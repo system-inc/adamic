@@ -1,0 +1,2558 @@
+{
+  "pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "reader": "6.0.3",
+  "files": 77,
+  "sources": {
+    "src/compiler/_namespaces/ts.moduleSpecifiers.ts": "d858679e4d64f2879cb625cecf199bb93f44e414e3c34fd55540fcccfef9c07e",
+    "src/compiler/_namespaces/ts.performance.ts": "e3d39c7ea64f27347b698a1951a76a014cd0c1c51565d6ed9182d7d4f064ddda",
+    "src/compiler/_namespaces/ts.ts": "74b899b9d4a9c709b9daa248cb9107227a705f0189eee82271ee84d3bbfc482b",
+    "src/compiler/binder.ts": "b2a0d4d09bfdd389297e346776d12297e4add7e0b62ba2015862e6b50dcb2aa3",
+    "src/compiler/builder.ts": "6e5b07ce2c67226096cad19391791073b2e37164d4e702bf77e7b2bc28ae9814",
+    "src/compiler/builderPublic.ts": "a6a304c41be6a7b33febcae8dd98955f90313c7e2d56af02f476e6b9722b82d6",
+    "src/compiler/builderState.ts": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "src/compiler/builderStatePublic.ts": "93138f0f93fd9dff071c3def9feebc5f88fbe65bcb028d4ca8871d3155b9b522",
+    "src/compiler/checker.ts": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+    "src/compiler/commandLineParser.ts": "e48e42605eef2b1880947b658187cf455b3c91aa4bcf32007ab7296b088009ab",
+    "src/compiler/core.ts": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "src/compiler/corePublic.ts": "899b3d3421836d6345090bce67d16d6c73c944762bfb0b5483a1e2ae192c9b09",
+    "src/compiler/debug.ts": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "src/compiler/emitter.ts": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+    "src/compiler/executeCommandLine.ts": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+    "src/compiler/expressionToTypeNode.ts": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+    "src/compiler/factory/baseNodeFactory.ts": "86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a",
+    "src/compiler/factory/emitHelpers.ts": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "src/compiler/factory/emitNode.ts": "d4e8f25e7c30e6c6f5fbb72d56812d140f8d15384be4a7bd4da226a47559583a",
+    "src/compiler/factory/nodeChildren.ts": "bded8155f089e40a86d99d53e135b8f3a4cbc49f70ff2bdd0b80f0683a2e9606",
+    "src/compiler/factory/nodeConverters.ts": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+    "src/compiler/factory/nodeFactory.ts": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "src/compiler/factory/nodeTests.ts": "47cc22cce04a5fa143e8182bd0f6e5aea2b1b34d58539701a0785fb0b60cf14f",
+    "src/compiler/factory/parenthesizerRules.ts": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764",
+    "src/compiler/factory/utilities.ts": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "src/compiler/factory/utilitiesPublic.ts": "a91c2dcc86ec6711aeae4fb0ad512209abe7a220ef2a0e7d2f04c3adcb7a0ff1",
+    "src/compiler/moduleNameResolver.ts": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+    "src/compiler/moduleSpecifiers.ts": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+    "src/compiler/parser.ts": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "src/compiler/path.ts": "4b777f1a03b9f39b4864106e60a43828b5b749a5fae00f68d6faf8f02e0c91bc",
+    "src/compiler/performance.ts": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+    "src/compiler/performanceCore.ts": "7f6e15fcf84111901e95303399ba69c9baacc3466a3ad5b5b21633c3d382f7b4",
+    "src/compiler/program.ts": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "src/compiler/programDiagnostics.ts": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "src/compiler/resolutionCache.ts": "7de45db4fd5e7c66131198ed2eb8b40f9a908056a8a3963614c1314bfca14da6",
+    "src/compiler/scanner.ts": "02f9e8f02e234b0e917e753a7b74f975c9b9b95f7f01ee4bc151081ed43dea49",
+    "src/compiler/semver.ts": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "src/compiler/sourcemap.ts": "036ab3c39165eb06a3fb145e1467f4f0dfebdb1f76b5faccc34a79db756473e4",
+    "src/compiler/symbolWalker.ts": "6aec8fecf7d57abd557bdbd4a9744ba2a1f3d8fcc9e9b84721158bd4f284300a",
+    "src/compiler/sys.ts": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "src/compiler/tracing.ts": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a",
+    "src/compiler/transformer.ts": "d13096beeb8d41a78cc48add41d5028b456e23f73c9973fe175c35941257a066",
+    "src/compiler/transformers/classFields.ts": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+    "src/compiler/transformers/classThis.ts": "41c65d5bb7518697a301cce563f6f800ed3ba8856372e86998d259a3eb439a6e",
+    "src/compiler/transformers/declarations.ts": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+    "src/compiler/transformers/declarations/diagnostics.ts": "dbc7849a0535ef63307656557c1037ef15006f7d6246197c095350854b71e721",
+    "src/compiler/transformers/destructuring.ts": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+    "src/compiler/transformers/es2015.ts": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "src/compiler/transformers/es2016.ts": "3e3ba9728ee63a9c68e8aee6356e84b611ec19c4acbfc7b4b806b49903c2967e",
+    "src/compiler/transformers/es2017.ts": "b18e65782e3ff096fb09a4609db90dddcb0cbdd8a2f1e72caeea19426dbd92b5",
+    "src/compiler/transformers/es2018.ts": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+    "src/compiler/transformers/es2019.ts": "99d755a8cd5bdd07d23590330990828ae7c8a33dae9d55926f5b0ab07db84878",
+    "src/compiler/transformers/es2020.ts": "763fb25fb5c40acf6d2482631c79709c9eddd299303292750a57216e392ae1dd",
+    "src/compiler/transformers/es2021.ts": "29798cddd385947caa004effdf997df6bc97b9a9b1d9919413dcee3a6a8b5205",
+    "src/compiler/transformers/esDecorators.ts": "bcef2e876468210c48941dad975a492f49eab7abeb4f75ca603e76ffd5e06c7c",
+    "src/compiler/transformers/esnext.ts": "7c566610dda1adbd37eec796f52b00a0ab2c08f42f678028ecf3b9f3516f60d1",
+    "src/compiler/transformers/generators.ts": "93e6814b36032fd49fbc2f9ff7fa60695430431f3c11a3f03207827fe44c07f5",
+    "src/compiler/transformers/jsx.ts": "2d9f268e5764a96ef52c2fd4d8b889bf248914917c6152358666a3effb041e6b",
+    "src/compiler/transformers/legacyDecorators.ts": "8321e776d83fe3892df9331baa9c1b837736ba5e4130d379a75ef9bfe34d86e8",
+    "src/compiler/transformers/module/esnextAnd2015.ts": "6c163c8dc720431f02b335d8d5c25efe849039d5805bfa722899f8a2cc2e6945",
+    "src/compiler/transformers/module/impliedNodeFormatDependent.ts": "9170b66a9feaa1b340e0723e0a0b10c085385c42ff25d39e9a24dd44e2d84a45",
+    "src/compiler/transformers/module/module.ts": "69802404b3e40beec0a1707813bf556841b81728a31af29ac554e95bc87f9c36",
+    "src/compiler/transformers/module/system.ts": "89f55cac43736092d29266dbe77b6e3a94c8ff5684bb7d41306a1e544b2caef7",
+    "src/compiler/transformers/namedEvaluation.ts": "7529078853a659502ab39832a4eec7e0ee6b94df675f63960254c56cc31060e7",
+    "src/compiler/transformers/taggedTemplate.ts": "800dc3bebb7e7879e68b5f3ed684397e41dd76b73a1130764fefe6007f627ea9",
+    "src/compiler/transformers/ts.ts": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+    "src/compiler/transformers/typeSerializer.ts": "8219081416c67c9ea7f1f8da6125775652eb7d065e8897fd430f50d83dbac5d6",
+    "src/compiler/transformers/utilities.ts": "cbddbf83ed9af717b94398ab8b2617f0098406d26712ae816130f40d3ce9c2e5",
+    "src/compiler/tsbuild.ts": "fb3789e399c0c7e1548d3949eab83a47da545cc88fe0ba2eee356926be607b78",
+    "src/compiler/tsbuildPublic.ts": "3337fb2a5fcb5757f2800b03849452f809227ebd74fcffd2b597e17e13dcb2a5",
+    "src/compiler/types.ts": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "src/compiler/utilities.ts": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "src/compiler/utilitiesPublic.ts": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+    "src/compiler/visitorPublic.ts": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "src/compiler/watch.ts": "c9d074948345a04d85e87d3c4b3e1a2c8328422c20e0b36b3ee9ae1c7a7ad24e",
+    "src/compiler/watchPublic.ts": "74fdacba504a4962aa0b591c385b6f7061742d37122842e55886a77ffa8d2bef",
+    "src/compiler/watchUtilities.ts": "0a4919e1976ea0683ea06137ec02c97fe5ad44ca8d0bc709f69eb0230b7a5487"
+  },
+  "patterns": {
+    "createSourceFile": {
+      "definitions": [
+        {
+          "file": "src/compiler/factory/nodeFactory.ts",
+          "line": 6041,
+          "column": 5
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1344,
+          "column": 1
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1978,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1716,
+          "column": 28
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1819,
+          "column": 28
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1990,
+          "column": 26
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8797,
+          "column": 32
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 410,
+          "column": 37
+        }
+      ]
+    },
+    "parseSourceFile": {
+      "definitions": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1603,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1356,
+          "column": 18
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1363,
+          "column": 18
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9959,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 10020,
+          "column": 24
+        }
+      ]
+    },
+    "parseList": {
+      "definitions": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 3094,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1814,
+          "column": 28
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 4381,
+          "column": 23
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 4433,
+          "column": 25
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 6191,
+          "column": 55
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 6831,
+          "column": 32
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 7018,
+          "column": 28
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 7026,
+          "column": 28
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 7037,
+          "column": 25
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8201,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8236,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8294,
+          "column": 26
+        }
+      ]
+    },
+    "internIdentifier": {
+      "definitions": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 2637,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 2654,
+          "column": 26
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 2717,
+          "column": 25
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 2749,
+          "column": 53
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 6440,
+          "column": 33
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8325,
+          "column": 25
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 8547,
+          "column": 27
+        },
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 9918,
+          "column": 30
+        }
+      ]
+    },
+    "createTypeChecker": {
+      "definitions": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1486,
+          "column": 1
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2685,
+          "column": 46
+        }
+      ]
+    },
+    "getDiagnosticsHelper": {
+      "definitions": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2778,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2795,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2799,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2828,
+          "column": 16
+        }
+      ]
+    },
+    "checkSourceFileWithEagerDiagnostics": {
+      "definitions": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49710,
+          "column": 5
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 1919,
+          "column": 17
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49732,
+          "column": 13
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 49756,
+          "column": 48
+        }
+      ]
+    },
+    "sortAndDeduplicateDiagnostics": {
+      "definitions": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "line": 303,
+          "column": 1
+        }
+      ],
+      "calls": [
+        {
+          "file": "src/compiler/program.ts",
+          "line": 648,
+          "column": 12
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2784,
+          "column": 20
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 2786,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3268,
+          "column": 16
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 3284,
+          "column": 35
+        },
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 612,
+          "column": 25
+        }
+      ]
+    }
+  },
+  "parserState": [
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1444,
+      "column": 9,
+      "name": "scanner",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1446,
+      "column": 9,
+      "name": "disallowInAndDecoratorContext",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1449,
+      "column": 9,
+      "name": "NodeConstructor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1450,
+      "column": 9,
+      "name": "TokenConstructor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1451,
+      "column": 9,
+      "name": "IdentifierConstructor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1452,
+      "column": 9,
+      "name": "PrivateIdentifierConstructor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1453,
+      "column": 9,
+      "name": "SourceFileConstructor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1462,
+      "column": 9,
+      "name": "baseNodeFactory",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1470,
+      "column": 9,
+      "name": "factory",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1472,
+      "column": 9,
+      "name": "{\r\n        createNodeArray: factoryCreateNodeArray,\r\n        createNumericLiteral: factoryCreateNumericLiteral,\r\n        createStringLiteral: factoryCreateStringLiteral,\r\n        createLiteralLikeNode: factoryCreateLiteralLikeNode,\r\n        createIdentifier: factoryCreateIdentifier,\r\n        createPrivateIdentifier: factoryCreatePrivateIdentifier,\r\n        createToken: factoryCreateToken,\r\n        createArrayLiteralExpression: factoryCreateArrayLiteralExpression,\r\n        createObjectLiteralExpression: factoryCreateObjectLiteralExpression,\r\n        createPropertyAccessExpression: factoryCreatePropertyAccessExpression,\r\n        createPropertyAccessChain: factoryCreatePropertyAccessChain,\r\n        createElementAccessExpression: factoryCreateElementAccessExpression,\r\n        createElementAccessChain: factoryCreateElementAccessChain,\r\n        createCallExpression: factoryCreateCallExpression,\r\n        createCallChain: factoryCreateCallChain,\r\n        createNewExpression: factoryCreateNewExpression,\r\n        createParenthesizedExpression: factoryCreateParenthesizedExpression,\r\n        createBlock: factoryCreateBlock,\r\n        createVariableStatement: factoryCreateVariableStatement,\r\n        createExpressionStatement: factoryCreateExpressionStatement,\r\n        createIfStatement: factoryCreateIfStatement,\r\n        createWhileStatement: factoryCreateWhileStatement,\r\n        createForStatement: factoryCreateForStatement,\r\n        createForOfStatement: factoryCreateForOfStatement,\r\n        createVariableDeclaration: factoryCreateVariableDeclaration,\r\n        createVariableDeclarationList: factoryCreateVariableDeclarationList,\r\n    }",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1501,
+      "column": 9,
+      "name": "fileName",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1502,
+      "column": 9,
+      "name": "sourceFlags",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1503,
+      "column": 9,
+      "name": "sourceText",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1504,
+      "column": 9,
+      "name": "languageVersion",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1505,
+      "column": 9,
+      "name": "scriptKind",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1506,
+      "column": 9,
+      "name": "languageVariant",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1507,
+      "column": 9,
+      "name": "parseDiagnostics",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1508,
+      "column": 9,
+      "name": "jsDocDiagnostics",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1509,
+      "column": 9,
+      "name": "syntaxCursor",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1511,
+      "column": 9,
+      "name": "currentToken",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1512,
+      "column": 9,
+      "name": "nodeCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1513,
+      "column": 9,
+      "name": "identifiers",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1514,
+      "column": 9,
+      "name": "identifierCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1518,
+      "column": 9,
+      "name": "parsingContext",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1520,
+      "column": 9,
+      "name": "notParenthesizedArrow",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1568,
+      "column": 9,
+      "name": "contextFlags",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1571,
+      "column": 9,
+      "name": "topLevel",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1600,
+      "column": 9,
+      "name": "parseErrorBeforeNextFinishedNode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1846,
+      "column": 9,
+      "name": "hasDeprecatedTag",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 2356,
+      "column": 11,
+      "name": "viableKeywordSuggestions",
+      "binding": "const"
+    }
+  ],
+  "checkerState": [
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1490,
+      "column": 9,
+      "name": "deferredDiagnosticsCallbacks",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1492,
+      "column": 9,
+      "name": "addLazyDiagnostic",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1505,
+      "column": 9,
+      "name": "cancellationToken",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1507,
+      "column": 9,
+      "name": "scanner",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1509,
+      "column": 9,
+      "name": "Symbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1510,
+      "column": 9,
+      "name": "Type",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1511,
+      "column": 9,
+      "name": "Signature",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1513,
+      "column": 9,
+      "name": "typeCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1514,
+      "column": 9,
+      "name": "symbolCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1515,
+      "column": 9,
+      "name": "totalInstantiationCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1516,
+      "column": 9,
+      "name": "instantiationCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1517,
+      "column": 9,
+      "name": "instantiationDepth",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1518,
+      "column": 9,
+      "name": "inlineLevel",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1519,
+      "column": 9,
+      "name": "currentNode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1520,
+      "column": 9,
+      "name": "varianceTypeParameter",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1521,
+      "column": 9,
+      "name": "isInferencePartiallyBlocked",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1522,
+      "column": 9,
+      "name": "withinUnreachableCode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1523,
+      "column": 9,
+      "name": "reportedUnreachableNodes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1525,
+      "column": 9,
+      "name": "emptySymbols",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1526,
+      "column": 9,
+      "name": "arrayVariances",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1528,
+      "column": 9,
+      "name": "compilerOptions",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1529,
+      "column": 9,
+      "name": "languageVersion",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1530,
+      "column": 9,
+      "name": "moduleKind",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1531,
+      "column": 9,
+      "name": "legacyDecorators",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1532,
+      "column": 9,
+      "name": "useDefineForClassFields",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1533,
+      "column": 9,
+      "name": "emitStandardClassFields",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1534,
+      "column": 9,
+      "name": "allowSyntheticDefaultImports",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1535,
+      "column": 9,
+      "name": "strictNullChecks",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1536,
+      "column": 9,
+      "name": "strictFunctionTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1537,
+      "column": 9,
+      "name": "strictBindCallApply",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1538,
+      "column": 9,
+      "name": "strictPropertyInitialization",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1539,
+      "column": 9,
+      "name": "strictBuiltinIteratorReturn",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1540,
+      "column": 9,
+      "name": "noImplicitAny",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1541,
+      "column": 9,
+      "name": "noImplicitThis",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1542,
+      "column": 9,
+      "name": "useUnknownInCatchVariables",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1543,
+      "column": 9,
+      "name": "exactOptionalPropertyTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1544,
+      "column": 9,
+      "name": "noUncheckedSideEffectImports",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1545,
+      "column": 9,
+      "name": "stableTypeOrdering",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1547,
+      "column": 9,
+      "name": "fileIndexMap",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1549,
+      "column": 9,
+      "name": "checkBinaryExpression",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1550,
+      "column": 9,
+      "name": "emitResolver",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1551,
+      "column": 9,
+      "name": "nodeBuilder",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1552,
+      "column": 9,
+      "name": "syntacticNodeBuilder",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1553,
+      "column": 9,
+      "name": "evaluate",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1558,
+      "column": 9,
+      "name": "globals",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1559,
+      "column": 9,
+      "name": "undefinedSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1562,
+      "column": 9,
+      "name": "globalThisSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1567,
+      "column": 9,
+      "name": "argumentsSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1568,
+      "column": 9,
+      "name": "requireSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1569,
+      "column": 9,
+      "name": "isolatedModulesLikeFlagName",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1570,
+      "column": 9,
+      "name": "canCollectSymbolAliasAccessabilityData",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1573,
+      "column": 9,
+      "name": "apparentArgumentCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1575,
+      "column": 9,
+      "name": "lastGetCombinedNodeFlagsNode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1576,
+      "column": 9,
+      "name": "lastGetCombinedNodeFlagsResult",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1577,
+      "column": 9,
+      "name": "lastGetCombinedModifierFlagsNode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1578,
+      "column": 9,
+      "name": "lastGetCombinedModifierFlagsResult",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1579,
+      "column": 9,
+      "name": "resolveName",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1594,
+      "column": 9,
+      "name": "resolveNameForSymbolSuggestion",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 1610,
+      "column": 11,
+      "name": "checker",
+      "binding": "const"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2048,
+      "column": 9,
+      "name": "tupleTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2049,
+      "column": 9,
+      "name": "unionTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2050,
+      "column": 9,
+      "name": "unionOfUnionTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2051,
+      "column": 9,
+      "name": "intersectionTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2052,
+      "column": 9,
+      "name": "stringLiteralTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2053,
+      "column": 9,
+      "name": "numberLiteralTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2054,
+      "column": 9,
+      "name": "bigIntLiteralTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2055,
+      "column": 9,
+      "name": "enumLiteralTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2056,
+      "column": 9,
+      "name": "indexedAccessTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2057,
+      "column": 9,
+      "name": "templateLiteralTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2058,
+      "column": 9,
+      "name": "stringMappingTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2059,
+      "column": 9,
+      "name": "substitutionTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2060,
+      "column": 9,
+      "name": "subtypeReductionCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2061,
+      "column": 9,
+      "name": "decoratorContextOverrideTypeCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2062,
+      "column": 9,
+      "name": "cachedTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2063,
+      "column": 9,
+      "name": "evolvingArrayTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2064,
+      "column": 9,
+      "name": "undefinedProperties",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2065,
+      "column": 9,
+      "name": "markerTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2067,
+      "column": 9,
+      "name": "unknownSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2068,
+      "column": 9,
+      "name": "resolvingSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2069,
+      "column": 9,
+      "name": "unresolvedSymbols",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2070,
+      "column": 9,
+      "name": "errorTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2076,
+      "column": 9,
+      "name": "seenIntrinsicNames",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2078,
+      "column": 9,
+      "name": "anyType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2079,
+      "column": 9,
+      "name": "autoType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2080,
+      "column": 9,
+      "name": "wildcardType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2081,
+      "column": 9,
+      "name": "blockedStringType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2082,
+      "column": 9,
+      "name": "errorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2083,
+      "column": 9,
+      "name": "unresolvedType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2084,
+      "column": 9,
+      "name": "nonInferrableAnyType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2085,
+      "column": 9,
+      "name": "intrinsicMarkerType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2086,
+      "column": 9,
+      "name": "unknownType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2087,
+      "column": 9,
+      "name": "undefinedType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2088,
+      "column": 9,
+      "name": "undefinedWideningType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2089,
+      "column": 9,
+      "name": "missingType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2090,
+      "column": 9,
+      "name": "undefinedOrMissingType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2091,
+      "column": 9,
+      "name": "optionalType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2092,
+      "column": 9,
+      "name": "nullType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2093,
+      "column": 9,
+      "name": "nullWideningType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2094,
+      "column": 9,
+      "name": "stringType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2095,
+      "column": 9,
+      "name": "numberType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2096,
+      "column": 9,
+      "name": "bigintType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2097,
+      "column": 9,
+      "name": "falseType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2098,
+      "column": 9,
+      "name": "regularFalseType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2099,
+      "column": 9,
+      "name": "trueType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2100,
+      "column": 9,
+      "name": "regularTrueType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2109,
+      "column": 9,
+      "name": "booleanType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2110,
+      "column": 9,
+      "name": "esSymbolType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2111,
+      "column": 9,
+      "name": "voidType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2112,
+      "column": 9,
+      "name": "neverType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2113,
+      "column": 9,
+      "name": "silentNeverType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2114,
+      "column": 9,
+      "name": "implicitNeverType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2115,
+      "column": 9,
+      "name": "unreachableNeverType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2116,
+      "column": 9,
+      "name": "nonPrimitiveType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2117,
+      "column": 9,
+      "name": "stringOrNumberType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2118,
+      "column": 9,
+      "name": "stringNumberSymbolType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2119,
+      "column": 9,
+      "name": "numberOrBigIntType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2120,
+      "column": 9,
+      "name": "templateConstraintType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2121,
+      "column": 9,
+      "name": "numericStringType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2123,
+      "column": 9,
+      "name": "restrictiveMapper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2124,
+      "column": 9,
+      "name": "permissiveMapper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2125,
+      "column": 9,
+      "name": "uniqueLiteralType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2126,
+      "column": 9,
+      "name": "uniqueLiteralMapper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2127,
+      "column": 9,
+      "name": "outofbandVarianceMarkerHandler",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2128,
+      "column": 9,
+      "name": "reportUnreliableMapper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2134,
+      "column": 9,
+      "name": "reportUnmeasurableMapper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2141,
+      "column": 9,
+      "name": "emptyObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2142,
+      "column": 9,
+      "name": "emptyJsxObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2144,
+      "column": 9,
+      "name": "emptyFreshJsxObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2147,
+      "column": 9,
+      "name": "emptyTypeLiteralSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2149,
+      "column": 9,
+      "name": "emptyTypeLiteralType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2151,
+      "column": 9,
+      "name": "unknownEmptyObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2152,
+      "column": 9,
+      "name": "unknownUnionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2154,
+      "column": 9,
+      "name": "emptyGenericType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2157,
+      "column": 9,
+      "name": "anyFunctionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2162,
+      "column": 9,
+      "name": "noConstraintType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2163,
+      "column": 9,
+      "name": "circularConstraintType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2164,
+      "column": 9,
+      "name": "resolvingDefaultType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2166,
+      "column": 9,
+      "name": "markerSuperType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2167,
+      "column": 9,
+      "name": "markerSubType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2169,
+      "column": 9,
+      "name": "markerOtherType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2171,
+      "column": 9,
+      "name": "markerSuperTypeForCheck",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2172,
+      "column": 9,
+      "name": "markerSubTypeForCheck",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2175,
+      "column": 9,
+      "name": "noTypePredicate",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2177,
+      "column": 9,
+      "name": "anySignature",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2178,
+      "column": 9,
+      "name": "unknownSignature",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2179,
+      "column": 9,
+      "name": "resolvingSignature",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2180,
+      "column": 9,
+      "name": "silentNeverSignature",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2182,
+      "column": 9,
+      "name": "enumNumberIndexInfo",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2183,
+      "column": 9,
+      "name": "anyBaseTypeIndexInfo",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2185,
+      "column": 9,
+      "name": "iterationTypesCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2186,
+      "column": 9,
+      "name": "noIterationTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2198,
+      "column": 9,
+      "name": "anyIterationTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2200,
+      "column": 9,
+      "name": "asyncIterationTypesResolver",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2216,
+      "column": 9,
+      "name": "syncIterationTypesResolver",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2244,
+      "column": 9,
+      "name": "amalgamatedDuplicates",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2245,
+      "column": 9,
+      "name": "reverseMappedCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2246,
+      "column": 9,
+      "name": "reverseHomomorphicMappedCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2247,
+      "column": 9,
+      "name": "ambientModulesCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2253,
+      "column": 9,
+      "name": "patternAmbientModules",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2254,
+      "column": 9,
+      "name": "patternAmbientModuleAugmentations",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2256,
+      "column": 9,
+      "name": "globalObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2257,
+      "column": 9,
+      "name": "globalFunctionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2258,
+      "column": 9,
+      "name": "globalCallableFunctionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2259,
+      "column": 9,
+      "name": "globalNewableFunctionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2260,
+      "column": 9,
+      "name": "globalArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2261,
+      "column": 9,
+      "name": "globalReadonlyArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2262,
+      "column": 9,
+      "name": "globalStringType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2263,
+      "column": 9,
+      "name": "globalNumberType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2264,
+      "column": 9,
+      "name": "globalBooleanType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2265,
+      "column": 9,
+      "name": "globalRegExpType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2266,
+      "column": 9,
+      "name": "globalThisType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2267,
+      "column": 9,
+      "name": "anyArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2268,
+      "column": 9,
+      "name": "autoArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2269,
+      "column": 9,
+      "name": "anyReadonlyArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2270,
+      "column": 9,
+      "name": "deferredGlobalNonNullableTypeAlias",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2275,
+      "column": 9,
+      "name": "deferredGlobalESSymbolConstructorSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2276,
+      "column": 9,
+      "name": "deferredGlobalESSymbolConstructorTypeSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2277,
+      "column": 9,
+      "name": "deferredGlobalESSymbolType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2278,
+      "column": 9,
+      "name": "deferredGlobalTypedPropertyDescriptorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2279,
+      "column": 9,
+      "name": "deferredGlobalPromiseType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2280,
+      "column": 9,
+      "name": "deferredGlobalPromiseLikeType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2281,
+      "column": 9,
+      "name": "deferredGlobalPromiseConstructorSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2282,
+      "column": 9,
+      "name": "deferredGlobalPromiseConstructorLikeType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2283,
+      "column": 9,
+      "name": "deferredGlobalIterableType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2284,
+      "column": 9,
+      "name": "deferredGlobalIteratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2285,
+      "column": 9,
+      "name": "deferredGlobalIterableIteratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2286,
+      "column": 9,
+      "name": "deferredGlobalIteratorObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2287,
+      "column": 9,
+      "name": "deferredGlobalGeneratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2288,
+      "column": 9,
+      "name": "deferredGlobalIteratorYieldResultType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2289,
+      "column": 9,
+      "name": "deferredGlobalIteratorReturnResultType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2290,
+      "column": 9,
+      "name": "deferredGlobalAsyncIterableType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2291,
+      "column": 9,
+      "name": "deferredGlobalAsyncIteratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2292,
+      "column": 9,
+      "name": "deferredGlobalAsyncIterableIteratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2293,
+      "column": 9,
+      "name": "deferredGlobalBuiltinIteratorTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2294,
+      "column": 9,
+      "name": "deferredGlobalBuiltinAsyncIteratorTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2295,
+      "column": 9,
+      "name": "deferredGlobalAsyncIteratorObjectType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2296,
+      "column": 9,
+      "name": "deferredGlobalAsyncGeneratorType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2297,
+      "column": 9,
+      "name": "deferredGlobalTemplateStringsArrayType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2298,
+      "column": 9,
+      "name": "deferredGlobalImportMetaType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2299,
+      "column": 9,
+      "name": "deferredGlobalImportMetaExpressionType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2300,
+      "column": 9,
+      "name": "deferredGlobalImportCallOptionsType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2301,
+      "column": 9,
+      "name": "deferredGlobalImportAttributesType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2302,
+      "column": 9,
+      "name": "deferredGlobalDisposableType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2303,
+      "column": 9,
+      "name": "deferredGlobalAsyncDisposableType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2304,
+      "column": 9,
+      "name": "deferredGlobalExtractSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2305,
+      "column": 9,
+      "name": "deferredGlobalOmitSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2306,
+      "column": 9,
+      "name": "deferredGlobalAwaitedSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2307,
+      "column": 9,
+      "name": "deferredGlobalBigIntType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2308,
+      "column": 9,
+      "name": "deferredGlobalNaNSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2309,
+      "column": 9,
+      "name": "deferredGlobalRecordSymbol",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2310,
+      "column": 9,
+      "name": "deferredGlobalClassDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2311,
+      "column": 9,
+      "name": "deferredGlobalClassMethodDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2312,
+      "column": 9,
+      "name": "deferredGlobalClassGetterDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2313,
+      "column": 9,
+      "name": "deferredGlobalClassSetterDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2314,
+      "column": 9,
+      "name": "deferredGlobalClassAccessorDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2315,
+      "column": 9,
+      "name": "deferredGlobalClassAccessorDecoratorTargetType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2316,
+      "column": 9,
+      "name": "deferredGlobalClassAccessorDecoratorResultType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2317,
+      "column": 9,
+      "name": "deferredGlobalClassFieldDecoratorContextType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2319,
+      "column": 9,
+      "name": "allPotentiallyUnusedIdentifiers",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2321,
+      "column": 9,
+      "name": "flowLoopStart",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2322,
+      "column": 9,
+      "name": "flowLoopCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2323,
+      "column": 9,
+      "name": "sharedFlowCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2324,
+      "column": 9,
+      "name": "flowAnalysisDisabled",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2325,
+      "column": 9,
+      "name": "flowInvocationCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2326,
+      "column": 9,
+      "name": "lastFlowNode",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2327,
+      "column": 9,
+      "name": "lastFlowNodeReachable",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2328,
+      "column": 9,
+      "name": "flowTypeCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2330,
+      "column": 9,
+      "name": "contextualTypeNodes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2331,
+      "column": 9,
+      "name": "contextualTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2332,
+      "column": 9,
+      "name": "contextualIsCache",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2333,
+      "column": 9,
+      "name": "contextualTypeCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2334,
+      "column": 9,
+      "name": "contextualBindingPatterns",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2336,
+      "column": 9,
+      "name": "inferenceContextNodes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2337,
+      "column": 9,
+      "name": "inferenceContexts",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2338,
+      "column": 9,
+      "name": "inferenceContextCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2340,
+      "column": 9,
+      "name": "activeTypeMappers",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2341,
+      "column": 9,
+      "name": "activeTypeMappersCaches",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2342,
+      "column": 9,
+      "name": "activeTypeMappersCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2344,
+      "column": 9,
+      "name": "emptyStringType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2345,
+      "column": 9,
+      "name": "zeroType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2346,
+      "column": 9,
+      "name": "zeroBigIntType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2348,
+      "column": 9,
+      "name": "resolutionTargets",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2349,
+      "column": 9,
+      "name": "resolutionResults",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2350,
+      "column": 9,
+      "name": "resolutionPropertyNames",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2351,
+      "column": 9,
+      "name": "resolutionStart",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2352,
+      "column": 9,
+      "name": "inVarianceComputation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2354,
+      "column": 9,
+      "name": "suggestionCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2355,
+      "column": 9,
+      "name": "maximumSuggestionCount",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2356,
+      "column": 9,
+      "name": "mergedSymbols",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2357,
+      "column": 9,
+      "name": "symbolLinks",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2358,
+      "column": 9,
+      "name": "nodeLinks",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2359,
+      "column": 9,
+      "name": "flowLoopCaches",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2360,
+      "column": 9,
+      "name": "flowLoopNodes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2361,
+      "column": 9,
+      "name": "flowLoopKeys",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2362,
+      "column": 9,
+      "name": "flowLoopTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2363,
+      "column": 9,
+      "name": "sharedFlowNodes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2364,
+      "column": 9,
+      "name": "sharedFlowTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2365,
+      "column": 9,
+      "name": "flowNodeReachable",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2366,
+      "column": 9,
+      "name": "flowNodePostSuper",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2367,
+      "column": 9,
+      "name": "potentialThisCollisions",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2368,
+      "column": 9,
+      "name": "potentialNewTargetCollisions",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2369,
+      "column": 9,
+      "name": "potentialWeakMapSetCollisions",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2370,
+      "column": 9,
+      "name": "potentialReflectCollisions",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2371,
+      "column": 9,
+      "name": "potentialUnusedRenamedBindingElementsInTypes",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2372,
+      "column": 9,
+      "name": "awaitedTypeStack",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2373,
+      "column": 9,
+      "name": "reverseMappedSourceStack",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2374,
+      "column": 9,
+      "name": "reverseMappedTargetStack",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2375,
+      "column": 9,
+      "name": "reverseExpandingFlags",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2377,
+      "column": 9,
+      "name": "diagnostics",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2378,
+      "column": 9,
+      "name": "suggestionDiagnostics",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2380,
+      "column": 9,
+      "name": "typeofType",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2382,
+      "column": 9,
+      "name": "_jsxNamespace",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2383,
+      "column": 9,
+      "name": "_jsxFactoryEntity",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2385,
+      "column": 9,
+      "name": "subtypeRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2386,
+      "column": 9,
+      "name": "strictSubtypeRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2387,
+      "column": 9,
+      "name": "assignableRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2388,
+      "column": 9,
+      "name": "comparableRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2389,
+      "column": 9,
+      "name": "identityRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2390,
+      "column": 9,
+      "name": "enumRelation",
+      "binding": "mutable"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2396,
+      "column": 9,
+      "name": "suggestedExtensions",
+      "binding": "mutable"
+    }
+  ]
+}

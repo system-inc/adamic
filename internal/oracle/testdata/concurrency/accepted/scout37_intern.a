@@ -1,0 +1,25 @@
+// Reduced parser.ts:2637 internIdentifier: a private map per file, not a global
+// intern pool. Return views after the callback's map and temporary owner die.
+import { parallelMap } from 'adamic';
+interface Interned {
+    readonly size: number;
+    readonly identifiers: readonly string[];
+}
+const cases: readonly string[] = ['alpha alpha beta', '__proto__ __proto__ constructor', 'βeta 𐐀name βeta', ''];
+const files: readonly string[] = Array.from({ length: 128 }, (_unused, index) => cases[index % cases.length] ?? '');
+const interned = parallelMap(files, (source: string): Interned => {
+    const identifiers = new Map<string, string>();
+    const values: string[] = [];
+    for (const token of source.split(' ')) {
+        if (token === '') { continue; }
+        const text = `!${token}!`.slice(1, -1);
+        let identifier = identifiers.get(text);
+        if (identifier === undefined) {
+            identifier = text;
+            identifiers.set(text, identifier);
+        }
+        values.push(identifier);
+    }
+    return { size: identifiers.size, identifiers: values };
+});
+for (const file of interned) { console.log(`${file.size}/${file.identifiers.join('|')}`); }
