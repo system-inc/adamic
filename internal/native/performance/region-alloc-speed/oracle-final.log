@@ -1,0 +1,66 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+    oracle_test.go:869: gate cache node hit
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+    oracle_test.go:869: gate cache node hit
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+    oracle_test.go:760: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a
+    oracle_test.go:741: gate cache native hit
+    oracle_test.go:753: gate cache native hit
+    oracle_test.go:767: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+    oracle_test.go:869: gate cache node hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+    oracle_test.go:760: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+    oracle_test.go:760: gate cache native hit
+    oracle_test.go:741: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+    oracle_test.go:741: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+    oracle_test.go:760: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a
+    oracle_test.go:753: gate cache native hit
+    oracle_test.go:767: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+    oracle_test.go:741: gate cache native hit
+    oracle_test.go:753: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+    oracle_test.go:753: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a
+    oracle_test.go:767: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/regions.a
+    oracle_test.go:767: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.05s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/region_alloc.a (0.30s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions_throw.a (0.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/region_end.a (0.31s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/regions.a (0.31s)
+PASS
+gate cache: native hits=16 misses=0
+gate cache: node hits=8 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.419s

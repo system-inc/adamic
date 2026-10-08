@@ -1,0 +1,180 @@
+{
+  "machine": "cb1632b4fc8c",
+  "platform": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+  "affinity": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "cpu.max": "400000 100000",
+  "load_before": [
+    0.0263671875,
+    0.64208984375,
+    0.82568359375
+  ],
+  "commands": {
+    "before": [
+      "/tmp/region-alloc-profile/before"
+    ],
+    "candidate": [
+      "/tmp/region-alloc-profile/candidate"
+    ],
+    "Node": [
+      "/workspace/adamic-tools/bin/node",
+      "--disable-warning=ExperimentalWarning",
+      "/workspace/adamic/bench/trees.ts"
+    ],
+    "Bun": [
+      "/tmp/trees-profile/bun",
+      "/workspace/adamic/bench/trees.ts"
+    ]
+  },
+  "sha256": {
+    "before": "a66ce218ee53fdad59469b6703348a28726751403c79683fa8e35510be210eb9",
+    "candidate": "6ae2fa5ac22517ab393c6ed3b5c73ba60308f3fe64c223100fcdbd21985a51ea",
+    "Node": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+    "Bun": "9fd36f87e4b90b07632b987a2e4ec81ca15a62c81bf983190cea6d715be2ad74"
+  },
+  "source_sha256": "743b83a8bce42948f155d02dd8e939c94a2d7f403274b2b1981da381aa6c7f50",
+  "load_after": [
+    1.03955078125,
+    0.81591796875,
+    0.87255859375
+  ],
+  "stdout": "stretch tree of depth 19\t check: 1048575\n262144\t trees of depth 4\t check: 8126464\n65536\t trees of depth 6\t check: 8323072\n16384\t trees of depth 8\t check: 8372224\n4096\t trees of depth 10\t check: 8384512\n1024\t trees of depth 12\t check: 8387584\n256\t trees of depth 14\t check: 8388352\n64\t trees of depth 16\t check: 8388544\n16\t trees of depth 18\t check: 8388592\nlong lived tree of depth 18\t check: 524287\n",
+  "samples": {
+    "before": [
+      {
+        "wall": 2.798068804997456,
+        "user": 1.7918190000000003,
+        "system": 1.005391
+      },
+      {
+        "wall": 4.77156450700204,
+        "user": 3.045186000000001,
+        "system": 1.7239839999999997
+      },
+      {
+        "wall": 4.084422445997916,
+        "user": 2.6790560000000028,
+        "system": 1.4046599999999998
+      },
+      {
+        "wall": 3.068177369001205,
+        "user": 1.9812379999999976,
+        "system": 1.0857829999999993
+      },
+      {
+        "wall": 3.951570356999582,
+        "user": 2.5109509999999986,
+        "system": 1.437520000000001
+      }
+    ],
+    "candidate": [
+      {
+        "wall": 1.6998591869996744,
+        "user": 1.0583489999999998,
+        "system": 0.6410970000000002
+      },
+      {
+        "wall": 1.8391190609982004,
+        "user": 1.1870089999999998,
+        "system": 0.6516329999999995
+      },
+      {
+        "wall": 1.552084681999986,
+        "user": 0.9741199999999992,
+        "system": 0.5762230000000006
+      },
+      {
+        "wall": 2.8352845849985897,
+        "user": 1.665965,
+        "system": 1.1663430000000012
+      },
+      {
+        "wall": 1.7137445640000806,
+        "user": 0.9988370000000018,
+        "system": 0.7143939999999986
+      }
+    ],
+    "Node": [
+      {
+        "wall": 2.1356049259993597,
+        "user": 2.8567300000000007,
+        "system": 0.16208199999999984
+      },
+      {
+        "wall": 3.5209895039988623,
+        "user": 4.206654,
+        "system": 0.309609
+      },
+      {
+        "wall": 8.069714139001007,
+        "user": 8.376473999999998,
+        "system": 1.020391
+      },
+      {
+        "wall": 4.337930781999603,
+        "user": 5.035626000000001,
+        "system": 0.38355299999999914
+      },
+      {
+        "wall": 2.3255364959986764,
+        "user": 2.824348999999998,
+        "system": 0.25243700000000047
+      }
+    ],
+    "Bun": [
+      {
+        "wall": 1.34506910699929,
+        "user": 1.7182510000000004,
+        "system": 0.3924500000000002
+      },
+      {
+        "wall": 3.395635005999793,
+        "user": 3.567589999999999,
+        "system": 0.736516
+      },
+      {
+        "wall": 3.4459285919983813,
+        "user": 3.5121210000000005,
+        "system": 0.6776300000000006
+      },
+      {
+        "wall": 3.7677584830016713,
+        "user": 4.0607630000000015,
+        "system": 0.7333069999999999
+      },
+      {
+        "wall": 2.5073154929996235,
+        "user": 2.799993999999998,
+        "system": 0.608353000000001
+      }
+    ]
+  },
+  "best": {
+    "before": {
+      "wall": 2.798068804997456,
+      "user": 1.7918190000000003,
+      "system": 1.005391
+    },
+    "candidate": {
+      "wall": 1.552084681999986,
+      "user": 0.9741199999999992,
+      "system": 0.5762230000000006
+    },
+    "Node": {
+      "wall": 2.1356049259993597,
+      "user": 2.8567300000000007,
+      "system": 0.16208199999999984
+    },
+    "Bun": {
+      "wall": 1.34506910699929,
+      "user": 1.7182510000000004,
+      "system": 0.3924500000000002
+    }
+  }
+}

@@ -1,0 +1,24 @@
+// Multiple block rollovers, dynamic outside children, and fresh regions on later statements.
+interface Branch {
+	readonly label: string;
+	readonly left: Branch | undefined;
+	readonly right: Branch | undefined;
+}
+function build(depth: number, seed: number): Branch {
+	if (depth === 0) {
+		return { label: `leaf${seed}`, left: undefined, right: undefined };
+	}
+	return {
+		label: `branch${seed}`,
+		left: build(depth - 1, seed * 2),
+		right: build(depth - 1, seed * 2 + 1),
+	};
+}
+function checksum(branch: Branch): number {
+	return branch.label.length
+		+ (branch.left === undefined ? 0 : checksum(branch.left))
+		+ (branch.right === undefined ? 0 : checksum(branch.right));
+}
+console.log(`${checksum(build(11, 1))}`);
+console.log(`${checksum(build(3, 2))}`);
+console.log(`${checksum(build(10, 3))}`);

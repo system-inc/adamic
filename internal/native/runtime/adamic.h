@@ -304,10 +304,13 @@ adamic_object *adamic_object_new(const adamic_shape *shape);
 typedef struct adamic_region_block adamic_region_block;
 typedef struct adamic_region {
 	adamic_region_block *blocks;
+	// Diagnostic total, maintained only with ADAMIC_COUNT.
 	size_t count;
 	bool holds_outside;
+	unsigned char *next;
+	unsigned char *end;
 } adamic_region;
-#define ADAMIC_REGION {NULL, 0, false}
+#define ADAMIC_REGION {NULL, 0, false, NULL, NULL}
 adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *shape);
 // filled_in is only for a literal that fills every slot without a throwing operation or
 // publication between allocation and completion. Constructors use the zeroed allocator above.

@@ -1,0 +1,6 @@
+=== RUN   TestWASIHostPromises
+    wasi_async_test.go:70: WASI host leak control: adamic: counts: allocations 3 frees 3 retains 3 releases 4 peak 3 regions 0
+        ; missing release mutant: adamic: counts: allocations 3 frees 0 retains 3 releases 3 peak 3 regions 0
+--- PASS: TestWASIHostPromises (10.14s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	10.154s

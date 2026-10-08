@@ -435,6 +435,7 @@ var fixtures = []struct {
 	// Regions: a statement's fresh values let go of together, and every way one could escape kept off it.
 	{"internal/oracle/testdata/regions.a", true, false},
 	{"internal/oracle/testdata/region_end.a", true, false},
+	{"internal/oracle/testdata/region_alloc.a", true, false},
 	// Reviewer R's round 8: a throw out of a statement with a region ends the region on its way out.
 	{"internal/oracle/testdata/regions_throw.a", true, false},
 	// A constructor whose object a closure captures, kept in a global (integration's reading of

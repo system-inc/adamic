@@ -1,0 +1,30 @@
+=== RUN   TestRegionAllocationAndMutants
+=== RUN   TestRegionAllocationAndMutants/release
+=== RUN   TestRegionAllocationAndMutants/counted
+=== RUN   TestRegionAllocationAndMutants/sanitized
+=== RUN   TestRegionAllocationAndMutants/skip_cursor
+    region_alloc_test.go:68: mutant caught: invalid regional cursor extent
+        adamic: counts: allocations 16388 frees 0 retains 0 releases 0 peak 16388 regions 0
+=== RUN   TestRegionAllocationAndMutants/skip_block_extent
+    region_alloc_test.go:68: mutant caught: completed block extent was lost
+        adamic: counts: allocations 16388 frees 0 retains 0 releases 0 peak 16388 regions 0
+=== RUN   TestRegionAllocationAndMutants/skip_alignment
+    region_alloc_test.go:68: mutant caught: unaligned regional object
+        adamic: counts: allocations 5 frees 0 retains 0 releases 0 peak 5 regions 0
+--- PASS: TestRegionAllocationAndMutants (1.34s)
+    --- PASS: TestRegionAllocationAndMutants/release (0.42s)
+    --- PASS: TestRegionAllocationAndMutants/counted (0.13s)
+    --- PASS: TestRegionAllocationAndMutants/sanitized (0.34s)
+    --- PASS: TestRegionAllocationAndMutants/skip_cursor (0.14s)
+    --- PASS: TestRegionAllocationAndMutants/skip_block_extent (0.17s)
+    --- PASS: TestRegionAllocationAndMutants/skip_alignment (0.15s)
+=== RUN   TestRegionEndWeakTargets
+=== PAUSE TestRegionEndWeakTargets
+=== RUN   TestRegionEndThrowInitialization
+=== PAUSE TestRegionEndThrowInitialization
+=== CONT  TestRegionEndWeakTargets
+=== CONT  TestRegionEndThrowInitialization
+--- PASS: TestRegionEndWeakTargets (11.82s)
+--- PASS: TestRegionEndThrowInitialization (12.28s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	13.659s

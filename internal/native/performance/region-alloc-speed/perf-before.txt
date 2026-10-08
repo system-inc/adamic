@@ -1,0 +1,43 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'task-clock:uH'
+# Event count (approx.): 1081243702
+#
+# Overhead  Command  Shared Object     Symbol
+# ........  .......  ................  .............................................
+#
+    46.85%  before   before            [.] adamic_function_0_build_in
+    38.78%  before   before            [.] adamic_function_1_check
+     4.92%  before   before            [.] adamic_heap_free_children
+     3.62%  before   before            [.] allocate_storage.llvm.7812802946908249075
+     1.11%  before   libc.so.6         [.] malloc
+     1.02%  before   before            [.] deallocate.llvm.7812802946908249075
+     0.56%  before   libc.so.6         [.] 0x00000000000a0682
+     0.46%  before   libc.so.6         [.] 0x00000000000a0696
+     0.37%  before   before            [.] release_last.llvm.7812802946908249075
+     0.28%  before   before            [.] adamic_region_end
+     0.28%  before   before            [.] let_go
+     0.19%  before   before            [.] adamic_function_0_build
+     0.19%  before   libc.so.6         [.] cfree
+     0.19%  before   libc.so.6         [.] 0x00000000000a0966
+     0.09%  before   before            [.] adamic_weak_forget
+     0.09%  before   before            [.] main
+     0.09%  before   libc.so.6         [.] 0x000000000009f055
+     0.09%  before   libc.so.6         [.] 0x000000000009ffff
+     0.09%  before   libc.so.6         [.] 0x00000000000a0011
+     0.09%  before   libc.so.6         [.] 0x00000000000a049b
+     0.09%  before   libc.so.6         [.] 0x00000000000a096a
+     0.09%  before   libc.so.6         [.] 0x00000000000a1400
+     0.09%  before   libc.so.6         [.] 0x00000000000a1906
+     0.09%  before   libc.so.6         [.] 0x00000000000a1cf5
+     0.09%  before   libc.so.6         [.] 0x00000000000a20bc
+     0.09%  before   libc.so.6         [.] 0x00000000000a20c6
+     0.09%  before   libc.so.6         [.] 0x00000000000a20e1
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

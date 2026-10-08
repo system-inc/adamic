@@ -1,0 +1,50 @@
+# To display the perf.data header info, please use --header/--header-only options.
+#
+#
+# Total Lost Samples: 0
+#
+# Samples: 1K of event 'task-clock:uH'
+# Event count (approx.): 1115346008
+#
+# Overhead  Command    Shared Object         Symbol
+# ........  .........  ....................  .............................................
+#
+    44.96%  candidate  candidate             [.] adamic_function_1_check
+    37.41%  candidate  candidate             [.] adamic_function_0_build_in
+     6.38%  candidate  candidate             [.] adamic_heap_free_children
+     4.05%  candidate  candidate             [.] allocate_storage.llvm.2375894059827177795
+     1.53%  candidate  libc.so.6             [.] malloc
+     1.08%  candidate  candidate             [.] deallocate.llvm.2375894059827177795
+     0.36%  candidate  candidate             [.] adamic_function_0_build
+     0.36%  candidate  candidate             [.] adamic_region_end
+     0.36%  candidate  candidate             [.] let_go
+     0.27%  candidate  candidate             [.] grow.llvm.10708392599604898240
+     0.27%  candidate  libc.so.6             [.] brk
+     0.27%  candidate  libc.so.6             [.] 0x00000000000a0696
+     0.27%  candidate  libc.so.6             [.] 0x00000000000a0966
+     0.18%  candidate  candidate             [.] adamic_weak_forget
+     0.18%  candidate  candidate             [.] release_last.llvm.2375894059827177795
+     0.18%  candidate  libc.so.6             [.] cfree
+     0.18%  candidate  libc.so.6             [.] 0x00000000000a0682
+     0.18%  candidate  libc.so.6             [.] 0x00000000000a096a
+     0.18%  candidate  libc.so.6             [.] 0x00000000000a12b8
+     0.09%  candidate  candidate             [.] adamic_heap_thread_end
+     0.09%  candidate  candidate             [.] free@plt
+     0.09%  candidate  ld-linux-x86-64.so.2  [.] 0x00000000000083b5
+     0.09%  candidate  libc.so.6             [.] 0x000000000009e650
+     0.09%  candidate  libc.so.6             [.] 0x000000000009ff43
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a026a
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a05a0
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a0671
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a0673
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a0688
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a0e0e
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a14a2
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a193c
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a1947
+     0.09%  candidate  libc.so.6             [.] 0x00000000000a1cf5
+
+
+#
+# (Cannot load tips.txt file, please install perf!)
+#

@@ -1,0 +1,12 @@
+=== RUN   TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/region_alloc.a
+=== PAUSE TestWASIAgreesWithNode/internal/oracle/testdata/region_alloc.a
+=== CONT  TestWASIAgreesWithNode/internal/oracle/testdata/region_alloc.a
+    wasi_test.go:41: gate cache node miss
+--- PASS: TestWASIAgreesWithNode (0.04s)
+    --- PASS: TestWASIAgreesWithNode/internal/oracle/testdata/region_alloc.a (9.28s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.386s

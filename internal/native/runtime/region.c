@@ -31,37 +31,42 @@ static size_t object_size(size_t count) {
 	return (size + ALIGN - 1) & ~(size_t)(ALIGN - 1);
 }
 
-// Keep allocation in each entry point: an out-of-line helper adds a call per object.
-static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
-	if (region == NULL) {
-		return adamic_object_new(shape);
-	}
-	size_t size = object_size(shape->count);
+// Block growth is cold. Keep malloc, capacity selection and block bookkeeping
+// out of the inlined per-object path and its callers' register requirements.
+__attribute__((noinline)) static void grow(adamic_region *region, size_t size) {
 	adamic_region_block *block = region->blocks;
-	if (block == NULL || block->size - block->used < size) {
-		// Each block twice the last, from 4 KB up to 1 MB, and at least as big as the object.
-		size_t capacity = block == NULL ? 4096 : block->size * 2;
-		if (capacity > 1048576) {
-			capacity = 1048576;
-		}
-		if (capacity < size) {
-			capacity = size;
-		}
-		adamic_region_block *fresh = malloc(sizeof *fresh + capacity);
-		if (fresh == NULL) {
-			static const char message[] = "out of memory";
-			adamic_panic(message, sizeof message - 1);
-		}
-		fresh->next = block;
-		fresh->size = capacity;
-		fresh->used = 0;
-		region->blocks = fresh;
-		block = fresh;
+	if (block != NULL) {
+		block->used = (size_t)(region->next - block->bytes);
 	}
-	adamic_object *object = (adamic_object *)(void *)(block->bytes + block->used);
-	block->used += size;
+	// Each block twice the last, from 4 KB up to 1 MB, and at least as big as the object.
+	size_t capacity = block == NULL ? 4096 : block->size * 2;
+	if (capacity > 1048576) { capacity = 1048576; }
+	if (capacity < size) { capacity = size; }
+	adamic_region_block *fresh = malloc(sizeof *fresh + capacity);
+	if (fresh == NULL) { adamic_panic("out of memory", 13); }
+	fresh->next = block;
+	fresh->size = capacity;
+	fresh->used = 0;
+	region->blocks = fresh;
+	region->next = fresh->bytes;
+	region->end = fresh->bytes + capacity;
+}
+
+// Only the current block's cursor changes per object. Completed blocks retain
+// their used extent for outside-child teardown and Weak membership checks.
+static inline adamic_object *object_new(adamic_region *region, const adamic_shape *shape, bool zero) {
+	if (region == NULL) { return adamic_object_new(shape); }
+	size_t size = object_size(shape->count);
+	unsigned char *next = region->next;
+	// Do not subtract NULL pointers on the first allocation or form an out-of-
+	// bounds next + size before checking the remaining capacity.
+	if (next == NULL || size > (size_t)(region->end - next)) {
+		grow(region, size);
+		next = region->next;
+	}
+	adamic_object *object = (adamic_object *)(void *)next;
+	region->next = next + size;
 	object->heap.references = 0;
-	object->heap.slab = 0;
 	object->heap.kind = adamic_kind_object;
 	object->heap.slab = ADAMIC_REGION_VALUE;
 	object->shape = shape;
@@ -73,7 +78,10 @@ static inline adamic_object *object_new(adamic_region *region, const adamic_shap
 		// the region must walk it, including the still-zero slots on its exceptional exit.
 		region->holds_outside = true;
 	}
+	// This total is consumed only by the counted report.
+#ifdef ADAMIC_COUNT
 	region->count++;
+#endif
 	ADAMIC_COUNT_ALLOCATION();
 	return object;
 }
@@ -91,7 +99,8 @@ bool adamic_region_contains(const adamic_region *region, const void *value) {
 	uintptr_t address = (uintptr_t)value;
 	for (const adamic_region_block *block = region->blocks; block != NULL; block = block->next) {
 		uintptr_t start = (uintptr_t)block->bytes;
-		if (address >= start && address - start < block->used) {
+		size_t used = block == region->blocks ? (size_t)(region->next - block->bytes) : block->used;
+		if (address >= start && address - start < used) {
 			return true;
 		}
 	}
@@ -99,6 +108,9 @@ bool adamic_region_contains(const adamic_region *region, const void *value) {
 }
 
 void adamic_region_end(adamic_region *region) {
+	if (region->blocks != NULL) {
+		region->blocks->used = (size_t)(region->next - region->blocks->bytes);
+	}
 	// No object/slot walk at all when every child is regional or immortal. Otherwise let go while
 	// every block still exists: a child can be in another block of the same region.
 	if (region->holds_outside) {
@@ -120,6 +132,8 @@ void adamic_region_end(adamic_region *region) {
 	}
 	ADAMIC_COUNT_REGION(region->count);
 	region->blocks = NULL;
+	region->next = NULL;
+	region->end = NULL;
 	region->count = 0;
 	region->holds_outside = false;
 }

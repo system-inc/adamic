@@ -1,0 +1,39 @@
+ Percent |	Source code & Disassembly of before for task-clock:uH (418 samples, percent: local period)
+----------------------------------------------------------------------------------------------------------
+         :
+         :
+         :
+         : 3    Disassembly of section .text:
+         :
+         : 5    0000000000003c30 <adamic_function_1_check>:
+    7.42 :   3c30:   push   %rbp
+    0.00 :   3c31:   mov    %rsp,%rbp
+    0.00 :   3c34:   push   %rbx
+    0.00 :   3c35:   push   %rax
+    0.48 :   3c36:   cmp    %rbp,%fs:0xfffffffffffffff0
+    0.00 :   3c3f:   ja     3c90 <adamic_function_1_check+0x60>
+    0.24 :   3c41:   mov    %rdi,%rbx
+    5.98 :   3c44:   mov    0x28(%rdi),%rdi
+   64.83 :   3c48:   movsd  -0x2ad0(%rip),%xmm0        # 1180 <_IO_stdin_used+0x40>
+    7.42 :   3c50:   test   %rdi,%rdi
+    0.00 :   3c53:   je     3c89 <adamic_function_1_check+0x59>
+    0.00 :   3c55:   cmpq   $0x0,0x30(%rbx)
+    2.15 :   3c5a:   je     3c89 <adamic_function_1_check+0x59>
+    0.00 :   3c5c:   call   3c30 <adamic_function_1_check>
+    0.48 :   3c61:   movsd  %xmm0,-0x10(%rbp)
+    0.00 :   3c66:   mov    0x30(%rbx),%rdi
+    0.48 :   3c6a:   test   %rdi,%rdi
+    0.00 :   3c6d:   je     3c95 <adamic_function_1_check+0x65>
+    1.20 :   3c6f:   call   3c30 <adamic_function_1_check>
+    0.00 :   3c74:   movsd  -0x10(%rbp),%xmm1
+    0.24 :   3c79:   addsd  -0x2b01(%rip),%xmm1        # 1180 <_IO_stdin_used+0x40>
+    3.59 :   3c81:   addsd  %xmm0,%xmm1
+    2.63 :   3c85:   movapd %xmm1,%xmm0
+    1.91 :   3c89:   add    $0x8,%rsp
+    0.24 :   3c8d:   pop    %rbx
+    0.72 :   3c8e:   pop    %rbp
+    0.00 :   3c8f:   ret
+    0.00 :   3c90:   call   95d0 <adamic_stack_overflow>
+    0.00 :   3c95:   lea    -0x296c(%rip),%rdi        # 1330 <adamic_function_1_check.message.2>
+    0.00 :   3c9c:   mov    $0x54,%esi
+    0.00 :   3ca1:   call   4a10 <adamic_panic>
