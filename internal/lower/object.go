@@ -1768,6 +1768,11 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if optional {
 		return l.optionalTupleElement(node, object, index)
 	}
+	if object.Type() == ir.Object && !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
+		if value, handled, err := l.finiteObjectElement(node, object); handled {
+			return value, err
+		}
+	}
 	if object.Type() != ir.Object || index.Kind != ast.KindNumericLiteral || !checker.IsTupleType(l.checker.GetTypeAtLocation(access.Expression)) {
 		return nil, l.notYet(node, describe(node))
 	}

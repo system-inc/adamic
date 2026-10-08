@@ -1,0 +1,25 @@
+interface CompilerOptions {
+ strict?: boolean;
+ alwaysStrict?: boolean;
+ noImplicitAny?: boolean;
+ noImplicitThis?: boolean;
+ strictNullChecks?: boolean;
+ strictFunctionTypes?: boolean;
+ strictBindCallApply?: boolean;
+ strictPropertyInitialization?: boolean;
+ strictBuiltinIteratorReturn?: boolean;
+ useUnknownInCatchVariables?: boolean;
+}
+type StrictOptionName = "alwaysStrict" | "noImplicitAny" | "noImplicitThis" | "strictNullChecks" | "strictFunctionTypes" | "strictBindCallApply" | "strictPropertyInitialization" | "strictBuiltinIteratorReturn" | "useUnknownInCatchVariables";
+function getStrictOptionValue(compilerOptions: CompilerOptions, flag: StrictOptionName): boolean {
+    return compilerOptions[flag] === undefined ? (compilerOptions.strict !== false) : !!compilerOptions[flag];
+}
+console.log(`${getStrictOptionValue({}, "alwaysStrict")}`);
+console.log(`${getStrictOptionValue({strict:false}, "noImplicitAny")}`);
+console.log(`${getStrictOptionValue({strict:false, noImplicitThis:true}, "noImplicitThis")}`);
+console.log(`${getStrictOptionValue({strict:true, strictNullChecks:false}, "strictNullChecks")}`);
+console.log(`${getStrictOptionValue({strictFunctionTypes:true}, "strictFunctionTypes")}`);
+console.log(`${getStrictOptionValue({strictBindCallApply:false}, "strictBindCallApply")}`);
+console.log(`${getStrictOptionValue({}, "strictPropertyInitialization")}`);
+console.log(`${getStrictOptionValue({strictBuiltinIteratorReturn:false}, "strictBuiltinIteratorReturn")}`);
+console.log(`${getStrictOptionValue({useUnknownInCatchVariables:true}, "useUnknownInCatchVariables")}`);

@@ -1,0 +1,24 @@
+const options: {first?:boolean; second?:boolean} = {first:true,second:true};
+function receiver(): {first?:boolean; second?:boolean} {
+ console.log("receiver");
+ return options;
+}
+function key(): "first" | "second" {
+ console.log("key");
+ options.second = false;
+ return "second";
+}
+console.log(`${receiver()[key()]}`);
+console.log(`${options.first}:${options.second}`);
+function read(value:{first?:boolean; second?:boolean}, name:"first"|"second"):boolean|undefined {
+ return value[name];
+}
+console.log(`${read({},"first")}:${read({second:false},"second")}:${read({first:true},"first")}`);
+function required(value:{first:boolean; second:boolean}, name:"first"|"second"):boolean {
+ return value[name];
+}
+function mixed(value:{first:boolean; second?:boolean}, name:"first"|"second"):boolean|undefined {
+ return value[name];
+}
+console.log(`${required({first:true,second:false},"first")}:${required({first:true,second:false},"second")}`);
+console.log(`${mixed({first:true},"first")}:${mixed({first:true},"second")}`);
