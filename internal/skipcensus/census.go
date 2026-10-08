@@ -277,6 +277,11 @@ func Load(r io.Reader) ([]Row, error) {
 func key(row Row) string { return row.File + ":" + row.ID }
 
 // Validate ignores line numbers. Moving a skip does not change its identity.
+// refusedFixture is a skip whose condition is the oracle fixture table's own declared refusal: the
+// fixture is recorded as one lowering refuses, so its skip is not-applicable even inside an opt-in
+// lane, never a missing input (@system_adamic's ruling, Oct 7).
+func refusedFixture(r Row) bool { return r.Condition == "!fixture.lowers" }
+
 func Validate(actual, declared []Row) error {
 	remaining := map[string]Row{}
 	for _, r := range declared {
@@ -289,7 +294,7 @@ func Validate(actual, declared []Row) error {
 		default:
 			return fmt.Errorf("invalid class for %s", k)
 		}
-		if len(r.OptInOn) > 0 && r.Class != "required-input" {
+		if len(r.OptInOn) > 0 && r.Class != "required-input" && !(r.Class == "not-applicable" && refusedFixture(r)) {
 			return fmt.Errorf("skip after opt-in %s (%s) must be required-input", k, strings.Join(r.OptInOn, ", "))
 		}
 		if r.Provides == "" {

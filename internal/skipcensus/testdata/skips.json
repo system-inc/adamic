@@ -527,8 +527,8 @@
       "TestWASIEmission"
     ],
     "message": "\"fixture does not lower\"",
-    "class": "required-input",
-    "provides": "The ADAMIC_ORACLE_WASI lane must support every selected emission fixture; an opted-in fixture that does not lower is missing required compiler support.",
+    "class": "not-applicable",
+    "provides": "The fixture is declared refused in the oracle's fixture table (lowers false): lowering refuses it by design, so it has nothing to emit. A refused fixture is not-applicable, never a missing input (@system_adamic's ruling, Oct 7).",
     "opt_in_on": [
       "ADAMIC_ORACLE_WASI"
     ]

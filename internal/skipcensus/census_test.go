@@ -193,6 +193,20 @@ func TestInvalidDeclarations(t *testing.T) {
 	}
 }
 
+// A refused fixture's skip may be not-applicable inside an opt-in lane; any other opt-in skip may not.
+func TestRefusedFixtureInOptInLane(t *testing.T) {
+	t.Parallel()
+	refused := Row{File: "wasi_test.go", ID: "TestWASIEmission:hash", Condition: "!fixture.lowers", Class: "not-applicable", Provides: "refused by lowering", OptInOn: []string{"ADAMIC_ORACLE_WASI"}}
+	if err := Validate([]Row{refused}, []Row{refused}); err != nil {
+		t.Fatalf("refused fixture rejected as not-applicable: %v", err)
+	}
+	other := refused
+	other.Condition = "sysroot == \"\""
+	if err := Validate([]Row{other}, []Row{other}); err == nil {
+		t.Fatal("an opt-in skip that is not a refused fixture accepted as not-applicable")
+	}
+}
+
 // The fixture preserves the final two output events and terminal skip event for
 // each named skip in gate-logs/2e165469ec95/plain, without altering event contents.
 func TestHistoricalPlainSkips(t *testing.T) {
