@@ -88,7 +88,7 @@ func TestCheckedViewRanked7Frontiers(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path, pathErr := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane2", probe.name+".a"))
+			path, pathErr := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane2", probe.name+".a")))
 			if pathErr != nil {
 				t.Fatal(pathErr)
 			}

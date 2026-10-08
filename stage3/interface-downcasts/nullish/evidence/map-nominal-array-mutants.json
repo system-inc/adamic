@@ -1,0 +1,44 @@
+[
+  {
+    "name": "array-nominal-native-producer",
+    "test": "^TestCheckedViewNominalArrayProducerMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-native-producer.log.gz"
+  },
+  {
+    "name": "array-nominal-javascript-producer",
+    "test": "^TestCheckedViewNominalArrayProducerMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-javascript-producer.log.gz"
+  },
+  {
+    "name": "array-nominal-native-write",
+    "test": "^TestCheckedViewNominalArrayWriteMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-native-write.log.gz"
+  },
+  {
+    "name": "array-nominal-javascript-write",
+    "test": "^TestCheckedViewNominalArrayWriteMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-javascript-write.log.gz"
+  },
+  {
+    "name": "array-nominal-native-read",
+    "test": "^TestCheckedViewNominalArrayReadMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-native-read.log.gz"
+  },
+  {
+    "name": "array-nominal-javascript-read",
+    "test": "^TestCheckedViewNominalArrayReadMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nominal-array-nominal-javascript-read.log.gz"
+  }
+]

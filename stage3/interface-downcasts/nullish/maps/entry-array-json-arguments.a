@@ -1,0 +1,6 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly values:readonly number[]}
+const values:number[]=[1];function mutate():number{values.push(2);return 0;}
+const raw={kind:'box',values:values};const base:Base=raw;
+function read(node:Target):void{console.log(JSON.stringify(node.values,undefined,mutate())??'missing');}
+read(base as Target);

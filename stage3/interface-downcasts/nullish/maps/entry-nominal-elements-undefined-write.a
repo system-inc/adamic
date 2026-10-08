@@ -1,0 +1,6 @@
+class Named {readonly count:number=7;}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly values:readonly (Named|undefined)[]}
+const fake={count:7};const item:(Named|undefined)[]=[new Named(),undefined];const raw={kind:'box',values:item};const base:Base=raw;
+function read(node:Target):void{console.log(typeof node.values);}
+read(base as Target);item.push(new Named());console.log(String(item.length));console.log(String(fake.count));

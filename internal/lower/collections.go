@@ -196,6 +196,12 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 	if err != nil {
 		return nil, true, err
 	}
+	if name == "forEach" && !set && !keyable(key) {
+		return nil, true, l.notYet(node, "a Map forEach callback with an unsupported key representation")
+	}
+	if name == "forEach" && !set && slotless(value) {
+		return nil, true, l.notYet(node, "a Map forEach callback with a slotless value representation")
+	}
 	collection, err := l.expression(receiver)
 	if err != nil {
 		return nil, true, err

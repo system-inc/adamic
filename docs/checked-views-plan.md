@@ -2603,6 +2603,54 @@ array blockers are pinned through actual string and original FileInfo objects;
 they need boxed union array storage and member adapters in the array consumers.
 Private 68704 remains excluded as instructed.
 
+### Dictionary group 9: string-index census rows on integration ffe428ab
+
+New lane file `internal/oracle/checked_view_dictionary_recheck_test.go` and original
+`dictionaries/source/{string-index,path-index}-*.a` controls certify numeric string
+indexing after checked field extraction. No shared production hook is needed.
+The cancelled non-null area port is excluded entirely.
+
+### Dictionary group 10: actual-source key enumeration
+
+New lane files `lower/view_dictionary_enumeration.go` and
+`oracle/checked_view_dictionary_enumeration_test.go`, with keys source witnesses.
+Named shared hooks: `dictionaryKeysCall` before recordObjectCall;
+`ir.RecordCall.DictionaryKeys`; `native.recordCall` routes key-only reads to
+`adamic_view_dictionary_source_keys` in existing view_dictionaries.c/.h.
+That helper uses record_keys for actual record producers and object_keys for
+fixed/class objects, validating heap kind without reading values or certifying
+element representation. JS retains Object.keys. Values/entries remain demanded
+refusals until their per-element adapters are certified.
+
+### Dictionary group 11: values and entries read every selected element
+
+Named `dictionaryValuesCall` in the lane enumeration file snapshots actual source
+keys and builds ordinary ForOf/ArrayPush IR, with every element routed through
+dictionaryReadContract. Entries use the existing tuple-object representation.
+Minimal library_object dispatch precedes unchecked record enumeration. No new
+record storage or generic trust rule is introduced. New values/entries source
+witnesses and enumeration mutants belong to the dictionary lane.
+
+Group 11 minimal shared production hook: `ir.ArrayPush.DictionaryProduction`
+marks only appends of already checked dictionary snapshots to the private result
+array of the generated enumeration helper. Native/JS ArrayPush dispatch skips
+the existing alias-write certificate guard for this construction; it retains
+normal ownership and gives no logical element certificate to the result. Every
+selected value has dictionaryReadContract, and nested reads keep their checks.
+The array is private until return, with no callbacks between appends. Later
+mutations and casts still require normal source certificates.
+
+Nested array-entry tuple consumption remains unsupported by the tuple lane.
+`Program.DictionaryEntryOrigins` and `dictionaryEnumerationOrigins` seed those
+derived result containers into the existing lazy demand graph, keeping the
+actual ViewOrigins cast ledger unchanged. `checkLazyViewReads` uses the combined
+roots only after actual casts activate it. Construction remains lazy; a reached
+unsupported tuple read now compile-refuses consistently, rather than JS alone
+rejecting its valid array representation. No second flow solver is introduced.
+
+Lane-owned `lower/view_dictionary_enumeration_test.go` proves the derived-origin
+refusal with a mutant removing only DictionaryEntryOrigins. The same fresh
+container then escapes the demanded tuple refusal, so the mutant is caught.
 
 ### Tuple merge with integration ffe428ab
 

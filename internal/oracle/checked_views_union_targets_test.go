@@ -29,7 +29,7 @@ func TestCheckedViewOriginalUnionTargets(t *testing.T) {
 	} {
 		for _, variant := range append(group.tags, "wrong-tag", "wrong-array") {
 			t.Run(group.name+"/"+variant, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/union-targets/" + group.name + "-" + variant + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/union-targets/" + group.name + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -106,7 +106,7 @@ func TestCheckedViewOriginalUnionTargetTags(t *testing.T) {
 	} {
 		for _, tag := range group.tags {
 			t.Run(group.name+"/"+tag, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/union-targets/" + group.name + "-cast-" + tag + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/union-targets/" + group.name + "-cast-" + tag + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -205,7 +205,7 @@ func rewriteUnionTargetStatements(body []ir.Statement, rewrite func(any) any) []
 
 func verifyUnionTargetDeclarations(t *testing.T, directory string) {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join(directory, "brand-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(directory, "brand-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -220,7 +220,7 @@ func verifyUnionTargetDeclarations(t *testing.T, directory string) {
 		t.Fatal("original union declaration provenance changed")
 	}
 	for file, digest := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(directory, file))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(directory, file)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -239,7 +239,7 @@ func TestCheckedViewScopedNeverWiderHelper(t *testing.T) {
 		t.Skip("set original declarations")
 	}
 	verifyUnionTargetDeclarations(t, directory)
-	input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/union-targets/never-wider-helper.a")
+	input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/union-targets/never-wider-helper.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

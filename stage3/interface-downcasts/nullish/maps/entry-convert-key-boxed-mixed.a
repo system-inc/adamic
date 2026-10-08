@@ -1,0 +1,12 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<number|string|boolean|null|undefined,string>|null}
+const negative:number|string|boolean|null|undefined=-0;
+const source=new Map<number|string|boolean|null|undefined,string>([[negative,'zero'],[NaN,'nan'],['key'+String(1),'one'],[false,'false'],[null,'null'],[undefined,'missing']]);
+source.set(NaN,'again');source.set('key'+String(1),'again-one');
+const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){
+console.log(String(map.size));console.log(String(map.get(0)));console.log(String(map.get(NaN)));console.log(String(map.get('key'+String(1))));console.log(String(map.get(false)));console.log(String(map.get(null)));console.log(String(map.get(undefined)));
+for(const key of map.keys()){console.log('key:'+String(key));if(typeof key==='number'&&key===0){console.log(String(1/key));}}
+const keys=[...map.keys()];source.clear();console.log(keys.join(','));
+}}
+read(base as Target);console.log(String(1/negative));

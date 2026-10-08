@@ -90,7 +90,7 @@
     "stderr": ""
   },
   {
-    "fixture": "array-uninitialized.a",
+    "fixture": "array-uninitialized.ts",
     "exit": 1,
     "stdout": "",
     "stderr": "<anonymous_script>:5\nconsole.log(`${items(raw).values.length}`);\n                                ^\n\nTypeError: Cannot read properties of undefined (reading 'length')\n    at eval (eval at <anonymous> ([eval]:1:83), <anonymous>:5:33)\n    at [eval]:1:83\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\n"
@@ -108,7 +108,7 @@
     "stderr": "<anonymous_script>:6\nconsole.log(`${runner(raw).run(7)}`);\n                           ^\n\nTypeError: runner(...).run is not a function\n    at eval (eval at <anonymous> ([eval]:1:83), <anonymous>:6:28)\n    at [eval]:1:83\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\n"
   },
   {
-    "fixture": "callable-uninitialized.a",
+    "fixture": "callable-uninitialized.ts",
     "exit": 1,
     "stdout": "",
     "stderr": "<anonymous_script>:6\nconsole.log(`${runner(raw).run(7)}`);\n                           ^\n\nTypeError: runner(...).run is not a function\n    at eval (eval at <anonymous> ([eval]:1:83), <anonymous>:6:28)\n    at [eval]:1:83\n    at runScriptInThisContext (node:internal/vm:219:10)\n    at node:internal/process/execution:451:12\n    at [eval]-wrapper:6:24\n    at runScriptInContext (node:internal/process/execution:449:60)\n    at evalFunction (node:internal/process/execution:283:30)\n    at evalTypeScript (node:internal/process/execution:295:3)\n    at node:internal/main/eval_string:71:3\n\nNode.js v24.19.0\n"

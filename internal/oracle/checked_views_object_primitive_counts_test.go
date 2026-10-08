@@ -34,7 +34,7 @@ func objectPrimitiveOriginalCount(t *testing.T, program *ir.Program, fixture str
 	}
 	row := fmt.Sprintf("%s/%s/%s/%s/%s/%s/%s/%s", match[1], match[2], match[3], match[4], match[5], match[6], regions, merges)
 	records := map[string]string{}
-	if data, err := os.ReadFile(objectPrimitiveBatchCounts); err == nil {
+	if data, err := os.ReadFile(checkedViewFixturePath(objectPrimitiveBatchCounts)); err == nil {
 		if err := json.Unmarshal(data, &records); err != nil {
 			t.Fatal(err)
 		}
@@ -67,8 +67,8 @@ func TestCheckedViewObjectPrimitiveFixCounts(t *testing.T) {
 }
 
 func objectPrimitiveFixCount(t *testing.T, path string) {
-	row := counted(t, path, false, nil, false, false)
-	data, err := os.ReadFile(countsPath)
+	row := counted(t, checkedViewFixturePath(path), false, nil, false, false)
+	data, err := os.ReadFile(checkedViewFixturePath(countsPath))
 	if err != nil {
 		t.Fatal(err)
 	}

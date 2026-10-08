@@ -68,7 +68,7 @@ func viewIntersectionDeferredCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
 	for _, name := range []string{"unread", "read", "helper", "callback", "destructure"} {
-		rows = append(rows, counted(t, "stage3/interface-downcasts/lane7/deferred-member-"+name+".a", false, nil, false, false))
+		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane7/deferred-member-"+name+".a"), false, nil, false, false))
 	}
 	return rows
 }
@@ -77,7 +77,7 @@ func viewIntersectionDeferredCounts(t *testing.T) []string {
 func TestCheckedViewIntersectionDeferredCounts(t *testing.T) {
 	rows := viewIntersectionDeferredCounts(t)
 	path := filepath.Join(repository, "internal/oracle/counts.md")
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(checkedViewFixturePath(path))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -3,6 +3,21 @@ package ir
 // MapCertificatePairs retains source storage and semantic subtype evidence.
 // Writable maps require both directions; readonly maps permit covariance.
 func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContractID {
+	// Compare optional reference payloads using private present descriptors. The
+	// producer IDs remain unchanged; undefined must separately be admitted by the
+	// target. Never rewrite a program descriptor to make a certificate fit.
+	comparison := *program
+	comparison.ViewContracts = append([]ViewContract(nil), program.ViewContracts...)
+	present := map[ViewContractID]ViewContractID{}
+	for index, contract := range program.ViewContracts {
+		if contract.Undefined && contract.Kind != ViewScalar && contract.Kind != ViewNullable && contract.Kind != ViewUnion {
+			contract.Undefined = false
+			contract.Of = contract.Of.Present()
+			comparison.ViewContracts = append(comparison.ViewContracts, contract)
+			present[ViewContractID(index+1)] = ViewContractID(len(comparison.ViewContracts))
+		}
+	}
+	program = &comparison
 	c := program.ViewContracts[target-1]
 	pairs := [][2]ViewContractID{}
 	active := map[[2]ViewContractID]bool{}
@@ -85,12 +100,12 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 		if from == 0 || to == 0 {
 			return false
 		}
-		if program.ViewContracts[from-1].Of != program.ViewContracts[to-1].Of {
-			return false
-		}
 		// Readonly arrays permit element covariance; writable arrays require both
 		// directions. Every recursive step also preserves physical storage.
 		source, target := program.ViewContracts[from-1], program.ViewContracts[to-1]
+		if payload := present[from]; payload != 0 {
+			return allowsNullish(to, ViewUndefined) && accepts(payload, to)
+		}
 		if source.Kind == ViewNull || source.Kind == ViewUndefined {
 			return allowsNullish(to, source.Kind)
 		}
@@ -189,7 +204,52 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 					return false
 				}
 			}
-			return accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
+			// Shared array readers convert packed numbers and primitive boxes at
+			// each extraction, without rewriting the producer storage.
+			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && ((program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || program.ViewContracts[source.Element-1].Of == Boolean && program.ViewContracts[target.Element-1].Of == MaybeBoolean) || PrimitiveArrayUnionStorage(program, source.Element, target.Element) || NominalArrayUnionStorage(program, source.Element, target.Element))
+			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
+		}
+		if source.Kind == ViewObject && (HasMapNominalWitness(program, from) || HasMapNominalWitness(program, to)) {
+			if target.Kind != ViewObject || source.Unsupported != "" || target.Unsupported != "" {
+				return false
+			}
+			if target.Nominal != "" && source.Nominal != target.Nominal {
+				ancestor := false
+				for _, base := range source.NominalBases {
+					ancestor = ancestor || base == target.Nominal
+				}
+				if !ancestor {
+					return false
+				}
+			}
+			pair := [2]ViewContractID{from, to}
+			if active[pair] {
+				return true
+			}
+			active[pair] = true
+			defer delete(active, pair)
+			for _, field := range target.Fields {
+				found := false
+				for _, own := range source.Fields {
+					if own.Name != field.Name {
+						continue
+					}
+					found = true
+					// The shared nullish field reader preserves counted class references
+					// from Object storage when a readonly target uses Union storage.
+					storage := sameStorage(own.Contract, field.Contract) || field.Readonly && NominalArrayUnionStorage(program, own.Contract, field.Contract)
+					if own.Optional && !field.Optional || !storage || !accepts(own.Contract, field.Contract) {
+						return false
+					}
+					if !field.Readonly && (own.Readonly || !accepts(field.Contract, own.Contract)) {
+						return false
+					}
+				}
+				if !found {
+					return false
+				}
+			}
+			return true
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
 			if id == to {
@@ -200,9 +260,59 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 	}
 	for _, pair := range program.MapCertificates {
 		key, value := pair[0], pair[1]
-		if accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
+		fromKey, toKey := program.ViewContracts[key-1].Of, program.ViewContracts[c.Key-1].Of
+		keyStorage := sameStorage(key, c.Key) || c.MapReadonly && (fromKey == Number && toKey == MaybeNumber || fromKey == Boolean && toKey == MaybeBoolean || PrimitiveArrayUnionStorage(program, key, c.Key))
+		if keyStorage && (sameStorage(value, c.Element) || c.MapReadonly && MapReadStorageCompatible(program.ViewContracts[value-1].Of, program.ViewContracts[c.Element-1].Of)) && accepts(key, c.Key) && accepts(value, c.Element) && (c.MapReadonly || accepts(c.Key, key) && accepts(c.Element, value)) {
 			pairs = append(pairs, pair)
 		}
 	}
 	return pairs
+}
+
+// Readonly values use these adapters; key admission separately requires a complete
+// primitive target descriptor, and queries convert back to the original key storage.
+func MapReadStorageCompatible(source, target Type) bool {
+	return source == target || target == Union && (source == Number || source == Boolean || source == MaybeNumber || source == MaybeBoolean || source.IsReference() && source != Weak) || target == MaybeNumber && source == Number || target == MaybeBoolean && source == Boolean
+}
+
+// PrimitiveArrayUnionStorage requires a complete primitive target contract. The
+// array reader boxes scalars into a private owner, preserving source identity.
+func PrimitiveArrayUnionStorage(program *Program, source, target ViewContractID) bool {
+	if source == 0 || target == 0 {
+		return false
+	}
+	from, to := program.ViewContracts[source-1], program.ViewContracts[target-1]
+	if to.Of != Union || from.Of != Number && from.Of != Boolean && from.Of != String && from.Of != MaybeNumber && from.Of != MaybeBoolean && from.Of != Union {
+		return false
+	}
+	return PrimitiveArrayContract(program, target)
+}
+
+func PrimitiveArrayContract(program *Program, id ViewContractID) bool {
+	if id == 0 {
+		return false
+	}
+	c := program.ViewContracts[id-1]
+	if c.Unsupported != "" {
+		return false
+	}
+	switch c.Kind {
+	case ViewScalar:
+		return c.Of.Present() == Number || c.Of.Present() == Boolean || c.Of.Present() == String
+	case ViewNull, ViewUndefined:
+		return true
+	case ViewNullable:
+		return c.Element != 0 && PrimitiveArrayContract(program, c.Element)
+	case ViewUnion:
+		if len(c.Members) == 0 {
+			return false
+		}
+		for _, member := range c.Members {
+			if !PrimitiveArrayContract(program, member) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
 }

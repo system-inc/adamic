@@ -1,0 +1,8 @@
+class Named {readonly count:number;constructor(count:number){this.count=count;}}
+interface Entry{child:Named}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Entry>}
+const fake={count:7};const item:Entry={child:new Named(7)};const source=new Map<string,Entry>([['key',item]]);const raw={kind:'box',value:source};const base:Base=raw;
+function inspect(entry:Entry):void{console.log(typeof entry.child);}
+function read(node:Target):void{const entry=node.value.get('key');if(entry!==undefined){inspect(entry);}}
+read(base as Target);item.child=new Named(9);inspect(item);console.log(String(fake.count));

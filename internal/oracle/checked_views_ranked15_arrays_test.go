@@ -18,7 +18,7 @@ func TestCheckedViewRanked15OriginalArrays(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_ARRAY15_ORIGINAL_DECLS to original15/prepare.cjs output")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "array15-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "array15-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -35,7 +35,7 @@ func TestCheckedViewRanked15OriginalArrays(t *testing.T) {
 		}
 	}
 	for name, digest := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, name))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, name)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -53,12 +53,12 @@ func TestCheckedViewRanked15OriginalArrays(t *testing.T) {
 		} {
 			t.Run(receiver.name+"-"+probe.mode, func(t *testing.T) {
 				name := receiver.name + "-" + probe.mode
-				input, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane2/original15", name+".a"))
+				input, err := os.ReadFile(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane2/original15", name+".a")))
 				if err != nil {
 					t.Fatal(err)
 				}
 				bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
-				file := filepath.Join(t.TempDir(), name+".a")
+				file := checkedViewFixtureCopyPath(filepath.Join(t.TempDir(), name+".a"), filepath.Join(repository, "stage3/interface-downcasts/lane2/original15", name+".a"))
 				if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 					t.Fatal(err)
 				}
@@ -117,7 +117,7 @@ func ranked15ArrayCounts(t *testing.T) []string {
 	declarations := os.Getenv("ADAMIC_ARRAY15_ORIGINAL_DECLS")
 	rows := []string{}
 	if declarations == "" {
-		data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/counts.md"))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(repository, "internal/oracle/counts.md")))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -132,16 +132,16 @@ func ranked15ArrayCounts(t *testing.T) []string {
 	for _, receiver := range []string{"function", "get", "set"} {
 		for _, mode := range []string{"good", "lazy", "wrong-array", "wrong-pos", "missing-pos"} {
 			name := receiver + "-" + mode + ".a"
-			input, err := os.ReadFile(filepath.Join(repository, prefix, name))
+			input, err := os.ReadFile(checkedViewFixturePath(filepath.Join(repository, prefix, name)))
 			if err != nil {
 				t.Fatal(err)
 			}
 			bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(declarations, "compiler/types.d.ts"))), 1)
-			file := filepath.Join(t.TempDir(), name)
+			file := checkedViewFixtureCopyPath(filepath.Join(t.TempDir(), name), filepath.Join(repository, prefix, name))
 			if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 				t.Fatal(err)
 			}
-			absoluteRepository, err := filepath.Abs(repository)
+			absoluteRepository, err := filepath.Abs(checkedViewFixturePath(repository))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -149,8 +149,8 @@ func ranked15ArrayCounts(t *testing.T) []string {
 			if err != nil {
 				t.Fatal(err)
 			}
-			row := counted(t, relative, false, nil, false, false)
-			rows = append(rows, strings.Replace(row, relative, prefix+name, 1))
+			row := counted(t, checkedViewFixturePath(relative), false, nil, false, false)
+			rows = append(rows, strings.Replace(row, relative, checkedViewFixturePath(prefix+name), 1))
 		}
 	}
 	return rows
@@ -163,7 +163,7 @@ func TestCheckedViewRanked15ArrayCounts(t *testing.T) {
 	}
 	rows := ranked15ArrayCounts(t)
 	path := filepath.Join(repository, "internal/oracle/counts.md")
-	data, err := os.ReadFile(path)
+	data, err := os.ReadFile(checkedViewFixturePath(path))
 	if err != nil {
 		t.Fatal(err)
 	}

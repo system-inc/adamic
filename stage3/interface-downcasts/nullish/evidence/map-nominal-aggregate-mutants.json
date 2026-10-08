@@ -1,0 +1,16 @@
+[
+  {
+    "name": "aggregate-nominal-native-producer",
+    "test": "^TestCheckedViewNullableNominalAggregateMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-aggregate-nominal-native-producer.log.gz"
+  },
+  {
+    "name": "aggregate-nominal-javascript-producer",
+    "test": "^TestCheckedViewNullableNominalAggregateMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-aggregate-nominal-javascript-producer.log.gz"
+  }
+]

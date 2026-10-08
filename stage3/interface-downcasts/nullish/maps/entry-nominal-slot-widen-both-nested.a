@@ -1,0 +1,6 @@
+class Named{readonly count:number=7;}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,{readonly inner:{readonly child:Named|null|undefined}}>}
+const item={inner:{child:new Named()}};const source=new Map<string,{readonly inner:{readonly child:Named}}>([['key',item]]);const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{node.value.forEach(entry=>{const child=entry.inner.child;console.log(child===null?'null':child===undefined?'undefined':String(child.count));});}
+read(base as Target);

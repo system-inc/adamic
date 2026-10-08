@@ -1,0 +1,1 @@
+let values:(number|null)[]=[1];function replace():number{values=[9];return 0;}console.log(JSON.stringify(values,undefined,replace())??'missing');console.log(JSON.stringify(values)??'missing');

@@ -1,0 +1,8 @@
+class Parent {private readonly identity:number=1;readonly count:number=7;}
+class Child extends Parent {readonly extra:number=8;}
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly value:ReadonlyMap<string,Parent>|null}
+const item=new Child();const source=new Map<string,Child>([['key',item]]);const copy=new Map<string,Parent>(source);
+console.log(String(copy.get('key')===item));const raw={kind:'box',value:source};const base:Base=raw;
+function read(node:Target):void{const map=node.value;if(map!==null){const value=map.get('key');if(value!==undefined){console.log(String(value instanceof Parent));console.log(String(value===item));console.log(String(value.count));}}}
+read(base as Target);

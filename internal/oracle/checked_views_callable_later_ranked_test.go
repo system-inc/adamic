@@ -131,7 +131,7 @@ func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 }
 
 func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/string-from-node/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/string-from-node/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -147,7 +147,7 @@ func TestCheckedViewCallableLaterRankedUnionRefusal(t *testing.T) {
 }
 
 func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/if-statement/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -162,7 +162,7 @@ func TestCheckedViewCallableLaterRankedBindingRefusal(t *testing.T) {
 }
 
 func TestCheckedViewCallableLaterRankedMethodRefusal(t *testing.T) {
-	path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/lift-block/good.a")
+	path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/lift-block/good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -210,7 +210,7 @@ func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 		{"environment-variable", "abc\n", "unbound-method"},
 	} {
 		t.Run(witness.directory, func(t *testing.T) {
-			path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/" + witness.directory + "/good.a")
+			path, err := filepath.Abs(checkedViewFixturePath(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/" + witness.directory + "/good.a"))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -426,10 +426,10 @@ func (e *emitter) statement(at *ir.Statement) {
 				allowed = append(allowed, fmt.Sprint(id))
 			}
 			if statement.WriteProven {
-				e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
+				e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.mapEntryNominalCertificate(statement.WriteContract, e.value(statement.Value), statement.WriteWhere))
 				break
 			}
-			e.line("adamicCheckedWrite(%s, %s, %s, [%s], %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), strings.Join(allowed, ","), quote(statement.WriteWhere))
+			e.line("adamicCheckedWrite(%s, %s, %s, [%s], %s);", e.value(statement.Object), quote(statement.Name), e.mapEntryNominalCertificate(statement.WriteContract, e.value(statement.Value), statement.WriteWhere), strings.Join(allowed, ","), quote(statement.WriteWhere))
 			break
 		}
 		if e.program.CheckedFields[statement.Name] && !statement.Define && !statement.Uninitialized {
@@ -841,11 +841,11 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 			if expected == "" {
 				expected = map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[expression.Of]
 			}
-			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.View), e.tupleViewRepresentation(expression.ViewContract, expression.Of), quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
+			value := fmt.Sprintf("adamicViewField(%s, %s, %s, %d, %s, [%s], %t, %t, %t)", e.nominalViewReceiver(expression), quote(expression.Name), quote(expression.View), e.tupleViewRepresentation(expression.ViewContract, expression.Of), quote(expected), e.values(expression.ViewAllowed), expression.Absent, expression.Optional, e.viewStringUndefined(expression))
 			if expression.Of == ir.Object || expression.Of == ir.Array {
 				value = e.viewObjectUnion(expression, value)
 			}
-			return e.mapViewCertificate(expression, value)
+			return e.nominalViewRead(e.program.NominalReadContracts[expression.ViewTypeID], e.mapViewCertificate(expression, value), expression.View, expression.Absent)
 		}
 		if expression.Readiness != "" {
 			return fmt.Sprintf("adamicReadField(%s, %s, %s, %t, %t)", e.value(expression.Object), quote(expression.Name), quote(expression.Readiness), expression.Optional, expression.Absent)
@@ -883,7 +883,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		if expression.Space != nil {
 			space = e.value(expression.Space)
 		}
-		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ")"
+		return "adamicJSONStringify(" + value + ", " + replacer + ", " + space + ", " + e.jsonReadSchema(expression.Schema) + ", " + e.jsonReadSchema(expression.ReplacerSchema) + ")"
 	case ir.JSONNull:
 		return "null"
 	case ir.MathCall:
@@ -963,6 +963,9 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.WeakTarget:
 		return e.value(expression.Value)
 	case ir.Narrow:
+		if expression.Undefined {
+			return "((value) => value === undefined ? undefined : panic(" + quote("undefined storage conversion failed: "+expression.UndefinedWhere+" expected undefined, found present reference") + "))(" + e.value(expression.Value) + ")"
+		}
 		if expression.Tuple {
 			return fmt.Sprintf("adamicNarrow(%s, %d)", e.value(expression.Value), ir.Array)
 		}
@@ -979,7 +982,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 		}
 		return "(" + e.value(expression.Value) + " ?? " + e.value(expression.Fallback) + ")"
 	case ir.ArrayPush:
-		if ir.HasArrayViews(e.program) {
+		if ir.HasArrayViews(e.program) && !expression.DictionaryProduction {
 			return fmt.Sprintf("adamicViewPush(%s, %s, %d)", e.value(expression.Array), e.value(expression.Value), expression.Element)
 		}
 		return e.value(expression.Array) + ".push(" + e.value(expression.Value) + ")"
@@ -1124,10 +1127,10 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapNew:
 		entries := []string{}
 		for _, entry := range expression.Entries {
-			entries = append(entries, "["+e.value(entry[0])+", "+e.value(entry[1])+"]")
+			entries = append(entries, "["+e.mapEntryNominalCertificate(expression.KeyContract, e.value(entry[0]), "Map constructor key")+", "+e.mapEntryCallableCertificate(expression.ValueContract, e.mapEntryNominalCertificate(expression.ValueContract, e.value(entry[1]), "Map constructor entry"), "Map constructor entry")+"]")
 		}
 		if expression.Pairs != nil {
-			return fmt.Sprintf("adamicMapProducer(new Map(%s),%d,%d,%s)", e.value(expression.Pairs), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
+			return fmt.Sprintf("adamicMapProducer(new Map(%s),%d,%d,%s)", "("+e.value(expression.Pairs)+").map((pair) => ["+e.mapEntryNominalCertificate(expression.KeyContract, "pair[0]", "Map copied entry")+", "+e.mapEntryCallableCertificate(expression.ValueContract, e.mapEntryNominalCertificate(expression.ValueContract, "pair[1]", "Map copied entry"), "Map constructor entry")+"])", expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 		}
 		return fmt.Sprintf("adamicMapProducer(new Map([%s]),%d,%d,%s)", strings.Join(entries, ", "), expression.KeyContract, expression.ValueContract, quote(expression.ContractName))
 	case ir.MapKeys:
@@ -1141,7 +1144,7 @@ func (e *emitter) valueWithoutViewArrays(expression ir.Expression) string {
 	case ir.MapGet:
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
-		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"
+		return e.value(expression.Map) + ".set(" + e.mapEntryNominalCertificate(expression.KeyContract, e.value(expression.Key), expression.ValueWhere) + ", " + e.mapEntryCallableCertificate(expression.ValueContract, e.mapEntryNominalCertificate(expression.ValueContract, e.value(expression.Value), expression.ValueWhere), expression.ValueWhere) + ")"
 	case ir.SetNew:
 		if expression.Values == nil {
 			return "new Set()"

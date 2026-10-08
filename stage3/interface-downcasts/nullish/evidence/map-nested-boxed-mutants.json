@@ -1,0 +1,30 @@
+[
+  {
+    "name": "boxed-native-member",
+    "test": "^TestCheckedViewMapNestedUnionLiteralMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/boxed-native-member.log"
+  },
+  {
+    "name": "boxed-javascript-member",
+    "test": "^TestCheckedViewMapNestedUnionLiteralMutant$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/boxed-javascript-member.log"
+  },
+  {
+    "name": "boxed-number-payload",
+    "test": "^TestCheckedViewMapCertificates$/^entry-convert-nested-union$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/boxed-number-payload.log"
+  },
+  {
+    "name": "boxed-owner",
+    "test": "^TestCheckedViewMapCertificates$/^entry-convert-nested-union$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/boxed-owner.log"
+  }
+]

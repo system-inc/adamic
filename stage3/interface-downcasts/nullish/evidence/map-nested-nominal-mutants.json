@@ -1,0 +1,30 @@
+[
+  {
+    "name": "nested-nominal-native-producer",
+    "test": "^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nested-nominal-native-producer.log.gz"
+  },
+  {
+    "name": "nested-nominal-javascript-producer",
+    "test": "^TestCheckedViewMapNestedNominalMutants$/^(constructor|set|copy)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nested-nominal-javascript-producer.log.gz"
+  },
+  {
+    "name": "nested-nominal-native-read",
+    "test": "^TestCheckedViewMapNestedNominalMutants$/^(receiver|generic|field)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nested-nominal-native-read.log.gz"
+  },
+  {
+    "name": "nested-nominal-javascript-read",
+    "test": "^TestCheckedViewMapNestedNominalMutants$/^(receiver|generic|field)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "map-nested-nominal-javascript-read.log.gz"
+  }
+]

@@ -17,7 +17,7 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 	if len(args) != 2 {
 		contract.Unsupported = "Map key/value certificate"
 	} else {
-		if args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
+		if !l.mapEntryTypeProven(args[0], map[*checker.Type]bool{}) || !l.mapEntryTypeProven(args[1], map[*checker.Type]bool{}) {
 			contract.Unsupported = "Map phantom/intersection certificate"
 		}
 		contract.Key = l.mapEntrySlot(node, l.concrete(args[0]))
@@ -33,7 +33,7 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 }
 func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 	args := l.typeArguments(l.concrete(l.checker.GetTypeAtLocation(node)))
-	if len(args) != 2 || args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
+	if len(args) != 2 {
 		return value
 	}
 	key := l.mapEntrySlot(node, l.concrete(args[0]))
@@ -50,24 +50,43 @@ func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 // slotContract has already checked every member recursively. Unknown or lazy
 // descriptors cannot certify entries merely because their storage is a pointer.
 func mapEntryContract(contract ir.ViewContract) bool {
-	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray)
+	return contract.Unsupported == "" && (contract.Kind == ir.ViewScalar || contract.Kind == ir.ViewObject || contract.Kind == ir.ViewArray || contract.Kind == ir.ViewUnion || contract.Kind == ir.ViewNullable || contract.Kind == ir.ViewNull || contract.Kind == ir.ViewUndefined || contract.Kind == ir.ViewCallable && contract.Result != 0)
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if base := l.phantomArrayBase(target); base != nil {
+		return l.mapEntrySlot(node, base)
+	}
+	if l.phantomBase(target) != nil {
+		id, err := l.viewContract(node, target)
+		if err != nil || !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) {
+			return 0
+		}
+		return id
+	}
+	if isClassInstance(l.checker.GetNonNullableType(target)) {
+		return l.mapNominalEntrySlot(node, target)
+	}
 	if checker.IsTupleType(l.checker.GetNonNullableType(target)) {
 		return l.mapNullableTupleEntrySlot(node, target)
+	}
+	if l.callableViewContract(l.checker.GetNonNullableType(target)) {
+		return l.mapCallableEntrySlot(node, target)
 	}
 	if !l.mapEntryTypeProven(target, map[*checker.Type]bool{}) {
 		return 0
 	}
+	if l.mapNestedNominalType(target, map[*checker.Type]bool{}) {
+		return l.mapNestedNominalEntrySlot(node, target)
+	}
 	present := l.checker.GetNonNullableType(target)
 	array := l.viewArrayBase(present) != nil
 	optionalObject := l.includesUndefined(target) && !l.includesNull(target) && present.Flags()&checker.TypeFlagsObject != 0
-	if !array && !optionalObject {
+	if !array && !optionalObject && target.Flags()&checker.TypeFlagsUnion == 0 && target.Flags()&checker.TypeFlagsNull == 0 {
 		return l.slotContract(node, target)
 	}
 	id, err := l.viewContract(node, target)
-	if err != nil || !supportedSlotContract(l.result, id, map[ir.ViewContractID]bool{}) {
+	if err != nil || !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) {
 		return 0
 	}
 	return id
@@ -77,7 +96,16 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 // throughout entries, including beneath structural fields or array elements.
 func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Type]bool) bool {
 	target = l.concrete(target)
-	if target.Flags()&checker.TypeFlagsIntersection != 0 || isClassInstance(target) {
+	if base := l.phantomBase(target); base != nil {
+		return true
+	}
+	if base := l.phantomArrayBase(target); base != nil {
+		return l.mapEntryTypeProven(base, seen)
+	}
+	if isClassInstance(l.checker.GetNonNullableType(target)) {
+		return l.mapNominalEntryTypeProven(target, seen)
+	}
+	if target.Flags()&checker.TypeFlagsIntersection != 0 {
 		return false
 	}
 	if seen[target] {
@@ -87,6 +115,14 @@ func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Ty
 	if target.Flags()&checker.TypeFlagsUnion != 0 {
 		for _, member := range target.Types() {
 			if !l.mapEntryTypeProven(member, seen) {
+				return false
+			}
+		}
+		return true
+	}
+	if checker.IsTupleType(target) {
+		for _, element := range l.checker.GetTypeArguments(target) {
+			if !l.mapEntryTypeProven(element, seen) {
 				return false
 			}
 		}

@@ -32,6 +32,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 			result = e.own(visit.Element, "NULL")
 		}
 	}
+	owner := e.viewArrayReadOwner(visit.Element)
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	if visit.Method == "findLast" || visit.Method == "findLastIndex" {
@@ -55,7 +56,7 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		if e.hasArrayHoles() && visit.Method != "find" && visit.Method != "findIndex" && visit.Method != "findLast" && visit.Method != "findLastIndex" {
 			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
 		}
-		checked := e.viewArrayElementSlot(visit.ViewRead, source, index)
+		checked := e.viewArrayElementSlot(visit.ViewRead, source, index, owner)
 		e.line("adamic_value %s = %s;", element, checked)
 	} else if e.hasArrayHoles() {
 		slot := e.temporary()
@@ -111,8 +112,8 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
-			if visit.Element == ir.MaybeNumber {
-				found = unslotted(ir.MaybeNumber, found)
+			if visit.Element == ir.MaybeNumber || visit.Element == ir.MaybeBoolean {
+				found = unslotted(visit.Element, found)
 			} else {
 				found = maybe(visit.Type(), found)
 			}
@@ -156,6 +157,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	} else {
 		accumulator = e.snapshot(reduce.Result, initial)
 	}
+	owner := e.viewArrayReadOwner(reduce.Element)
 	count, index, element, answer := e.temporary(), e.temporary(), e.temporary(), e.temporary()
 	e.line("size_t %s = %s->length;", count, source)
 	e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
@@ -167,7 +169,7 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 		if e.hasArrayHoles() {
 			e.line("if (adamic_array_holes_at(%s, (double)%s) == NULL) continue;", source, index)
 		}
-		checked := e.viewArrayElementSlot(reduce.ViewRead, source, index)
+		checked := e.viewArrayElementSlot(reduce.ViewRead, source, index, owner)
 		e.line("adamic_value %s = %s;", element, checked)
 	} else if e.hasArrayHoles() {
 		slot := e.temporary()

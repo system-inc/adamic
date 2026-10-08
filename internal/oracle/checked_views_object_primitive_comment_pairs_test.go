@@ -23,7 +23,7 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS to prepare.cjs output")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "original-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "original-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -46,7 +46,7 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 		t.Fatal("original provenance drift")
 	}
 	for name, expected := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, name))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, name)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -67,7 +67,7 @@ func TestCheckedViewObjectPrimitiveCommentPairs(t *testing.T) {
 		for _, mode := range []string{"good", "wrong", "nested"} {
 			t.Run(fmt.Sprintf("%d-%s", pair.ID, mode), func(t *testing.T) {
 				name := fmt.Sprintf("jsdoc-%d-%s.a", pair.ID, mode)
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + name)
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + name))
 				if err != nil {
 					t.Fatal(err)
 				}

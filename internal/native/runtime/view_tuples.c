@@ -33,7 +33,7 @@ void adamic_view_tuple_range(const adamic_object *value, size_t minimum, size_t 
 bool adamic_tuple_array_union_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, const char *expected, const char *expression, adamic_value *result) {
  adamic_value snapshot;
  unsigned char storage = array == NULL ? 0 : array->references ? 10 : array->element_kind;
- adamic_value *slot = adamic_view_array_at(array, index, relative, undefined_allowed, storage, expected, expression, &snapshot);
+ adamic_value *slot = adamic_view_array_at(array, index, relative, undefined_allowed, storage == 10 ? adamic_view_array_tuple_union : storage, expected, expression, &snapshot, NULL);
  if (slot == NULL) { result->reference = NULL; return false; }
  if (storage == 10) result->reference = adamic_retain(slot->reference);
  else if (storage == 1) result->reference = adamic_box_number(slot->number);

@@ -22,5 +22,15 @@
       "overlaps_primary": true,
       "evidence": "TestCheckedViewTupleLane4bOutSignature and three lane4b-out-signature .a fixtures"
     }
+  ],
+  "rechecked_integration": "432d4913d31daaa49d8ca4eb46f30f21f90da5ee",
+  "ranked_remaining": [
+    {
+      "type_id": 97898,
+      "candidate_reads": 4,
+      "owner_dependency": "Shared cast admission and alias-preserving array-to-tuple storage bridge",
+      "observation": "Original Node prints string; compiler refuses at 5:18 with adamic/no-unchecked-cast",
+      "inference": "Tuple read certificates do not establish the source array alias/storage conversion"
+    }
   ]
 }
