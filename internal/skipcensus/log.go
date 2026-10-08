@@ -22,7 +22,9 @@ type Landed func(branch string) (bool, error)
 
 var awaitedBranch = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._/-]*$`)
 
-// checkPending holds a pending row to its reason: it names the branch it awaits, and its skip message says so.
+// checkPending holds a pending row to its reason: it names the branch it awaits, and its skip message says so,
+// as "awaits <branch>" or "dependency: <branch>" (@system_adamic, Oct 8: internal/oracle's TestEntriesAcceptance
+// skips with "acceptance dependency: codex/step12-entries-fixtures 8d864f9c", the same pending reason).
 func checkPending(row Row) error {
 	if !awaitedBranch.MatchString(row.Awaits) {
 		return fmt.Errorf("a pending skip names the branch it awaits")
@@ -31,7 +33,7 @@ func checkPending(row Row) error {
 	if err != nil {
 		literal = row.Message
 	}
-	if !strings.Contains(literal, "awaits "+row.Awaits) {
+	if !strings.Contains(literal, "awaits "+row.Awaits) && !strings.Contains(literal, "dependency: "+row.Awaits) {
 		return fmt.Errorf("a pending skip's message says %q", "awaits "+row.Awaits)
 	}
 	return nil

@@ -398,6 +398,16 @@ func TestPendingSkipsCantOutliveTheirReason(t *testing.T) {
 	if output, err := check(nil); err == nil || !strings.Contains(output, "unknown=1") {
 		t.Fatalf("a pending skip with nobody to ask passed: %v %s", err, output)
 	}
+	// The dependency form names its branch the same way; a message naming neither form is refused.
+	row.Message = `"acceptance dependency: codex/feature 8d864f9c"`
+	if output, err := check(off); err != nil || !strings.Contains(output, "pending=1") {
+		t.Fatalf("the dependency form: %v %s", err, output)
+	}
+	row.Message = `"needs codex/feature"`
+	if err := checkPending(row); err == nil {
+		t.Fatal("a pending message naming no awaited branch passed")
+	}
+	row.Message = `"awaits codex/feature: the bridge returns its error"`
 	if err := checkPending(row); err != nil {
 		t.Fatal(err)
 	}

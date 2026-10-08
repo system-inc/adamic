@@ -313,5 +313,20 @@
     "class": "pending",
     "provides": "Pending (@system_cohere_lint_rules, Oct 8): the checker bridge's refusal test, until codex/tsgo-errors-as-values makes tsgoInspect return TSGoError.",
     "awaits": "codex/tsgo-errors-as-values"
+  },
+  {
+    "file": "internal/oracle/entries_acceptance_test.go",
+    "test": "TestEntriesAcceptance",
+    "id": "TestEntriesAcceptance:extra",
+    "line": 36,
+    "condition": "",
+    "reads": [],
+    "callers": [
+      "TestEntriesAcceptance"
+    ],
+    "message": "\"acceptance dependency: codex/step12-entries-fixtures 8d864f9c\"",
+    "class": "pending",
+    "provides": "Pending (@system_adamic, Oct 8 22:43Z): the entries acceptance bucket, until codex/step12-entries-fixtures lands its expectations; compiler renames the skip to the awaits wording on the next slice (#whkxbc7).",
+    "awaits": "codex/step12-entries-fixtures"
   }
 ]
