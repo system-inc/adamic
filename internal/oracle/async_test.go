@@ -480,6 +480,7 @@ func TestAsyncReaderProbes(t *testing.T) {
 		cycle              bool
 	}{
 		{"async_refuse_frame_capture_cycle", "async frame capture cycle", "seed3:held:7\n", true},
+		{"async_refuse_for_of_string", "async for-of over this iterable", "a\nb\n", false},
 		{"async_refuse_return_thenable", "return of thenables", "7\n", false},
 		{"async_refuse_arrow_thenable", "return of thenables", "7\n", false},
 	} {
@@ -591,4 +592,52 @@ func TestAsyncLoopCellsCatchSharedCell(t *testing.T) {
 	if disagreement(onNode(t, path), result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
 		t.Fatalf("Node output must catch shared-cell mutant: %+v", result)
 	}
+}
+
+// Skipping an index at the continuation edge still produces clean, valid C.
+// Only the source on Node can catch resuming the loop on the wrong iteration.
+func TestAsyncForOfWrongIterationMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_for_of_body.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := false
+	for _, function := range program.Functions {
+		for index, statement := range function.Body {
+			loop, ok := statement.(ir.Loop)
+			if !ok || len(loop.Update) != 1 {
+				continue
+			}
+			update, ok := loop.Update[0].(ir.Assign)
+			if !ok || program.Locals[update.Local].Name != "suspension" {
+				continue
+			}
+			addition, ok := update.Value.(ir.Binary)
+			if !ok || addition.Operator != ir.Add {
+				continue
+			}
+			addition.Right = ir.NumberConstant{Value: 2}
+			update.Value = addition
+			loop.Update[0] = update
+			function.Body[index] = loop
+			changed = true
+		}
+	}
+	if !changed {
+		t.Fatal("no array iterator continuation to mutate")
+	}
+	binary := filepath.Join(t.TempDir(), "wrong-iteration")
+	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	oracle := onNode(t, path)
+	if disagreement(oracle, result) != "stdout differs" || result.exitCode != 0 || len(result.stderr) != 0 {
+		t.Fatalf("only Node stdout must catch wrong iteration: %+v", result)
+	}
+	t.Logf("caught: Node %q; wrong iteration %q", oracle.stdout, result.stdout)
 }

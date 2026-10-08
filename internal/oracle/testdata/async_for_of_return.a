@@ -1,0 +1,8 @@
+async function find(): Promise<string> {
+    for (const item of [`item${1}`, `item${2}`, `item${3}`]) {
+        const held = await Promise.resolve(item);
+        if (held === "item2") { return `${item}:found`; }
+    }
+    return "missing";
+}
+console.log(await find());
