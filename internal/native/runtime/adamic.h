@@ -363,7 +363,14 @@ typedef struct adamic_array {
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;
+	struct adamic_map *sparse;
 } adamic_array;
+
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_is_range_error(const adamic_object *value);
+adamic_value *adamic_array_holes_at(const adamic_array *array, double index);
+void adamic_array_holes_set(adamic_array *array, double index, adamic_value value);
+void adamic_array_holes_set_length(adamic_array *array, double length);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
@@ -549,6 +556,8 @@ enum adamic_equality {
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);
+double adamic_array_holes_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool includes, double from, bool has_from, bool last);
+
 
 // adamic_array_from_length is the length Array.from({ length }) makes (array_from.c): ToLength of
 // the number, and a panic where JavaScript throws, past 2^32 - 1.
@@ -581,6 +590,8 @@ adamic_array *adamic_array_concat(size_t count, adamic_array *const arrays[]);
 // a function value, the context.
 adamic_array *adamic_array_slice(const adamic_array *array, double start, double end, bool has_end);
 void adamic_array_sort(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
+// Default string sort: present strings in UTF-16 order, then undefined, then holes.
+void adamic_array_sort_strings(adamic_array *array, int (*compare)(adamic_value, adamic_value, void *), void *context);
 int adamic_compare_closure(adamic_value left, adamic_value right, void *context);
 // adamic_timsort sorts count values in place by V8's algorithm (sort.c). It says false, the values
 // in some order of the sort's half done, when the comparator threw (adamic_thrown set).
@@ -601,6 +612,8 @@ enum adamic_join {
 	adamic_join_maybe_numbers,
 };
 struct adamic_string *adamic_array_join(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind);
+adamic_string *adamic_array_holes_join(const adamic_array *array, const adamic_string *separator, enum adamic_join kind);
+
 
 struct adamic_string *adamic_array_join_nested(const adamic_array *array, const struct adamic_string *separator, enum adamic_join kind, size_t depth);
 

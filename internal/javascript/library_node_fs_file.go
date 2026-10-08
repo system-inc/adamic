@@ -10,6 +10,8 @@ func (e *emitter) nodeFSFile(call ir.NodeFSFile) string {
 	switch call.Operation {
 	case "date_new":
 		return "new Date(" + args[0] + ")"
+	case "date_string":
+		return dateStringJavaScript + "(" + args[0] + ")"
 	case "date_time":
 		return "(" + args[0] + ").getTime()"
 	case "is_file":

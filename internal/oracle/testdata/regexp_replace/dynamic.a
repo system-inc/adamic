@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+const re = new RegExp(programArguments()[0] ?? '(?<first>a)(b)', 'g');
+console.log('ab ab'.replaceAll(re, (match: string, first: string, second: string, offset: number, input: string, groups: { readonly first: string } | undefined) => `${match}:${first}:${second}:${offset}:${input}:${groups?.first ?? 'missing'}`));
+console.log(`${re.lastIndex}`);

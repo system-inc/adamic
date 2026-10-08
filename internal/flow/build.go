@@ -459,10 +459,16 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 				// can terminate the process; retain their catch/finally edges.
 				operation := value.Interface().(ir.ProcessCall).Operation
 				throws = throws || operation == "exit" || operation == "setExitCode" || operation == "cwd" || operation == "chdir" || operation == "measure"
+			case reflect.TypeOf(ir.ArrayHoles{}), reflect.TypeOf(ir.ArraySetLength{}):
+				throws = true
 			case reflect.TypeOf(ir.NodeHostCall{}):
 				throws = throws || value.Interface().(ir.NodeHostCall).Throws
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
+					throws = true
+				}
+			case reflect.TypeOf(ir.RegExpCall{}):
+				if value.Interface().(ir.RegExpCall).Replacement != nil && program.ClosuresMayThrow {
 					throws = true
 				}
 			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:

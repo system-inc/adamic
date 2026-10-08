@@ -1,0 +1,1 @@
+for (const stamp of [-8640000000000000, -62198755200000, -62167219200000, -1, 1, 253402300800000, 8640000000000000]) { const d = new Date(stamp); console.log(String(d)); console.log(`${d}`); console.log('' + d); }
