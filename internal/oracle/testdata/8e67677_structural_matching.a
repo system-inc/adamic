@@ -1,0 +1,15 @@
+interface Tester {
+	readonly test: (text: string) => boolean;
+}
+function direct(pattern: RegExp): boolean {
+	return pattern.test('xa');
+}
+function wrapped(tester: Tester): boolean {
+	return tester.test('xa');
+}
+function run(): void {
+	const pattern = /a/;
+	const tester: Tester = { test: (text) => pattern.test(text) };
+	console.log(`${direct(pattern)} ${wrapped(tester)}`);
+}
+run();

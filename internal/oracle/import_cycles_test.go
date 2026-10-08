@@ -83,6 +83,7 @@ func quoteJS(value string) string {
 func TestImportCycleLoadTimeReads(t *testing.T) {
 	// Not parallel: the cohere runner caches one program process-wide.
 	for _, probe := range []struct{ path, output, nodeError string }{
+		{"../imported_const_cases/cycle/main.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"read/a.a", "", "ReferenceError: Cannot access 'value' before initialization"},
 		{"classes/c.a", "", "ReferenceError: Cannot access 'Base' before initialization"},
 		// Entering at Leaf evaluates Base then Middle, so ESM succeeds.

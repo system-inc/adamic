@@ -11,9 +11,8 @@ import (
 
 const recordLimit = "a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars"
 
-// recordInfo deliberately bounds the first compiler view of the existing record
-// runtime. No mutable table or recursive payload is admitted until its writable
-// slots and reachability are part of the cycle proof.
+// recordInfo bounds the readonly record view of the existing table runtime.
+// Mutable slots and their reachability proof are owned by mutable_records.go.
 func (l *lowering) recordInfo(t *checker.Type) (*checker.IndexInfo, bool) {
 	if t == nil {
 		return nil, false
@@ -50,6 +49,12 @@ func (l *lowering) sameRecordView(from, to *checker.Type) bool {
 	// Arrays and library collections have their own representation/view checks.
 	fr, _ := l.representation(from)
 	tr, _ := l.representation(to)
+	if l.recordElement(from) != nil || l.recordElement(to) != nil {
+		// Mutable record views are checked at storage-bearing sites by
+		// recordStorageView; reflection and spread contexts do not store a view.
+		// Readonly record storage still cannot be reinterpreted as mutable storage.
+		return !l.readonlyRecordSupported(from) && !l.readonlyRecordSupported(to)
+	}
 	if fr != ir.Record && tr != ir.Record {
 		return true
 	}
@@ -74,16 +79,16 @@ func (l *lowering) recordUse(node *ast.Node) error {
 	}
 	if node.Kind == ast.KindPropertyAccessExpression {
 		receiver := node.AsPropertyAccessExpression().Expression
-		if rep, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); rep == ir.Record {
+		if rep, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); rep == ir.Record && l.recordElement(l.checker.GetTypeAtLocation(receiver)) == nil {
 			return l.notYet(node, "a named property or prototype member on a record; read an own string key with brackets")
 		}
 	}
 	return nil
 }
 
-func (l *lowering) recordLiteral(node *ast.Node) (ir.Expression, bool, error) {
+func (l *lowering) readonlyRecordLiteral(node *ast.Node) (ir.Expression, bool, error) {
 	t := l.checker.GetContextualType(node, checker.ContextFlagsNone)
-	if t == nil || len(l.checker.GetIndexInfosOfType(t)) == 0 {
+	if t == nil || len(l.checker.GetIndexInfosOfType(t)) == 0 || l.recordElement(t) != nil {
 		return nil, false, nil
 	}
 	info, ok := l.recordInfo(t)
@@ -122,7 +127,7 @@ func (l *lowering) recordIndex(node *ast.Node) (ir.Expression, bool, error) {
 	access := node.AsElementAccessExpression()
 	t := l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression))
 	rep, _ := l.representation(t)
-	if rep != ir.Record {
+	if rep != ir.Record || l.recordElement(t) != nil {
 		return nil, false, nil
 	}
 	info, ok := l.recordInfo(t)
@@ -163,4 +168,9 @@ func (l *lowering) hasStringRecordIndex(t *checker.Type) bool {
 		}
 	}
 	return false
+}
+
+func (l *lowering) readonlyRecordSupported(proven *checker.Type) bool {
+	_, supported := l.recordInfo(proven)
+	return supported
 }

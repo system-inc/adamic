@@ -1,0 +1,23 @@
+enum Rank { Low = 1, Mid = 2, High = 4, Top = High }
+enum Word { Yes = 'yes', No = 'no', Again = Yes }
+function rankName(value: Rank): string {
+    switch (value) {
+        case Rank.Low: return 'low';
+        case Rank.Mid: return 'mid';
+        case Rank.High: return 'high';
+    }
+}
+function wordName(value: Word): string {
+    switch (value) {
+        case Word.Yes: return 'yes';
+        case Word.No: return 'no';
+    }
+}
+function onlyLow(value: Rank.Low): string {
+    switch (value) {
+        case Rank.Low: return 'only';
+    }
+}
+const ranks: readonly Rank[] = [Rank.Low, Rank.Mid, Rank.High, Rank.Top];
+for (const rank of ranks) console.log(`${rank} ${rankName(rank)}`);
+console.log(`${wordName(Word.Yes)} ${wordName(Word.Again)} ${wordName(Word.No)} ${onlyLow(Rank.Low)}`);

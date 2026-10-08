@@ -1,0 +1,13 @@
+interface Leaf { text: string; }
+function change(records: Record<string, Leaf>): void {
+    const child = records['one'] ?? { text: 'fallback' };
+    const text = child.text;
+    [1].forEach((n: number): void => {
+        const alias = records['one'];
+        if (alias !== undefined) alias.text = `changed${n}`;
+    });
+    console.log(text);
+}
+const records: Record<string, Leaf> = { one: { text: `start${0}` } };
+change(records);
+console.log(records['one']?.text ?? 'missing');

@@ -1,0 +1,17 @@
+import type { Weak } from 'adamic';
+interface Box {
+	readonly label: string;
+}
+function run(n: number): void {
+	const a: Box = { label: `a${n}` };
+	const b: Box = { label: `b${n}` };
+	const seen: Weak<Box>[] = [a, undefined, b];
+	const present = seen.filter((x) => x !== undefined);
+	const found = present.find((x: Weak<Box>) => (x === undefined ? false : x.label.startsWith('b')));
+	console.log(found?.label ?? 'none');
+	const last = present.at(-1);
+	console.log(last?.label ?? 'none');
+	const popped = present.pop();
+	console.log(popped?.label ?? 'none');
+}
+run(1);

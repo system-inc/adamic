@@ -987,3 +987,60 @@ Nominal class downcasts use the same ancestry and erased generic identity as `in
 Sixteen new oracle fixtures cover success and failure, both backends, Node source, native release, ASan/UBSan and leaks on successful runs; failing fixtures use the oracle's checked flag. Contract tests independently pin messages, 340,009 bytes of preceding stdout, and absence of catch/finally execution. Sixteen runtime mutants are killed by exit or stdout comparison: skip each of eleven failing checks, use a wrong numeric tag, string tag or class identity, and evaluate each operand form twice. Seven restored compiler/runtime source mutants are killed for duplicate tags, omitted nominal ancestry, omitted generic argument proof, hidden optional fields, unsafe writes through union views, catchable panic and unflushed panic. The duplicate-tag mutant emits valid C and finishes without sanitizer findings, printing native `1` against Node's `wrongwrong1`.
 
 Primitive `number | string | boolean` union assertions remain refused. Their packed union tags are not independently validated for cast extraction and ownership in this unit, so the existing narrowing path remains the repair. Unknown-to-interface, callback signature changes, mutable widening, unrelated assertions and `as unknown as` remain refused with `adamic/no-unchecked-cast` and the admitted forms named. Nested or transformed generic argument recovery is conservatively refused. Validation here is Linux only; no performance claim or macOS execution is made. The accepted design above is copied unchanged from `origin/codex/escape-hatches` because the enum base did not contain this document.
+
+## Non-null assertion implementation
+
+`e!` now lowers through the existing nullish coalescing panic path. It evaluates
+its operand once, checks the stored maybe pair or null reference (including mixed
+unions), and returns the non-null representation. The diagnostic captures the
+assertion's original source text, including `!`. Panic flushes stdout, prints
+`adamic: panic: non-null assertion failed: <expression text> is null or undefined`
+to stderr and exits 70 without running catch or finally.
+
+Numbers and booleans in maybe pairs, optional references, mixed unions containing
+undefined, and nullable match results are covered. Present zero, false, empty
+string and NaN pass. Assertions on already present types emit no additional check;
+reads narrowed from nullable storage keep a check, including after calls or
+capture writes. No new flow elision or reference representation was introduced.
+
+The nine non_null oracle fixtures pass uncached, with successes held to source
+Node and failures held to the checked JavaScript backend. Mutants removing the
+native check, rejecting zero, false or empty string, and evaluating twice fail
+those comparisons. A changed message fails the exact-text lowering test; ignoring
+nullable storage after a capture write fails the oracle under UBSan.
+
+### Shared field readiness representation
+
+Each native object carries one initialized byte per field after its `adamic_value` slots, indexed by its actual shape. `adamic_object_initialized(const adamic_object *object)` exposes those bytes; `adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized)` updates a named slot. Fresh ordinary fields are initialized; an `ir.Field.Uninitialized` starts clear. Writes set the bit. The bytes share the object's allocation, including region allocations.
+
+Checked reads use `adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)` in native code and `adamicReadField(object, name, expression, optional = false)` in JavaScript. `ir.Property.Readiness` supplies the source expression. Missing or uninitialized fields panic with `read before assignment: field '<name>' in <expression>`. The state is independent of the value, so zero, false, empty strings, and assigned undefined do not mean uninitialized. JavaScript keeps state in a WeakMap, preserving own keys.
+
+### Uninitialized assertions and definite assignment
+
+`undefined!` and `null!` in a let, const, class field or parameter-default initializer now reserve an uninitialized slot. `let x!: T` and `field!: T` use the same state. An ordinary assignment marks the slot ready independently of its value. Reads before assignment use the existing temporal-dead-zone readiness path and panic with exit 70, naming the variable or field and the source expression. Panic runs no catch or finally. Literal assertions used as direct assignments also clear readiness, as recorded below. Other non-initializer assertions retain the loud nullish check. A shadowed `undefined` is an ordinary operand.
+
+Captured locals keep readiness in their existing cell; iteration clones copy that state. The existing control-flow graph proves dominating assignments across joins, loops and exception edges, including reads in closures after their own writes. An assignment that throws does not initialize its destination. Field facts are per binding and invalidated by calls and binding writes. Cross-function assignment proofs remain conservative. Field reads and spreads share `adamic_object_read` and `adamicReadField`; the JavaScript helper also accepts `allowAbsent = false` after `optional`. Optional absence retains its ordinary undefined behavior. Static inherited reads check their actual owning slot.
+
+Weak assertions use the same expression-bearing diagnostic, including after explicit clear or native lifetime release. Source Node agrees byte for byte on the successful fixtures. Inserted read checks and explicit Weak clearing use the oracle's checked JavaScript reference; native lifetime release has a separate pinned runtime assertion because Node retains the target.
+
+Readiness mutants dropping a check, erasing across a zero-iteration loop, initializing to zero, missing captured and exceptional reads, and treating marker initializers as ordinary nullish checks are caught by runtime output assertions. Weak generic-message and native lifetime-message mutants are caught by exact stderr assertions. The latent rerun in `non-null-readiness-census.json` verifies all 78 recorded source hashes: the original 180 non-null Refused and 25 NonNullExpression NotYet findings are now zero for both reasons. Twelve original locations still encounter other recorded refusals or NotYet reasons. This checker-rejected, per-unit measurement does not establish that tsc compiles.
+
+### Lazy computed assertion initializers
+
+The later scanner ruling extends the initializer rule to `let x = e!`, `const x = e!`, `var x = e!`, fields and defaults. The operand is evaluated once in its stored representation. A present value initializes the slot; a nullish value leaves the shared readiness state clear. The eventual read diagnostic names the slot and the original initializer expression. Assignment still makes it ready, and the same dominance proof erases subsequent reads' checks. Arguments, returns, member receivers and other operands keep eager assertions.
+
+The scanner fixture uses `var text = textInitial!` and a captured `setText`, with both missing and provided initial text. Local, instance-field, static-field and default fixtures cover assignment before reading and checked failure before assignment. Zero, false and empty strings remain present. The eager-initializer mutant exits 70 before the scanner can assign, while source Node prints its result. Other var forms remain refused; repeated var assertion declarations are refused explicitly. Function-local var reads before their declaration remain outside supported hoisting, rather than being guessed.
+
+The scanner controls now include the exact `let text: string = undefined!` probe from stage3-scanner-proof 71f9953. Its dominating assignment erases the read check. `var tokenValue!: string` is also admitted through the same readiness path as let definite declarations. Sibling closure reads retain the captured-cell check, including after a setter call; the successful frame matches Node and the unassigned frame panics with the variable and read expression. Removing that captured check produces exit 0 and different stdout, caught by the pinned runtime assertion. These controls use sibling arrow functions because named nested declarations belong to the nested-functions unit. Count regeneration adds fixture rows without changing existing rows.
+
+### Literal assertion assignments deinitialize
+
+A direct assignment of builtin `undefined!` or `null!` to a variable or stored field now clears its existing readiness state. An ordinary subsequent write restores readiness. Other assertion operands in assignments remain eager. Reads before the next write panic with exit 70 and name the variable or field and expression. No second readiness mechanism is introduced.
+
+The control-flow proof clears its fact at deinitialization, intersects loop and exception paths, and invalidates potentially deinitialized captured or global slots at calls. Deinitializing a field invalidates alias facts for that field name. A dominating later write still erases the check. Object values, entries, assignment sources and spreads also use the shared field read helper; Object.assign writes restore target readiness. Accessor properties are explicitly NotYet for deinitialization because they do not expose a stored field slot.
+
+Fixtures cover reassignment before reading, checked reads, method calls, aliases, captured writes, exception paths and loops. The ordinary-store mutant prints undefined through the JavaScript backend and is caught by the pinned panic assertion. Keeping a slot proven after deinitialization prints zero natively and is caught by the pinned assertion, without relying on a crash.
+
+Validation: `go test ./internal/lower ./internal/ir ./internal/fresh ./internal/javascript` passed (lower 26.116s, ir 23.088s, fresh 38.609s). The flow package also passed in 51.679s. `go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|object_)' -count=1 -v` passed all 71 selected fixtures in 9.273s, including 17 new deinitialization fixtures. The scanner controls remain green. `go test ./internal/oracle -run 'TestReadinessMutants|TestDeinitializationIsNotOrdinaryStoreMutant' -count=1 -v` passed in 2.025s; dropping values, entries or assignment-source checks is also caught by pinned output. Count regeneration passed in 17.557s and adds 17 rows with no existing row changes. Focused native field, ownership, receiver and iterator tests passed in 1.649s. Vet passed for lower, ir, flow, fresh, native, javascript and oracle. Logs are `/tmp/deinit-packages-final.log`, `/tmp/deinit-fixtures-final.log`, `/tmp/deinit-mutants-final.log`, `/tmp/deinit-counts.log`, `/tmp/deinit-native.log` and `/tmp/deinit-vet.log`. The full repository gate was not rerun for this priority amendment.
+
+An initial package command named nonexistent borrow and reuse packages and exposed a changed refusal diagnostic. The command was corrected and the original diagnostic restored before the passing package run. The shared field representation remains the initialized byte per shape slot, with `adamic_object_read` and `adamicReadField` as its read helpers; this amendment changes state transitions and proof invalidation, not representation selection.

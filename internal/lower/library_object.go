@@ -9,8 +9,11 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.recordObjectCall(node, name); handled {
+		return value, true, err
+	}
 	refused := func(reason string) (ir.Expression, bool, error) {
-		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
+		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason + " (adamic/object-shape)"}
 	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
@@ -29,7 +32,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 	written := node.AsCallExpression().Arguments.Nodes
 	if name == "assign" {
 		if len(written) < 1 {
-			return nil, true, l.notYet(node, "Object.assign without a target")
+			return nil, true, l.notYet(node, "Object.assign without a target (pass a present plain-object target as the first argument)")
 		}
 	} else if len(written) != count {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
@@ -41,7 +44,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 			return value, true, err
 		}
 	}
-	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
+	call := ir.ObjectCall{Method: name, Returns: ir.Boolean, Readiness: sourceExpression(node)}
 	switch name {
 	case "is":
 		for _, argument := range written {
@@ -58,9 +61,11 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
-		// Reflection cannot use a widened view: a hidden field can have another representation.
+		// Value reflection cannot use a widened view: hidden fields can have another representation.
+		// Named hasOwn can also use literal-origin interface aliases. Unknown origins
+		// may hide constructor storage whose inherited slots are not own properties.
 		// A plain const's literal initializer proves the complete shape, including field presence.
-		if !l.exactObject(written[0], 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if !((name == "keys" || name == "assign") && l.literalObjectKeys(written[0], 0)) && !l.exactObject(written[0], 0) && !(name == "hasOwn" && (isClassInstance(l.checker.GetTypeAtLocation(written[0])) || l.literalDataObject(written[0], 0))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
@@ -74,7 +79,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
+			if key.Kind != ast.KindStringLiteral || strings.ContainsRune(key.Text(), 0) || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
 				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
 			}
 			keyValue, err := l.expression(key)
@@ -101,7 +106,7 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 				element = pair[1]
 			}
 			call.Element, _ = l.representation(element)
-			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
+			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean && call.Element != ir.MaybeNumber {
 				return refused("tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound")
 			}
 			if declaration := l.enumObject(written[0]); declaration != nil {
@@ -135,9 +140,12 @@ func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool,
 				for _, field := range l.checker.GetPropertiesOfType(source) {
 					into := l.checker.GetPropertyOfType(target, field.Name)
 					if into == nil {
-						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
+						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape (construct a new literal with every destination field declared explicitly)")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
+					if into.Flags&ast.SymbolFlagsOptional != 0 {
+						toType = l.checker.GetNonNullableType(toType)
+					}
 					of, known := l.representation(fromType)
 					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
@@ -197,6 +205,32 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	return l.exactObject(variable.Initializer, depth+1)
+}
+
+// literalDataObject follows const aliases through annotations to plain data
+// initializers. Getter literals and constructor views need different own-property
+// descriptors; proving only their names would not make hasOwn sound.
+func (l *lowering) literalDataObject(node *ast.Node, depth int) bool {
+	if depth > 16 {
+		return false
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression {
+		return l.exactObject(node, 0)
+	}
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	return initializer != nil && l.literalDataObject(initializer, depth+1)
 }
 
 // objectCanFreeze is conservative across aliases and calls. A try around a write in a program

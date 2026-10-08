@@ -69,6 +69,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
+			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
+				valueType, isKnown = ir.Object, true
+			}
 			if !isKnown {
 				// An arrow function has no name to point at, so it's pointed at whole.
 				where := declaration.Name()
@@ -91,6 +94,10 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	patterns := []patterned{}
 	for _, parameter := range declaration.Parameters() {
 		declared := parameter.AsParameterDeclaration()
+		if declaration.Kind == ast.KindMethodDeclaration && ast.HasSyntacticModifier(declaration, ast.ModifierFlagsStatic) && ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			// TypeScript's explicit this parameter is erased; the receiver is supplied separately.
+			continue
+		}
 		if name := parameter.Name(); (name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern) && declared.DotDotDotToken == nil && declared.Initializer == nil && declared.QuestionToken == nil {
 			incoming := len(l.result.Locals)
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
@@ -105,11 +112,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if err != nil {
 			return err
 		}
-		if function.Closure && (declared.Initializer != nil || declared.QuestionToken != nil) {
-			// A function value is called with the arguments its caller has, and no more.
-			return l.notYet(parameter, "a function value with an optional parameter")
-		}
-		if function.Closure && slotless(l.result.Locals[local].Type) {
+		if function.Closure && argumentSlotless(l.result.Locals[local].Type) {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}
@@ -126,7 +129,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		function.Parameters = append(function.Parameters, incoming)
 		defaults = append(defaults, defaulted{local: local, incoming: incoming, initializer: declared.Initializer})
 	}
-	if function.Closure && slotless(function.Returns) {
+	if function.Closure && argumentSlotless(function.Returns) {
 		// A function value's arguments and result are each one adamic_value, and number | undefined
 		// needs two words.
 		return l.notYet(declaration, "a function value returning "+typeName(function.Returns))
@@ -182,6 +185,26 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 		if err != nil {
 			break
 		}
+		if l.uninitializedInitializer(parameter.initializer) {
+			l.result.Locals[parameter.local].Uninitialized = true
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
+		}
+
+		if assertionInitializer(parameter.initializer) {
+			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
+			if lazyErr != nil {
+				err = lazyErr
+				break
+			}
+			l.result.Locals[parameter.local].Uninitialized = true
+			l.result.Locals[parameter.local].InitializerExpression = sourceExpression(parameter.initializer)
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			fallback := append(prefix, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: value}}})
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
+		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
 			break
@@ -227,8 +250,10 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	// The environment may have grown while the body was lowered (captures are found as they're
 	// read), so it's taken from what's recorded, not from this copy.
 	function.Environment = l.result.Functions[index].Environment
+	function.ForwardedNestedParent = l.result.Functions[index].ForwardedNestedParent
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }

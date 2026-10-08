@@ -1,0 +1,14 @@
+interface Leaf { text: string; }
+interface Root { child: Leaf; }
+function changes(root: Root): void {
+	const child = root.child;
+	const text = child.text;
+	[1].map((n: number): number => {
+		root.child.text = `changed${n}`;
+		return n;
+	});
+	console.log(text);
+}
+const root: Root = { child: { text: `start${0}` } };
+changes(root);
+console.log(root.child.text);

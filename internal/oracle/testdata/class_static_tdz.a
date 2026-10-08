@@ -1,0 +1,10 @@
+function invokeClass(): number {
+	return Stepper.down(3);
+}
+console.log('before');
+console.log(`${invokeClass()}`);
+class Stepper {
+	static down(count: number): number {
+		return count + 1;
+	}
+}

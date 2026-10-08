@@ -1,0 +1,11 @@
+class Stepper {
+	static down(count: number): number {
+		return count + 1;
+	}
+}
+function invokeAlias(count: number): number {
+	return Alias.down(count);
+}
+console.log('before');
+console.log(`${invokeAlias(3)}`);
+const Alias = Stepper;

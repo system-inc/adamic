@@ -14,7 +14,7 @@ import (
 func TestParserRepresentationProbes(t *testing.T) {
 	parallelMarkdown(t)
 	for _, gap := range []struct{ path, stdout, notYet, refused, refusedExact string }{
-		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a function inside a function (a closure)"},
+		{path: "gaps/1_recursive_state.ts", stdout: "35\n35\n", notYet: "a first-class nested function reference from another nested function"},
 		{path: "gaps/2_state_arrow_cycle.ts", stdout: "35\n35\n", refused: "a cycle reference counting can't free"},
 		{path: "gaps/3_recursive_callable.ts", stdout: "1\n0\n"},
 		{path: "gaps/14_missing_path_key.ts", stdout: "key=\"\" present=false\n"},

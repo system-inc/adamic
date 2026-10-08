@@ -1,0 +1,48 @@
+interface MaybeRecord { slot?: number; text?: string }
+function make(): MaybeRecord { return {}; }
+function fill(record: MaybeRecord): void {
+	console.log(`${String(record.slot)}|${record.text ?? 'absent'}|${'slot' in record}`);
+	record.slot = 4;
+	record.text = ['written', 'later'].join('-');
+	console.log(`${record.slot}|${record.text}|${'slot' in record}`);
+}
+fill(make());
+const source: MaybeRecord = {};
+const spread: MaybeRecord = { ...source };
+console.log(Object.keys(spread).join(','));
+fill(spread);
+console.log(`${String(source.slot)}|${Object.keys(source).join(',')}`);
+const empty = {};
+const extended: MaybeRecord = { ...empty };
+fill(extended);
+const copied: MaybeRecord = { ...spread };
+console.log(`${Object.keys(copied).join(',')}|${copied.slot}`);
+const target: MaybeRecord = {};
+Object.assign(target, { slot: 8, text: 'assigned' });
+console.log(`${Object.keys(target).join(',')}|${target.slot}|${target.text}`);
+
+const supplied: MaybeRecord = { ...empty, slot: 9 };
+console.log(`${supplied.slot}|${Object.keys(supplied).join(',')}`);
+const assignedEmpty: MaybeRecord = Object.assign({}, {});
+assignedEmpty.slot = 10;
+console.log(`${assignedEmpty.slot}|${Object.keys(assignedEmpty).join(',')}`);
+interface WithUndefined { slot?: number | undefined; text?: string | undefined }
+const undefinedFields: WithUndefined = {};
+undefinedFields.slot = undefined;
+undefinedFields.text = undefined;
+console.log(`${'slot' in undefinedFields}|${Object.keys(undefinedFields).join(',')}|${String(undefinedFields.slot)}`);
+
+function absent(): MaybeRecord | undefined { return undefined; }
+const absentSpread: MaybeRecord = { ...absent() };
+console.log(`${Object.keys(absentSpread).join(',')}|${'slot' in absentSpread}|${String(absentSpread.slot)}`);
+fill(absentSpread);
+console.log(Object.keys(absentSpread).join(','));
+
+let getterOrder = '';
+const getters = {
+	get '10'(): number { getterOrder += 'ten'; return 10; },
+	get '2'(): number { getterOrder += 'two'; return 2; },
+};
+const getterSpread: { readonly '10': number; readonly '2': number; slot?: number } = { ...getters };
+getterSpread.slot = 11;
+console.log(`${getterOrder}|${Object.keys(getterSpread).join(',')}|${getterSpread.slot}`);

@@ -1,0 +1,4 @@
+const ages: Record<string, number> = {};
+const key: string = 'Kirk';
+console.log(typeof ages[key]);
+function take(value: Function): void {}

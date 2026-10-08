@@ -1,0 +1,15 @@
+function visit(r: Record<string, number>): string {
+ let result = '';
+ for (let key in r) {
+  if (key === 'a') {delete r['a']; delete r['b']; r['b'] = 20; r['0'] = 0; r['new'] = 9;}
+  if (key === 'c') continue;
+  result = result + key + ':' + String(r[key]) + '|';
+ }
+ return result;
+}
+const r: Record<string, number> = {a: 1, b: 2, c: 3};
+console.log(visit(r));
+console.log(String(JSON.stringify(r)));
+function first(r: Record<string, number>): string {for (const k in r) return k; return 'empty';}
+console.log(first(r));
+console.log(first({}));

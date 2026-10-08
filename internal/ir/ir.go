@@ -79,6 +79,14 @@ type Function struct {
 	// captured variables it reaches through its cells, in order.
 	Closure     bool
 	Environment []int
+	// NestedParent is the enclosing function plus one for a named nested declaration.
+	NestedParent int
+	// ForwardedNestedParent identifies a named group called directly from this
+	// anonymous closure. Its complete shared layout is forwarded after lowering.
+	ForwardedNestedParent int
+	// FrameEnvironment is the layout of the single entry allocation for this frame.
+	FrameEnvironment []int
+	NestedFrame      bool
 
 	// MayThrow is a function a throw can leave (docs/memory.md, "Exceptions"): its callers test for
 	// one after each call. Lowering works it out over the call graph once every function is lowered.
@@ -165,8 +173,12 @@ func (t Type) IsReference() bool {
 
 // Local is a variable: its name as written, for reading the output, and its type.
 type Local struct {
-	Name string
-	Type Type
+	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
+	Uninitialized         bool
+	InitializerExpression string
+	Hoisted               bool
+	Name                  string
+	Type                  Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -176,6 +188,15 @@ type Local struct {
 
 	// Captured is a variable some closure reads or writes: it lives in a cell, shared by reference.
 	Captured bool
+	// Preallocated cells exist before their source initializer executes.
+	Preallocated bool
+	// EnvironmentCell is an interior slot of its function's FrameEnvironment.
+	EnvironmentCell bool
+	// NestedFunction is the named declaration this binding holds, plus one.
+	NestedFunction int
+
+	// ExpressionAssigned excludes conditional expression writes from statement liveness and moves.
+	ExpressionAssigned bool
 
 	// Borrowed is a reference parameter the function only looks at: its caller keeps the value alive
 	// for the whole call, so the function neither retains it on entry nor releases it on the way out
@@ -208,9 +229,10 @@ type (
 	// bodies and cyclic module evaluation. JavaScript throws in the temporal dead zone;
 	// Adamic checks it out loud.
 	Read struct {
-		Local   int
-		Of      Type
-		Checked bool
+		Local     int
+		Of        Type
+		Checked   bool
+		Readiness string
 	}
 
 	// Call calls a function. Returns is its result type, 0 for void.
@@ -277,6 +299,7 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -284,6 +307,8 @@ type (
 		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
+		// Missing reserves declared optional fields without making them own properties.
+		Missing []Field
 
 		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
 		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
@@ -299,10 +324,12 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
-		Object   Expression
-		Name     string
-		Of       Type
-		Optional bool
+		// Readiness is the source expression for a checked field read, empty when proven ready.
+		Readiness string
+		Object    Expression
+		Name      string
+		Of        Type
+		Optional  bool
 		// Absent is an optional own field: a shape without it reads as undefined.
 		Absent bool
 		// Class is, when the field is one of a class's, that class's constructor plus one, and 0
@@ -582,6 +609,8 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		// Direct is a sibling code target plus one, sharing Closure as its environment.
+		Direct    int
 		Closure   Expression
 		Arguments []Expression
 		Returns   Type
@@ -766,9 +795,11 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
-	Name    string
-	Value   Expression
-	Private bool
+	// Uninitialized reserves storage without making its typed value readable.
+	Uninitialized bool
+	Name          string
+	Value         Expression
+	Private       bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -1003,18 +1034,24 @@ type (
 		Value  Expression
 	}
 
+	// AllocateEnvironment is one frame allocation site, visible to future placement analysis.
+	AllocateEnvironment struct{ Cells []int }
+
 	// Declare introduces a local with its first value.
 	Declare struct {
-		Local int
-		Value Expression
+		// Uninitialized reserves storage with readiness clear; a nested frame cell may already exist.
+		Uninitialized bool
+		Local         int
+		Value         Expression
 	}
 
 	// Assign gives a local a new value, releasing the old one if it's a string. Checked is as for
 	// Read: a write to a global from inside a function.
 	Assign struct {
-		Local   int
-		Value   Expression
-		Checked bool
+		Local         int
+		Value         Expression
+		Checked       bool
+		Uninitialized bool
 	}
 
 	// Evaluate evaluates an expression for its effects and discards the value: a call as a statement.
@@ -1035,9 +1072,10 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		Object Expression
-		Name   string
-		Value  Expression
+		Uninitialized bool
+		Object        Expression
+		Name          string
+		Value         Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of
@@ -1059,6 +1097,7 @@ type (
 	// the body, or after it when CheckAfter is set), and Update runs after each pass, continue
 	// included.
 	Loop struct {
+		Labels     []string
 		Condition  Expression
 		Body       []Statement
 		Update     []Statement
@@ -1076,6 +1115,7 @@ type (
 	// length is read again before each pass, as JavaScript's array iterator does; over a string, the
 	// elements are its code points, each a string.
 	ForOf struct {
+		Labels   []string
 		Iterable Expression
 		Element  Type
 		Local    int
@@ -1103,10 +1143,11 @@ type (
 		Default []Statement
 	}
 
-	// Depth counts the enclosing loops and switches skipped by a labeled break.
-	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct {
+		Depth int
+		Label string
+	}
+	Continue struct{ Label string }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
@@ -1134,23 +1175,24 @@ type Case struct {
 	Body  []Statement
 }
 
-func (WriteLine) statement()   {}
-func (Declare) statement()     {}
-func (Assign) statement()      {}
-func (Evaluate) statement()    {}
-func (Panic) statement()       {}
-func (SetProperty) statement() {}
-func (SetIndex) statement()    {}
-func (Return) statement()      {}
-func (If) statement()          {}
-func (Loop) statement()        {}
-func (Block) statement()       {}
-func (ForOf) statement()       {}
-func (Switch) statement()      {}
-func (Break) statement()       {}
-func (Continue) statement()    {}
-func (Throw) statement()       {}
-func (Try) statement()         {}
+func (WriteLine) statement()           {}
+func (AllocateEnvironment) statement() {}
+func (Declare) statement()             {}
+func (Assign) statement()              {}
+func (Evaluate) statement()            {}
+func (Panic) statement()               {}
+func (SetProperty) statement()         {}
+func (SetIndex) statement()            {}
+func (Return) statement()              {}
+func (If) statement()                  {}
+func (Loop) statement()                {}
+func (Block) statement()               {}
+func (ForOf) statement()               {}
+func (Switch) statement()              {}
+func (Break) statement()               {}
+func (Continue) statement()            {}
+func (Throw) statement()               {}
+func (Try) statement()                 {}
 
 func (p *Program) HasInheritance() bool {
 	for _, class := range p.Classes {

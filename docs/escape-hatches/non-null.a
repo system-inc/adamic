@@ -1,0 +1,3 @@
+const m = new Map<string, number>();
+const n = m.get('missing')!;
+console.log(`${n + 1}`);

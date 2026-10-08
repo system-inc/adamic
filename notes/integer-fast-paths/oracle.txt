@@ -1,0 +1,29 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_calls.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_calls.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_loops.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_loops.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_nested.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_nested.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_remainder.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_remainder.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_slots.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_calls.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_remainder.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_loops.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_slots.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_nested.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_calls.a (8.33s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_loops.a (8.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_remainder.a (8.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_slots.a (8.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/integer_coverage_nested.a (8.71s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.724s

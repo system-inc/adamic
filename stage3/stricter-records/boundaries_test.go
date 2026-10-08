@@ -24,10 +24,11 @@ func checkedProgram(t *testing.T, source string) string {
 
 func TestRecordBoundaries(t *testing.T) {
 	t.Parallel()
+	// The merged dependency proves mutable records in the native and Node oracle
+	// suites; the readonly slice still refuses the remaining storage boundaries.
 	cases := map[string]string{
 		"record_cast":     `const record: { readonly [key: string]: number } = {}; const fixed = record as {}; console.log("done");`,
 		"nested_cast":     `const outer: { readonly record: { readonly [key: string]: number } } = { record: {} }; const fixed = outer as { readonly record: {} }; console.log("done");`,
-		"mutable":         `const record: { [key: string]: number } = {}; console.log("done");`,
 		"nullable":        `const record: { readonly [key: string]: string | null } = {}; console.log("done");`,
 		"undefined":       `const record: { readonly [key: string]: string | undefined } = {}; console.log("done");`,
 		"recursive":       `interface RecordNode { readonly [key: string]: RecordNode } const record: RecordNode = {}; console.log("done");`,

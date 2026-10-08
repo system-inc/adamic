@@ -1,0 +1,5 @@
+import { value } from './main.a';
+switch (1) {
+  case value: console.log('matched'); break;
+  default: console.log('missed');
+}

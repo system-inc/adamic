@@ -28,7 +28,7 @@ func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
 			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
 		}
-		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
+		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of (adamic/throw-error)"}
 	}
 	value, err := l.expression(thrown)
 	if err != nil {
@@ -50,7 +50,7 @@ func (l *lowering) newError(node *ast.Node) (ir.Expression, error) {
 			return nil, err
 		}
 		if message.Type() != ir.String {
-			return nil, l.notYet(node, "new Error with a message that isn't a string")
+			return nil, l.notYet(node, "new Error with a message that isn't a string (convert the message explicitly, for example new Error(String(value)) for a scalar value)")
 		}
 	}
 	return ir.MakeError{Message: message}, nil
@@ -70,7 +70,7 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 		if declaration := clause.AsCatchClause().VariableDeclaration; declaration != nil {
 			name := declaration.Name()
 			if !ast.IsIdentifier(name) {
-				return nil, l.notYet(name, "a catch that destructures what it caught")
+				return nil, l.notYet(name, "a catch that destructures what it caught (catch one name, narrow it with instanceof Error, then read its fields)")
 			}
 			if l.caught == nil {
 				l.caught = map[*ast.Symbol]bool{}
@@ -157,8 +157,12 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = found || l.throwsOut(node.Catch) || l.throwsOut(node.Finally)
 				return false
 			}
+		case ir.NodeFSFile:
+			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
+		case ir.Defined:
+			found = node.Throws()
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true
@@ -209,8 +213,12 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 			if l.objectCanFreeze() {
 				failing = "a write to a potentially frozen object"
 			}
+		case ir.NodeBufferCall:
+			if node.Function == "hash_update" || node.Function == "hash_digest" {
+				failing = "Hash finalization, whose catchable .code contract is not supported yet"
+			}
 		case ir.ObjectCall:
-			if node.Method == "assign" && l.objectCanFreeze() {
+			if (node.Method == "assign" || node.Method == "optionalDelete") && l.objectCanFreeze() {
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
