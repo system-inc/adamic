@@ -10,6 +10,10 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	ViewOrigins       []Expression
+	ViewContracts     []ViewContract
+	ViewContractTypes map[int]ViewContractID
+
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
@@ -388,6 +392,7 @@ type (
 	ObjectLiteral struct {
 		// Record uses counted own-key storage when indexed aliases can add fields.
 		Record          bool
+		GraphTypes      []int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -411,6 +416,12 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		ViewContract       ViewContractID
+		ViewTypeID         int
+		ViewReceiverTypeID int
+		ViewWhere          string
+		ViewOrdinary       bool
+
 		// View names a required field read whose presence, readiness and representation are checked.
 		View        string
 		ViewType    string
@@ -438,6 +449,8 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
+		GraphTypes []int
+
 		Element  Type
 		Elements []Expression
 		Spread   []bool
@@ -610,6 +623,8 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
+		ViewContract ViewContractID
+
 		CheckedFields bool
 		Value         Expression
 		Field         string
