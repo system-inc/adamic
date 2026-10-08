@@ -1036,6 +1036,9 @@ func (l *lowering) switchStatement(node *ast.Node) ([]ir.Statement, error) {
 			}
 			switch test.(type) {
 			case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
+			case ir.Undefined:
+				// Undefined is a constant; encode absence in the scrutinee representation.
+				test = fit(ir.Undefined{}, value.Type())
 			default:
 				if l.enumMember(clause.AsCaseOrDefaultClause().Expression) == nil {
 					return nil, l.notYet(clause, "a case that isn't a constant")

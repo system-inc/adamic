@@ -9,6 +9,8 @@ repository = Path(__file__).resolve().parents[3]
 logs = Path('/tmp/adamic-switch-case-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
+    ('undefined-string', 'internal/lower/object.go', 'test = fit(ir.Undefined{}, value.Type())', 'test = fit(ir.Undefined{}, value.Type()); if value.Type() == ir.String { test = ir.StringConstant{Index: l.constant("=")} }', 'switch_case_undefined'),
+    ('undefined-pair', 'internal/lower/object.go', 'test = fit(ir.Undefined{}, value.Type())', 'test = fit(ir.Undefined{}, value.Type()); if value.Type().IsMaybe() && value.Type().Present() == ir.Number { test = ir.MaybeOf{Value: ir.NumberConstant{}, Of: value.Type()} }', 'switch_case_undefined'),
     ('optional-tag', 'internal/lower/object.go', 'test = fit(test, value.Type())', 'test = ir.MaybeOf{Of: value.Type()}', 'switch_case_optional_mapping'),
     ('optional-presence', 'internal/lower/object.go', 'test = fit(test, value.Type())', 'test = fit(test, value.Type()); lowered.Value = ir.MaybeOf{Value: ir.NumberConstant{}, Of: value.Type()}', 'switch_case_optional_mapping'),
     ('native-read', 'internal/native/emit_locals.go', 'if read.Checked {', 'if read.Checked && e.program.Locals[read.Local].Ready == 0 {', 'switch_case_read_tdz'),

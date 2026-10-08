@@ -10,7 +10,7 @@ func init() {
 		path    string
 		lowers  bool
 		checked bool
-	}{"internal/oracle/testdata/switch_case_undefined.a", false, false})
+	}{"internal/oracle/testdata/switch_case_undefined.a", true, false})
 }
 
 func TestSwitchCaseUndefinedSource(t *testing.T) {
