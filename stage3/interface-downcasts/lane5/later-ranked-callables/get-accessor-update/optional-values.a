@@ -1,0 +1,27 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Identifier {readonly kind:80;readonly value:number;}
+interface StringLiteral {readonly kind:11;readonly value:number;}
+interface NoSubstitutionTemplateLiteral {readonly kind:15;readonly value:number;}
+interface NumericLiteral {readonly kind:9;readonly value:number;}
+interface ComputedPropertyName {readonly kind:168;readonly value:number;}
+interface PrivateIdentifier {readonly kind:81;readonly value:number;}
+interface BigIntLiteral {readonly kind:10;readonly value:number;}
+type PropertyName =
+    | Identifier
+    | StringLiteral
+    | NoSubstitutionTemplateLiteral
+    | NumericLiteral
+    | ComputedPropertyName
+    | PrivateIdentifier
+    | BigIntLiteral;
+
+
+interface GetAccessorDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ParameterDeclaration {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Block {readonly value:number;}
+interface Base {readonly updateGetAccessorDeclaration:unknown;}
+interface Target {updateGetAccessorDeclaration(node: GetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): GetAccessorDeclaration;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:80,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:11,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:15,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:9,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:168,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:81,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},undefined,{kind:10,value:3},[],undefined,undefined).value}`);console.log(`${context.factory.updateGetAccessorDeclaration({value:1},[{value:2}],{kind:80,value:3},[{value:4}],{value:5},{value:6}).value}`);}
+probe({updateGetAccessorDeclaration:(node:GetAccessorDeclaration,modifiers:readonly ModifierLike[]|undefined,name:PropertyName,parameters:readonly ParameterDeclaration[],type:TypeNode|undefined,body:Block|undefined):GetAccessorDeclaration=>{const modifier=modifiers===undefined?undefined:modifiers[0];const parameter=parameters[0];return {value:node.value+(modifier===undefined?0:modifier.value)+name.value+(parameter===undefined?0:parameter.value)+(type===undefined?0:type.value)+(body===undefined?0:body.value)};}});

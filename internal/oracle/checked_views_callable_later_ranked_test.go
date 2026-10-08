@@ -8,6 +8,11 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"outer-expressions", "restoreOuterExpressions", "7\n", "4\n4\n9\n", "0", "innerExpression.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"get-accessor-update", "updateGetAccessorDeclaration", "21\n", "4\n4\n4\n4\n4\n4\n4\n21\n", "0", "parameter.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"parenthesized-update", "updateParenthesizedExpression", "7\n", "", "0", "node.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"set-accessor-update", "updateSetAccessorDeclaration", "16\n", "4\n4\n4\n4\n4\n4\n4\n16\n", "0", "parameter.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"host-source-files", "getSourceFiles", "3\n", "", "1", "sourceFile.value", "3\n", "0\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"property-declaration", "createPropertyDeclaration", "24\n", "4\n4\n4\n4\n4\n4\n4\n3\n8\n", "0", "modifier.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"qualified-name", "createQualifiedName", "7\n", "7\n7\n7\n7\n", "0", "left.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"import-declaration", "createImportDeclaration", "10\n", "3\n3\n10\n", "0", "moduleSpecifier.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

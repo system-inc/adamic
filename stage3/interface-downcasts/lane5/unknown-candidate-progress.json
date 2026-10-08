@@ -2079,6 +2079,113 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "outer-accessor-parenthesized-host",
+      "pairs": 5,
+      "candidateReads": 45,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "restoreOuterExpressions",
+          "declared_types": [
+            "(outerExpression: Expression | undefined, innerExpression: Expression, kinds?: OuterExpressionKinds | undefined) => Expression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/factory/parenthesizerRules.ts",
+            "line": 448,
+            "column": 24
+          },
+          "rank": 191,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateGetAccessorDeclaration",
+          "declared_types": [
+            "(node: GetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined) => GetAccessorDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 728,
+            "column": 16
+          },
+          "rank": 192,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateParenthesizedExpression",
+          "declared_types": [
+            "(node: ParenthesizedExpression, expression: Expression) => ParenthesizedExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 1095,
+            "column": 16
+          },
+          "rank": 193,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateSetAccessorDeclaration",
+          "declared_types": [
+            "(node: SetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined) => SetAccessorDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/visitorPublic.ts",
+            "line": 739,
+            "column": 16
+          },
+          "rank": 194,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 9940,
+          "type": "TypeCheckerHost",
+          "field": "getSourceFiles",
+          "declared_types": [
+            "() => readonly SourceFile[]"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/checker.ts",
+            "line": 1547,
+            "column": 53
+          },
+          "rank": 196,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

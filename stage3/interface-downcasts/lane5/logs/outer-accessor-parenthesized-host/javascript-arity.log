@@ -1,0 +1,27 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.21s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/outer-expressions/wrong-arity (0.46s)
+        checked_views_callable_later_ranked_test.go:89: gate cache node hit
+        checked_views_callable_later_ranked_test.go:109: gate cache node miss
+        checked_views_callable_later_ranked_test.go:129: backend2 exit 0 stdout "9\n" stderr "" want "restoreOuterExpressions" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.restoreOuterExpressions expected (outerExpression: Expression | undefined, innerExpression: Expression, kinds?: number | undefined) => Expression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/get-accessor-update/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:89: gate cache node hit
+        checked_views_callable_later_ranked_test.go:109: gate cache node miss
+        checked_views_callable_later_ranked_test.go:129: backend2 exit 0 stdout "9\n" stderr "" want "updateGetAccessorDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateGetAccessorDeclaration expected (node: GetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined) => GetAccessorDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/parenthesized-update/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:89: gate cache node hit
+        checked_views_callable_later_ranked_test.go:109: gate cache node miss
+        checked_views_callable_later_ranked_test.go:129: backend2 exit 0 stdout "9\n" stderr "" want "updateParenthesizedExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateParenthesizedExpression expected (node: ParenthesizedExpression, expression: Expression) => ParenthesizedExpression, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/set-accessor-update/wrong-arity (0.43s)
+        checked_views_callable_later_ranked_test.go:89: gate cache node hit
+        checked_views_callable_later_ranked_test.go:109: gate cache node miss
+        checked_views_callable_later_ranked_test.go:129: backend2 exit 0 stdout "9\n" stderr "" want "updateSetAccessorDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: context.factory.updateSetAccessorDeclaration expected (node: SetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined) => SetAccessorDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/host-source-files/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:89: gate cache node hit
+        checked_views_callable_later_ranked_test.go:109: gate cache node miss
+        checked_views_callable_later_ranked_test.go:129: backend2 exit 0 stdout "9\n" stderr "" want "getSourceFiles" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: host.getSourceFiles expected () => readonly SourceFile[], found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=5 misses=5
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.218s
+FAIL

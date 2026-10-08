@@ -1685,6 +1685,111 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 9327
+    },
+    {
+      "rank": 191,
+      "type": "NodeFactory",
+      "field": "restoreOuterExpressions",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/factory/parenthesizerRules.ts",
+        "line": 448,
+        "column": 24
+      },
+      "read": "factory.restoreOuterExpressions",
+      "readKind": "property",
+      "call": "factory.restoreOuterExpressions(expression, updated, OuterExpressionKinds.PartiallyEmittedExpressions)",
+      "utf16Start": 21765,
+      "utf16End": 21796,
+      "fileSha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764",
+      "declaration": "restoreOuterExpressions(outerExpression: Expression | undefined, innerExpression: Expression, kinds?: OuterExpressionKinds): Expression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9480
+    },
+    {
+      "rank": 192,
+      "type": "NodeFactory",
+      "field": "updateGetAccessorDeclaration",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 728,
+        "column": 16
+      },
+      "read": "context.factory.updateGetAccessorDeclaration",
+      "readKind": "property",
+      "call": "context.factory.updateGetAccessorDeclaration(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifierLike),\r\n            Debug.checkDefined(nodeVisitor(node.name, visitor, isPropertyName)),\r\n            visitParameterList(node.parameters, visitor, context, nodesVisitor),\r\n            nodeVisitor(node.type, visitor, isTypeNode),\r\n            visitFunctionBody(node.body!, visitor, context, nodeVisitor),\r\n        )",
+      "utf16Start": 33324,
+      "utf16End": 33368,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateGetAccessorDeclaration(node: GetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): GetAccessorDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8860
+    },
+    {
+      "rank": 193,
+      "type": "NodeFactory",
+      "field": "updateParenthesizedExpression",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1095,
+        "column": 16
+      },
+      "read": "context.factory.updateParenthesizedExpression",
+      "readKind": "property",
+      "call": "context.factory.updateParenthesizedExpression(\r\n            node,\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n        )",
+      "utf16Start": 52337,
+      "utf16End": 52382,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateParenthesizedExpression(node: ParenthesizedExpression, expression: Expression): ParenthesizedExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8964
+    },
+    {
+      "rank": 194,
+      "type": "NodeFactory",
+      "field": "updateSetAccessorDeclaration",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 739,
+        "column": 16
+      },
+      "read": "context.factory.updateSetAccessorDeclaration",
+      "readKind": "property",
+      "call": "context.factory.updateSetAccessorDeclaration(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifierLike),\r\n            Debug.checkDefined(nodeVisitor(node.name, visitor, isPropertyName)),\r\n            visitParameterList(node.parameters, visitor, context, nodesVisitor),\r\n            visitFunctionBody(node.body!, visitor, context, nodeVisitor),\r\n        )",
+      "utf16Start": 33939,
+      "utf16End": 33983,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateSetAccessorDeclaration(node: SetAccessorDeclaration, modifiers: readonly ModifierLike[] | undefined, name: PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined): SetAccessorDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8862
+    },
+    {
+      "rank": 196,
+      "type": "TypeCheckerHost",
+      "field": "getSourceFiles",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 1547,
+        "column": 53
+      },
+      "read": "host.getSourceFiles",
+      "readKind": "property",
+      "call": "host.getSourceFiles()",
+      "utf16Start": 48028,
+      "utf16End": 48047,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "getSourceFiles(): readonly SourceFile[];",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 5045
     }
   ]
 }

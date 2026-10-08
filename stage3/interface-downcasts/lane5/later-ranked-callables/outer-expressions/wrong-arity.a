@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type OuterExpressionKinds=number;
+interface Expression {readonly value:number;}
+interface Base {readonly restoreOuterExpressions:unknown;}
+interface Target {restoreOuterExpressions(outerExpression: Expression | undefined, innerExpression: Expression, kinds?: OuterExpressionKinds): Expression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.restoreOuterExpressions({value:3},{value:4}).value}`);}
+probe({restoreOuterExpressions:():Expression=>({value:9})});

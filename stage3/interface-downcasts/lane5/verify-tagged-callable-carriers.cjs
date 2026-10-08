@@ -21,6 +21,8 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [192, {directory:'get-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
+ [194, {directory:'set-accessor-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral']}],
  [176, {directory:'property-declaration', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral'], tokens:['QuestionToken','ExclamationToken']}],
  [177, {directory:'qualified-name', aliases:['EntityName'], carriers:['Identifier','QualifiedName']}],
  [159, {directory:'parameter-update', aliases:['BindingName','BindingPattern'], carriers:['Identifier','ObjectBindingPattern','ArrayBindingPattern'], tokens:['DotDotDotToken','QuestionToken']}],

@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface SourceFile {readonly value:string;}
+interface Base {readonly getSourceFiles:unknown;}
+interface Target {getSourceFiles(): readonly SourceFile[];}
+function probe(value:Base):void {const host=value as Target;const files=host.getSourceFiles();const sourceFile=files[0];console.log(`${sourceFile===undefined?0:sourceFile.value}`);}
+probe({getSourceFiles:(unused:number):readonly SourceFile[]=>[{value:"9"}]});
