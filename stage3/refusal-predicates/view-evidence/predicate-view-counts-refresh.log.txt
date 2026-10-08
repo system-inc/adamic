@@ -75,7 +75,7 @@
                   125 | static adamic_string * adamic_function_1_show(adamic_maybe_number adamic_local_11_value) {
                       |                                                                   ^
                 1 error generated.
-                
+
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_write_buffer.a (0.70s)
             counts_test.go:201: Lower: /workspace/adamic/internal/oracle/testdata/node_fs_file_write_buffer.a:8:1: stage 0 can't lower writeFileSync: fs option literals containing evaluated expressions; bind a plain options object first yet
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_mkdtemp.a (0.98s)
@@ -90,14 +90,14 @@
                   288 |                 return adamic_temporary_41;
                       |                 ^      ~~~~~~~~~~~~~~~~~~~
                 1 error generated.
-                
+
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_system.a (1.00s)
             counts_test.go:108: native: clang failed: exit status 1
                 /tmp/adamic-gate/adamic-build-671127571/main.c:284:3: error: void function 'adamic_function_5_deleteFile' should not return a value [-Wreturn-mismatch]
                   284 |                 return adamic_temporary_41;
                       |                 ^      ~~~~~~~~~~~~~~~~~~~
                 1 error generated.
-                
+
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_utimes.a (1.05s)
             counts_test.go:113: want an input fixture's counted run to finish, as TestInputAgreesWithNode wants it to on Node: exit 70, stderr "adamic: panic: field read failed: errno.code matches no member of string | undefined; expected string | undefined, found unsupported representation\nadamic: counts: allocations 23 frees 18 retains 3 releases 16 peak 7 regions 0\n"
         --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_fs_file_unlink.a (1.04s)
