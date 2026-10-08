@@ -2059,6 +2059,9 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-control.a | 14 | 14 | 28 | 39 | 13 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-producer.a | 9 | 9 | 19 | 26 | 9 | 0 | 0 | 0 |
+| stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-array-read.a | 14 | 14 | 28 | 39 | 13 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-undefined.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-both.a | 10 | 10 | 24 | 32 | 9 | 0 | 0 | 0 |
 | stage3/interface-downcasts/nullish/maps/entry-nominal-recursive-read.a | 11 | 11 | 24 | 34 | 10 | 0 | 0 | 0 |

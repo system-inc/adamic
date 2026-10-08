@@ -34,7 +34,7 @@ func (e *emitter) mapNominalGraphCertificate(id ir.ViewContractID, value, where 
 			pointer = fmt.Sprintf("%s_fields_%d", table, index)
 			e.declarations = append(e.declarations, "static const adamic_nominal_graph_field "+pointer+"[]={"+strings.Join(fields, ",")+"};")
 		}
-		rows = append(rows, fmt.Sprintf("{%s,%s,%t,%t,%s,%d}", cString(contract.Name), class, nullable, undefined, pointer, len(fields)))
+		rows = append(rows, fmt.Sprintf("{%s,%s,%t,%t,%t,%d,%s,%d}", cString(contract.Name), class, nullable, undefined, contract.Kind == ir.ViewArray, int(contract.Element)-1, pointer, len(fields)))
 	}
 	e.declarations = append(e.declarations, "static const adamic_nominal_graph_schema "+table+"[]={"+strings.Join(rows, ",")+"};")
 	e.line("adamic_nominal_graph_check((const void *)%s,%d,%s,%s);", value, id-1, table, cString(where))

@@ -12,6 +12,8 @@ typedef struct {
  const adamic_class *nominal;
  bool null_allowed;
  bool undefined_allowed;
+ bool array;
+ unsigned int element;
  const adamic_nominal_graph_field *fields;
  size_t field_count;
 } adamic_nominal_graph_schema;

@@ -517,15 +517,19 @@ func TestCheckedViewNominalFieldWidenReadMutants(t *testing.T) {
 }
 
 func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
-	for _, site := range []string{"producer", "read", "null", "shared-schema", "cycle"} {
+	for _, site := range []string{"producer", "read", "null", "shared-schema", "cycle", "array-producer", "array-read", "array-cycle", "array-storage"} {
 		t.Run(site, func(t *testing.T) {
 			fixture := site
+			stage := strings.TrimPrefix(site, "array-")
+			if site == "array-cycle" || site == "array-storage" {
+				fixture = "array-producer"
+			}
 			if site == "null" || site == "cycle" {
 				fixture = "producer"
 			}
 			program, path := interfaceFixture(t, "nullish/maps/entry-nominal-recursive-"+fixture)
 			truth := onNode(t, path)
-			fake, leaf, item := -1, -1, -1
+			fake, leaf, item, children := -1, -1, -1, -1
 			for i, local := range program.Locals {
 				switch local.Name {
 				case "fake":
@@ -534,6 +538,8 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 					leaf = i
 				case "item":
 					item = i
+				case "children":
+					children = i
 				}
 			}
 			changed := false
@@ -543,6 +549,12 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 					continue
 				}
 				name := program.Locals[declaration.Local].Name
+				if site == "array-storage" && name == "children" {
+					declaration.Value = ir.ArrayLiteral{Element: ir.Number, Elements: []ir.Expression{ir.NumberConstant{Value: 7}}}
+					program.Main[i] = declaration
+					changed = true
+					break
+				}
 				if site == "null" && name == "source" {
 					creation, ok := declaration.Value.(ir.MapNew)
 					if !ok {
@@ -554,13 +566,25 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 					changed = true
 					break
 				}
-				if (site == "producer" && name == "item") || (site == "read" && name == "source") {
+				if (stage == "producer" && name == "item") || (stage == "read" && name == "source") {
 					if fake < 0 || leaf < 0 {
 						t.Fatal("missing locals")
 					}
 					mutation := ir.SetProperty{Object: ir.Read{Local: leaf, Of: ir.Object}, Name: "child", Value: ir.Read{Local: fake, Of: ir.Object}}
 					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
 					program.Main = append(program.Main[:i+1], mutation)
+					program.Main = append(program.Main, remaining...)
+					changed = true
+					break
+				}
+				if site == "array-cycle" && name == "source" {
+					if item < 0 || children < 0 {
+						t.Fatal("missing array cycle locals")
+					}
+					corruption := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "children", Define: true, Value: ir.ArrayLiteral{Element: ir.Object, Elements: []ir.Expression{ir.Read{Local: item, Of: ir.Object}}}}
+					cleanup := ir.SetProperty{Object: ir.Read{Local: item, Of: ir.Object}, Name: "children", Define: true, Value: ir.Read{Local: children, Of: ir.Array}}
+					remaining := append([]ir.Statement(nil), program.Main[i+1:]...)
+					program.Main = append(program.Main[:i], corruption, declaration, cleanup)
 					program.Main = append(program.Main, remaining...)
 					changed = true
 					break
@@ -595,12 +619,12 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 			}
 			native, binary := nativelyUncached(t, program)
 			expected := "Map nominal producer failed:"
-			if site == "read" {
+			if stage == "read" {
 				expected = "field read failed:"
 			}
 			for backend, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				t.Logf("%s exit=%d stdout=%q stderr=%q", []string{"native", "released", "JavaScript"}[backend], got.exitCode, got.stdout, got.stderr)
-				if site == "cycle" {
+				if stage == "cycle" {
 					if diff := disagreement(truth, got); diff != "" {
 						t.Fatal(diff)
 					}
@@ -610,7 +634,7 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 					t.Fatalf("recursive nominal obligation ran on: %#v", got)
 				}
 			}
-			if site == "cycle" {
+			if stage == "cycle" {
 				if report := leaks(t, program, binary); report != "" {
 					t.Fatal(report)
 				}
@@ -623,7 +647,7 @@ func TestCheckedViewRecursiveNominalMutants(t *testing.T) {
 func recursiveNominalCounts(t *testing.T) []string {
 	t.Helper()
 	rows := []string{}
-	for _, name := range []string{"recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
+	for _, name := range []string{"recursive-array-control", "recursive-array-producer", "recursive-array-read", "recursive-undefined", "recursive-both", "recursive-read", "recursive-producer", "recursive-shared-schema", "recursive-control", "gap-recursive-read", "gap-recursive-unread"} {
 		row := counted(t, "stage3/interface-downcasts/nullish/maps/entry-nominal-"+name+".a", false, nil, false, false)
 		rows = append(rows, row)
 	}

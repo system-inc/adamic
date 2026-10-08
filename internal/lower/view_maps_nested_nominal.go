@@ -151,12 +151,19 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 	if element == nil {
 		return 0
 	}
+	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+	l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Unsupported: "pending nominal array producer graph"})
+	l.result.NominalEntryContracts[int(target.Id())] = id
 	child := l.mapEntrySlot(node, l.concrete(element))
 	if child == 0 {
 		return 0
 	}
-	of := l.result.ViewContracts[child-1].Of
-	if of != ir.Object && of != ir.Array && !(of == ir.Union && isClassInstance(l.checker.GetNonNullableType(element))) {
+	descriptor := l.result.ViewContracts[child-1]
+	of := descriptor.Of
+	if descriptor.Kind == ir.ViewNullable {
+		descriptor = l.result.ViewContracts[descriptor.Element-1]
+	}
+	if of != ir.Object && of != ir.Array && !(of == ir.Union && (descriptor.Of == ir.Object || descriptor.Of == ir.Array)) {
 		return 0
 	}
 	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), Element: child, ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}
@@ -171,12 +178,12 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 		}
 		contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: field.Name, Contract: slot, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(field)})
 	}
-	l.result.ViewContracts = append(l.result.ViewContracts, contract)
-	return ir.ViewContractID(len(l.result.ViewContracts))
+	l.result.ViewContracts[id-1] = contract
+	return id
 }
 
-// The visited-witness adapter currently covers recursive readonly object paths.
-// Recursive arrays, mutable aggregate edges and recursive class declarations
+// The visited-witness adapter covers recursive readonly object and array paths.
+// Mutable aggregate edges and recursive class declarations
 // retain their existing refusals until their storage producers have this proof.
 func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*checker.Type]bool) bool {
 	target = l.concrete(target)
@@ -191,7 +198,10 @@ func (l *lowering) recursiveNominalObjectPath(target *checker.Type, seen map[*ch
 	if target.Flags()&checker.TypeFlagsObject == 0 {
 		return target.Flags()&checker.TypeFlagsUnion == 0
 	}
-	if l.viewArrayBase(target) != nil || checker.IsTupleType(target) {
+	if base := l.viewArrayBase(target); base != nil {
+		return l.isLibraryType(base, "ReadonlyArray") && l.recursiveNominalObjectPath(l.viewArrayElementType(target), seen)
+	}
+	if checker.IsTupleType(target) {
 		return !l.mapNestedNominalType(target, map[*checker.Type]bool{})
 	}
 	if len(l.checker.GetIndexInfosOfType(target)) != 0 || len(l.checker.GetSignaturesOfType(target, checker.SignatureKindCall)) != 0 {

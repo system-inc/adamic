@@ -32,17 +32,27 @@ void adamic_nominal_graph_check(const void *value,unsigned int root,const adamic
   bool null=item.value==&adamic_null,undefined=item.value==NULL;
   if(null||undefined){if((null&&!schema->null_allowed)||(undefined&&!schema->undefined_allowed))graph_failure(where,schema->name);adamic_release(item.value);continue;}
   const adamic_heap *heap=item.value;
-  if(heap->kind!=adamic_kind_object||(schema->nominal!=NULL&&!adamic_instanceof(item.value,schema->nominal)))graph_failure(where,schema->name);
+  if(heap->kind!=(schema->array?adamic_kind_array:adamic_kind_object)||(schema->nominal!=NULL&&!adamic_instanceof(item.value,schema->nominal)))graph_failure(where,schema->name);
   bool visited=false;
   for(size_t i=0;i<seen_count;i++){if(seen[i].value==item.value&&seen[i].schema==item.schema){visited=true;break;}}
   if(visited){adamic_release(item.value);continue;}
   if(seen_count==seen_capacity)graph_grow(&seen,&seen_capacity);
   seen[seen_count++]=item;
+  if(schema->array) {
+   const adamic_array *array=item.value;
+   if(array->length!=0&&(!array->references||array->element_kind!=10))graph_failure(where,schema->name);
+   for(size_t index=0;index<array->length;index++) {
+    adamic_value *slot=adamic_array_holes_at(array,(double)index);
+    if(slot==NULL)continue;
+    if(work_count==work_capacity)graph_grow(&work,&work_capacity);
+    work[work_count++]=(graph_item){adamic_retain(slot->reference),schema->element};
+   }
+  }
   for(size_t i=0;i<schema->field_count;i++) {
    const adamic_nominal_graph_field *field=&schema->fields[i];
    const adamic_nominal_graph_schema *child=&schemas[field->schema];
    adamic_slot_cache cache={0};
-   adamic_heap *snapshot=adamic_object_nullish_view((const adamic_object *)item.value,field->name,&cache,1u<<4,child->null_allowed,child->undefined_allowed||field->optional,field->optional,false,field->name,child->name);
+   adamic_heap *snapshot=adamic_object_nullish_view((const adamic_object *)item.value,field->name,&cache,1u<<(child->array?5:4),child->null_allowed,child->undefined_allowed||field->optional,field->optional,false,field->name,child->name);
    if(work_count==work_capacity)graph_grow(&work,&work_capacity);
    work[work_count++]=(graph_item){snapshot,field->schema};
   }

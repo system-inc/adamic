@@ -31,7 +31,7 @@
       "production_reaching_view_counts": "unmeasured"
     },
     {
-      "family": "recursive nominal arrays, mutable aggregate cycles and recursive class declarations",
+      "family": "mutable recursive aggregates and recursive class declarations",
       "read": "node.value",
       "outcome": "producer witness coverage not implemented; existing named refusals retained",
       "production_reaching_view_counts": "unmeasured"
@@ -107,6 +107,11 @@
     {
       "family": "nominal class beneath recursive readonly object entries",
       "scope": "readonly structural object cycles and null, undefined and combined-nullish links to finite data classes; iterative owned producer snapshots keyed by object and schema, independent escaped class read checks; eight Node controls and producer/read/null-root/shared-schema payload mutants",
+      "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nominal class beneath recursive readonly reference arrays",
+      "scope": "readonly object/array cycles with nonnullable structural entry elements; iterative owned snapshots check reference storage before slot reads, preserve holes, and recheck escaped class reads; three Node controls, producer/read/scalar-storage payload mutants and a valid object-array back edge",
       "production_reaching_view_counts": "unmeasured"
     }
   ],

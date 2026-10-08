@@ -1,0 +1,26 @@
+{
+  "base": "9d1022cc9",
+  "controls": 3,
+  "mutants": [
+    "nested class lookalike before constructor",
+    "nested class lookalike after constructor at read",
+    "scalar array in reference-array storage"
+  ],
+  "valid_cycle": "object-array back edge terminates and passes leak check after cleanup",
+  "counterfactual": "same producer/read/storage payloads run on in native, released native and JavaScript with nominal checks omitted",
+  "scoped_oracle_seconds": 11.543,
+  "nominal_regression_seconds": 27.941,
+  "remaining_inventory": {
+    "pairs": 2018,
+    "reads": 9101,
+    "certified_remaining": "unmeasured"
+  },
+  "logs": [
+    "proof-and-counts",
+    "physical-storage-mutant",
+    "counterfactual",
+    "compiler",
+    "vet",
+    "nominal-regression"
+  ]
+}

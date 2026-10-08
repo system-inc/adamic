@@ -1201,3 +1201,30 @@ primitive brands remain refused in internal/lower/phantom_brands.go,
 void". The conservative inventory remains 2,018 pairs / 9,101 reads; exact
 production reaching-view discharge is unmeasured. Evidence is in
 recursive-nominal.json and the corresponding compressed logs.
+
+
+October 8: recursive readonly reference-array paths
+
+The visited witness now handles object/array back edges with nonnullable
+structural entry elements. Array descriptors are interned before their element
+is lowered, and incomplete producer schemas remain refused. Native checks
+physical reference storage before reading a slot, retains each work snapshot,
+and skips sparse holes. JavaScript traverses present indices under the same
+schema obligations. Three additional controls match Node and record allocation
+rows with allocations equal to frees. A real object-array back edge terminates
+and passes the leak check after cleanup.
+
+Nested class producer and escaped-read lookalikes, plus a scalar array injected
+into reference-array storage, stop with exit 70 in native, released native and
+JavaScript. All three corrupted payloads run on when nominal checks alone are
+omitted in the scratch counterfactual; no bypass is committed. The complete
+recursive matrix and counts pass in 11.543s; the additional physical-storage
+mutant passes in 0.536s. Existing nominal tests pass in 27.941s and retain the
+entry-live-mutation refusal. Compiler packages pass: IR 0.013s, lower 6.443s,
+native 39.553s, JavaScript 1.212s; scoped vet passes. No full gate is claimed.
+
+Mutable recursive aggregates and recursive class declarations still need their
+own producer/storage proofs. Callable families remain lane 5 dependencies,
+optional/rest tuples remain lane 4c, and required primitive brands keep the
+existing language refusal. The 2,018-pair / 9,101-read inventory and unmeasured
+production discharge remain unchanged. Evidence: recursive-array.json and logs.
