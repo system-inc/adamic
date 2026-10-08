@@ -1,0 +1,8 @@
+import type { HasTypeArguments } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as HasTypeArguments;
+ console.log(`${viewed.kind}`);
+}
+const raw = { kind: 286, typeArguments: 7 };
+read(raw);

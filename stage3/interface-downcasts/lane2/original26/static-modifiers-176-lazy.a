@@ -1,0 +1,8 @@
+import type { ClassStaticBlockDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as ClassStaticBlockDeclaration;
+ console.log(`${viewed.kind}`);
+}
+const raw = { kind: 176, modifiers: 7 };
+read(raw);

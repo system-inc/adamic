@@ -2765,3 +2765,7 @@ Original mapper sources/targets and FlowReduceLabelData antecedents are certifie
 ### Lane 2 ranked group 25 signature arrays
 
 Five original accessor and signature array pairs / fifteen reads are certified with fifty fixtures and five executed element mutants. Finishing controls and mutants pass leak checks; complete original declarations are retained. Lane 2 totals are 192 pairs / 2927 reads, remaining 142 / 262. See stage3/interface-downcasts/lane2/RANKED25-ARRAYS-REPORT.md.
+
+### Lane 2 ranked group 26 modifier and JSX arrays
+
+Four original array pairs / twelve reads are certified with fifty-six fixtures and four executed mutants, including every original HasTypeArguments receiver arm. Finishing controls and mutants pass leak checks. Lane 2 totals are 196 pairs / 2939 reads, remaining 138 / 250. See stage3/interface-downcasts/lane2/RANKED26-ARRAYS-REPORT.md.
