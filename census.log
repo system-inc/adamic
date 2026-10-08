@@ -1,0 +1,5 @@
+measurement	github.com/system-inc/adamic/stage1/cohere/json	TestProfileSnapshotsAgree	TestProfileSnapshotsAgree:0c806cf55aaf661dc1cd0ca6f410d2e8cd783d596f2a608e77da9ec5f091cf66	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+measurement	github.com/system-inc/adamic/internal/native	TestNormalizeLongMeasurements	TestNormalizeLongMeasurements:6dcd1081c12d5b6018fcc9cefc4b64e74675be953be75185fa2be02d217f45de	ADAMIC_NORMALIZE_BENCH_LOG names a writable JSONL output for opt-in long-string timing and RSS observations.
+measurement	github.com/system-inc/adamic/internal/native	TestRecordBenchmark	TestRecordBenchmark:06ee23e4bcdbf34555e793a31d7dc4a10bdb21fb5c9a110c068aa7683ad1f84d	Opt-in benchmark: set ADAMIC_RECORD_BENCH=1 for five-round Node timing comparisons; no timing threshold verifies correctness.
+measurement	github.com/system-inc/adamic/internal/native	TestMeasureClangUnits	TestMeasureClangUnits:03683169fb662d98215fb4465dea1cc535cddd2f3b736fc257b8ceee2618bd70	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+skips=4 required-input=0 unknown=0
