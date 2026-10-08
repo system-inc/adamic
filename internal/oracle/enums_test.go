@@ -3,11 +3,11 @@ package oracle
 import (
 	"fmt"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -114,10 +114,6 @@ func TestEnumSemanticMutants(t *testing.T) {
 
 func TestEnumCleanupMutant(t *testing.T) {
 	t.Parallel()
-	// The oracle uses LeakSanitizer on Linux and the leaks tool on macOS.
-	if runtime.GOOS != "linux" {
-		t.Skip("LeakSanitizer detect_leaks is not supported on this platform")
-	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/enums.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -142,13 +138,23 @@ func TestEnumCleanupMutant(t *testing.T) {
 		t.Fatal(err)
 	}
 	// Dead compiler temporaries may still resemble roots in registers or the returned main stack.
-	// Global roots remain enabled, so the emitted global clearing is still required.
-	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "LSAN_OPTIONS=use_stacks=0:use_registers=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
-	if !strings.Contains(string(result.stderr), "LeakSanitizer: detected memory leaks") {
-		t.Fatalf("enum cleanup mutant not caught: exit %d, stderr %s", result.exitCode, result.stderr)
+	// Keep global roots enabled: the emitted global clearing is still required.
+	report, err := leakcheck.Check(leakcheck.Program{
+		C: code, Sanitized: binary, Counted: filepath.Join(t.TempDir(), "counted"),
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			environment = append(environment, "LSAN_OPTIONS=use_stacks=0:use_registers=0", "UBSAN_OPTIONS=halt_on_error=1")
+			return leakRun(executeWith(t, environment, name, arguments...))
+		},
+	})
+	if err != nil {
+		t.Fatal(err)
 	}
-	if string(result.stdout) != string(onNode(t, path).stdout) {
-		t.Fatal("cleanup mutant must preserve Node stdout")
+	if !strings.Contains(report, "LeakSanitizer: detected memory leaks") && !strings.Contains(report, "heap values leaked:") {
+		t.Fatalf("enum cleanup mutant not caught: %s", report)
 	}
-	t.Log("skipped enum cleanup caught only by LeakSanitizer; Node stdout unchanged")
+	result := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=0", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != string(onNode(t, path).stdout) {
+		t.Fatal("cleanup mutant must finish cleanly and preserve Node stdout")
+	}
+	t.Logf("skipped enum cleanup caught only by leak check; Node stdout unchanged: %s", report)
 }
