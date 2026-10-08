@@ -1,0 +1,6 @@
+interface Declaration { readonly name: string; readonly children: readonly string[]; }
+interface HasModifiers { readonly modifiers: readonly string[]; }
+function declaration(): Declaration & HasModifiers {
+    return { name: ["dec", "laration"].join(""), children: ["child"], modifiers: ["public", "readonly"] };
+}
+console.log(`${declaration().name}:${declaration().modifiers.join("+")}`);
