@@ -459,7 +459,11 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 		// Conditional and logical operands inherit a context even though they
 		// are not direct assignment sites. Query the checker before using the
 		// expression's uninstantiated inferred type as an implied target.
-		contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		if viewSite(node) {
+			contextual = l.checker.GetContextualType(node, checker.ContextFlagsNone)
+		} else if candidate := l.checker.GetContextualType(node, checker.ContextFlagsNone); candidate != nil && len(l.checker.GetSignaturesOfType(l.withoutUndefined(candidate), checker.SignatureKindCall)) > 0 {
+			contextual = candidate
+		}
 		if contextual == nil {
 			// With no type written for it, a value can still be taken into a wider one tsc made: the
 			// union of a conditional's branches reduced to the wider (flag ? dogs : animals is an
@@ -616,7 +620,7 @@ func (l *lowering) impliedTarget(node *ast.Node) *checker.Type {
 			// In particular, && may leave its left operand without a context
 			// and infer a generic result type. Its contextual result is the
 			// actual slot, not a new obligation to accept an unbound T.
-			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil {
+			if contextual := l.checker.GetContextualType(parent, checker.ContextFlagsNone); contextual != nil && len(l.checker.GetSignaturesOfType(l.withoutUndefined(contextual), checker.SignatureKindCall)) > 0 {
 				return contextual
 			}
 			return l.checker.GetTypeAtLocation(parent)
