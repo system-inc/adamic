@@ -1,3 +1,113 @@
+Built: original TrackedSymbol optional forEach consumers through the existing tuple certificate; 2 pairs / 2 candidate reads now certified.
+Commits: starting f753567dd8837e90914e7c229df88d8536a3bf8b; pair 6b58eb3c02d57ea341985643ae9528b5597115ac.
+Checks: outSignature PASS 26.108s; TrackedSymbol PASS 12.566s; tuple counts update/check PASS 32.037s/37.821s; complete counts refresh blocked.
+Mutants: original skip/shape/nested and tracked meaning/guard all fail their semantic oracles; JavaScript catches them before native emission.
+Remaining: 8 candidate pairs / 13 candidate reads; optional/rest Map forms remain refused; exact reaching-view coverage is unmeasured.
+
+Eight tracked-*.a fixtures import unchanged TrackedSymbol from the 78 hashed
+upstream declarations at 050880ce59e30b356b686bd3144efe24f875ebc8. The oracle
+also asserts the full original Symbol field set. Node decides fixture behavior;
+JavaScript, native release and ASan/UBSan match the valid programs and pinned
+refusals. Successful native runs pass the existing leak checker. Controls cover
+nested Symbol.flags, tuple meaning, tuple arity, tuple versus record identity,
+undefined receivers, receiver evaluation once and conditional callback creation.
+
+The minimal statement hook saves receiver?.forEach(callback)'s receiver once
+and guards the existing ArrayVisit; callback creation remains in that branch.
+It handles arrays of required-position tuples only, without null receivers,
+optional calls on the method itself, or thisArg. Other optional calls retain
+refusals. No second tuple representation, constructor or flow graph is added.
+The hook and original counts binding are listed in docs/checked-views-plan.md.
+Twenty original tuple fixture count rows are now recorded, including the twelve
+previous outSignature fixtures. Original counts remeasurement remains opt-in
+with the same external declaration inputs as the existing semantic oracle.
+
+Blocking observations: the required TestCountsAreRecorded refresh fails on
+fixtures outside this unit: ctor_set.a aborts with free(): invalid pointer;
+census_overload_contracts.a refuses excess implementation arguments;
+census_small_boolean.a and nbody_field_values.a refuse template interpolation;
+maybe_number_slots.a has a native argument representation error; and
+require_perf_hooks.a panics in Node.Text on a binding pattern. The three named
+lowering failures reproduce with statements.go restored from the exact starting
+commit using Go's source overlay, which restores the entire production source
+of this checkpoint. The broader lower refusal regression also has three stale
+expectations for already-supported union operations; all three reproduce with
+the starting-source overlay. The relevant optional-call and tuple-storage
+regressions pass (0.136s and 0.319s). No prohibited file was edited, no complete
+package or full gate was run, and no successful complete counts refresh is claimed.
+The tuple-only counts update and check both pass. This report stops at that
+required-check blocker rather than marking the remaining unit complete.
+
+Remaining production candidates: four original numeric-brand pairs / seven
+reads (97898, 97913, 97926, 97931), and four optional-position receiver pairs /
+six reads (95604 fields 0/1; 68230 fields 0/1). A scratch unchanged
+IncrementalBuildInfoEmitSignature probe still refuses its representation at
+stage 0. No required-any numeric brand was substituted or erased. Optional/rest
+Map gap controls pass as named compile refusals, not implementation completion;
+no rest production pair has been found in the supplied inventory.
+
+Commands actually run (all test output redirected to separate log files):
+
+```sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/views-tuples-setup-retry.log 2>&1
+source /workspace/adamic-tools/env.sh
+node stage3/interface-downcasts/tuples/prepare.cjs /tmp/views-tuples-pinned /tmp/views-tuples-original-declarations > /tmp/views-tuples-prepare.log 2>&1
+export ADAMIC_TUPLE_ORIGINAL_DECLS=/tmp/views-tuples-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewTupleOriginalOutSignature$' -count=1 -v -timeout 3m > /tmp/views-tuples-original-baseline.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestCheckedViewTupleOriginalTrackedSymbols$' -count=1 -v -timeout 3m > /tmp/views-tuples-tracked-final.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewMapStorageGaps$/^(optional-tuple|rest-tuple)$' -count=1 -v -timeout 3m > /tmp/views-tuples-map-gaps.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -timeout 15m -args -update-counts > /tmp/views-tuples-counts.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1 -timeout 3m -args -update-counts > /tmp/views-tuples-owned-counts.log 2>&1
+go test ./internal/oracle -run '^TestCheckedViewTupleOriginalCounts$' -count=1 -timeout 3m > /tmp/views-tuples-owned-counts-check.log 2>&1
+go test ./internal/lower -run '^(TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat|TestATupleSeenAsAnArrayIsNotYet)$' -count=1 -v -timeout 3m > /tmp/views-tuples-lower-regression.log 2>&1
+go test ./internal/lower -run '^TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat$/^a_(method|function_value)_called_through' -count=1 -v -timeout 3m > /tmp/views-tuples-optional-call-regression.log 2>&1
+go test ./internal/lower -run '^TestATupleSeenAsAnArrayIsNotYet$' -count=1 -v -timeout 3m > /tmp/views-tuples-storage-regression.log 2>&1
+```
+
+Every mutant is a separate go test ./internal/oracle -count=1 -v -timeout 3m:
+
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=skip with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-wrong-kind-noread$:
+  exits 0 and prints boolean instead of the expected exit-70 named refusal.
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=shape with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-record-noread$:
+  accepts a record and prints object instead of the named tuple refusal.
+- ADAMIC_TUPLE_ORIGINAL_MUTANT=nested with
+  ^TestCheckedViewTupleOriginalOutSignature/emit-helper-wrong$:
+  prints false instead of the named nested-position refusal.
+- ADAMIC_TUPLE_TRACKED_MUTANT=meaning with
+  ^TestCheckedViewTupleOriginalTrackedSymbols/tracked-meaning-wrong$:
+  prints 1 then false and exits 0 instead of the pinned SymbolFlags refusal.
+- ADAMIC_TUPLE_TRACKED_MUTANT=guard with
+  ^TestCheckedViewTupleOriginalTrackedSymbols/tracked-evaluation-undefined$:
+  improperly creates the callback and exits 70 with a TypeError; Node and the
+  unchanged program print only receiver and exit 0. The callback stdout and
+  exit-code oracle catch the missing guard; no clang or sanitizer failure is
+  credited as a mutant kill.
+
+Logs: /tmp/views-tuples-mutant-{skip,shape,nested}.log and
+/tmp/views-tuples-tracked-mutant-{meaning,guard}.log. Starting-source checks:
+/tmp/views-tuples-start-counts-failures.log and
+/tmp/views-tuples-start-lower-failures.log, using
+/tmp/views-tuples-start-overlay.json.
+
+Setup finished successfully after working around the submodule fetch. Its
+initial automatic TypeScript checkout fetched full history and was interrupted
+(exit 143). A racing manual shallow fetch failed with 'shallow file has changed
+since we read it'; sequential exact shallow fetch and checkout of
+cohere/TypeScript d92d9bfee114c80be2c375d72edae966176e3a4f then succeeded.
+Retry timing lines: Node ready 0.033s; Go 0.043s; submodules 0.088s;
+markdown-width skipped, ready 0.090s (step 0.007s); clang 0.258s; Go build
+795.430s; test binaries deferred 795.533s; cache warm 795.535s; done 795.618s.
+nproc=5; cgroup quota=4; Go 1.27.1, clang 20.1.8, Node 24.19.0. The long cold
+build also included redundant initial compilations, which were stopped before
+sequential scoped reruns. No timeout cutoff was used for this checkpoint.
+
+Previous checkpoint report follows unchanged.
+
+---
+
 Built: original EmitSignature field views using lane 1's single tuple certificate path and lane 2 array read hooks.
 Commits: territory b3bc7138; lane 1 merge 13486c7c (includes 65d8a138).
 Checks: original pair oracle PASS 11.507s; scoped IR/lower/native/JavaScript PASS 0.011s/4.593s/39.285s/0.875s.
