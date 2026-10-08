@@ -63,6 +63,12 @@ function supportedExpression(parser: Parser, id: number): boolean {
     }
     return false;
 }
+function supportedList(parser: Parser, id: number): boolean {
+    const list = parser.node(id);
+    if(list.kind !== 'VariableDeclarationList') { return false; }
+    for(const child of list.children) { const declaration = parser.node(child); if(declaration.children.length > 2 || parser.node(declaration.children[0] ?? -1).kind !== 'Identifier' || (declaration.children[1] !== undefined && !supportedExpression(parser, declaration.children[1] ?? -1))) { return false; } }
+    return true;
+}
 function supportedStatement(parser: Parser, id: number): boolean {
     const statement = parser.node(id);
     if(statement.kind === 'FunctionDeclaration') { return supportedFunction(parser, id); }
@@ -70,8 +76,21 @@ function supportedStatement(parser: Parser, id: number): boolean {
     if(statement.kind === 'IfStatement') {
         return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1) && (statement.children[2] === undefined || supportedStatement(parser, statement.children[2] ?? -1));
     }
+    if(statement.kind === 'DoStatement') { return supportedStatement(parser, statement.children[0] ?? -1) && supportedExpression(parser, statement.children[1] ?? -1); }
+    if(statement.kind === 'ForStatement') {
+        const init = statement.slots[0] ?? -1;
+        return (init < 0 || (parser.node(init).kind === 'VariableDeclarationList' ? supportedList(parser, init) : supportedExpression(parser, init))) && statement.slots.slice(1, 3).every((child) => child < 0 || supportedExpression(parser, child)) && supportedStatement(parser, statement.slots[3] ?? -1);
+    }
+    if(statement.kind === 'ForOfStatement' || statement.kind === 'ForInStatement') {
+        const offset = parser.node(statement.children[0] ?? -1).kind === 'AwaitKeyword' ? 1 : 0;
+        const init = statement.children[offset] ?? -1;
+        return (parser.node(init).kind === 'VariableDeclarationList' ? supportedList(parser, init) : supportedTarget(parser, init)) && supportedExpression(parser, statement.children[offset + 1] ?? -1) && supportedStatement(parser, statement.children[offset + 2] ?? -1);
+    }
+    if(statement.kind === 'SwitchStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && parser.node(statement.children[1] ?? -1).children.every((child) => { const clause = parser.node(child); return (clause.kind === 'DefaultClause' || supportedExpression(parser, clause.children[0] ?? -1)) && clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0).every((id) => supportedStatement(parser, id)); }); }
+    if(statement.kind === 'LabeledStatement') { return supportedStatement(parser, statement.children[1] ?? -1); }
+    if(statement.kind === 'TryStatement') { return statement.children.every((child) => { const part = parser.node(child); if(part.kind !== 'CatchClause') { return supportedStatement(parser, child); } const binding = part.children.length > 1 ? parser.node(part.children[0] ?? -1) : undefined; return (binding === undefined || (binding.children.length === 1 && parser.node(binding.children[0] ?? -1).kind === 'Identifier')) && supportedStatement(parser, part.children[part.children.length - 1] ?? -1); }); }
     if(statement.kind === 'WhileStatement') { return supportedExpression(parser, statement.children[0] ?? -1) && supportedStatement(parser, statement.children[1] ?? -1); }
-    if(statement.kind === 'BreakStatement' || statement.kind === 'ContinueStatement') { return statement.children.length === 0; }
+    if(statement.kind === 'BreakStatement' || statement.kind === 'ContinueStatement') { return statement.children.length <= 1; }
         if(statement.kind === 'VariableStatement') {
             const list = parser.node(statement.children[0] ?? -1);
             if(list.kind !== 'VariableDeclarationList') { return false; }
@@ -106,7 +125,7 @@ class StraightLineBuilder {
     readonly arena: HIRArena;
     readonly functionIndex: FunctionIndex;
     current: BasicBlock | undefined;
-    readonly jumps: { readonly breakBlock: BlockIndex; readonly continueBlock: BlockIndex }[] = [];
+    readonly jumps: { readonly label: string; readonly breakBlock: BlockIndex; readonly continueBlock?: BlockIndex }[] = [];
     readonly symbols: SymbolSnapshot | undefined;
     readonly enclosing: StraightLineBuilder | undefined;
     readonly captured: Map<number, PlaceInterface> = new Map<number, PlaceInterface>();
@@ -228,7 +247,10 @@ class StraightLineBuilder {
         return value;
     }
     declarations(id: number): void {
-        const list = this.parser.node(this.parser.node(id).children[0] ?? -1);
+        this.declarationList(this.parser.node(id).children[0] ?? -1);
+    }
+    declarationList(id: number): void {
+        const list = this.parser.node(id);
         const declarationKind = list.semantic === '2' ? 0 : 1;
         for(const declarationId of list.children) {
             const declaration = this.parser.node(declarationId);
@@ -250,7 +272,7 @@ class StraightLineBuilder {
     }
     jump(block: BlockIndex, variant: number): void { this.close({ kind: 'Goto', block, variant }); }
     statements(ids: readonly number[]): void { for(const id of ids) { this.statement(id); } }
-    statement(id: number): void {
+    statement(id: number, label: string = ''): void {
         const node = this.parser.node(id);
         if(node.kind === 'FunctionDeclaration') {
             const value = this.nested(id);
@@ -274,14 +296,16 @@ class StraightLineBuilder {
             this.current = test;
             const value = this.expression(node.children[0] ?? -1);
             this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id });
-            this.current = loop; this.jumps.push({ breakBlock: fallthrough.id, continueBlock: test.id });
+            this.current = loop; this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock: test.id });
             this.statement(node.children[1] ?? -1); this.jumps.pop(); this.jump(test.id, 1);
             this.current = fallthrough;
         }
+        else if(['DoStatement', 'ForStatement', 'ForOfStatement', 'ForInStatement', 'SwitchStatement', 'LabeledStatement', 'TryStatement'].includes(node.kind)) { this.flow(id, label); }
         else if(node.kind === 'BreakStatement' || node.kind === 'ContinueStatement') {
-            const target = this.jumps[this.jumps.length - 1];
+            const name = node.children[0] === undefined ? '' : this.parser.node(node.children[0] ?? -1).text;
+            const target = this.lookupJump(name, node.kind === 'ContinueStatement');
             if(target === undefined) { this.close({ kind: 'Unsupported' }); }
-            else { this.jump(node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock, node.kind === 'BreakStatement' ? 0 : 1); }
+            else { this.jump(node.kind === 'BreakStatement' ? target.breakBlock : target.continueBlock ?? panic('invalid continue target'), node.kind === 'BreakStatement' ? 0 : 1); }
         }
         else if(node.kind === 'ReturnStatement') {
             const expressionId = node.children[0];
@@ -292,6 +316,83 @@ class StraightLineBuilder {
         }
         else if(node.kind === 'ThrowStatement') { this.close({ kind: 'Throw', value: this.expression(node.children[0] ?? -1) }); }
         else if(node.kind === 'ExpressionStatement') { this.expression(node.children[0] ?? -1); }
+    }
+    lookupJump(label: string, continuing: boolean): { readonly label: string; readonly breakBlock: BlockIndex; readonly continueBlock?: BlockIndex } | undefined {
+        for(let index = this.jumps.length - 1; index >= 0; index--) {
+            const target = this.jumps[index] ?? panic('missing jump');
+            if(continuing && target.continueBlock === undefined) { if(label !== '' && target.label === label) { return undefined; } continue; }
+            if(label === '' || target.label === label) { return target; }
+        }
+        return undefined;
+    }
+    forBinding(id: number, value: PlaceInterface): void {
+        const node = this.parser.node(id);
+        if(node.kind !== 'VariableDeclarationList') { this.assign(id, value); return; }
+        for(const child of node.children) { const name = this.parser.node(child).children[0] ?? -1; this.emit({ kind: 'StoreLocal', lvalue: this.bind(name), value, declarationKind: node.semantic === '2' ? 0 : 1 }, name, undefined); }
+    }
+    flow(id: number, label: string): void {
+        const node = this.parser.node(id);
+        if(node.kind === 'LabeledStatement') {
+            const name = this.parser.node(node.children[0] ?? -1).text; const body = node.children[1] ?? -1;
+            if(['WhileStatement', 'DoStatement', 'ForStatement', 'ForOfStatement', 'ForInStatement'].includes(this.parser.node(body).kind)) { this.statement(body, name); return; }
+            const block = this.fn.newBlock('block'); const fallthrough = this.fn.newBlock('block');
+            this.close({ kind: 'Label', block: block.id, fallthrough: fallthrough.id }); this.current = block;
+            this.jumps.push({ label: name, breakBlock: fallthrough.id }); this.statement(body); this.jumps.pop();
+            this.jump(fallthrough.id, 0); this.current = fallthrough; return;
+        }
+        if(node.kind === 'SwitchStatement') {
+            const test = this.expression(node.children[0] ?? -1); const clauses = this.parser.node(node.children[1] ?? -1).children;
+            const fallthrough = this.fn.newBlock('block'); const blocks = clauses.map((_child) => this.fn.newBlock('block').id);
+            const cases: { test: PlaceInterface | undefined; readonly block: BlockIndex }[] = [];
+            for(let index = 0; index < clauses.length; index++) { const clause = this.parser.node(clauses[index] ?? -1); cases.push({ test: clause.kind === 'DefaultClause' ? undefined : this.expression(clause.children[0] ?? -1), block: blocks[index] ?? panic('missing case block') }); }
+            this.close({ kind: 'Switch', testPlace: test, cases, fallthrough: fallthrough.id }); this.jumps.push({ label, breakBlock: fallthrough.id });
+            for(let index = 0; index < clauses.length; index++) { const clause = this.parser.node(clauses[index] ?? -1); this.current = this.fn.block(blocks[index] ?? panic('missing case block')); this.statements(clause.children.slice(clause.kind === 'CaseClause' ? 1 : 0)); this.jump(blocks[index + 1] ?? fallthrough.id, 0); }
+            this.jumps.pop(); this.current = fallthrough; return;
+        }
+        if(node.kind === 'TryStatement') { this.tryStatement(id); return; }
+        if(node.kind === 'DoStatement') {
+            const loop = this.fn.newBlock('loop'); const test = this.fn.newBlock('block'); const fallthrough = this.fn.newBlock('block');
+            this.close({ kind: 'DoWhile', loop: loop.id, testBlock: test.id, fallthrough: fallthrough.id }); this.current = loop;
+            this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock: test.id }); this.statement(node.children[0] ?? -1); this.jumps.pop();
+            this.jump(test.id, 1); this.current = test;
+            const value = this.expression(node.children[1] ?? -1); this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id }); this.current = fallthrough; return;
+        }
+        if(node.kind === 'ForStatement') {
+            const init = this.fn.newBlock('block'); const test = this.fn.newBlock('block'); const loop = this.fn.newBlock('loop'); const fallthrough = this.fn.newBlock('block');
+            const increment = node.slots[2] ?? -1; const update = increment < 0 ? undefined : this.fn.newBlock('block');
+            if(update === undefined) { this.close({ kind: 'For', init: init.id, testBlock: test.id, loop: loop.id, fallthrough: fallthrough.id }); } else { this.close({ kind: 'For', init: init.id, testBlock: test.id, loop: loop.id, update: update.id, fallthrough: fallthrough.id }); } this.current = init;
+            const initializer = node.slots[0] ?? -1; if(initializer >= 0) { if(this.parser.node(initializer).kind === 'VariableDeclarationList') { this.declarationList(initializer); } else { this.expression(initializer); } }
+            this.jump(test.id, 0); this.current = test; const condition = node.slots[1] ?? -1;
+            if(condition < 0) { this.jump(loop.id, 0); } else { const value = this.expression(condition); this.close({ kind: 'Branch', testPlace: value, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id }); }
+            const continueBlock = update?.id ?? test.id; this.current = loop; this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock }); this.statement(node.slots[3] ?? -1); this.jumps.pop();
+            this.jump(continueBlock, 1); if(update !== undefined) { this.current = update; this.expression(increment); this.jump(test.id, 0); }
+            this.current = fallthrough; return;
+        }
+        const of = node.kind === 'ForOfStatement'; const offset = this.parser.node(node.children[0] ?? -1).kind === 'AwaitKeyword' ? 1 : 0;
+        const init = this.fn.newBlock(of ? 'loop' : 'block'); const test = of ? this.fn.newBlock('loop') : init; const loop = this.fn.newBlock('loop'); const fallthrough = this.fn.newBlock('block');
+        if(of) { this.close({ kind: 'ForOf', init: init.id, testBlock: test.id, loop: loop.id, fallthrough: fallthrough.id }); } else { this.close({ kind: 'ForIn', init: init.id, loop: loop.id, fallthrough: fallthrough.id }); }
+        this.current = init; const collectionId = node.children[offset + 1] ?? -1; const collection = this.expression(collectionId);
+        const iterator = of ? this.emit({ kind: 'GetIterator', value: collection }, collectionId, undefined) : undefined;
+        let next: PlaceInterface;
+        if(iterator !== undefined) { this.jump(test.id, 0); this.current = test; next = this.emit({ kind: 'IteratorNext', iterator, collection }, id, undefined); }
+        else { next = this.emit({ kind: 'NextPropertyOf', value: collection }, id, undefined); }
+        this.close({ kind: 'Branch', testPlace: next, consequent: loop.id, alternate: fallthrough.id, fallthrough: fallthrough.id });
+        this.current = loop; this.forBinding(node.children[offset] ?? -1, next); this.jumps.push({ label, breakBlock: fallthrough.id, continueBlock: test.id }); this.statement(node.children[offset + 2] ?? -1); this.jumps.pop();
+        this.jump(test.id, 1); this.current = fallthrough;
+    }
+    tryStatement(id: number): void {
+        const node = this.parser.node(id); const body = this.fn.newBlock('block'); const fallthrough = this.fn.newBlock('block');
+        const catchId = node.children.find((child) => this.parser.node(child).kind === 'CatchClause');
+        const finallyId = node.children.slice(1).find((child) => this.parser.node(child).kind === 'Block');
+        const finalBlock = finallyId === undefined ? undefined : this.fn.newBlock('block'); const normal = finalBlock ?? fallthrough; const handler = this.fn.newBlock('catch');
+        let binding: PlaceInterface | undefined;
+        if(catchId !== undefined) { const clause = this.parser.node(catchId); if(clause.children.length > 1) { binding = this.bind(this.parser.node(clause.children[0] ?? -1).children[0] ?? -1); } }
+        this.close({ kind: 'Try', block: body.id, handler: handler.id, handlerBinding: binding, fallthrough: fallthrough.id }); this.current = body; this.statement(node.children[0] ?? -1); this.jump(normal.id, 2);
+        this.current = handler;
+        if(catchId !== undefined) { const clause = this.parser.node(catchId); this.statement(clause.children[clause.children.length - 1] ?? -1); this.jump(normal.id, 2); }
+        else if(finalBlock !== undefined) { this.jump(finalBlock.id, 2); } else { this.close({ kind: 'Unreachable' }); }
+        if(finalBlock !== undefined) { this.current = finalBlock; this.statement(finallyId ?? -1); this.jump(fallthrough.id, 2); }
+        this.current = fallthrough;
     }
     valueBranch(id: number, logical: string | undefined): PlaceInterface {
         const node = this.parser.node(id);

@@ -177,6 +177,15 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"do loop loses continue variant", "lower.ts", "this.jump(test.id, 1); this.current = test;", "this.jump(test.id, 0); this.current = test;"},
+	{"for increment jumps past loop", "lower.ts", "this.expression(increment); this.jump(test.id, 0);", "this.expression(increment); this.jump(fallthrough.id, 0);"},
+	{"iterator next loses collection", "lower.ts", "kind: 'IteratorNext', iterator, collection", "kind: 'IteratorNext', iterator, collection: iterator"},
+	{"for in uses return slot as object", "lower.ts", "kind: 'NextPropertyOf', value: collection", "kind: 'NextPropertyOf', value: this.fn.returns"},
+	{"switch cases stop falling through", "lower.ts", "this.jump(blocks[index + 1] ?? fallthrough.id, 0);", "this.jump(fallthrough.id, 0);"},
+	{"label terminal targets exit", "lower.ts", "kind: 'Label', block: block.id, fallthrough: fallthrough.id", "kind: 'Label', block: fallthrough.id, fallthrough: fallthrough.id"},
+	{"try completion loses variant", "lower.ts", "this.statement(node.children[0] ?? -1); this.jump(normal.id, 2);", "this.statement(node.children[0] ?? -1); this.jump(normal.id, 0);"},
+	{"for condition disappears", "lower.ts", "const condition = node.slots[1] ?? -1;", "const condition = -1;"},
+
 	{"capture read becomes local", "lower.ts", "kind: 'LoadContext', place:", "kind: 'LoadLocal', place:"},
 	{"capture pairing loses outer value", "lower.ts", "const place = this.locals.get(symbol) ?? this.captureOf(symbol);", "const place = this.fn.returns;"},
 	{"contextual outer writes become local", "lower.ts", "kind: this.contextual.has(symbol) ? 'StoreContext' : 'StoreLocal'", "kind: 'StoreLocal'"},

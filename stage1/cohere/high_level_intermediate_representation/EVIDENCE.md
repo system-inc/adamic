@@ -234,3 +234,41 @@ nonzero exit containing `function index` and `out of range`, after successful na
 compilation. This distinguishes a checked-read failure from a compiler refusal.
 The checked-in summary now records the 280-function native certificate. Flow and
 private-corpus exclusions are unchanged. Unit 2 remains incomplete and unpushed.
+
+## Remaining statement flow certificate (Oct 8)
+
+Go lower.go:744–1095 and 1180 (do/for/iterator loops, switch, try and labels)
+now lower into the branded block arena. The whole executed census matches Go on
+Node and native: 311/1,465 original corpus functions (31 more), plus 45/45 probes,
+356/1,510 overall; Flow exclusions and all 45 classified private-corpus skips persist.
+Optional for-header roles are retained separately from canonical parser children.
+
+`HIR_CENSUS_EXPORT=/tmp/hir-flow-certified go test -v -count=1 -timeout=25m
+./stage1/cohere/high_level_intermediate_representation -run '^TestWholeConstructionCensus$'`
+matched the full admitted census on both backends and caught 41 semantic mutants.
+One newly written test-only mutant used the initializer as the condition and tried
+to lower a declaration as an expression; its execution failed and is not evidence.
+Its replacement removes the condition while preserving successful construction:
+`HIR_CENSUS_EXPORT=/tmp/hir-flow-final go test -v -count=1 -timeout=25m
+./stage1/cohere/high_level_intermediate_representation
+-run 'TestWholeConstructionCensus/catches_for_condition_disappears'` passed the
+full census, this corrected mutant and the checked off-by-one FunctionIndex mutant
+on both backends. Thus all 42 retained semantic mutants have executable Node/native
+witnesses. New paths each have a mutant: do continue variant, for increment target,
+iterator collection, for-in object, switch fallthrough, label target, try completion
+variant and omitted for condition. No native/Node gap remains.
+
+`go test -v -count=1 -timeout=10m ./stage1/cohere/high_level_intermediate_representation
+-run 'TestStraightLineOracle|TestResidentSymbolFacts|Test.*Brand'` passed small oracle,
+checker identity/live-native/replay mutants and FunctionIndex/BlockIndex rejection.
+Parser `TestExpressionsAgree` (58 cases, 17,463 canonical bytes, retained mutants)
+and `TestWholeGeneratedAgrees` (68 files, 93,323 bytes) passed on Go/Node/native.
+`TestWholeCompilerAgrees` was skipped: ADAMIC_TYPESCRIPT_SOURCE's required standalone
+pin was unavailable; it is not counted as validation.
+
+The enum-slot diagnostic from explicit `continueBlock: undefined` was ordinary
+port feedback. Go lower.go:982 uses InvalidBlock for a switch's absent continue
+edge. The supported arena record represents this absence by omitting its optional
+BlockIndex field; all real targets retain the whole branded enum. Exact diagnostic:
+`Adamic 0.1 refuses an unproven value assigned to a numeric literal or enum member slot BlockIndex; compare with this literal and return that constant, or widen the slot to the whole numeric enum or number (adamic/enum-literal)`
+No required operation or graph edge was bypassed.

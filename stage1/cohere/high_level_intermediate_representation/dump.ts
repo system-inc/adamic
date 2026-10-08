@@ -62,6 +62,8 @@ function instructionText(instruction: Instruction, arena: HIRArena, fn: HIRFunct
     else if(value.kind === 'StoreGlobal') { payload = `{"Name":${quote(value.name)},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'DeclareLocal') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))}}`; }
     else if(value.kind === 'LoadContext') { payload = `{"Place":${quote(placeText(value.place))}}`; }
+    else if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { payload = `{"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'IteratorNext') { payload = `{"Collection":${quote(placeText(value.collection))},"Iterator":${quote(placeText(value.iterator))}}`; }
     else if(value.kind === 'FunctionExpression') { arena.read(value.functionReference.index); if(fn.functions[value.functionReference.ordinal] !== value.functionReference.index) { panic('function reference ordinal disagrees with arena index'); } payload = `{"Captures":[${value.captures.map((place) => quote(placeText(place))).join(',')}],"Function":${value.functionReference.ordinal}}`; }
     else if(value.kind === 'StoreLocal' || value.kind === 'StoreContext') { payload = `{"Kind":${value.declarationKind},"LValue":${quote(placeText(value.lvalue))},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { payload = `{"LValue":${quote(placeText(value.lvalue))},"Operation":${quote(value.operation)},"Value":${quote(placeText(value.value))}}`; }
@@ -88,6 +90,12 @@ function terminalText(terminal: TerminalType): string {
     if(terminal.kind === 'If' || terminal.kind === 'Branch') { return `{"Alternate":${terminal.alternate},"Consequent":${terminal.consequent},"Fallthrough":${terminal.fallthrough},"Test":${quote(placeText(testPlace(terminal)))}}`; }
     if(terminal.kind === 'Logical') { return `{"Fallthrough":${terminal.fallthrough},"Operator":${quote(terminal.operator ?? panic('missing logical operator'))},"Test":${terminal.testBlock}}`; }
     if(terminal.kind === 'Ternary') { return `{"Fallthrough":${terminal.fallthrough},"Test":${terminal.testBlock}}`; }
-    if(terminal.kind === 'While') { return `{"Fallthrough":${terminal.fallthrough},"Loop":${terminal.loop},"Test":${terminal.testBlock}}`; }
+    if(terminal.kind === 'While' || terminal.kind === 'DoWhile') { return `{"Fallthrough":${terminal.fallthrough},"Loop":${terminal.loop},"Test":${terminal.testBlock}}`; }
+    if(terminal.kind === 'For') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop},"Test":${terminal.testBlock},"Update":${terminal.update ?? 0}}`; }
+    if(terminal.kind === 'ForOf') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop},"Test":${terminal.testBlock}}`; }
+    if(terminal.kind === 'ForIn') { return `{"Fallthrough":${terminal.fallthrough},"Init":${terminal.init},"Loop":${terminal.loop}}`; }
+    if(terminal.kind === 'Label') { return `{"Block":${terminal.block},"Fallthrough":${terminal.fallthrough}}`; }
+    if(terminal.kind === 'Try') { return `{"Block":${terminal.block},"Fallthrough":${terminal.fallthrough},"Handler":${terminal.handler},"HandlerBinding":${terminal.handlerBinding === undefined ? 'null' : quote(placeText(terminal.handlerBinding))}}`; }
+    if(terminal.kind === 'Switch') { const cases = (terminal.cases ?? panic('missing cases')).map((clause) => `{"Block":${clause.block},"Test":${clause.test === undefined ? 'null' : quote(placeText(clause.test))}}`).join(','); return `{"Cases":[${cases}],"Fallthrough":${terminal.fallthrough},"Test":${quote(placeText(testPlace(terminal)))}}`; }
     return '{}';
 }

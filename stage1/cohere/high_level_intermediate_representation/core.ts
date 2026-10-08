@@ -39,6 +39,8 @@ export type ValueType = { readonly kind: 'Primitive'; readonly literal: string }
     | { readonly kind: 'CallExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
     | { readonly kind: 'MethodCall'; receiver: PlaceInterface; property: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
     | { readonly kind: 'NewExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[] }
+    | { readonly kind: 'GetIterator' | 'NextPropertyOf'; value: PlaceInterface }
+    | { readonly kind: 'IteratorNext'; iterator: PlaceInterface; collection: PlaceInterface }
     | { readonly kind: 'FunctionExpression'; readonly functionReference: FunctionReferenceInterface; readonly captures: PlaceInterface[] };
 export class Instruction {
     readonly id: InstructionIndex;
@@ -53,7 +55,7 @@ export class Instruction {
 }
 // A tagged arena record; accessors validate the fields required by each terminal kind.
 export interface TerminalType {
-    readonly kind: 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While';
+    readonly kind: 'Return' | 'Throw' | 'Unreachable' | 'Unsupported' | 'Goto' | 'If' | 'Branch' | 'Logical' | 'Ternary' | 'While' | 'DoWhile' | 'For' | 'ForOf' | 'ForIn' | 'Switch' | 'Label' | 'Try';
     value?: PlaceInterface;
     readonly block?: BlockIndex;
     readonly variant?: number;
@@ -64,6 +66,11 @@ export interface TerminalType {
     readonly fallthrough?: BlockIndex;
     readonly operator?: string;
     readonly loop?: BlockIndex;
+    readonly init?: BlockIndex;
+    readonly update?: BlockIndex;
+    readonly cases?: { test: PlaceInterface | undefined; readonly block: BlockIndex }[];
+    readonly handler?: BlockIndex;
+    handlerBinding?: PlaceInterface | undefined;
 }
 export function testPlace(terminal: TerminalType): PlaceInterface { return terminal.testPlace ?? panic('terminal requires a test place'); }
 export function testBlock(terminal: TerminalType): BlockIndex { return terminal.testBlock ?? panic('terminal requires a test block'); }

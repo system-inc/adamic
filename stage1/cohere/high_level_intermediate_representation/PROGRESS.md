@@ -1,4 +1,23 @@
-# Unit 2 local checkpoint: arena-based closures
+# Unit 2 local checkpoint: remaining statement flow
+
+The statement-flow seam matches **311/1,465 corpus functions** on Node and native,
+up **31** from the arena checkpoint, plus **45/45 probes** (356/1,510 overall).
+Active non-Flow coverage is 311/1,442. Newly admitted syntax is do/for (including
+omitted clauses), for-of/in with plain bindings or existing targets, switch dispatch
+and fallthrough, labeled break/continue, and try/catch/finally. Every eligible row
+in the executed construction census is checked; other rows remain explicit declines.
+All 42 retained semantic mutants have executable Node/native witnesses; the checked
+index mutant and brand rejection also pass (see EVIDENCE.md for the corrected
+test-only condition mutant). The parser retains optional for-header roles separately from its canonical child
+list. Its 58 expression fixtures and 68 generated whole-file fixtures agree with Go
+on both backends; the external whole-compiler test was skipped because its required
+standalone TypeScript pin was unavailable. SSA algorithms remain imported.
+
+Unit 2 is unfinished: JSX, remaining expression/pattern/function variants, full
+export provenance, ForFunction/cache/full visitors/cloning and static-components
+still need certification. No plan-branch push is authorized until the finished unit.
+
+# Previous checkpoint: arena-based closures
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
 

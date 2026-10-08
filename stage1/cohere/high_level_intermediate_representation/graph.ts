@@ -25,9 +25,14 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     setPhis: function(block, phis) { block.phis = phis; },
     eachEdge: function(block, visit) {
         const terminal = block.terminal;
-        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
+        if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While' || terminal.kind === 'DoWhile' || terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn' || terminal.kind === 'Switch' || terminal.kind === 'Label' || terminal.kind === 'Try') { visit(terminal.fallthrough ?? panic('missing fallthrough'), 'Fallthrough'); }
         if(terminal.kind === 'Goto') { visit(terminal.block ?? panic('missing goto target'), 'Real'); }
         else if(terminal.kind === 'If' || terminal.kind === 'Branch') { visit(terminal.consequent ?? panic('missing consequent'), 'Real'); visit(terminal.alternate ?? panic('missing alternate'), 'Real'); }
+        else if(terminal.kind === 'DoWhile') { visit(terminal.loop ?? panic('missing do loop'), 'Real'); }
+        else if(terminal.kind === 'For' || terminal.kind === 'ForOf' || terminal.kind === 'ForIn') { visit(terminal.init ?? panic('missing loop init'), 'Real'); }
+        else if(terminal.kind === 'Label') { visit(terminal.block ?? panic('missing label block'), 'Real'); }
+        else if(terminal.kind === 'Try') { visit(terminal.block ?? panic('missing try block'), 'Real'); visit(terminal.handler ?? panic('missing handler'), 'Real'); }
+        else if(terminal.kind === 'Switch') { const cases = terminal.cases ?? panic('missing cases'); for(const clause of cases) { visit(clause.block, 'Real'); } if(!cases.some((clause) => clause.test === undefined)) { visit(terminal.fallthrough ?? panic('missing switch exit'), 'Real'); } }
         else if(terminal.kind === 'Logical' || terminal.kind === 'Ternary' || terminal.kind === 'While') { visit(testBlock(terminal), 'Real'); }
     },
     endsInReturn: (block) => block.terminal.kind === 'Return',
@@ -48,6 +53,8 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
         if(value.kind === 'CallExpression' || value.kind === 'NewExpression') { value.callee = visit(value.callee, 'Use'); }
         if(value.kind === 'MethodCall') { value.receiver = visit(value.receiver, 'Use'); value.property = visit(value.property, 'Use'); }
         if(value.kind === 'CallExpression' || value.kind === 'NewExpression' || value.kind === 'MethodCall') { for(const argument of value.args) { argument.place = visit(argument.place, 'Use'); } }
+        if(value.kind === 'GetIterator' || value.kind === 'NextPropertyOf') { value.value = visit(value.value, 'Use'); }
+        if(value.kind === 'IteratorNext') { value.iterator = visit(value.iterator, 'Use'); value.collection = visit(value.collection, 'Use'); }
         if(value.kind === 'FunctionExpression') { for(let index = 0; index < value.captures.length; index++) { value.captures[index] = visit(value.captures[index] ?? panic('missing capture'), 'Use'); } }
         if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'StoreContext' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
 
@@ -61,8 +68,11 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
     eachTerminalPlace: function(block, visit) {
         const terminal = block.terminal;
         if(terminal.kind === 'Return' || terminal.kind === 'Throw') { terminal.value = visit(terminal.value ?? panic('missing terminal value'), 'Use'); }
-        else if(terminal.kind === 'If' || terminal.kind === 'Branch') { terminal.testPlace = visit(testPlace(terminal), 'Use'); }
+        else if(terminal.kind === 'If' || terminal.kind === 'Branch' || terminal.kind === 'Switch') { terminal.testPlace = visit(testPlace(terminal), 'Use'); }
+        if(terminal.kind === 'Switch') { for(const clause of terminal.cases ?? panic('missing cases')) { if(clause.test !== undefined) { clause.test = visit(clause.test, 'Use'); } } }
+        if(terminal.kind === 'Try' && terminal.handlerBinding !== undefined) { terminal.handlerBinding = visit(terminal.handlerBinding, 'Define'); }
     },
+        // Terminal case/handler operands are owned by their tagged arena record.
     setTerminalOrder: function(block, order) { block.terminalOrder = order; },
     params: (fn) => fn.params,
     returns: (fn) => fn.returns,

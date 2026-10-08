@@ -647,6 +647,7 @@ export class Statements {
         const pos = this.parser.scanner.fullStart;
         this.parser.next();
         const children: number[] = [];
+        let initializer = -1; let condition = -1; let incrementor = -1;
         if(this.parser.kind() === 'AwaitKeyword') {
             children.push(this.parser.token());
         }
@@ -664,6 +665,7 @@ export class Statements {
                     : this.parser.rootExpression(),
             );
         }
+        if(children.length > 0 && this.parser.node(children[children.length - 1] ?? -1).kind !== 'AwaitKeyword') { initializer = children[children.length - 1] ?? -1; }
         this.parser.setIn(old);
         if(this.parser.kind() === 'OfKeyword' || this.parser.kind() === 'InKeyword') {
             const of = this.parser.kind() === 'OfKeyword';
@@ -676,14 +678,18 @@ export class Statements {
         this.parser.expect('SemicolonToken');
         if(this.parser.kind() !== 'SemicolonToken') {
             children.push(this.parser.rootExpression());
+            condition = children[children.length - 1] ?? -1;
         }
         this.parser.expect('SemicolonToken');
         if(this.parser.kind() !== 'CloseParenToken') {
             children.push(this.parser.rootExpression());
+            incrementor = children[children.length - 1] ?? -1;
         }
         this.parser.expect('CloseParenToken');
         children.push(this.statement());
-        return this.make('ForStatement', pos, children);
+        const id = this.make('ForStatement', pos, children);
+        this.parser.node(id).slots = [initializer, condition, incrementor, children[children.length - 1] ?? -1];
+        return id;
     }
     switchStatement(): number {
         const pos = this.parser.scanner.fullStart;

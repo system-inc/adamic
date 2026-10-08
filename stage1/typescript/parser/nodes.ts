@@ -10,6 +10,8 @@ export class ParseNode {
     raw = '';
     operator = '';
     semantic = '';
+    // Optional for-header roles, kept separate from the canonical child order/tree dump.
+    slots: number[] = [];
     optional = false;
     literalFlags = 0;
     list = -1;

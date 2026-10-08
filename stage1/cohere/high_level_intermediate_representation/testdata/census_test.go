@@ -141,6 +141,18 @@ func constructionEligible(node *ast.Node) bool {
 	}
 	return constructionStatement(body)
 }
+func constructionInitializer(node *ast.Node) bool {
+	if node.Kind != ast.KindVariableDeclarationList {
+		return constructionTarget(node) || constructionExpression(node)
+	}
+	for _, decl := range node.AsVariableDeclarationList().Declarations.Nodes {
+		d := decl.AsVariableDeclaration()
+		if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
+			return false
+		}
+	}
+	return true
+}
 func constructionStatement(statement *ast.Node) bool {
 	if statement == nil {
 		return false
@@ -163,19 +175,56 @@ func constructionStatement(statement *ast.Node) bool {
 	case ast.KindWhileStatement:
 		x := statement.AsWhileStatement()
 		return constructionExpression(x.Expression) && constructionStatement(x.Statement)
-	case ast.KindBreakStatement:
-		return statement.AsBreakStatement().Label == nil
-	case ast.KindContinueStatement:
-		return statement.AsContinueStatement().Label == nil
-	case ast.KindVariableStatement:
-		list := statement.AsVariableStatement().DeclarationList.AsVariableDeclarationList()
-		for _, decl := range list.Declarations.Nodes {
-			d := decl.AsVariableDeclaration()
-			if d.Name().Kind != ast.KindIdentifier || d.Type != nil || (d.Initializer != nil && !constructionExpression(d.Initializer)) {
+	case ast.KindDoStatement:
+		x := statement.AsDoStatement()
+		return constructionExpression(x.Expression) && constructionStatement(x.Statement)
+	case ast.KindForStatement:
+		x := statement.AsForStatement()
+		return (x.Initializer == nil || constructionInitializer(x.Initializer)) && (x.Condition == nil || constructionExpression(x.Condition)) && (x.Incrementor == nil || constructionExpression(x.Incrementor)) && constructionStatement(x.Statement)
+	case ast.KindForOfStatement, ast.KindForInStatement:
+		x := statement.AsForInOrOfStatement()
+		return constructionInitializer(x.Initializer) && constructionExpression(x.Expression) && constructionStatement(x.Statement)
+	case ast.KindSwitchStatement:
+		x := statement.AsSwitchStatement()
+		if !constructionExpression(x.Expression) {
+			return false
+		}
+		for _, clause := range x.CaseBlock.AsCaseBlock().Clauses.Nodes {
+			c := clause.AsCaseOrDefaultClause()
+			if c.Expression != nil && !constructionExpression(c.Expression) {
+				return false
+			}
+			for _, body := range c.Statements.Nodes {
+				if !constructionStatement(body) {
+					return false
+				}
+			}
+		}
+		return true
+	case ast.KindLabeledStatement:
+		return constructionStatement(statement.AsLabeledStatement().Statement)
+	case ast.KindTryStatement:
+		x := statement.AsTryStatement()
+		if !constructionStatement(x.TryBlock) || (x.FinallyBlock != nil && !constructionStatement(x.FinallyBlock)) {
+			return false
+		}
+		if x.CatchClause != nil {
+			c := x.CatchClause.AsCatchClause()
+			if c.VariableDeclaration != nil {
+				d := c.VariableDeclaration.AsVariableDeclaration()
+				if d.Name().Kind != ast.KindIdentifier || d.Type != nil {
+					return false
+				}
+			}
+			if !constructionStatement(c.Block) {
 				return false
 			}
 		}
 		return true
+	case ast.KindBreakStatement, ast.KindContinueStatement:
+		return true
+	case ast.KindVariableStatement:
+		return constructionInitializer(statement.AsVariableStatement().DeclarationList)
 	case ast.KindExpressionStatement:
 		return constructionExpression(statement.AsExpressionStatement().Expression)
 	case ast.KindReturnStatement:
@@ -368,6 +417,15 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function DoLoop(n) { let x = 0; do { x++; if (x === 2) continue; if (x === 3) break; } while (x < n); return x; }",
+		"function ForLoop(n) { let x = 0; for (let i = 0; i < n; i++) { if (i === 2) continue; x += i; } return x; }",
+		"function ForEmpty(n) { for (;;) { if (n) break; return n; } for (; n;) { n--; } for (n = 1;; n++) { break; } return n; }",
+		"function Iterators(values) { let out = 0; for (const value of values) { out += value; } for (let key in values) { out = values[key]; } return out; }",
+		"function IteratorTarget(values, obj) { let value; for (value of values) { if (value) break; } for (obj.key in values) { continue; } return value; }",
+		"function Cases(x) { let y = 0; switch (x) { case 1: y = 1; case 2: y += 2; break; default: y = 3; } switch (y) { case 9: y++; } return y; }",
+		"function Labels(n) { outer: for (; n; n--) { switch (n) { case 1: continue outer; case 2: break; default: break outer; } } done: { if (n) break done; n++; } return n; }",
+		"function Exceptions(fn) { let x = 0; try { x = fn(); } catch (error) { x = error; } finally { x++; } try { fn(); } finally { x++; } try { fn(); } catch { x--; } return x; }",
+
 		"function Captures(x) { const f = () => x + x; return f; }",
 		"function Grandparent(x) { return () => () => x; }",
 		"function ContextWrites(flag) { let x = 1; const read = () => x; if (flag) x = 2; return read; }",

@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 280,
-  "pathProbes": 37,
-  "pathProbesMatched": 37,
+  "constructionCorpusFunctionsMatched": 311,
+  "pathProbes": 45,
+  "pathProbesMatched": 45,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -203,6 +203,15 @@
       ]
     },
     {
+      "key": "128b905969008a5af69498eb93c0f6ecaa99c93f9b190586af1012e0ead7e9c1",
+      "start": 395,
+      "end": 511,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
       "key": "14ace93c10b46bbe92d6989f72c54ece273c3b4b2c850ff57e4cafa79e6feb3e",
       "start": 0,
       "end": 89,
@@ -212,12 +221,30 @@
       ]
     },
     {
+      "key": "14c967288a828c432fd953d105f5673fb192cb9c1af104e5dccbade6d49e68ad",
+      "start": 0,
+      "end": 86,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "14f8a3480f91543d5f25cda3d3440b12bab1a1defb150d3fe94e2aa3b199ea38",
       "start": 83,
       "end": 227,
       "checker": true,
       "calls": [
         "upstream:error.invalid-return-mutable-function-from-hook.js"
+      ]
+    },
+    {
+      "key": "153cac76113d8fd545e092a0280f28abba878a6bf2d575b734f0fd1559015f0c",
+      "start": 0,
+      "end": 78,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -259,6 +286,15 @@
       "checker": true,
       "calls": [
         "upstream:error.todo-allow-assigning-to-inferred-ref-prop-in-callback.js"
+      ]
+    },
+    {
+      "key": "1ced92dc0941f7fae8a2e51adb9a44c6a3602c2f5f4da318b48784b506608245",
+      "start": 0,
+      "end": 76,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -397,12 +433,30 @@
       ]
     },
     {
+      "key": "28cc4914f670ce7d2d69fdada26d1f925245035ceb11a1314ceb4cb9223d6631",
+      "start": 0,
+      "end": 71,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "2b6044fce6a2c99d94b491844d7a40bc94a42712ea8ed3e1236ea3d0fcbf585d",
       "start": 39,
       "end": 77,
       "checker": true,
       "calls": [
         "upstream:error.todo-hoist-function-decls.js/nested"
+      ]
+    },
+    {
+      "key": "2c230253dc0b2f80c65e0c1509d6572a470d1f4f30daf70c49c62d9933be43a6",
+      "start": 0,
+      "end": 74,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -483,6 +537,24 @@
       ]
     },
     {
+      "key": "30b422375717ae533c2f858559df3250d5995bc58be76748f9b5a68280f87fb8",
+      "start": 132,
+      "end": 292,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "30e0612baed599d061f6874c4f6fa7bb010637bc1a34a06b6c4977f95c639f6f",
+      "start": 0,
+      "end": 96,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "30e93f7ac4485564fcf6fa50821932f2146d5e45d0d0283217f9f332fd8ce38a",
       "start": 0,
       "end": 53,
@@ -498,6 +570,24 @@
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91/nested"
+      ]
+    },
+    {
+      "key": "3631e40de6d2e606a26c3eb3e3abbbae6fcc31f0b5a691eae92382ce6d1cc8b5",
+      "start": 0,
+      "end": 67,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
+      "key": "37a1d2713311ff01e913863f2e2882e7e8b9337b95fddf70086b828c6bcbbbcd",
+      "start": 0,
+      "end": 196,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-49d341e5d68f.js"
       ]
     },
     {
@@ -552,6 +642,15 @@
       "checker": true,
       "calls": [
         "prune_non_escaping_scopes_test.go:207/nested"
+      ]
+    },
+    {
+      "key": "3e4bcccf218c48f8ed2eb62a41795149a1a8b4c04a5873cd79364d24028f2a99",
+      "start": 0,
+      "end": 69,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -643,6 +742,15 @@
       ]
     },
     {
+      "key": "472e3ccf68a5d54a3a562cb2ef79696e9a73d084bdc3fc306adc8ea2843aa595",
+      "start": 0,
+      "end": 50,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "47d7ccd78a8ee145e1a50016d3224a6151c30c079bb26c92b98ad0ed3bff7349",
       "start": 0,
       "end": 65,
@@ -676,6 +784,15 @@
       "checker": true,
       "calls": [
         "upstream:error.invalid-reassign-local-in-hook-return-value.js/nested"
+      ]
+    },
+    {
+      "key": "498ecff4932ad38e5d756d3309ff28305ef016f408bd0789fffe8945e77a5ed8",
+      "start": 0,
+      "end": 70,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1040,6 +1157,15 @@
       ]
     },
     {
+      "key": "7181e0776dd7712b7c6a35fbc475c988c3b0620a69b82d4d1b6380f6f399c377",
+      "start": 0,
+      "end": 70,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "71adf394ce8d76d5cf6f4a6bae1b263eca82b154774c5051e6d470be9f602f22",
       "start": 0,
       "end": 104,
@@ -1082,6 +1208,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid-call-phi-possibly-hook.js"
+      ]
+    },
+    {
+      "key": "73ccf4a68bf1c0c4fb548280f7569ba4b9798650a682e6436bd1ed7172db53ef",
+      "start": 0,
+      "end": 68,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1154,6 +1289,15 @@
       "checker": true,
       "calls": [
         "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d952b82c2597.js"
+      ]
+    },
+    {
+      "key": "7b50897762e441358b5e24dcbd74e7845404c641eaef825c5cc5b0704dc6008f",
+      "start": 0,
+      "end": 61,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -1283,6 +1427,15 @@
       ]
     },
     {
+      "key": "829d6ab97ca3c657f3780db4c17d31cd4ec14640e3da0396528b7be56080fec5",
+      "start": 0,
+      "end": 120,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "82ee0e5486087eb2846d99e0bf955c224fc776df36d34f287bd325f86518eeb2",
       "start": 0,
       "end": 92,
@@ -1325,6 +1478,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "85a0254a35c27b6a1f517ecc19ffc34371d43d493ed3ac9782c3adbef3da4f0c",
+      "start": 0,
+      "end": 56,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1679,6 +1841,15 @@
       ]
     },
     {
+      "key": "a27d04a4fe70bbb18eb2ee1961909d6fe29b1c07a3bea9ed289f36a58d03cf31",
+      "start": 0,
+      "end": 101,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "a3a210c987e10a31088ee2f04687cd62e341f34e753c69336acfc9a06d11c6fd",
       "start": 0,
       "end": 74,
@@ -1739,6 +1910,15 @@
       "checker": true,
       "calls": [
         "lower_global_test.go:39"
+      ]
+    },
+    {
+      "key": "a73868815f961094decb628ed585248ab1b9b9f6222746078a3c2cdce7672f13",
+      "start": 0,
+      "end": 133,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-for.js"
       ]
     },
     {
@@ -1823,6 +2003,15 @@
       ]
     },
     {
+      "key": "af7e709c785951a5650965156bf9fdf22d52298e02e6421325e0567172625c5f",
+      "start": 0,
+      "end": 74,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "af9af02470452710a41d685f811650c6f9237e36480b3d5ad284799ccd0e3422",
       "start": 178,
       "end": 212,
@@ -1880,6 +2069,15 @@
       ]
     },
     {
+      "key": "b224546fb9362c61008ee0fe399af337e16a5b88047fc73f1588e0af48b8b10a",
+      "start": 292,
+      "end": 395,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
       "key": "b38a97b95df4346da4b7432db0a1eaf0e56983b8be08e766c31785af17a123d3",
       "start": 288,
       "end": 317,
@@ -1891,6 +2089,15 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:array-pattern-spread-creates-array.js/nested"
+      ]
+    },
+    {
+      "key": "b52050990df19546b61b3eb821643f8521a836db912d0570a876ff39c659aaec",
+      "start": 511,
+      "end": 645,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
       ]
     },
     {
@@ -1993,6 +2200,24 @@
       ]
     },
     {
+      "key": "c216a8cb7650393028337d77ae7bb158e76483bd75df13f640c51d768940a691",
+      "start": 0,
+      "end": 117,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "c2f84809ce28c11cae14aaf95854aaa3edb4fcd26794f3daa041afe057245c19",
+      "start": 0,
+      "end": 99,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
+      ]
+    },
+    {
       "key": "c47587d154997d98ff0cad91168cefae7fa2b8fa54ca693fc4f0309b6e4f1408",
       "start": 87,
       "end": 126,
@@ -2044,6 +2269,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "cbb3016092dc5ca14f23bdbc16141160862c9afded71f003186c68da7a1de3c2",
+      "start": 0,
+      "end": 49,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -2110,6 +2344,15 @@
       "checker": true,
       "calls": [
         "upstream:error.reassign-global-fn-arg.js"
+      ]
+    },
+    {
+      "key": "d20fb5f3e7d44b365341f37b586cb95f068d937e9a470358b765bc975962706e",
+      "start": 0,
+      "end": 81,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -2185,6 +2428,15 @@
       "checker": true,
       "calls": [
         "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "d934b7e6633db6d6539d552c57de3cfd96cb16c5c844f3d89697af15d9d8c9b0",
+      "start": 0,
+      "end": 97,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35"
       ]
     },
     {
@@ -2493,6 +2745,15 @@
       ]
     },
     {
+      "key": "f229ab1e8d04999b26398d7940bd030a4aed679e1de764727e2698a3f90dc0db",
+      "start": 958,
+      "end": 1065,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
       "key": "f375f665a6c0827f966fde854021c2e046d9c43cdea5d8f0e5357fab596ecb52",
       "start": 102,
       "end": 144,
@@ -2535,6 +2796,15 @@
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91/nested/nested"
+      ]
+    },
+    {
+      "key": "f5bce0d124bc4a2cb287a1b4d449122938e183e0f55cfe5be6cff8e945f2aad6",
+      "start": 0,
+      "end": 58,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -2640,6 +2910,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "fda085e73ee5b7a5e1e7c6b93d8ea048f0c0a588420f95be62358b3a03e4b982",
+      "start": 0,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.rules-of-hooks-e29c874aa913.js"
       ]
     },
     {
