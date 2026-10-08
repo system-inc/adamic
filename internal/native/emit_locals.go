@@ -83,7 +83,7 @@ func (e *emitter) checkReady(local int) {
 // checked against the temporal dead zone first.
 func (e *emitter) read(read ir.Read) string {
 	name := e.localName(read.Local)
-	if e.program.Locals[read.Local].Counter {
+	if e.integerCounter(read.Local) {
 		// Read as the double it stands for, which every value it can hold is exactly.
 		return "((double)" + name + ")"
 	}
@@ -138,8 +138,8 @@ func (e *emitter) declareLocal(local int, value string, owned bool) {
 		e.line("%s->ready = true;", e.cellReference(local))
 		return
 	}
-	if declared.Counter {
-		// A whole-number constant within 2^53, which an integer holds exactly (lower/counters.go).
+	if e.integerCounter(local) {
+		// A proven whole-number start within 2^53, which an integer holds exactly.
 		e.line("int64_t %s = (int64_t)%s;", e.localName(local), value)
 		return
 	}

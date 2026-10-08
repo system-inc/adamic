@@ -1,0 +1,20 @@
+// Integer-counter reads include negative indices and the bound; writes exercise conversions.
+function exercise(): void {
+ const bytes = new Uint8Array(3);
+ for (let index = 0; index < bytes.length; index++) { bytes[index] = index === 0 ? index : 300; }
+ for (let index = 0; index <= bytes.length; index++) { console.log(`${bytes[index]}`); }
+ for (let index = -1; index < 0; index++) { console.log(`${bytes[index]}`); }
+ const words = new Uint16Array(3);
+ for (let index = 0; index < words.length; index++) { words[index] = index === 0 ? index : 65537; }
+ for (let index = 0; index <= words.length; index++) { console.log(`${words[index]}`); }
+ for (let index = -1; index < 0; index++) { console.log(`${words[index]}`); }
+ const signed = new Int32Array(3);
+ for (let index = 0; index < signed.length; index++) { signed[index] = index === 0 ? index : 4294967295; }
+ for (let index = 0; index <= signed.length; index++) { console.log(`${signed[index]}`); }
+ for (let index = -1; index < 0; index++) { console.log(`${signed[index]}`); }
+ const floats = new Float64Array(3);
+ for (let index = 0; index < floats.length; index++) { floats[index] = index === 0 ? index : -0.5; }
+ for (let index = 0; index <= floats.length; index++) { console.log(`${floats[index]}`); }
+ for (let index = -1; index < 0; index++) { console.log(`${floats[index]}`); }
+}
+exercise();

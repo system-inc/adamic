@@ -15,7 +15,7 @@ func (e *emitter) arrayIndexSlot(expression ir.ArrayIndex) string {
 	lookup := "adamic_array_at"
 	if expression.Relative {
 		lookup = "adamic_array_at_relative"
-	} else if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
+	} else if read, isRead := expression.Index.(ir.Read); isRead && e.integerCounter(read.Local) {
 		lookup, index = "adamic_array_at_integer", e.localName(read.Local)
 	}
 	e.line("adamic_value *%s = %s(%s, %s);", slot, lookup, array, index)

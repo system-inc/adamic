@@ -6,7 +6,12 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// counters marks the loop counters the native backend may keep in an integer (ir.Local.Counter).
+// counters marks static integer counters and loop-entry guarded specializations.
+// The static proof below keeps its original refusals. extendedCounter additionally
+// handles nonnegative squared conditions, starts from nonnegative whole-counter
+// products, and whole invariant steps. Unknown invariant numeric locals are checked at
+// loop entry, including the final update's range, with the double loop retained
+// as fallback. Facts derived from a guarded outer loop carry that dependency.
 //
 // A number in JavaScript is a double, and a loop counter is one too. But a counter that starts at a
 // whole number, steps by a whole number, and stops at a bound that's a whole number in a range known
@@ -36,7 +41,7 @@ import (
 // keeps a double, since nothing bounds where it goes. A global counter keeps a double too, since a
 // function may run before its loop has.
 func counters(program *ir.Program) {
-	known := facts{assigned: map[int]bool{}, declared: map[int]ir.Expression{}, counters: map[int]span{}}
+	known := facts{assigned: map[int]bool{}, declared: map[int]ir.Expression{}, counters: map[int]span{}, guarded: map[int]bool{}}
 	for _, function := range program.Functions {
 		findAssigned(function.Body, known.assigned)
 		findDeclared(function.Body, known.declared)
@@ -48,6 +53,7 @@ func counters(program *ir.Program) {
 	mark := func(statements []ir.Statement) {
 		eachBlock(statements, func(block ir.Block) {
 			markCounter(program, block, known)
+			extendedCounter(program, block, known)
 		})
 	}
 	for _, function := range program.Functions {
@@ -62,6 +68,7 @@ type facts struct {
 	assigned map[int]bool
 	declared map[int]ir.Expression
 	counters map[int]span
+	guarded  map[int]bool
 }
 
 // span is the least and the most a counter can be.
@@ -149,7 +156,13 @@ func markCounter(program *ir.Program, block ir.Block, known facts) {
 	if !isWhole {
 		return
 	}
-	program.Locals[counter].Counter = true
+	dependencies := counterDependencies(known, start, condition.Right)
+	if len(dependencies) == 0 {
+		program.Locals[counter].Counter = true
+	} else {
+		program.Locals[counter].CounterGuard = &ir.CounterGuard{Dependencies: dependencies}
+		known.guarded[counter] = true
+	}
 	// A loop in the body that reads the counter, as for (let j = i + 1; ...) does, reads a value in
 	// this range: the body never writes the counter, and runs only while the condition holds. A body
 	// that never runs has a range whose ends cross, which boundRange refuses.

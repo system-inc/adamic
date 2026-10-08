@@ -61,7 +61,7 @@ static double read_element(const adamic_typed_array *array, size_t index) {
 	adamic_unreachable();
 }
 
-static void write_element(adamic_typed_array *array, size_t index, double value) {
+void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index, double value) {
 	if (array->kind == adamic_typed_array_float64) {
 		((double *)array->data)[index] = value;
 		return;
@@ -84,7 +84,7 @@ static void write_element(adamic_typed_array *array, size_t index, double value)
 adamic_typed_array *adamic_typed_array_from_numbers(enum adamic_typed_array_kind kind, const adamic_array *numbers) {
 	adamic_typed_array *array = allocate(kind, numbers->length);
 	for (size_t index = 0; index < numbers->length; index++) {
-		write_element(array, index, numbers->elements[index].number);
+		adamic_typed_array_write_converted(array, index, numbers->elements[index].number);
 	}
 	return array;
 }
@@ -105,7 +105,7 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
 
 void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value) {
 	adamic_typed_array_check_write(array, index);
-	write_element(array, (size_t)index, value);
+	adamic_typed_array_write_converted(array, (size_t)index, value);
 }
 
 double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length; }
@@ -119,7 +119,7 @@ static size_t relative(double index, size_t length) {
 adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end) {
 	size_t from = has_start ? relative(start, array->length) : 0;
 	size_t to = has_end ? relative(end, array->length) : array->length;
-	for (size_t index = from; index < to; index++) { write_element(array, index, value); }
+	for (size_t index = from; index < to; index++) { adamic_typed_array_write_converted(array, index, value); }
 	return array;
 }
 

@@ -1,0 +1,32 @@
+date: 2026-10-08T06:37:35Z
+machine: linux/amd64, 5 logical CPUs, INTEL(R) XEON(R) PLATINUM 8573C
+kernel: Linux 6.18.44 x86_64
+adamic: 5212b966
+clang: clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+node: v24.19.0
+runtimes: native, node
+load before: 2.02 1.39 1.02 (1, 5, 15 minutes)
+
+round 1 primes_5m native: 0.038 s, 5.5 MB
+round 1 primes_5m node: 0.137 s, 54.6 MB
+round 2 primes_5m native: 0.050 s, 5.5 MB
+round 2 primes_5m node: 0.125 s, 54.7 MB
+round 3 primes_5m native: 0.042 s, 5.5 MB
+round 3 primes_5m node: 0.138 s, 54.6 MB
+round 4 primes_5m native: 0.042 s, 5.5 MB
+round 4 primes_5m node: 0.150 s, 54.8 MB
+round 5 primes_5m native: 0.041 s, 5.5 MB
+round 5 primes_5m node: 0.139 s, 54.6 MB
+best of 5 interleaved rounds; time is wall clock, memory is peak resident
+
+| benchmark | native time | native memory | node time | node memory | native vs node | same answer |
+|---|---|---|---|---|---|---|
+| primes_5m | 0.038 s | 5.5 MB | 0.125 s | 54.7 MB | 0.31x | yes |
+
+counted native build, run once (adamic build --count; parallel programs use ADAMIC_THREADS=1): heap values and reference-count calls
+
+| benchmark | allocations | frees | retains | releases | peak live | in regions |
+|---|---:|---:|---:|---:|---:|---:|
+| primes_5m | 3 | 3 | 0 | 3 | 2 | 0 |
+
+load after: 2.01 1.41 1.03 (1, 5, 15 minutes)

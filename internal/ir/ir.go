@@ -230,8 +230,12 @@ type Local struct {
 
 	// Counter is a for loop's counter proven to hold only whole numbers no larger than 2^53, each a
 	// double exactly, so the native backend keeps it in an integer and reads it as the same double
-	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole constant step.
+	// (internal/lower/counters.go). Only the loop's update ever writes it, by a whole invariant step.
 	Counter bool
+
+	// CounterGuard is a native-only integer specialization at this local's for
+	// block. The original double block is retained as its fallback.
+	CounterGuard *CounterGuard
 }
 
 // Expression is a value. Evaluating a String expression yields a reference its consumer owns: the
@@ -1255,4 +1259,15 @@ type SourceIdentity struct {
 type MainModule struct {
 	Module     string
 	Statements int
+}
+
+// CounterGuard records the loop-entry conditions for a native integer path.
+// Dependencies must themselves be in their integer paths. A nil Bound means
+// only those dependencies are required; otherwise Bound and Step are pure,
+// loop-invariant numeric expressions validated by internal/lower.
+type CounterGuard struct {
+	Dependencies                 []int
+	Bound, Step                  Expression
+	Ascending, Inclusive, Square bool
+	MaxStep                      float64
 }

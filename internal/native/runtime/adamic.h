@@ -422,6 +422,8 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
 // set_slow is set for what the inline path leaves: a bad index (it panics) or a value that
 // needs ToUint8, ToUint16 or ToInt32's modulo.
 void adamic_typed_array_set_slow(adamic_typed_array *array, double index, double value);
+// Converts the value at an index whose bounds the caller has already checked.
+void adamic_typed_array_write_converted(adamic_typed_array *array, size_t index, double value);
 
 // Element reads and writes are inline, as adamic_array_at is, so a loop over a typed array is a
 // load or a store, not a call. The index test is adamic_array_at's: past the bounds,
@@ -434,6 +436,21 @@ static inline adamic_maybe_number adamic_typed_array_get(const adamic_typed_arra
 	if ((double)whole != index) {
 		return (adamic_maybe_number){false, 0};
 	}
+	switch (array->kind) {
+	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
+	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
+	case adamic_typed_array_int32: return (adamic_maybe_number){true, ((const int32_t *)array->data)[whole]};
+	case adamic_typed_array_float64: break;
+	}
+	return (adamic_maybe_number){true, ((const double *)array->data)[whole]};
+}
+
+// A proven integer counter needs only the bounds check.
+static inline adamic_maybe_number adamic_typed_array_get_integer(const adamic_typed_array *array, int64_t index) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		return (adamic_maybe_number){false, 0};
+	}
+	size_t whole = (size_t)index;
 	switch (array->kind) {
 	case adamic_typed_array_uint8: return (adamic_maybe_number){true, ((const uint8_t *)array->data)[whole]};
 	case adamic_typed_array_uint16: return (adamic_maybe_number){true, ((const uint16_t *)array->data)[whole]};
@@ -476,6 +493,39 @@ static inline void adamic_typed_array_set(adamic_typed_array *array, double inde
 		}
 	}
 	adamic_typed_array_set_slow(array, index, value);
+}
+
+// Integer indices preserve the same panic and value conversion as the double form.
+static inline void adamic_typed_array_set_integer(adamic_typed_array *array, int64_t index, double value) {
+	if (index < 0 || (uint64_t)index >= array->length) {
+		adamic_typed_array_check_write(array, (double)index);
+		return;
+	}
+	size_t whole = (size_t)index;
+	switch (array->kind) {
+	case adamic_typed_array_float64:
+		((double *)array->data)[whole] = value;
+		return;
+	case adamic_typed_array_uint8:
+		if (value > -1.0 && value < 256.0) {
+			((uint8_t *)array->data)[whole] = (uint8_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_uint16:
+		if (value > -1.0 && value < 65536.0) {
+			((uint16_t *)array->data)[whole] = (uint16_t)value;
+			return;
+		}
+		break;
+	case adamic_typed_array_int32:
+		if (value > -2147483649.0 && value < 2147483648.0) {
+			((int32_t *)array->data)[whole] = (int32_t)value;
+			return;
+		}
+		break;
+	}
+	adamic_typed_array_write_converted(array, whole, value);
 }
 double adamic_typed_array_length(const adamic_typed_array *array);
 adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);

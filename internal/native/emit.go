@@ -184,9 +184,11 @@ func cBytes(value string) string {
 }
 
 type emitter struct {
-	program *ir.Program
-	out     strings.Builder
-	indent  int
+	program           *ir.Program
+	counterModes      map[int]bool
+	doubleCounterPath bool
+	out               strings.Builder
+	indent            int
 
 	// reuse is where objects are reused in place (reuse.go), at names the statement being emitted,
 	// where it stands in its slice, and taking is the spread whose replaced fields are being

@@ -111,9 +111,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		e.end()
 	case ir.Assign:
-		if e.program.Locals[statement.Local].Counter {
+		if e.integerCounter(statement.Local) {
 			// The loop's update, counter + step or counter - step, is the only write a counter has, and
-			// its step a whole constant within 2^53 (lower/counters.go), which the cast keeps exactly.
+			// its step whole and invariant within 2^53 (lower/counters.go), which the cast keeps exactly.
 			sum, isSum := statement.Value.(ir.Binary)
 			read, isRead := sum.Left.(ir.Read)
 			if !isSum || (sum.Operator != ir.Add && sum.Operator != ir.Subtract) || !isRead || read.Local != statement.Local {
@@ -168,7 +168,11 @@ func (e *emitter) statement(statement ir.Statement) {
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
 		if statement.Array.Type().IsTypedArray() {
-			e.line("adamic_typed_array_set(%s, %s, %s);", array, index, value)
+			store := "adamic_typed_array_set"
+			if read, isRead := statement.Index.(ir.Read); isRead && e.integerCounter(read.Local) {
+				store, index = "adamic_typed_array_set_integer", e.localName(read.Local)
+			}
+			e.line("%s(%s, %s, %s);", store, array, index, value)
 			e.end()
 			break
 		}
@@ -218,6 +222,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		}
 		e.line("}")
 	case ir.Block:
+		if e.counterBlock(statement) {
+			break
+		}
 		e.line("{")
 		e.nested(statement.Body, nil)
 		e.line("}")
