@@ -1,0 +1,7 @@
+=== RUN   TestUnit6ScopeTerminalFixture
+=== PAUSE TestUnit6ScopeTerminalFixture
+=== CONT  TestUnit6ScopeTerminalFixture
+    stage1_unit6_oracle_test.go:88: Go scope-terminal fixture: built=1 blocks-split=1 phi-operands-rekeyed=0; deterministic before/after framing
+--- PASS: TestUnit6ScopeTerminalFixture (0.00s)
+PASS
+ok  	github.com/system-inc/cohere/internal/lint/ecmascript/high_level_intermediate_representation	0.007s

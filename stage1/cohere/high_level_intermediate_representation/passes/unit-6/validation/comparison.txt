@@ -1,0 +1,10 @@
+=== RUN   TestScopeTerminalReplayContract
+=== PAUSE TestScopeTerminalReplayContract
+=== CONT  TestScopeTerminalReplayContract
+    replay_contract_test.go:125: node: Go input decodes; actual Go scope-terminal output stops at unknown terminal Scope
+    replay_contract_test.go:125: emitted-javascript: Go input decodes; actual Go scope-terminal output stops at unknown terminal Scope
+    replay_contract_test.go:125: native: Go input decodes; actual Go scope-terminal output stops at unknown terminal Scope
+    replay_contract_test.go:127: Unit 6 pass certificate: native=0/1465 Node=0/1465 emitted-JavaScript=0/1465; semantic mutant not run
+--- PASS: TestScopeTerminalReplayContract (31.89s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-6	31.891s

@@ -1,0 +1,11 @@
+hir-v1
+function f other entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+instruction 0 1 0:<unknown>:0:0:0 0:0 ArrayExpression {"Elements":[]}
+terminal 2 Return 0:<unknown>:0:0:0
+scopes -
+end

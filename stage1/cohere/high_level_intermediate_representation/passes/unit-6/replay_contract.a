@@ -1,0 +1,10 @@
+// Dependency reproducer for the owner's Scope terminal and fresh-arena decoder.
+// This runs no unit 6 algorithm and is not a scope-pass certificate.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { readCheckpoint, decodeCheckpoint, writeGraph } from '../../replay/index.ts';
+const argumentsList = programArguments();
+const input = readTextFile(argumentsList[0] ?? panic('missing checkpoint path'));
+if(input.kind === 'Error') { panic(input.message); }
+const checkpoint = readCheckpoint(input.text);
+decodeCheckpoint(checkpoint);
+console.log(writeGraph(checkpoint.graph).slice(0, -1));

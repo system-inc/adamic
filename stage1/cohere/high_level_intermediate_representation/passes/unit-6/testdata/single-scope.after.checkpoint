@@ -1,0 +1,35 @@
+hir-checkpoint-v1
+case	unit6-single-scope	unit6.scope-terminals
+graph-lines 15
+hir-v1
+function f other entry=1 async=0 generator=0
+params 
+context 
+returns 0:<unknown>:0:0:0
+identifier 0 1 
+block 1 block predecessors=
+terminal 1 Scope {"Block":2,"Fallthrough":3,"Scope":1}
+block 2 block predecessors=1
+instruction 0 2 0:<unknown>:0:0:0 0:0 ArrayExpression {"Elements":[]}
+terminal 3 Goto {"Block":3,"Variant":0}
+block 3 block predecessors=2
+terminal 4 Return 0:<unknown>:0:0:0
+scopes -
+end
+identities 1
+identity	$	scope	1
+sidecars 13
+sidecar	input.ast	$	function	-	node	nil
+sidecar	input.ast	$	identifier	0	node	nil
+sidecar	input.ast	$	instruction	0	node	nil
+sidecar	input.checker	$	function	-	available	0
+sidecar	input.identity	$	function	-	next-block	4
+sidecar	input.types	$	identifier	0	alias-present	0
+sidecar	input.types	$	identifier	0	alias-symbol	
+sidecar	input.types	$	identifier	0	type-present	0
+sidecar	input.types	$	identifier	0	type-symbol	
+sidecar	unit6.scopes	$	identifier	0	scope	1
+sidecar	unit6.scopes	$	scope	1	group	1
+sidecar	unit6.scopes	$	scope	1	range	1%00094
+sidecar	unit6.terminals	$	function	-	outcome	1%00091%00090
+end-checkpoint
