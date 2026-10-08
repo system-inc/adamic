@@ -1,0 +1,30 @@
+type Box = { value: number | string | boolean | undefined };
+function make(value: number | string | boolean | undefined): Box { return { value }; }
+const boxes: Box[] = [make(4), make("hello"), make(true), make(undefined)];
+for (const box of boxes) {
+ const value = box.value;
+ console.log(typeof value);
+ if (typeof box.value === "number") console.log(String(box.value + 3));
+ if (typeof box.value === "string") console.log(String(box.value.length));
+ if (typeof box.value === "boolean") console.log(String(box.value));
+ console.log(String(box.value === undefined));
+}
+const scalar = { value: 12 };
+const view: { readonly value: number | string } = scalar;
+const copied = view.value;
+console.log(typeof copied);
+if (typeof copied === "number") console.log(String(copied + 1));
+const mutable = make(2);
+mutable.value = "changed";
+console.log(typeof mutable.value);
+console.log(String(mutable.value.length));
+
+const booleanScalar = { value: true };
+const booleanView: { readonly value: boolean | string } = booleanScalar;
+const booleanCopy = booleanView.value;
+console.log(typeof booleanCopy);
+if (typeof booleanCopy === "boolean") console.log(String(booleanCopy));
+type TextOrObject = { value: string | { count: number } };
+function objectBox(): TextOrObject { return { value: { count: 9 } }; }
+const objectHolder = objectBox();
+if (typeof objectHolder.value !== "string") console.log(String(objectHolder.value.count));

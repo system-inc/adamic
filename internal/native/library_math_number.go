@@ -21,6 +21,16 @@ func (e *emitter) libraryMathCall(call ir.MathCall) (string, bool) {
 }
 
 func (e *emitter) libraryNumberCall(call ir.NumberCall) (string, bool) {
+	if call.Function == "unionHasRepresentation" {
+		value := e.snapshot(ir.Union, e.value(call.Arguments[0]))
+		of := ir.Type(call.Arguments[1].(ir.NumberConstant).Value)
+		kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "map", ir.Closure: "closure"}
+		kind, known := kinds[of]
+		if !known {
+			panic("native: unsupported narrowed union field")
+		}
+		return e.snapshot(ir.Boolean, fmt.Sprintf("(%s != NULL && %s->kind == adamic_kind_%s)", value, value, kind)), true
+	}
 	if call.Function == "toBoolean" {
 		return e.censusToBoolean(call.Arguments[0]), true
 	}

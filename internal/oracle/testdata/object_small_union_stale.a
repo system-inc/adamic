@@ -1,0 +1,11 @@
+type Box = { value: number | string };
+function make(): Box { return { value: 7 }; }
+const shared = make();
+function toText(): void { shared.value = "words".repeat(3); }
+function check(): void {
+ if (typeof shared.value === "number") {
+  toText();
+  console.log(`after toText: ${shared.value + 1}`);
+ }
+}
+check();

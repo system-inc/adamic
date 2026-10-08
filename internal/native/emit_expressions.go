@@ -114,6 +114,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.ObjectLiteral:
 		return e.objectLiteral(expression)
 	case ir.Property:
+		if expression.Of == ir.Union {
+			return e.objectUnionProperty(expression)
+		}
 		if taken, ok := e.take(expression); ok {
 			return taken
 		}

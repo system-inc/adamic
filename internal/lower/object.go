@@ -504,6 +504,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field != nil {
+		if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared == ir.Union {
+			return l.readUnionObjectField(node, property, field.Flags&ast.SymbolFlagsOptional != 0)
+		}
+	}
 	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
 		return property
 	}

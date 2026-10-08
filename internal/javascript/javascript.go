@@ -709,6 +709,29 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.ObjectCall:
 		return "Object." + expression.Method + "(" + e.values(expression.Arguments) + ")"
 	case ir.NumberCall:
+		if expression.Function == "unionHasRepresentation" {
+			of := ir.Type(expression.Arguments[1].(ir.NumberConstant).Value)
+			test := ""
+			switch of {
+			case ir.Number:
+				test = "typeof v === 'number'"
+			case ir.Boolean:
+				test = "typeof v === 'boolean'"
+			case ir.String:
+				test = "typeof v === 'string'"
+			case ir.Array:
+				test = "Array.isArray(v)"
+			case ir.Map:
+				test = "v instanceof Map || v instanceof Set"
+			case ir.Closure:
+				test = "typeof v === 'function' || v instanceof AdamicClosure"
+			case ir.Object:
+				test = "v !== undefined && v !== null && (typeof v === 'object' || typeof v === 'function') && !Array.isArray(v) && !(v instanceof Map) && !(v instanceof Set) && !(v instanceof AdamicClosure)"
+			default:
+				panic("javascript: unsupported narrowed union field")
+			}
+			return "((v) => " + test + ")(" + e.value(expression.Arguments[0]) + ")"
+		}
 		if expression.Function == "toBoolean" {
 			return "Boolean(" + e.values(expression.Arguments) + ")"
 		}

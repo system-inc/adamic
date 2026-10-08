@@ -224,6 +224,10 @@ func (e *emitter) shapeWith(fieldNames []string, fieldTypes []ir.Type, methods [
 	}
 	fields := fieldNames
 	key := strings.Join(names, ",") + "|" + strings.Join(references, ",")
+	// Union field views must distinguish scalar layouts with the same ownership bits.
+	for _, fieldType := range fieldTypes {
+		key += "|" + strconv.Itoa(int(fieldType))
+	}
 	for _, method := range methods {
 		key += fmt.Sprintf("|%s=%d", method.Name, method.Function)
 	}
