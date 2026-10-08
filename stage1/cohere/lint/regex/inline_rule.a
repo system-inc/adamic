@@ -1,0 +1,34 @@
+export const syntaxKinds: readonly number[] = [307];
+// Rule-local predicate over the SourceFile view handed by the comment adapter.
+import { InlineCommentIgnorePattern, inlineDirective } from './no_inline_comments.a';
+import { space } from '../comments.ts';
+export interface InlineCommentView { start: number; end: number; text: string; block: boolean; emptyJsx: boolean; }
+export interface InlineFileView { kind: number; source: string; comments: readonly InlineCommentView[]; }
+export interface InlineFinding { start: number; end: number; id: string; message: string; }
+function trimmed(text: string): string {
+    let start = 0; let end = text.length;
+    while(start < end && space(text[start] ?? '')) start++;
+    while(end > start && space(text[end - 1] ?? '')) end--;
+    return text.slice(start, end);
+}
+export class InlineCommentsRule {
+    readonly ignore: InlineCommentIgnorePattern;
+    constructor(ignorePattern: string) { this.ignore = new InlineCommentIgnorePattern(ignorePattern); }
+    visit(file: InlineFileView): InlineFinding[] {
+        const findings: InlineFinding[] = [];
+        for(const comment of file.comments) {
+            const firstLine = file.source.slice(0, comment.start).lastIndexOf('\n') + 1;
+            const nextLine = file.source.indexOf('\n', comment.end);
+            const preamble = trimmed(file.source.slice(firstLine, comment.start));
+            const postamble = trimmed(file.source.slice(comment.end, nextLine < 0 ? file.source.length : nextLine));
+            if(preamble === '' && postamble === '') continue;
+            const inner = comment.text.slice(2, comment.block && comment.text.endsWith('*/') ? comment.text.length - 2 : comment.text.length);
+            const body = trimmed(inner);
+            if(this.ignore.ignores(body)) continue;
+            if((preamble === '' || preamble === '{') && (postamble === '' || postamble === '}') && comment.emptyJsx) continue;
+            if(inlineDirective(body, comment.block)) continue;
+            findings.push({start:comment.start,end:comment.end,id:'unexpectedInlineComment',message:"This comment shares a line with code. A trailing comment is the first thing lost when a line is wrapped, reordered, or moved, because it belongs to a position rather than to a statement, and it pushes the line past whatever width the rest of the file keeps to. Put it on its own line above the code it describes, where it survives the next edit and where a reader looking for it does not have to scan to the right margin."});
+        }
+        return findings;
+    }
+}

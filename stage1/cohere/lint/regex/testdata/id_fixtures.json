@@ -1,0 +1,2866 @@
+[
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "(num) => { num * num };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "({ prop: obj.longName } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "({ prop: obj.x.y.something } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "abc = d;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { #xyz = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { #xyz() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { method() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { xyz = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "class MyClass { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "export var num = 0;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo(...args) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo([arr]) {}"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo(num = 0) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "function xyz() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "function xyz(abc, de) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import * as something from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import something from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { 'x' as x } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { x as foo } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { x as x } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { x } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "let foo = { [a + b]: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "let foo = { [a]: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "let {a: foo} = bar;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "try { blah(); } catch (err) { /* pass */ }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "unrelatedExpressionThatNeedsToBeIgnored();"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var _a = 2"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var _ad$$ = new $;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var arr = [i,j,f,b]"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var handler = function ($e) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = { 'a': 1, bc: 2 }; obj.tk = obj.a;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = { 'a': 1, bc: 2 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = { abc: 1, de: 2 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = {}; obj['a'] = 2;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var query = location.query.q ? location.query.q : ''"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var query = location.query.q || '';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var xy = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var xyz = new ΣΣ();"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var xyz;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { [a]: prop } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: { b: { c: longName } } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "({ a: obj.x.y.z } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "({ prop: obj.x } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var obj = { [a]: 2 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var obj = { a: 1, bc: 2 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var obj = {}; obj.a = 1; obj.bc = 2;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var {x, y: {z}} = foo;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var {x} = foo;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "({ a: obj.x.y.z } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "({ prop: obj.xxxxx } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var obj = { aaaaa: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var obj = {}; obj.aaaaa = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "[x-z]"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "var x = 1 ;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^A",
+        "^BEFORE_",
+        "^Z"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^BEFORE_",
+        "^A",
+        "^Z"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^BEFORE_",
+        "send$"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^BEFORE_"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 0
+    },
+    "rule": "id-length",
+    "source": "var x = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "foo.$x = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var x = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "let foo = { [a + b]: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "let foo = { [a]: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { a: longEnough } = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "var { a: foo } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "({ prop: o.𐌘 } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "(𐌘) => { 𐌘 * 𐌘 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "class F { #𐌘 = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "class F { #𐌘() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "class F { 𐌘 = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "class F { 𐌘() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "class 𠮟 { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "function f(...𐌘) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "function f([𐌘]) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "function f({𐌘}) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var [ 𐌘 ] = a;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var a = { 𐌘: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var { p: [𐌘]} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var { p: 𐌘} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var { 𐌘 } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var 각 = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var 葛󠄀 = 2"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var 각 = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var 𠮟 = 2"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "export * from 'foo.json' with { type: 'json' }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "export { default } from 'foo.json' with { type: 'json' }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "import foo from 'foo.json' with { type: 'json' }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "import('foo.json', { 'with': { type: 'json' } })"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "import('foo.json', { with: { type } })"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "import('foo.json', { with: { type: 'json' } })"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { #abc = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { #abc() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { abc = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { prop: foo } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "import { longName } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "import { x as bar } from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "var { longName: foo } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 6,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var lalala = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": {
+        "a": true
+      },
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { foo: a } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": {
+        "h": true,
+        "q": true
+      },
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "for (var q, h=0; h < 10; h++) { console.log(h); q++; }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooLong",
+        "message": "Identifier name '_$xt_$' is too long (> 4). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var _$xt_$ = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooLong",
+        "message": "Identifier name '각각' is too long (> 1). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 1,
+      "Minimum": 1
+    },
+    "rule": "id-length",
+    "source": "var 각각 = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'N' is too short (< 3). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^BEFORE_"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function N() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: a} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { x: a} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { ...a } = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { ...a } = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": {
+        "x": true
+      },
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { x: a} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'b' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { a: b } = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'f' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      },
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "function f([a]) {}"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'f' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      },
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "function f(...a) {}"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'i' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "for (var i=0; i < 10; i++) { console.log(i); }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 9
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function x() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 11,
+        "id": "tooLong",
+        "message": "Identifier name '_$x$_t$' is too long (> 4). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 4,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var _$x$_t$ = Foo(42)"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 11,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 10
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var { p: [a] } = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var longName = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "tooLong",
+        "message": "Identifier name 'toString' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var toString;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 11
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "export var x = 0;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var {prop: x} = foo;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 11
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var foo = {x: prop};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = { a: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var obj = { a: 1, bc: 2 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop: a } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { x = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { x() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 13,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import * as x from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function xyz(a) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "({ prop: obj.x } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo(x = 0) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop: [x] } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { 𐌘() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop: 𐌘} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShortPrivate",
+        "message": "Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { #x = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "tooShortPrivate",
+        "message": "Identifier name '#x' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 12
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo { #x() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 7
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "import longName from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo([a]) {}"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo({x}) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop: [[x]] } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'z' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "({ a: obj.x.y.z } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name 'z' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { x as z } from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "({ prop: obj.𐌘 } = {});"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo2 { 𐌘 = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { prop: [𐌘]} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo([𐌘]) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo({𐌘}) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var myObj = { 𐌘: 1 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShortPrivate",
+        "message": "Identifier name '#a' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 14
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Klass { #a = 1; }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShortPrivate",
+        "message": "Identifier name '#𐌘' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo1 { #𐌘() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 16,
+        "id": "tooShortPrivate",
+        "message": "Identifier name '#𐌘' is too short (< 2). A private field name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 13
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class Foo3 { #𐌘 = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 17,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 3). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 16
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "var { longName: a } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 17,
+        "id": "tooShort",
+        "message": "Identifier name 'c' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 16
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: { b: { c, e: longName } } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 17,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 16
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo(...x) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 17,
+        "id": "tooShort",
+        "message": "Identifier name 'z' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 16
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { foo as z } from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 18,
+        "id": "tooLong",
+        "message": "Identifier name 'hasOwnProperty' is too long (> 10). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 10,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var hasOwnProperty;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 18,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 17
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo({x: a, longName}) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 18,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 17
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo({x: a}) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 19,
+        "id": "tooLong",
+        "message": "Identifier name 'abcdefg' is too long (> 3). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { abcdefg = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 19,
+        "id": "tooShort",
+        "message": "Identifier name 'b' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 18
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": {
+        "a": true
+      },
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "function foo({ a: b }) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 19,
+        "id": "tooShort",
+        "message": "Identifier name 'z' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 18
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import { 'foo' as z } from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 19,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 17
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo1(...𐌘) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 2,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 1
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "(a) => { a * a };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooLong",
+        "message": "Identifier name 'BEFORE_send' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function BEFORE_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "import * as longName from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "var { prop: longName } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooLongPrivate",
+        "message": "Identifier name #'abcdefg' is too long (> 3). A private field name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { #abcdefg = 1 }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooLongPrivate",
+        "message": "Identifier name #'abcdefg' is too long (> 3). A private field name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 12
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 3,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Foo { #abcdefg() {} }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooShort",
+        "message": "Identifier name 'd' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 19
+      },
+      {
+        "end": 23,
+        "id": "tooShort",
+        "message": "Identifier name 'e' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 22
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: { b: { c: d, e } } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooShort",
+        "message": "Identifier name 'd' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 19
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: { b: { c: d } } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "tooShort",
+        "message": "Identifier name 'd' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 19
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a: { b: { c: d, e: longName } } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "tooLongPrivate",
+        "message": "Identifier name #'longName' is too long (> 5). A private field name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 14
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "class Klass { #longName = 1; }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 24,
+        "id": "tooLong",
+        "message": "Identifier name 'NOTMATCHED_send' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 9
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": [
+        "^BEFORE_"
+      ],
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function NOTMATCHED_send() {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 24,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 16
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "import { foo as longName } from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 24,
+        "id": "tooShort",
+        "message": "Identifier name 'e' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 23
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "try { blah(); } catch (e) { /* pass */ }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 25,
+        "id": "tooShort",
+        "message": "Identifier name 'e' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 24
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var handler = function (e) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 26,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 3). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 25
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function foo({ longName: a }) {}"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 29,
+        "id": "tooLong",
+        "message": "Identifier name 'longName' is too long (> 5). A name this long is usually carrying context that belongs in its type or its scope rather than in its spelling.",
+        "start": 21
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": true,
+      "Maximum": 5,
+      "Minimum": 3
+    },
+    "rule": "id-length",
+    "source": "function foo({ prop: longName }) {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 29,
+        "id": "tooShort",
+        "message": "Identifier name 'd' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 28
+      },
+      {
+        "end": 32,
+        "id": "tooShort",
+        "message": "Identifier name 'e' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 31
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "function foo({ a: { b: { c: d, e } } }) { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 3,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 1
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "(𐌘) => { 𐌘 * 𐌘 };"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var a = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "obj.a = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var a = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'e' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "obj.e = document.body;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'j' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var j=0; while (j > -10) { console.log(--j); }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var x = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var x = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 5,
+        "id": "tooShort",
+        "message": "Identifier name '각' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var 각 = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 6,
+        "id": "tooShort",
+        "message": "Identifier name 'i' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 5
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var [i] = arr;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 6,
+        "id": "tooShort",
+        "message": "Identifier name '𠮟' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var 𠮟 = 2"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      },
+      {
+        "end": 18,
+        "id": "tooShort",
+        "message": "Identifier name 'd' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 17
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { a, b: { c: d, e: longName } } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": {
+      "CheckProperties": false,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var [ a ] = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var [ a ] = x;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'i' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      },
+      {
+        "end": 9,
+        "id": "tooShort",
+        "message": "Identifier name 'a' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 8
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var [,i,a] = arr;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class x { }"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { x} = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name '각' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": {
+      "CheckProperties": true,
+      "ExceptionPatterns": null,
+      "Exceptions": null,
+      "HasMaximum": false,
+      "Maximum": 0,
+      "Minimum": 2
+    },
+    "rule": "id-length",
+    "source": "var 각 = 1;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 7,
+        "id": "tooShort",
+        "message": "Identifier name '葛󠄀' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 4
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var 葛󠄀 = 2"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 7
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import x from 'module';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "tooShort",
+        "message": "Identifier name 'x' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 7
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "import x from 'y';"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var [ 𐌘 ] = arr;"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "tooShort",
+        "message": "Identifier name '𐌘' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "var { 𐌘 } = {};"
+  },
+  {
+    "file": "/repository/source/IdLength.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "tooShort",
+        "message": "Identifier name '𠮟' is too short (< 2). A name this short carries no information about what it holds, so every reader has to reconstruct that from the surrounding code. Name it for what it is.",
+        "start": 6
+      }
+    ],
+    "options": null,
+    "rule": "id-length",
+    "source": "class 𠮟 { }"
+  }
+]

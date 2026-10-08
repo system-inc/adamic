@@ -1,7 +1,7 @@
 // Matching follows cohere's JavaScript iu pattern with literal terms and decorations.
 // Quoting counts UTF-8 bytes, as cohere does, rather than JS code units.
 import { utf8Length } from 'adamic';
-import { foldPoint, printable } from './unicode.ts';
+import { printable } from './unicode.ts';
 
 export function word(character: string): boolean {
     return (
@@ -62,60 +62,7 @@ export function selfDirective(value: string): boolean {
     }
     return false;
 }
-function decorated(character: string, decoration: string[]): boolean {
-    for(const entry of decoration) {
-        if(foldPoint(character.codePointAt(0) ?? -1) === foldPoint(entry.codePointAt(0) ?? -2)) {
-            return true;
-        }
-    }
-    return false;
-}
-// JavaScript iu boundaries include the long s and Kelvin sign through their ASCII folds.
-function patternWord(character: string): boolean {
-    return character !== '' && word(String.fromCodePoint(foldPoint(character.codePointAt(0) ?? 0)));
-}
-export function matches(value: string, term: string, location: string, decoration: string[]): boolean {
-    // Cohere escapes every decoration, including '-' as \x2d, so none spells a range.
-    let prefix = 0;
-    if(location === 'start') {
-        while(prefix < value.length) {
-            const point = value.codePointAt(prefix) ?? 0;
-            const character = String.fromCodePoint(point);
-            if(!space(character) && !decorated(character, decoration)) {
-                break;
-            }
-            prefix += point > 65535 ? 2 : 1;
-        }
-    }
-    for(let index = 0; index <= (location === 'start' ? prefix : value.length); index++) {
-        // Compare folded scalars directly, without allocating candidate strings.
-        let end = index;
-        let equal = true;
-        for(let cursor = 0; cursor < term.length;) {
-            const expected = term.codePointAt(cursor) ?? 0;
-            const actual = value.codePointAt(end);
-            if(actual === undefined || foldPoint(actual) !== foldPoint(expected)) {
-                equal = false;
-                break;
-            }
-            cursor += expected > 65535 ? 2 : 1;
-            end += actual > 65535 ? 2 : 1;
-        }
-        if(
-            equal &&
-            (location === 'start' ||
-                !word(term[0] ?? '') ||
-                patternWord(value[index - 1] ?? '') !== patternWord(value[index] ?? '')) &&
-            (!word(term[term.length - 1] ?? '') || patternWord(value[end - 1] ?? '') !== patternWord(value[end] ?? ''))
-        ) {
-            return true;
-        }
-        if((value.codePointAt(index) ?? 0) > 65535) {
-            index++;
-        }
-    }
-    return false;
-}
+export { matches } from './regex/no_warning_comments.a';
 export function quote(value: string): string {
     let normalized = '';
     let cursor = 0;

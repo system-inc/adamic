@@ -1,0 +1,13 @@
+// id-length's exceptionPatterns, compiled once per decoded configuration.
+export class IdLengthExceptionPatterns {
+    readonly patterns: RegExp[] = [];
+    constructor(sources: readonly string[]) {
+        for(const source of sources) this.patterns.push(new RegExp(source, 'u'));
+    }
+    allows(name: string): boolean {
+        for(const pattern of this.patterns) {
+            if(pattern.test(name)) return true;
+        }
+        return false;
+    }
+}

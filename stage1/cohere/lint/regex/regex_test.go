@@ -121,24 +121,66 @@ func TestDynamicPatternGap(t *testing.T) {
 	if e != nil {
 		t.Fatal(e)
 	}
-	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-		t.Fatalf("expected named native gap, got %v", e)
+	lowered, e := lower.Lower(context.Background(), p)
+	if e != nil {
+		if !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
+			t.Fatalf("unexpected dynamic RegExp blocker: %v", e)
+		}
+		t.Logf("PENDING emitted JS and native on codex/regex-runtime-compiler: %v", e)
+		return
 	}
-	t.Log(e)
+	directory := t.TempDir()
+	js := filepath.Join(directory, "dynamic.js")
+	binary := filepath.Join(directory, "dynamic")
+	if e := os.WriteFile(js, []byte(javascript.JavaScript(lowered)), 0644); e != nil {
+		t.Fatal(e)
+	}
+	if e := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); e != nil {
+		t.Fatal(e)
+	}
+	for _, actual := range [][]byte{run(t, ".", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), js, "TODO"), run(t, ".", binary, "TODO")} {
+		if !bytes.Equal(actual, out) {
+			t.Fatalf("dynamic constructor differs from Node: %q", actual)
+		}
+	}
+	t.Log("dynamic constructor emitted JS and sanitized native acceptance now green")
 }
 
-func TestOptionDialectGap(t *testing.T) {
+func optionAnswers(t *testing.T, cases string) ([]byte, []byte) {
+	t.Helper()
 	root, _ := filepath.Abs(".")
 	cohere, _ := filepath.Abs("../../../../cohere")
-	goAnswer := run(t, cohere, "go", "run", filepath.Join(root, "testdata/option_dialects.go"))
-	nodeAnswer := run(t, root, "node", filepath.Join(root, "testdata/option_dialects.mjs"))
-	expectedGo := "\\s\tfalse\na$\tfalse\n(?i)todo\ttrue\n\\p{Greek}\ttrue\na\\z\ttrue\n(?P<word>a)\ttrue\n"
-	expectedNode := "\\s\ttrue\na$\tfalse\n(?i)todo\tSyntaxError\n\\p{Greek}\tSyntaxError\na\\z\tSyntaxError\n(?P<word>a)\tSyntaxError\n"
-	if string(goAnswer) != expectedGo || string(nodeAnswer) != expectedNode {
-		t.Fatalf("dialect observations changed: Go %q Node %q", goAnswer, nodeAnswer)
+	directory := t.TempDir()
+	virtual := filepath.Join(cohere, "adamic_regex_options_oracle.go")
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(root, "testdata/option_dialects.go")}})
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("raw new RegExp(pattern, u) differs from accepted Go options on five of six named controls; Go=%q Node=%q", goAnswer, nodeAnswer)
+	overlayPath := filepath.Join(directory, "overlay.json")
+	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(directory, "options-oracle")
+	run(t, cohere, "go", "build", "-overlay="+overlayPath, "-o", binary, virtual)
+	corpus := filepath.Join(root, "testdata", cases)
+	return run(t, cohere, binary, corpus), run(t, root, "node", filepath.Join(root, "testdata/option_dialects.mjs"), corpus)
+}
+func TestOptionPatternsAgreeWithESRegexp(t *testing.T) {
+	goAnswer, nodeAnswer := optionAnswers(t, "option_cases.json")
+	if !bytes.Equal(goAnswer, nodeAnswer) {
+		t.Fatalf("esregexp/Node option comparison differs: Go %q Node %q", goAnswer, nodeAnswer)
+	}
+	if bytes.Count(goAnswer, []byte("\n")) != 9 {
+		t.Fatal("option controls missing")
+	}
+	t.Logf("9 unchanged JavaScript option sources agree against cohere esregexp Compile(source, u), including syntax rejection: %q", goAnswer)
+}
+func TestOptionPropertyGap(t *testing.T) {
+	goAnswer, nodeAnswer := optionAnswers(t, "option_property_gap.json")
+	if string(goAnswer) != "\\p{Script=Greek}\tSyntaxError\n" || string(nodeAnswer) != "\\p{Script=Greek}\ttrue\n" {
+		t.Fatalf("property gap changed; remove the exclusion and extend agreement cases: Go %q Node %q", goAnswer, nodeAnswer)
+	}
+	t.Logf("named pinned esregexp property gap, excluded from agreement controls: Go %q Node %q", goAnswer, nodeAnswer)
 }
 
 func TestInventoryMatchesPinnedSource(t *testing.T) {

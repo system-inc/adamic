@@ -1,0 +1,16 @@
+import { IdLengthExceptionPatterns } from '../id_length.a';
+import { InlineCommentIgnorePattern } from '../no_inline_comments.a';
+import { WarningCommentMatchers } from '../no_warning_comments.a';
+import { migrationCases } from './migration_cases.a';
+const cases = migrationCases();
+for(let index = 0; index < cases.length; index++) {
+    const sample = cases[index];
+    if(sample === undefined) continue;
+    let matched = false;
+    if(sample.rule === 'id-length') matched = new IdLengthExceptionPatterns([sample.pattern]).allows(sample.input);
+    else if(sample.rule === 'no-inline-comments') matched = new InlineCommentIgnorePattern(sample.pattern).ignores(sample.input);
+    else if(sample.rule === 'no-warning-comments') {
+        matched = new WarningCommentMatchers([sample.term], sample.location, sample.decoration ?? []).matching(sample.input).length > 0;
+    }
+    console.log(`${index}:${matched}`);
+}

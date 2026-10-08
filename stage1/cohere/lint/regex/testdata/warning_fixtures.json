@@ -1,0 +1,1395 @@
+[
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* any block comment */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* any block comment with (TODO, FIXME's or XXX!) */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* any block comment with TODO, FIXME or XXX */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* eslint no-console: \"error\" */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* eslint no-warning-comments: [2, { terms: [\"todo\"] }] */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/** TODO: fix this */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/** multi-line block comment with lines starting with\nTODO\nFIXME or\nXXX\n*/"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/*eslint no-warning-comments: [2, { \"terms\": [\"todo\", \"fixme\", \"any other term\"], \"location\": \"anywhere\" }]*/\n\nvar x = 10;\n"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// HACK x"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// any comment with TODO, FIXME or XXX"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// any comment"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// something todo"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": [
+        "*"
+      ],
+      "Location": "",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "//!TODO "
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "fixme",
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "fixme",
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any comment"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any comment"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "foo-bar"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// foo"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "[aeiou]"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// special regex characters don't cause a problem"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODO_thing"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODOs"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// comments containing terms as substrings like TodoMVC"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// xTODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// ТODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/*eslint no-warning-comments: [2, { \"terms\": [\"todo\", \"fixme\", \"any other term\"], \"location\": \"anywhere\" }]*/\n\nvar x = 10;\n"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// any comment"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "start",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment with TODO, FIXME or XXX */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [],
+    "options": {
+      "Decoration": null,
+      "Location": "start",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// any comment with TODO, FIXME or XXX"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 10,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"FIXME x\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// FIXME x"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any FIXME\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any FIXME"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fIxMe\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any fIxMe"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any fixme"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// any fixme"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 12,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"fixme!\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "fixme"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* fixme! */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 14,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: small\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODO: small"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `FIXME`, which marks the code as knowingly unfinished: \"any FIXME\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "FIXME"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any FIXME */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `FIXME`, which marks the code as knowingly unfinished: \"any fIxMe\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "FIXME"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any fIxMe */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `FIXME`, which marks the code as knowingly unfinished: \"any fixme\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "FIXME"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any fixme */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 15,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any fixme */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 17,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: fix this\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// TODO: fix this"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 18,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO indented\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "//   TODO indented"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 19,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `[litera|$]`, which marks the code as knowingly unfinished: \"regex [litera|$]\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "[litera|$]"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// regex [litera|$]"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "fixme",
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// any fixme or todo"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"fixme and todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* fixme and todo */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: fix this\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* TODO: fix this */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"fixme and todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 20,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"fixme and todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* fixme and todo */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 21,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"* TODO: fix this\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*"
+      ],
+      "Location": "",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/** TODO: fix this */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `eslint`, which marks the code as knowingly unfinished: \"eslint one-var: 2\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "",
+      "Terms": [
+        "eslint"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* eslint one-var: 2 */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "fixme",
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any fixme or todo */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `one`, which marks the code as knowingly unfinished: \"eslint one-var: 2\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "one"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/* eslint one-var: 2 */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"*** TODO decorated\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*"
+      ],
+      "Location": "",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/**** TODO decorated */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 23,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any fixme or todo\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any fixme or todo */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 24,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: something small\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODO: something small"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 26,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"* TODO fix * this\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*"
+      ],
+      "Location": "",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/*\n * TODO fix\n * this\n */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 38,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any comment with TODO, FIXME or XXX\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 38,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any comment with TODO, FIXME or XXX\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 38,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"any comment with TODO, FIXME or XXX\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// any comment with TODO, FIXME or XXX"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 43,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO stop using no-warning-comments here\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// TODO stop using no-warning-comments here"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 46,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `!xxx`, which marks the code as knowingly unfinished: \"!XXX comment starting with no spaces...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "start",
+      "Terms": [
+        "!xxx"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "//!XXX comment starting with no spaces (start)"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 47,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any block comment with TODO, FIXME or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 47,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any block comment with TODO, FIXME or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 47,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"any block comment with TODO, FIXME or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment with TODO, FIXME or XXX */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 48,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `*todo`, which marks the code as knowingly unfinished: \"**TODO term starts with a decoration...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*"
+      ],
+      "Location": "start",
+      "Terms": [
+        "*todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "//**TODO term starts with a decoration character"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 49,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `!xxx`, which marks the code as knowingly unfinished: \"!XXX comment starting with no spaces...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "!xxx"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "//!XXX comment starting with no spaces (anywhere)"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 49,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 42
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "/* eslint no-warning-comments: \"error\" */ // TODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 51,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: something really longer than 40...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODO: something really longer than 40 characters"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 52,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"any block comment with (TODO, FIXME's or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 52,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"any block comment with (TODO, FIXME's or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 52,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"any block comment with (TODO, FIXME's or...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* any block comment with (TODO, FIXME's or XXX!) */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 55,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo!`, which marks the code as knowingly unfinished: \"Comment ending with term including...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo!"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// Comment ending with term including punctuation TODO!"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 55,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO undecorated multi-line block...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "start",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "/*\nTODO undecorated multi-line block comment (start)\n*/"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 57,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `!todo`, which marks the code as knowingly unfinished: \"!TODO comment starting with term...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "!todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// !TODO comment starting with term including punctuation"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 57,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"Comment ending with term followed by...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// Comment ending with term followed by punctuation TODO!"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 59,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `FIX!`, which marks the code as knowingly unfinished: \"FIX!term ending with punctuation...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "FIX!"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// FIX!term ending with punctuation followed word character"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 59,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"!TODO comment starting with term...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// !TODO comment starting with term preceded by punctuation"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 59,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"* *any block comment *with (TODO,...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 59,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"* *any block comment *with (TODO,...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      },
+      {
+        "end": 59,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"* *any block comment *with (TODO,...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/** \n *any block comment \n*with (TODO, FIXME's or XXX!) **/"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 61,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `!FIX`, which marks the code as knowingly unfinished: \"Term starting with punctuation preceded...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "!FIX"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// Term starting with punctuation preceded word character!FIX"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 63,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"/// TODO decorated single-line comment...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*",
+        "/"
+      ],
+      "Location": "start",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "///// TODO decorated single-line comment with decoration array \n /////"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 73,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "// https://github.com/eslint/eslint/pull/13522#discussion_r470293411 TODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 74,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo!`, which marks the code as knowingly unfinished: \"Comment ending with term including...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo!"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// Comment ending with term including punctuation followed by more TODO!!!"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 76,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `!todo`, which marks the code as knowingly unfinished: \"!!!TODO comment starting with term...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "!todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// !!!TODO comment starting with term including punctuation preceded by more"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 78,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO: something really longer than 40...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": null
+    },
+    "rule": "no-warning-comments",
+    "source": "/* TODO: something \n really longer than 40 characters \n and also a new line */"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `fixme`, which marks the code as knowingly unfinished: \"fixme\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// fixme"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODOé\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// TODOé"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"ÜTODO\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// ÜTODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"日TODO\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": null,
+      "Location": "anywhere",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "// 日TODO"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 8,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `xxx`, which marks the code as knowingly unfinished: \"XXX x\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// XXX x"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 87,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"/*/*/ TODO decorated single-line comment...\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": {
+      "Decoration": [
+        "*",
+        "/"
+      ],
+      "Location": "start",
+      "Terms": [
+        "todo"
+      ]
+    },
+    "rule": "no-warning-comments",
+    "source": "///*/*/ TODO decorated single-line comment with multiple decoration characters (start) \n /////"
+  },
+  {
+    "file": "/repository/source/NoWarningComments.ts",
+    "findings": [
+      {
+        "end": 9,
+        "id": "unexpectedComment",
+        "message": "This comment opens with `todo`, which marks the code as knowingly unfinished: \"TODO x\". A warning comment is a note to a future reader that something was deferred, so it should be tracked somewhere that gets read rather than left where only the next editor of this file will find it.",
+        "start": 0
+      }
+    ],
+    "options": null,
+    "rule": "no-warning-comments",
+    "source": "// TODO x"
+  }
+]

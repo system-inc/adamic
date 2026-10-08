@@ -1,0 +1,36 @@
+--- a/stage1/cohere/lint/rules/id-length/rule.ts
++++ b/stage1/cohere/lint/rules/id-length/rule.ts
+@@ -3,6 +3,7 @@
+ import type { RuleContext } from '../../context.ts';
+ import { Parser } from '../../../../typescript/parser/parser.ts';
+ import { graphemes } from './graphemes.a';
++import { IdLengthExceptionPatterns } from '../../regex/id_length.a';
+ const name = 'id-length';
+ const modifiers: readonly string[] = ['StaticKeyword', 'PublicKeyword', 'PrivateKeyword', 'ProtectedKeyword', 'ReadonlyKeyword', 'AbstractKeyword', 'DeclareKeyword', 'OverrideKeyword', 'AsyncKeyword', 'AccessorKeyword', 'Decorator', 'AsteriskToken', 'DotDotDotToken', 'ExportKeyword', 'DefaultKeyword'];
+ function exceptionMap(text: string): string[] {
+@@ -26,6 +27,7 @@
+     readonly hasMaximum: boolean;
+     readonly properties: boolean;
+     readonly exceptions: readonly string[];
++    readonly exceptionPatterns: IdLengthExceptionPatterns;
+     constructor(context: RuleContext) {
+         this.context = context;
+         this.minimum = Number(context.settings.read('minimum', context.settings.read('min', '2')));
+@@ -39,7 +41,7 @@
+             this.exceptions = exceptionMap(text);
+         }
+         else this.exceptions = exceptions;
+-        if(context.enabled(name) && context.settings.list('exceptionpatterns', []).length > 0) panic('id-length: runtime regex option requires shared matcher support');
++        this.exceptionPatterns = new IdLengthExceptionPatterns(context.enabled(name) ? context.settings.list('exceptionpatterns', []) : []);
+     }
+     parent(index: number): number { return this.context.parents[index] ?? -1; }
+     ownName(index: number): number {
+@@ -126,7 +128,7 @@
+         const text = privateName ? node.text.slice(1) : node.text;
+         const length = graphemes(text);
+         const tooLong = this.hasMaximum && length > this.maximum;
+-        if((length >= this.minimum && !tooLong) || this.exceptions.includes(text) || !this.naming(index, parent)) return;
++        if((length >= this.minimum && !tooLong) || this.exceptions.includes(text) || this.exceptionPatterns.allows(text) || !this.naming(index, parent)) return;
+         const id = `${tooLong ? 'tooLong' : 'tooShort'}${privateName ? 'Private' : ''}`;
+         const rendered = privateName ? tooLong ? `#'${text}'` : `'#${text}'` : `'${text}'`;
+         const policy = tooLong

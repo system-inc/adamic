@@ -1,0 +1,12 @@
+// Structural validation adapter for the existing parked id-length consumer.
+import type { Settings } from '../../../settings.ts';
+import type { ParseNode } from '../../../../../typescript/parser/nodes.ts';
+export interface RuleContext {
+    readonly source: string;
+    readonly settings: Settings;
+    readonly parents: readonly number[];
+    node(index: number): ParseNode;
+    start(index: number): number;
+    enabled(name: string): boolean;
+    report(index: number, rule: string, id: string, message: string, repair: string, replacement: string, suggestion: string): void;
+}
