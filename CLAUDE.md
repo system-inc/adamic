@@ -38,7 +38,7 @@ Whole functions are kept together; trace extracted files with `git log --follow 
 ```
 gofmt -l cmd internal
 go vet ./...
-ADAMIC_GATE_UNCACHED=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
+ADAMIC_GATE_UNCACHED=1 ADAMIC_GATE_COHERE=1 go test -count=1 -timeout 30m ./... > "$TMPDIR/test.log" 2>&1; echo "exit=$?"
 ```
 
 The oracle caches fixture observations under the user cache directory. It still regenerates C and
@@ -66,9 +66,14 @@ On Linux there's no `leaks` tool: LeakSanitizer (part of ASan there) does that j
 
 cohere checks and formats every Adamic program in this repository, `.ts` and `.a` alike. `tsconfig.json` carries the same compiler options stage 0 sets in `internal/load/load.go` (keep the two identical), the prelude as the one global declaration file, and `"sourceExtensions": [".a"]`, which cohere's TypeScript reads and stock tools ignore. `CohereSettings.json` turns on `cohere:typescript` (soundness, style and correctness) and ignores the files that are wrong on purpose, for these reasons:
 
-- `internal/load/testdata/0.1/refuse/**`: docs/0.1.md's five refused programs, whose job is to be refused.
+- `**/testdata/**` and `**/fixtures/**`: every test's fixtures, docs/0.1.md's five refused programs among them. A fixture's text is what its test checks: oracle programs mutate their caller's data and reassign parameters on purpose, and formatting one moves the anchors its test reads.
+- `**/evidence/**` and `notes/**`: measurements and working notes, the inputs and outputs of an investigation, kept as they were when it was made.
 - `stage1/**/gaps/**`: each stage-1 slice's smallest programs for what stage 0 can't hold yet, kept exactly as written so their gaps tests notice when a gap closes.
 - `review/**`: reviewers' probes, written to break things.
+- `stage3/drivers/tsc/corpus/**`: 300 programs from TypeScript 6.0.3's own compiler tests, kept byte for byte as upstream wrote them, 240 of them with errors on purpose, for the tsc diagnostics oracle.
+- `internal/refusalprobe/lies/**`: programs that use a construct Adamic should refuse (the `Function` type, optional-property widening) in a way that makes the wrong type visible, kept as fixtures for the refusals that will reject them.
+
+The cohere baseline gate (`cloud/cohere_gate.py`, run by `TestRepositoryPassesCohereBaseline` when `ADAMIC_GATE_COHERE=1`, which every gate run sets) builds the pinned submodule binary and type-checks, lints and checks the formatting of every repository-owned `.ts` and `.a` program outside the ignores. For now, JSON, Markdown and scripts are outside its format check. That's temporary: one reformat on fresh main brings them in, and the format check widens back to every file in the same push (#dvxrzsv). The pinned cohere does not discover `.a` yet, so the gate checks disposable `.a.ts` copies with their import suffixes adjusted; it never edits cohere or source files. Type and lint phases run separately so intentional type-error fixtures do not hide lint findings, and every ignore above applies. It prints what it covered before its verdict. Remaining findings are recorded in `cloud/cohere-baseline.json`, keyed by path, rule, messageId, severity and source line, never message text, so a cohere pin bump that rewords a message changes nothing. `--record` removes resolved entries and refuses additions, and the gate refuses baseline growth relative to `origin/main` and to HEAD.
 
 ## Working here
 
