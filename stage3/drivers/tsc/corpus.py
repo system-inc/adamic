@@ -135,13 +135,14 @@ def main():
         folder = output / name
         folder.mkdir()
         raw = source.read_bytes()
-        (folder / 'input.a').write_bytes(raw)
+        (folder / source.name).write_bytes(raw)
         if case['baseline']:
             shutil.copyfile(case['baseline'], folder / 'reference.errors.txt')
         (folder / 'expected.stdout').write_bytes(case['expected'])
         (folder / 'expected.stderr').write_bytes(b'')
         (folder / 'expected.exit').write_text('2\n' if case['codes'] else '0\n')
         manifest.append({'id': name, 'source': 'tests/cases/compiler/' + source.name,
+                         'path': str(Path('corpus') / name / source.name),
                          'source_sha256': hashlib.sha256(raw).hexdigest(),
                          'baseline': 'tests/baselines/reference/' + case['baseline'].name if case['baseline'] else None,
                          'baseline_sha256': hashlib.sha256(case['baseline'].read_bytes()).hexdigest() if case['baseline'] else None,
