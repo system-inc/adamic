@@ -17,39 +17,50 @@ var jsonGuard = childguard.Options{Stall: 5 * time.Minute}
 
 func TestProgressGuard(t *testing.T) {
 	t.Parallel()
-	policy := childguard.Options{FirstOutput: 500 * time.Millisecond, Stall: 200 * time.Millisecond, Ceiling: 5 * time.Second}
-	for _, fixture := range []struct{ name, source, message string }{
-		{"never prints", "exec sleep 20", "stalled: no first output"},
-		{"never returns", "printf ready; exec sleep 20", "stalled: no output"},
+	// Each case leaves only the window it tests able to fire (the others an hour), and a talking child's
+	// gaps are a small fraction of its windows, so load can't decide a verdict: at load 827 on Cloud a
+	// 200 ms stall window killed the talking child (Oct 8, 293f6c9d).
+	never := time.Hour
+	for _, fixture := range []struct {
+		name, source, message string
+		policy                childguard.Options
+	}{
+		{"never prints", "exec sleep 600", "stalled: no first output", childguard.Options{FirstOutput: 5 * time.Second, Stall: never, Ceiling: never}},
+		{"never returns", "printf ready; exec sleep 600", "stalled: no output", childguard.Options{FirstOutput: never, Stall: 5 * time.Second, Ceiling: never}},
 	} {
 		t.Run(fixture.name, func(t *testing.T) {
+			t.Parallel()
 			command := exec.Command("sh", "-c", fixture.source)
-			_, err := childguard.CombinedOutput(command, policy)
+			_, err := childguard.CombinedOutput(command, fixture.policy)
 			if err == nil || !strings.Contains(err.Error(), fixture.message) || !strings.Contains(err.Error(), "sh") {
 				t.Fatalf("guard failed by name: %v", err)
 			}
 			t.Logf("caught %s: %v", fixture.name, err)
 		})
 	}
+	// Talking for 4 s against a 3 s first-output window and a 60 s stall window: the first-output window
+	// must stop counting once the child talks.
+	talking := childguard.Options{FirstOutput: 3 * time.Second, Stall: time.Minute, Ceiling: never}
 	t.Run("progress outlasts startup", func(t *testing.T) {
-		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x; sleep 0.1; done")
-		output, err := childguard.CombinedOutput(command, policy)
+		t.Parallel()
+		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x; sleep 0.5; done")
+		output, err := childguard.CombinedOutput(command, talking)
 		if err != nil || string(output) != "xxxxxxxx" {
 			t.Fatalf("progress was killed: %q %v", output, err)
 		}
 	})
 	t.Run("stderr is progress", func(t *testing.T) {
-		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x >&2; sleep 0.1; done")
-		output, err := childguard.CombinedOutput(command, policy)
+		t.Parallel()
+		command := exec.Command("sh", "-c", "for i in 1 2 3 4 5 6 7 8; do printf x >&2; sleep 0.5; done")
+		output, err := childguard.CombinedOutput(command, talking)
 		if err != nil || string(output) != "xxxxxxxx" {
 			t.Fatalf("stderr progress was killed: %q %v", output, err)
 		}
 	})
 	t.Run("overall backstop", func(t *testing.T) {
-		short := policy
-		short.Ceiling = 300 * time.Millisecond
+		t.Parallel()
 		command := exec.Command("sh", "-c", "while :; do printf x; sleep 0.05; done")
-		_, err := childguard.CombinedOutput(command, short)
+		_, err := childguard.CombinedOutput(command, childguard.Options{FirstOutput: never, Stall: never, Ceiling: time.Second})
 		if err == nil || !strings.Contains(err.Error(), "ceiling:") {
 			t.Fatalf("backstop survived: %v", err)
 		}
