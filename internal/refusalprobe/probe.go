@@ -124,7 +124,7 @@ func ValidateCatalog(root string) error {
 		return false
 	}
 	// Error-returning helpers called by the pass must have an explicit catalog owner too.
-	helpers := map[string]string{"checkOverrides": "method-override", "refuseStringWidening": "mutable-variance", "classViewRefusal": "nominal-class", "prototypeRead": "prototype-read", "provePredicate": "unproven-predicate"}
+	helpers := map[string]string{"checkOverrides": "method-override", "refuseStringWidening": "mutable-variance", "classViewRefusal": "nominal-class", "prototypeRead": "prototype-read", "provePredicate": "unproven-predicate", "enumRefusal": "enum-tag", "refuseOptionalWidening": "optional-widening"}
 	ast.Inspect(file, func(node ast.Node) bool {
 		conditional, ok := node.(*ast.IfStmt)
 		if !ok || conditional.Init == nil {

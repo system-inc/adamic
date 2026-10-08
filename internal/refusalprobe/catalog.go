@@ -72,6 +72,8 @@ func Catalog() []Entry {
 		{Name: "overloads", Boundary: "implementation signatures are not lowered as overloads; needs a separate diagnostic design"},
 		{Name: "reopened", Boundary: "throw Error/try/catch/finally, inheritance/super/abstract/protected, accessors, for-in on proven plain objects, RegExp/Set/JSON.stringify, Object helpers, arguments/files input opened after 0.1; not promised Refused by current compiler"},
 		{Name: "library-boundaries", Boundary: "symbol/bigint/Date/process/globalThis/Intl and stdin/environment need individual loader/NotYet contracts; not generated"},
+		{Name: "enum-tag", Diagnostic: "adamic/enum-tag", Boundary: "enumRefusal (main 287a5ec5): an object refinement tagged by an open numeric enum; needs multi-member enum probes, not generated in this 0.1 corpus"},
+		{Name: "optional-widening", Diagnostic: "adamic/no-optional-widening", Boundary: "refuseOptionalWidening (main c9c3e7ce, 6d625b5b): an optional field absent from a structural source; not generated in this 0.1 corpus"},
 		{Name: "polymorphic-recursion", Boundary: "requires recursive generic instantiation; not generated"},
 		{Name: "module-boundaries", Boundary: "namespace imports, export-star, default declarations and import cycles need multi-module probes; not generated"},
 	}
