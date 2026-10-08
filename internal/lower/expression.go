@@ -1131,6 +1131,11 @@ func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 
 // callFunction lowers a call's arguments, in order, and the call to function.
 func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expression, error) {
+	var err error
+	function, err = l.specializeVisitorCall(call, function)
+	if err != nil {
+		return nil, err
+	}
 	arguments, spread, err := l.callArguments(call.Arguments.Nodes)
 	if err != nil {
 		return nil, err
@@ -1311,6 +1316,9 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 	}
 	if implementation := l.overloadValueTarget(node.AsCallExpression().Expression, map[*ast.Node]bool{}); implementation != nil {
 		return l.callOverloadValue(node.AsCallExpression(), closure, arguments, spread, implementation)
+	}
+	if value, handled, err := l.checkedVisitorInvocation(node.AsCallExpression(), closure, arguments, spread); handled || err != nil {
+		return value, err
 	}
 	// A named nested overload retains its implementation ABI until the
 	// resolved overload boundary has checked and converted the result.

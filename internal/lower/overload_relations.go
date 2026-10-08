@@ -30,6 +30,31 @@ func (l *lowering) overloadResultFailure(produced, promised *checker.Type, path 
 			}
 		}
 	}
+	if promised.Flags()&checker.TypeFlagsUnion != 0 && l.visitorArrayElement(produced) != nil {
+		var arrayTarget *checker.Type
+		for _, member := range promised.Types() {
+			if l.visitorArrayElement(member) != nil {
+				if arrayTarget != nil {
+					arrayTarget = nil
+					break
+				}
+				arrayTarget = member
+			}
+		}
+		if arrayTarget != nil && !l.censusRelated(produced, arrayTarget) {
+			return l.overloadResultFailure(produced, arrayTarget, path, visited)
+		}
+	}
+	if produced.Flags()&checker.TypeFlagsObject != 0 && promised.Flags()&checker.TypeFlagsObject != 0 {
+		fromElement, toElement := l.visitorArrayElement(produced), l.visitorArrayElement(promised)
+		if fromElement != nil && toElement != nil && !l.censusRelated(fromElement, toElement) {
+			failure := l.overloadResultFailure(fromElement, toElement, path+"[]", visited)
+			if failure.path == path+"[]" {
+				failure.relation = describe("result element covariance", fromElement, toElement)
+			}
+			return failure
+		}
+	}
 	if promised.Flags()&checker.TypeFlagsObject != 0 {
 		for _, property := range l.checker.GetPropertiesOfType(promised) {
 			own := l.checker.GetPropertyOfType(produced, property.Name)
