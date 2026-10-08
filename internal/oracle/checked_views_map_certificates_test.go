@@ -7,7 +7,7 @@ import (
 )
 
 func TestCheckedViewMapCertificates(t *testing.T) {
-	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object", "entry-mixed-schema", "entry-null-schema", "entry-undefined-schema", "entry-boolean-undefined", "entry-lifecycle", "entry-live-mutation", "entry-callable-plain", "entry-callable-null", "entry-callable-undefined", "entry-callable-both", "entry-callable-result-schema", "entry-callable-parameter-schema", "entry-callable-contravariant", "entry-callable-clone", "entry-tuple", "entry-tuple-schema", "entry-tuple-covariant", "entry-tuple-mutable-invariant", "entry-tuple-length-schema", "entry-tuple-readonly-schema", "entry-tuple-nullish"}
+	names := []string{"key-schema", "readonly-covariant", "mutable-invariant", "clone", "boolean", "structural", "structural-schema", "structural-covariant", "structural-payload-wrong", "structural-mutable-invariant", "object-key", "object-key-schema", "structural-schema-unused-payload", "optional-number", "array", "array-schema", "array-payload-wrong", "array-covariant", "array-mutable-invariant", "array-mutable", "array-schema-unused-payload", "array-recursive", "node-array", "node-array-own-schema", "node-array-readonly-schema", "node-array-covariant", "node-array-own-schema-unused-payload", "optional-array", "optional-array-schema", "optional-object", "entry-mixed-schema", "entry-null-schema", "entry-undefined-schema", "entry-boolean-undefined", "entry-lifecycle", "entry-live-mutation", "entry-callable-plain", "entry-callable-null", "entry-callable-undefined", "entry-callable-both", "entry-callable-result-schema", "entry-callable-parameter-schema", "entry-callable-contravariant", "entry-callable-clone", "entry-tuple", "entry-tuple-schema", "entry-tuple-covariant", "entry-tuple-mutable-invariant", "entry-tuple-length-schema", "entry-tuple-readonly-schema", "entry-tuple-nullish", "entry-brand-string", "entry-brand-number", "entry-brand-boolean", "entry-brand-array", "entry-brand-schema"}
 	for _, variant := range []string{"null", "undefined", "both"} {
 		for _, mutation := range []string{"", "-wrong", "-value-schema", "-opposite"} {
 			if variant == "both" && mutation == "-opposite" {
@@ -82,17 +82,19 @@ func TestCheckedViewMapCertificateWrites(t *testing.T) {
 	}
 }
 
-func TestCheckedViewMapPhantomRefusal(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/phantom-refused.a"))
-	if err != nil {
-		t.Fatal(err)
-	}
-	_, err = lowered(t, path)
+func TestCheckedViewMapApprovedPhantom(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/phantom-refused")
 	truth := onNode(t, path)
-	if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map") {
-		t.Fatalf("phantom certificate fabricated: %v", err)
+	native, binary := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if diff := disagreement(truth, got); diff != "" {
+			t.Fatal(diff)
+		}
 	}
-	t.Logf("Node stdout=%q; caught unsupported brand at read: %v", truth.stdout, err)
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+	t.Logf("Node stdout=%q; approved void brand has no runtime nominal demand", truth.stdout)
 }
 
 func mapReadField(name string) string {
@@ -105,7 +107,7 @@ func mapReadField(name string) string {
 	return "node.value"
 }
 
-func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
+func TestCheckedViewMapApprovedBrandBoundaries(t *testing.T) {
 	for _, family := range []string{"nested-array-brand", "nested-object-brand"} {
 		for _, use := range []string{"read", "unread"} {
 			t.Run(family+"-"+use, func(t *testing.T) {
@@ -115,13 +117,6 @@ func TestCheckedViewMapEntryFamilyBoundaries(t *testing.T) {
 				}
 				truth := onNode(t, path)
 				program, err := lowered(t, path)
-				if use == "read" {
-					if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map key/value certificate") {
-						t.Fatalf("unsupported entry escaped or refused away from read: %v", err)
-					}
-					t.Logf("Node stdout=%q; named read refusal: %v", truth.stdout, err)
-					return
-				}
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -158,4 +153,17 @@ func TestCheckedViewMapUnionEntryStorage(t *testing.T) {
 			})
 		}
 	}
+}
+
+func TestCheckedViewMapBrandNullishRepresentationGap(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-brand-nullish.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lowered(t, path)
+	truth := onNode(t, path)
+	if err == nil || !strings.Contains(err.Error(), "Map entry whose key or value is of another type") {
+		t.Fatalf("erased void storage converted without proof: %v", err)
+	}
+	t.Logf("Node stdout=%q; retained representation boundary: %v", truth.stdout, err)
 }

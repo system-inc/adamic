@@ -401,3 +401,28 @@ the implementation mutation by behavior. Evidence is in map-tuple-*.log.gz.
 Map/nullish/nullable-selection oracle checks pass in 127.248s; final tuple
 selection passes in 10.585s. The exact production inventory remains 2,018 pairs /
 9,101 reads pending whole-program lowering and shared reaching-view proof.
+
+## Approved phantom Map brands (October 8)
+
+Map schemas now reuse the existing primitive and array phantom-brand proofs.
+Only absent members accepted by phantomBase/phantomArrayBase are erased; a real
+intersection or nominal class still lacks this certificate. Primitive brands
+preserve finite literal domains. Array brands preserve their element contract
+and readonly provenance. Existing nested array/object brand controls now compile.
+Node and both backends print the same primitive kind followed by undefined for
+the phantom member. A wider string producer cannot certify a finite branded
+string: the schema mutant exits 70 at node.value.
+
+The full Map oracle passes in 68.595s. Scoped View|Map|Contract|Callable|Tuple
+checks pass (lower 4.466s, native 30.949s, JS 0.763s); vet passes. Adding Phantom
+to the selection exposes three inherited groups: both array-brand IR-equivalence
+tests and the old cycle-refusal expectation. Reverting view_maps.go to the tuple
+checkpoint reproduces all three; logs retain this comparison. No full gate pass
+is claimed.
+
+The branded string|branded void constructor probe prints string, undefined, true
+on Node but remains a named Map-entry representation refusal. This is a storage
+conversion gap, not a completed branded-nullish control. Its executable gap test
+pins the refusal. Production demand remains 2,018 pairs / 9,101 reads awaiting
+whole-program lowering and shared reaching-view proof; broader callable work
+stays with lane 5.

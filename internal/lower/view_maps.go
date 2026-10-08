@@ -17,7 +17,7 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 	if len(args) != 2 {
 		contract.Unsupported = "Map key/value certificate"
 	} else {
-		if args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
+		if !l.mapEntryTypeProven(args[0], map[*checker.Type]bool{}) || !l.mapEntryTypeProven(args[1], map[*checker.Type]bool{}) {
 			contract.Unsupported = "Map phantom/intersection certificate"
 		}
 		contract.Key = l.mapEntrySlot(node, l.concrete(args[0]))
@@ -33,7 +33,7 @@ func (l *lowering) mapViewContract(node *ast.Node, target *checker.Type) (ir.Vie
 }
 func (l *lowering) mapProducer(node *ast.Node, value ir.MapNew) ir.MapNew {
 	args := l.typeArguments(l.concrete(l.checker.GetTypeAtLocation(node)))
-	if len(args) != 2 || args[0].Flags()&checker.TypeFlagsIntersection != 0 || args[1].Flags()&checker.TypeFlagsIntersection != 0 {
+	if len(args) != 2 {
 		return value
 	}
 	key := l.mapEntrySlot(node, l.concrete(args[0]))
@@ -54,6 +54,16 @@ func mapEntryContract(contract ir.ViewContract) bool {
 }
 
 func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewContractID {
+	if base := l.phantomArrayBase(target); base != nil {
+		return l.mapEntrySlot(node, base)
+	}
+	if l.phantomBase(target) != nil {
+		id, err := l.viewContract(node, target)
+		if err != nil || !mapEntryDescriptorProven(l.result, id, map[ir.ViewContractID]bool{}) {
+			return 0
+		}
+		return id
+	}
 	if checker.IsTupleType(l.checker.GetNonNullableType(target)) {
 		return l.mapNullableTupleEntrySlot(node, target)
 	}
@@ -80,6 +90,12 @@ func (l *lowering) mapEntrySlot(node *ast.Node, target *checker.Type) ir.ViewCon
 // throughout entries, including beneath structural fields or array elements.
 func (l *lowering) mapEntryTypeProven(target *checker.Type, seen map[*checker.Type]bool) bool {
 	target = l.concrete(target)
+	if base := l.phantomBase(target); base != nil {
+		return true
+	}
+	if base := l.phantomArrayBase(target); base != nil {
+		return l.mapEntryTypeProven(base, seen)
+	}
 	if target.Flags()&checker.TypeFlagsIntersection != 0 || isClassInstance(target) {
 		return false
 	}
