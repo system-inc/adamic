@@ -13,8 +13,9 @@ import (
 )
 
 type auditInput struct {
-	Name string `json:"name"`
-	Text string `json:"text"`
+	Corpus bool   `json:"-"`
+	Name   string `json:"name"`
+	Text   string `json:"text"`
 }
 type auditOutput struct {
 	Name      string   `json:"name"`
@@ -122,6 +123,12 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 	}
 	dir := t.TempDir()
 	inputs, files := auditCorpus(t, root)
+	// This file sweep is small beside the mandatory generated and fixed checks.
+	selection := selectMarkdownFiles(t, root, inputs, files, 1)
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+	}
+	inputs, files = selectedMarkdownInputs(inputs, files, selection)
 	var batch bytes.Buffer
 	encoder := json.NewEncoder(&batch)
 	for _, input := range inputs {
