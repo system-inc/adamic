@@ -1,0 +1,4 @@
+const values: unknown[] = [];
+values.push(null);
+values.push(undefined);
+console.log(`${typeof values[0]} ${typeof values[1]}`);

@@ -13,6 +13,22 @@ func (e *emitter) libraryArraySearch(search ir.ArraySearch) string {
 		from = e.value(search.From)
 	}
 	element := search.Element
+	if element == ir.Union {
+		value = e.snapshot(ir.Union, value)
+		// A temporary match vector preserves strict equality, SameValueZero and the runtime
+		// search's starting-index rules without comparing boxes by their addresses.
+		copy := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, false)", array))
+		index, item := e.temporary(), e.temporary()
+		e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, array, index)
+		e.line("\tadamic_heap *%s = %s->elements[%s].reference;", item, array, index)
+		equal := fmt.Sprintf("adamic_union_equal(%s, %s)", item, value)
+		if search.Includes {
+			equal += fmt.Sprintf(" || (%s != NULL && %s != NULL && %s->kind == adamic_kind_number && %s->kind == adamic_kind_number && isnan(((adamic_number_box *)%s)->number) && isnan(((adamic_number_box *)%s)->number))", item, value, item, value, item, value)
+		}
+		e.line("\tadamic_array_push(%s, (adamic_value){.number = (%s) ? 1.0 : 0.0});", copy, equal)
+		e.line("}")
+		array, value, element = copy, "1.0", ir.Number
+	}
 	if element == ir.MaybeBoolean {
 		// Search compares the three tagged values, including present undefined. Use numerical
 		// tags in a temporary dense array so no uninitialized union padding enters equality.

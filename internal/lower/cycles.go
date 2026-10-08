@@ -383,6 +383,11 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
 			}
 			continue
 		}
+		if flags&checker.TypeFlagsNonPrimitive != 0 {
+			// object can hold any strong reference, including this holder or a closure
+			// capturing its cell. Only the fresh-write proof may relax such a slot.
+			return true
+		}
 		if flags&checker.TypeFlagsObject == 0 {
 			continue
 		}

@@ -1,0 +1,51 @@
+type Root = number | readonly [number, number];
+const pair: readonly [number, number] = [2, 4];
+const roots: Root[] = [1, pair, 0 / 0, 5];
+for (const root of roots) {
+	if (typeof root === 'number') {
+		console.log(`id ${root}`);
+	} else {
+		console.log(`span ${root[0]} ${root[1]}`);
+	}
+}
+console.log(`${roots.indexOf(1)} ${roots.includes(0 / 0)} ${roots.indexOf(0 / 0)} ${roots.includes(pair)}`);
+const missing: undefined[] = [undefined, undefined];
+missing.push(undefined);
+console.log(`${missing[0]} ${missing[5]} ${missing.pop()} ${missing.includes(undefined)} ${missing.length}`);
+const own = { value: 7 };
+const objects: object[] = [own, [3], () => 4];
+console.log(`${objects[0] === own} ${objects.includes(own)} ${typeof objects[1]} ${typeof objects[2]}`);
+function readArrays(values: string[][] | readonly (string | readonly string[] | undefined)[]): void {
+	for (const value of values) {
+		console.log(`${typeof value}`);
+	}
+}
+readArrays([['text']]);
+readArrays([['nested'], undefined]);
+
+const sorted: (number | string | undefined)[] = ['b', 2, undefined, 'a', 1];
+function compareUnion(left: number | string | undefined, right: number | string | undefined): number {
+	console.log(`union compare ${left} ${right}`);
+	return `${left}` < `${right}` ? -1 : `${left}` > `${right}` ? 1 : 0;
+}
+sorted.sort(compareUnion);
+console.log(`${sorted[0]} ${sorted[1]} ${sorted[2]} ${sorted[3]} ${sorted[4]}`);
+
+
+type Extension = string & { readonly extension?: never };
+function countExtensions(values: Extension[][] | readonly (readonly Extension[] | Extension | undefined)[]): number {
+	return values.slice().length;
+}
+const extensions: Extension[][] = [['.a'], ['.b']];
+const mixedExtensions: readonly (readonly Extension[] | Extension | undefined)[] = ['.c', ['.d'], undefined];
+console.log(`${countExtensions(extensions)} ${countExtensions(mixedExtensions)}`);
+
+interface BundleFile { readonly version: string; readonly signature?: string }
+type MultiFile = Omit<BundleFile, 'signature'> & { readonly signature?: string | false };
+function countFiles(values: readonly (string | BundleFile)[] | readonly (string | MultiFile)[]): number {
+	return values.slice().length;
+}
+const bundleFiles: readonly (string | BundleFile)[] = ['v1', { version: 'v2' }];
+const multiFiles: readonly (string | MultiFile)[] = ['v3', { version: 'v4' }];
+console.log(`${countFiles(bundleFiles)} ${countFiles(multiFiles)}`);
+console.log(`${multiFiles.slice().length}`);
