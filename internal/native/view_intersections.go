@@ -40,7 +40,7 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 		slot := e.temporary()
 		path := expression + "." + field.Name
 		optional := field.Optional || child.Undefined
-		e.line("adamic_value %s = adamic_object_optional_view(%s, %s, &%s, %d, %s, %s, %t, %t);", slot, object, cString(field.Name), e.cache(), child.Of, cString(child.Name), cString(path), optional, optional)
+		e.line("adamic_value %s = adamic_object_optional_view_undefined(%s, %s, &%s, %d, %s, %s, %t, false, %t);", slot, object, cString(field.Name), e.cache(), child.Of, cString(child.Name), cString(path), field.Optional, child.Undefined)
 		// A snapshot used only for validation must still compile with -Werror.
 		e.line("(void)%s;", slot)
 		if child.Of == ir.Object {

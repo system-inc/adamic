@@ -12,4 +12,5 @@ adamic_value *adamic_view_array_at(const struct adamic_array *array, double inde
 void adamic_view_array_storage_check(const struct adamic_array *array, unsigned char storage, const char *expression);
 adamic_string *adamic_view_array_string(const struct adamic_array *array, const adamic_string *separator, bool checked, unsigned char wanted, bool undefined_allowed, const char *expected, const char *expression, size_t allowed_count, const adamic_value *allowed);
 int adamic_view_array_default_compare(adamic_value left, adamic_value right, void *context);
+#include "view_array_writes.h"
 #endif

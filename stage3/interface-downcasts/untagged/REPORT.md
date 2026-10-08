@@ -1,3 +1,367 @@
+Built: final three candidate projections (Type ranks 24/72 and optional forEach rank 227), reusing lane 5 producer certificates and adding exact logical producer membership.
+Commits: callable projection group 8de074cc; integration refresh cf4abe26 (80a6921c); shipping repair/report commit follows in Git history.
+Commands: final shipping view packages passed (IR 0.012s, lower 4.492s, native 6.587s, JS 0.981s); selected Node oracle passed 119.633s with 963 Node checks; vet passed. Setup done 214.165s, nproc 5.
+Mutants: skip nested callable checks native/JS; accept wrong results native/JS; drop nested Symbol checks native/JS; drop logical certificates native/JS; erase checker identity proof. All nine caught semantic pinned refusal failures and restored.
+Uncovered: zero reduced candidate projections remain; original TypeChecker and intrinsic forEach contracts, full compiler interfaces, and exact reachability are not certified.
+
+Revised planning target was October 9, 2026, 23:00 UTC. The final reduced
+candidate projections are implemented October 8. This is 61 projections/434
+candidate reads represented, zero remaining in that projection inventory. It is
+not full unchanged compiler-interface completion; those counts stay zero. Ranks
+24 and 72 contribute 43 candidate reads, using a recursive Type projection with
+one scalar TypeChecker method. Rank 227 contributes one candidate read, using
+optional number thisArg; its original intrinsic owner and any thisArg are outside
+this proof. Both original Type boundary receipts still conservatively refuse.
+
+Lane 5 was inspected at 15b30747 and consumed through integration 6a7f1bf3.
+Its immutable producer lookup, expected signature descriptors and named failures
+are shared with this family. A pure predicate is extracted for nested structural
+selection, without changing closure calling conventions. Higher-order callable
+union members additionally require exact checker identity against existing
+closureRecords, certified only after all implementations are lowered. This
+conservatively rejects unproved producers even if their physical parameter/result
+representations match. ProducerCertified makes an empty whitelist a refusal.
+
+Optional represented parameters now have a positive Node/native/JS control;
+generic, rest and overloaded contracts remain unsupported. A complete callable
+read certificate supersedes only field-name fallback in lazy admission, retaining
+receiver refusals. Both direct and stored nested callback mismatches have exact
+exit-70 pins naming forEach, ForEach and the uncertified function signature.
+Type fixtures also pin wrong checker results and wrong nested Symbol names.
+A valid empty indexed array is held to Node. Unsupported original Type fixtures
+are kept as boundary receipts, not credited as full conformance.
+
+Reproduce final controls:
+```
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run 'TestCheckedViewUntaggedCandidatePairs/^(24|72|227)$/|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedRemainingBoundaries' -count=1 -v > /tmp/untagged-last-three-restored.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-nested-callable-mutants.py > /tmp/untagged-nested-callable-mutants.log 2>&1
+```
+The first mutation run corrected a JavaScript whitespace anchor; that failed
+harness assertion is not counted as a caught mutant. The corrected eight runtime
+mutants and separately added checker-proof mutant all fail semantically with
+successfully executed binaries. Every mutation is restored in finally.
+
+Shipping integration refresh consumed 80a6921c with four conflicts, resolved
+hunk by hunk: preserve both plan sections; run intersection dispatch before
+untagged object/array selection; preserve both proven lazy-read exemptions.
+Required undefined presence metadata is retained. The first broader oracle run
+exposed a recursive optional array clone with its element still reserved (rank
+92) and changed physical callable diagnostic pins. Both were fixed and rechecked:
+viewOptionalArrayContract preserves ObjectPresent; the owned completion hook
+fills only a missing element from its completed canonical array. Existing
+physical callable mismatch diagnostics remain pinned, while a physically
+compatible but logically unproved callback produces the new named unknown
+signature refusal. The targeted repair oracle passed 3.352s. All three logical
+certificate/checker-proof mutants were rerun against the final repair and caught.
+
+The full touched-package attempt is not green. Its nine lower test groups fail
+identically on isolated integration 80a6921c, referencing the existing cohere
+submodule through a symlink, with no copied code. Confirmed baseline comparison
+passed as evidence: same nine failing roots, zero additional failing roots.
+Those groups are CensusMarkerResultIsAssignable, CensusMarkerZeroCallIsNotAssumedSafe,
+OverloadedShorthandFunctionValueStaysNotYet, CensusPredicateMarkerKeepsProofBoundaries,
+CensusOverloadRelation, PhantomArrayRequiredCastsAreErased, PhantomArrayCastsAreErased,
+PhantomArrayProofs and NestedFunctionGapsAreLoud. The broad package attempt was
+stopped after over six minutes in the unrelated exhaustive native decoder corpus.
+The final shipping gate is the focused view-package gate and the selected broader
+oracle gate below, plus vet. No full repository, full native-package, or current
+main landing is claimed. This is the lane tip for the designated integrator.
+
+Final shipping commands, all outputs directly to files:
+```
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Untagged' -count=1 > /tmp/untagged-shipping-packages.log 2>&1
+go vet ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle > /tmp/untagged-shipping-vet.log 2>&1
+go test ./internal/oracle -run 'TestCheckedViewUntagged|TestCheckedViewLazy|TestCheckedViewObjects|TestCheckedViewInterfaces|TestCheckedViewObjectUnions|TestCheckedViewCallable|TestCheckedViewIntersection|TestCheckedViewNullish' -count=1 -v -timeout 20m > /tmp/untagged-shipping-oracles.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-nested-callable-mutants.py nested-callable-drop-logical-native nested-callable-drop-logical-js nested-callable-drop-checker-proof > /tmp/untagged-repaired-logical-mutants.log 2>&1
+```
+After publication: 61 candidate projections/434 candidate reads represented,
+zero reduced projection pairs/reads remaining. Production completions and exact
+reachability remain unmeasured/uncertified as recorded in the ledger. Original
+TypeChecker generic/rest/overloaded methods and intrinsic forEach contracts need
+additional callable-family support; the projection completion date does not
+promise a completion date for those unchanged original interfaces.
+
+Built: fifteen recursive FlowNode projections plus fixed-signature callable union selection with direct and nested source controls.
+Commits: previous group e3be8faf; this group's commit follows in Git history.
+Commands: FlowNode/callable Node/native/JS controls passed 16.002s; remaining-boundary receipts passed 0.367s; final view packages passed (IR 0.012s, lower 4.581s, native 11.512s, JS 0.973s); oracle passed 72.813s with 548 Node executions.
+Mutants: producer undefined tag, recursive completion, skipped callable checks native/JS, wrong member native/JS, dropped nested callable checks native/JS; all eight caught semantically and restored; active-pair native/JS and undefined reference-write omission add three more mutants.
+Uncovered: 3 candidate projections/44 reads remain (24:33, 72:10, 227:1); unchanged compiler interfaces and exact reachability remain uncertified.
+
+Planning target remains October 12, 2026, 23:00 UTC. Counts are candidate
+projections: 58/390 represented, 3/44 pending; full unchanged compiler-interface
+completions remain zero. FlowNode fixtures narrow node selectors and retain the
+recursive flags/id/node/antecedent structure. They are independently authored,
+not copied compiler definitions. Valid cycles use active contract/value pairs in both runtimes; non-cyclic input deeper than 128 edges still refuses conservatively. The first source probe exposed and fixed explicit
+undefined producer tags and provisional recursive array admission. Each FlowNode
+candidate has valid member samples, wrong and nested-wrong exact pins, and an
+absent control wherever its declared field permits absence.
+
+The three remaining obligations have concrete source boundary receipts. Structural
+Type membership still cannot certify its nested TypeChecker callable fields; a
+valid fixed checker producer reaches a named unsupported object-union refusal.
+Direct fixed callable unions now choose a member using immutable producer code
+signatures, but optional callback/thisArg signatures in candidate 227 remain
+unsupported. These are implementation limits, not whole-tsc checker diagnostics
+or a waiting handoff. No positive completion is credited for refusal receipts.
+
+The mutant harness initially rejected a build-breaking skipped-check mutation
+because it left a Go variable unused. The mutation was corrected to preserve the
+variable reference; all eight receipts now demonstrate semantic failures rather
+than compiler failures. All source mutations were restored.
+
+Built: recursive field-only matching plus seven array-union projections, including homogeneous selection and lazy tagged payloads.
+Commits: follows pushed 70d33dfd; this group is recorded in Git history.
+Commands: recursive Node/native/JS oracle passed 1.063s; array candidate oracle passed 8.439s; shipping IR/lower/native/JS/oracle gate passed, oracle 42.204s (390 Node executions).
+Mutants: six recursive skip/wrong/nested mutants caught; five array skip/wrong-member/nested mutants run with semantic pins and restoration.
+Uncovered: 18 candidate projections/79 reads remain; unchanged compiler interfaces, NodeArray metadata, and exact reachability are not certified.
+
+Whole-family planning target remains October 12, 2026, 23:00 UTC. Candidate
+counts are 43 projections/355 reads represented, 18/79 pending. Full unchanged
+compiler-interface completions remain zero. The recursive schema matcher retains
+optional child IDs, follows union descendants, and refuses at depth above 128.
+The array selector checks homogeneous membership, rather than permitting mixed
+members merely because each index fits the joined element union. Named failures
+are pinned in source oracles; positive, empty, unread-payload, and absent controls
+are compared to Node in both backends. This is a reduced contract projection,
+not a claim that every field of stock TypeScript's interfaces is implemented.
+
+Built: all 36 own-kind candidate selector projections, including indexed reads, with 310 candidate reads represented.
+Commits: production hooks 1baa2640; ranked first group 4fb1c603; this second source group follows in Git history.
+Commands: exact candidate source oracle 13.136s; final filtered IR/lower/native/JavaScript/oracle passed, oracle 35.259s.
+Mutants: skipped selection native/JS, wrong scalar kind native/JS, wrong literal native/JS, dropped nested guards, ignored overlaps, dropped index membership; all nine caught and restored.
+Uncovered: 25 candidate selector pairs/124 reads remain; full unchanged compiler interface conformance and exact allocation reachability are not certified.
+
+Revised whole-family planning target: October 12, 2026, 23:00 UTC. This is a
+planning estimate, not a completion claim. No shared-hook ownership wait remains.
+
+The second ranked group adds the remaining 32 own-kind selector projections,
+144 candidate reads. Every candidate has its own .a fixture set and exact refusal
+pins. Valid member samples and permitted absence match Node in both production
+backends. Wrong kinds and nested labels refuse with exit 70, naming the actual
+field, expected type and found value category. Node positive stdout is also pinned
+to the number of member controls, preventing an empty fixture from counting.
+
+Total selector projection coverage: 36 candidate pairs/310 candidate reads out
+of 61/434 classified untagged candidates. Remaining: 25/124. This remains projection
+coverage; the unchanged full compiler-interface completion count is zero. No original
+interface implementation was copied. The classifier measured kind contracts with a
+zero-diagnostic stock checker; generator code writes independent read projections.
+The supplied broader 228/2,468 object-union candidate pool also contains shared-tag
+and other consumer families and is not this lane's exact denominator.
+
+Existing array dispatch reaches the named object-union hook. Candidate 133's indexed
+wrong-kind read is pinned. A new mutant clears that actual ArrayIndex.ViewContract:
+heap-object storage still passes, but both backends continue with true/exit 0. The
+expected exit-70 membership pin catches it. This proves array kind alone is not
+being counted as an object-union contract. Indexed nested label checks also pass.
+All previous eight semantic mutations were rerun and restored with this group.
+
+The remaining candidate obligations are field-only recursive Type/FlowNode members,
+unions of array contracts, and a callable union. They need complete member adapters;
+this checkpoint deliberately does not substitute a flags-number test for those
+contracts. Nominal targets, getter/static selection and unsupported nested families
+remain outside the own-data matcher. Instance own data is covered and getter probing
+is refused without calling the getter. All later reads retain shared checks.
+
+Validation output is committed under logs/. Only the scoped commands below were
+run for this group; no full repository gate is claimed. Setup timing remains
+214.165s, nproc 5, four-CPU quota. No lane branch was merged independently.
+
+```
+source /workspace/adamic-tools/env.sh
+go test ./internal/oracle -run '^TestCheckedViewUntaggedCandidatePairs$' -count=1 -v > /tmp/untagged-candidate-group2-pinned.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-candidate-mutants.py > /tmp/untagged-candidate-group2-mutants.log 2>&1
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestViewUnionDiscriminant|TestUntaggedView|TestCheckedViewUntagged(Selection|SourceDispatch|SourceFlows|CandidatePairs|OwnClassData)' -count=1 -v > /tmp/untagged-group2-shipping.log 2>&1
+```
+
+Earlier first-group checkpoint, historical:
+
+Built: classified candidate unions; added overlapping/open-kind dispatch, own class-data probes, and top-four candidate selector fixtures.
+Commits: production hooks 1baa2640; prior handoff 55b3fdef/2bb00f0f; this candidate group follows in Git history.
+Commands: stock classification has 0 diagnostics; final lane IR/lower/backend/oracle checks pass, oracle 25.111s; getter/data control 0.783s.
+Mutants: skip selection native/JS, accept wrong scalar kind native/JS, accept wrong literal native/JS, drop nested guards, ignore overlap; all eight caught and restored.
+Uncovered: 57 candidate selector pairs/268 candidate reads remain; full unchanged compiler interfaces, non-kind member adapters, nominal targets, getters/static selection and exact allocation reachability are not certified.
+
+Whole-family planning target remains October 12, 2026, 23:00 UTC. Candidate
+progress is explicitly selector-projection coverage, not a claim of full compiler
+interface conformance. User authorization removed the shared-hook waiting block.
+
+The pinned stock checker at TypeScript 6.0.3/050880ce has zero diagnostics after
+locked dependency installation and generated diagnostic declarations. No production
+checker diagnostics were bypassed. classify-candidates.cjs refers to a detached
+cohere/TypeScript worktree; no code was lifted from cohere. Its input is lazy's
+228-pair/2,468-read candidate inventory. Actual shared disjoint literal fields split
+it into 156 shared-discriminant pairs/2,019 reads, 61 untagged candidates/434 reads,
+and 11 other consumer contracts/15 reads. The 61 retain array/callable overlaps.
+A shared enum field with overlapping values is not a discriminant. Open whole
+numeric enums preserve number semantics rather than requiring listed enum values.
+
+First ranked group:
+- FunctionLikeDeclaration.body: rank 8, 50 candidate reads.
+- ForStatement.initializer: rank 11, 43 candidate reads.
+- ModuleDeclaration.body: rank 13, 38 candidate reads.
+- ForOfStatement.initializer: rank 19, 35 candidate reads.
+
+Each has a separate source fixture set with valid member samples, named wrong-kind
+exit 70, a nested wrong label, and permitted absence where declared. Source definitions
+are independently written selector projections from measured kind metadata, with
+unread unsupported fields retained. They do not copy original interfaces and do not
+certify every unread compiler field. Four candidate selector pairs/166 candidate
+reads are covered; 57/268 remain unvalidated. The full compiler-pair completion count
+is still zero. Both scopes are recorded in lazy-candidate-progress.json.
+
+ViewUnionHasDiscriminant is a new lane-owned IR query. The existing named lower
+hook and both backend hooks use it; the shared change is listed in the plan. An own
+required scalar kind is checked, including unrestricted numeric enum kind contracts.
+Other unread payload fields are deferred. Pure probing now covers initialized own
+data on class instances through shared metadata. It does not invoke getters or
+resolve inherited static storage. Nominal target contracts remain unsupported by this
+matcher, consistently in both backends. The returned id does not become a payload
+certificate; subsequent reads keep shared guards. Helper, generic, callback and
+stored-field source controls pass with exact holder.value wrong-shape messages.
+
+candidate-refusals.json pins actual native/JS messages. A malformed nested label
+fails at value0.payload.label, expected string, found boolean. Invalid kinds fail at
+the actual body/initializer read, naming its source alias and found object. Node
+controls observe ordinary true values; invalid checked reads intentionally refuse.
+class-data-getter.a refuses without printing its getter marker, proving no getter
+was invoked by membership probing. Valid class data and wrong class kinds are pinned.
+
+Eight candidate mutations are separate and restored. Skipped selectors, wrong type
+acceptance and wrong literal acceptance continue with exit 0; exact refusal pins catch
+them. Dropping actual lowered payload/label guards makes native exit by signal and
+JavaScript continue with true; both fail the exit-70 pin. Removing disjointness is
+caught by TestViewUnionDiscriminantOverlaps. Logs are checked in. No full repository
+gate was run; the scoped existing view/lazy checks passed (IR 0.015s, lower 1.371s,
+native 4.733s, JavaScript 1.083s). Setup remains 214.165s, nproc 5.
+
+Reproduction:
+
+```
+source /workspace/adamic-tools/env.sh
+NODE_PATH=/tmp/untagged-stock-api/node_modules node stage3/interface-downcasts/untagged/classify-candidates.cjs /tmp/untagged-typescript stage3/interface-downcasts/untagged/lazy-candidate-progress.json /tmp/untagged-classified-candidates.json > /tmp/untagged-classification.log 2>&1
+python3 stage3/interface-downcasts/untagged/generate-candidate-fixtures.py /tmp/untagged-classified-candidates.json 8 11 13 19
+python3 stage3/interface-downcasts/untagged/run-candidate-mutants.py > /tmp/untagged-candidate-mutants.log 2>&1
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript ./internal/oracle -run 'TestViewUnionDiscriminant|TestUntaggedView|TestCheckedViewUntagged(Selection|SourceDispatch|SourceFlows|CandidatePairs|OwnClassData)' -count=1 -v > /tmp/untagged-group1-shipping.log 2>&1
+```
+
+Next: continue most-read remaining own-kind candidates, then field-only/recursive
+and array/callable overlaps. Full member adapter coverage is not replaced by these
+projection receipts. No individual lane branch was merged.
+
+Earlier checkpoint, historical:
+
+Built: installed three minimal named production hooks; all 12 representative source cases pass without overlays.
+Commits: component/source handoff 55b3fdef, evidence 2bb00f0f, integration base ba59427c; production hook commit follows in Git history.
+Commands: production oracle 5.751s; scoped lower/JS/native 1.247s/0.975s/4.064s; setup 214.165s, nproc 5.
+Mutants: skip native/JS selection, accept native/JS wrong tags, remove nested IR guards; all five caught on production source and restored.
+Uncovered: unchanged compiler-pair fixtures and overlapping member adapters; candidate pool remains 228 pairs/2,468 reads pending classification.
+
+Revised whole-family target: October 12, 2026, 23:00 UTC. The user now authorizes
+minimal shared hooks directly. No owner handoff is blocking this lane. Only the
+three listed shared hunks changed: supportsUntaggedRead in lower/view_contracts.go
+and viewUntaggedObjectUnion in each backend's view_unions.go. The integrator can
+merge this own-branch tip and reconcile those named hooks hunk by hunk.
+
+The 12-member, five-member and field-only fixtures now compile through production
+source loading/lowering and both backends. They include every representative member,
+wrong shapes, nested wrong scalars and viewed optional absence. Exact refusal pins
+are unchanged; positive results match Node. They are reduced shape fixtures, not
+unchanged tsc pair receipts. Candidate completed pairs/reads remain zero, pending
+classification and actual per-pair fixtures. Exact runtime reachability is still
+unmeasured, but no longer treated as a prerequisite for candidate progress.
+
+Production reproduction:
+
+```
+source /workspace/adamic-tools/env.sh
+VIEW_UNTAGGED_SOURCE_REQUIRED=1 go test ./internal/oracle -run '^TestCheckedViewUntagged(Selection|SourceDispatch)$' -count=1 -v > /tmp/untagged-wired-source.log 2>&1
+go test ./internal/lower ./internal/javascript ./internal/native -run 'TestUntaggedView|TestView|TestLazyView|TestSharedArrayContractAdapter' -count=1 > /tmp/untagged-wired-packages.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-source-mutants.py > /tmp/untagged-wired-mutants.log 2>&1
+```
+
+All five source mutations were run without GOFLAGS overlays. Individual source
+mutation logs and wired summary logs are checked in. Full repository gate was not run.
+The source test's no-hook skip is now unreachable on this branch; its required mode
+fails if admission is removed. The old frontier test skips the obsolete refusal and
+the source-dispatch test supplies executable evidence. No individual lane was merged.
+
+Earlier overlay checkpoint, historical:
+
+Built: merged ba59427c; source selectors and three owner-hook handoffs; 12 source cases pass with an overlay.
+Commits: integration base ba59427ccc7afecae29a305c41e6e9c7867e5610; source checkpoint 55b3fdef; evidence checkpoint follows in this branch's Git history.
+Commands: overlay source/component oracle 4.509s; scoped lower/JS/native 1.058s/0.858s/3.875s; production frontier 1.436s, source dispatch explicitly skipped.
+Mutants: skip native/JS selection, accept native/JS wrong tags, drop lowered nested guards; all five caught by exact source pins and restored.
+Uncovered: production hooks and unchanged tsc pairs; exact family pairs/reads remaining are unmeasured, not zero.
+
+Revised whole-family estimate: October 14, 2026 UTC, conditional on the integrator
+installing the three hooks and a family-specific reachability inventory. This is a
+planning estimate. The current census cannot support an unconditional delivery date.
+
+The designated integration merge was a clean fast-forward. It brought lazy admission
+and all pushed lane tips; no individual lane branch was merged. Production shared
+files remain untouched, as required by territory ownership. source-hooks.patch contains
+three concrete hunks for lower/view_contracts.go, native/view_unions.go and
+javascript/view_unions.go. The integrator must apply them, format the shared files and
+replace the old source-refusal frontier with the source-dispatch evidence.
+
+The new helpers use the interned registry and shared slot initialization/type metadata.
+A member's own required finite tags select it lazily; payload reads keep shared guards.
+Field-only members require complete acyclic scalar/plain-object contracts. Other
+families, classes and accessor-based membership remain refused. Required shared tags
+keep the existing dispatch. JavaScript honors allowed undefined before object selection.
+The selected id is not stored as dynamic provenance: subsequent reads rely on the
+shared conservative checked-read machinery. This checkpoint does not certify every
+helper/generic/callback/field flow for these unions.
+
+Actual .a source programs exercise every member of the reduced 12-member name union,
+every member of the five-member option union, and both structural alternatives. Each
+shape also tests wrong membership, a nested wrong scalar, and viewed optional absence.
+Node controls provide the observed ordinary behavior; compiled invalid views instead
+stop with exact exit 70/stderr pins in source-refusals.json. These are representative
+shape fixtures, not unchanged full compiler interface fixtures or completed census pairs.
+The earlier component tests still include sanitized native execution.
+
+Measurement uses lazy/census/read-demand-pairs.json.gz and lazy/ADAPTED-CENSUS.md.
+The latter explicitly states at lines 64-65 that allocation reachability is unmeasured.
+lazy-candidate-progress.json ranks all 228 static object-union pairs/2,468 candidate
+reads, including tagged unions. All remain pending as census obligations; zero
+production pairs/reads are claimed complete. Exact untagged remaining counts are null.
+The old pair-progress.json 84/186 queue is historical and must not be used as the
+current exact denominator. The fresh pool's leading BindingName reads (112, 96, 57)
+have shared discriminants, so they cannot simply be charged to this lane. The reduced
+12-member name fixture is not evidence that these tagged pairs are completed here.
+
+Source mutation evidence:
+- source-skip-native and source-skip-javascript: binding-name/wrong continues with exit 0; exact refusal pin fails.
+- source-wrong-shape-native and source-wrong-shape-javascript: invalid kind 99 is admitted; the same exact refusal pin fails.
+- source-drop-transitive: remove payload/label guards in the actual lowered program; native exits by signal (-1), JavaScript prints true with exit 0. Both fail the expected exit 70 pin. No sanitizer failure is being treated as the check.
+
+Reproduction (all test output goes to files):
+
+```
+source /workspace/adamic-tools/env.sh
+python3 stage3/interface-downcasts/untagged/source-overlay.py /tmp/untagged-source-overlay
+VIEW_UNTAGGED_SOURCE_REQUIRED=1 GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json go test ./internal/oracle -run '^TestCheckedViewUntagged(Selection|SourceDispatch)$' -count=1 -v > /tmp/untagged-source-final.log 2>&1
+GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json go test ./internal/lower ./internal/javascript ./internal/native -run 'TestUntaggedView|TestView|TestLazyView|TestSharedArrayContractAdapter' -count=1 > /tmp/untagged-source-packages.log 2>&1
+GOFLAGS=-overlay=/tmp/untagged-source-overlay/overlay.json python3 stage3/interface-downcasts/untagged/run-source-mutants.py > /tmp/untagged-source-mutants.log 2>&1
+go test ./internal/lower ./internal/javascript ./internal/native ./internal/oracle -run 'TestUntaggedView|TestCheckedViewUntaggedSourceFrontier|TestCheckedViewUntaggedSourceDispatch' -count=1 -v > /tmp/untagged-production-frontier.log 2>&1
+```
+
+Setup: GOPROXY=https://proxy.golang.org|direct; submodules ready 9.847s,
+go build ready 213.987s, deferred test binaries 214.121s, build cache warm
+214.124s, done 214.165s; nproc=5, cgroup quota=4 CPUs. Environment source is
+/workspace/adamic-tools/env.sh. Logs are copied into this lane's logs directory.
+Full repository gate was not run. Whole-tsc checker diagnostics do not prevent these
+source fixtures, but prevent the claimed exact whole-program reachability census.
+
+Pending owner action is concrete and reviewable: apply source-hooks.patch on the
+integration branch and wake this lane with that tip. Until then, production source
+admission remains blocked by the shared-hook ownership rule, not lazy cast admission.
+
+Earlier checkpoint, retained as historical evidence:
+
 Built: member-specific tag filtering, selected-contract preservation and structural fallback components; no source admission.
 Commits: territory 6c321f8a; lane 4 refresh d15b4206; selector 566aad67; mutant checkpoint recorded in Git history.
 Commands: focused lower/oracle passed (0.006s/3.470s); counted absent controls passed (1.299s); touched-package vet passed.
@@ -124,3 +488,15 @@ source admission tests once the shared integration implements the hooks.
 After every push: 84 pairs and 186 reads remain. No pair is reduced based on
 these components. All files and mutation sources are restored. Branch publication
 uses only codex/views-untagged-object-unions and opens no pull request.
+
+Group 4 shipping commands:
+```
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Untagged' -count=1 -v
+go test ./internal/oracle -run 'TestCheckedViewUntagged|TestCheckedViewLazy|TestCheckedViewObjects|TestCheckedViewInterfaces|TestCheckedViewObjectUnions|TestCheckedViewCallableContractControl' -count=1 -v
+```
+Outputs were written directly to log files. The initial broad run found missing
+locked @types/node dependencies and a class initializer regression from semantic
+undefined tagging. `npm ci --ignore-scripts` in stage3/api installed the locked
+dependencies. The reference-write hook fixed the initializer regression, proven
+by the omission mutant and the final green gate. Full repository tests were not
+run. Existing generic/rest/optional callable limits are preserved and recorded.

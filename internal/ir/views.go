@@ -15,6 +15,8 @@ const (
 	ViewNull
 	ViewUndefined
 	ViewNullable
+	ViewMap
+	ViewDictionary
 )
 
 // Contracts describe declared logical types, independently of physical layout ids.
@@ -34,21 +36,28 @@ type ViewContract struct {
 	// Unsupported records the member family that must fail at a demanded read.
 	Unsupported string
 
-	NominalBases []string
-	Nominal      string
-	Undefined    bool
-	Null         bool
-	Kind         ViewKind
-	Name         string
-	Of           Type
-	Allowed      []ViewLiteral
-	Fields       []ViewFieldContract
-	Members      []ViewContractID
-	Element      ViewContractID
-	Tuple        []ViewContractID
-	Functions    []int
-	Parameters   []ViewContractID
-	Result       ViewContractID
+	NominalBases  []string
+	Nominal       string
+	Undefined     bool
+	Null          bool
+	Kind          ViewKind
+	Name          string
+	Of            Type
+	Allowed       []ViewLiteral
+	Fields        []ViewFieldContract
+	Members       []ViewContractID
+	Key           ViewContractID
+	MapReadonly   bool
+	ArrayReadonly bool
+	Element       ViewContractID
+	Tuple         []ViewContractID
+	Functions     []int
+	// ProducerCertified requires immutable code identity in Functions, even when empty.
+	ProducerCertified bool
+	Parameters        []ViewContractID
+	Result            ViewContractID
+	// DiscardResult certifies an erased zero-argument marker; it cannot supply a valued result.
+	DiscardResult bool
 }
 
 type ViewFieldContract struct {

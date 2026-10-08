@@ -66,8 +66,7 @@ func (e *emitter) viewIntersectionFields(id ir.ViewContractID, object, expressio
 				allowed = append(allowed, strconv.FormatBool(literal.Boolean))
 			}
 		}
-		optional := field.Optional || child.Undefined
-		body = append(body, fmt.Sprintf("{ const %s = adamicViewField(%s,%s,%s,%d,%s,[%s],%t,%t);", slot, object, quote(field.Name), quote(path), child.Of, quote(child.Name), strings.Join(allowed, ","), optional, optional))
+		body = append(body, fmt.Sprintf("{ const %s = adamicViewField(%s,%s,%s,%d,%s,[%s],%t,false,%t);", slot, object, quote(field.Name), quote(path), child.Of, quote(child.Name), strings.Join(allowed, ","), field.Optional, child.Undefined))
 		if child.Of == ir.Object {
 			if child.Kind == ir.ViewUnion {
 				body = append(body, "if ("+slot+" !== undefined) {"+e.viewObjectUnion(ir.Property{View: path, ViewContract: field.Contract}, slot)+";}")

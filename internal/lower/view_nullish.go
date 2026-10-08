@@ -25,7 +25,7 @@ func (l *lowering) nullishViewContract(node *ast.Node, target *checker.Type) (ir
 		presentContract := l.result.ViewContracts[child-1]
 		contract.Unsupported = presentContract.Unsupported
 		if contract.Unsupported == "" && presentContract.Kind == ir.ViewUnion {
-			contract.Unsupported = "nullable union member selection"
+			contract.Unsupported = nullableUnionUnsupported(l.result, presentContract)
 		}
 	}
 	l.result.ViewContracts[id-1] = contract
@@ -50,5 +50,39 @@ func (l *lowering) nullishViewKinds(target *checker.Type) uint32 {
 	if !known || of == 0 || of == ir.Union {
 		return 0
 	}
+	// Records and fixed objects have the same logical heap kind; storage stays certified separately.
+	if of == ir.Record {
+		of = ir.Object
+	}
 	return 1 << of
+}
+
+// Distinct runtime kinds select a member without reading its payload. Object
+// unions with a common finite tag use the existing tag adapter. Ambiguous array
+// or opaque callable alternatives retain a named read refusal.
+func nullableUnionUnsupported(program *ir.Program, contract ir.ViewContract) string {
+	kinds := map[ir.Type]int{}
+	for _, id := range contract.Members {
+		member := program.ViewContracts[id-1]
+		if member.Kind == ir.ViewUndefined || member.Kind == ir.ViewNull {
+			continue
+		}
+		if member.Unsupported != "" {
+			return member.Unsupported
+		}
+		switch member.Kind {
+		case ir.ViewScalar, ir.ViewObject, ir.ViewArray, ir.ViewMap:
+		default:
+			return "nullable union member selection"
+		}
+		if member.Kind != ir.ViewScalar {
+			kinds[member.Of]++
+		}
+	}
+	for of, count := range kinds {
+		if count > 1 && !(of == ir.Object && contract.Of == ir.Object) {
+			return "nullable union member selection"
+		}
+	}
+	return ""
 }

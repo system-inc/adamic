@@ -1,0 +1,6 @@
+type AnyFunction = (...args: never[]) => void;
+interface Base { readonly kind: 'debug' | 'other'; }
+interface Debug extends Base { readonly kind: 'debug'; readonly assertion: AnyFunction; }
+function read(input: Base): void { const debug = input as Debug; const callback = debug.assertion; callback(); console.log('called'); }
+const input = { kind: 'debug' as const, assertion: (): boolean => { console.log('producer'); return true; } };
+read(input);

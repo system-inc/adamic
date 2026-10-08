@@ -1,0 +1,5 @@
+native-array-kind: caught by ranked2-variables-wrong-array; /tmp/adamic-lane2-ranked-parser-array-mutants/native-array-kind.log
+javascript-array-kind: caught by ranked2-call-wrong-array; /tmp/adamic-lane2-ranked-parser-array-mutants/javascript-array-kind.log
+native-enum-member: caught by ranked2-tuple-wrong-member; /tmp/adamic-lane2-ranked-parser-array-mutants/native-enum-member.log
+javascript-enum-member: caught by ranked2-tuple-wrong-member; /tmp/adamic-lane2-ranked-parser-array-mutants/javascript-enum-member.log
+native-eager-elements: caught by ranked2-call-lazy; /tmp/adamic-lane2-ranked-parser-array-mutants/native-eager-elements.log

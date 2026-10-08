@@ -63,7 +63,7 @@ func BoundedIntersectionField(program *Program, id ViewContractID, walkable func
 		return BoundedIntersectionField(program, present, walkable)
 	}
 	switch c.Kind {
-	case ViewUnknown, ViewUndefined, ViewNull:
+	case ViewUnknown, ViewUndefined, ViewNull, ViewDictionary:
 		return BoundedDeferred, 0
 	case ViewScalar:
 		if c.Of == Union {
@@ -86,6 +86,16 @@ func BoundedIntersectionField(program *Program, id ViewContractID, walkable func
 			if tag, _ := UnionDiscriminant(program, id); tag != "" {
 				return BoundedArms, id
 			}
+			return BoundedRefused, 0
+		}
+		return BoundedKind, 0
+	case ViewNullable:
+		if c.Null || !c.Undefined || c.Element == 0 {
+			return BoundedRefused, 0
+		}
+		return BoundedIntersectionField(program, c.Element, walkable)
+	case ViewMap:
+		if c.Of != Map {
 			return BoundedRefused, 0
 		}
 		return BoundedKind, 0

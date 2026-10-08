@@ -1,0 +1,6 @@
+import type { Identifier } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function helper(value: Identifier): void { console.log(String(value.escapedText)); }
+const raw = { kind: 80, escapedText: 42 };
+const base: Base = raw;
+helper(base as Identifier);

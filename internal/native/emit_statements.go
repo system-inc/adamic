@@ -177,7 +177,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
-		e.viewArrayMutation(array, statement.Element)
+		e.viewArrayMutation(array, statement.Element, value)
 		if statement.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}
@@ -204,7 +204,10 @@ func (e *emitter) statement(statement ir.Statement) {
 		slot := e.temporary()
 		cache := e.cache()
 		if e.program.CheckedFields[statement.Name] {
-			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+			// The names are the JavaScript backend's adamicViewTypeNames, so both refuse a write
+			// into a slot of another representation, such as an array into one holding undefined,
+			// with the same diagnostic.
+			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, statement.Value.Type(), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Object: "object", ir.Array: "array", ir.Map: "Map"}[statement.Value.Type()]), cString("<write>."+statement.Name))
 		}
 		if e.program.CheckedFields[statement.Name] {
 			e.line("adamic_value *%s = adamic_object_write_field(%s, %s, &%s);", slot, object, cString(statement.Name), cache)

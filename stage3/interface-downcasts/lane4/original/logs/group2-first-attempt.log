@@ -1,0 +1,72 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/wrong
+    checked_views_brands_original_test.go:121: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:121: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie4036453024/001/identifier | privateidentifier-good.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie1255017204/001/identifier | privateidentifier-internal.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie2306135139/001/identifier | privateidentifier-undefined.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie1823730446/001/identifier | privateidentifier-wrong.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie2609850149/001/identifier | privateidentifier-null.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsIdentifier__PrivateIdentifie3852169968/001/identifier | privateidentifier-missing.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/wrong
+    checked_views_brands_original_test.go:121: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:121: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/TransientSymbol/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/good
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNamegood454624301/001/membername-good.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/internal
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNameinternal3687325946/001/membername-internal.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/undefined
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNameundefined2669817283/001/membername-undefined.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/wrong
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNamewrong3596917627/001/membername-wrong.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/null
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNamenull4031564472/001/membername-null.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestCheckedViewBrandsOriginalPairs/MemberName/missing
+    checked_views_brands_original_test.go:65: /tmp/adamic-gate/TestCheckedViewBrandsOriginalPairsMemberNamemissing621738740/001/membername-missing.a:6:8: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestCheckedViewBrandsOriginalPairs (28.13s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/good (1.78s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/internal (1.74s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/undefined (1.59s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/wrong (1.56s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/null (1.40s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/PrivateIdentifier/missing (1.47s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/good (0.48s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/internal (0.48s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/undefined (0.51s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/wrong (0.46s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/null (0.45s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/Identifier_|_PrivateIdentifier/missing (0.48s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/good (2.13s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/internal (2.34s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/undefined (2.02s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/wrong (2.04s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/null (1.97s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/TransientSymbol/missing (1.85s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/good (0.51s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/internal (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/undefined (0.73s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/wrong (0.61s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/null (0.54s)
+    --- FAIL: TestCheckedViewBrandsOriginalPairs/MemberName/missing (0.45s)
+FAIL
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=38
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	28.171s
+FAIL

@@ -1,0 +1,8 @@
+original-slot-alias: caught by reference-array-source-alias; /tmp/adamic-lane2-reference-array-mutants/original-slot-alias.log
+native-original-contract: caught by reference-array-missing-field; /tmp/adamic-lane2-reference-array-mutants/native-original-contract.log
+javascript-original-contract: caught by reference-array-narrow-field; /tmp/adamic-lane2-reference-array-mutants/javascript-original-contract.log
+native-incoming-readiness: caught by reference-array-uninitialized; /tmp/adamic-lane2-reference-array-mutants/native-incoming-readiness.log
+javascript-incoming-readiness: caught by reference-array-uninitialized; /tmp/adamic-lane2-reference-array-mutants/javascript-incoming-readiness.log
+readonly-incoming: caught by reference-array-readonly-incoming; /tmp/adamic-lane2-reference-array-mutants/readonly-incoming.log
+mutable-field-direction: caught by reference-array-mutable-incoming; /tmp/adamic-lane2-reference-array-mutants/mutable-field-direction.log
+native-reference-ownership: caught by reference-array-alias; /tmp/adamic-lane2-reference-array-mutants/native-reference-ownership.log

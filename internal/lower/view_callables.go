@@ -43,6 +43,11 @@ func buildViewCallableContract(l *lowering, node *ast.Node, target *checker.Type
 // This deliberately overapproximates allocation flow. Opaque inputs never count
 // as a body certificate, and method bivariance is not used as signature evidence.
 func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, property *ast.Symbol) error {
+	// A supported shape is certified from producer code at each read, not from
+	// same-named implementations elsewhere. Unsupported shapes retain the old proof.
+	if l.runtimeViewCallableShape(l.checker.GetTypeOfSymbol(property)) || l.viewCallableMarkerType(l.checker.GetTypeOfSymbol(property)) {
+		return nil
+	}
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
 		return err
@@ -66,7 +71,7 @@ func (l *lowering) viewCallableFieldUses(node *ast.Node, target *checker.Type, p
 			called = true
 		}
 		var value *ast.Node
-		if part.Name() != nil && part.Name().Text() == property.Name {
+		if callableDataDeclaration(part) && part.Name() != nil && part.Name().Kind != ast.KindComputedPropertyName && part.Name().Text() == property.Name {
 			switch part.Kind {
 			case ast.KindPropertyAssignment:
 				value = part.AsPropertyAssignment().Initializer
@@ -209,4 +214,13 @@ func (l *lowering) viewProvenClassCast(node *ast.Node, value ir.Expression, sour
 		return ir.CheckedCast{Value: value, Field: property.Name, FieldType: of, Allowed: []ir.Expression{allowed}, CheckedFields: true, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}, nil
 	}
 	return nil, nil
+}
+
+// Only these declarations have a scalar property name. Binding patterns are not names.
+func callableDataDeclaration(node *ast.Node) bool {
+	switch node.Kind {
+	case ast.KindPropertyAssignment, ast.KindShorthandPropertyAssignment, ast.KindPropertyDeclaration, ast.KindMethodDeclaration:
+		return true
+	}
+	return false
 }

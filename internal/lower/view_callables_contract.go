@@ -15,8 +15,8 @@ func (l *lowering) completeViewCallableShapeContract(node *ast.Node, target *che
 		return l.notYet(node, "viewed callable read with overload or construct signatures")
 	}
 	signature := signatures[0]
-	if len(signature.TypeParameters()) != 0 || signature.HasRestParameter() || signature.MinArgumentCount() != len(signature.Parameters()) {
-		return l.notYet(node, "viewed callable read with generic, rest or optional parameters")
+	if len(signature.TypeParameters()) != 0 || signature.HasRestParameter() {
+		return l.notYet(node, "viewed callable read with generic or rest parameters")
 	}
 	contract := l.result.ViewContracts[id-1]
 	parameters := make([]ir.ViewContractID, len(signature.Parameters()))

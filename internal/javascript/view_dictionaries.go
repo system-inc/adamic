@@ -13,6 +13,7 @@ const adamicViewDictionaryRead = (record, key, kinds, childContract, expression,
  if (!Object.hasOwn(record, key) && key in Object.prototype) panic("record member '" + key + "' is missing; records hold own keys only");
  const slot = Object.getOwnPropertyDescriptor(record, key);
  if (slot !== undefined && !Object.hasOwn(slot, 'value')) fail('accessor');
+ if (typeof adamicFieldReadiness !== 'undefined' && adamicFieldReadiness.get(record)?.has(key)) fail('uninitialized');
  const value = slot === undefined ? undefined : slot.value;
  const kind = value === undefined ? 'undefined' : value === null ? 'null' : Array.isArray(value) ? 'array' : value instanceof Map ? 'Map' : typeof value;
  if (!kinds.includes(kind)) fail(kind);

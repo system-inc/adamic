@@ -15,7 +15,7 @@ func internArrayViewContract(l *lowering, node *ast.Node, target *checker.Type, 
 		return 0, l.notYet(node, "a checked tuple view with per-position optional and rest contracts")
 	}
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
-	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target)}
+	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}
 	l.result.ViewContracts = append(l.result.ViewContracts, contract)
 	l.result.ViewContractTypes[int(target.Id())] = id
 	handled, err := l.viewArrayContract(node, target, func(element *checker.Type) error {
@@ -55,6 +55,8 @@ func (l *lowering) viewOptionalArrayContract(node *ast.Node, target *checker.Typ
 		return 0, true, err
 	}
 	contract := l.result.ViewContracts[present-1]
+	// Keep the canonical array ID when a recursive element is still reserved.
+	contract.ObjectPresent = present
 	contract.Undefined = true
 	contract.Name = l.checker.TypeToString(target)
 	id := ir.ViewContractID(len(l.result.ViewContracts) + 1)

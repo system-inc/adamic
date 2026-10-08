@@ -7,12 +7,13 @@ import (
 )
 
 type recursiveIntersectionField struct {
-	Name     string            `json:"name"`
-	Expected string            `json:"expected"`
-	Type     ir.Type           `json:"type"`
-	Optional bool              `json:"optional"`
-	Child    ir.ViewContractID `json:"child"`
-	Allowed  []any             `json:"allowed"`
+	Name      string            `json:"name"`
+	Expected  string            `json:"expected"`
+	Type      ir.Type           `json:"type"`
+	Optional  bool              `json:"optional"`
+	Undefined bool              `json:"undefined"`
+	Child     ir.ViewContractID `json:"child"`
+	Allowed   []any             `json:"allowed"`
 }
 
 func (e *emitter) viewRecursiveIntersection(property ir.Property, value string) string {
@@ -49,7 +50,7 @@ func (e *emitter) viewRecursiveIntersection(property ir.Property, value string) 
 					allowed = append(allowed, literal.Boolean)
 				}
 			}
-			fields = append(fields, recursiveIntersectionField{field.Name, child.Name, child.Of, field.Optional || child.Undefined, nested, allowed})
+			fields = append(fields, recursiveIntersectionField{field.Name, child.Name, child.Of, field.Optional, child.Undefined, nested, allowed})
 		}
 		descriptors = append(descriptors, fields)
 	}
@@ -65,7 +66,7 @@ func (e *emitter) viewRecursiveIntersection(property ir.Property, value string) 
   ids.add(id);
   for (const field of contracts[id] || []) {
    const next = path + '.' + field.name;
-   const slot = adamicViewField(object,field.name,next,field.type,field.expected,field.allowed,field.optional,field.optional);
+   const slot = adamicViewField(object,field.name,next,field.type,field.expected,field.allowed,field.optional,false,field.undefined);
    if (slot !== undefined && field.child !== 0) check(slot,field.child,next);
   }
   ids.delete(id);
@@ -147,7 +148,7 @@ func (e *emitter) viewBoundedIntersection(property ir.Property, value string) st
 			if kind == ir.BoundedObject || kind == ir.BoundedArms {
 				nested = indices[next]
 			}
-			fields = append(fields, recursiveIntersectionField{field.Name, child.Name, child.Of, field.Optional || child.Undefined, nested, boundedLiterals(child.Allowed)})
+			fields = append(fields, recursiveIntersectionField{field.Name, child.Name, child.Of, field.Optional, child.Undefined, nested, boundedLiterals(child.Allowed)})
 		}
 		descriptors = append(descriptors, boundedIntersectionContract{Fields: fields})
 	}
@@ -168,7 +169,7 @@ func (e *emitter) viewBoundedIntersection(property ir.Property, value string) st
   } else {
    for (const field of contract.fields) {
     const next = path + '.' + field.name;
-    const slot = adamicViewField(object,field.name,next,field.type,field.expected,field.allowed,field.optional,field.optional);
+    const slot = adamicViewField(object,field.name,next,field.type,field.expected,field.allowed,field.optional,false,field.undefined);
     if (slot !== undefined && field.child !== 0) check(slot,field.child,next);
    }
   }
@@ -191,7 +192,7 @@ func (e *emitter) viewIntersectionNullishRead(property ir.Property, value string
 		}
 		c = e.program.ViewContracts[id-1]
 	}
-	if !c.Intersection && c.IntersectionTag == "" {
+	if !c.Intersection {
 		return value
 	}
 	property.ViewContract = id

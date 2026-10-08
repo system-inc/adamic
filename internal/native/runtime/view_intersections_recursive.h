@@ -12,6 +12,7 @@ typedef struct {
  const char *expected;
  unsigned char type;
  bool optional;
+ bool undefined_member;
  size_t child;
  const adamic_intersection_literal *allowed;
  size_t allowed_count;

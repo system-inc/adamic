@@ -1,0 +1,704 @@
+=== RUN   TestViewUnionDiscriminantOverlaps
+--- PASS: TestViewUnionDiscriminantOverlaps (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.012s
+=== RUN   TestInheritanceRefusesFalseNominalViews
+=== PAUSE TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestEnumSlotViews
+=== PAUSE TestEnumSlotViews
+=== RUN   TestIteratorViewsCannotHideReturn
+=== PAUSE TestIteratorViewsCannotHideReturn
+=== RUN   TestIteratorViewsCannotEraseReceivers
+=== PAUSE TestIteratorViewsCannotEraseReceivers
+=== RUN   TestLiteralMethodViewsDoNotLoseThis
+=== PAUSE TestLiteralMethodViewsDoNotLoseThis
+=== RUN   TestGenericIteratorViewsPreserveNativeArguments
+=== PAUSE TestGenericIteratorViewsPreserveNativeArguments
+=== RUN   TestAViewThatCantWriteIsNotRefused
+=== PAUSE TestAViewThatCantWriteIsNotRefused
+=== RUN   TestRequirePerformanceViewCannotEscape
+=== PAUSE TestRequirePerformanceViewCannotEscape
+=== RUN   TestOptionalWideningViews
+=== PAUSE TestOptionalWideningViews
+=== RUN   TestPhantomArrayPresenceViews
+=== PAUSE TestPhantomArrayPresenceViews
+=== RUN   TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== PAUSE TestPrototypeHazardsBehindObjectViewsAreNotYet
+=== RUN   TestLazyViewAdaptedCensus
+    view_adapted_census_test.go:21: set LAZY_ADAPTED_ROOT, LAZY_ADAPTED_SITES and LAZY_ADAPTED_OUTPUT
+--- SKIP: TestLazyViewAdaptedCensus (0.00s)
+=== RUN   TestViewArrayContract
+=== PAUSE TestViewArrayContract
+=== RUN   TestViewCallableShapeContract
+=== PAUSE TestViewCallableShapeContract
+=== RUN   TestPrepareViewCallableRead
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_()_=>_string;
+=== RUN   TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number;
+--- PASS: TestPrepareViewCallableRead (0.35s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(value:_number)_=>_number; (0.06s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_((value:_number)_=>_number)_|_undefined; (0.04s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_()_=>_string; (0.04s)
+    --- PASS: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.05s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_<T>(value:_T)_=>_T; (0.08s)
+    --- PASS: TestPrepareViewCallableRead/type_Target_=_(...values:_number[])_=>_number; (0.07s)
+=== RUN   TestViewCallableSignature
+=== PAUSE TestViewCallableSignature
+=== RUN   TestViewPreflightPreservesOtherRefusals
+--- PASS: TestViewPreflightPreservesOtherRefusals (0.16s)
+=== RUN   TestViewArrayConsumerRefusals
+--- PASS: TestViewArrayConsumerRefusals (0.27s)
+=== RUN   TestViewArrayOptionalComparatorRefusal
+--- PASS: TestViewArrayOptionalComparatorRefusal (0.07s)
+=== RUN   TestViewIntersectionContracts
+=== PAUSE TestViewIntersectionContracts
+=== RUN   TestLazyViewCensus
+    view_lazy_census_test.go:29: set LAZY_VIEW_CENSUS_ROOT, LAZY_VIEW_CENSUS_SEEDS and LAZY_VIEW_CENSUS_OUTPUT
+--- SKIP: TestLazyViewCensus (0.00s)
+=== RUN   TestLazyViewDemandUsesSharedFlow
+=== RUN   TestLazyViewDemandUsesSharedFlow/helper_merge
+=== RUN   TestLazyViewDemandUsesSharedFlow/wider_helper
+=== RUN   TestLazyViewDemandUsesSharedFlow/ordinary_only
+=== RUN   TestLazyViewDemandUsesSharedFlow/callback_unknown
+=== RUN   TestLazyViewDemandUsesSharedFlow/missing_producer
+--- PASS: TestLazyViewDemandUsesSharedFlow (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/helper_merge (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/wider_helper (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/ordinary_only (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/callback_unknown (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/missing_producer (0.00s)
+=== RUN   TestLazyViewArrayDemand
+=== RUN   TestLazyViewArrayDemand/index
+=== RUN   TestLazyViewArrayDemand/map
+=== RUN   TestLazyViewArrayDemand/visit
+=== RUN   TestLazyViewArrayDemand/reduce
+=== RUN   TestLazyViewArrayDemand/pop
+=== RUN   TestLazyViewArrayDemand/join
+=== RUN   TestLazyViewArrayDemand/for_of
+--- PASS: TestLazyViewArrayDemand (0.00s)
+    --- PASS: TestLazyViewArrayDemand/index (0.00s)
+    --- PASS: TestLazyViewArrayDemand/map (0.00s)
+    --- PASS: TestLazyViewArrayDemand/visit (0.00s)
+    --- PASS: TestLazyViewArrayDemand/reduce (0.00s)
+    --- PASS: TestLazyViewArrayDemand/pop (0.00s)
+    --- PASS: TestLazyViewArrayDemand/join (0.00s)
+    --- PASS: TestLazyViewArrayDemand/for_of (0.00s)
+=== RUN   TestViewObjectContractsAreAvailableToEraser
+--- PASS: TestViewObjectContractsAreAvailableToEraser (0.06s)
+=== RUN   TestViewObjectWritesNeedSourceCertificate
+--- PASS: TestViewObjectWritesNeedSourceCertificate (0.08s)
+=== RUN   TestUntaggedViewMemberTags
+--- PASS: TestUntaggedViewMemberTags (0.00s)
+=== RUN   TestUntaggedViewStructuralFallback
+--- PASS: TestUntaggedViewStructuralFallback (0.00s)
+=== CONT  TestInheritanceRefusesFalseNominalViews
+=== RUN   TestInheritanceRefusesFalseNominalViews/weak_structural
+=== PAUSE TestInheritanceRefusesFalseNominalViews/weak_structural
+=== RUN   TestInheritanceRefusesFalseNominalViews/source_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/source_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/target_union
+=== PAUSE TestInheritanceRefusesFalseNominalViews/target_union
+=== RUN   TestInheritanceRefusesFalseNominalViews/nested_array
+=== PAUSE TestInheritanceRefusesFalseNominalViews/nested_array
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== RUN   TestInheritanceRefusesFalseNominalViews/structural_object
+=== PAUSE TestInheritanceRefusesFalseNominalViews/structural_object
+=== RUN   TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== PAUSE TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestInheritanceRefusesFalseNominalViews/weak_structural
+=== CONT  TestLiteralMethodViewsDoNotLoseThis
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_class
+=== CONT  TestIteratorViewsCannotHideReturn
+=== CONT  TestIteratorViewsCannotEraseReceivers
+--- PASS: TestIteratorViewsCannotHideReturn (0.09s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/nested_array
+=== CONT  TestInheritanceRefusesFalseNominalViews/structural_object
+--- PASS: TestIteratorViewsCannotEraseReceivers (0.14s)
+=== CONT  TestInheritanceRefusesFalseNominalViews/unrelated_override
+=== CONT  TestInheritanceRefusesFalseNominalViews/target_union
+=== CONT  TestInheritanceRefusesFalseNominalViews/source_union
+=== CONT  TestEnumSlotViews
+=== RUN   TestEnumSlotViews/variable
+=== PAUSE TestEnumSlotViews/variable
+=== RUN   TestEnumSlotViews/initializer
+=== PAUSE TestEnumSlotViews/initializer
+=== RUN   TestEnumSlotViews/member_initializer
+=== PAUSE TestEnumSlotViews/member_initializer
+=== RUN   TestEnumSlotViews/argument
+=== PAUSE TestEnumSlotViews/argument
+=== RUN   TestEnumSlotViews/assignment
+=== PAUSE TestEnumSlotViews/assignment
+=== RUN   TestEnumSlotViews/literal_property
+=== PAUSE TestEnumSlotViews/literal_property
+=== RUN   TestEnumSlotViews/array_literal
+=== PAUSE TestEnumSlotViews/array_literal
+=== RUN   TestEnumSlotViews/increment
+=== PAUSE TestEnumSlotViews/increment
+=== RUN   TestEnumSlotViews/compound
+=== PAUSE TestEnumSlotViews/compound
+=== RUN   TestEnumSlotViews/array_alias
+=== PAUSE TestEnumSlotViews/array_alias
+=== RUN   TestEnumSlotViews/readonly_into_enum_array
+=== PAUSE TestEnumSlotViews/readonly_into_enum_array
+=== RUN   TestEnumSlotViews/function_view
+=== PAUSE TestEnumSlotViews/function_view
+=== RUN   TestEnumSlotViews/object_assign
+=== PAUSE TestEnumSlotViews/object_assign
+=== RUN   TestEnumSlotViews/override
+=== PAUSE TestEnumSlotViews/override
+=== RUN   TestEnumSlotViews/class_field
+=== PAUSE TestEnumSlotViews/class_field
+=== RUN   TestEnumSlotViews/optional_union
+=== PAUSE TestEnumSlotViews/optional_union
+=== RUN   TestEnumSlotViews/map_alias
+=== PAUSE TestEnumSlotViews/map_alias
+=== RUN   TestEnumSlotViews/mutable_field_alias
+=== PAUSE TestEnumSlotViews/mutable_field_alias
+=== RUN   TestEnumSlotViews/generic_class_invariant
+=== PAUSE TestEnumSlotViews/generic_class_invariant
+=== RUN   TestEnumSlotViews/structural_numeric_enum_object
+=== PAUSE TestEnumSlotViews/structural_numeric_enum_object
+=== RUN   TestEnumSlotViews/structural_string_enum_object
+=== PAUSE TestEnumSlotViews/structural_string_enum_object
+=== RUN   TestEnumSlotViews/structural_enum_object_array
+=== PAUSE TestEnumSlotViews/structural_enum_object_array
+=== RUN   TestEnumSlotViews/enum_object_writable_view
+=== PAUSE TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestPrototypeHazardsBehindObjectViewsAreNotYet
+--- PASS: TestLiteralMethodViewsDoNotLoseThis (0.31s)
+=== CONT  TestViewIntersectionContracts
+=== RUN   TestViewIntersectionContracts/interfaces
+=== CONT  TestViewCallableSignature
+--- PASS: TestViewCallableSignature (0.00s)
+=== CONT  TestViewCallableShapeContract
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number;
+=== CONT  TestViewArrayContract
+=== RUN   TestViewArrayContract/type_Target_=_number[];
+--- PASS: TestInheritanceRefusesFalseNominalViews (0.00s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/weak_structural (0.12s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_class (0.18s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/nested_array (0.14s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/structural_object (0.11s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/unrelated_override (0.16s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/target_union (0.13s)
+    --- PASS: TestInheritanceRefusesFalseNominalViews/source_union (0.12s)
+=== CONT  TestRequirePerformanceViewCannotEscape
+=== RUN   TestViewIntersectionContracts/nested
+=== RUN   TestViewArrayContract/type_Target_=_readonly_string[];
+=== RUN   TestViewCallableShapeContract/type_Target_=_()_=>_string;
+=== RUN   TestViewIntersectionContracts/brand
+=== RUN   TestViewArrayContract/type_Target_=_{_readonly_name:_string_}[];
+=== RUN   TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number;
+=== RUN   TestViewIntersectionContracts/runtime_member
+=== RUN   TestViewArrayContract/type_Target_=_(string_|_number)[];
+=== RUN   TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T;
+=== RUN   TestViewArrayContract/type_Target_=_number;
+=== RUN   TestViewIntersectionContracts/optional_brand
+=== RUN   TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number;
+=== RUN   TestViewArrayContract/type_Target_=_readonly_[number,_string?];
+=== RUN   TestViewIntersectionContracts/primitive_brand_lane
+--- PASS: TestViewArrayContract (0.60s)
+    --- PASS: TestViewArrayContract/type_Target_=_number[]; (0.11s)
+    --- PASS: TestViewArrayContract/type_Target_=_readonly_string[]; (0.12s)
+    --- PASS: TestViewArrayContract/type_Target_=_{_readonly_name:_string_}[]; (0.10s)
+    --- PASS: TestViewArrayContract/type_Target_=_(string_|_number)[]; (0.07s)
+    --- PASS: TestViewArrayContract/type_Target_=_number; (0.05s)
+    --- PASS: TestViewArrayContract/type_Target_=_readonly_[number,_string?]; (0.15s)
+=== CONT  TestPhantomArrayPresenceViews
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand_|_readonly_number[]
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand_|_readonly_number[]
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Item
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Item
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand_|_readonly_number[]
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand_|_readonly_number[]
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Item
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Item
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand_|_readonly_number[]
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand_|_readonly_number[]
+=== RUN   TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Item
+=== PAUSE TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Item
+=== CONT  TestOptionalWideningViews
+=== RUN   TestOptionalWideningViews/argument
+=== PAUSE TestOptionalWideningViews/argument
+=== RUN   TestOptionalWideningViews/array_element
+=== PAUSE TestOptionalWideningViews/array_element
+=== RUN   TestOptionalWideningViews/arrow
+=== PAUSE TestOptionalWideningViews/arrow
+=== RUN   TestOptionalWideningViews/assignment
+=== PAUSE TestOptionalWideningViews/assignment
+=== RUN   TestOptionalWideningViews/cast
+=== PAUSE TestOptionalWideningViews/cast
+=== RUN   TestOptionalWideningViews/class_derived
+=== PAUSE TestOptionalWideningViews/class_derived
+=== RUN   TestOptionalWideningViews/class_expression
+=== PAUSE TestOptionalWideningViews/class_expression
+=== RUN   TestOptionalWideningViews/class_field
+=== PAUSE TestOptionalWideningViews/class_field
+=== RUN   TestOptionalWideningViews/class_generic
+=== PAUSE TestOptionalWideningViews/class_generic
+=== RUN   TestOptionalWideningViews/class_generic_compound
+=== PAUSE TestOptionalWideningViews/class_generic_compound
+=== RUN   TestOptionalWideningViews/class_transitive
+=== PAUSE TestOptionalWideningViews/class_transitive
+=== RUN   TestOptionalWideningViews/field
+=== PAUSE TestOptionalWideningViews/field
+=== RUN   TestOptionalWideningViews/generic
+=== PAUSE TestOptionalWideningViews/generic
+=== RUN   TestOptionalWideningViews/incompatible
+=== PAUSE TestOptionalWideningViews/incompatible
+=== RUN   TestOptionalWideningViews/initializer
+=== PAUSE TestOptionalWideningViews/initializer
+=== RUN   TestOptionalWideningViews/nested
+=== PAUSE TestOptionalWideningViews/nested
+=== RUN   TestOptionalWideningViews/parameter_default
+=== PAUSE TestOptionalWideningViews/parameter_default
+=== RUN   TestOptionalWideningViews/property_write
+=== PAUSE TestOptionalWideningViews/property_write
+=== RUN   TestOptionalWideningViews/readonly
+=== PAUSE TestOptionalWideningViews/readonly
+=== RUN   TestOptionalWideningViews/return
+=== PAUSE TestOptionalWideningViews/return
+=== RUN   TestOptionalWideningViews/shorthand
+=== PAUSE TestOptionalWideningViews/shorthand
+=== RUN   TestOptionalWideningViews/spread
+=== PAUSE TestOptionalWideningViews/spread
+=== RUN   TestOptionalWideningViews/spread_other_missing
+=== PAUSE TestOptionalWideningViews/spread_other_missing
+=== RUN   TestOptionalWideningViews/tuple_element
+=== PAUSE TestOptionalWideningViews/tuple_element
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_array
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_array
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_ops
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_ops
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_parameter
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_parameter
+=== RUN   TestOptionalWideningViews/widening_boolean_as_number_return
+=== PAUSE TestOptionalWideningViews/widening_boolean_as_number_return
+=== RUN   TestOptionalWideningViews/widening_false_as_number
+=== PAUSE TestOptionalWideningViews/widening_false_as_number
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_};
+--- PASS: TestViewIntersectionContracts (0.65s)
+    --- PASS: TestViewIntersectionContracts/interfaces (0.07s)
+    --- PASS: TestViewIntersectionContracts/nested (0.15s)
+    --- PASS: TestViewIntersectionContracts/brand (0.06s)
+    --- PASS: TestViewIntersectionContracts/runtime_member (0.18s)
+    --- PASS: TestViewIntersectionContracts/optional_brand (0.16s)
+    --- PASS: TestViewIntersectionContracts/primitive_brand_lane (0.04s)
+=== CONT  TestGenericIteratorViewsPreserveNativeArguments
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.04s)
+=== CONT  TestAViewThatCantWriteIsNotRefused
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== RUN   TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+=== RUN   TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== PAUSE TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestEnumSlotViews/variable
+--- PASS: TestViewCallableShapeContract (0.75s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value:_number)_=>_number; (0.16s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_()_=>_string; (0.08s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(value?:_number)_=>_number; (0.11s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_<T>(value:_T)_=>_T; (0.11s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_(...values:_number[])_=>_number; (0.17s)
+    --- PASS: TestViewCallableShapeContract/type_Target_=_{_(value:_number):_number;_(value:_string):_string;_}; (0.12s)
+=== CONT  TestEnumSlotViews/object_assign
+--- PASS: TestGenericIteratorViewsPreserveNativeArguments (0.16s)
+=== CONT  TestEnumSlotViews/enum_object_writable_view
+=== CONT  TestEnumSlotViews/structural_enum_object_array
+=== CONT  TestEnumSlotViews/structural_string_enum_object
+=== CONT  TestEnumSlotViews/structural_numeric_enum_object
+=== CONT  TestEnumSlotViews/generic_class_invariant
+=== CONT  TestEnumSlotViews/mutable_field_alias
+=== CONT  TestEnumSlotViews/map_alias
+=== CONT  TestEnumSlotViews/optional_union
+=== CONT  TestEnumSlotViews/class_field
+=== CONT  TestEnumSlotViews/override
+=== CONT  TestEnumSlotViews/array_literal
+=== CONT  TestEnumSlotViews/function_view
+=== CONT  TestEnumSlotViews/readonly_into_enum_array
+=== CONT  TestEnumSlotViews/array_alias
+--- PASS: TestPrototypeHazardsBehindObjectViewsAreNotYet (1.48s)
+=== CONT  TestEnumSlotViews/compound
+=== CONT  TestEnumSlotViews/increment
+=== CONT  TestEnumSlotViews/argument
+=== CONT  TestEnumSlotViews/literal_property
+=== CONT  TestEnumSlotViews/assignment
+=== CONT  TestEnumSlotViews/member_initializer
+=== CONT  TestEnumSlotViews/initializer
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand
+=== CONT  TestOptionalWideningViews/argument
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Item
+--- PASS: TestEnumSlotViews (0.00s)
+    --- PASS: TestEnumSlotViews/object_assign (0.08s)
+    --- PASS: TestEnumSlotViews/structural_enum_object_array (0.03s)
+    --- PASS: TestEnumSlotViews/variable (0.21s)
+    --- PASS: TestEnumSlotViews/enum_object_writable_view (0.13s)
+    --- PASS: TestEnumSlotViews/structural_numeric_enum_object (0.25s)
+    --- PASS: TestEnumSlotViews/structural_string_enum_object (0.26s)
+    --- PASS: TestEnumSlotViews/generic_class_invariant (0.20s)
+    --- PASS: TestEnumSlotViews/mutable_field_alias (0.02s)
+    --- PASS: TestEnumSlotViews/class_field (0.10s)
+    --- PASS: TestEnumSlotViews/optional_union (0.12s)
+    --- PASS: TestEnumSlotViews/map_alias (0.17s)
+    --- PASS: TestEnumSlotViews/function_view (0.03s)
+    --- PASS: TestEnumSlotViews/override (0.13s)
+    --- PASS: TestEnumSlotViews/array_literal (0.16s)
+    --- PASS: TestEnumSlotViews/array_alias (0.08s)
+    --- PASS: TestEnumSlotViews/readonly_into_enum_array (0.12s)
+    --- PASS: TestEnumSlotViews/increment (0.11s)
+    --- PASS: TestEnumSlotViews/compound (0.15s)
+    --- PASS: TestEnumSlotViews/argument (0.10s)
+    --- PASS: TestEnumSlotViews/literal_property (0.14s)
+    --- PASS: TestEnumSlotViews/member_initializer (0.08s)
+    --- PASS: TestEnumSlotViews/initializer (0.08s)
+    --- PASS: TestEnumSlotViews/assignment (0.13s)
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand_|_readonly_number[]
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Item
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand_|_readonly_number[]
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Item
+=== CONT  TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand_|_readonly_number[]
+=== CONT  TestOptionalWideningViews/widening_false_as_number
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_return
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_parameter
+--- PASS: TestPhantomArrayPresenceViews (0.00s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand (0.12s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Item (0.11s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand_|_readonly_number[] (0.18s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker?:_undefined;_}a:_Brand (0.12s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Item (0.11s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand_|_readonly_number[] (0.12s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_void;_}a:_Brand (0.09s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Item (0.09s)
+    --- PASS: TestPhantomArrayPresenceViews/interface_Brand_extends_ReadonlyArray<number>_{_marker:_undefined;_}a:_Brand_|_readonly_number[] (0.14s)
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_ops
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number_array
+=== CONT  TestOptionalWideningViews/widening_boolean_as_number
+=== CONT  TestOptionalWideningViews/tuple_element
+=== CONT  TestOptionalWideningViews/spread_other_missing
+=== CONT  TestOptionalWideningViews/spread
+=== CONT  TestOptionalWideningViews/return
+=== CONT  TestOptionalWideningViews/readonly
+=== CONT  TestOptionalWideningViews/shorthand
+=== CONT  TestOptionalWideningViews/property_write
+=== CONT  TestOptionalWideningViews/parameter_default
+=== CONT  TestOptionalWideningViews/nested
+=== CONT  TestOptionalWideningViews/initializer
+=== CONT  TestOptionalWideningViews/incompatible
+=== CONT  TestOptionalWideningViews/generic
+=== CONT  TestOptionalWideningViews/field
+=== CONT  TestOptionalWideningViews/class_transitive
+=== CONT  TestOptionalWideningViews/class_generic_compound
+=== CONT  TestOptionalWideningViews/class_generic
+=== CONT  TestOptionalWideningViews/class_field
+=== CONT  TestOptionalWideningViews/class_expression
+=== CONT  TestOptionalWideningViews/class_derived
+=== CONT  TestOptionalWideningViews/cast
+=== CONT  TestOptionalWideningViews/assignment
+=== CONT  TestOptionalWideningViews/arrow
+=== CONT  TestOptionalWideningViews/array_element
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself
+--- PASS: TestOptionalWideningViews (0.00s)
+    --- PASS: TestOptionalWideningViews/argument (0.13s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_parameter (0.11s)
+    --- PASS: TestOptionalWideningViews/widening_false_as_number (0.17s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_return (0.13s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_ops (0.06s)
+    --- PASS: TestOptionalWideningViews/tuple_element (0.07s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number_array (0.09s)
+    --- PASS: TestOptionalWideningViews/widening_boolean_as_number (0.08s)
+    --- PASS: TestOptionalWideningViews/spread_other_missing (0.07s)
+    --- PASS: TestOptionalWideningViews/return (0.09s)
+    --- PASS: TestOptionalWideningViews/readonly (0.09s)
+    --- PASS: TestOptionalWideningViews/shorthand (0.08s)
+    --- PASS: TestOptionalWideningViews/spread (0.13s)
+    --- PASS: TestOptionalWideningViews/property_write (0.08s)
+    --- PASS: TestOptionalWideningViews/initializer (0.07s)
+    --- PASS: TestOptionalWideningViews/incompatible (0.02s)
+    --- PASS: TestOptionalWideningViews/generic (0.05s)
+    --- PASS: TestOptionalWideningViews/parameter_default (0.14s)
+    --- PASS: TestOptionalWideningViews/nested (0.14s)
+    --- PASS: TestOptionalWideningViews/field (0.10s)
+    --- PASS: TestOptionalWideningViews/class_transitive (0.08s)
+    --- PASS: TestOptionalWideningViews/class_generic_compound (0.08s)
+    --- PASS: TestOptionalWideningViews/class_generic (0.10s)
+    --- PASS: TestOptionalWideningViews/class_expression (0.08s)
+    --- PASS: TestOptionalWideningViews/class_field (0.10s)
+    --- PASS: TestOptionalWideningViews/cast (0.09s)
+    --- PASS: TestOptionalWideningViews/class_derived (0.15s)
+    --- PASS: TestOptionalWideningViews/assignment (0.07s)
+    --- PASS: TestOptionalWideningViews/arrow (0.08s)
+    --- PASS: TestOptionalWideningViews/array_element (0.09s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_new_Map_passed
+--- PASS: TestRequirePerformanceViewCannotEscape (2.77s)
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider
+=== CONT  TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array
+=== CONT  TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names
+--- PASS: TestAViewThatCantWriteIsNotRefused (0.00s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field (0.05s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself (0.12s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies (0.02s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_new_Map_passed (0.16s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs (0.17s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter (0.18s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map (0.14s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag (0.09s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself (0.10s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type (0.13s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one (0.12s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names (0.08s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_constraint:_a_Narrow_into_a_Pack_slot (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array (0.11s)
+    --- PASS: TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider (0.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	4.581s
+=== RUN   TestStringViewAfterAppendMatchesNode
+=== PAUSE TestStringViewAfterAppendMatchesNode
+=== RUN   TestRuntimeStringViews
+=== PAUSE TestRuntimeStringViews
+=== RUN   TestViewCallableShapeNative
+=== PAUSE TestViewCallableShapeNative
+=== RUN   TestViewCallableProducerCertificateNative
+=== RUN   TestViewCallableProducerCertificateNative/valid
+=== RUN   TestViewCallableProducerCertificateNative/wrong-arity
+=== RUN   TestViewCallableProducerCertificateNative/wrong-result
+=== RUN   TestViewCallableProducerCertificateNative/optional-absent
+=== RUN   TestViewCallableProducerCertificateNative/unrecorded
+--- PASS: TestViewCallableProducerCertificateNative (2.28s)
+    --- PASS: TestViewCallableProducerCertificateNative/valid (0.43s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-arity (0.48s)
+    --- PASS: TestViewCallableProducerCertificateNative/wrong-result (0.45s)
+    --- PASS: TestViewCallableProducerCertificateNative/optional-absent (0.36s)
+    --- PASS: TestViewCallableProducerCertificateNative/unrecorded (0.56s)
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestStringViewAfterAppendMatchesNode
+=== CONT  TestViewCallableShapeNative
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewCallableShapeNative/valid
+=== CONT  TestRuntimeStringViews
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/0
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/1
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/2
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/3
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/4
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.24s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/0 (0.00s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/1 (0.03s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/2 (0.01s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/3 (0.00s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/4 (0.00s)
+=== RUN   TestViewCallableShapeNative/wrong-arity
+=== NAME  TestStringViewAfterAppendMatchesNode
+    string_index_test.go:406: 43 lines match Node, including literal, stack and in-place append views
+--- PASS: TestStringViewAfterAppendMatchesNode (0.96s)
+=== RUN   TestViewCallableShapeNative/wrong-parameter
+=== RUN   TestViewCallableShapeNative/wrong-result
+=== RUN   TestViewCallableShapeNative/unknown-result
+=== RUN   TestViewCallableShapeNative/unknown-parameter
+=== RUN   TestViewCallableShapeNative/unknown-signature
+=== RUN   TestViewCallableShapeNative/number
+=== RUN   TestViewCallableShapeNative/optional-absent
+=== RUN   TestViewCallableShapeNative/required-absent
+--- PASS: TestViewCallableShapeNative (4.26s)
+    --- PASS: TestViewCallableShapeNative/valid (0.89s)
+    --- PASS: TestViewCallableShapeNative/wrong-arity (0.78s)
+    --- PASS: TestViewCallableShapeNative/wrong-parameter (0.51s)
+    --- PASS: TestViewCallableShapeNative/wrong-result (0.36s)
+    --- PASS: TestViewCallableShapeNative/unknown-result (0.27s)
+    --- PASS: TestViewCallableShapeNative/unknown-parameter (0.27s)
+    --- PASS: TestViewCallableShapeNative/unknown-signature (0.30s)
+    --- PASS: TestViewCallableShapeNative/number (0.31s)
+    --- PASS: TestViewCallableShapeNative/optional-absent (0.29s)
+    --- PASS: TestViewCallableShapeNative/required-absent (0.28s)
+--- PASS: TestRuntimeStringViews (9.19s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	11.512s
+=== RUN   TestViewArraysNode
+=== PAUSE TestViewArraysNode
+=== RUN   TestViewArrayFieldPresence
+=== PAUSE TestViewArrayFieldPresence
+=== RUN   TestViewCallableShapeNode
+=== PAUSE TestViewCallableShapeNode
+=== RUN   TestViewCallableProducerCertificateNode
+=== RUN   TestViewCallableProducerCertificateNode/valid
+=== RUN   TestViewCallableProducerCertificateNode/wrong-arity
+=== RUN   TestViewCallableProducerCertificateNode/wrong-result
+=== RUN   TestViewCallableProducerCertificateNode/optional-absent
+=== RUN   TestViewCallableProducerCertificateNode/unrecorded
+--- PASS: TestViewCallableProducerCertificateNode (0.21s)
+    --- PASS: TestViewCallableProducerCertificateNode/valid (0.05s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-arity (0.04s)
+    --- PASS: TestViewCallableProducerCertificateNode/wrong-result (0.06s)
+    --- PASS: TestViewCallableProducerCertificateNode/optional-absent (0.03s)
+    --- PASS: TestViewCallableProducerCertificateNode/unrecorded (0.04s)
+=== RUN   TestViewCallablesNode
+=== PAUSE TestViewCallablesNode
+=== RUN   TestViewMixedUnionUnknownAndUnavailable
+=== PAUSE TestViewMixedUnionUnknownAndUnavailable
+=== CONT  TestViewArraysNode
+=== RUN   TestViewArraysNode/lazy
+=== CONT  TestViewCallablesNode
+=== RUN   TestViewCallablesNode/field
+=== CONT  TestViewMixedUnionUnknownAndUnavailable
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/unknown
+=== CONT  TestViewArrayFieldPresence
+=== CONT  TestViewCallableShapeNode
+=== RUN   TestViewCallableShapeNode/valid
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_adapter
+=== RUN   TestViewArraysNode/second
+=== RUN   TestViewCallableShapeNode/wrong-arity
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/missing_contract
+=== RUN   TestViewCallablesNode/method
+=== RUN   TestViewArraysNode/kind
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined
+=== RUN   TestViewCallablesNode/missing
+=== RUN   TestViewCallableShapeNode/wrong-parameter
+=== RUN   TestViewArraysNode/alias
+=== RUN   TestViewMixedUnionUnknownAndUnavailable/literal_false
+=== RUN   TestViewCallablesNode/uninitialized
+=== RUN   TestViewCallableShapeNode/wrong-result
+--- PASS: TestViewArrayFieldPresence (0.28s)
+=== RUN   TestViewArraysNode/object
+--- PASS: TestViewMixedUnionUnknownAndUnavailable (0.31s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/unknown (0.05s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_adapter (0.05s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/missing_contract (0.05s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/null_is_not_undefined (0.09s)
+    --- PASS: TestViewMixedUnionUnknownAndUnavailable/literal_false (0.08s)
+=== RUN   TestViewCallablesNode/kind
+=== RUN   TestViewCallableShapeNode/unknown-result
+=== RUN   TestViewArraysNode/object_payload
+=== RUN   TestViewCallableShapeNode/unknown-parameter
+=== RUN   TestViewCallablesNode/once
+=== RUN   TestViewArraysNode/hole
+=== RUN   TestViewCallableShapeNode/unknown-signature
+=== RUN   TestViewArraysNode/optional_index
+=== RUN   TestViewCallableShapeNode/number
+=== RUN   TestViewArraysNode/once
+=== RUN   TestViewCallableShapeNode/optional-absent
+--- PASS: TestViewCallablesNode (0.56s)
+    --- PASS: TestViewCallablesNode/field (0.10s)
+    --- PASS: TestViewCallablesNode/method (0.07s)
+    --- PASS: TestViewCallablesNode/missing (0.08s)
+    --- PASS: TestViewCallablesNode/uninitialized (0.07s)
+    --- PASS: TestViewCallablesNode/kind (0.06s)
+    --- PASS: TestViewCallablesNode/once (0.07s)
+=== RUN   TestViewCallableShapeNode/required-absent
+--- PASS: TestViewArraysNode (0.70s)
+    --- PASS: TestViewArraysNode/lazy (0.07s)
+    --- PASS: TestViewArraysNode/second (0.05s)
+    --- PASS: TestViewArraysNode/kind (0.09s)
+    --- PASS: TestViewArraysNode/alias (0.09s)
+    --- PASS: TestViewArraysNode/object (0.06s)
+    --- PASS: TestViewArraysNode/object_payload (0.09s)
+    --- PASS: TestViewArraysNode/hole (0.06s)
+    --- PASS: TestViewArraysNode/optional_index (0.04s)
+    --- PASS: TestViewArraysNode/once (0.06s)
+--- PASS: TestViewCallableShapeNode (0.75s)
+    --- PASS: TestViewCallableShapeNode/valid (0.08s)
+    --- PASS: TestViewCallableShapeNode/wrong-arity (0.12s)
+    --- PASS: TestViewCallableShapeNode/wrong-parameter (0.07s)
+    --- PASS: TestViewCallableShapeNode/wrong-result (0.07s)
+    --- PASS: TestViewCallableShapeNode/unknown-result (0.04s)
+    --- PASS: TestViewCallableShapeNode/unknown-parameter (0.08s)
+    --- PASS: TestViewCallableShapeNode/unknown-signature (0.07s)
+    --- PASS: TestViewCallableShapeNode/number (0.03s)
+    --- PASS: TestViewCallableShapeNode/optional-absent (0.05s)
+    --- PASS: TestViewCallableShapeNode/required-absent (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.973s

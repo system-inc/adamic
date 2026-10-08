@@ -1,5 +1,7 @@
 package javascript
 
+import "github.com/system-inc/adamic/internal/ir"
+
 // MixedUnionRuntime is included by the common dispatcher once its normalized
 // field probe and complete member-contract adapter are wired. It never reads a
 // field or invokes a getter while testing alternative member kinds.
@@ -20,3 +22,9 @@ const adamicViewMixedUnionSelect = (snapshot, members, match, expression, declar
  panic('field read failed: ' + expression + ' matches no member of ' + declared + '; expected ' + declared + ', found ' + found);
 };
 `
+
+// Required fields can contain undefined without permitting their absence.
+func (e *emitter) viewStringUndefined(property ir.Property) bool {
+	id := property.ViewContract
+	return property.Of == ir.String && id > 0 && int(id) <= len(e.program.ViewContracts) && e.program.ViewContracts[id-1].Undefined && e.program.ViewContracts[id-1].Unsupported == ""
+}

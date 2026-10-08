@@ -1,0 +1,13 @@
+interface Entry {readonly count:number}
+interface Small {readonly label:string}
+interface Viewed extends Small {readonly count:number}
+const bad={label:'entry',count:'wrong'};const small:Small=bad;
+const viewed=small as Viewed;
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,Entry>|null}
+const map=new Map<string,Entry>();map.set('key',viewed);
+const raw={kind:'box',value:map};const base:Base=raw;
+function payload(entry:Entry):void{console.log(String(entry.count));}
+payload({count:1});
+function read(node:Target):void{const map=node.value;if(map!==null){const entry=map.get('key');if(entry!==undefined){payload(entry);}}}
+read(base as Target);

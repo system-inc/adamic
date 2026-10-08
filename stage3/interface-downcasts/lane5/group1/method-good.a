@@ -1,0 +1,5 @@
+interface Base { readonly kind: 'debug' | 'other'; }
+interface Debug extends Base { readonly kind: 'debug'; run(value: number): number; }
+class Raw { readonly kind: 'debug' = 'debug'; offset = 3; run(value: number): number { return value + this.offset; } }
+function read(input: Base): number { const debug = input as Debug; return debug.run(7); }
+console.log(`${read(new Raw())}`);

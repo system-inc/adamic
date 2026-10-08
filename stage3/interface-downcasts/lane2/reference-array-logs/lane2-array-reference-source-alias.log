@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewArrayReferenceWrites (0.00s)
+    --- FAIL: TestCheckedViewArrayReferenceWrites/reference-array-source-alias (0.71s)
+        checked_views_array_reference_writes_test.go:36: stderr differs; stderr "adamic: panic: field write failed: property 'value' on record { kind: \"entry\"; value: 7; text: string; } at reference-array-source-alias.a:11 has no compatible declared slot\n"; stdout ""; exit 70
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.730s
+FAIL

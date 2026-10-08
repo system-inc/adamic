@@ -1,0 +1,77 @@
+=== RUN   TestCheckedViewBrandsOriginalPairs
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/wrong
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/wrong
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/wrong
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/wrong
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/missing
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/good
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/internal
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/undefined
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/wrong
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+    checked_views_brands_original_test.go:163: member-check bypass caught: exit 0 stdout "uncheckedunchecked\n"
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/null
+=== RUN   TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/missing
+--- PASS: TestCheckedViewBrandsOriginalPairs (57.11s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/good (2.14s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/internal (2.19s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/undefined (1.68s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/wrong (1.82s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/null (1.80s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/UniqueESSymbolType/escapedName/missing (2.80s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/good (2.30s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/internal (1.90s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/undefined (1.78s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/wrong (1.69s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/null (1.40s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedIdentifier/escapedText/missing (1.46s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/good (1.95s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/internal (2.00s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/undefined (1.95s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/wrong (1.82s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/null (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/GeneratedPrivateIdentifier/escapedText/missing (1.53s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/good (1.73s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/internal (1.71s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/undefined (1.85s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/wrong (2.59s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/null (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Identifier_|_undefined/escapedText/missing (1.50s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/good (1.86s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/internal (1.98s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/undefined (2.48s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/wrong (2.47s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/null (2.15s)
+    --- PASS: TestCheckedViewBrandsOriginalPairs/Symbol_|_undefined/escapedName/missing (1.56s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=65
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	57.134s

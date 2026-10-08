@@ -1,0 +1,12 @@
+import type { ConditionalType } from 'original-tsc-types';
+interface Base { readonly flags: number; }
+function read(type: ConditionalType): string {
+ const member = type.resolvedConstraintOfDistributive;
+ if (member === undefined) return 'absent';
+ if (typeof member === 'boolean') return `${member}`;
+ return `${member.flags}`;
+}
+const poison = `${42}` === '42' ? true : { flags: 2 };
+const concrete = { flags: 1, resolvedConstraintOfDistributive: poison };
+const base: Base = concrete;
+console.log(read(base as ConditionalType));

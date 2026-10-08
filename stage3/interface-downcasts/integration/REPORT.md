@@ -1,7 +1,7 @@
-Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
+Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
-Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-101 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+Final checkpoint gates cover focused packages, full IR, filtered Node oracle and vet; the rejected-owner publication was immediately corrected.
+487 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -465,3 +465,846 @@ These are original-contract witnesses for two pairs and 35 candidate reads;
 40 candidate pairs and 146 reads remain, with whole-program reachability
 unmeasured. The optional-boolean landing hold remains active; its branch had
 no published ref at this check.
+
+Newest lazy owner nullable selection, c809598e4443d2a20f4a8b2e9b260ce6069b4b5e
+
+Two individual conflicts in lower/interface_cast.go and lower/object.go:
+retain objectPrimitiveViewType, scalar/maybe representations, callable exception
+and accessor refusal; expand only the Union nullish exception to include
+undefined as well as null. The incoming owner guards contain both behaviors.
+Fixture controls scalar-undefined, tagged-undefined and object-undefined exercise
+the new route, while optional-receiver, required-missing and original-pair
+controls retain the earlier policies.
+
+The owner selector validates present scalar member literals and finite tagged
+object union members after the shared presence/readiness/kind check. Nested
+payload checks remain lazy. Unsupported/ambiguous member families retain named
+read refusals; no producer certificate comes from the target.
+
+All 21 owner selection fixtures passed the uncached preflight (12.253s). Two
+actual backend omission mutants were executed and restored: remove only the
+nullishMemberSelection call, native then JavaScript. scalar-both-wrong constructs
+not-allowed at runtime with the valid string kind, and both mutants run valid
+code but fail the pinned refusal. Evidence is nullable-selection-mutants.log and
+its per-backend logs. Existing source-kind guards alone cannot catch this case.
+
+Optional-boolean landing hold remains active until the user lifts it; the
+priority fix branch has no published ref at this fetch. Production read census
+and whole-repository gate remain unmeasured.
+
+Final nullable-selection gates: lower 18.751s, native 26.510s, JavaScript
+3.720s, full IR 31.124s, uncached filtered oracle 185.782s; vet exit 0.
+Original declarations were enabled and all earlier original-pair controls ran.
+The sole documented array-callback baseline exclusion is unchanged.
+
+Priority lazy owner Map certificates, f7a784c4e094e0c97dae9dc8309a900e4cd3d666
+
+Clean merge, no conflict hunks. Constructor schema ids are kept independently
+of the target view. MapCertificatePairs permits scalar readonly covariance but
+requires reverse compatibility for mutable maps and identical physical types.
+Native headers and JavaScript's private WeakMap carry original evidence; nullish
+selection checks a Map alternative's certificate after kind/presence/readiness.
+Unsupported branded and aggregate schemas remain named demanded refusals.
+The view_writes.go addition excludes ViewMap as a writable-slot certificate; it
+does not settle the optional-boolean storage investigation or lift the hold.
+
+Three actual implementation mutants were executed and restored. Native omission
+of the zero-compatible-schema refusal and JavaScript certificate omission each
+run scalar-both-value-schema past the expected field trap. Removing the mutable
+reverse relation runs mutable-invariant past that trap. All are semantic failures
+of executed witnesses, with valid compilation and no sanitizer error. The first
+native mutant draft was rejected by clang's tautological-comparison warning; its
+log is preserved as a build failure and is not credited as a mutant kill.
+
+Evidence uses map-cert-* logs. Production inventory is still unmeasured; the
+owner's static 2,018 pairs / 9,101 reads are not reduced by fixture success.
+Optional-boolean hold remains active until explicitly lifted by the user.
+
+Final Map gates: lower 22.851s, native 69.684s, JavaScript 4.904s,
+full IR 50.966s, uncached filtered oracle 231.796s, vet exit 0.
+Supplemental existing Map/Set/record regressions: native 71.781s and oracle
+49.497s, both pass. Original declaration suite was enabled. No new failure or
+additional exclusion; sole recorded array-callback baseline exclusion remains.
+
+
+Callable source and stored markers, b6e53fb46bc623c7017ba8d86b9e995ff4a1d912
+
+Three conflict hunks resolved separately: plan append keeps both lane hook lists;
+interface_cast.go uses callableViewContract while preserving the owner's nullable
+admission and guards; object.go prepares the callable property before retaining
+all owner Nullish/Narrow metadata and object-primitive exclusions. No whole-file
+resolution. Group1 direct/stored/callback/arity/result controls, nullable selection
+controls, and stored-marker string/arity controls prove the combined behavior.
+
+Cross-lane repairs keep nullable callable implementation proofs and add callable
+producer certification after nullish readiness, presence and membership checks
+in both emitters. callable-undefined-arity.a pins an arity-one producer against
+() => string | undefined at the root-only read; two executed backend IR mutants
+remove only its callable certificate and print present instead of the expected
+exit-70 arity diagnostic. UndefinedAllowed is passed alongside optional absence
+when checking signatures. Existing nullish proof refusals remain active.
+
+Ten source implementation mutants were caught: stored-marker shape omission and
+discarded string-result release omission, read-contract omission, native shape
+omission, both arity omissions, JavaScript shape omission, native method-signature
+omission, lower required-marker proof omission, and write-back guard omission.
+Two executable component kind mutants (native number acceptance and JavaScript
+number invocation) were independently caught by TestViewCallableShape*/number.
+The first helper runner used the wrong Go executable and failed before executing;
+that toolchain failure is not credited. All production files were restored.
+
+Behavioral overlap preflight found only a count-row mismatch: optional-absent now
+performs seven releases rather than six through the owner's nullish path. The
+measured row was regenerated; allocations/frees remain balanced (1/1).
+The count update passed in 4.051s. Original declarations remain enabled in the
+final gate. Optional-boolean hold stays active until the user explicitly lifts it.
+
+Final callable gates: lower 17.979s, native 41.340s, JavaScript 4.392s,
+full IR 37.933s, uncached filtered oracle 208.411s; vet exit 0.
+Original declaration controls ran. The sole array-callback baseline exclusion
+remains; no new failure or further exclusion. Evidence: callable-* logs.
+
+
+Priority lane 4, 67d34f3cfbb92c21a0986933c70a529969736a51
+
+Five conflict hunks resolved individually in four files. docs/checked-views-plan.md
+retains both appended hook/coordination sections. javascript.go adds declared
+undefined payload evidence, restricts object union dispatch to object values, and
+retains the owner's mapViewCertificate after dispatch. view_contracts.go keeps
+the ViewNull branch and extends only the undefined condition to phantomUndefined.
+object.c retains both includes and, separately, both the owner's
+adamic_object_read_contract and lane 4's snapshot probe through shared readiness
+and actual static-owner evidence. No whole-file pick or bulk resolution.
+
+Preflight exposed an automatic semantic overlap: the owner's broad undefined
+path intercepted approved __String string/phantom-void reads. An owned helper
+viewBrandedStringUndefined selects the existing scalar read only when the physical
+representation is string, null is excluded, and an approved phantom-undefined
+member is present. Ordinary nullish reads remain on the owner's path. Required
+missing fields still trap; explicit undefined is allowed. CompleteBrand and all
+12 BrandCandidatePairs retain their original exact diagnostics and Node controls.
+The first undefined-admission overlay was redundant under the intercepted path
+and survived; it is preserved, not credited. Both overlays are caught after the
+repair. A scratch-log relative-path error was corrected; not a mutant kill.
+
+FiniteStringKeyComponent retains every exit-70 wrong-member refusal, with the
+owner's nullable selector diagnostic now pinned. The owner already implements
+open string/number/undefined selection, so stale eager compile-gap assertions
+were replaced by TestCheckedViewOpenCompilerOptionKeySelection. Its twelve
+source controls hold string, number, undefined and absence to Node and pin
+boolean/null at value.skippedOn, expected keyof CompilerOptions | undefined.
+Eight backend omission mutants print uncheckedunchecked at exit 0. The first
+unboxed test replacement failed its ABI build; it was not counted. The corrected
+mutant uses ir.Box and executes valid release code. Finite-key and open-key
+controls pass 10.452s. Primitive mixed array admission remains refused.
+
+This is reduced open-key/component evidence, not full original CompilerOptions
+or dictionary extraction certification. Lane 4's dictionary queue is preserved
+as pending 11 pairs / 38 static candidate reads. The 14 __String candidate
+pairs / 511 reads have representative source witnesses; exact whole-tsc runtime
+reachability is unmeasured. Optional-boolean hold remains active.
+
+Executed runtime probe mutants: number-tag and boolean-payload caught by
+TestCheckedViewPrimitiveHeap; skip-readiness, ignore-owner, collapse-null,
+ignore-reference-storage and trust-unknown caught by PrimitiveProbe. Every
+failure is semantic native release output or exit status, not a warning or
+sanitizer-only failure. Source restored. Two backend undefined overlays caught
+by CompleteBrand/undefined. Additional incoming oracle mutations run in the
+final gate: twelve candidate-pair read bypasses (24 backend executions), six
+CompleteBrand refusal bypasses and two undefined first-member substitutions
+(16), two finite-key bypasses (4), and four open-key bypasses (8). Total 61 new
+executed check defects, plus prior 120. Evidence is mixed-* logs.
+
+Final lane 4 gates: lower 9.759s, native 32.670s, JavaScript 1.448s,
+full IR 19.061s, uncached filtered oracle 210.849s; vet exit 0.
+Original declaration controls enabled. All 52 new backend IR mutation executions
+logged their caught behavior; all nine source mutations caught independently.
+Sole array-callback baseline exclusion unchanged, no new failure remaining.
+
+
+Priority owner structural and array Maps, 99089aa11253bd879e9b5ecad8a65c870eee8fc7
+
+One conflict hunk in internal/ir/views.go: keep callable DiscardResult and add
+ArrayReadonly; neither certificate substitutes for the other. Structural/array
+Map producer descriptors remain source-owned. Readonly covariance, writable
+invariance, physical storage equality, every NodeArray own-field schema and
+undefined entry restrictions stay enforced. Nested phantom entries are refused
+recursively, including below object fields and array elements. Nullable, mixed,
+callable and tuple entries retain named demanded read refusals and unread twins.
+
+Overlap preflight passed 41.819s: Map schemas and payload propagation, nullable
+selection, NodeArray records, stored callable markers and CompleteBrand.
+Structural-schema-unused-payload and array-schema-unused-payload stop at the
+Map field even without reading entries, so descendant checks cannot conceal a
+missing constructor certificate. Native positives retain leak checks.
+
+Production inventory remains 2,018 pairs / 9,101 reads unverified by whole-tsc
+lowering and reaching-view proof; no fixture success subtracts those sites.
+Optional-boolean hold remains active until explicitly lifted by the user.
+
+Six implementation mutations executed independently and restored:
+structural-kind-only, array-kind-only, skip-own-fields, skip-readonly-source and
+skip-undefined-source each let its wrong-schema root-only witness print object
+at exit 0 instead of the named Map field refusal. skip-nested-brands admitted
+both nested-array-brand-read and nested-object-brand-read, violating the named
+compile refusal. These are semantic runtime/admission failures, not build errors
+or crashes. The first five run all compiled backend calls in the oracle; the
+logged failing observation is the first native mode. No extra backend count is
+claimed. Evidence: owner-reference-mutants/ logs. Six new defects, total 187.
+
+
+The first owner-reference oracle gate failed only map_foreach_arrays.a in both
+backends: exit 70, array write expected array, found uncertified source element
+contract. Producer Map schemas had interned ViewArray descriptors without any
+admitted view. HasArrayViews now requires ViewOrigins before enabling the existing
+program-wide checked-array policy. Actual viewed arrays retain all checks.
+The regression and Map/NodeArray/optional-array controls pass 39.354s. Removing
+this origin requirement restores the valid-code runtime failure in both backends;
+the Node agreement oracle catches it. This seventh new defect brings the total
+to 188. The original failed gate is preserved; no new test exclusion was added.
+
+Final restored owner-reference gates: lower 11.207s, native 20.568s, JavaScript
+2.218s; full IR 16.792s; uncached filtered Node oracle 213.260s; vet exit 0.
+Original-declaration controls enabled. Existing array-callback proof exclusion
+unchanged; no new failure remains.
+
+
+Latest callable contracts, f3a2646a09db4666676eacfd09306d0f0f06bb61
+
+Six conflicts resolved individually: two plan hunks preserve the moved lane-5
+hook list once, known-void metadata and lane-4 probes/inventory. object.go keeps
+the approved branded-string-undefined dispatch exception. view_callables_read.go
+attaches complete producer-comparable signatures to boxed nullable Union reads.
+Native/JavaScript view_nullish.go keep owner member selection and Map certificates
+and use the lane-owned callable certificate afterward, guarded for null/undefined.
+Known void 254 is exact, unknown zero and discarded-result 255 remain distinct.
+
+The old nullable wrong-result source still refuses, now at the actual field read:
+exit 70 node.value expected () => string, incompatible result representation.
+This replaces its older compile refusal only because an independent producer
+signature now establishes the ABI and the runtime check can reject the value.
+The same-name proof exemption is paired with descriptor completion and both
+backend checks, not trusted target annotations. The nullable wrong-arity fixture
+reads and would call a string-returning function that never touches its missing
+argument; omission evidence therefore executes valid code without an ABI fault.
+Overlap oracle passes 68.322s, including Map certificates and CompleteBrand.
+
+FileWatcher.close retains its complete original declaration. Program canonical
+handoff keeps the original callable alias but reduces the receiver/helper. Four
+candidate member contracts / 34 static reads are fixture-certified; 304 / 1469
+remain in the static table. Whole Program and whole-tsc reachability are unclaimed.
+Debug.assert and detached intrinsics remain named proof/dispatch boundaries until
+separately checked after the queued predicate dependency. Optional-boolean hold
+remains active. No cohere source was copied.
+
+Six new callable implementation defects caught and restored: native and JavaScript
+arity guards (both canonical-name and watcher wrong-arity witnesses), native and
+JavaScript exact-result guards (watcher wrong-result exits 0, no output), and both
+nullable-dispatch hook omissions (nullable-wrong-arity exits 0 with forbidden
+output). Native canonical wrong-result also crashes without its guard; that is
+recorded separately and is not credited as valid-code kill evidence. The watcher
+witness establishes the native result guard can fail in valid code. Total 194
+executed implementation/component defects. Logs: callable-latest-mutants/.
+
+Final callable gates: lower 15.494s, native 23.472s, JavaScript 1.615s; full IR
+30.111s; uncached filtered Node oracle 261.199s; vet exit 0. Original declaration
+controls enabled; no new exclusions or failures. The existing array-callback
+proof baseline and optional-boolean hold remain.
+
+
+Prioritized proven predicates dependency, b131a36dc50163896dbbdd0ef6d304223454fd0a
+
+Twenty conflict hunks in eleven files resolved individually. docs/0.1.md keeps
+supported labels out of the refused list. ir.go preserves ViewOrigins and
+MapCertificates while using the structured ordinary/overload predicate count
+records. cast.go (two) and cast_proof.go (three) retain integrated deferred/lazy
+views, structural certification, marker proof and writable-source guards rather
+than restoring the older eager interfaceView path. invariance.go retains its
+qualified-name guard; refusals.go retains deferred/view cast classification.
+expression.go keeps allocation provenance and never-expression handling while
+recording ordinary calls; its comparison hunk uses concrete specialization AND
+retains !includesUndefined, preserving both null and undefined alternatives.
+
+optional_widening_test.go retains checked-view admission instead of obsolete
+blanket optional-widening refusals. Its census three hunks retain schema disposition
+and diagnostics and adopt typed normalized file paths. field_access_paths.a keeps
+the incoming readonly declaration, with the same field order and runtime output.
+The four counts hunks preserve all measured integration rows, equal common rows
+and the new independent predicate table at the end. No whole-file choice was used.
+
+Parser callback/assertion proof and CLI explain-checks preflight passes: lower
+10.453s, CLI 3.749s, load .007s. The three census panic controls initially fail only
+computed_relation.a's stale optional-field diagnostic: integrated lazy admission
+reaches the named computed-field NotYet. The pin now records that actual refusal;
+no production capability or guard was weakened. Restored three controls pass .139s.
+
+The previously excluded library_array_holes_callbacks.a now matches Node under
+independent callback-body proofs. The boundary oracle passes 1.025s, also verifying
+predicate count rows. Its exclusion has been removed from all subsequent required
+gates. Debug.assert still stops at adamic/no-type-predicate for the property callback
+declaration; merging proven direct assertions does not certify a viewed producer
+with that unsupported contract. The unbound intrinsic read also remains refused.
+The optional-boolean storage hold remains until the user explicitly lifts it.
+
+Fourteen new predicate/conflict mutations executed and restored. Six proof mutants:
+callback body bypass (ParserCallbackLie), assertion normal-return bypass and helper
+termination bypass (ParserAssertionProofErasure), erased specialized null check,
+erased specialized undefined/null distinction and dropped scalar operand evaluation
+(ParserAssertionBackends, both backends except undefined distinction native-only).
+Four census guards: qualified cast, qualified widening, computed-name and early
+generic cleanup; their reduced controls catch the original Go compiler panic.
+Two report erasures fail exact CLI stderr goldens for ordinary/callback and assertion
+calls. Union-slot admission fails both MixedUnionCallbackABIIsPending refusal pins.
+Removing !includesUndefined fails source Node agreement for string-both in valid
+native code. Total 208 implementation/component mutants. Panic witnesses are kept
+separate from valid emitted-code observations. The ambiguous union-runner anchor
+stopped before mutation, was corrected and only the two pending cases rerun; it is
+not a mutant kill. Evidence: predicates-mutants/ and predicates-extra-mutants/.
+
+Final predicate required gates: lower 13.307s, native 18.174s, JavaScript 1.967s;
+full IR 23.823s; uncached filtered Node oracle 276.136s; vet exit 0. Array-callback
+fixture is included with no skip. Full CLI 15.401s and load 8.229s pass; restored
+predicate/parser/assertion/census proof selection passes 20.392s.
+
+Supplemental predicate/census/generic/regex/output oracle fails three fixtures in
+48.390s. An isolated unmodified pushed-parent 8afdc710 reproduces all three in
+.098s after its cold checker build. census_overload_contracts.a:13:16 retains the
+more-arguments-than-implementation NotYet; census_small_boolean.a:19:16 retains
+unsupported template interpolation. maybe_number_slots.a:29:33 previously stops
+at the unproven inferred predicate argument `(value) => value === undefined`.
+Its independent proof now passes, exposing a later native C build failure: passing
+adamic_object* to show(adamic_maybe_number). No binary is admitted by that failed
+build. This is a changed frontier on an already-failing supplemental fixture,
+not a green full-oracle claim. Both logs are retained. The required checked-view
+selection has no failure or exclusion; whole repository remains unclaimed.
+
+Publication note: callable merge 8afdc710 initially failed HTTPS username lookup
+twice. The requested first-parent fallback patch remains at
+/tmp/views-integration-8afdc7102bbf5c9cdad9f4471923003cac7f8a6f.patch.
+The installed GitHub credential helper then pushed it successfully. That helper
+is configured only in this repository; no credential value was read or logged.
+
+
+## Lazy admission 055333e1 left out
+
+Newest fetched owner tip 055333e1ea0c278bc809b0dbbd292fbb0e9b56a1 contains
+85e958e2deed551a539a665a35fd492a02a7f4ea. Its automatic merge changes
+censusCallableSlotless to admit all boxed union callable slots. The existing
+TestMixedUnionCallbackABIIsPending fails both mixed_union_callback and
+mixed_union_callback_variance: each expected a refusal but received nil (0.073s).
+Preserving the existing union refusal instead makes the new Map certificate
+entry-live-mutation fixture fail at line 5:82: stage 0 cannot lower a function
+value taking string | number | null (0.068s). A global admission therefore cannot
+retain both obligations without a separate callable ABI adapter or scoped proof.
+The item was aborted and left out, as authorized; no incoming production code
+was committed. Exact evidence is owner-055333-abi.log and
+owner-055333-preserved-abi.log. The branch remained at 6a7f1bf3a83e61069b1a380739ed513c0f9b0591.
+
+## Callable scalar witnesses 15b30747
+
+Merged source tip 15b30747f83f57f926fb1b291cda5ba3bc39a27a adds
+Scanner.hasPrecedingLineBreak and performance.mark fixtures. One conflict hunk
+in internal/oracle/counts.md retains all eight incoming allocation rows before
+the complete existing predicate direction table, whose end-of-file placement
+is independently checked. The plan additions merge without conflict. No shared
+production hook changes. Original signatures and reads retain reduced receivers;
+these fixtures do not prove complete compiler contexts or runtime reachability.
+
+All four executable omissions ran: native and JavaScript shape bypass, native
+and JavaScript wrong-arity acceptance. Each caused both original member tests
+to lose their exact exit-70 refusal in valid emitted code (exit 0); restored
+production guards are unchanged. Total implementation/component mutants: 212.
+The mixed scalar/boxed result boundary remains refused and has a Node control.
+The optional-boolean landing hold remains until the user explicitly lifts it.
+
+Final callable-15 required gates: lower 15.322s, native 20.377s, JavaScript 2.834s; full IR 3.380s; uncached filtered Node oracle 247.320s; go vet ./... exit 0. No oracle fixture exclusion. Gate logs retained under integration/logs.
+
+
+## Intersection 9e4e13fb reconciliation
+
+Incoming tip 9e4e13fb1bb9c755c1743eb0937906eeea988de8 carries finite,
+tagged-arm and recursive intersection dispatch and an original SymbolTracker
+witness. Five conflict hunks resolved individually in four files: both plan
+appends retain every lane hook/history; JavaScript readiness retains the ninth
+undefinedMember flag, null diagnostic and owner Map code while admitting actual
+callable kind 8; both nullish emitters retain owner member selection, per-member
+Map certificates and callable signature certificates before direct conjunction
+validation. Tagged intersection arms already run through owner union selection;
+the new conjunction hook excludes that case to avoid duplicate slot reads.
+Automatic strictViewContract merging retains phantomUndefined erasure and adds
+structural intersections and canonical optional descriptors. The shared allocation
+flow graph, lazy descendant refusals and writable-slot certification stay intact.
+
+New source root-read witnesses expose a required-property gap: finite and
+recursive string | undefined required fields missing from actual objects print
+true and exit 0 in sanitized native, release native and generated JavaScript.
+Explicitly present undefined controls also print true as Node does. The repair
+separates field.Optional and child.Undefined in both walkers and descriptor tables.
+Native adds object_optional_view's explicit payload flag and the named
+adamic_object_optional_view_undefined wrapper; viewField forwards the branded
+string undefined flag. Existing wrapper uses the same readiness/presence validator.
+Optional receiver absence does not authorize absent required fields on a present
+receiver, or present undefined payloads without a declared value member. JavaScript
+uses the existing ninth flag. Four restored controls pass, and CompleteBrand
+controls pass. Before/after logs preserve observed output; no check is removed.
+
+The new presence counterfactual makes each required label optional in production
+IR. Both finite and recursive missing cases execute valid code with true/exit 0
+in all three modes, failing six independent refusal assertions. This is four
+backend-specific defects (sanitizer repetition is not separately counted).
+The source tests construct temporary .a witnesses from inline source without
+copying upstream/cohere declarations. Original lane tests enable all 78 declaration
+hashes and complete unchanged field sets through ADAMIC_INTERSECTION_ORIGINAL_DECLS.
+Both original-declaration opt-in suites remain enabled in all later required gates.
+
+Supplemental TestOptionalClassReads fails class_derived, class_generic,
+class_generic_compound and class_transitive with stderr differs; class_expression
+passes. The isolated unmodified prior integration 8afdc710 reproduces the same
+four failures (3.075s). These are existing supplemental failures, not a green
+full-oracle claim. Presence/brand repair selection passes its new controls but
+that supplemental class selection remains red (combined 29.737s). The optional-
+boolean landing hold remains until the user explicitly lifts it; property
+presence and permitted undefined values do not establish storage compatibility.
+
+Intersection counterfactuals complete: source dispatch/shape/nested (six backend
+checks), selected-arm skip/shape/nested/tag (eight), recursive skip/shape/nested/
+canonical/optional/three literals (sixteen), and original skip/shape/nested/
+presence/outer/absence (twelve). Each driver shows valid true/exit-0 execution
+losing the independent refusal pin, except forbidden optional absence produces
+the intended counterfactual exit 70 on its positive control. Together with the
+four new required-undefined presence checks, 46 newly executed implementation
+counterfactuals bring the cumulative total to 258. Sanitizer/release repetitions
+are retained in logs but not separately counted. All descriptor mutants are
+confined to each test's IR; production sources are unmutated.
+
+Final intersection required gates: lower 16.587s, native 52.707s, JavaScript 2.807s; full IR 30.949s; go vet ./... exit 0; uncached filtered Node oracle 376.970s, both original-declaration suites enabled, no fixture exclusion. Protected assembly/oracle files unchanged.
+
+
+## Array f201b579 reconciliation
+
+Newest fetched array tip f201b579b587663f707e10612edf91c3a20ee395 carries
+69c398621c76738e9482b087c94375508997b0a3 plus readonly array-union work.
+The single plan append conflict preserves all integration hook sections and the
+incoming reference-write and readonly-union sections. Source metadata and shared
+hooks merge automatically without discarding Map certificates, predicate proof
+reports, callable discard contracts, nullish fields, the intersection presence
+repair, or HasArrayViews' admitted-origin guard. The new native object message
+allocation accounts for both expected-type occurrences; old undersizing is an
+observed ASan overflow mutant, not a diagnostic change.
+
+The initial new-array source selection fails only two optional wrong-array
+stderr pins (23.047s): ranked-signature-wrong-array and
+ranked3-reference-wrong-array. Both still exit 70, name the same field and type,
+and reject the same number; the owner member reader says matches no member.
+Those two pins now use its exact current diagnostic, and both pass .522s.
+All other new ranked, parser, union and reference-write source controls pass.
+Mutable array-union demanded reads retain their precise compile refusal, while
+unread fields remain admitted. Reference writes require original producer and
+incoming scalar-record certificates, reverse mutable-field agreement, readiness,
+finite literals and ownership before changing storage. No complete tsc schema
+or exact reachable-cast count is inferred from reduced ranked witnesses.
+
+Executed four sequential mutant groups: ranked (4), reference-write (8), parser
+(5), readonly union (9), 26 new production mutation witnesses total. Removal of
+native ownership yields ASan use-after-free on a surviving alias; undersized
+native diagnostic allocation yields ASan buffer overflow. Native kind omissions
+also cause sanitizer runtime failures; these are memory-safety witnesses, not
+claims of successful mutant output. Other catches lose named refusals, reach a
+different descendant refusal, or reject untouched later elements under an
+illegal eager scan. Every group compiles and executes; production restores in
+finally. All raw logs are retained. Cumulative explicit mutation witnesses: 284.
+
+A test-harness edit during the reference group caused a transient go-vet build
+failure for viewRankedArrayCounts. That failure is not credited as a kill. The
+entire eight-mutant reference group was rerun after source edits completed and
+all eight were caught. First-attempt summary and failing raw evidence are kept
+separately; later groups and final evidence are also retained. Production is
+restored before every required gate.
+
+Measured 55 new ranked/reference fixture allocation rows in 5.915s. The new
+viewRankedArrayCounts hook is included in interfaceCastCounts and independently
+checked by TestCheckedViewRankedArrayCounts. Its updater inserts only measured
+rows before the untouched predicate direction table. The intentionally refused
+mutable-array read has no runtime artifact and no allocation row. These fixture
+allocation metrics do not imply static candidate execution or full compiler
+read coverage. Original-declaration suites remain enabled in the required oracle.
+The optional-boolean landing hold remains until the user explicitly lifts it.
+
+
+Supplemental full flow/freshness tests remain red: TestEveryFunctionIsInSingleAssignment
+and liveness corpus retain census_overload_contracts.a's more-arguments-than-
+implementation NotYet; census_small_boolean.a retains unsupported interpolation.
+Liveness require_perf_hooks.a and freshness TestEveryWriteIsRecordedAndKnown hit
+Unhandled case in Node.Text: *ast.BindingPattern in viewCallableFieldUses at line
+74. The isolated unmodified prior integration 8afdc710 reproduces freshness's
+same panic (23.583s) and the corrected exact liveness perf_hooks subtest reproduces
+it in .739s. The first baseline liveness filter selected no fixture and reported
+nothing checked; it is not evidence and was corrected before drawing this result.
+The pending dictionary lane already contains the narrow callableDataDeclaration
+AST-kind guard, to reconcile in its own merge. No flow/freshness production files
+were edited, no baseline corpus tests skipped, and these full packages are not
+claimed green. Required checked-view gates remain separate and active.
+
+Required array merge gates: lower 10.608s, native 41.276s, JavaScript 1.935s; full IR 34.312s; filtered oracle 326.925s with both original-declaration suites enabled and no exclusions; go vet ./... exit 0.
+
+Object/primitive newest tip 534b8c525de2624b938dd25dd3dc36f49ae51b25
+
+Resolve the single docs/checked-views-plan.md append conflict by retaining both
+complete additions. library_object.go merges the objectPrimitiveIntersectionStorage
+physical-storage hook without deleting the existing scalar intersection fallback.
+This hook proves storage only; shared deferred contracts still govern reads.
+
+Regenerate both original declaration manifests from pristine upstream 050880ce.
+The first original preflight (48.999s) found six diagnostic-only mismatches.
+generated-prefix-wrong.a still exits 70, now with the owner's nullable selector
+message naming member.prefix/string | undefined/boolean. Four bindable/JSDoc
+frontiers still refuse, now at kind's unsupported union intersection contract.
+jsdoc-comment-probe.a still refuses as NotYet for interpolating an aggregate union.
+Update those exact pins; the six corrected witnesses pass in 3.332s. No refused
+frontier is credited as certified, and no acceptance condition is relaxed.
+
+New original LiteralType root/nested omission and wrong-shape controls execute
+eight counterfactuals. The five new original pairs execute twenty outer/member
+counterfactuals, sixteen nested type/omission counterfactuals, and two optional
+GeneratedNamePart prefix omissions: 46 new checks, cumulative 330. Each expected
+refusal is lost in valid release-native and JavaScript execution. Existing source
+and original SourceFile/Diagnostic counterfactuals rerun without double counting.
+The declaration field-set and hash assertions remain complete. Eight witnessed
+original field pairs carry 59 static candidate reads; original enclosing compiler
+functions and exact execution reachability remain unmeasured. Optional-boolean
+landing hold remains until explicitly lifted by the user.
+
+Object/primitive required gates pass: lower 13.159s, native 20.909s, JavaScript 1.386s; full IR 18.977s; filtered uncached oracle 298.001s, 1531 Node executions, both original suites enabled; go vet ./... exit 0.
+
+Dictionary newest tip deec3c933543c7b5e7ba0d9db0964265d03c494c
+
+Fourteen conflicting hunks in eleven files are resolved individually:
+- docs/checked-views-plan.md: retain both append inventories and all shared hooks.
+- ir/views.go: retain Nullable and Map kind ordinals, append Dictionary separately.
+- javascript/javascript.go (two): keep Map certificate runtime plus dictionary runtime;
+  dispatch explicit DictionaryKey reads before ordinary boxed-union field dispatch.
+- javascript/readiness.go: keep ninth undefined-member flag, strict required-field
+  presence and callable kind 8; add Record kind 14 as an object heap read.
+- lower/interface_cast.go: add Record to the existing supported-storage exception
+  without dropping nullable/Map/callable/object-primitive handling or accessors.
+- lower/library_object.go: dispatch record operations and array-record production
+  independently, preserving the original object operations below them.
+- lower/optional_widening_census_test.go (two): retain AsString API and structured
+  disposition/diagnostic census, rather than old string conversions.
+- lower/view_lazy.go: keep owner nullable/Map dispatch, then dictionary descriptors.
+- lower/view_writes.go: refuse Unknown, Nullable, Map and Dictionary slot writes
+  unless their owning adapter supplies a certificate; keep all older refusals.
+- native/runtime/object.c: keep separate undefined-member payload, optional
+  receiver and optional-field flags, matching the incoming presence tightening.
+- oracle/testdata/field_access_paths.a: keep readonly qualifiers and declaration
+  order pinned by prior optional storage evidence.
+
+The first dictionary source preflight (95.657s) exposes nullable Record masks
+using physical type 14 while the runtime independently reports object heap kind 4.
+Normalize only that logical kind in the lower mask; native nullish storage validates actual Record-tagged references as
+object heaps before using them. Element storage certificates remain independent,
+and container admission does not scan unread entries. Nullable diagnostic pins
+now name the owner's matches-no-member refusal while retaining exact field, type,
+found value and exit 70. Reconciled container, optional-required-presence, absence
+mutant and nested array suites pass in 39.797s.
+
+The independently known Record callable producer result must be released by
+discarded marker calls. Before the added Record cleanup, stored-marker/record.a
+compiles but leaks 341 bytes in three allocations under LeakSanitizer (0.601s).
+The source dynamically allocates its string, so immortal literal optimization
+cannot hide ownership. Adding Record to the independently recorded result-kind
+release restores Node/native/JS agreement and cleanup (0.425s). Counts are measured
+in 6.829s and the new row is inserted before the untouched predicate table.
+No valued callable ABI admission changes; ordinary mixed-union callbacks remain
+refused. The incoming narrow callableDataDeclaration guard preserves supported
+runtime signatures while preventing BindingPattern.Text panics.
+
+The Go cache filled the workspace disk during reconciliation and an integration
+mutant attempt. These setup/build failures are not mutant kills. Source was
+restored in finally; only disposable cache entries older than two hours were
+removed (16638411467 bytes). Exact initial and rerun logs are retained. Required
+gates run on restored production after all integration mutations complete.
+Optional-boolean landing hold remains; this merge is not advertised for landing.
+
+Integration mutations now execute successfully: omitting Record discard release
+reproduces LeakSanitizer's compiled leak; restoring the old physical-kind mask
+rejects valid wildcardDirectories; omitting native actual-14 decoding rejects a
+genuine Record producer in paths-producer-good.a. The initial last mutation used
+a fixed-object producer and survived, so it is not credited. The added genuine
+producer first passes Node, sanitized native, release native and JavaScript
+(0.628s), then detects the omission. All three finally restore production.
+
+A fourth isolated source mutant uses a Go overlay to remove only the counted-
+Record cycle refusal while leaving the working source untouched. TestRecordRefusals
+then admits both direct self and Node.links self-cycle programs, losing two
+required refusals (2.392s); no compile failure is credited. The normal record
+suite runs independently on restored source. The overlay and all raw logs are
+retained. Dictionary's existing source/storage/finite/member/origin/producer
+counterfactual suites execute in the required oracle; their component group
+was counted previously and is not counted twice.
+
+Supplemental full flow/freshness run remains red: flow 172.078s and freshness
+119.913s. BindingPattern panic is gone and perf_hooks programs are no longer
+failing. The full run exposes eleven refused source fixtures in flow: the two
+previously reproduced census refusals, process_exit/default/bad_code, cwd_error,
+write_file/write_buffer/rm/mkdtemp and nbody_field_values. An unmodified prior
+integration 8afdc710 exact nine-fixture trace run reproduces all nine latter
+messages in 1.818s. Freshness reports thirteen unknown PhantomMember writes; an
+isolated test-only overlay that selects phantom fixtures against that same
+unchanged parent reproduces all thirteen in .505s. This overlay is only baseline
+evidence, not a change to the normal corpus or an excluded required oracle.
+
+Supplemental records/readiness gate passes native 58.029s and oracle 15.168s.
+Lower reports one newly added diagnostic pin: nullable Record JSON.stringify
+still refuses as NotYet, now specifically naming missing runtime element
+metadata rather than generic value-of-type refusal. Updating only that reason
+retains the refused fixture; all record lower tests pass in 2.882s and lower vet
+passes. No broader source feature was enabled to make this pin pass.
+
+Dictionary required gates pass on restored production: lower 14.446s, native 55.921s, JavaScript 2.334s, full IR 14.444s; filtered oracle 588.603s, 1855 Node checks and 526 native checks, no exclusions; whole vet passes. This merge adds 27 dictionary counterfactuals and four integration mutants (31 total). Final cycle overlay detects only the two expected lost refusals (.516s). Final whole vet also passes after the diagnostic pin and removal of unreachable nullable member mappings. Next: final untagged tip cd32db423, then ranked arrays 5c609c010.
+
+
+Lane 4c final candidate projections, cd32db4234fb0a65a6ad199474b802c9e7491054
+----------------------------------------------------------------------------
+Two conflicts, two individually resolved hunks. docs/checked-views-plan.md keeps
+both the complete dictionary/array inventories and incoming untagged refresh and
+repair evidence. lower/object.go joins all array alternatives through the owned
+untaggedArrayElement hook, retaining the ordinary-array fallback; no duplicate
+element declaration and no first-alternative erasure.
+
+Automatic merges inspected: preserve Dictionary 10 after Nullable 8/Map 9,
+Record physical storage 14, dictionary lookup dispatch, array producer/write
+certificates, intersection dispatch before untagged selection, separate required
+presence/undefined metadata, callable known-void 254/discard 255, and exact
+logical producer identity. The minimal lower.go metadata hook is explicitly
+listed by the lane's shared-hook plan. No global mixed-union callable ABI gate
+is relaxed; the previously rejected owner tip remains out.
+
+Preflight 80.394s finds a genuine overlapping dispatch defect: both runtimes
+admit untagged/fixtures/array-union-mixed.a after lane 2's array union adapter
+erases the separate array alternatives. Reconciliation keeps plain readonly
+array unions as ViewUnion with full member contracts and a joined selected
+index contract. NodeArray alternatives with own properties retain the owning
+array adapter and its lazy indexed checks. Both sides' behavior is proven by
+TestCheckedViewUntaggedArrayUnion, TestCheckedViewRankedArrayUnionContracts
+(including ranked3-pattern-lazy.a) and TestCheckedViewMutableArrayUnionRefusal;
+the combined repair gate passes in 3.691s. Mutable union refusal stays explicit.
+
+Source/component and candidate fixtures cover own-kind, field-only recursive,
+array, fixed callable and final nested callable projections. This is the lane's
+61 reduced candidate projections / 434 static reads, with zero remaining in
+that projection inventory. Full unchanged TypeChecker/intrinsic forEach,
+compiler-wide reachability and original interface completion stay uncertified.
+Required package/oracle/vet results and newly executed mutants follow below.
+The optional-boolean landing hold remains.
+
+All 45 lane 4c mutations were independently executed against integrated source:
+source dispatch 5; candidate selection/discriminant/index guards 9; recursive
+matching 6; array membership/transitive guards 5; active-pair/undefined writes 3;
+FlowNode completion and callable union dispatch 8; nested callable physical,
+transitive, logical producer and checker-identity proof 9. Each runner restored
+source in finally. Two old mutation anchors were updated to the integrated
+recursive path argument and combined callable condition without weakening tests.
+The additional integration descriptor-erasure mutant makes the mixed-array
+fixture exit 0 in both backends and is caught by its exact refusal pins. Total
+46 newly executed mutants; cumulative explicit count 407. Earlier component
+mutants are not counted again. No build failure is credited as a semantic kill.
+
+The first required oracle is stopped after three real dictionary regressions:
+OptionalRequiredField/undefined loses its expected undefined diagnostic;
+CompilerPaths/compiler-paths-missing and OptionalPaths/optional-paths-missing
+lose valid Node controls. Lane 4c now emits explicit undefined as actual tag 13,
+which the dictionary source decoder formerly marked unknown. A single decoding
+branch recognizes semantic undefined; the independent allowed-kind mask still
+refuses a required dictionary field. All three tests plus the optional-absence
+mutant pass in 23.209s. Omitting this branch is a separately executed semantic
+mutant caught by compiler-paths-missing, giving 47 new mutants / 408 cumulative.
+An environment restart interrupted its first attempt before finally; that
+attempt is not credited, its one changed branch was manually restored and the
+complete mutant rerun then succeeded and restored production. Required gates
+are repeated under the final label; interrupted/failing evidence is retained.
+
+Second full oracle completes red in 466.928s (2345 Node / 523 native cache
+misses), with only TestDefaultTaggedSourceViews/default-boxed-write failing:
+initialized undefined tagging overwrote the physical Union tag on reserved
+uninitialized storage, so its valid first number write refused as uninitialized.
+fieldInitialRepresentation retains Union 10 only when Field.Uninitialized is
+true and the independently lowered physical representation is Union. The
+readiness bit still refuses reads; initialized undefined keeps semantic 13.
+Both literal construction and spread-field construction use the same helper.
+Default source writes/refusals, candidate 108, class-data and dictionary controls
+pass together in 11.413s. Omitting this one condition is caught by the compiled
+Node-backed default-boxed-write control. Now 48 new mutants / 409 cumulative.
+The full required oracle and packages are repeated on restored production.
+
+Final restored required gates pass: lower 15.535s, native 21.742s, JavaScript
+2.665s, full IR 25.510s and whole vet. Filtered oracle passes in 456.401s:
+2345 Node and 523 native cache misses, no configured fixture exclusions;
+original intersection/object-primitive suites enabled. Three historical no-hook
+frontier receipts skip because hooks are installed; required-mode source
+admission tests run successfully. All 48 new mutants are restored. New queue:
+owner 65d8a138927fe240c4ede0854e9bd00084fd0f16, then newest arrays 257568b0e
+(which carries ranked group four 5c609c010 and fifth through ninth groups).
+Optional-boolean hold remains; no published fix ref was found.
+
+Priority owner retry: fetched newest 706a189c96e21d7fd2115aea268bfa96eef54d43
+(includes requested 65d8a138927fe240c4ede0854e9bd00084fd0f16). Merge is clean,
+but TestMixedUnionCallbackABIIsPending loses both mixed_union_callback and
+mixed_union_callback_variance refusals: got nil (.258s). Restore only the
+ordinary censusCallableSlotless Union guard and the required Map control
+entry-live-mutation.a:5:82 fails with NotYet function value taking
+string | number | null (.047s). The optional-reference conversion follow-up
+still does not scope that callable ABI change. No clean resolution preserves
+both existing refusals and every new Node agreement. Entire owner item is
+left out of the final tree; see corrective publication below. Exact logs are preserved.
+Continue with newest array tip 257568b0eb90669bd0585f04e81f8b1e11039760.
+This is a semantic integration failure, not an automatic approval rejection.
+
+Publication correction: abort failed because the temporary census_small.go
+experiment was unstaged. The command incorrectly continued, committing and
+pushing ff1c994d687d972d108cc4784da055883040aabf with rejected owner changes.
+Immediately revert that merge against its first parent, preserving these logs.
+The corrected compiler/runtime/docs tree is byte-identical to green a7623448c;
+only integration evidence changes. ff1c994d6 must not be consumed. Owner remains
+in history but its entire source change is reverted. A later repaired owner tip
+will require explicit reapplication of the reverted changes before gating.
+No history rewrite or force push. This was an integrator command error, not a
+reviewer rejection. All subsequent mutating sequences stop on the first error.
+
+Ranked array integration: fetched 1ff63ff942647d7eafe3ba2d4bebb71da7ba0e8e,
+which contains requested 257568b0eb90669bd0585f04e81f8b1e11039760 and
+5c609c0109e7dcad3d9169f866d17f20cfbb3fd3, the fourth group. Pending merges of 60d9bf9f and 924eccb0 were aborted
+successfully to take the newly published groups before committing. No intermediate
+array checkpoint was published. Groups four through fourteen add 381 source
+fixtures: 375 executable fixtures and six named compile-refusal fixtures.
+
+Two conflicted hunks, both in docs/checked-views-plan.md, resolved separately:
+1. Incoming moved reference-write/readonly-union hook sections duplicate sections
+   already later in integration. Keep existing sections in their integration
+   position, add only ranked4 through ranked14 here, exactly once. Both behaviors
+   are retained: TestCheckedViewArrayReferenceWrites,
+   TestCheckedViewRankedArrayUnionContracts and TestCheckedViewMutableArrayUnionRefusal,
+   alongside TestCheckedViewRanked4ArrayContracts through Ranked14ArrayContracts.
+2. Incoming has no addition where integration's later hook inventories and
+   callable, dictionary, intersection and untagged evidence are appended. Keep
+   those existing additions. No production behavior is selected away. Proof
+   includes required-mode TestCheckedViewUntaggedSourceDispatch, dictionary storage,
+   original intersection/object-primitive suites and existing callable fixtures.
+
+Four incoming production changes merge without conflict and were inspected:
+arrayLiteralElement avoids asking a union for type arguments while joining may-flow
+seeds; graph adoption uses adamic_object_size including aligned slot contracts;
+native write diagnostics name object/array/Map consistently with JavaScript;
+present NULL array references name undefined, preserving boxed null separately.
+
+Preflight caught ranked4-label-assign admitting an uncertified original mixed-slot
+array write: native exit 0, stdout "1:1", rather than the pinned exit 70
+(74.102s overall). Untagged's actual-13 explicit-undefined reference-write hook
+also admitted wanted-5 arrays. Narrow that exception only for arrays, retaining
+string/object/Map/callable/boxed-reference behavior. The original slot has no
+reifiable array certificate; physical pointer storage is not that proof. No
+refusal pin is weakened. Ranked4 label cases, all untagged suites and default
+source-view writes pass together in 112.763s. Removing this new exclusion makes
+ranked4-label-assign execute successfully again and is caught by its exact pin.
+
+The counts helper's existing ranked*.a wildcard also tried to compile incoming
+ranked10-resolved-arguments-assign, which intentionally has no executable runtime.
+Its exact NotYet caused TestCheckedViewRankedArrayCounts to fail (4.89s). Retain
+all six new compile-refusal cases in their Node-backed frontier suites; list them
+explicitly, alongside the existing ranked3 refusal, only in the runtime-count
+helper. All other lowering errors remain fatal. Measure the executable fixtures:
+375 new rows, no changed old rows, inserted before the predicate EOF table.
+The update passes in 53.949s. The red oracle was stopped explicitly before
+refreshing the pending merge; no pass is inferred from that interrupted run.
+
+Executed source mutants: ranked4 seven, ranked5 eight, ranked6 five, ranked7 two,
+ranked8 four, ranked9 two, ranked10 two, ranked11 two, ranked12 two, ranked13 two,
+ranked14 three. Total 39 caught: 38 compiled runtime witnesses and one named
+compile-refusal omission witness (ranked14's field-name fallback). Native and
+JavaScript failures include lost refusals, wrong diagnostic timing and sanitizer
+errors after successful compilation; build/frontend errors are rejected as runtime
+proof. Every source mutation is restored in finally before the next mutation.
+The initially copied ranked4 harness selected Ranked5 and ran no tests; it received
+no credit and was corrected before all seven proper witnesses were rerun.
+The first formatter command lacked the toolchain environment, failed without
+continuing, and was rerun after sourcing /workspace/adamic-tools/env.sh.
+
+Separate counterfactuals, not added to the 39: old GetTypeArguments(union) reproduces
+a frontend panic on ranked4-label-push; omitting union-specific element seeds
+survives every ranked4 fixture. This conservative may-flow addition has no proved
+runtime-check witness. The native ranked12 member mask alone also survives;
+its emitted member selector still refuses. The combined mask/selector omission is
+caught with a later narrowing diagnostic, and is counted once. Both survivor logs
+are retained. Cumulative explicit implementation/component count: 409 + 39 = 448.
+
+Final required gates: lower 8.307s, native 12.790s, JavaScript 1.282s, full IR 2.568s, whole vet exit 0; uncached filtered oracle 584.603s, 3101 Node and 898 native misses, no configured exclusions, original intersection/object-primitive suites and required-mode untagged dispatch enabled.
+No whole-repository test gate or unchanged-tsc production reachability census is
+claimed. Lane 2's 145 pairs / 2701 reads are candidate-projection counts; its
+full EmitHelper.text and untagged BaseType element shapes remain unclaimed.
+Optional-boolean landing hold remains in force, with no published fix ref found.
+
+Newest owner priority inspection: 0ea22091e93375f5f03e3b34b76edf7b96891898,
+which includes adc4dd1c's key/nested conversions and nominal data-class Map proofs,
+still inherits the rejected unscoped callable ABI admission. Its exact tip fails
+TestMixedUnionCallbackABIIsPending/mixed_union_callback and
+/mixed_union_callback_variance, both got nil instead of the named union ABI
+refusal (isolated checkout, 0.446s). Test and fixture source are unchanged from
+integration. The isolated checkout was restored to its prior baseline. This item
+is not retained or re-published. Restoring the old callable guard was already
+shown to break the owner's required entry-live-mutation Map agreement, so no clean
+resolution keeps all refusals and new Node agreements. See the previous 706 retry
+and publication correction for exact evidence and the reverted-owner ancestry.
+Lane 4 original-brand tip 6858d196802c9826a62188c8d4887fe0810e4700 is next.
+
+
+## Original brand and direct tagged union checkpoint
+
+Merged codex/views-mixed-unions-2 d5738b8e863f47ff798ea88fed8ae53901b5d84d
+(supersedes requested 6858d196802c9826a62188c8d4887fe0810e4700) on
+213c43771bd2f3a3dd9abd69ea088bf13e4c629e. One conflict hunk in
+docs/checked-views-plan.md: keep the integration dictionary and untagged
+inventories and append both incoming original-brand evidence and direct-tag
+hook descriptions. Resolved that append hunk individually. No production
+conflicts, whole-file picks or bulk resolution strategy.
+
+Production proof requires each target arm preserve source slots, distinct
+same-held immutable literal tags and supported schemas. Payload reads remain
+lazy. The preflight caught two old valid-cast NotYet receipts becoming admitted:
+ranked5-function-union-cast.a and ranked6-class-like-union-cast.a. These unchanged
+Node-valid fixtures now run in the full runtime contracts suites, with Node
+stdout 1, release native, sanitized native, JavaScript and leaks checked. Their
+two measured rows are added before predicate counts. The unchanged jsdoc-parent
+cache frontier still refuses. This is an explicit supported-frontier migration,
+not retention of the now-obsolete compile-only expectation. Wrong tags, payloads
+and unsafe admission refusals remain. Mutable target tag has a new independent
+negative proof control.
+
+Three source guard erasures independently admit duplicate target tags,
+incompatible source slots and mutable target tags; the named negative tests
+catch each with unsafe union target admitted. Finally restored production after
+each. Expanded proof controls pass in 0.171s. Original-brand oracle executes
+34 IR member-check bypass cases in both release backends (68 catches); two
+original direct-target tag bypass cases run in both release backends (4 catches).
+These 36 component cases plus three source guards add 39 unique mutants, not
+72 unique mutants. Cumulative explicit total 448 + 39 = 487.
+
+Required restored gates: lower 10.427s, native 19.611s, JavaScript 2.262s,
+full IR 13.356s; go vet ./... exit 0. Uncached filtered oracle PASS 942.203s,
+Node misses 3608, native misses 1024, no configured exclusions. Original brand,
+object-primitive and intersection declarations enabled, required untagged
+source dispatch enabled. Original declarations are independently prepared from
+unchanged TypeScript pin 050880ce59e30b356b686bd3144efe24f875ebc8; original
+file hashes verified. Count refresh PASS 56.955s, exactly two new rows.
+Exact commands are the existing integration gate helper selection with
+ADAMIC_BRAND_ORIGINAL_DECLS additionally pointing to the prepared declarations.
+Raw logs below preserve failures, restored runs and mutants.
+
+Limits: 27 original __String pairs / 540 candidate reads and five nullable
+pairs / nine reads are fixture evidence. Three original pairs / three reads
+remain blocked: ActiveLabel.name and anonymousRenamedBinding.name have never
+fields, and the recursive LeftHandSideExpression & Identifier carrier.child.
+Original class members still refuse Map certificate fallback; all seven
+FunctionLike and two class tags are checked, not full class member certification.
+Full original tsc execution and exact reaching-view census remain unmeasured.
+The user has authorized lifting the optional-boolean hold after integrating
+its fix; a2eb65ca76816f895f846f78a210bc1717a5f7c4 is next, ahead of lane 5.

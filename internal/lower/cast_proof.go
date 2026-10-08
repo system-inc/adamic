@@ -98,6 +98,9 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
+	if l.viewCallableDiscardedMarker(node) {
+		return castProof{}, nil
+	}
 	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
 	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
@@ -119,6 +122,15 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	allClasses := true
 	for _, member := range append(append([]*checker.Type{}, members...), targets...) {
 		allClasses = allClasses && isClassInstance(member)
+	}
+	if l.dictionaryCastNeedsView(source, target) {
+		if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
+			return castProof{}, l.notYet(node, "a writable-slot checked dictionary view requiring source contract certification")
+		}
+		if _, err := l.viewSchema(node, target); err != nil {
+			return castProof{}, err
+		}
+		return castProof{view: true}, nil
 	}
 	var upcastFailure error
 	// A structural assignability result is only an upcast candidate. Nominal
@@ -178,6 +190,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		return castProof{lowering: kind, deferredError: refused}, nil
 	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
+		if proof, err := l.viewUnionTargetProof(node, source, target); proof != nil || err != nil {
+			if err != nil {
+				return castProof{}, err
+			}
+			return *proof, nil
+		}
 		// Shared views certify each read; mutable source slots still require
 		// the same reverse relation as the interface-downcast entry point.
 		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) {

@@ -1,0 +1,27 @@
+[
+  {
+    "mutation": "skip-readiness",
+    "caught": true,
+    "log": "stage3/interface-downcasts/lane4/logs/probe-mutant-skip-readiness.log"
+  },
+  {
+    "mutation": "ignore-owner",
+    "caught": true,
+    "log": "stage3/interface-downcasts/lane4/logs/probe-mutant-ignore-owner.log"
+  },
+  {
+    "mutation": "collapse-null",
+    "caught": true,
+    "log": "stage3/interface-downcasts/lane4/logs/probe-mutant-collapse-null.log"
+  },
+  {
+    "mutation": "ignore-reference-storage",
+    "caught": true,
+    "log": "stage3/interface-downcasts/lane4/logs/probe-mutant-ignore-reference-storage.log"
+  },
+  {
+    "mutation": "trust-unknown",
+    "caught": true,
+    "log": "stage3/interface-downcasts/lane4/logs/probe-mutant-trust-unknown.log"
+  }
+]

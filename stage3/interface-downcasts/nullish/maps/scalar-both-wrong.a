@@ -1,0 +1,15 @@
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,number>|null|undefined}
+function make(which:number):Base{
+ if(which===0){const map=new Map<string,number>([['key',7]]);map.set('key',8);const raw={kind:'box',value:42};return raw;}
+ if(which===2){const raw={kind:'box',value:undefined};return raw;}
+ const raw={kind:'box',value:null};return raw;
+}
+function read(node:Target):void{
+ const value=node.value;
+ console.log(typeof value+':'+String(value===null)+':'+String(value===undefined));
+ if(value!==null&&value!==undefined){console.log(String(value.get('key')??0));}
+}
+read(make(0) as Target);
+read(make(1) as Target);
+read(make(2) as Target);

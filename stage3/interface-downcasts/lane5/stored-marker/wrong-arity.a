@@ -1,0 +1,6 @@
+type AnyFunction = (...args: never[]) => void;
+let counter = 7;
+counter += 1;
+const callback: AnyFunction = (value: number): boolean => { console.log("producer"); return true; };
+callback();
+console.log('called');

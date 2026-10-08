@@ -1,0 +1,12 @@
+// Independent array-union contract projection; not a compiler-interface copy.
+interface CandidatePayload {readonly label:string;}
+interface ArrayElement0 {readonly kind:1; readonly payload:CandidatePayload; readonly opaque0:any;}
+interface ArrayElement1 {readonly kind:2; readonly payload:CandidatePayload; readonly opaque1:any;}
+type ArrayTarget=readonly ArrayElement0[] | readonly ArrayElement1[];
+interface ReadReceiver {readonly kind:'Receiver'; readonly fileInfos:ArrayTarget;}
+const raw0={kind:'Receiver' as const,fileInfos:[{kind:1,payload:{label:true}}]};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const values0=view0.fileInfos;
+const item0=values0[0];
+if(item0!==undefined){console.log(`${item0.payload.label}`);}

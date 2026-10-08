@@ -125,6 +125,9 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.PhantomMember:
 		return e.phantomMember(expression)
 	case ir.Property:
+		if expression.DictionaryKey != nil {
+			return e.dictionaryRead(expression)
+		}
 		if expression.View != "" {
 			return e.viewField(expression)
 		}
@@ -503,6 +506,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			pairs = e.value(expression.Pairs)
 		}
 		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		e.line("%s->key_contract = %d; %s->value_contract = %d; %s->contract_name = %s;", created, expression.KeyContract, created, expression.ValueContract, created, cString(func() string {
+			if expression.ContractName == "" {
+				return "uncertified Map"
+			}
+			return expression.ContractName
+		}()))
 		e.adoptGraph(created, "sizeof *"+created, e.graphTypes(expression.GraphTypes))
 		for _, entry := range entries {
 			e.line("adamic_map_set(%s, %s, %s);", created, e.heldIn(created, expression.Key, entry[0]), e.heldIn(created, expression.Value, entry[1]))
@@ -587,7 +596,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
-		e.viewArrayMutation(array, expression.Element)
+		e.viewArrayMutation(array, expression.Element, value)
 		if expression.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}
@@ -685,6 +694,12 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 			return e.own(ir.String, function+"(0, NULL)")
 		}
 		return e.own(ir.String, fmt.Sprintf("%s(%d, (const double[]){%s})", function, len(codes), strings.Join(codes, ", ")))
+	case ir.RecordCoalesce:
+		return e.recordCoalesce(expression)
+	case ir.RecordCall:
+		return e.recordCall(expression)
+	case ir.RecordLiteral:
+		return e.recordLiteral(expression)
 	case ir.ObjectCall:
 		return e.objectCall(expression)
 	case ir.NumberCall:

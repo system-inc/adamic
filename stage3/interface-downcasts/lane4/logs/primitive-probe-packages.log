@@ -1,0 +1,110 @@
+ok  	github.com/system-inc/adamic/internal/ir	32.511s
+--- FAIL: TestGraphRegionsMillion (0.37s)
+    graph_regions_test.go:219: adamic: graph region: live 1000000 bytes 78000000 reachable 950001 bytes 74100078 unreachable 49999 bytes 3899922 metadata 16000064
+        adamic: graph counts: regions 1 merges 999999
+        adamic: counts: allocations 1000000 frees 1000000 retains 0 releases 1000000 peak 1000000 regions 0
+        members 1000000 reachable 950001
+        rss_kib 94744
+        
+--- FAIL: TestGraphContainerBoundary (2.60s)
+    graph_regions_test.go:318: exit status 1
+        =================================================================
+        ==45086==ERROR: AddressSanitizer: heap-use-after-free on address 0x7bec657e0090 at pc 0x55ef880d2dc0 bp 0x7fffed824790 sp 0x7fffed824788
+        WRITE of size 8 at 0x7bec657e0090 thread T0
+            #0 0x55ef880d2dbf in adamic_map_set /home/agent/.cache/adamic/runtime/.build-30557723/map.c:239:15
+            #1 0x55ef880a8bd6 in main /tmp/adamic-gate/adamic-build-3893285332/main.c:31:2
+            #2 0x7efc667a3ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #3 0x7efc667a3d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+            #4 0x55ef87fc2510 in _start (/tmp/adamic-gate/TestGraphContainerBoundary54749803/001/containers+0x61510)
+        
+        0x7bec657e0090 is located 80 bytes inside of 176-byte region [0x7bec657e0040,0x7bec657e00f0)
+        freed by thread T0 here:
+            #0 0x55ef88065086 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3
+            #1 0x55ef880c273e in deallocate /home/agent/.cache/adamic/runtime/.build-30557723/heap.c:218:3
+            #2 0x55ef880c273e in adamic_heap_graph_storage /home/agent/.cache/adamic/runtime/.build-30557723/heap.c:235:2
+        
+        previously allocated by thread T0 here:
+            #0 0x55ef88065324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x55ef880c252d in allocate_storage /home/agent/.cache/adamic/runtime/.build-30557723/heap.c:198:10
+            #2 0x55ef880c252d in adamic_allocate /home/agent/.cache/adamic/runtime/.build-30557723/heap.c:212:9
+        
+        SUMMARY: AddressSanitizer: heap-use-after-free /home/agent/.cache/adamic/runtime/.build-30557723/map.c:239:15 in adamic_map_set
+        Shadow bytes around the buggy address:
+          0x7bec657dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bec657dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bec657dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bec657dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00
+          0x7bec657e0000: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd
+        =>0x7bec657e0080: fd fd[fd]fd fd fd fd fd fd fd fd fd fd fd fa fa
+          0x7bec657e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bec657e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bec657e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bec657e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+          0x7bec657e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa
+        Shadow byte legend (one shadow byte represents 8 application bytes):
+          Addressable:           00
+          Partially addressable: 01 02 03 04 05 06 07 
+          Heap left redzone:       fa
+          Freed heap region:       fd
+          Stack left redzone:      f1
+          Stack mid redzone:       f2
+          Stack right redzone:     f3
+          Stack after return:      f5
+          Stack use after scope:   f8
+          Global redzone:          f9
+          Global init order:       f6
+          Poisoned by user:        f7
+          Container overflow:      fc
+          Array cookie:            ac
+          Intra object redzone:    bb
+          ASan internal:           fe
+          Left alloca redzone:     ca
+          Right alloca redzone:    cb
+        ==45086==ABORTING
+--- FAIL: TestGraphClosureEnvironment (0.06s)
+    graph_regions_test.go:158: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-436030259/main.c:10:47: error: incompatible function pointer types passing 'adamic_value (adamic_closure *, adamic_value *)' (aka 'union adamic_value (struct adamic_closure *, union adamic_value *)') to parameter of type 'adamic_code' (aka 'union adamic_value (*)(struct adamic_closure *, union adamic_value *, unsigned long)') [-Wincompatible-function-pointer-types]
+           10 |  adamic_closure *closure = adamic_closure_new(code, 1);
+              |                                               ^~~~
+        /home/agent/.cache/adamic/runtime/de28eafd1c9a37243a4a706f62cfc1cbb7a5a1a8c19683221a5300552aa2ed72/adamic.h:114:48: note: passing argument to parameter 'code' here
+          114 | adamic_closure *adamic_closure_new(adamic_code code, size_t count);
+              |                                                ^
+        1 error generated.
+        
+--- FAIL: TestGraphLazyRegions (5.30s)
+    graph_regions_test.go:371: adamic: graph region: live 4 bytes 312 reachable 4 bytes 312 unreachable 0 bytes 0 metadata 192
+        adamic: graph region: live 1 bytes 78 reachable 1 bytes 78 unreachable 0 bytes 0 metadata 16
+        adamic: graph counts: regions 2 merges 3
+        adamic: counts: allocations 5 frees 5 retains 1 releases 6 peak 4 regions 0
+        
+--- FAIL: TestGraphRegionsRuntime (1.01s)
+    graph_regions_test.go:119: unreleased anchor counted=false: exit 1
+        
+        =================================================================
+        ==45135==ERROR: LeakSanitizer: detected memory leaks
+        
+        Indirect leak of 264 byte(s) in 3 object(s) allocated from:
+            #0 0x563df67bf324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x563df681bfc1 in allocate_storage /home/agent/.cache/adamic/runtime/.build-2546522615/heap.c:198:10
+            #2 0x563df681bfc1 in adamic_heap_graph_storage /home/agent/.cache/adamic/runtime/.build-2546522615/heap.c:228:25
+        
+        Indirect leak of 79 byte(s) in 1 object(s) allocated from:
+            #0 0x563df67bf324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x563df681be9f in allocate_storage /home/agent/.cache/adamic/runtime/.build-2546522615/heap.c:198:10
+            #2 0x563df681be9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-2546522615/heap.c:212:9
+        
+        Indirect leak of 64 byte(s) in 1 object(s) allocated from:
+            #0 0x563df67bf4f9 in calloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:74:3
+            #1 0x563df6819a3e in new_region /home/agent/.cache/adamic/runtime/.build-2546522615/graph_regions.c:68:25
+            #2 0x563df68029d0 in main /tmp/adamic-gate/adamic-build-3595585121/main.c:54:48
+        
+        SUMMARY: AddressSanitizer: 407 byte(s) leaked in 5 allocation(s).
+    graph_regions_test.go:97: adamic: graph region: live 3 bytes 234 reachable 2 bytes 156 unreachable 1 bytes 78 metadata 112
+        adamic: graph counts: regions 1 merges 2
+        adamic: counts: allocations 5 frees 5 retains 0 releases 4 peak 5 regions 0
+        made at runtime
+        
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	462.555s
+ok  	github.com/system-inc/adamic/internal/javascript	2.307s
+FAIL

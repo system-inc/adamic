@@ -41,7 +41,7 @@ func (e *emitter) viewRecursiveIntersection(property ir.Property, object string)
 				literalName = fmt.Sprintf("%s_%d_%d_literals", name, index, len(parts))
 				e.declarations = append(e.declarations, "static const adamic_intersection_literal "+literalName+"[] = {"+strings.Join(allowed, ",")+"};")
 			}
-			parts = append(parts, fmt.Sprintf("{%s,%s,%d,%t,%d,%s,%d}", cString(field.Name), cString(child.Name), child.Of, field.Optional || child.Undefined, nested, literalName, len(allowed)))
+			parts = append(parts, fmt.Sprintf("{%s,%s,%d,%t,%t,%d,%s,%d}", cString(field.Name), cString(child.Name), child.Of, field.Optional, child.Undefined, nested, literalName, len(allowed)))
 		}
 		if len(parts) == 0 {
 			fields = append(fields, "{NULL,0,NULL,NULL,0,NULL,0}")
@@ -117,7 +117,7 @@ func (e *emitter) viewBoundedIntersection(property ir.Property, object string) {
 				nested = indices[next]
 			}
 			allowed := literals(fmt.Sprintf("%s_%d_%d_literals", name, index, len(parts)), child.Allowed)
-			parts = append(parts, fmt.Sprintf("{%s,%s,%d,%t,%d,%s,%d}", cString(field.Name), cString(child.Name), child.Of, field.Optional || child.Undefined, nested, allowed, len(child.Allowed)))
+			parts = append(parts, fmt.Sprintf("{%s,%s,%d,%t,%t,%d,%s,%d}", cString(field.Name), cString(child.Name), child.Of, field.Optional, child.Undefined, nested, allowed, len(child.Allowed)))
 		}
 		if len(parts) == 0 {
 			entries = append(entries, "{NULL,0,NULL,NULL,0,NULL,0}")
@@ -145,7 +145,7 @@ func (e *emitter) viewIntersectionNullishRead(property ir.Property, value string
 		}
 		c = e.program.ViewContracts[id-1]
 	}
-	if !c.Intersection && c.IntersectionTag == "" {
+	if !c.Intersection {
 		return
 	}
 	property.ViewContract = id

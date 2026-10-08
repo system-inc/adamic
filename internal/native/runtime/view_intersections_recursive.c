@@ -34,7 +34,7 @@ static void require_object(const adamic_object *object, const adamic_intersectio
   if (next == NULL) { static const char message[] = "out of memory"; adamic_panic(message, sizeof message - 1); }
   (void)snprintf(next, capacity, "%s.%s", path, field->name);
   adamic_slot_cache cache = {0};
-  adamic_value value = adamic_object_optional_view(object, field->name, &cache, field->type, field->expected, next, field->optional, field->optional);
+  adamic_value value = adamic_object_optional_view_undefined(object, field->name, &cache, field->type, field->expected, next, field->optional, false, field->undefined_member);
   unsigned char type = field->type;
   bool present = true;
   if (type == 7) { adamic_maybe_number number = adamic_maybe_number_unpack(value.number); present = number.present; value.number = number.number; type = 1; }
@@ -96,7 +96,7 @@ static void require_bounded(const adamic_object *object, const adamic_intersecti
   const adamic_intersection_field *field = &contract->fields[i];
   char *next = bounded_path(path, field->name);
   adamic_slot_cache cache = {0};
-  adamic_value value = adamic_object_optional_view(object, field->name, &cache, field->type, field->expected, next, field->optional, field->optional);
+  adamic_value value = adamic_object_optional_view_undefined(object, field->name, &cache, field->type, field->expected, next, field->optional, false, field->undefined_member);
   unsigned char type = field->type;
   bool present = true;
   if (type == 7) { adamic_maybe_number number = adamic_maybe_number_unpack(value.number); present = number.present; value.number = number.number; type = 1; }
