@@ -1,0 +1,3 @@
+import { Parser } from '/workspace/scratch/compiler-agree-shards/stage1/typescript/parser/parser.ts';
+const parser = new Parser('f(x||(() =>{this})', 'fix-reparse.ts');
+console.log(`root ${parser.file()}`);

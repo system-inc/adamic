@@ -1,0 +1,20 @@
+=== RUN   TestFixReparseProbe
+    lint_test.go:927: Go oracle:
+        case 0
+        /tmp/adamic-gate/TestFixReparseProbe1365973679/002/fix-reparse.ts:1:6
+          prefer-arrow-callback  An arrow function inherits `this` from where it is written instead of from how it is called, which is what a callback almost always wants. Writing it as a function expression leaves the binding up to the caller.
+        
+        range 5 21 preferArrowCallback fix			21 32
+        fix-edit	5 13	
+        fix-edit	15 15	 =>
+        fix-edit	5 5	(
+        fix-edit	32 32	)
+        rejected prefer-arrow-callback 32 32 prefer-arrow-callback overlaps another fix
+        rejected prefer-arrow-callback 5 5  the rewritten file does not parse (TS1005: ')' expected.)
+        rejected prefer-arrow-callback 5 13  the rewritten file does not parse (TS1005: ')' expected.)
+        rejected prefer-arrow-callback 15 15  the rewritten file does not parse (TS1005: ')' expected.)
+        rejected prefer-arrow-callback 21 32  the rewritten file does not parse (TS1005: ')' expected.)
+        fixed	f(x||function(){this}.bind(this))
+--- PASS: TestFixReparseProbe (29.65s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	29.728s
