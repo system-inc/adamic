@@ -15,6 +15,7 @@ import (
 	"testing"
 	"time"
 
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -23,6 +24,9 @@ import (
 )
 
 const repository = "../../.."
+
+// Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
+const childStall = 4 * time.Minute
 
 type run struct {
 	stdout, stderr []byte
@@ -89,10 +93,10 @@ func askedCases(t *testing.T) (string, string) {
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	cmd := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
+	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
 	cmd.Dir = filepath.Join(repo, "cohere")
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := cmd.CombinedOutput()
+	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {
 		t.Fatalf("Go oracle: %v\n%s", err, output)
 	}
@@ -246,18 +250,17 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded is a command that can't outlive its test: it has a deadline, it runs in a process group of
-// its own, and when the deadline passes or the test ends, the whole group is killed.
+// bounded configures a child command; Run and CombinedOutput below guard its output progress.
+// Silent builds and buffered children use childguard's 30-minute FirstOutput window;
+// after output starts, childStall allows over 3x the measured loaded gaps.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Minute)
-	t.Cleanup(cancel)
-	command := exec.CommandContext(ctx, name, arguments...)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-	}
-	command.WaitDelay = 5 * time.Second
+	command := exec.Command(name, arguments...)
+	t.Cleanup(func() {
+		if command.Process != nil && command.ProcessState == nil {
+			_ = syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		}
+	})
 	return command
 }
 
@@ -270,7 +273,7 @@ func execute(t *testing.T, environment []string, name string, arguments ...strin
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := childguard.Run(command, childguard.Options{Stall: childStall})
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)
@@ -365,10 +368,10 @@ func TestCompositionMatchesGo(t *testing.T) {
 	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicCompositionCases$", "./internal/format/css")
+	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicCompositionCases$", "./internal/format/css")
 	command.Dir = filepath.Join(repo, "cohere")
 	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := command.CombinedOutput()
+	output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall})
 	if err != nil {
 		t.Fatalf("Go composition oracle: %v\n%s", err, output)
 	}
