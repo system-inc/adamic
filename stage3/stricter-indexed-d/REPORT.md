@@ -1,6 +1,6 @@
 Built witnesses for all 27 assigned rows: 26 proven, including all 26 supported hole variants; D119 nested records blocked.
-Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 0b9a22d6.
-Commands: grouped Node-held witnesses, merged nullable controls and record guards pass; combined regression results follow below.
+Commits: sentinel eff7e8e9, nullable guards 27b06da3, D151 927e13e9; dependency merges 09180ec8 and f7c17f3b; witness groups ac206b80 through 1fb6e6a4; cast integration correction and regression evidence in this commit.
+Commands: complete witness suite, compiler packages, both dependency suites, 30 uncached Node oracle fixtures, vet and census pass.
 Mutants: every supported absent and hole guard erased independently and caught; record outer guard and null-sentinel-to-NULL mutants caught.
 Not covered: D119 needs nested record payload support; full repository gate and whole TypeScript build not run.
 
@@ -535,3 +535,46 @@ mutant is claimed for D119.
 The private string sentinel remains declared once in
 internal/native/runtime/nullable.c for runtime review; both dependency merges
 preserve its undefined-only indexed guards and separate null observations.
+
+## Combined merge regression validation
+
+Initial dependency run exposed a diagnostic-order regression:
+TestTypedArrayRepresentationBoundaries/cast-view expected the typed-array
+storage refusal, but recordUse caught that non-record cast first. The correction
+limits recordUse's cast refusal to types with a string record index signature.
+The existing cast path still refuses incompatible typed-array storage views;
+record cast/view boundaries retain their record refusal. This does not admit
+new representations or runtime behavior. The failed run is retained in
+merged-dependencies.log, and the corrected full suites pass in
+merged-dependencies-fixed.log.
+
+Commands (all test output redirected to evidence logs):
+
+```sh
+source /workspace/adamic-tools/env.sh
+go test ./internal/lower ./internal/ir ./internal/javascript -count=1 -timeout 10m
+go test ./internal/native -count=1 -timeout 10m
+go test ./stage3/stricter-indexed-d -count=1 -timeout 10m -v
+go test ./internal/lower ./stage3/stricter-options ./stage3/stricter-records -count=1 -timeout 10m
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|string_index|narrowed_reads|narrowed_numbers|unions|typeof.*|regexp.*)\.a$' -count=1 -timeout 8m -v
+go vet ./internal/lower ./internal/ir ./internal/native ./internal/javascript ./stage3/stricter-indexed-d ./stage3/stricter-options ./stage3/stricter-records
+python3 stage3/stricter-indexed-d/census.py
+git diff --check
+```
+
+Compiler package results: lower 25.882s, IR 21.118s, JavaScript no standalone
+tests, native 141.275s. After the cast correction: lower 30.773s,
+stricter-options 39.435s and stricter-records 39.879s, all pass. The complete
+unit before that correction passes in 75.668s, with 55 independently erased
+guard mutants caught (26 absent, 26 hole, three outer-record absent), plus two
+sentinel-to-NULL runtime mutants caught. Generic nullable controls additionally
+hold erased guards in release and sanitized builds. The uncached 30-fixture
+Node oracle passes in 12.089s (native 0 cache hits/85 misses, Node 0 hits/60
+misses). Vet and diff check have empty logs; census reports 27 rows, zero
+missing/extra, exact source metadata. Setup was reused from the prior successful
+run, with its recorded timing unchanged; nproc is still 5. The complete
+repository gate and whole TypeScript native build remain unrun.
+
+Final complete witness rerun after the cast correction passes in 80.072s,
+with all 27 row assessments and both nullable runtime mutants rerun; raw output
+is merged-final-witnesses.log. No supported row or hole variant remains.
