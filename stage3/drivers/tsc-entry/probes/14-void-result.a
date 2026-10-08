@@ -1,3 +1,4 @@
+// a-check: type error TS2322
 interface Type { readonly name: string }
 function obtain(): Type | void { return; }
 const type: Type | undefined = obtain();

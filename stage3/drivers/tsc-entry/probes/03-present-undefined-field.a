@@ -1,3 +1,4 @@
+// a-check: type error TS2375
 interface EmitSignature { readonly hash: string }
 interface ReusableBuilderProgramState { readonly outSignature?: EmitSignature }
 const outSignature: EmitSignature | undefined = undefined;

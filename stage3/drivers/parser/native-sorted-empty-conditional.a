@@ -1,3 +1,4 @@
+// a-check: refused a cast the runtime can't check
 // From TypeScript 6.0.3, src/compiler/core.ts:1038-1040
 interface SortedReadonlyArray<T> extends ReadonlyArray<T> { " __sortedArrayBrand": undefined; }
 const emptyArray: never[] = [] as never[];

@@ -1,3 +1,4 @@
+// a-check: refused a namespace
 // Reduced from TypeScript 6.0.3, Debug.shouldAssertFunction.
 type AnyFunction = (...args: never[]) => void;
 namespace Debug { export function shouldLog(level: number): boolean { return level > 0; } }

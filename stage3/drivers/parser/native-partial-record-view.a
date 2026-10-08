@@ -1,3 +1,4 @@
+// a-check: refused an index signature
 // Reduced from TypeScript 6.0.3, Debug.setAssertionLevel/getOwnKeys.
 interface MapLike<T> { [index: string]: T; }
 function getOwnKeys<T>(map: MapLike<T>): string[] { return Object.keys(map); }

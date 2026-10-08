@@ -1,3 +1,4 @@
+// a-check: refused a value of type Node seen as Mutable<Node>, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
 declare const console: { readonly log: (value: string) => void };
 interface Node {
     readonly pos: number;

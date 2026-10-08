@@ -1,3 +1,4 @@
+// a-check: type error TS18048
 function show(m: { readonly name: string } | undefined): void {
     console.log(m.name);
 }

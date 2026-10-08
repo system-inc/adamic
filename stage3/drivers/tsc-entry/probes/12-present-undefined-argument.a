@@ -1,3 +1,4 @@
+// a-check: type error TS2379
 interface Modifier { readonly kind: number }
 interface SignatureToSignatureDeclarationOptions { readonly modifiers?: readonly Modifier[] }
 function accept(options: SignatureToSignatureDeclarationOptions): void { console.log("ok"); }

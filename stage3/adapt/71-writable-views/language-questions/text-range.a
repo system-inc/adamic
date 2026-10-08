@@ -1,3 +1,4 @@
+// a-check: refused a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace
 declare const console: { readonly log: (value: string) => void };
 interface ReadonlyTextRange {
     readonly pos: number;

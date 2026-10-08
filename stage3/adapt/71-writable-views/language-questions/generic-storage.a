@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 declare const console: { log(value: string): void };
 interface SourceFile { readonly name: "input"; }
 interface Diagnostic { file: SourceFile | undefined; }

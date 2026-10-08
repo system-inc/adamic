@@ -1,3 +1,4 @@
+// a-check: refused arguments
 // Reduced from compiler's arguments_length_unrelated_type.a.
 // A function value must forward the actual count, not its first numeric argument.
 function reader(): number { return arguments.length; }

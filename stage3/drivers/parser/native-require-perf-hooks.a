@@ -1,3 +1,4 @@
+// a-check: type error TS2591
 // Reduced from TypeScript 6.0.3, performanceCore.ts:37.
 function loadPerformance(): void { const hooks = require("perf_hooks") as Partial<typeof import("perf_hooks")>; }
 console.log("performance declaration loaded");

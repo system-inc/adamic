@@ -1,3 +1,4 @@
+// a-check: refused a namespace
 // Minimal namespace reachability performance witness.
 // Dead branches share a call graph; Node executes no inner calls.
 function f0(): void {}

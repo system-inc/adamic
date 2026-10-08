@@ -1,3 +1,4 @@
+// a-check: refused the non-null assertion !
 // From TypeScript 6.0.3, src/compiler/core.ts, sameMap overloads and implementation.
 // Proposal only: the honest union return reveals a blocked builder caller.
 export function sameMap<T, U = T>(array: T[], f: (x: T, i: number) => U): (T | U)[];

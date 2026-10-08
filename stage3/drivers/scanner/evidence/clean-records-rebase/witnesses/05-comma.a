@@ -1,3 +1,4 @@
+// a-check: refused the comma operator
 let x = 0;
 const value = (x++, x);
 console.log(`${value}`);

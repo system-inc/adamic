@@ -1,3 +1,4 @@
+// a-check: refused arguments
 // From TypeScript 6.0.3, src/compiler/core.ts:1239
 // reduceLeft distinguishes an omitted initial argument from explicit undefined.
 function hasInitial(initial?: number): boolean {

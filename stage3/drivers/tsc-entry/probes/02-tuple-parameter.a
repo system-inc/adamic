@@ -1,3 +1,4 @@
+// a-check: type error TS2488
 type Path = string & { readonly pathBrand: unknown };
 interface FileInfo { readonly version: string }
 function examine([path, info]: [Path, FileInfo] | undefined): void {

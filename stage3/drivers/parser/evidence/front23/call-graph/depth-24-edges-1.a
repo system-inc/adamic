@@ -1,3 +1,4 @@
+// a-check: refused a namespace
 function f0(): void {}
 function f1(): void { if (false) { f0(); } }
 function f2(): void { if (false) { f1(); } }

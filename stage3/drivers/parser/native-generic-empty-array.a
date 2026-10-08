@@ -1,3 +1,4 @@
+// a-check: refused a value of type never seen as U, a type parameter whose constraint {} can be written, so it can write what never can't hold
 // From TypeScript 6.0.3, src/compiler/core.ts:414
 // flatMap's empty fallback, reduced to the never-to-generic result view.
 const emptyArray: never[] = [] as never[];
