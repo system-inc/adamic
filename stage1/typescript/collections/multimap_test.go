@@ -32,7 +32,7 @@ func TestSlice2BodiesMatchPinnedTSC(t *testing.T) {
 		}
 		return normalize(text[first : first+last])
 	}
-	original := read("../../../stage3/adapt/multimap-composition/original.a")
+	original := read("../../../stage3/scout/19-slice2/multimap-composition/original.a")
 	if normalize(original) != span(upstream, "export interface MultiMap<", "/** @internal */\r\nexport function createQueue") {
 		t.Fatal("original MultiMap adaptation input drifted")
 	}

@@ -15,7 +15,7 @@ function adapt(tree) {
     if (!core) throw new Error("missing core.ts");
     const declaration = core.statements.find(node => ts.isInterfaceDeclaration(node) && node.name.text === "MultiMap");
     if (!declaration) throw new Error("missing MultiMap");
-    const port = fs.readFileSync(path.join(__dirname, "../../../stage1/typescript/collections/multimap.a"), "utf8");
+    const port = fs.readFileSync(path.join(__dirname, "../../../../stage1/typescript/collections/multimap.a"), "utf8");
     const replacement = port.slice(port.indexOf("export interface MultiMap"));
     const replacementTree = ts.createSourceFile("multimap.a", replacement, ts.ScriptTarget.Latest, true);
     const normalize = text => text.replace(/\s+/g, " ").trim();

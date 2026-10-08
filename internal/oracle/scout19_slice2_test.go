@@ -62,7 +62,7 @@ func TestScout19Slice2ExpectedRefusals(t *testing.T) {
 
 func TestScout19Slice2ExpandoStaysRefused(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "stage3/adapt/multimap-composition/original.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "stage3/scout/19-slice2/multimap-composition/original.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
