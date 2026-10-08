@@ -3,7 +3,7 @@ package refusalprobe
 
 // Entry names a construct and its neighbor. Accepted pairs require both inputs to compile;
 // other executable pairs require Bad to have Diagnostic and Good to compile.
-// Boundary records constructs whose refusal cannot be reached through load.Load, or which opened
+// Boundary records tested NotYet facilities, constructs whose refusal cannot be reached through load.Load, or which opened
 // after 0.1, and ruled refusals still awaiting compiler work. They remain visible rather than becoming successes.
 type Entry struct {
 	Name, Diagnostic, Bad, Good, Placement, Boundary string
@@ -45,7 +45,7 @@ func Catalog() []Entry {
 		{Name: "enum-nested", Diagnostic: "an enum inside a function or block; declare it at module scope", Bad: "function run(): void { enum E { A } }", Good: "enum E { A } function run(): void { console.log(`${E.A}`); } run();", Placement: "module", Boundary: "NotYet: enums inside functions or blocks need module scope on main"},
 		{Name: "enum-merged", Diagnostic: "merged enum declarations; put the members in one declaration", Bad: "enum E { A } enum E { B = 1 }", Good: "enum E { A, B = 1 } console.log(`${E.B}`);", Placement: "module", Boundary: "NotYet: merge members into one runtime declaration"},
 		{Name: "enum-ambient", Diagnostic: "an ambient enum without a runtime definition", Bad: "declare enum E { A = 0 }", Good: "enum E { A = 0 } console.log(`${E.A}`);", Placement: "module", Boundary: "NotYet: ambient enums have no runtime definition"},
-		{Name: "namespace", Diagnostic: "a namespace", Bad: "namespace Types { export type N = number; }", Good: "type N = number;", Placement: "module"},
+		{Name: "namespace", Diagnostic: "this in a namespace function; a qualified call and a detached call have different receivers", Bad: "namespace N { export function read(this: {readonly x: number}): number { return this.x; } }", Good: "namespace N { export function read(state: {readonly x: number}): number { return state.x; } }", Placement: "module-first"},
 		{Name: "void", Diagnostic: "the void operator", Bad: "void 1;", Good: "const value = 1;"},
 		{Name: "index-signature", Diagnostic: "an index signature", Bad: "interface Indexed { [key: string]: number; }", Good: "interface Indexed { readonly n: number; }", Placement: "module"},
 		{Name: "export-default", Diagnostic: "export default", Bad: "export default 1;", Good: "export const value = 1;", Placement: "module"},
@@ -79,6 +79,9 @@ func Catalog() []Entry {
 		// provePredicate refuses a type predicate whose body does not prove it. An arrow predicate is an
 		// expression, so the writer can place it in every surrounding; the neighbor is the proven predicate.
 		{Name: "unproven-predicate", Diagnostic: "a type predicate whose return is not proven (true return narrows to string | undefined, not string)", Bad: "const isText = (x: string | undefined): x is string => true; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }", Good: "const isText = (x: string | undefined): x is string => x !== undefined; const word: string | undefined = 'a'; if (isText(word)) { console.log(word); }"},
+		{Name: "predicate-argument", Diagnostic: "an unproven predicate argument for parameter callback", Bad: "function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => true);", Good: "function apply(callback: (value: number) => value is number): boolean { return callback(1); } apply((value: number): value is number => typeof value === 'number');", Placement: "module"},
+		{Name: "node-library", Diagnostic: "node:os.userInfo", Bad: "import {userInfo} from 'node:os'; userInfo();", Good: "console.log('user');", Placement: "module", Boundary: "NotYet: node:os.userInfo has no runtime implementation"},
+		{Name: "typed-array-unsupported", Diagnostic: "typed array element type Int8Array", Bad: "const value = new Int8Array(4);", Good: "const value = new Uint8Array(4);", Boundary: "NotYet: Int8Array storage is not implemented"},
 		{Name: "method-override", Diagnostic: "adamic/contravariant-override", Boundary: "checkOverrides also guards inheritance member kinds, accessor descriptors and ABI representation; not generated in this 0.1 corpus"},
 		{Name: "parameter-properties", Diagnostic: "a parameter property", Bad: "class Box { constructor(public value: number) {} }", Good: "class Box { value: number; constructor(value: number) { this.value = value; } }", Placement: "module"},
 		{Name: "overloads", Boundary: "implementation signatures are not lowered as overloads; needs a separate diagnostic design"},

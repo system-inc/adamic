@@ -74,6 +74,12 @@ func generate(seed uint64, index int, entry Entry) Program {
 		context = 0
 		names[0] = "module"
 	}
+	// Runtime namespaces must initialize before the generated padding call.
+	if entry.Placement == "module-first" {
+		context = 0
+		names[0] = "module"
+		wrap = func(source string) string { return source + "\n" + prefix }
+	}
 	if entry.Placement == "prefix" {
 		wrap = func(source string) string {
 			return source + "\n" + prefix + wrappers[context][0] + "console.log('neighbor');\n" + wrappers[context][1]
@@ -125,6 +131,10 @@ func ValidateCatalog(root string) error {
 	}
 	// Error-returning helpers called by the pass must have an explicit catalog owner too.
 	helpers := map[string][]string{
+		"nodeLibraryRefusal":     {"node-library"},
+		"typedArrayUnsupported":  {"typed-array-unsupported"},
+		"predicateArguments":     {"predicate-argument"},
+		"namespaceRefusal":       {"namespace"},
 		"checkOverrides":         {"method-override"},
 		"refuseStringWidening":   {"mutable-variance"},
 		"classViewRefusal":       {"nominal-class"},

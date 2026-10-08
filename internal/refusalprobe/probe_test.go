@@ -147,9 +147,9 @@ func TestGeneratedRefusals(t *testing.T) {
 	}
 }
 
-func TestEnumNotYetBoundaries(t *testing.T) {
+func TestNotYetBoundaries(t *testing.T) {
 	for _, entry := range Catalog() {
-		if !strings.HasPrefix(entry.Name, "enum-") || entry.Boundary == "" {
+		if !strings.HasPrefix(entry.Boundary, "NotYet:") {
 			continue
 		}
 		t.Run(entry.Name, func(t *testing.T) {
@@ -211,5 +211,25 @@ func TestAcceptedCatalogPairs(t *testing.T) {
 	}
 	if !seen["record"] {
 		t.Fatal("missing accepted Record pair")
+	}
+}
+
+// Isolate these helper contracts from unrelated catalog drift on merged main.
+func TestStep04HelperCoverage(t *testing.T) {
+	for _, helper := range []string{"nodeLibraryRefusal", "typedArrayUnsupported", "predicateArguments", "namespaceRefusal"} {
+		t.Run(helper, func(t *testing.T) {
+			directory := t.TempDir()
+			path := filepath.Join(directory, "internal/lower")
+			if err := os.MkdirAll(path, 0755); err != nil {
+				t.Fatal(err)
+			}
+			source := "package lower\nfunc probe() { if err := l." + helper + "(node); err != nil { return } }\n"
+			if err := os.WriteFile(filepath.Join(path, "refusals.go"), []byte(source), 0644); err != nil {
+				t.Fatal(err)
+			}
+			if err := ValidateCatalog(directory); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 }

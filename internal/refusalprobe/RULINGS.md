@@ -229,3 +229,31 @@ const padding = 891;
 console.log(`${padding}`);
 class Box { n = 1; } const box = new Box();
 ```
+
+## Step 04 catalog observations
+
+Observed on merged `devtools/port-refusalprobe`
+`69385a98a6685431cf10852e499ff876578c0ccf`:
+
+- `nodeLibraryRefusal`: `import {userInfo} from 'node:os'; userInfo();`
+  returns NotYet `node:os.userInfo`. Its neighbor `console.log('user');` compiles.
+- `typedArrayUnsupported`: `const value = new Int8Array(4);` returns NotYet
+  `typed array element type Int8Array`. Replacing Int8Array with Uint8Array compiles.
+- `predicateArguments`: the `predicate-argument` catalog program returns Refused
+  `an unproven predicate argument for parameter callback`. Its proven typeof neighbor compiles.
+- `namespaceRefusal`: the `namespace` catalog program returns Refused
+  `this in a namespace function; a qualified call and a detached call have different receivers`.
+  Its explicit-state neighbor compiles. Type-only namespaces are now accepted.
+
+These are reachable contracts, not new language rulings. The two NotYet entries
+stay outside the permanent-refusal generator; tests demand their exact diagnostic
+and compile their neighbors. No skips are added.
+
+The complete package suite still fails independently of these four contracts:
+the audit also lacks `argumentsRefusal`, `nodeBufferUnsupportedUse`, and
+`libraryMethod`. Existing negative probes `definite-local`, `definite-field`,
+`void`, `in`, `comma`, `and-assign`, `or-assign`, `arguments`, `truthiness`, and
+`parameter-properties` now compile. The strict-diagnostic regression also uses
+the accepted definite-local program. Are these accepted constructs intended
+support or missing refusals? This follow-up records the observation without
+changing their language contracts or weakening the failing checks.
