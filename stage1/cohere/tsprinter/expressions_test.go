@@ -16,6 +16,7 @@ func expressionCorpus(t *testing.T) (string, string, string) {
 	root, _ := filepath.Abs(repository)
 	source := os.Getenv("ADAMIC_TYPESCRIPT_SOURCE")
 	if source == "" {
+		// census: required-input ADAMIC_TYPESCRIPT_SOURCE: setup --gate-inputs supplies pristine TypeScript v6.0.3 source at 050880ce59e30b356b686bd3144efe24f875ebc8.
 		t.Skip("set ADAMIC_TYPESCRIPT_SOURCE to a TypeScript 6.0.3 source checkout at 050880ce; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	command := bounded(t, "git", "-C", source, "rev-parse", "HEAD")
@@ -99,6 +100,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
+		// census: required-input ADAMIC_TS_PRETTIER: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with prettier@3.9.6.
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, _ := filepath.Abs("testdata/expressions.mjs")

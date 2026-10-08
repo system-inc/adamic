@@ -55,6 +55,7 @@ func TestStatementUpstreamDifferences(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_TS_PRETTIER")
 	if library == "" {
+		// census: required-input ADAMIC_TS_PRETTIER: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with prettier@3.9.6.
 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, _ = filepath.Abs("testdata/statementDifferences.mjs")

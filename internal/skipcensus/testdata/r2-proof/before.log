@@ -1,0 +1,65 @@
+--- FAIL: TestCensus (0.53s)
+    census_test.go:17: stage1/cohere/estree/corpus_test.go:18 (TestRepositoryAgreement): missing census annotation
+        stage1/cohere/estree/corpus_test.go:84 (TestCorpusNativeRefusals): missing census annotation
+        stage1/cohere/estree/estree_test.go:255 (checkOriginalLibraries): missing census annotation
+        stage1/cohere/estree/jsx_test.go:56 (TestJSXOriginalLibraries): missing census annotation
+        stage1/cohere/estree/recovery_test.go:65 (TestRecoveryLibraryGaps): missing census annotation
+        stage1/cohere/estree/scalars_test.go:47 (TestPinnedNumericGaps): missing census annotation
+        stage1/cohere/estree/syntax_test.go:100 (TestTypeMemberLibraryGap): missing census annotation
+        stage1/cohere/estree/syntax_test.go:92 (TestSyntaxLibraries): missing census annotation
+        stage1/cohere/estree/throughput_test.go:16 (TestThroughput): missing census annotation
+        stage1/cohere/estree/utf8_test.go:41 (TestCookedSurrogateLibraryGap): missing census annotation
+        stage1/cohere/graphql/printer/gaps_test.go:39 (TestPrinterWhitespaceGap): missing census annotation
+        stage1/cohere/graphql/printer/performance_test.go:17 (TestPrinterThroughput): missing census annotation
+        stage1/cohere/graphql/printer/printer_test.go:84 (TestPrinterUpstreamPreflight): missing census annotation
+        stage1/cohere/graphql/printer/testdata/cohere_side_test.go:19 (TestAdamicPrinter): missing census annotation
+        stage1/cohere/tsprinter/doc_test.go:51 (TestDocumentsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/expressions_test.go:102 (TestExpressionsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/expressions_test.go:19 (expressionCorpus): missing census annotation
+        stage1/cohere/tsprinter/statements_test.go:120 (TestStatementsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/statements_test.go:19 (statementCorpus): missing census annotation
+        stage1/cohere/tsprinter/testdata/expressions_side_test.go:685 (TestAdamicExpressionBenchmark): missing census annotation
+        stage1/cohere/tsprinter/upstream_test.go:58 (TestStatementUpstreamDifferences): missing census annotation
+        stage1/cohere/yaml/compose_test.go:137 (TestComposeMatchGo): missing census annotation
+        stage1/cohere/yaml/cst_test.go:82 (TestCSTMatchesGo): missing census annotation
+        stage1/cohere/yaml/format_test.go:141 (TestFormatterMatchesGo): missing census annotation
+        stage1/cohere/yaml/format_test.go:199 (TestBundledParserDifference): missing census annotation
+        stage1/cohere/yaml/lexer_test.go:225 (TestLexerMatchesGo): missing census annotation
+        stage1/cohere/yaml/props_test.go:109 (TestPropsMatchGo): missing census annotation
+        stage1/cohere/yaml/scalar_test.go:136 (TestScalarsMatchGo): missing census annotation
+        stage1/cohere/yaml/schema_test.go:106 (TestSchemaMatchesGo): missing census annotation
+        stage1/cohere/yaml/unist_test.go:84 (TestUnistMatchesGo): missing census annotation
+--- FAIL: TestHistoricalPlainSkips (0.45s)
+    census_test.go:75: stage1/cohere/estree/corpus_test.go:18 (TestRepositoryAgreement): missing census annotation
+        stage1/cohere/estree/corpus_test.go:84 (TestCorpusNativeRefusals): missing census annotation
+        stage1/cohere/estree/estree_test.go:255 (checkOriginalLibraries): missing census annotation
+        stage1/cohere/estree/jsx_test.go:56 (TestJSXOriginalLibraries): missing census annotation
+        stage1/cohere/estree/recovery_test.go:65 (TestRecoveryLibraryGaps): missing census annotation
+        stage1/cohere/estree/scalars_test.go:47 (TestPinnedNumericGaps): missing census annotation
+        stage1/cohere/estree/syntax_test.go:100 (TestTypeMemberLibraryGap): missing census annotation
+        stage1/cohere/estree/syntax_test.go:92 (TestSyntaxLibraries): missing census annotation
+        stage1/cohere/estree/throughput_test.go:16 (TestThroughput): missing census annotation
+        stage1/cohere/estree/utf8_test.go:41 (TestCookedSurrogateLibraryGap): missing census annotation
+        stage1/cohere/graphql/printer/gaps_test.go:39 (TestPrinterWhitespaceGap): missing census annotation
+        stage1/cohere/graphql/printer/performance_test.go:17 (TestPrinterThroughput): missing census annotation
+        stage1/cohere/graphql/printer/printer_test.go:84 (TestPrinterUpstreamPreflight): missing census annotation
+        stage1/cohere/graphql/printer/testdata/cohere_side_test.go:19 (TestAdamicPrinter): missing census annotation
+        stage1/cohere/tsprinter/doc_test.go:51 (TestDocumentsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/expressions_test.go:102 (TestExpressionsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/expressions_test.go:19 (expressionCorpus): missing census annotation
+        stage1/cohere/tsprinter/statements_test.go:120 (TestStatementsAgainstGoAndPrettier): missing census annotation
+        stage1/cohere/tsprinter/statements_test.go:19 (statementCorpus): missing census annotation
+        stage1/cohere/tsprinter/testdata/expressions_side_test.go:685 (TestAdamicExpressionBenchmark): missing census annotation
+        stage1/cohere/tsprinter/upstream_test.go:58 (TestStatementUpstreamDifferences): missing census annotation
+        stage1/cohere/yaml/compose_test.go:137 (TestComposeMatchGo): missing census annotation
+        stage1/cohere/yaml/cst_test.go:82 (TestCSTMatchesGo): missing census annotation
+        stage1/cohere/yaml/format_test.go:141 (TestFormatterMatchesGo): missing census annotation
+        stage1/cohere/yaml/format_test.go:199 (TestBundledParserDifference): missing census annotation
+        stage1/cohere/yaml/lexer_test.go:225 (TestLexerMatchesGo): missing census annotation
+        stage1/cohere/yaml/props_test.go:109 (TestPropsMatchGo): missing census annotation
+        stage1/cohere/yaml/scalar_test.go:136 (TestScalarsMatchGo): missing census annotation
+        stage1/cohere/yaml/schema_test.go:106 (TestSchemaMatchesGo): missing census annotation
+        stage1/cohere/yaml/unist_test.go:84 (TestUnistMatchesGo): missing census annotation
+FAIL
+FAIL	github.com/system-inc/adamic/internal/skipcensus	0.988s
+FAIL

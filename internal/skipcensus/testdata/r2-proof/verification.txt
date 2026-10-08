@@ -1,0 +1,8 @@
+Base verified with git ls-remote: 8e4a951904692e478d67f4558f4e800bc0eeea2b
+Setup: bash cloud/setup.sh --gate-inputs, exit 0; source /workspace/adamic-tools/env.sh; nproc 5; Node v24.19.0.
+Census: go test -count=1 ./internal/skipcensus, exit 0.
+Export: go run ./internal/skipcensus/cmd -table, exit 0; all 30 new sites verified against their annotations: 27 required-input, 3 measurement, 0 not-applicable, 0 opt-in-lane.
+Vet: go vet ./internal/skipcensus/..., exit 0.
+Compile: ADAMIC_GATE_UNCACHED=1 ADAMIC_GATE_COHERE=1 go test -count=1 -run NONE ./stage1/cohere/estree ./stage1/cohere/tsprinter ./stage1/cohere/yaml ./stage1/cohere/graphql/printer, exit 0.
+Mutant: removing TestRepositoryAgreement annotation made real TestCensus fail with corpus_test.go:18 and test name; original restored.
+Coverage: annotations and package compilation; full stage 1 oracle tests and whole gate not run.

@@ -15,6 +15,7 @@ import (
 func TestRepositoryAgreement(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
+		// census: required-input ADAMIC_ESTREE_CORPUS: stage1/cohere/estree/testdata/corpus.mjs supplies a frozen Go/Node audit directory with port-records.jsonl and referenced source and answer files; setup does not currently export this corpus.
 		t.Skip("set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory")
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "port-records.jsonl"))
@@ -81,6 +82,7 @@ func TestRepositoryAgreement(t *testing.T) {
 func TestCorpusNativeRefusals(t *testing.T) {
 	directory := os.Getenv("ADAMIC_ESTREE_CORPUS")
 	if directory == "" {
+		// census: required-input ADAMIC_ESTREE_CORPUS: stage1/cohere/estree/testdata/corpus.mjs supplies a frozen Go/Node audit directory with port-records.jsonl and referenced source and answer files; setup does not currently export this corpus.
 		t.Skip("completed frozen corpus required")
 	}
 	data, err := os.ReadFile(filepath.Join(directory, "port-records.jsonl"))

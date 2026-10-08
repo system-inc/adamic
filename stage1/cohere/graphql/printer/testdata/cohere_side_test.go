@@ -16,6 +16,7 @@ import (
 func TestAdamicPrinter(t *testing.T) {
 	path := os.Getenv("ADAMIC_PRINTER_REQUEST")
 	if path == "" {
+		// census: required-input ADAMIC_PRINTER_REQUEST: stage1/cohere/graphql/printer/printer_test.go printerCases writes the Sources/Cases/Answers/Mode/Coverage JSON request and exports its path to the pinned cohere Go overlay.
 		t.Skip("stage 1 overlay")
 	}
 	data, err := os.ReadFile(path)

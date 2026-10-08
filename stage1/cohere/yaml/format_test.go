@@ -138,6 +138,7 @@ func TestFormatterMatchesGo(t *testing.T) {
 	}
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
+		// census: required-input ADAMIC_YAML_LIBRARY: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0.
 		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	external := run(t, "", nil, "node", "testdata/format_library.mjs", library, "--cases", cases)
@@ -196,6 +197,7 @@ func unescapeCase(line string) string {
 func TestBundledParserDifference(t *testing.T) {
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
+		// census: required-input ADAMIC_YAML_LIBRARY: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with yaml@2.9.0, prettier@3.9.6 and yaml-unist-parser@3.2.0.
 		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	actual := run(t, "", nil, "node", "gaps/bundledParser.mjs", library)

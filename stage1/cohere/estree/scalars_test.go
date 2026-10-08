@@ -44,6 +44,7 @@ func TestScalarOriginalLibraries(t *testing.T) {
 func TestPinnedNumericGaps(t *testing.T) {
 	library := os.Getenv("ADAMIC_ESTREE_LIBRARY")
 	if library == "" {
+		// census: required-input ADAMIC_ESTREE_LIBRARY: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6.
 		t.Skip("set ADAMIC_ESTREE_LIBRARY to an npm install of @typescript-eslint/typescript-estree@8.65.0, typescript@6.0.3 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	list := manifest(t, []string{"1e999; 0x10000000000000000;"})

@@ -682,6 +682,7 @@ func supportedSyntax(node *ast.Node) bool {
 func TestAdamicExpressionBenchmark(t *testing.T) {
 	path := os.Getenv("ADAMIC_TS_BENCH_CASES")
 	if path == "" {
+		// census: measurement Opt-in throughput or benchmark driver; never gate correctness verification.
 		t.Skip("benchmark-only driver")
 	}
 	data, err := os.ReadFile(path)

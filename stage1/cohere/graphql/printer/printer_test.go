@@ -81,6 +81,7 @@ func printerCases(t *testing.T, mode string) (string, string) {
 func TestPrinterUpstreamPreflight(t *testing.T) {
 	directory := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if directory == "" {
+		// census: required-input ADAMIC_GRAPHQL_PRETTIER: setup --gate-inputs supplies the cloud/gate-inputs/css-printer lockfile install with prettier@3.9.6 and graphql@17.0.2.
 		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to an npm install of prettier@3.9.6 and graphql@17.0.2; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
 	}
 	script, err := filepath.Abs("testdata/prettier.mjs")

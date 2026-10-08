@@ -1,0 +1,150 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.108s)
+setup: submodules ready (0.154s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.409s)
+setup: node v24.19.0 skipped (validated version, checksum and installed bytes); step-duration=0.614s
+v24.19.0
+setup: node ready (0.734s)
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.007s
+setup: markdown dependencies ready (0.806s)
+setup: stage3 API dependencies skipped (validated API lock and installed bytes); step-duration=0.116s
+setup: stage3 API dependencies checked (1.005s)
+
+added 21 packages in 2s
+setup: gate input css-printer installed (npm ci, integrity verified); step-duration=2.669s
+
+added 5 packages in 551ms
+setup: gate input css installed (npm ci, integrity verified); step-duration=1.205s
+
+added 1 package in 1s
+setup: gate input graphql installed (npm ci, integrity verified); step-duration=1.825s
+
+added 1 package in 466ms
+setup: gate input media-query installed (npm ci, integrity verified); step-duration=1.047s
+npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+
+added 8 packages in 569ms
+setup: gate input selector installed (npm ci, integrity verified); step-duration=1.197s
+npm warn deprecated flatten@1.0.3: flatten is deprecated in favor of utility frameworks such as lodash.
+
+added 4 packages in 517ms
+setup: gate input values installed (npm ci, integrity verified); step-duration=0.992s
+
+added 1 package in 677ms
+setup: gate input json-prettier installed (npm ci, integrity verified); step-duration=1.469s
+setup: gate input shared Prettier paths shared prettier 3.9.6: CSS numbers, CSS strings and Markdown inline paths verified; step-duration=0.097s
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/adamic-tools/gate-inputs/cycle-ledger-wws6rgpz/checkout/.git/
+From https://github.com/microsoft/TypeScript
+ * branch            050880ce59e30b356b686bd3144efe24f875ebc8 -> FETCH_HEAD
+HEAD is now at 050880c Bump version to 6.0.3 and LKG
+Reading diagnostics from src/compiler/diagnosticMessages.json
+setup: gate input cycle ledger installed (pristine exact commit and both generated diagnostics verified); step-duration=4.831s
+setup: gate npm inputs ready (16.408s)
+setup: downloading module dependencies in /workspace/adamic
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tools/customlint/testdata
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript/tsc
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/ast
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/bundled
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/checker
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/compiler
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/core
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/format
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/incremental
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/locale
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/parser
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/scanner
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tsoptions
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/tspath
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/cachedvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/TypeScript-shim/vfs/osvfs
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/mutation_aliasing
+all modules verified
+setup: downloading module dependencies in /workspace/adamic/cohere/static_single_assignment
+all modules verified
+setup: module dependencies downloaded and verified (22 module directories); step-duration=16.765s
+setup: module dependencies ready (16.989s)
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/adamic-tools/gate-inputs/css-fixtures-pcmuzaer/checkout/.git/
+From https://github.com/system-inc/prettier
+ * branch            cb4b33fba24a8428d00e54be85fc886288a374ea -> FETCH_HEAD
+HEAD is now at cb4b33f The publish step needs --ignore-scripts, and the reason is worth stating
+setup: gate input CSS fixtures installed (exact commit, sparse checkout, Git integrity and counts verified: {'.css': 157, '.scss': 90, '.less': 43}); step-duration=2.433s
+hint: Using 'master' as the name for the initial branch. This default branch name
+hint: will change to "main" in Git 3.0. To configure the initial branch name
+hint: to use in all of your new repositories, which will suppress this warning,
+hint: call:
+hint:
+hint: 	git config --global init.defaultBranch <name>
+hint:
+hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+hint: 'development'. The just-created branch can be renamed via this command:
+hint:
+hint: 	git branch -m <name>
+hint:
+hint: Disable this message with "git config set advice.defaultBranchName false"
+Initialized empty Git repository in /workspace/adamic-tools/gate-inputs/typescript-psef3kev/checkout/.git/
+From https://github.com/microsoft/TypeScript
+ * branch                050880ce59e30b356b686bd3144efe24f875ebc8 -> FETCH_HEAD
+HEAD is now at 050880ce5 Bump version to 6.0.3 and LKG
+setup: gate input TypeScript source installed (depth-one exact commit, Git integrity and pristine status checked); step-duration=20.997s
+setup: gate input 100 MiB gitignore generated (deterministic 100 MiB, SHA256 verified); step-duration=0.403s
+setup: gate corpora ready (23.966s)
+setup: gate input checker archive built (Go content-addressed inputs, archive bytes stamped); step-duration=222.781s
+setup: go build ready (289.265s)
+setup: test binaries deferred (use --warm-tests) (289.459s)
+setup: build cache warm (289.463s)
+setup: workspace sums restored to the commit (289.562s)
+setup: build-flags commit=8e4a951904692e478d67f4558f4e800bc0eeea2b nproc=5 cpu.max=400000 100000 go=go version go1.27.1 linux/amd64 clang=clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261) node=v24.19.0 cached=yes warm-tests=false gate-inputs=true gate-archive=true load-before=0.00 0.00 0.00 1/290 35352 load-after=8.68 4.44 1.85 1/305 40873
+setup: done on 5 processors (cgroup cpu.max: 400000 100000), 17.6 GB (289.626s)
+setup: source /workspace/adamic-tools/env.sh
+setup: logs /tmp/adamic-gate/setup.6v48OT
+setup: node v24.19.0
