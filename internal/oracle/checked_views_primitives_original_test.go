@@ -1,6 +1,7 @@
 package oracle
 
 import (
+	"crypto/sha256"
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
@@ -87,14 +88,11 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 					assertPrimitiveFirstMemberMutant(t, program, "value", false, "undefined\n")
 				}
 				if variant == "wrong" {
-					index := len(program.Strings)
-					program.Strings = append(program.Strings, "unchecked")
-					replacement := ir.Box{Value: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: index}, ir.StringConstant{Index: index}}}}
-					if count := dropLane4NamedHelperView(program, "value", replacement); count != 1 {
-						t.Fatalf("expected one primitive member-check bypass, got %d", count)
+					if count := skipPrimitiveMemberChecks(program, "value"); count != 1 {
+						t.Fatalf("want one primitive check mutation, got %d", count)
 					}
 					for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-						if got.exitCode != 0 || string(got.stdout) != "uncheckedunchecked\n" {
+						if got.exitCode != 0 || string(got.stdout) != text {
 							t.Fatalf("mutant must run valid release code: stdout %q stderr %q", got.stdout, got.stderr)
 						}
 						t.Log("primitive member-check bypass caught by named refusal pin")
@@ -116,6 +114,12 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 		variants                    []string
 	}{
 		{"literal-union", "StringLiteralType | NumberLiteralType", "value", "string | number", []string{"string", "number", "wrong", "null", "undefined", "missing"}},
+		{"diagnostic", "Diagnostic", "skippedOn", "keyof CompilerOptions | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
+		{"bundle-pending", "IncrementalBundleEmitBuildInfo", "pendingEmit", "IncrementalBuildInfoBundlePendingEmit | undefined", []string{"number", "false", "undefined", "wrong", "wrong-string", "null", "missing"}},
+		{"resolved", "Resolved", "originalPath", "string | true | undefined", []string{"string", "true", "undefined", "wrong", "wrong-number", "null", "missing"}},
+		{"package-peer", "PackageJsonInfoContents", "peerDependencies", "string | false | undefined", []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"}},
+		{"reusable-file", "ReusableDiagnosticRelatedInformation", "file", "string | false | undefined", []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"}},
+		{"reusable-skipped", "ReusableDiagnostic", "skippedOn", "keyof CompilerOptions | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
 		{"node-links", "NodeLinks", "isExhaustive", "0 | boolean | undefined", []string{"true", "false", "zero", "undefined", "wrong-number", "wrong-string", "null", "missing"}},
 		{"emit-node", "EmitNode", "constantValue", "string | number | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing"}},
 		{"emit-node-optional", "EmitNode", "constantValue", "string | number | undefined", []string{"string", "number", "undefined", "wrong", "null", "missing", "absent"}},
@@ -127,11 +131,24 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					t.Fatal(err)
 				}
 				bound := strings.Replace(string(input), "'original-tsc-types'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(directory, "compiler/types.d.ts"))), 1)
+				for _, module := range []string{"types", "builder", "moduleNameResolver"} {
+					bound = strings.ReplaceAll(bound, "'original-tsc-"+module+"'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(directory, "compiler", module+".d.ts"))))
+				}
+				bound = strings.ReplaceAll(bound, "'original-tsc-private'", fmt.Sprintf("%q", filepath.ToSlash(filepath.Join(directory, "primitive-private.d.ts"))))
 				file := filepath.Join(t.TempDir(), "primitive.a")
 				if err := os.WriteFile(file, []byte(bound), 0600); err != nil {
 					t.Fatal(err)
 				}
 				text := map[string]string{"true": "true", "false": "false", "zero": "0", "undefined": "undefined", "wrong-number": "1", "wrong-string": "wrong", "null": "null", "missing": "undefined", "string": "word-built", "number": "42", "wrong": "true", "absent": "undefined"}[variant] + "\n"
+				if variant == "wrong-number" && group.name != "node-links" {
+					text = "42\n"
+				}
+				if group.name == "resolved" && variant == "wrong" {
+					text = "false\n"
+				}
+				if group.name == "bundle-pending" && variant == "number" {
+					text = "1\n"
+				}
 				if diff := disagreement(run{stdout: []byte(text)}, onNode(t, file)); diff != "" {
 					t.Fatal("Node: " + diff)
 				}
@@ -170,8 +187,8 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					found := map[string]string{"wrong-number": "number", "wrong-string": "string", "wrong": "boolean", "null": "null", "undefined": "undefined", "missing": "missing"}[variant]
 					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " matches no member of " + group.declared + "; expected " + group.declared + ", found " + found + "\n")}
 				}
-				if group.name == "literal-union" && variant == "missing" {
-					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.value is not initialized; expected string | number, found missing\n")}
+				if (group.name == "literal-union" || group.name == "bundle-pending" || group.name == "package-peer" || group.name == "reusable-file") && variant == "missing" {
+					want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + label + " is not initialized; expected " + group.declared + ", found missing\n")}
 				}
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if diff := disagreement(want, got); diff != "" {
@@ -188,20 +205,17 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 					}
 				}
 				if variant == "undefined" && group.name != "literal-union" {
-					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links", "undefined\n")
+					assertPrimitiveFirstMemberMutant(t, program, group.field, group.name == "node-links" || group.name == "bundle-pending", "undefined\n")
 				}
 				if group.name == "literal-union" && variant == "number" {
 					assertPrimitiveFirstMemberMutant(t, program, group.field, false, "42\n")
 				}
 				if variant == "wrong-number" || variant == "wrong" {
-					index := len(program.Strings)
-					program.Strings = append(program.Strings, "unchecked")
-					replacement := ir.Box{Value: ir.Concat{Parts: []ir.Expression{ir.StringConstant{Index: index}, ir.StringConstant{Index: index}}}}
-					if count := dropLane4NamedHelperView(program, group.field, replacement); count != 1 {
-						t.Fatalf("want one member-check bypass, got %d", count)
+					if count := skipPrimitiveMemberChecks(program, group.field); count != 1 {
+						t.Fatalf("want one primitive check mutation, got %d", count)
 					}
 					for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-						if got.exitCode != 0 || string(got.stdout) != "uncheckedunchecked\n" {
+						if got.exitCode != 0 || string(got.stdout) != text {
 							t.Fatalf("mutant must run valid release code: stdout %q stderr %q", got.stdout, got.stderr)
 						}
 						t.Log("member/literal-check bypass caught by named refusal pin")
@@ -219,11 +233,21 @@ func assertOriginalPrimitiveFields(t *testing.T, directory string, program *ir.P
 		t.Fatal(err)
 	}
 	var manifest struct {
-		Commit string              `json:"upstream_commit"`
-		Fields map[string][]string `json:"fields"`
+		Commit     string              `json:"upstream_commit"`
+		Fields     map[string][]string `json:"fields"`
+		PrivateSHA string              `json:"private_sha256"`
 	}
 	if err := json.Unmarshal(data, &manifest); err != nil {
 		t.Fatal(err)
+	}
+	if manifest.PrivateSHA != "" {
+		private, err := os.ReadFile(filepath.Join(directory, "primitive-private.d.ts"))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if fmt.Sprintf("%x", sha256.Sum256(private)) != manifest.PrivateSHA {
+			t.Fatal("original private declaration drift")
+		}
 	}
 	if manifest.Commit != "050880ce59e30b356b686bd3144efe24f875ebc8" {
 		t.Fatal("original primitive provenance changed")
@@ -323,4 +347,25 @@ func TestPrimitiveOrdinaryProperty(t *testing.T) {
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
 	}
+}
+
+// Keep the actual field read and physical storage validation. Drop only declared
+// primitive kind/member restrictions; the original wrong value must run on.
+func skipPrimitiveMemberChecks(program *ir.Program, field string) int {
+	count := 0
+	rewrite := func(value any) any {
+		property, ok := value.(ir.Property)
+		if !ok || property.Name != field || !property.Nullish || property.Of != ir.Union || property.View == "" {
+			return value
+		}
+		property.ViewContract = 0
+		property.ViewAllowed = nil
+		property.NullishKinds = (1 << ir.String) | (1 << ir.Number) | (1 << ir.Boolean)
+		count++
+		return property
+	}
+	for i := range program.Functions {
+		program.Functions[i].Body = rewriteUnionTargetStatements(program.Functions[i].Body, rewrite)
+	}
+	return count
 }

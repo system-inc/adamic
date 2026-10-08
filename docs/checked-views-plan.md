@@ -1704,3 +1704,12 @@ union field writes, class fields and array/closure storage refusals remain.
 An ordinary pure-primitive field fixture supplies Node/backend coverage.
 The original union helper is tested with viewed values of each full member;
 direct untagged union admission remains lane 4c and is not credited here.
+
+### Lane 4 nullable finite-member diagnostic alignment
+
+Minimal hook in javascript/view_nullish.go: nullishMemberSelection names
+"matches no member of" the declared union, matching the native selector when a
+runtime kind exists but a finite literal member rejects it. Resolved.originalPath
+false versus its true-only member exposed the mismatch. No check is removed.
+Complete original Resolved is printed from its private source interface and
+hash-pinned separately; all five fields, including PackageId, are retained.

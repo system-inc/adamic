@@ -21,10 +21,22 @@ for (const name of ['EvaluatorResult','NodeLinks','EmitNode','StringLiteralType'
  if (!symbol) throw Error('original receiver absent: '+name);
  fields[name] = checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f => f.name).sort();
 }
+for (const [name,module] of [['Diagnostic','types'],['IncrementalBundleEmitBuildInfo','builder'],['PackageJsonInfoContents','moduleNameResolver'],['ReusableDiagnostic','builder'],['ReusableDiagnosticRelatedInformation','builder']]) {
+ const file=program.getSourceFile(path.join(root,'src/compiler/'+module+'.ts'));
+ const symbol=checker.getExportsOfModule(checker.getSymbolAtLocation(file)).find(s=>s.name===name);
+ if(!symbol)throw Error('original receiver absent: '+name);
+ fields[name]=checker.getPropertiesOfType(checker.getDeclaredTypeOfSymbol(symbol)).map(f=>f.name).sort();
+}
+const resolvedSource=program.getSourceFile(path.join(root,'src/compiler/moduleNameResolver.ts'));
+const resolvedDeclaration=resolvedSource.statements.find(n=>ts.isInterfaceDeclaration(n)&&n.name.text==='Resolved');
+if(!resolvedDeclaration||resolvedDeclaration.heritageClauses||resolvedDeclaration.typeParameters)throw Error('original Resolved changed');
+fields.Resolved=checker.getPropertiesOfType(checker.getTypeAtLocation(resolvedDeclaration.name)).map(f=>f.name).sort();
+const exportedResolved=ts.factory.updateInterfaceDeclaration(resolvedDeclaration,[ts.factory.createModifier(ts.SyntaxKind.ExportKeyword)],resolvedDeclaration.name,resolvedDeclaration.typeParameters,resolvedDeclaration.heritageClauses,resolvedDeclaration.members);
+fs.writeFileSync(path.join(out,'primitive-private.d.ts'),"import type { PackageId } from './compiler/types';\n"+ts.createPrinter().printNode(ts.EmitHint.Unspecified,exportedResolved,resolvedSource)+'\n');
 const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(path.resolve(__dirname,'../read-demand-pairs.json.gz'))));
-const ids = [10524,10525,10747,6994,6995,46428];
-const pairs = inventory.filter(p=>ids.includes(p.receiver_type_id) && ['value','isExhaustive','constantValue'].includes(p.field));
-if (pairs.length !== 6 || pairs.reduce((n,p)=>n+p.reads,0)!==76) throw Error('candidate pair inventory drift');
+const ids = [10524,10525,10747,6994,6995,46428,9761,97934,37515,97180,97181,65708];
+const pairs = inventory.filter(p=>p.families.includes("mixed primitive union") && ids.includes(p.receiver_type_id) && ['value','isExhaustive','constantValue','skippedOn','pendingEmit','peerDependencies','file','originalPath'].includes(p.field));
+if (pairs.length !== 12 || pairs.reduce((n,p)=>n+p.reads,0)!==89) throw Error('candidate pair inventory drift');
 for (const pair of pairs) {
  const file=program.getSourceFile(path.join(root,pair.witness.file));
  if(!file)throw Error('read source absent');
@@ -39,9 +51,9 @@ for (const pair of pairs) {
  const receiver=checker.getNonNullableType(checker.getTypeAtLocation(receiverNode));
  const names=checker.getPropertiesOfType(receiver).map(f=>f.name).sort();
  if(pair.receiver_type_id===46428) fields[pair.type]=names;
- const rootName=pair.receiver_type_id===46428?pair.type:pair.type.startsWith('EvaluatorResult')?'EvaluatorResult':pair.type.startsWith('EmitNode')?'EmitNode':'NodeLinks';
- if(JSON.stringify(names)!==JSON.stringify(fields[rootName]))throw Error('original instantiated field set changed');
+ const rootName=pair.receiver_type_id===46428?pair.type:['Diagnostic','IncrementalBundleEmitBuildInfo','PackageJsonInfoContents','ReusableDiagnostic','ReusableDiagnosticRelatedInformation','Resolved'].includes(pair.type)?pair.type:pair.type.startsWith('EvaluatorResult')?'EvaluatorResult':pair.type.startsWith('EmitNode')?'EmitNode':'NodeLinks';
+ if(JSON.stringify(names)!==JSON.stringify(fields[rootName]))throw Error('original instantiated field set changed: '+JSON.stringify({pair:pair.type,names,want:fields[rootName]}));
  pair.original_fields=names;
 }
-fs.writeFileSync(path.join(out,'primitive-manifest.json'),JSON.stringify({upstream_commit:pin.commit,types_source_sha256:hash(path.join(root,'src/compiler/types.ts')),fields,pairs},null,2)+'\n');
-console.log('Verified six original primitive pairs / seventy-six candidate reads and complete receiver fields');
+fs.writeFileSync(path.join(out,'primitive-manifest.json'),JSON.stringify({upstream_commit:pin.commit,types_source_sha256:hash(path.join(root,'src/compiler/types.ts')),fields,pairs,private_sha256:hash(path.join(out,"primitive-private.d.ts")),private_source_sha256:hash(path.join(root,"src/compiler/moduleNameResolver.ts"))},null,2)+'\n');
+console.log('Verified twelve original primitive pairs / eighty-nine candidate reads and complete receiver fields');

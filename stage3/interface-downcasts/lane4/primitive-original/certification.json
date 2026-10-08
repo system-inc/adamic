@@ -102,6 +102,70 @@
       "value",
       "widened"
     ],
+    "Diagnostic": [
+      "canonicalHead",
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportsDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
+    ],
+    "IncrementalBundleEmitBuildInfo": [
+      "changeFileSet",
+      "checkPending",
+      "emitDiagnosticsPerFile",
+      "errors",
+      "fileInfos",
+      "fileNames",
+      "latestChangedDtsFile",
+      "options",
+      "outSignature",
+      "pendingEmit",
+      "resolvedRoot",
+      "root",
+      "semanticDiagnosticsPerFile",
+      "version"
+    ],
+    "PackageJsonInfoContents": [
+      "packageJsonContent",
+      "peerDependencies",
+      "resolvedEntrypoints",
+      "versionPaths"
+    ],
+    "ReusableDiagnostic": [
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "relatedInformation",
+      "reportDeprecated",
+      "reportsUnnecessary",
+      "skippedOn",
+      "source",
+      "start"
+    ],
+    "ReusableDiagnosticRelatedInformation": [
+      "category",
+      "code",
+      "file",
+      "length",
+      "messageText",
+      "start"
+    ],
+    "Resolved": [
+      "extension",
+      "originalPath",
+      "packageId",
+      "path",
+      "resolvedUsingTsExtension"
+    ],
     "StringLiteralType | NumberLiteralType": [
       "aliasSymbol",
       "aliasTypeArguments",
@@ -240,6 +304,40 @@
       "state": "certified original declarations and read syntax"
     },
     {
+      "receiver_type_id": 9761,
+      "type": "Diagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 5099,
+        "column": 37
+      },
+      "original_fields": [
+        "canonicalHead",
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "relatedInformation",
+        "reportsDeprecated",
+        "reportsUnnecessary",
+        "skippedOn",
+        "source",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
       "receiver_type_id": 10525,
       "type": "EvaluatorResult<string | number | undefined> | undefined",
       "field": "value",
@@ -261,6 +359,93 @@
         "isSyntacticallyString",
         "resolvedOtherFiles",
         "value"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97934,
+      "type": "IncrementalBundleEmitBuildInfo",
+      "field": "pendingEmit",
+      "declared_types": [
+        "IncrementalBuildInfoBundlePendingEmit | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 2282,
+        "column": 33
+      },
+      "original_fields": [
+        "changeFileSet",
+        "checkPending",
+        "emitDiagnosticsPerFile",
+        "errors",
+        "fileInfos",
+        "fileNames",
+        "latestChangedDtsFile",
+        "options",
+        "outSignature",
+        "pendingEmit",
+        "resolvedRoot",
+        "root",
+        "semanticDiagnosticsPerFile",
+        "version"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 65708,
+      "type": "Resolved",
+      "field": "originalPath",
+      "declared_types": [
+        "string | true | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 3,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 241,
+        "column": 10
+      },
+      "original_fields": [
+        "extension",
+        "originalPath",
+        "packageId",
+        "path",
+        "resolvedUsingTsExtension"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "peerDependencies",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 2,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 2415,
+        "column": 9
+      },
+      "original_fields": [
+        "packageJsonContent",
+        "peerDependencies",
+        "resolvedEntrypoints",
+        "versionPaths"
       ],
       "state": "certified original declarations and read syntax"
     },
@@ -347,10 +532,72 @@
         "typeNode"
       ],
       "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97180,
+      "type": "ReusableDiagnostic",
+      "field": "skippedOn",
+      "declared_types": [
+        "keyof CompilerOptions | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 579,
+        "column": 28
+      },
+      "original_fields": [
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "relatedInformation",
+        "reportDeprecated",
+        "reportsUnnecessary",
+        "skippedOn",
+        "source",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
+    },
+    {
+      "receiver_type_id": 97181,
+      "type": "ReusableDiagnosticRelatedInformation",
+      "field": "file",
+      "declared_types": [
+        "string | false | undefined"
+      ],
+      "families": [
+        "mixed primitive union",
+        "nullish members"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/builder.ts",
+        "line": 601,
+        "column": 13
+      },
+      "original_fields": [
+        "category",
+        "code",
+        "file",
+        "length",
+        "messageText",
+        "start"
+      ],
+      "state": "certified original declarations and read syntax"
     }
   ],
-  "certified_pairs": 6,
-  "certified_reads": 76,
-  "remaining_nonbrand_pairs": 22,
-  "remaining_nonbrand_reads": 62
+  "private_sha256": "bf8bece5e314150719489996e4a20f18aca874ec42a526f694fa5b2ffa690393",
+  "private_source_sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+  "certified_pairs": 12,
+  "certified_reads": 89,
+  "remaining_nonbrand_pairs": 16,
+  "remaining_nonbrand_reads": 49
 }

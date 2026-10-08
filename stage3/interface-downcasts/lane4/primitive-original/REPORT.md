@@ -1,8 +1,8 @@
-Certified five original primitive pairs, 70 candidate reads, including EmitNode destructuring.
-Commit: this checkpoint on codex/views-mixed-unions-2, after 527b7557.
-Checks: uncached original C/JS/Node oracle PASS 100.134s; filtered lower PASS 0.872s; vet passed.
-Mutants: five member-check bypasses and five untested-first-member substitutions; 20 backend kills.
-Uncovered: remaining primitive shapes, arrays and dictionary selectors; no exact tsc reachability claim.
+Certified twelve original primitive pairs, 89 candidate reads, including full original private Resolved.
+Commit: this checkpoint on codex/views-mixed-unions-2, after 076295ed.
+Checks: original + nullish oracle PASS 299.401s; exact member mutants PASS 61.710s; JavaScript package PASS 1.563s; vet passed.
+Mutants: 30 backend kills of actual-value member-check removal and 24 of untested first-member substitution.
+Uncovered: remaining private receivers, arrays/tuples and dictionary element selectors; no exact tsc reachability claim.
 
 | Original pair | Candidate reads | Status |
 | --- | ---: | --- |
@@ -92,3 +92,50 @@ in the original mixed-primitive column; one remaining pair/read is lane 7.
 Nonbrand remaining is 22 / 62. Larger object-plus-primitive entries remain lane
 4b and are not credited here. Continuing with three-read nullable primitive
 fields; October 13, 17:00 MDT remains the estimate.
+
+
+Nullable follow-up adds six pairs / thirteen reads:
+
+| Pair | Candidate reads |
+| --- | ---: |
+| Diagnostic.skippedOn | 3 |
+| IncrementalBundleEmitBuildInfo.pendingEmit | 3 |
+| Resolved.originalPath | 3 |
+| PackageJsonInfoContents.peerDependencies | 2 |
+| ReusableDiagnosticRelatedInformation.file | 1 |
+| ReusableDiagnostic.skippedOn | 1 |
+
+Original interfaces and aliases are imported whole from the hash-pinned 78-file
+emission. Private Resolved is printed from its complete original interface with
+all five fields and its PackageId dependency; its generated declaration and
+source are hash-pinned separately. The stock read witness and all receiver field
+sets are verified. No proxy receiver or shortened private interface is used.
+
+The true-only member of originalPath caught a JavaScript diagnostic mismatch.
+The minimal nullishMemberSelection emitter hook now uses native's named union
+message. Both backends share exact pins for wrong runtime kinds and wrong finite
+boolean members. Missing required pendingEmit, peerDependencies and file fields
+have separate named initialization pins. Missing optional fields return undefined.
+
+The precise skip-member mutants retain the original field read and physical
+producer storage validation, remove declared masks/literal/member obligations,
+and print the original wrong value in valid release C and JS. Only the member
+refusal can catch these mutants; there is no constant-output proxy in this rerun.
+The bundle first-member substitution uses its actual numeric member None (0).
+
+Run: ADAMIC_BRAND_ORIGINAL_DECLS=/tmp/views-brand2-original-declarations
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run
+'^Test(CheckedViewOriginal(EvaluatorPrimitivePairs|FinitePrimitiveFields)|PrimitiveOrdinary(Binding|Property)|CheckedViewNullish.*)$'
+-count=1 -v -timeout 10m. PASS 299.401s, native misses 78, Node misses 372,
+zero hits; logs/nullable-all-oracle.log. Exact-member rerun uses
+'^TestCheckedViewOriginal(EvaluatorPrimitivePairs|FinitePrimitiveFields)$/[^/]+/(wrong|wrong-number|undefined)$'
+and passes in 61.710s, native misses 11, Node misses 80, zero hits. Combined
+with the pure-union numeric control, this proves 30 exact member-check and 24
+first-member backend kills. JavaScript package passes in 1.563s; vet passes.
+No full lower package or repository gate is claimed.
+
+The original mixed-primitive column now has 46 / 640 certified and 17 / 50
+remaining, including lane 7's branded intersection 1 / 1. Nonbrand remaining is
+16 / 49. These are candidate counts; object-plus-primitive rows remain owned by
+lane 4b and dictionary rows overlap lane 6. Continue through the remaining
+private receivers; October 13, 17:00 MDT remains the estimate.
