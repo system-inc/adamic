@@ -1,0 +1,6 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function joinedIdentity<T>(value:T):T {return value;}
+const alias=joinedIdentity;
+function hostRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=alias(raw);alias(JSON.parse('{}'));return node as Ready;}

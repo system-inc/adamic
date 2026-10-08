@@ -1,0 +1,79 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "conditionalOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "conditionalTwo",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "genericOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "assertedOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongOne",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongTwo",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "opaqueOne",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:6:12",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:7:49"
+      ]
+    },
+    {
+      "owner": "opaqueTwo",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:6:12",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:7:59"
+      ]
+    },
+    {
+      "owner": "spreadOne",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/spread/src/compiler/main.a:9:50"
+      ]
+    },
+    {
+      "owner": "spreadTwo",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/spread/src/compiler/main.a:9:60"
+      ]
+    }
+  ]
+}

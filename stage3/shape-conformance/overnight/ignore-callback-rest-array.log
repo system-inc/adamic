@@ -1,0 +1,6 @@
+/tmp/shape-generic-callable-mutants/ignore-callback-rest-array/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/generic-callables/controls.py", line 16, in <module>
+    assert row['outcome']==expected[owner],(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('restRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 1060, 'end': 1073, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 1060, 'end': 1073, 'owner': 'restRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'conforms and ready (free)', 'reason': 'declared allocation field certificates', 'detail': [], 'allocation_sites': [-5], 'fields': [], 'host_values': [], 'diagnostic_causes': []})

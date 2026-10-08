@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "declarationRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "arrowRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "joinedRead",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "restRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "callback rest arguments require an array allocation at /tmp/shape-generic-callable-controls/clean/src/compiler/main.a:12:1"
+      ]
+    },
+    {
+      "owner": "spreadRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "unmodeled expression KindSpreadElement at /tmp/shape-generic-callable-controls/clean/src/compiler/main.a:17:128"
+      ]
+    },
+    {
+      "owner": "hostRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque host result requires runtime semantic metadata at /tmp/shape-generic-callable-controls/host/src/compiler/main.a:6:103"
+      ]
+    }
+  ]
+}

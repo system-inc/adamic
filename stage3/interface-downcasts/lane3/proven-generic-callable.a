@@ -1,0 +1,7 @@
+interface Base { readonly kind: 'identifier' | 'other'; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly name: string; }
+function identity<T>(value: T): T { return value; }
+const alias = identity;
+function read(value: Base): string { return (value as Identifier).name; }
+const exact: Identifier = {kind:'identifier',name:'hello'};
+console.log(read(alias(exact)));

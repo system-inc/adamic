@@ -273,9 +273,7 @@ func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
 		return m.materialize(node, literal)
 	case ast.KindArrowFunction, ast.KindFunctionExpression:
         function := m.Functions[node]
-        if function.Skipped { return m.unknown(node, "diagnosed body", "callback body skipped", m.text(node), node) }
-        if len(node.TypeParameters()) != 0 { return m.unknown(node, "flow the graph can't see", "generic callback substitution not modeled", m.text(node)) }
-        return m.materialize(node, ir.MakeClosure{Function:function.Index})
+        return m.materialize(node, m.allocationCallbackIdentity(function))
     case ast.KindNewExpression:
 		return m.unknown(node, "flow the graph can't see", "constructor allocation and initialization body not modeled", m.text(node))
 	case ast.KindCallExpression:
@@ -530,9 +528,7 @@ func MeasureLatentShapes(ctx context.Context, program *load.Program, root string
 					m.IR.Functions[index].Parameters = append(m.IR.Functions[index].Parameters, m.local(parameter.Name()))
 				}
                 if node.Kind == ast.KindFunctionDeclaration && node.Name() != nil {
-                    var identity ir.Expression = ir.MakeClosure{Function:index}
-                    if skipped { identity = latentShapeUnknown{Category:"diagnosed body", Reason:"callback implementation skipped at "+program.Where(node), Diagnostics:m.diagnosticCauses(node)} }
-                    if !skipped && len(node.TypeParameters()) != 0 { identity = latentShapeUnknown{Category:"flow the graph can't see", Reason:"generic callback implementation not instantiated at "+program.Where(node)} }
+                    identity := m.allocationCallbackIdentity(m.Functions[node])
                     m.IR.Main = append(m.IR.Main, ir.Declare{Local:m.local(node.Name()), Value:identity})
                 }
 				if skipped {
@@ -1018,4 +1014,18 @@ func (m *latentShapeMeter) opaqueAllocationCall(node *ast.Node, function latentS
         m.append(ir.Assign{Local:parameter, Value:boundary})
     }
     return boundary
+}
+
+// Callable identity names a represented runtime body, independently of its type
+// parameters. Actual values from all invocations join in the shared graph.
+// A rest parameter needs an array producer, not the first supplied object.
+func (m *latentShapeMeter) allocationCallbackIdentity(function latentShapeFunction) ir.Expression {
+    node := function.Node
+    if function.Skipped { return latentShapeUnknown{Category:"diagnosed body", Reason:"callback implementation skipped at "+m.Loaded.Where(node), Diagnostics:m.diagnosticCauses(node)} }
+    for _, parameter := range node.Parameters() {
+        if parameter.AsParameterDeclaration().DotDotDotToken != nil {
+            return latentShapeUnknown{Category:"flow the graph can't see", Reason:"callback rest arguments require an array allocation at "+m.Loaded.Where(node)}
+        }
+    }
+    return ir.MakeClosure{Function:function.Index}
 }

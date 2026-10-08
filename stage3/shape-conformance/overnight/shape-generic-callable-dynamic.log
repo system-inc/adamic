@@ -1,0 +1,83 @@
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "finiteString",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "finiteNumber",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongString",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongNumber",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "openKey",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "dynamic key membership not proven",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "absentKey",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "dynamic projected slot absent or allocation not modeled: absent"
+      ]
+    },
+    {
+      "owner": "hostKey",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "dynamic key membership not proven",
+        "opaque call may mutate projected fields",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-dynamic-controls/host/src/compiler/main.a:5:92"
+      ]
+    },
+    {
+      "owner": "indexedStore",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "indexed store effects not certified"
+      ]
+    },
+    {
+      "owner": "directStore",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "mutation effects on field certificate unavailable: kind",
+        "mutation effects on field certificate unavailable: ready"
+      ]
+    },
+    {
+      "owner": "diagnosedKey",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "dynamic key membership not proven",
+        "opaque call may mutate projected fields",
+        "callee body skipped at /tmp/shape-dynamic-controls/diagnosed/src/compiler/main.a:6:90"
+      ]
+    }
+  ]
+}

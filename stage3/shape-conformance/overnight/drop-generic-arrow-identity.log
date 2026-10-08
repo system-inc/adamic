@@ -1,0 +1,6 @@
+/tmp/shape-generic-callable-mutants/drop-generic-arrow-identity/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/generic-callables/controls.py", line 16, in <module>
+    assert row['outcome']==expected[owner],(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('arrowRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 549, 'end': 562, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 549, 'end': 562, 'owner': 'arrowRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['callback target identity is unknown', 'mutant dropped generic arrow'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

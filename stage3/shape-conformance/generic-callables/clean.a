@@ -1,0 +1,17 @@
+interface Base {readonly kind:'ok'|'other';}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function declarationIdentity<T>(value:T):T {return value;}
+const declarationAlias=declarationIdentity;
+function declarationRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=declarationAlias(raw);return node as Ready;}
+const arrowIdentity=<T>(value:T):T=>value;
+function arrowRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=arrowIdentity(raw);return node as Ready;}
+function joinedIdentity<T>(value:T):T {return value;}
+const joinedAlias=joinedIdentity;
+function joinedRead(flag:boolean):Ready {const first={kind:'ok' as const,ready:true};const second={kind:'ok' as const,ready:0};const node:Base=joinedAlias(flag?first:second);return node as Ready;}
+function genericRest<T>(...values:T[]):T {return values as unknown as T;}
+const restAlias=genericRest;
+function restRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=restAlias(raw);return node as Ready;}
+function genericSpread<T>(value:T):T {return value;}
+const spreadAlias=genericSpread;
+function spreadRead():Ready {const raw={kind:'ok' as const,ready:true};const supplied:[Base]=[raw];const node:Base=spreadAlias(...supplied);return node as Ready;}

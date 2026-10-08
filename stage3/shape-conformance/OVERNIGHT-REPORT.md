@@ -39,3 +39,11 @@ The count-row handoff is:
 | nonconforming-callback-join.a | 5 | 1 | 10 | 10 | 5 | 0 | 0 | 0 |
 
 Full census before and after measurements are in progress. No corpus bucket improvement is claimed until both outputs finish and pass the independent audit. This checkpoint contains the passing rule, controls, witnesses, mutants and raw logs, so that completed work is available while the measurements run.
+
+## Generic callable implementation identities
+
+The next callback group follows generic function declaration aliases and generic arrow identities to their clean represented runtime bodies. Type arguments do not select another implementation; every actual invocation still joins through the existing callback graph. Diagnosed implementations keep their named diagnostic provenance. All callable rest implementations, generic or ordinary, now retain `callback rest arguments require an array allocation`, because a rest array cannot be replaced by the first supplied object. Spread expressions retain their existing unmodeled-input boundary.
+
+Six new controls pass: declaration and arrow alias results are Free; a mixed good/number ready join is conforms-if; rest and spread are unsupported Unknown; a later host invocation makes the earlier clean invocation host Unknown. The previous 35 latent, ten dynamic and ten callback-join controls pass unchanged. Three valid built mutants are caught: drop-generic-declaration-identity loses declarationRead; drop-generic-arrow-identity loses arrowRead; ignore-callback-rest-array incorrectly makes restRead Free by treating its rest array as the first object. The control independently pins both the outcome and named rest cause.
+
+This is an analysis-only identity improvement. The merged production compiler still refuses the actual generic-function-value alias witness with `stage 0 can't lower a generic function as a value yet`, at proven-generic-callable.a:4:15. It emits no C. That runtime pair is explicitly not certified; its source and exact diagnostic are retained. No production admission or representation rule was relaxed. A separately built third fixed-source census measures this group against the callback-join output; final bucket numbers await audited completion.
