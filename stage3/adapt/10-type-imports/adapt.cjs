@@ -171,3 +171,5 @@ function main() {
 
 try { main(); }
 catch (error) { console.error(error.message); process.exitCode = 1; }
+
+// A comment only: the fast gate control for stage 3 (a known-good change must come back green).
