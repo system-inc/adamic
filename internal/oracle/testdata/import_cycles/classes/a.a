@@ -1,0 +1,3 @@
+import { Middle } from './b.a';
+export class Leaf extends Middle {}
+console.log('leaf');

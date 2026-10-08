@@ -12,7 +12,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses a spread after the first field; spread once, first: { ...source, field: value } (adamic/single-spread)"
+      "what": "stage3/fixtures/objects/01_reference_spreads.a:7:111: Adamic 0.1 refuses optional property preserve in FileReference absent from structural source { resolutionMode: number; }, which can hide fields; declare preserve on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
     }
   },
   {
@@ -77,7 +77,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"
+      "what": "stage3/fixtures/objects/05_polling_array_metadata.a:12:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -92,10 +92,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/06_watch_close.a:25:17: stage 0 can't lower storing boolean in a field yet"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/objects/06_watch_close.a:14:15: Adamic 0.1 refuses 'file', a variable a function value captures and can be reached from what it holds, so the function holds the variable and the variable holds the function: a cycle reference counting can't free; write the function as a function declaration (function file() {}), which captures nothing, or declare the variable Weak\u003c...\u003e and keep the function somewhere strong (adamic/cycle-capable)"}
   },
   {
     "file": "07_synthetic_reference.a",
@@ -126,10 +123,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/08_loop_state.a:10:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/08_loop_state.a:32:57: stage 0 can't lower a call through ?. (an optional call) yet"}
   },
   {
     "file": "10_build_options.a",
@@ -179,8 +173,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/14_comment_pending.a:28:13: error TS7029: Fallthrough case in switch."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/14_comment_pending.a:10:19: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"
     }
   },
   {
@@ -246,10 +240,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/19_identifier_multimap.a:20:13: Adamic 0.1 refuses a value as a condition; compare it explicitly, like name.length > 0 or count !== 0"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/19_identifier_multimap.a:24:27: stage 0 can't lower a BinaryExpression with a value and a value yet"}
   },
   {
     "file": "20_queue_optional_call.a",
@@ -279,8 +270,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "Checker",
-      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:15:48: error TS7030: Not all code paths return a value."
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/22_nested_optional_calls.a:16:33: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
     }
   },
   {
@@ -410,8 +401,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/30_host_optional_method.a:6:12: stage 0 can't lower a call through ?. (an optional call) yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/objects/30_host_optional_method.a:8:73: Adamic 0.1 refuses optional property getCompilerHost in ResolutionCacheHost absent from structural source { name: string; }, which can hide fields; declare getCompilerHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)"
     }
   }
 ]
