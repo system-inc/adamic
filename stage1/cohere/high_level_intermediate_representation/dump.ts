@@ -61,6 +61,15 @@ function instructionText(instruction: Instruction): string {
     else if(value.kind === 'ComputedLoad') { payload = `{"Object":${quote(placeText(value.object))},"Optional":false,"Property":${quote(placeText(value.property))}}`; }
     else if(value.kind === 'PropertyStore') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(value.property)},"Value":${quote(placeText(value.value))}}`; }
     else if(value.kind === 'ComputedStore') { payload = `{"Object":${quote(placeText(value.object))},"Property":${quote(placeText(value.property))},"Value":${quote(placeText(value.value))}}`; }
+    else if(value.kind === 'CallExpression' || value.kind === 'MethodCall' || value.kind === 'NewExpression') {
+        const args = '[' + value.args.map((argument) => `{"Place":${quote(placeText(argument.place))},"Spread":${argument.spread ? 'true' : 'false'}}`).join(',') + ']';
+        if(value.kind === 'NewExpression') { payload = `{"Args":${args},"Callee":${quote(placeText(value.callee))}}`; }
+        else {
+            const origin = `{"Export":${quote(value.origin.exported)},"Module":${quote(value.origin.module)}}`;
+            if(value.kind === 'CallExpression') { payload = `{"Args":${args},"Callee":${quote(placeText(value.callee))},"CalleeOrigin":${origin},"Optional":${value.optional ? 'true' : 'false'}}`; }
+            else { payload = `{"Args":${args},"CalleeOrigin":${origin},"Optional":${value.optional ? 'true' : 'false'},"Property":${quote(placeText(value.property))},"Receiver":${quote(placeText(value.receiver))}}`; }
+        }
+    }
     return `instruction ${instruction.id} ${instruction.order} ${placeText(instruction.lvalue)} ${instruction.start}:${instruction.end} ${instruction.value.kind} ${payload}\n`;
 }
 

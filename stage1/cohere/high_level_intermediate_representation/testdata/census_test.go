@@ -62,6 +62,32 @@ func constructionExpression(n *ast.Node) bool {
 	case ast.KindElementAccessExpression:
 		x := n.AsElementAccessExpression()
 		return x.QuestionDotToken == nil && constructionExpression(x.Expression) && constructionExpression(x.ArgumentExpression)
+	case ast.KindCallExpression, ast.KindNewExpression:
+		var callee *ast.Node
+		var arguments *ast.NodeList
+		if n.Kind == ast.KindCallExpression {
+			x := n.AsCallExpression()
+			callee = x.Expression
+			arguments = x.Arguments
+		} else {
+			x := n.AsNewExpression()
+			callee = x.Expression
+			arguments = x.Arguments
+		}
+		if !constructionExpression(callee) {
+			return false
+		}
+		if arguments != nil {
+			for _, arg := range arguments.Nodes {
+				if arg.Kind == ast.KindSpreadElement {
+					arg = arg.AsSpreadElement().Expression
+				}
+				if !constructionExpression(arg) {
+					return false
+				}
+			}
+		}
+		return true
 	case ast.KindPostfixUnaryExpression:
 		return constructionTarget(n.AsPostfixUnaryExpression().Operand)
 	case ast.KindPrefixUnaryExpression:
@@ -319,6 +345,10 @@ func uniqueConstructionCalls(values []string) []string {
 
 func TestStage1ConstructionPathProbes(t *testing.T) {
 	sources := []string{
+		"function Calls(fn, value) { fn?.(value); return fn(value, ...value); }",
+		"function Methods(obj, key) { obj.method(1); return obj[key](2); }",
+		"function Constructors(Ctor, value) { new Ctor; return new Ctor(value, ...value); }",
+		"import React, {useState as state} from 'react'; import * as R from 'react'; const alias: unknown = state; function Origins() { state(1); alias(2); React.useEffect(3); return R['useRef'](4); }",
 		"function Orphan() { return 1; 2; }",
 		"function Branches(flag) { let x = 1; if (flag) { x = 2; } else { x = 3; } return x; }",
 		"function Abrupt(flag) { if (flag) { return 1; } else { throw 2; } return 3; }",

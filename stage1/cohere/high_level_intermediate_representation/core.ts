@@ -14,6 +14,8 @@ export interface IdentifierInterface {
     readonly name: string;
 }
 // The slice admits only these variants; unsupported syntax is declined before lowering.
+export interface ArgumentInterface { place: PlaceInterface; readonly spread: boolean; }
+export interface ModuleExportOriginInterface { readonly module: string; readonly exported: string; }
 export type ValueType = { readonly kind: 'Primitive'; readonly literal: string } | { readonly kind: 'LoadLocal'; place: PlaceInterface }
     | { readonly kind: 'UnaryExpression'; readonly operator: string; value: PlaceInterface }
     | { readonly kind: 'BinaryExpression'; left: PlaceInterface; readonly operator: string; right: PlaceInterface }
@@ -25,7 +27,10 @@ export type ValueType = { readonly kind: 'Primitive'; readonly literal: string }
     | { readonly kind: 'PropertyLoad'; object: PlaceInterface; readonly property: string }
     | { readonly kind: 'ComputedLoad'; object: PlaceInterface; property: PlaceInterface }
     | { readonly kind: 'PropertyStore'; object: PlaceInterface; readonly property: string; value: PlaceInterface }
-    | { readonly kind: 'ComputedStore'; object: PlaceInterface; property: PlaceInterface; value: PlaceInterface };
+    | { readonly kind: 'ComputedStore'; object: PlaceInterface; property: PlaceInterface; value: PlaceInterface }
+    | { readonly kind: 'CallExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
+    | { readonly kind: 'MethodCall'; receiver: PlaceInterface; property: PlaceInterface; readonly args: ArgumentInterface[]; readonly optional: boolean; readonly origin: ModuleExportOriginInterface }
+    | { readonly kind: 'NewExpression'; callee: PlaceInterface; readonly args: ArgumentInterface[] };
 export class Instruction {
     readonly id: number;
     order: EvaluationOrderType = 0;

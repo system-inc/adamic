@@ -1,9 +1,9 @@
 {
   "cohere": "7945d102a6c18dd36adf9114a758ce646e8b2359",
   "constructionCorpusFunctions": 1465,
-  "constructionCorpusFunctionsMatched": 112,
-  "pathProbes": 20,
-  "pathProbesMatched": 20,
+  "constructionCorpusFunctionsMatched": 222,
+  "pathProbes": 24,
+  "pathProbesMatched": 24,
   "upstreamFixtures": 395,
   "flowExcludedFixtures": [
     "error.bug-context-variable-catch-in-lambda.js",
@@ -132,6 +132,24 @@
       ]
     },
     {
+      "key": "0e3b7be6d70037cc575cefb3d1566eca2ee856852608380fca47c4b9fbf56708",
+      "start": 203,
+      "end": 256,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-449a37146a83.js/nested/nested"
+      ]
+    },
+    {
+      "key": "0e9746ce0e9e286bfbecbe27b4ca5dcc410e0e94d888623f47009214b6897036",
+      "start": 53,
+      "end": 169,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-conditionally-methodcall-hooklike-property-of-local.js"
+      ]
+    },
+    {
       "key": "0f21fe3bede429c5aff77ee649f2a246353d33bdaa7e90a96d0051e0563f2596",
       "start": 180,
       "end": 189,
@@ -155,6 +173,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:error.validate-object-values-mutation.js/nested"
+      ]
+    },
+    {
+      "key": "118b239c0778b14ae406bcc55a9ab3ca45311635e78f925af09b5d0c9c2815c7",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -208,6 +235,33 @@
       ]
     },
     {
+      "key": "2034a02b3949b2069eb8249fefd0179558fd8d0f384b01b155463c5c845a34ab",
+      "start": 0,
+      "end": 185,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-b4dcda3d60ed.js"
+      ]
+    },
+    {
+      "key": "20b758598bc0f7f79aee38879b2c93ec7c1f0fc3693af123f81ba6cbfa2768d1",
+      "start": 0,
+      "end": 71,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "228ed5b108b60739dc0f58660633598ae6972042912848e725a405d6f48b8bd5",
+      "start": 31,
+      "end": 159,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
       "key": "236cda9f45c98a34a5bf544b17782221fa0a5eb21b033474a204717fcd5db227",
       "start": 93,
       "end": 101,
@@ -226,12 +280,39 @@
       ]
     },
     {
+      "key": "251a812a31d90bf99ddc97c654cf19301bdfc4536a6a6fade84277d5f9a5497f",
+      "start": 0,
+      "end": 142,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-set-and-read-ref-during-render.js"
+      ]
+    },
+    {
       "key": "25936d83c9d84508972ba916dd193c07e5d107604458cff83f5fdf6d8193582e",
       "start": 83,
       "end": 91,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "27128ba485af72b0dd8f2d4d2fe211d32163b07f70c71936d508b46695c08a07",
+      "start": 0,
+      "end": 52,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "271522b2aae3a5ea3219b719ef0459fdf5773d2c1ddc893f66415b26d3839b66",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -253,12 +334,30 @@
       ]
     },
     {
+      "key": "2c8853b6b71d887393101c00533cd24036d5ce94828ba2efd6a79d083ec35201",
+      "start": 50,
+      "end": 128,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-type-provider-hook-name-not-typed-as-hook-namespace.js"
+      ]
+    },
+    {
       "key": "2dade829c4d6f8a39166297fa52b3267a92b5ff927ba35dccc8eab64d1139d73",
       "start": 162,
       "end": 197,
       "checker": true,
       "calls": [
         "upstream:error.invalid-global-reassignment-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "2dae3beeb7bd0a54a2366fc176fabcffdedffa32c926c341f1f590c227503d61",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -280,6 +379,15 @@
         "preserve_manual_memoization_score_test.go:552/nested",
         "prune_non_escaping_scopes_test.go:445/nested",
         "upstream:preserve-memo-validation/preserve-use-callback-stable-built-ins.ts/nested"
+      ]
+    },
+    {
+      "key": "2f4820cba0112692ef2c8cd0193e6d5ee5535703669ecde70df94ee2b1df997c",
+      "start": 172,
+      "end": 228,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.rules-of-hooks-d0935abedc42.js"
       ]
     },
     {
@@ -312,6 +420,15 @@
       ]
     },
     {
+      "key": "38b66492218afa33a38a0464d67d61bdee0be5d6744cbd78865c94ec9bcbf919",
+      "start": 0,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "upstream:error.bailout-on-flow-suppression.js"
+      ]
+    },
+    {
       "key": "39371cb309e5c5f9e09e83846fa44b43687f95eea7a30ac20a2cda44b1ee996f",
       "start": 16,
       "end": 53,
@@ -330,12 +447,32 @@
       ]
     },
     {
+      "key": "3b03d0bdbf17515ebcff442f168f5111030ae85129af22932e65af5167dbbdb0",
+      "start": 0,
+      "end": 88,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-reassigned-in-conditional.js"
+      ]
+    },
+    {
       "key": "417fb5f0baafe47c0bcf95bf0ed09a61b7979374fef7ffadf07a45e9516cfb6d",
       "start": 66,
       "end": 82,
       "checker": false,
       "calls": [
         "lower_test.go:53/nested"
+      ]
+    },
+    {
+      "key": "42ae4ebb5ca6333a409bfa5d3bfd76512ab41784c11705bc26a52150f93fb6bd",
+      "start": 727,
+      "end": 749,
+      "checker": true,
+      "calls": [
+        "clone_test.go:50/nested",
+        "clone_test.go:55/nested",
+        "clone_test.go:72/nested"
       ]
     },
     {
@@ -350,6 +487,24 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:ref-like-name-in-useCallback.js/nested"
+      ]
+    },
+    {
+      "key": "45632cb5c6d93cd06138e99ab0c518bc9a2c68bcdd2ee544ba7e0065efc7b84c",
+      "start": 131,
+      "end": 185,
+      "checker": true,
+      "calls": [
+        "upstream:error.validate-blocklisted-imports.ts"
+      ]
+    },
+    {
+      "key": "46b107aae28453887a40933c4489d1131f95adb5be9b19049db001988912d504",
+      "start": 0,
+      "end": 47,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -389,9 +544,27 @@
       ]
     },
     {
+      "key": "48ff6da2b07297e1c6c5496d2ed820fbcfc4c2b8864a85dd267a61ab0619baf0",
+      "start": 0,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "4a910f50c0d92b5526c5065b2061276b85049f5fdbe637161ec167689f81f17d",
       "start": 0,
       "end": 68,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "518be4c4218ce337cf0ed60d6c8d2d1bb4167f44e73702d10e6187c4aadde986",
+      "start": 0,
+      "end": 92,
       "checker": true,
       "calls": [
         "ranges_test.go:38"
@@ -409,6 +582,51 @@
         "prune_non_escaping_scopes_test.go:445/nested",
         "scope_oracle_test.go:200/nested",
         "upstream:allow-global-mutation-in-effect-indirect-usecallback.js/nested"
+      ]
+    },
+    {
+      "key": "5639d3c25bc2fef86741e175e3599324dfbfb2b01bd2fb53d7a498f9e26b7fa9",
+      "start": 0,
+      "end": 90,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-after-early-return.js"
+      ]
+    },
+    {
+      "key": "5643e217cb11d62028d1edcb7a55369356559a5f5fadc3749e824863a0c2e1f9",
+      "start": 56,
+      "end": 116,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-type-provider-hook-name-not-typed-as-hook.js"
+      ]
+    },
+    {
+      "key": "57903a5f0f0e04c623a38fe44e41d6cb945619c62dc9b8b11b75697eca07f87e",
+      "start": 0,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-c906cace44e9.js"
+      ]
+    },
+    {
+      "key": "59bc58c4a1f5c72c0a0768524c039d174d555055635803ecabadbe5db5bd0b81",
+      "start": 193,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "flatten_scopes_with_hooks_test.go:30/nested"
+      ]
+    },
+    {
+      "key": "5ace16a506d9004b801c6b57dde0aa33d3d7e2a7e93f518df0f968ef0cbee2aa",
+      "start": 44,
+      "end": 149,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-conditional-call-non-hook-imported-as-hook.js"
       ]
     },
     {
@@ -430,12 +648,30 @@
       ]
     },
     {
+      "key": "5ed21423b6f67a07cb110fa02e2537d1ec556393b9937ced04902d7ccb7be444",
+      "start": 0,
+      "end": 51,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-pass-hook-as-call-arg.js"
+      ]
+    },
+    {
       "key": "5edbaac60cc3d39f385001fcb10bc14e20663b6cc034d7d9e9961c85d9758f1e",
       "start": 92,
       "end": 100,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "5efc76a05a91257714d8dd745f1c86613541b772fe2ea743276a92651f767bef",
+      "start": 0,
+      "end": 79,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -448,6 +684,33 @@
       ]
     },
     {
+      "key": "615f6e7cf3b383f7e73b204748cd1e21d33ba41fdc9c7e1a75138fe0920d4b1f",
+      "start": 0,
+      "end": 69,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "618b945bcbf8bc90edf6e462ce3f1ec2c155ec9b637195211a8cc0d347a336c9",
+      "start": 0,
+      "end": 59,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "6319f63d1f565217de6e6bd8a81d8390acee861bc381ed65cff011b3fe55de65",
+      "start": 0,
+      "end": 152,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-dynamic-hook-via-hooklike-local.js"
+      ]
+    },
+    {
       "key": "643b1003cc530887354f383f5f4b44a7b80c42b09bae0cd8634d5db22deb90ae",
       "start": 0,
       "end": 49,
@@ -457,12 +720,39 @@
       ]
     },
     {
+      "key": "650016f4095c299fbb4412713c7a4248fd78c9cfea9645a8bf0ef7da407ca14d",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "65ac5ea17bf6e060e400328b6477056a0277e042e44c148cbce21c16c3d6daa9",
+      "start": 0,
+      "end": 48,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "65bd5f75202cd1b11f8999a6ac92ebb0d9e7e92bafeb81a1d35c75d1ad5a5a03",
       "start": 0,
       "end": 51,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "679ff6f040e2403a745af8acc46b149347c23412909e495c6db4034acebbd27a",
+      "start": 0,
+      "end": 199,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-2aabd222fc6a.js"
       ]
     },
     {
@@ -480,6 +770,15 @@
       ]
     },
     {
+      "key": "6825f2f867747ed845bc2d67787cd43ab60f6ee96365971857176587b3fe3ee6",
+      "start": 760,
+      "end": 777,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-hoisting-setstate.js/nested"
+      ]
+    },
+    {
       "key": "68f13b89cda6613332a57d7f56982ed6c28327d72770a14bc1d4e4b31dd06394",
       "start": 95,
       "end": 103,
@@ -489,12 +788,48 @@
       ]
     },
     {
+      "key": "695d16c97ec8c6b2779f287df319eab2c5c1f2609fef0f27bcbc43637d319b99",
+      "start": 0,
+      "end": 100,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-if-consequent.js"
+      ]
+    },
+    {
       "key": "6b1fb091ef16b3d06a3cf8ab046e1681ec528e8713492ea27315aa48642ffa4d",
       "start": 0,
       "end": 51,
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "6d3589448a63374eaf66137111698e9610e05d4adcd9b7e61292c1a8c11d5217",
+      "start": 0,
+      "end": 47,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "6ea3e36e4193fd34e5211827dbce5e6ed320286b4262f2fea00d265c7441eb90",
+      "start": 40,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "upstream:error.dont-hoist-inline-reference.js"
+      ]
+    },
+    {
+      "key": "6f2c8e1bcee25b1b10e1ed804ac6ae8791512c81b8706e424a73f2aeeccf0b43",
+      "start": 0,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "upstream:error.capitalized-method-call.js"
       ]
     },
     {
@@ -516,6 +851,42 @@
       ]
     },
     {
+      "key": "724223604fc5d8fca0e183ea8f68540a17722ab6bde45fb3c089d4b926173725",
+      "start": 0,
+      "end": 64,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "7385f62c2bbf8cb4dfc802262a385fcb3566ec14072a820f11194275438aa4c6",
+      "start": 0,
+      "end": 367,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-call-phi-possibly-hook.js"
+      ]
+    },
+    {
+      "key": "7591ed967066966f825b41efcad3a03eb53fb889dbab2244f49d722c86c1a58c",
+      "start": 53,
+      "end": 190,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-condtionally-call-hooklike-property-of-local.js"
+      ]
+    },
+    {
+      "key": "7827798f358fed596c1687c123164c46b1c9072741ee4524964b6f8c862cfcf8",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "78ab67786f77523af38a9fbc6b890023077c64e61016c8a970f1de55d559a47d",
       "start": 316,
       "end": 324,
@@ -531,6 +902,15 @@
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "7956de39b0f3708d0be1a06b4c9189c2480c9dbadcba14b2dc2f4ddc4669a0ff",
+      "start": 218,
+      "end": 278,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-unconditional-set-state-hook-return-in-render.js"
       ]
     },
     {
@@ -552,12 +932,57 @@
       ]
     },
     {
+      "key": "7d2d288df8a592efb6babf55595ec7c221a0b399870961015a3fd0661608a9c8",
+      "start": 0,
+      "end": 117,
+      "checker": true,
+      "calls": [
+        "upstream:error.conditional-hook-unknown-hook-react-namespace.js"
+      ]
+    },
+    {
+      "key": "7e5eb42bc70925f406777d87631107b78a355000eeedf978624f53697facb9ec",
+      "start": 165,
+      "end": 212,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-76a74b4666e9.js/nested"
+      ]
+    },
+    {
+      "key": "7e67a708a0ab3b1ecb0d5f5035db9ea911c5faabac7620c7120b99ba4d1eaf58",
+      "start": 0,
+      "end": 43,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "7efc2207dd27c6398d678a497e615548691925b5a79f00024a7024210be76aa8",
       "start": 36,
       "end": 68,
       "checker": true,
       "calls": [
         "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
+      "key": "7f321e625643aa5e3c3d353a3b1b573c46b8ff64b546300464897c9d34b6f535",
+      "start": 43,
+      "end": 165,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-hook-call-spreads-mutable-iterator.js"
+      ]
+    },
+    {
+      "key": "80002db2cfb81cf9a31c003fa112d197e54e888c6cb66aa0b643f40616d8f551",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -579,12 +1004,66 @@
       ]
     },
     {
+      "key": "813e6fe23066c9682f26dad1638de358e57bb7f6daf1b81bf93c3544627b98f9",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8291ce147cfbd5431020299760cecef570f73a0b55c2139aaaee0a9000fa22c6",
+      "start": 0,
+      "end": 231,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/todo.error.invalid-rules-of-hooks-a0058f0b446d.js"
+      ]
+    },
+    {
+      "key": "82ee0e5486087eb2846d99e0bf955c224fc776df36d34f287bd325f86518eeb2",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8368ff500ebbb29e8fbe9fd689383da649b48a8a1818293f541a19d48aa40ece",
+      "start": 0,
+      "end": 80,
+      "checker": true,
+      "calls": [
+        "upstream:error.capitalized-function-call-aliased.js"
+      ]
+    },
+    {
+      "key": "84f1e2645d10c3402e21b20f6ca5803de3762797fd7d3c6d0c326efe2048cae3",
+      "start": 0,
+      "end": 242,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-f3d6c5e9c83d.js"
+      ]
+    },
+    {
       "key": "852a5855fc11922aa22fed6628d308a0fb900b657df2bd7a0d3a4842fad585e2",
       "start": 152,
       "end": 160,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "8653e79be741f0ce6a96df965cae26fcccf698ae9449b1d936521488909283dd",
+      "start": 128,
+      "end": 224,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d842d36db450.js/nested"
       ]
     },
     {
@@ -615,12 +1094,30 @@
       ]
     },
     {
+      "key": "883e9d56ae504611e5216b07935f3416846384366fdea70140cbdf0976d13554",
+      "start": 226,
+      "end": 266,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.bail.rules-of-hooks-8503ca76d6f8.js/nested"
+      ]
+    },
+    {
       "key": "8865f8fcb6ed4320389df10fa949b43173b69d591491290f99e60a126b8b9e5c",
       "start": 36,
       "end": 134,
       "checker": true,
       "calls": [
         "upstream:error.reassignment-to-global-indirect.js/nested"
+      ]
+    },
+    {
+      "key": "89693a1d022bf453e563b3e0c33774bf0d7bea22195cb143b05967d46bad5c7e",
+      "start": 0,
+      "end": 133,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-pass-ref-to-function.js"
       ]
     },
     {
@@ -642,6 +1139,51 @@
       ]
     },
     {
+      "key": "8b59a46b1e1926f0b6095958e2f16dcd5b366ef9fb93d53ac40b638e8eaa4dbe",
+      "start": 0,
+      "end": 103,
+      "checker": true,
+      "calls": [
+        "upstream:error.conditional-hooks-as-method-call.js"
+      ]
+    },
+    {
+      "key": "8d8a2cdde75e98ad69d06d169291b204e83e23324279378d628389ad93c3b2e5",
+      "start": 0,
+      "end": 105,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8dd05405e8bc77c6dfe7b3b7f7d172c8e31b4e28bd4efccb66b9eb6d1ee5b148",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "8eb7b1b29627d1d8b729d38ee31a8835296f3c1c05f3ac4839f4ad5c59d132e3",
+      "start": 178,
+      "end": 218,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-d952b82c2597.js/nested"
+      ]
+    },
+    {
+      "key": "90210ff15e6d8a63fbb4c25969c1010a4f34b6bb2a91d56950d1ba7a7a558770",
+      "start": 0,
+      "end": 111,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-hook-if-alternate.js"
+      ]
+    },
+    {
       "key": "90831659ae926e617c3bf317273a78d5ff12be2ad02994f57928e588327329a4",
       "start": 153,
       "end": 161,
@@ -657,6 +1199,15 @@
       "checker": true,
       "calls": [
         "upstream:error.function-expression-references-variable-its-assigned-to.js/nested"
+      ]
+    },
+    {
+      "key": "92add50e7dc920a4e25f8f2c6037ac7d664b285895eccb7931e7f7288f4e1cdc",
+      "start": 218,
+      "end": 262,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0de1224ce64b.js/nested/nested"
       ]
     },
     {
@@ -678,6 +1229,69 @@
       ]
     },
     {
+      "key": "9797c4cabca816c09d5b71d22b05af646d812c9e4ab6eb1b1f4ce467bdfdbe14",
+      "start": 51,
+      "end": 132,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91"
+      ]
+    },
+    {
+      "key": "97cfc4452fda606a1c1d52aaeb386f30df97561056afb3259b4b50ffe33135d0",
+      "start": 0,
+      "end": 279,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-1b9527f967f3.js"
+      ]
+    },
+    {
+      "key": "994d4163587d1eee1c5d36aad951fc160f28b0e50fe27790db5ebfb8c69ff730",
+      "start": 29,
+      "end": 101,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
+      "key": "9a9916cc1e4d35415df9d469d0010df1b46ab414aa510bc87ae96e84beeab232",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "upstream:error.capitalized-function-call.js"
+      ]
+    },
+    {
+      "key": "9b555bfbf4e5c4e4a7492625a5dbbd32d89a9364e7d28c68977d8cdb9f2082f0",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9cc0c672f96b6709e5772c37f784c2fe10509c84b289c0fc3dc61ec6426acec6",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "9f09b0afac597997f6b642d5261ec4aa22afedd5727f2fb32a912a14a0fb2655",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
       "key": "9f1fa2f809570323724cfa3ef5aeeb4c5320ebb9af4341582657f51441a6be0f",
       "start": 0,
       "end": 57,
@@ -693,6 +1307,42 @@
       "checker": true,
       "calls": [
         "upstream:error.not-useEffect-external-mutate.js/nested"
+      ]
+    },
+    {
+      "key": "a21e3c12c554779ee5c78a9e6cc4ddfe521c7c0db4b9a79762811edb024b5cbe",
+      "start": 0,
+      "end": 136,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-access-ref-during-render.js"
+      ]
+    },
+    {
+      "key": "a47bc2e2ec6dce794a2021739ca9dcefeb1bf292f46820c9b2967bab0694aa8c",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "a4b0c5812178a97c952533fa994bbcd35840eab3fd99fac0d93f2bc46b8b9b6b",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "a4f2fee8f6eeba14557e82228d393de712f45c849c6a3880983064d4b1db231f",
+      "start": 0,
+      "end": 62,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -723,6 +1373,15 @@
       ]
     },
     {
+      "key": "a78f9d4a5b6053ce2efb7d008faea7b63d2cad5e6a197f10c10453de4f612e3c",
+      "start": 239,
+      "end": 279,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.bail.rules-of-hooks-3d692676194b.js/nested"
+      ]
+    },
+    {
       "key": "a79294bf6f334f4bf02b9ff78d5fac75e211428ba9cd48a9c7b322c155ed9085",
       "start": 143,
       "end": 151,
@@ -750,12 +1409,30 @@
       ]
     },
     {
+      "key": "ab90c56d830d16052f129b6e6ee1984a9b847f4e40804405535ed0d0bbf644a4",
+      "start": 87,
+      "end": 141,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38/nested"
+      ]
+    },
+    {
       "key": "ac6187dc6a0748aeb39f74f0ef7bb1fe99b98528fec5eb2092bd1cce55e86ebe",
       "start": 58,
       "end": 81,
       "checker": true,
       "calls": [
         "upstream:error.reassign-global-fn-arg.js/nested"
+      ]
+    },
+    {
+      "key": "ad7d01f8e0eeda2d0a99ab2ee1c67226576ea3d342c02851bcfb65148082af55",
+      "start": 0,
+      "end": 51,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -807,6 +1484,29 @@
       ]
     },
     {
+      "key": "b1d8732b27aba9de3f6cdc562b3ddec91c6a8e2b02644037525dec3595adb29f",
+      "start": 0,
+      "end": 46,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "b38a97b95df4346da4b7432db0a1eaf0e56983b8be08e766c31785af17a123d3",
+      "start": 288,
+      "end": 317,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:array-pattern-spread-creates-array.js/nested"
+      ]
+    },
+    {
       "key": "b5bfbd48d5feb816da9a2e8d201104c6a785e40b573d6bacf227e9598447e1c0",
       "start": 30,
       "end": 67,
@@ -852,6 +1552,24 @@
       ]
     },
     {
+      "key": "bf50e6b864f1ce68d00853353a9cf70c2ebf5e34b689afd446d2f97ef90006d0",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "bff67304f670da0fcb32b0aab08bf46b9b8f8377feb5567bf72709389567a89f",
+      "start": 0,
+      "end": 62,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "c0a8dcc0ae3909667e926dc2efcec5bbd6779086fd1a87103d8b53176d54f7a9",
       "start": 379,
       "end": 417,
@@ -870,12 +1588,30 @@
       ]
     },
     {
+      "key": "c18c5e447a987b0b39a46ae9c03768999fdcaac41a85a92983097eb011e51fe0",
+      "start": 138,
+      "end": 225,
+      "checker": true,
+      "calls": [
+        "capture_test.go:35/nested"
+      ]
+    },
+    {
       "key": "c47587d154997d98ff0cad91168cefae7fa2b8fa54ca693fc4f0309b6e4f1408",
       "start": 87,
       "end": 126,
       "checker": true,
       "calls": [
         "upstream:new-mutability/error.not-useEffect-external-mutate.js/nested"
+      ]
+    },
+    {
+      "key": "c4ee8c84a492030638bfcd4cd26a859d1e65a8067f8ba9415c62ad79c570db22",
+      "start": 0,
+      "end": 62,
+      "checker": true,
+      "calls": [
+        "upstream:error.propertyload-hook.js"
       ]
     },
     {
@@ -894,6 +1630,15 @@
       "checker": true,
       "calls": [
         "upstream:error.update-global-should-bailout.tsx"
+      ]
+    },
+    {
+      "key": "c7e3899000ffd10830001ddd795d525da980478836801c80e27715969b60d240",
+      "start": 0,
+      "end": 197,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-ea7c2fb545a9.js"
       ]
     },
     {
@@ -918,12 +1663,30 @@
       ]
     },
     {
+      "key": "cc27ec222298dcca6adca79d50f38fdd3bfffc718c0a360bd2a2d4b8723bd792",
+      "start": 0,
+      "end": 200,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-79128a755612.js"
+      ]
+    },
+    {
       "key": "cc2ba16a80d765649b0c796e167c149ce7d6e87d348db9383921233123a40d77",
       "start": 21,
       "end": 58,
       "checker": true,
       "calls": [
         "upstream:error.hoisting-simple-function-declaration.js/nested"
+      ]
+    },
+    {
+      "key": "cfb859dd11493fd84eb6579c4db3e0e9dfcc70d9640f72ea03eb7afd55dad4f4",
+      "start": 0,
+      "end": 94,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -942,6 +1705,15 @@
       "checker": true,
       "calls": [
         "upstream:error.reassign-global-fn-arg.js"
+      ]
+    },
+    {
+      "key": "d272c8f245a1d28a2ad0a7f3c3af119e36b0c465c180df29972b54b69fa3642d",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -975,6 +1747,15 @@
       ]
     },
     {
+      "key": "d75c65e55981bb0720b82527a3f49fb2774da5f2c99dbdef2f8a99a874e5ac1e",
+      "start": 0,
+      "end": 38,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
       "key": "d7752a43602768b8d2ad5c07b21d0528f4f68a400c5ec511ed6c29ce9f0d1c8f",
       "start": 0,
       "end": 35,
@@ -993,12 +1774,39 @@
       ]
     },
     {
+      "key": "ddd0e5a7da324a534672b0cf9f62e5594a35768d78278cef3e387a1cf77c5779",
+      "start": 337,
+      "end": 379,
+      "checker": true,
+      "calls": [
+        "upstream:error.todo-valid-functiondecl-hoisting.tsx/nested"
+      ]
+    },
+    {
+      "key": "def89c9d590d239ff01c39fa04b5a21163b17feeff5ee612da277a0a2aaaf3ac",
+      "start": 69,
+      "end": 132,
+      "checker": true,
+      "calls": [
+        "upstream:error.hook-property-load-local-hook.js"
+      ]
+    },
+    {
       "key": "dff0f3d05a469570445846cd588647f143a1cc670c5cd6857059a0bfd8003ed1",
       "start": 0,
       "end": 40,
       "checker": false,
       "calls": [
         "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "dff4c51de986894d7e75bed334033acb6a484475a2d4628c617627a245fa3e81",
+      "start": 0,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -1020,6 +1828,32 @@
       ]
     },
     {
+      "key": "e364741c2bd4cdcc2302ba2a67602aceb3d616b22ddaf016c4e2340bd8d1053f",
+      "start": 248,
+      "end": 369,
+      "checker": true,
+      "calls": [
+        "memo_block_scope_oracle_test.go:272",
+        "preserve_manual_memoization_score_test.go:552",
+        "prune_non_escaping_scopes_test.go:445",
+        "upstream:dont-memoize-primitive-function-call-non-escaping.js"
+      ]
+    },
+    {
+      "key": "e3a3ae14f2a4aaebe0995b42e9874ca01801056d98510632565a89d946a3f846",
+      "start": 87,
+      "end": 134,
+      "checker": true,
+      "calls": [
+        "dependency_oracle_test.go:455/nested",
+        "memo_block_scope_oracle_test.go:272/nested",
+        "preserve_manual_memoization_score_test.go:552/nested",
+        "prune_non_escaping_scopes_test.go:445/nested",
+        "scope_oracle_test.go:200/nested",
+        "upstream:hoisting-setstate-captured-indirectly-jsx.js/nested"
+      ]
+    },
+    {
       "key": "e48bb74f6cea39cd71e25e811fab2ee5ce745400791090fe406bb293c2019c19",
       "start": 61,
       "end": 70,
@@ -1038,12 +1872,75 @@
       ]
     },
     {
+      "key": "e7ca41a12d8a47ffbfa963553f26f3a0f7fcd822a8f913f99253733a9676bf8f",
+      "start": 0,
+      "end": 53,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "e8b21c1159bd328d38a3f47557291ac256b6361b64ada551ea4abfd591b6e5f2",
+      "start": 0,
+      "end": 74,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
+      ]
+    },
+    {
+      "key": "e90681d25ad09366104b04c4a96f383c083ca313bf5fee219b33969e4a1e3dc9",
+      "start": 53,
+      "end": 164,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-conditionally-call-local-named-like-hook.js"
+      ]
+    },
+    {
+      "key": "e914d1721c08509687b9c48ba5b3d2af40e6b75bb8d1d4adb1c323a54cd70060",
+      "start": 0,
+      "end": 81,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-ternary-with-hook-values.js"
+      ]
+    },
+    {
+      "key": "e945108c6558dcaf42f26ae063ce8eeee7850baf6f905851950f74296308798e",
+      "start": 0,
+      "end": 213,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-d740d54e9c21.js"
+      ]
+    },
+    {
+      "key": "e9f786f51a2de79d6afa3e8973a784790d2de09886b55d117c6c81e47d78fa86",
+      "start": 59,
+      "end": 168,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-conditional-call-aliased-hook-import.js"
+      ]
+    },
+    {
       "key": "ebb712997f3c06f911e65514bd6eaf4a13d78601caf194e3afadef6ca67122f6",
       "start": 325,
       "end": 367,
       "checker": true,
       "calls": [
         "always_invalidating_test.go:176/nested"
+      ]
+    },
+    {
+      "key": "ecff2891b353e214270c587b987f9542112f023990f8bd8abb20b082cbf8f4f1",
+      "start": 0,
+      "end": 57,
+      "checker": false,
+      "calls": [
+        "lower_test.go:53"
       ]
     },
     {
@@ -1065,12 +1962,57 @@
       ]
     },
     {
+      "key": "f07c7f5290bbfc7c19fcdf6c4b9208c96de92aabf6405d8eda54bdb5baec8a7d",
+      "start": 0,
+      "end": 92,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
+      ]
+    },
+    {
+      "key": "f0ceec7b846419035dcf9d828ecb14af79122124e82c8391ccd3532cb652136a",
+      "start": 0,
+      "end": 126,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-mutate-context.js"
+      ]
+    },
+    {
+      "key": "f1913c18a251f70294a9ea3fdde749f378ead4da88bc27d27e3fcf21e632ac45",
+      "start": 51,
+      "end": 106,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85/nested"
+      ]
+    },
+    {
+      "key": "f193fcc4b0681bb313c7165240f55885d1294f2d3324a9dd8f4f4f027cd1fd24",
+      "start": 31,
+      "end": 109,
+      "checker": true,
+      "calls": [
+        "reactive_stable_hooks_test.go:85"
+      ]
+    },
+    {
       "key": "f41f135afbb9f5d2b01449fb4ea71af5f27afe0691ac8733aea815a6bbec5739",
       "start": 106,
       "end": 114,
       "checker": true,
       "calls": [
         "upstream:error.hook-ref-value.js/nested"
+      ]
+    },
+    {
+      "key": "f4415626ccaa1b1b31087ffdb3d8fb29f87675ff36e951ceea95095a36028e91",
+      "start": 0,
+      "end": 172,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-9bf17c174134.js"
       ]
     },
     {
@@ -1089,6 +2031,24 @@
       "checker": false,
       "calls": [
         "postdominator_frontier_test.go:91/nested/nested"
+      ]
+    },
+    {
+      "key": "f730ab83004be648bc2231fafebc8e2d9f2059e575e5de856a2b77b3f4aca183",
+      "start": 915,
+      "end": 940,
+      "checker": false,
+      "calls": [
+        "postdominator_frontier_test.go:91/nested"
+      ]
+    },
+    {
+      "key": "f81f64d877c52fcbe4c2d988d2b2493d1fa092570ec2558b72ffc4b50bba3534",
+      "start": 0,
+      "end": 53,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {
@@ -1134,12 +2094,57 @@
       ]
     },
     {
+      "key": "fccae44348258a1170e0aff79c166b3a49093fa0b3a84fd80ffb50761d629b22",
+      "start": 0,
+      "end": 242,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-9718e30b856c.js"
+      ]
+    },
+    {
+      "key": "fcff5557a00a1f765698a0b127110700214ef48d9d75c26d12b3b18ad1ba1e73",
+      "start": 123,
+      "end": 217,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid.invalid-rules-of-hooks-0a1dbff27ba0.js/nested"
+      ]
+    },
+    {
+      "key": "fd8492f64574f6b3d5959114679f594bc8e16e078fbd62b524f91b75b44e1149",
+      "start": 0,
+      "end": 212,
+      "checker": true,
+      "calls": [
+        "upstream:rules-of-hooks/error.invalid-rules-of-hooks-d85c144bdf40.js"
+      ]
+    },
+    {
       "key": "fd9f4b2c4aa9906182760694c49f913646ebe0a05729f614ee90d8cace21035b",
       "start": 96,
       "end": 104,
       "checker": true,
       "calls": [
         "effects_react_effect_test.go:52/nested"
+      ]
+    },
+    {
+      "key": "fdbef9f652744fe6383737d805a3578fe36e42fc448c5300c8e4874fcb5faf87",
+      "start": 0,
+      "end": 95,
+      "checker": true,
+      "calls": [
+        "upstream:error.invalid-assign-hook-to-local.js"
+      ]
+    },
+    {
+      "key": "fdbfaa709475c9e861144ccac9feb481bc03232a937c792f241a55a118c850ce",
+      "start": 0,
+      "end": 93,
+      "checker": true,
+      "calls": [
+        "ranges_test.go:38"
       ]
     },
     {

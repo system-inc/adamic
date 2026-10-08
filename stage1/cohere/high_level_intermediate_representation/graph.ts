@@ -45,6 +45,9 @@ export const hirGraph: GraphInterface<HIRFunction, BasicBlock, PlaceInterface> =
         if(value.kind === 'StoreGlobal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.value = visit(value.value, 'Use'); }
         if(value.kind === 'PropertyLoad' || value.kind === 'ComputedLoad' || value.kind === 'PropertyStore' || value.kind === 'ComputedStore') { value.object = visit(value.object, 'Use'); }
         if(value.kind === 'ComputedLoad' || value.kind === 'ComputedStore') { value.property = visit(value.property, 'Use'); }
+        if(value.kind === 'CallExpression' || value.kind === 'NewExpression') { value.callee = visit(value.callee, 'Use'); }
+        if(value.kind === 'MethodCall') { value.receiver = visit(value.receiver, 'Use'); value.property = visit(value.property, 'Use'); }
+        if(value.kind === 'CallExpression' || value.kind === 'NewExpression' || value.kind === 'MethodCall') { for(const argument of value.args) { argument.place = visit(argument.place, 'Use'); } }
         if(value.kind === 'DeclareLocal' || value.kind === 'StoreLocal' || value.kind === 'PrefixUpdate' || value.kind === 'PostfixUpdate') { value.lvalue = visit(value.lvalue, 'Define'); }
 
     },

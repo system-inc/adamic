@@ -65,3 +65,48 @@ for each observed graph. hir-v1 now exposes orphan table entries as well as bloc
 kinds, terminal payloads and constructed phis. Private-corpus skips and Flow
 exclusions remain as catalogued. Earlier literal regression and symbol contract
 remain part of the complete package test.
+
+
+## Calls: compiler diagnostic in a test-only mutant
+
+The production constructor lowering compiles and compares exactly. The initial
+mutation that replaced its arguments with `[]` was rejected by native compilation.
+The corresponding production Go emission is
+`cohere/internal/lint/ecmascript/high_level_intermediate_representation/lower_expression.go:265`
+(`return b.emit(&NewExpression{Callee: callee, Args: args}, node)`).
+The earlier commentary's line 276 was incorrect; that line appends a spread argument.
+
+Compiler message, reproduced from the failing local run (temporary paths retained):
+
+```text
+adamic: /workspace/adamic/stage1/cohere/hir-mutant-2881980759/core.ts:69:5: Adamic 0.1 refuses Instruction[], an array whose elements can reach back to an array like it: a cycle reference counting can't free, and the write at /workspace/adamic/stage1/cohere/hir-mutant-2881980759/lower.ts:246:9 may close one (the value written reaches something this function didn't make or let escape, and what it's written into wasn't made here); declare the elements weak, Weak<Instruction>[] (import type { Weak } from 'adamic'), which don't count and read undefined once what they point to is freed; or make it readonly Instruction[]; or write into such an array only values this function made, or only into one it made (adamic/cycle-capable)
+```
+
+No production workaround was introduced. The constructor path instead has a semantic
+mutant replacing its callee with the function's returns place. A compile rejection
+is never counted as a caught oracle mutant.
+
+
+## Verified calls and constructor checkpoint (local, unpushed)
+
+Command:
+`HIR_CENSUS_EXPORT=/tmp/hir-calls-census-final go test -v -count=1 -timeout=25m ./stage1/cohere/high_level_intermediate_representation`
+
+```text
+HIR construction census: 1489 context-distinct functions in 1489 records; 246 eligible; 395 fixtures (40 Flow exclusions)
+246/1489 context-distinct functions match Go on Node and natively; remaining rows are explicit declines
+45 Go tests skipped; names recorded in go-tests.log
+PASS: TestWholeConstructionCensus, all 29 semantic lowering mutants
+PASS: TestStraightLineOracle, 12 prior cases and return-store mutant
+PASS: TestResidentSymbolFacts, 22 selectors and identity-collapse mutant
+PASS
+ok github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation 299.089s
+```
+
+Corpus coverage is **222/1,465**, up **110** from 112. Probes are **24/24**;
+active non-Flow coverage is 222/1,442. The 23 Flow graph exclusions, 40 excluded
+upstream fixtures and all 45 original skip assignments are unchanged. This run
+uses the corrected constructor mutation and final optional-call/typed-alias probes.
+Five new lowering mutants were executed successfully on both backends and caught;
+no compilation failure contributes to the 29. No cohere source or gitlink changed.
+Per the new standing policy, this checkpoint is local until unit 2 is complete.

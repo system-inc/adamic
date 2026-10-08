@@ -3,7 +3,7 @@ import { panic, utf8Length } from 'adamic';
 import { Parser } from '../../typescript/parser/parser.ts';
 import { written } from '../../typescript/parser/nodes.ts';
 import { HIRFunction, Instruction, BasicBlock } from './core.ts';
-import type { PlaceInterface, ValueType, TerminalType } from './core.ts';
+import type { PlaceInterface, ValueType, TerminalType, ArgumentInterface, ModuleExportOriginInterface } from './core.ts';
 import { SymbolSnapshot } from './symbol.ts';
 import { constructHIR } from './graph.ts';
 function literal(kind: string, text: string): string | undefined {
@@ -39,6 +39,15 @@ function supportedExpression(parser: Parser, id: number): boolean {
     }
     if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
         return !node.optional && node.children.length === 2 && supportedExpression(parser, node.children[0] ?? -1) && (node.kind === 'PropertyAccessExpression' || supportedExpression(parser, node.children[1] ?? -1));
+    }
+    if(node.kind === 'CallExpression' || node.kind === 'NewExpression') {
+        if(!supportedExpression(parser, node.children[0] ?? -1)) { return false; }
+        const count = Math.max(0, node.list);
+        for(const argument of node.children.slice(node.children.length - count)) {
+            const arg = parser.node(argument);
+            if(!supportedExpression(parser, arg.kind === 'SpreadElement' ? arg.children[0] ?? -1 : argument)) { return false; }
+        }
+        return true;
     }
     if(node.kind === 'PostfixUnaryExpression') { return supportedTarget(parser, node.children[0] ?? -1); }
     if(node.kind === 'PrefixUnaryExpression') {
@@ -237,10 +246,78 @@ class StraightLineBuilder {
         this.fn.instructions.push(new Instruction(this.fn.instructions.length, place, value, start, end));
         return place;
     }
+    // Resolve direct imports and same-file const aliases from compiler symbol identities.
+    // Barrel export graphs remain a separate construction seam.
+    exportOrigin(id: number, active: Set<number>): ModuleExportOriginInterface {
+        const empty: ModuleExportOriginInterface = { module: '', exported: '' };
+        if(this.symbols === undefined) { return empty; }
+        const node = this.parser.node(id);
+        if(node.kind === 'ParenthesizedExpression') { return this.exportOrigin(node.children[0] ?? -1, active); }
+        if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {
+            const receiver = this.exportOrigin(node.children[0] ?? -1, active);
+            const property = this.parser.node(node.children[1] ?? -1);
+            if(receiver.module !== '' && (receiver.exported === '*' || receiver.exported === 'default') && (node.kind === 'PropertyAccessExpression' || property.kind === 'StringLiteral')) {
+                return { module: receiver.module, exported: property.text };
+            }
+            return empty;
+        }
+        if(node.kind !== 'Identifier') { return empty; }
+        const symbol = this.symbols.read(this.byte(node.pos), this.byte(node.end));
+        if(active.has(symbol.identity)) { return empty; }
+        active.add(symbol.identity);
+        let result = empty;
+        for(const declaration of symbol.declarations) {
+            if(['ImportSpecifier', 'ImportClause', 'NamespaceImport'].includes(declaration.kind) && declaration.module === 'react') {
+                result = { module: 'react', exported: declaration.kind === 'NamespaceImport' ? '*' : declaration.kind === 'ImportClause' ? 'default' : declaration.property === '' ? declaration.name : declaration.property };
+                break;
+            }
+            if(declaration.kind === 'VariableDeclaration' && declaration.sameSource) {
+                const index = this.parser.nodes.findIndex((candidate) => candidate.kind === 'VariableDeclaration' && this.byte(candidate.pos) === declaration.start && this.byte(candidate.end) === declaration.end);
+                if(index >= 0) {
+                    const parent = this.parser.nodes.find((candidate) => candidate.kind === 'VariableDeclarationList' && candidate.children.includes(index));
+                    const declarationNode = this.parser.node(index);
+                    const initializer = declarationNode.children.length > 1 ? declarationNode.children[declarationNode.children.length - 1] : undefined;
+                    if(parent?.semantic === '2' && initializer !== undefined) { result = this.exportOrigin(initializer, active); if(result.module !== '') { break; } }
+                }
+            }
+        }
+        active.delete(symbol.identity);
+        return result;
+    }
+    arguments(id: number): ArgumentInterface[] {
+        const node = this.parser.node(id);
+        const args: ArgumentInterface[] = [];
+        const count = Math.max(0, node.list);
+        for(const argument of node.children.slice(node.children.length - count)) {
+            const child = this.parser.node(argument);
+            args.push({ place: this.expression(child.kind === 'SpreadElement' ? child.children[0] ?? -1 : argument), spread: child.kind === 'SpreadElement' });
+        }
+        return args;
+    }
+    call(id: number): PlaceInterface {
+        const node = this.parser.node(id);
+        const calleeId = node.children[0] ?? -1;
+        if(node.kind === 'NewExpression') {
+            const callee = this.expression(calleeId);
+            return this.emit({ kind: 'NewExpression', callee, args: this.arguments(id) }, id, undefined);
+        }
+        const origin = this.exportOrigin(calleeId, new Set<number>());
+        const optional = node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken');
+        const callee = this.parser.node(calleeId);
+        if(callee.kind === 'PropertyAccessExpression' || callee.kind === 'ElementAccessExpression') {
+            const receiver = this.expression(callee.children[0] ?? -1);
+            const propertyId = callee.children[1] ?? -1;
+            const property = callee.kind === 'PropertyAccessExpression' ? this.emit({ kind: 'Primitive', literal: `string:${written(this.parser.node(propertyId).text)}` }, propertyId, undefined) : this.expression(propertyId);
+            return this.emit({ kind: 'MethodCall', receiver, property, args: this.arguments(id), optional, origin }, id, undefined);
+        }
+        const place = this.expression(calleeId);
+        return this.emit({ kind: 'CallExpression', callee: place, args: this.arguments(id), optional, origin }, id, undefined);
+    }
     expression(id: number): PlaceInterface {
         const node = this.parser.node(id);
         const primitive = literal(node.kind, node.text);
         if(primitive !== undefined) { return this.emit({ kind: 'Primitive', literal: primitive }, id, undefined); }
+        if(node.kind === 'CallExpression' || node.kind === 'NewExpression') { return this.call(id); }
         if(node.kind === 'ConditionalExpression') { return this.valueBranch(id, undefined); }
         if(node.kind === 'Identifier') { return this.loadIdentifier(id); }
         if(node.kind === 'PropertyAccessExpression' || node.kind === 'ElementAccessExpression') {

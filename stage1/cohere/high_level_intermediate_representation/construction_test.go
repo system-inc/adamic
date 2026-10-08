@@ -176,6 +176,12 @@ func compareConstructionCensus(t *testing.T, output []byte, manifest string, mut
 type constructionMutant struct{ name, file, from, to string }
 
 var constructionMutants = []constructionMutant{
+	{"optional call becomes unconditional", "lower.ts", "const optional = node.children.some((child) => this.parser.node(child).kind === 'QuestionDotToken');", "const optional = false;"},
+	{"call arguments lose spread", "lower.ts", "spread: child.kind === 'SpreadElement'", "spread: false"},
+	{"method call loses receiver", "lower.ts", "kind: 'MethodCall', receiver, property, args", "kind: 'MethodCall', receiver: property, property, args"},
+	{"constructor uses return slot as callee", "lower.ts", "kind: 'NewExpression', callee, args: this.arguments(id)", "kind: 'NewExpression', callee: this.fn.returns, args: this.arguments(id)"},
+	{"React callee origin disappears", "lower.ts", "const origin = this.exportOrigin(calleeId, new Set<number>());", "const origin: ModuleExportOriginInterface = { module: '', exported: '' };"},
+
 	{"concise arrow returns unused slot", "lower.ts", "if(conciseId >= 0) { builder.close({ kind: 'Return', value: builder.expression(conciseId) }); }", "if(conciseId >= 0) { builder.expression(conciseId); builder.close({ kind: 'Return', value: fn.returns }); }"},
 	{"anonymous assignment name disappears", "lower.ts", "if(name === '') {", "if(name !== '') {"},
 

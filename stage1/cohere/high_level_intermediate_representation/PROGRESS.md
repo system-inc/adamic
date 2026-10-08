@@ -1,10 +1,10 @@
-# Unit 2 clean seam: statements, expressions and initial control flow
+# Unit 2 local checkpoint: calls and constructors
 
 Unit 2 and static-components are **not complete**. This landing extends the first slice and builds the construction denominator from executed Go tests instead of a source-text sample. Static-components has not been registered or claimed green.
 
 ## Construction corpus and coverage
 
-At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 112 match byte for byte on Node and native Adamic**. Twenty additional path probes also match: 132/1,485 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
+At cohere 7945d102a6c18dd36adf9114a758ce646e8b2359, the executed construction census contains **1,465 corpus function graphs; 222 match byte for byte on Node and native Adamic**. Twenty-four additional path probes also match: 246/1,489 with probes included. Function graphs are distinct by source bytes, byte span, checker mode and constructed dump. Equal inputs/results reached by several tests are deduplicated and retain all caller provenance. Nested functions are recorded individually, as well as retained in their parent's dump. A parent is not certified by matching only its nested functions.
 
 Every original Go HIR test runs through a test-file overlay that redirects its `Lower`, `ForFunction` and `ForFunctionWithoutManualMemoization` calls to observers. The original production implementations are called unchanged, their return values are returned unchanged, and the observer constructs/dumps a deep clone. For the memo-erased entry, a separate original Lower is observed because the erased result is not the construction oracle. Production files, test files on disk, and the cohere gitlink are untouched. This captures generated test inputs and their actual checker contexts, including multi-file programs, rather than approximating them by extracting raw strings.
 
@@ -16,7 +16,7 @@ Forty-five original Go tests skip under this environment. Their names and requir
 
 ## What now lowers
 
-Function declarations, function expressions and block/concise arrows with simple identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns; resident-symbol parameter/local reads, let/const/var declarations, assignments and compound assignments, prefix/postfix updates, global/module/import loads, global stores and property/computed loads and stores. Other syntax is declined. Blocks, if/else, returns/throws (including subsequent unreachable code), ternaries, logical &&/||/??, while loops and unlabeled break/continue are also admitted. Typed/optional/rest/destructured parameters and nested function creation remain outside this seam.
+Function declarations, function expressions and block/concise arrows with simple identifier parameters; inferred names for anonymous functions assigned directly to variables; numeric, bigint, string, non-substitution template, bool and null literals; parentheses; prefix unary operators, typeof and void; non-short-circuit binary operators; comma expressions; expression and empty statements; terminal returns; resident-symbol parameter/local reads, let/const/var declarations, assignments and compound assignments, prefix/postfix updates, global/module/import loads, global stores and property/computed loads and stores. Other syntax is declined. Blocks, if/else, returns/throws (including subsequent unreachable code), ternaries, logical &&/||/??, while loops and unlabeled break/continue are also admitted. Call/new expressions, named and computed method calls, spread arguments and direct optional calls are admitted. Typed/optional/rest/destructured parameters and nested function creation remain outside this seam.
 
 Literal strings use the parser's deterministic UTF-16 `written` escape alphabet, including newlines, backslashes and surrogate pairs. Source positions are converted from the port parser's UTF-16 indexes to Go's UTF-8 byte positions before becoming places or instruction spans. Concise arrows return the expression place directly; block returns copy into the shared returns place, matching Go. Identifiers/declarations and parameter versions come from the imported SSA implementation, not a local replacement.
 
@@ -24,13 +24,13 @@ The new coverage driver consumes the entire census and emits either a dump or an
 
 The Go hir-v1 adapter now serializes all instruction/terminal payload variants, phis, nested functions, context declarations and outlined function references, including orphan instructions retained in the complete table. General payloads use sorted JSON field names; AST references are stable kind/span handles. Existing Primitive, LoadLocal, UnaryExpression and BinaryExpression records use the explicit field formats implemented by the slice. Scopes remain `scopes -` at construction; scope analysis has not run. The adapter does not infer or normalize IDs to hide differences.
 
-Eight semantic mutants are caught on both Node and native Adamic: literal boolean flip; binary right operand replaced by left; unary operator replaced by plus; comma returning left; parameter moved to context; return store replaced by nil; concise arrow returning the unused returns slot; inferred function name omitted. They compile and execute successfully before their answers disagree.
+The original eight semantic mutants are retained on both Node and native Adamic: literal boolean flip; binary right operand replaced by left; unary operator replaced by plus; comma returning left; parameter moved to context; return store replaced by nil; concise arrow returning the unused returns slot; inferred function name omitted. They compile and execute successfully before their answers disagree.
 
 ## Remaining unit 2 work
 
 1. Complete the remaining core variants and terminal/edge visitors. The multi-block adapter and complete instruction-table dump now cover the admitted control-flow paths.
 2. Complete captures and contextual binding reads/writes through the resident checker. Local/parameter reads, versioned declarations, module/import classification and checker-less test behavior now match the admitted census. No lexical-only approximation has been introduced. `stage1/cohere/lint/context.ts` already provides `context.checker`; its `Checker.ask` bridge must support the symbol identity/binding queries needed by Go lower.go:1245 onward, rather than inventing local IDs independently of checker resolution.
-3. Lower destructuring, calls/new/spread, object/array/template/regex/type-cast/await/yield forms, JSX, nested function tables, context identifiers, and optional-chain control flow. Give each major path a caught native/Node mutant and an exact corpus dump comparison.
+3. Lower destructuring, object/array/template/regex/type-cast/await/yield forms, JSX, nested function tables, context identifiers, and optional-chain control flow. Give each major path a caught native/Node mutant and an exact corpus dump comparison.
 4. Add switch, do/for/iterator loops, labeled break/continue and exception/finally terminals. If/else, ternaries, short-circuit expressions, while and unlabeled jumps now match. Finish the adapter using the imported SSA graph and construct modules. Keep structural fallthrough separate from real predecessors.
 5. Implement the actual rule-context `ForFunction` cache and cheap spelling gate, clone/full visitors, and postdominator/control-dominator analyses. Construct each cached function exactly once and preserve source/checker handles for rule consumers.
 6. Reach 1,465/1,465 (or the freshly exported count after a pin/input change), with all declines eliminated or specifically escalated as language/source gaps. Supply private corpora to eliminate relevant environment skips; resolve Flow through the agreed parser boundary rather than claiming it was tested.
@@ -146,3 +146,37 @@ loops, switch/labels, exception/finally and optional chains. JSX, live ForFuncti
 integration/cache, full visitors/cloning/postdominators and static-components remain
 unfinished. No rule is claimed green at this seam, and no blocking Adamic language
 gap was encountered.
+
+
+## Calls and constructors: verified local checkpoint
+
+Adds CallExpression, MethodCall, NewExpression and ordered argument records, including
+spread flags and direct optional calls. A named method emits a string primitive at
+the property-name span and retains the receiver; computed methods evaluate the key.
+The callee/receiver/key precede left-to-right arguments. Parenthesized methods follow
+Go's plain-call path. Generic call/new type arguments are erased. All operand visits
+run through the existing imported SSA construction, with the original evaluation order.
+
+React origins currently resolve direct named/default/namespace imports and same-file
+const aliases using resident compiler symbol identities and exact declaration spans.
+Import renames, namespace/default member access, string computed members and cyclic
+const aliases are handled. General cross-file barrel re-exports and aliased-symbol
+chains still need generic compiler export-shape facts and the complete export-origin
+resolver; the current corpus matches do not certify that missing path.
+
+The owner changed the push policy during this checkpoint: push only after a whole
+unit's own fixtures, tests and mutants pass locally. This checkpoint stays local;
+unit 2 is unfinished. Next: closures/context bindings, the remaining expression and
+control-flow forms, JSX, ForFunction integration and static-components. The original
+Flow exclusions and 45 skipped-test unit assignments remain unchanged.
+
+
+Final local comparison: **222/1,465 corpus functions**, an increase of **110**
+over 112; **24/24 probes**, hence 246/1,489 with probes. Active non-Flow coverage
+is 222/1,442. Direct optional calls add a witness but do not independently move the
+corpus count. All **29 lowering mutants** compile, run and disagree with the oracle
+on both Node and native. The five new mutations remove a spread flag, substitute the
+method receiver, substitute the constructor callee, clear React origins, and clear
+optional-call status. The retained 12-case regression and its return-store mutant
+pass. All 22 resident symbol selectors and the identity-collapse mutant also pass.
+No unit gate or push was initiated. This is a local partial checkpoint of unit 2.
