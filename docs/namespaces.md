@@ -331,3 +331,17 @@ inside debug.ts; the production whole-file build still fails its dependency
 checker errors. The component report includes the exact remaining-site ledger,
 raw findings and failed production build. Existing post-initialization and
 unresolved-before-initialization Debug reads remain held to Node.
+
+## Host declaration namespaces and sys.ts initialization
+
+Ambient namespace declarations describe existing host values. They have no
+executable body and are excluded from namespace initialization reachability,
+including nested declarations inheriting ambient context and declaration files.
+This lifts sys.ts's false pending-namespace reads of fs.realpathSync.native and
+process.cwd. It does not register new host operations or admit authored ambient
+namespace implementations. Unsupported host members retain their named NotYet.
+Executable namespaces retain SCC reachability and runtime readiness checks.
+
+The [sys initialization report](../stage3/namespace-init-sys/REPORT.md) records
+exact host reductions, Node observations, both backend diagnostics, runnable
+structural controls, the reaching-access mutant and the production rerun.
