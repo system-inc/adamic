@@ -76,6 +76,11 @@ func (l *lowering) stringConversion(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) stringConversionValue(node *ast.Node, value ir.Expression) (ir.Expression, error) {
+	if node.Parent != nil && node.Parent.Kind == ast.KindTemplateSpan {
+		proven := l.concrete(l.checker.GetTypeAtLocation(node))
+		scalar := value.Type() == ir.Number || value.Type() == ir.Boolean || value.Type() == ir.MaybeNumber || value.Type() == ir.MaybeBoolean || value.Type() == ir.Union
+		if value.Type() == ir.String || (!scalar && proven.Flags()&(checker.TypeFlagsNull|checker.TypeFlagsUndefined) != 0) { return l.spelled(node, value), nil }
+	}
 	if l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
 		return ir.Effects{Body: []ir.Statement{ir.Evaluate{Value: value}}, Result: ir.StringConstant{Index: l.constant("undefined")}}, nil
 	}

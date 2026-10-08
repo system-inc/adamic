@@ -249,8 +249,6 @@ typedef struct adamic_object {
 	adamic_heap heap;
 	const adamic_shape *shape;
 	const adamic_class *class;
-	// An ordinary counted graph edge; never exempt from ownership proofs.
-	adamic_object *prototype;
 	bool frozen;
 	bool tuple;
 	adamic_value slots[];
