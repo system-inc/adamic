@@ -67,6 +67,20 @@ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) libraryMathNumberCall(node *ast.Node) (ir.Expression, bool, error) {
 	callee := ast.SkipParentheses(node.AsCallExpression().Expression)
 	written := node.AsCallExpression().Arguments.Nodes
+	if l.isLibraryGlobal(callee, "isNaN") || l.isLibraryGlobal(callee, "isFinite") {
+		name := callee.Text()
+		if len(written) != 1 || hasSpread(node) {
+			return nil, true, l.notYet(node, name+" with spread or other than one argument")
+		}
+		value, err := l.expression(written[0])
+		if err != nil {
+			return nil, true, err
+		}
+		if value.Type() != ir.Number {
+			return nil, true, l.notYet(node, name+" without a proven number argument")
+		}
+		return ir.NumberCall{Function: name, Arguments: []ir.Expression{value}}, true, nil
+	}
 	if l.isLibraryGlobal(callee, "Number") {
 		if len(written) == 0 {
 			return ir.NumberConstant{}, true, nil
