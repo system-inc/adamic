@@ -220,8 +220,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 			item = item.AsSpreadElement().Expression
 		}
 		var value ir.Expression
+		var spreadElement ir.Type
 		if spread {
-			value, _, err = l.iterated(item)
+			value, spreadElement, err = l.iterated(item)
 		} else {
 			value, err = l.expression(item)
 		}
@@ -232,7 +233,9 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 			if value.Type() != ir.Array {
 				return nil, l.notYet(item, "spreading a "+typeName(value.Type())+" among other elements")
 			}
-			if _, other, err := l.iteratedType(item); err != nil || other != element {
+			// iterated already proved the representation of the values it collects.
+			// Asking elementType again mistakes a Set, Map or string for an array.
+			if spreadElement != element {
 				return nil, l.notYet(item, "spreading an array of other elements")
 			}
 			spreads = true

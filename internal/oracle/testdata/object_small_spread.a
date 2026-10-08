@@ -1,0 +1,14 @@
+const words = new Set<string>(['one', 'two']);
+function mutate(): string {
+    words.add(`built-${words.size}`);
+    return 'middle';
+}
+console.log(['first', ...words, mutate(), ...words, 'last'].join('|'));
+console.log(['start', ...'A🌍B', 'end'].join('|'));
+const map = new Map<string, string>([['key', `value-${words.size}`]]);
+console.log(['keys', ...map.keys(), 'done'].join('|'));
+console.log(['values', ...map.values(), 'done'].join('|'));
+const entries: (readonly [string, string])[] = [['before', 'entry'], ...map, ['after', 'entry']];
+console.log(`${entries.length}: ${entries[1]?.[0]} ${entries[1]?.[1]}`);
+const array: string[] = ['array'];
+console.log([...array, 'tail'].join('|'));
