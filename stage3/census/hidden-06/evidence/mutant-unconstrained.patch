@@ -1,0 +1,11 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -66,7 +66,7 @@
+ 		}
+ 		constraint := l.checker.GetBaseConstraintOfType(proven)
+ 		if constraint == nil || constraint == proven || constraint.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsNonPrimitive|checker.TypeFlagsTypeParameter) != 0 {
+-			return 0, false
++			return ir.Number, true
+ 		}
+ 		// A scalar constraint proves its storage even for a narrower literal. An
+ 		// object constraint does not: structural subtypes can be arrays or callable.
