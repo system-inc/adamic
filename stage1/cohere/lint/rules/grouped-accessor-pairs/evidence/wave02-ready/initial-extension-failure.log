@@ -1,0 +1,120 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestWave02ReadyParity
+    wave02_certification_test.go:14: checker compilation phases: load=248.384554ms lower=9.400190554s C=787.369771ms JavaScript=38.186637ms
+    wave02_certification_test.go:14: checker native build: 1m16.567417513s
+    lint_test.go:295: cohere cases: 5468 unique source/rule/options combinations
+=== RUN   TestWave02ReadyParity/typescript-no-restricted-types
+    wave02_certification_test.go:24: upstream case count: 52
+    wave02_certification_test.go:28: Go, Node, emitted JavaScript, native identical: 12773 bytes
+=== RUN   TestWave02ReadyParity/base-consistency-no-bare-throw
+    wave02_certification_test.go:24: upstream case count: 51
+    wave02_certification_test.go:28: Node: case 20 line 62: port "/tmp/adamic-gate/lint-shared-1365562488/upstream-674417245/case-1108/repository/source/modules/thing/Service.test.a:1:35", Go "fixed\texport function f(): void { throw new Error('x'); }\\u000a"
+        Go context:
+          base/consistency-no-bare-throw  This throws a bare `Error`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 34 48 bareThrow 			34 48
+        fixed	export function f(): void { throw new Error('x'); }\u000a
+        case 20
+        fixed	export function f(): void { throw new Error('x'); }\u000a
+        case 21
+        fixed	export function f(): void { throw new Error('x'); }
+        case 22
+        fixed	export async function f(): Promise<void> { throw await makeError(); }
+=== RUN   TestWave02ReadyParity/grouped-accessor-pairs
+    wave02_certification_test.go:24: upstream case count: 160
+    wave02_certification_test.go:28: Go, Node, emitted JavaScript, native identical: 30068 bytes
+--- FAIL: TestWave02ReadyParity (285.34s)
+    --- PASS: TestWave02ReadyParity/typescript-no-restricted-types (0.77s)
+    --- FAIL: TestWave02ReadyParity/base-consistency-no-bare-throw (0.53s)
+    --- PASS: TestWave02ReadyParity/grouped-accessor-pairs (0.73s)
+=== CONT  TestMutants
+=== RUN   TestMutants/allowed_restricted_type_ban_reported
+=== PAUSE TestMutants/allowed_restricted_type_ban_reported
+=== RUN   TestMutants/AggregateError_container_reported
+=== PAUSE TestMutants/AggregateError_container_reported
+=== RUN   TestMutants/ignore_duplicate_getter_exemption
+=== PAUSE TestMutants/ignore_duplicate_getter_exemption
+=== CONT  TestMutants/allowed_restricted_type_ban_reported
+=== CONT  TestMutants/ignore_duplicate_getter_exemption
+=== CONT  TestMutants/AggregateError_container_reported
+=== NAME  TestMutants/allowed_restricted_type_ban_reported
+    lint_test.go:858: checker compilation phases: load=376.868972ms lower=10.524639431s C=977.668369ms JavaScript=36.924142ms
+=== NAME  TestMutants/ignore_duplicate_getter_exemption
+    lint_test.go:858: checker compilation phases: load=389.100708ms lower=10.717521625s C=1.110941425s JavaScript=87.425766ms
+=== NAME  TestMutants/AggregateError_container_reported
+    lint_test.go:858: checker compilation phases: load=301.662597ms lower=10.761470582s C=1.083402209s JavaScript=63.806152ms
+=== NAME  TestMutants/allowed_restricted_type_ban_reported
+    lint_test.go:864: allowed restricted type ban reported caught on Node: case 88 line 4600: port "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:2:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:2:18
+          @typescript-eslint/no-restricted-types  Don't use `Bar` as a type.
+        
+        range 33 36 bannedTypeMessage 			33 36
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:3:12
+    lint_test.go:864: allowed restricted type ban reported caught on emitted JavaScript: case 88 line 4600: port "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:1:12", Go "/tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:2:18"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:2:18
+          @typescript-eslint/no-restricted-types  Don't use `Bar` as a type.
+        
+        range 33 36 bannedTypeMessage 			33 36
+        /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported2536493773/019/typescript-no-restricted-types-0.ts:3:12
+=== NAME  TestMutants/AggregateError_container_reported
+    lint_test.go:864: AggregateError container reported caught on Node: case 88 line 4608: port "/tmp/adamic-gate/TestMutantsAggregateError_container_reported2453133153/019/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow 			6 20
+        /tmp/adamic-gate/TestMutantsAggregateError_container_reported2453133153/019/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow 			28 46
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+    lint_test.go:864: AggregateError container reported caught on emitted JavaScript: case 88 line 4608: port "/tmp/adamic-gate/TestMutantsAggregateError_container_reported2453133153/019/base-consistency-no-bare-throw-0.ts:3:7", Go "fixed\tthrow new Error('x');\\u000athrow new TypeError('x');\\u000athrow new AggregateError([], 'container');\\u000athrow new Errors.Validation('x');\\u000a"
+        Go context:
+        range 6 20 bareThrow 			6 20
+        /tmp/adamic-gate/TestMutantsAggregateError_container_reported2453133153/019/base-consistency-no-bare-throw-0.ts:2:7
+          base/consistency-no-bare-throw  This throws a bare `TypeError`, which names no declared failure. Raise it through the tier that declares it, `AccountModule.error(identifier, data, cause)`, `ApiWorker.error(...)` or `Base.error(...)`. A bare throw carries no identifier, so the board groups it by its message and one interpolated value mints one identity per value, and it normalizes to 500, so a refusal reads as our fault.
+        
+        range 28 46 bareThrow 			28 46
+        fixed	throw new Error('x');\u000athrow new TypeError('x');\u000athrow new AggregateError([], 'container');\u000athrow new Errors.Validation('x');\u000a
+=== NAME  TestMutants/ignore_duplicate_getter_exemption
+    lint_test.go:864: ignore duplicate getter exemption caught on Node: case 88 line 4604: port "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 88
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped 			40 49
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped 			177 186
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+    lint_test.go:864: ignore duplicate getter exemption caught on emitted JavaScript: case 88 line 4604: port "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:1:123", Go "/tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:2:30"
+        Go context:
+        case 88
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:1:41
+          grouped-accessor-pairs  Accessor pair getter 'value' and setter 'value' should be grouped.
+        
+        range 40 49 notGrouped 			40 49
+        /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption26227295/019/grouped-accessor-pairs-0.ts:2:30
+          grouped-accessor-pairs  Accessor pair getter and setter should be grouped.
+        
+        range 177 186 notGrouped 			177 186
+        fixed	class Group { get value() {} other() {} set value(input) {} get duplicate() {} other2() {} get duplicate() {} other3() {} set duplicate(input) {} }\u000a({ get [key]() {}, other: 1, set [key](input) {} });\u000a
+--- PASS: TestMutants (0.03s)
+    --- PASS: TestMutants/allowed_restricted_type_ban_reported (13.90s)
+    --- PASS: TestMutants/AggregateError_container_reported (14.14s)
+    --- PASS: TestMutants/ignore_duplicate_getter_exemption (14.19s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	299.716s
+FAIL

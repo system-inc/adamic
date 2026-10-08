@@ -1,0 +1,91 @@
+package lint
+
+import (
+	"bytes"
+	"encoding/json"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Exercise each owned rule on every captured upstream row and its configured witnesses.
+// Uses the shared comparison unchanged, including its three runtimes and Go oracle.
+func TestWave02ReadyParity(t *testing.T) {
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t)
+	binary := buildPort(t, directory, true)
+	cases := upstream(t)
+	for _, descriptor := range prepareRegistry(t, directory) {
+		if descriptor.Name != "grouped-accessor-pairs" && descriptor.Name != "base/consistency-no-bare-throw" && descriptor.Name != "@typescript-eslint/no-restricted-types" {
+			continue
+		}
+		t.Run(descriptor.Slug, func(t *testing.T) {
+			var rows []string
+			for _, row := range cases {
+				fields := strings.Split(row, "\t")
+				if len(fields) > 1 && fields[1] == descriptor.Name {
+					rows = append(rows, row)
+				}
+			}
+			t.Logf("upstream case count: %d", len(rows))
+			for _, row := range ownedWitnessRows(t, directory, descriptor) {
+				rows = append(rows, row, strings.SplitN(row, "\t", 2)[0]+"\tall")
+			}
+			compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
+		})
+	}
+}
+
+// Native certification is per rule, in addition to the shared canary gate.
+func TestWave02ReadyMutants(t *testing.T) {
+	oracle := goOracle(t)
+	cases := upstream(t)
+	for _, descriptor := range prepareRegistry(t, ".") {
+		if descriptor.Name != "grouped-accessor-pairs" && descriptor.Name != "base/consistency-no-bare-throw" && descriptor.Name != "@typescript-eslint/no-restricted-types" {
+			continue
+		}
+		t.Run(descriptor.Slug, func(t *testing.T) {
+			var rows []string
+			for _, row := range cases {
+				fields := strings.Split(row, "\t")
+				if len(fields) > 1 && fields[1] == descriptor.Name {
+					rows = append(rows, row)
+				}
+			}
+			rows = append(rows, ownedWitnessRows(t, ".", descriptor)...)
+			path := manifest(t, recoveryRows(t, oracle, rows))
+			want := execute(t, "", oracle, "--manifest", path).output
+			data, err := os.ReadFile(filepath.Join("rules", descriptor.Slug, "mutant.json"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			var change struct{ Name, File, From, To string }
+			if err := json.Unmarshal(data, &change); err != nil {
+				t.Fatal(err)
+			}
+			if change.File == "" {
+				change.File = descriptor.Module
+			}
+			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			binary := buildMutantPort(t, directory)
+			sides := []struct {
+				name string
+				run  execution
+			}{
+				{"Node", node(t, directory, path, false)},
+				{"emitted JavaScript", emittedNode(t, directory, path, false)},
+				{"sanitized native", execute(t, "", binary, "--manifest", path)},
+			}
+			for _, side := range sides {
+				if bytes.Equal(side.run.output, want) {
+					t.Fatalf("%s survived on %s", change.Name, side.name)
+				}
+				t.Logf("%s caught on %s: %s", change.Name, side.name, difference(side.run.output, want))
+			}
+		})
+	}
+}

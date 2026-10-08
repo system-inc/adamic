@@ -1,0 +1,4 @@
+throw new Error('x');
+throw new TypeError('x');
+throw new AggregateError([], 'container');
+throw new Errors.Validation('x');

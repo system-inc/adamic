@@ -1,0 +1,37 @@
+=== RUN   TestRulesAgree
+=== PAUSE TestRulesAgree
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestRulesAgree
+=== CONT  TestMutants
+=== CONT  TestOwnedWitnesses
+=== RUN   TestMutants/allowed_restricted_type_ban_reported
+=== PAUSE TestMutants/allowed_restricted_type_ban_reported
+=== RUN   TestMutants/AggregateError_container_reported
+=== PAUSE TestMutants/AggregateError_container_reported
+=== RUN   TestMutants/ignore_duplicate_getter_exemption
+=== PAUSE TestMutants/ignore_duplicate_getter_exemption
+=== CONT  TestMutants/allowed_restricted_type_ban_reported
+=== CONT  TestMutants/ignore_duplicate_getter_exemption
+=== CONT  TestMutants/AggregateError_container_reported
+=== NAME  TestRulesAgree
+    lint_test.go:372: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.a:87:30: stage 0 can't lower an array of never yet
+--- FAIL: TestRulesAgree (120.57s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: /workspace/adamic/stage1/cohere/lint/rules/typescript-no-restricted-types/rule.a:87:30: stage 0 can't lower an array of never yet
+--- FAIL: TestOwnedWitnesses (120.57s)
+=== NAME  TestMutants/allowed_restricted_type_ban_reported
+    lint_test.go:858: /tmp/adamic-gate/TestMutantsallowed_restricted_type_ban_reported4212913236/024/rules/typescript-no-restricted-types/rule.a:87:30: stage 0 can't lower an array of never yet
+=== NAME  TestMutants/ignore_duplicate_getter_exemption
+    lint_test.go:858: /tmp/adamic-gate/TestMutantsignore_duplicate_getter_exemption2149439542/024/rules/typescript-no-restricted-types/rule.a:87:30: stage 0 can't lower an array of never yet
+=== NAME  TestMutants/AggregateError_container_reported
+    lint_test.go:858: /tmp/adamic-gate/TestMutantsAggregateError_container_reported3780852024/024/rules/typescript-no-restricted-types/rule.a:87:30: stage 0 can't lower an array of never yet
+--- FAIL: TestMutants (111.77s)
+    --- FAIL: TestMutants/allowed_restricted_type_ban_reported (9.91s)
+    --- FAIL: TestMutants/ignore_duplicate_getter_exemption (10.98s)
+    --- FAIL: TestMutants/AggregateError_container_reported (11.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	122.929s
+FAIL
