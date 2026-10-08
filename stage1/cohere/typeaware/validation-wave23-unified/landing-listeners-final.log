@@ -1,0 +1,24 @@
+=== RUN   TestWave23NumericListeners
+    wave_23_listener_test.go:67: eighteen rule.json name/kinds declarations match the independent Go registry
+    wave_23_listener_test.go:142: @typescript-eslint/only-throw-error listener mutant: exit 0, empty stderr, Go byte oracle catches byte 36
+    wave_23_listener_test.go:142: @typescript-eslint/prefer-promise-reject-errors listener mutant: exit 0, empty stderr, Go byte oracle catches byte 88
+    wave_23_listener_test.go:142: @typescript-eslint/prefer-reduce-type-parameter listener mutant: exit 0, empty stderr, Go byte oracle catches byte 144
+    wave_23_listener_test.go:142: nexus/correctness-no-collection-misuse listener mutant: exit 0, empty stderr, Go byte oracle catches byte 187
+    wave_23_listener_test.go:142: nexus/correctness-no-discarded-outcome listener mutant: exit 0, empty stderr, Go byte oracle catches byte 238
+    wave_23_listener_test.go:142: nexus/correctness-no-discarded-pure-result listener mutant: exit 0, empty stderr, Go byte oracle catches byte 285
+    wave_23_listener_test.go:142: no-eval listener mutant: exit 0, empty stderr, Go byte oracle catches byte 297
+    wave_23_listener_test.go:142: no-extend-native listener mutant: exit 0, empty stderr, Go byte oracle catches byte 329
+    wave_23_listener_test.go:142: no-func-assign listener mutant: exit 0, empty stderr, Go byte oracle catches byte 352
+    wave_23_listener_test.go:142: no-new-func listener mutant: exit 0, empty stderr, Go byte oracle catches byte 372
+    wave_23_listener_test.go:142: no-new-native-nonconstructor listener mutant: exit 0, empty stderr, Go byte oracle catches byte 409
+    wave_23_listener_test.go:142: no-new-wrappers listener mutant: exit 0, empty stderr, Go byte oracle catches byte 429
+    wave_23_listener_test.go:142: no-throw-literal listener mutant: exit 0, empty stderr, Go byte oracle catches byte 450
+    wave_23_listener_test.go:142: no-useless-backreference listener mutant: exit 0, empty stderr, Go byte oracle catches byte 479
+    wave_23_listener_test.go:142: prefer-arrow-callback listener mutant: exit 0, empty stderr, Go byte oracle catches byte 508
+    wave_23_listener_test.go:142: react-hooks/set-state-in-effect listener mutant: exit 0, empty stderr, Go byte oracle catches byte 544
+    wave_23_listener_test.go:142: react-hooks/set-state-in-render listener mutant: exit 0, empty stderr, Go byte oracle catches byte 580
+    wave_23_listener_test.go:142: react-hooks/static-components listener mutant: exit 0, empty stderr, Go byte oracle catches byte 614
+    wave_23_listener_test.go:144: eighteen production registrations: 618 identical Go/native/sanitized/Node bytes
+--- PASS: TestWave23NumericListeners (12.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	12.528s

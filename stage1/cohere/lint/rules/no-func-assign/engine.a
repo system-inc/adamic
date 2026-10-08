@@ -1,0 +1,43 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { Reassign } from '../../../typeaware/reassign.ts';
+const message = "This assigns to the name a function declares. The declaration is hoisted, so the assignment usually parses and runs without complaint, and what it costs shows up somewhere else: every later call of the name invokes whatever was assigned instead of the function. Inside the function's own body the mistake is quieter still, because the write happens on the first call and the second call reaches a different value. A named function expression is stricter, where the binding is immutable and the write throws in strict mode. Assign to a separate variable, or declare the function as a variable if it is meant to be replaced.";
+export class NoFuncAssign {
+    readonly rules: Rules;
+    readonly bindings: Bindings;
+    readonly writes: Reassign;
+    readonly anchors: number[] = [];
+    readonly names: string[] = [];
+    readonly occurrences = new Map<string, number[]>();
+    indexed = false;
+    constructor(rules: Rules, bindings: Bindings) { this.rules = rules; this.bindings = bindings; this.writes = new Reassign(rules); }
+    first(index: number): number { return this.bindings.list(index, 'binding-declarations', false)[0] ?? -1; }
+    visit(node: ParseNode, index: number): void {
+        const nameIndex = this.bindings.shape.name(index);
+        if(nameIndex < 0 || this.rules.parser.node(nameIndex).kind !== 'Identifier') { return; }
+        const declaration = this.first(nameIndex);
+        if(declaration < 0 || this.anchors.includes(declaration)) { return; }
+        this.anchors.push(declaration);
+        if(!this.indexed) {
+            for(let occurrence = 0; occurrence < this.rules.parser.nodes.length; occurrence++) {
+                const identifier = this.rules.parser.nodes[occurrence];
+                if(identifier === undefined || identifier.kind !== 'Identifier') { continue; }
+                let list = this.occurrences.get(identifier.text);
+                if(list === undefined) { const created: number[] = []; list = created; this.occurrences.set(identifier.text, created); }
+                list.push(occurrence);
+            }
+            this.indexed = true;
+        }
+        const name = this.rules.parser.node(nameIndex).text;
+        const occurrences = this.occurrences.get(name);
+        if(occurrences === undefined) { return; }
+        for(const occurrence of occurrences) {
+            if(!this.writes.writes(occurrence) || this.first(occurrence) !== declaration) { continue; }
+            const identifier = this.rules.parser.node(occurrence);
+            this.rules.findings.push(new Diagnostic('no-func-assign', 'noFuncAssign', message, this.rules.byte(this.rules.start(identifier)), this.rules.byte(identifier.end), ''));
+        }
+    }
+
+}

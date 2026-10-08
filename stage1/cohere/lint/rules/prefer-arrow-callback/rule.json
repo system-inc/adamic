@@ -1,0 +1,14 @@
+{
+  "name": "prefer-arrow-callback",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferArrowCallback",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferArrowCallback"
+}

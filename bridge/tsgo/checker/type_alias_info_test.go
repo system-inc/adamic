@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -29,7 +30,7 @@ func TestTypeAliasInfo(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	var node, receiver *ast.Node
@@ -72,7 +73,7 @@ func TestTypeAliasInfo(t *testing.T) {
 	for i := 0; i < count; i++ {
 		f := ast.GetSourceFileOfNode(alias.Symbol().Declarations[i])
 		at := 5 + i*3
-		if fields[at] != f.FileName() || fields[at+1] != "1" || fields[at+2] != "1" {
+		if fields[at] != string(f.FileName()) || fields[at+1] != "1" || fields[at+2] != "1" {
 			t.Fatalf("wrong origin: %q", fields)
 		}
 	}

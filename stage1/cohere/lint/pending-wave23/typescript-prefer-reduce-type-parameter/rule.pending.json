@@ -1,0 +1,18 @@
+{
+  "name": "@typescript-eslint/prefer-reduce-type-parameter",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oraclePreferReduceTypeParameter",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestPreferReduceTypeParameter",
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ]
+}

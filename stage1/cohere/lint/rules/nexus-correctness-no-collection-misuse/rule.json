@@ -1,0 +1,20 @@
+{
+  "name": "nexus/correctness-no-collection-misuse",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "BinaryExpression",
+    "ElementAccessExpression",
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleCorrectnessNoCollectionMisuse",
+  "upstreamPackage": "nexus",
+  "upstreamTest": "TestCorrectnessNoCollectionMisuse",
+  "programReads": [
+    "ReadsCompilerOptions",
+    "ReadsDefaultLibrary"
+  ]
+}

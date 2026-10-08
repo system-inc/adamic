@@ -1,0 +1,27 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { CoreReferences } from '../../../typeaware/core_references.a';
+const message = "This builds a function by compiling a string at runtime, which is eval wearing a different name. The body is invisible to the type checker, to the bundler, and to every tool that would otherwise catch a mistake in it, it cannot close over anything in the surrounding scope, and if any part of the string came from input it is a code injection. Write a real function, or take one as a parameter.";
+export class NoNewFunc {
+    readonly rules: Rules;
+    readonly references: CoreReferences;
+    constructor(rules: Rules, references: CoreReferences) { this.rules = rules; this.references = references; }
+    visit(node: ParseNode, index: number): void {
+            const calleeIndex = this.rules.skip(node.children[0] ?? -1);
+            const callee = this.rules.parser.node(calleeIndex);
+            let constructor = false;
+            if(callee.kind === 'Identifier') {
+                constructor = callee.text === 'Function' && this.references.global(calleeIndex);
+            } else if(['apply', 'bind', 'call'].includes(this.references.member(calleeIndex))) {
+                const object = this.references.object(calleeIndex);
+                if(object < 0) { return; }
+                const receiver = this.rules.skip(object); const name = this.rules.parser.node(receiver);
+                constructor = name.kind === 'Identifier' && name.text === 'Function' && this.references.global(receiver);
+            }
+            if(constructor) {
+                this.rules.findings.push(new Diagnostic('no-new-func', 'noFunctionConstructor', message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+            }
+    }
+
+}

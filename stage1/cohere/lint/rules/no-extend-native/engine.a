@@ -1,0 +1,45 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { CoreReferences } from '../../../typeaware/core_references.a';
+import { Reassign } from '../../../typeaware/reassign.ts';
+const builtins = ["AggregateError", "Array", "ArrayBuffer", "Atomics", "BigInt", "BigInt64Array", "BigUint64Array", "Boolean", "DataView", "Date", "Error", "EvalError", "FinalizationRegistry", "Float16Array", "Float32Array", "Float64Array", "Function", "Infinity", "Int16Array", "Int32Array", "Int8Array", "Intl", "Iterator", "JSON", "Map", "Math", "NaN", "Number", "Object", "Promise", "Proxy", "RangeError", "ReferenceError", "Reflect", "RegExp", "Set", "SharedArrayBuffer", "String", "Symbol", "SyntaxError", "TypeError", "URIError", "Uint16Array", "Uint32Array", "Uint8Array", "Uint8ClampedArray", "WeakMap", "WeakRef", "WeakSet"];
+const message = "This adds a property to `%s.prototype`, which every object of that type in the program shares, including ones created by code that has never heard of this file. The property shows up in every `for...in` over such an object, it silently loses to a future standard method of the same name, and nothing at the call site says where it came from. Put the function somewhere it can be imported instead.";
+export class NoExtendNative {
+    readonly rules: Rules;
+    readonly references: CoreReferences;
+    readonly assignments: Reassign;
+    readonly exceptions: string[];
+    constructor(rules: Rules, references: CoreReferences, exceptions: string[] = []) { this.rules = rules; this.references = references; this.assignments = new Reassign(rules); this.exceptions = exceptions; }
+    builtin(index: number): string {
+        if(index < 0) { return ''; }
+        const prototype = this.rules.skip(index);
+        if(this.references.member(prototype) !== 'prototype') { return ''; }
+        const object = this.references.object(prototype);
+        if(object < 0) { return ''; }
+        const receiver = this.rules.skip(object); const node = this.rules.parser.node(receiver);
+        return node.kind === 'Identifier' && builtins.includes(node.text) && !this.exceptions.includes(node.text) && this.references.global(receiver) ? node.text : '';
+    }
+    define(index: number): boolean {
+        const callee = this.rules.skip(index);
+        if(!['defineProperty', 'defineProperties'].includes(this.references.member(callee))) { return false; }
+        const object = this.references.object(callee);
+        if(object < 0) { return false; }
+        const receiver = this.rules.skip(object); const node = this.rules.parser.node(receiver);
+        return node.kind === 'Identifier' && node.text === 'Object' && this.references.global(receiver);
+    }
+    report(index: number, builtin: string): void {
+        const node = this.rules.parser.node(index);
+        this.rules.findings.push(new Diagnostic('no-extend-native', 'unexpected', message.replace('%s', builtin), this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+    }
+    visit(node: ParseNode, index: number): void { let builtin = '';
+            if(node.kind === 'BinaryExpression' && this.assignments.assignment(this.rules.parser.node(node.children[1] ?? -1).kind)) {
+                const target = this.rules.skip(node.children[0] ?? -1);
+                builtin = this.builtin(this.references.object(target));
+            } else if(node.kind === 'CallExpression' && node.list > 0 && this.define(node.children[0] ?? -1)) {
+                builtin = this.builtin(node.children[node.children.length - node.list] ?? -1);
+            }
+            if(builtin !== '') { this.report(index, builtin); }
+    }
+
+}

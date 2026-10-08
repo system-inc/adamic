@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -28,7 +29,7 @@ func TestDeclarationAncestryAndAwaitedShape(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	var result, promise *ast.Node
@@ -89,7 +90,7 @@ func TestDeclarationAncestryAndAwaitedShape(t *testing.T) {
 					first = n.AsTypeAliasDeclaration().Type.Pos()
 					last = n.AsTypeAliasDeclaration().Type.End()
 				}
-				expected := []string{strings.TrimPrefix(n.Kind.String(), "Kind"), name, strconv.Itoa(n.Pos()), strconv.Itoa(n.End()), source.FileName(), strconv.Itoa(children), strconv.Itoa(first), strconv.Itoa(last)}
+				expected := []string{strings.TrimPrefix(n.Kind.String(), "Kind"), name, strconv.Itoa(n.Pos()), strconv.Itoa(n.End()), string(source.FileName()), strconv.Itoa(children), strconv.Itoa(first), strconv.Itoa(last)}
 				if strings.Join(fields[at:at+8], "|") != strings.Join(expected, "|") {
 					t.Fatalf("ancestry mismatch: %q != %q", fields[at:at+8], expected)
 				}

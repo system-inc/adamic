@@ -1,0 +1,553 @@
+[
+  {
+    "rule": "nexus/correctness-no-collection-misuse",
+    "descriptor": "stage1/cohere/lint/rules/nexus-correctness-no-collection-misuse/rule.json",
+    "prefix": "TestCorrectnessNoCollectionMisuse",
+    "tests": [
+      {
+        "name": "TestCorrectnessNoCollectionMisuseInOnArray",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 105
+      },
+      {
+        "name": "TestCorrectnessNoCollectionMisuseInStaysSilentOnIndexesAndMembers",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 126
+      },
+      {
+        "name": "TestCorrectnessNoCollectionMisuseImpossibleSizeComparison",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 146
+      },
+      {
+        "name": "TestCorrectnessNoCollectionMisuseSizeComparisonStaysSilentWhenItCanChange",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 177
+      },
+      {
+        "name": "TestCorrectnessNoCollectionMisuseOnMapsAndSets",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 197
+      },
+      {
+        "name": "TestCorrectnessNoCollectionMisuseOnMapsAndSetsStaysSilentOnMembersAndLookalikes",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_collection_misuse_test.go",
+        "line": 224
+      }
+    ]
+  },
+  {
+    "rule": "nexus/correctness-no-discarded-pure-result",
+    "descriptor": "stage1/cohere/lint/rules/nexus-correctness-no-discarded-pure-result/rule.json",
+    "prefix": "TestCorrectnessNoDiscardedPureResult",
+    "tests": [
+      {
+        "name": "TestCorrectnessNoDiscardedPureResultFiresOnTheSlipAndNotOnItsFix",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_discarded_pure_result_test.go",
+        "line": 79
+      },
+      {
+        "name": "TestCorrectnessNoDiscardedPureResultFires",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_discarded_pure_result_test.go",
+        "line": 102
+      },
+      {
+        "name": "TestCorrectnessNoDiscardedPureResultStaysSilent",
+        "path": "cohere/internal/lint/rules/nexus/correctness_no_discarded_pure_result_test.go",
+        "line": 130
+      }
+    ]
+  },
+  {
+    "rule": "no-eval",
+    "descriptor": "stage1/cohere/lint/rules/no-eval/rule.json",
+    "prefix": "TestNoEval",
+    "tests": [
+      {
+        "name": "TestNoEvalRequiresTypedHarness",
+        "path": "cohere/internal/lint/rules/core/no_eval_test.go",
+        "line": 29
+      },
+      {
+        "name": "TestNoEvalFires",
+        "path": "cohere/internal/lint/rules/core/no_eval_test.go",
+        "line": 38
+      },
+      {
+        "name": "TestNoEvalStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_eval_test.go",
+        "line": 98
+      },
+      {
+        "name": "TestNoEvalAllowIndirect",
+        "path": "cohere/internal/lint/rules/core/no_eval_test.go",
+        "line": 169
+      },
+      {
+        "name": "TestNoEvalSpans",
+        "path": "cohere/internal/lint/rules/core/no_eval_test.go",
+        "line": 222
+      }
+    ]
+  },
+  {
+    "rule": "no-extend-native",
+    "descriptor": "stage1/cohere/lint/rules/no-extend-native/rule.json",
+    "prefix": "TestNoExtendNative",
+    "tests": [
+      {
+        "name": "TestNoExtendNativeFires",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 25
+      },
+      {
+        "name": "TestNoExtendNativeStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 87
+      },
+      {
+        "name": "TestNoExtendNativeReportsTheWholeExtension",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 129
+      },
+      {
+        "name": "TestNoExtendNativeDeclinesShapesTheCorpusOmits",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 169
+      },
+      {
+        "name": "TestNoExtendNativeDecodesItsOptions",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 198
+      },
+      {
+        "name": "TestNoExtendNativeDefaultsWithoutTheDecoder",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 229
+      },
+      {
+        "name": "TestNoExtendNativeNeedsTheTypedHarness",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 240
+      },
+      {
+        "name": "TestNoExtendNativeDeclinesReadingAPrototypeProperty",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 265
+      },
+      {
+        "name": "TestNoExtendNativeDeclinesADefineCallOnAnotherReceiver",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 300
+      },
+      {
+        "name": "TestNoExtendNativeReadsATemplateSubscript",
+        "path": "cohere/internal/lint/rules/core/no_extend_native_test.go",
+        "line": 332
+      }
+    ]
+  },
+  {
+    "rule": "no-func-assign",
+    "descriptor": "stage1/cohere/lint/rules/no-func-assign/rule.json",
+    "prefix": "TestNoFuncAssign",
+    "tests": [
+      {
+        "name": "TestNoFuncAssignFires",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 21
+      },
+      {
+        "name": "TestNoFuncAssignStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 69
+      },
+      {
+        "name": "TestNoFuncAssignPointsAtTheWrite",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 107
+      },
+      {
+        "name": "TestNoFuncAssignReportsEachWriteAtItsOwnOffset",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 158
+      },
+      {
+        "name": "TestNoFuncAssignNeedsTheTypedHarness",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 178
+      },
+      {
+        "name": "TestNoFuncAssignCoversWriteShapesUpstreamNeverExercises",
+        "path": "cohere/internal/lint/rules/core/no_func_assign_test.go",
+        "line": 203
+      }
+    ]
+  },
+  {
+    "rule": "no-new-func",
+    "descriptor": "stage1/cohere/lint/rules/no-new-func/rule.json",
+    "prefix": "TestNoNewFunc",
+    "tests": [
+      {
+        "name": "TestNoNewFuncFires",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 24
+      },
+      {
+        "name": "TestNoNewFuncStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 59
+      },
+      {
+        "name": "TestNoNewFuncReportsTheInvokingExpression",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 101
+      },
+      {
+        "name": "TestNoNewFuncFiresOnShapesTheCorpusOmits",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 139
+      },
+      {
+        "name": "TestNoNewFuncDeclinesShapesTheCorpusOmits",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 167
+      },
+      {
+        "name": "TestNoNewFuncNeedsTheTypedHarness",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 192
+      },
+      {
+        "name": "TestNoNewFuncReportsWhyItMatters",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 207
+      },
+      {
+        "name": "TestNoNewFuncDeclinesAShadowReachedThroughAMethod",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 232
+      },
+      {
+        "name": "TestNoNewFuncReadsATemplateMethodName",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 263
+      },
+      {
+        "name": "TestNoNewFuncDeclinesANumericMethodSubscript",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 284
+      },
+      {
+        "name": "TestNoNewFuncSurvivesANonIdentifierReceiver",
+        "path": "cohere/internal/lint/rules/core/no_new_func_test.go",
+        "line": 314
+      }
+    ]
+  },
+  {
+    "rule": "no-new-native-nonconstructor",
+    "descriptor": "stage1/cohere/lint/rules/no-new-native-nonconstructor/rule.json",
+    "prefix": "TestNoNewNativeNonconstructor",
+    "tests": [
+      {
+        "name": "TestNoNewNativeNonconstructorFires",
+        "path": "cohere/internal/lint/rules/core/no_new_native_nonconstructor_test.go",
+        "line": 21
+      },
+      {
+        "name": "TestNoNewNativeNonconstructorStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_new_native_nonconstructor_test.go",
+        "line": 55
+      },
+      {
+        "name": "TestNoNewNativeNonconstructorDeclinesAnImportedShadow",
+        "path": "cohere/internal/lint/rules/core/no_new_native_nonconstructor_test.go",
+        "line": 92
+      }
+    ]
+  },
+  {
+    "rule": "no-new-wrappers",
+    "descriptor": "stage1/cohere/lint/rules/no-new-wrappers/rule.json",
+    "prefix": "TestNoNewWrappers",
+    "tests": [
+      {
+        "name": "TestNoNewWrappersFires",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 24
+      },
+      {
+        "name": "TestNoNewWrappersStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 58
+      },
+      {
+        "name": "TestNoNewWrappersDeclinesAnImportedShadow",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 89
+      },
+      {
+        "name": "TestNoNewWrappersReportsWhereUpstreamsGlobalsConfigWouldNot",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 111
+      },
+      {
+        "name": "TestNoNewWrappersReportsTheWholeNewExpression",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 143
+      },
+      {
+        "name": "TestNoNewWrappersRendersTheName",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 180
+      },
+      {
+        "name": "TestNoNewWrappersOnFormsUpstreamDoesNotWrite",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 206
+      },
+      {
+        "name": "TestNoNewWrappersReportsEachViolation",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 245
+      },
+      {
+        "name": "TestNoNewWrappersIsSilentWithoutAChecker",
+        "path": "cohere/internal/lint/rules/core/no_new_wrappers_test.go",
+        "line": 261
+      }
+    ]
+  },
+  {
+    "rule": "no-throw-literal",
+    "descriptor": "stage1/cohere/lint/rules/no-throw-literal/rule.json",
+    "prefix": "TestNoThrowLiteral",
+    "tests": [
+      {
+        "name": "TestNoThrowLiteralStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 28
+      },
+      {
+        "name": "TestNoThrowLiteralFiresObject",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 71
+      },
+      {
+        "name": "TestNoThrowLiteralFiresUndef",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 109
+      },
+      {
+        "name": "TestNoThrowLiteralHandlesShapesTheCorpusOmits",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 137
+      },
+      {
+        "name": "TestNoThrowLiteralReportsTheWholeStatement",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 171
+      },
+      {
+        "name": "TestNoThrowLiteralUndefOnlyForTheGlobal",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 192
+      },
+      {
+        "name": "TestNoThrowLiteralNeedsTheTypedHarness",
+        "path": "cohere/internal/lint/rules/core/no_throw_literal_test.go",
+        "line": 202
+      }
+    ]
+  },
+  {
+    "rule": "no-useless-backreference",
+    "descriptor": "stage1/cohere/lint/rules/no-useless-backreference/rule.json",
+    "prefix": "TestNoUselessBackreference",
+    "tests": [
+      {
+        "name": "TestNoUselessBackreferenceAgreesWithESLint",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_corpus_test.go",
+        "line": 26
+      },
+      {
+        "name": "TestNoUselessBackreferenceFires",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 26
+      },
+      {
+        "name": "TestNoUselessBackreferenceStaysSilent",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 144
+      },
+      {
+        "name": "TestNoUselessBackreferenceStillReportsBesideALegacyOctal",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 265
+      },
+      {
+        "name": "TestNoUselessBackreferenceHandlesConstructorArgumentShapes",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 287
+      },
+      {
+        "name": "TestNoUselessBackreferenceIgnoresALocalRegExp",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 321
+      },
+      {
+        "name": "TestNoUselessBackreferenceDeclinesAPatternABuiltinBuilds",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 343
+      },
+      {
+        "name": "TestNoUselessBackreferencePointsAtThePattern",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 353
+      },
+      {
+        "name": "TestNoUselessBackreferenceEveryPathStartsAtTheRoot",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 399
+      },
+      {
+        "name": "TestNoUselessBackreferenceStaysSilentOnAPatternTheEngineWouldRefuse",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 438
+      },
+      {
+        "name": "TestNoUselessBackreferenceIsRegistered",
+        "path": "cohere/internal/lint/rules/core/no_useless_backreference_test.go",
+        "line": 482
+      }
+    ]
+  },
+  {
+    "rule": "prefer-arrow-callback",
+    "descriptor": "stage1/cohere/lint/rules/prefer-arrow-callback/rule.json",
+    "prefix": "TestPreferArrowCallback",
+    "tests": [
+      {
+        "name": "TestPreferArrowCallbackFires",
+        "path": "cohere/internal/lint/rules/core/prefer_arrow_callback_test.go",
+        "line": 53
+      },
+      {
+        "name": "TestPreferArrowCallbackStaysSilent",
+        "path": "cohere/internal/lint/rules/core/prefer_arrow_callback_test.go",
+        "line": 174
+      },
+      {
+        "name": "TestPreferArrowCallbackSelfReferenceIsResolvedNotMatched",
+        "path": "cohere/internal/lint/rules/core/prefer_arrow_callback_test.go",
+        "line": 254
+      },
+      {
+        "name": "TestPreferArrowCallbackHandlesNewExpressions",
+        "path": "cohere/internal/lint/rules/core/prefer_arrow_callback_test.go",
+        "line": 308
+      }
+    ]
+  },
+  {
+    "rule": "react/jsx-fragments",
+    "descriptor": "stage1/cohere/lint/rules/react-jsx-fragments/rule.json",
+    "prefix": "TestJsxFragments",
+    "tests": [
+      {
+        "name": "TestJsxFragmentsStaysSilent",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 29
+      },
+      {
+        "name": "TestJsxFragmentsFires",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 56
+      },
+      {
+        "name": "TestJsxFragmentsTypeArgumentsAreReportedAndNotRewritten",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 102
+      },
+      {
+        "name": "TestJsxFragmentsSpans",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 135
+      },
+      {
+        "name": "TestJsxFragmentsMessageText",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 188
+      },
+      {
+        "name": "TestJsxFragmentsNilOptionsUsesTheDefault",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 266
+      },
+      {
+        "name": "TestJsxFragmentsRequiresTheTypedHarness",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 281
+      },
+      {
+        "name": "TestJsxFragmentsShapesUpstreamDoesNotWrite",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 305
+      },
+      {
+        "name": "TestJsxFragmentsVersionArmIsNotPorted",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 403
+      },
+      {
+        "name": "TestJsxFragmentsSurvivorShapes",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 456
+      },
+      {
+        "name": "TestJsxFragmentsNonReactSources",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 502
+      },
+      {
+        "name": "TestJsxFragmentsDecoderRefusesWhatUpstreamRefuses",
+        "path": "cohere/internal/lint/rules/react/jsx_fragments_test.go",
+        "line": 533
+      }
+    ]
+  },
+  {
+    "rule": "react/jsx-no-undef",
+    "descriptor": "stage1/cohere/lint/rules/react-jsx-no-undef/rule.json",
+    "prefix": "TestJsxNoUndef",
+    "tests": [
+      {
+        "name": "TestJsxNoUndefFires",
+        "path": "cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+        "line": 29
+      },
+      {
+        "name": "TestJsxNoUndefStaysSilent",
+        "path": "cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+        "line": 91
+      },
+      {
+        "name": "TestJsxNoUndefNeedsTheTypedHarness",
+        "path": "cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+        "line": 158
+      },
+      {
+        "name": "TestJsxNoUndefPointsAtTheReferencedIdentifier",
+        "path": "cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+        "line": 177
+      },
+      {
+        "name": "TestJsxNoUndefAllowGlobals",
+        "path": "cohere/internal/lint/rules/react/jsx_no_undef_test.go",
+        "line": 216
+      }
+    ]
+  }
+]

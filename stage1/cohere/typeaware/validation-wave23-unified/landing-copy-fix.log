@@ -1,0 +1,13 @@
+=== RUN   TestCheckerCacheSourceByte
+    checker_cache_test.go:34: checker compilation phases: load=217.67815ms lower=5.536619055s C=869.640096ms JavaScript=45.948279ms
+    checker_cache_test.go:34: checker native build: 1m8.919217248s
+    checker_cache_test.go:34: checker compilation phases: load=198.592377ms lower=5.116068057s C=651.832213ms JavaScript=28.39106ms
+    checker_cache_test.go:34: checker native build: 5.823442329s
+    checker_cache_test.go:62: runtime 0: source-byte mutant caught by findings comparison; before=71ca1623865a80c39a60f41230725066dc9c39b60296be5d9681d592f7ed47f5 after=93a634263d8ab70e450e649ad653250fa684af0dc04b4cf710ee784e4c998ac6
+    checker_cache_test.go:62: runtime 1: source-byte mutant caught by findings comparison; before=71ca1623865a80c39a60f41230725066dc9c39b60296be5d9681d592f7ed47f5 after=93a634263d8ab70e450e649ad653250fa684af0dc04b4cf710ee784e4c998ac6
+    checker_cache_test.go:62: runtime 2: source-byte mutant caught by findings comparison; before=71ca1623865a80c39a60f41230725066dc9c39b60296be5d9681d592f7ed47f5 after=93a634263d8ab70e450e649ad653250fa684af0dc04b4cf710ee784e4c998ac6
+    checker_cache_test.go:68: generated C before=3d060d6131a9895be441d838ebe8256b0b046c0977d0926f5aea0dcbee808d75 after=0e051d8ba8176ce299b795b6d2a1ed2863c95d193e01be1868c2aec0c16a32ed; emitted JavaScript before=ff8a738e66529a1615765be7530594775e5629518ca1842c37d51542f507b9fd after=dd54b2f3661322cdc33e01049adb32ade67e4130364e494540f306e65c462e65
+    checker_cache_test.go:34: checker native build: 6.811173ms
+--- PASS: TestCheckerCacheSourceByte (94.77s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	94.825s

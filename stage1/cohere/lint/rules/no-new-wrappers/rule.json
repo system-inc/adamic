@@ -1,0 +1,14 @@
+{
+  "name": "no-new-wrappers",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "NewExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoNewWrappers",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoNewWrappers"
+}

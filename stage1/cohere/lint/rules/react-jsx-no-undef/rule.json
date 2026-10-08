@@ -1,0 +1,15 @@
+{
+  "name": "react/jsx-no-undef",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxNoUndef",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxNoUndef"
+}

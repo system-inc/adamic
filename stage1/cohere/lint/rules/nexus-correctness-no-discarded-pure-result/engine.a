@@ -1,0 +1,48 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { types } from '../../../typeaware/facts.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { nodeSymbolDetails } from '../../../typeaware/node_symbol_details.a';
+
+const stringMethods = ['at', 'charAt', 'charCodeAt', 'codePointAt', 'concat', 'endsWith', 'includes', 'indexOf', 'isWellFormed', 'lastIndexOf', 'match', 'matchAll', 'padEnd', 'padStart', 'replace', 'replaceAll', 'search', 'slice', 'split', 'startsWith', 'substr', 'substring', 'toLocaleLowerCase', 'toLocaleUpperCase', 'toLowerCase', 'toString', 'toUpperCase', 'toWellFormed', 'trim', 'trimEnd', 'trimLeft', 'trimRight', 'trimStart', 'valueOf'];
+const arrayMethods = ['at', 'concat', 'entries', 'flat', 'includes', 'indexOf', 'join', 'keys', 'lastIndexOf', 'slice', 'toReversed', 'toSorted', 'toSpliced', 'values', 'with'];
+const message = "This call computes a new value and changes nothing, and its result is thrown away, so the statement does nothing. Strings are immutable (`name.trim()` returns a trimmed copy and leaves `name` as it was), and these array methods return a new array or a value without touching the original (`list.concat(more)` does not add to `list`). Assign the result (`name = name.trim()`, `list = list.concat(more)`), use the mutating form (`list.push(...more)`), or delete the statement.";
+export class NoDiscardedPureResult {
+    readonly rules: Rules;
+    constructor(rules: Rules) { this.rules = rules; }
+    callable(index: number): boolean {
+        const value = this.rules.skip(index);
+        if(['ArrowFunction', 'FunctionExpression'].includes(this.rules.parser.node(value).kind)) { return true; }
+        const facts = types(this.rules.ask(value, 'raw-shape'), 'raw-shape');
+        if(!facts.present || facts.roots.length === 0) { return true; }
+        for(const id of facts.parts(facts.root())) {
+            const part = facts.type(id);
+            if((part.flags & 3) !== 0) { return true; }
+            const frames = new Frames(this.rules.ask(value, `call-count\n${id}`));
+            header(frames, 'call-count'); const count = frames.natural(); frames.end();
+            if(count > 0) { return true; }
+        }
+        return false;
+    }
+    check(index: number): void {
+        const statement = this.rules.parser.node(index);
+        const callIndex = this.rules.skip(statement.children[0] ?? -1);
+        const call = this.rules.parser.node(callIndex);
+        if(call.kind !== 'CallExpression') { return; }
+        const callee = this.rules.parser.node(this.rules.skip(call.children[0] ?? -1));
+        if(callee.kind !== 'PropertyAccessExpression') { return; }
+        const nameIndex = callee.children[callee.children.length - 1] ?? -1;
+        const name = this.rules.parser.node(nameIndex);
+        if(name.kind !== 'Identifier') { return; }
+        const declarations = nodeSymbolDetails(this.rules, nameIndex);
+        if(declarations.length === 0 || !declarations.every((declaration) => declaration.kind === 'MethodSignature' && declaration.ownerKind === 'InterfaceDeclaration' && declaration.library &&
+            (declaration.ownerName === 'String' ? stringMethods.includes(name.text) : ['Array', 'ReadonlyArray'].includes(declaration.ownerName) && arrayMethods.includes(name.text)))) { return; }
+        const arguments_ = call.children.slice(call.children.length - Math.max(call.list, 0));
+        if(arguments_.some((argument) => this.callable(argument))) { return; }
+        const reported = this.rules.parser.node(callIndex);
+        this.rules.findings.push(new Diagnostic('nexus/correctness-no-discarded-pure-result', 'discardedPureResult', message, this.rules.byte(this.rules.start(reported)), this.rules.byte(reported.end), ''));
+    }
+    visit(node: ParseNode, index: number): void { this.check(index); }
+
+}

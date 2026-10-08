@@ -1,0 +1,16 @@
+{
+  "name": "react/jsx-fragments",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "JsxElement",
+    "JsxSelfClosingElement",
+    "JsxFragment"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxFragments",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxFragments"
+}

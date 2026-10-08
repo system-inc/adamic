@@ -1,0 +1,43 @@
+// Compatibility for rule judgments; every fact comes from the area's run-owned checker.
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { Rules } from '../../../typeaware/rules.ts';
+import { UnaryMinus, byteOffsets } from '../../../typeaware/unary_minus.ts';
+export class RuleFacts extends Rules {
+    readonly context: RuleContext;
+    flushed = 0;
+    constructor(context: RuleContext) {
+        const checker = context.checker;
+        const program = checker === undefined ? 0 : checker.program;
+        const offsets = checker === undefined ? byteOffsets(context.source) : checker.offsets;
+        super(program, context.parser.path, context.parser, context.scanner, offsets,
+            new UnaryMinus(program, context.parser.path, context.parser, context.scanner, offsets));
+        this.context = context;
+        for(const parent of context.parents) { this.parents.push(parent); }
+    }
+    ask(index: number, question: string): string {
+        const checker = this.context.checker ?? panic('typed rule without checker');
+        const answer = checker.ask(index, question);
+        return answer.value ?? panic(answer.reason);
+    }
+    position(byte: number): number {
+        const position = this.offsets.indexOf(byte);
+        if(position < 0) { panic('finding byte offset is not a UTF-16 boundary'); }
+        return position;
+    }
+    flush(): void {
+        for(const diagnostic of this.findings.slice(this.flushed)) {
+            const edits: SuggestionEdit[] = [];
+            if(diagnostic.fixStart >= 0) { edits.push(new SuggestionEdit(this.position(diagnostic.fixStart), this.position(diagnostic.fixEnd), diagnostic.replacement)); }
+            for(const edit of diagnostic.repairs) { edits.push(new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text)); }
+            const suggestions: Suggestion[] = [];
+            for(const suggestion of diagnostic.suggestions) {
+                const repairs = suggestion.repairs.map((edit) => new SuggestionEdit(this.position(edit.start), this.position(edit.end), edit.text));
+                suggestions.push(new Suggestion(suggestion.id, suggestion.message, repairs));
+            }
+            this.context.reportRange(this.position(diagnostic.start), this.position(diagnostic.end), diagnostic.rule, diagnostic.id, diagnostic.message, edits, suggestions);
+        }
+        this.flushed = this.findings.length;
+    }
+}

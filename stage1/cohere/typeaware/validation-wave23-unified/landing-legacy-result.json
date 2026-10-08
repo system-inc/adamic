@@ -1,0 +1,26 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./stage1/cohere/typeaware",
+    "-run",
+    "^TestWave23",
+    "-count=1",
+    "-timeout=60m"
+  ],
+  "exit": 1,
+  "wall_seconds": 630.0274634029997,
+  "nproc": 5,
+  "load_start": [
+    0.10498046875,
+    0.451171875,
+    1.06591796875
+  ],
+  "load_end": [
+    1.48486328125,
+    1.22705078125,
+    1.14697265625
+  ],
+  "load_peak_1m": 1.64990234375
+}

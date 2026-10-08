@@ -1,0 +1,14 @@
+{
+  "name": "no-throw-literal",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "ThrowStatement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoThrowLiteral",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoThrowLiteral"
+}

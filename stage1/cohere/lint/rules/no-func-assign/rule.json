@@ -1,0 +1,15 @@
+{
+  "name": "no-func-assign",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "FunctionDeclaration",
+    "FunctionExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoFuncAssign",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoFuncAssign"
+}

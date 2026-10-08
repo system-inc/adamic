@@ -42,7 +42,7 @@ func (p *Program) declarationAncestry(out *fields, question string) error {
 			out.number(uint64(n.End()))
 			path := ""
 			if source := ast.GetSourceFileOfNode(n); source != nil {
-				path = source.FileName()
+				path = string(source.FileName())
 			}
 			out.text(path)
 			count := 0

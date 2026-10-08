@@ -1,0 +1,45 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-timeout=90m"
+  ],
+  "exit": 1,
+  "wall_seconds": 2610.144738733,
+  "nproc": 5,
+  "load_start": [
+    0.689453125,
+    1.30224609375,
+    1.271484375
+  ],
+  "load_end": [
+    1.7099609375,
+    1.8291015625,
+    2.43115234375
+  ],
+  "load_peak_1m": 5.3017578125,
+  "top_level_counts": {
+    "pass": 31,
+    "skip": 1,
+    "fail": 3
+  },
+  "including_subtest_counts": {
+    "pass": 123,
+    "skip": 1,
+    "fail": 3
+  },
+  "failed_tests": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees",
+    "TestRulesAgree"
+  ],
+  "skipped_tests": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "registered_mutants_caught": 88,
+  "owned_unified_mutants_caught": 13,
+  "input_skips": 0
+}

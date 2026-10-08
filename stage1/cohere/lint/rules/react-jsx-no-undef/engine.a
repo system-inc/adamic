@@ -1,0 +1,52 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+
+const message = 'This JSX tag names a component that has no declaration in scope, so React receives `undefined` where a component was meant and throws at render rather than at build. Almost always a misspelling or a missing import. Import the component, or fix the spelling to match the binding you meant.';
+export const jsxNoUndefKinds: readonly string[] = ['JsxOpeningElement', 'JsxSelfClosingElement'];
+
+export class JsxNoUndef {
+    readonly rules: Rules;
+    readonly allowGlobals: boolean;
+    constructor(rules: Rules, allowGlobals = false) {
+        this.rules = rules;
+        this.allowGlobals = allowGlobals;
+    }
+    // The driver has already selected an opening or self-closing element.
+    visit(node: ParseNode, index: number): void {
+        let reference = node.children[0] ?? -1;
+        if(reference < 0) { return; }
+        let name = this.rules.parser.node(reference);
+        const member = name.kind === 'PropertyAccessExpression';
+        while(name.kind === 'PropertyAccessExpression') {
+            reference = name.children[0] ?? -1;
+            if(reference < 0) { return; }
+            name = this.rules.parser.node(reference);
+        }
+        if(name.kind !== 'Identifier') { return; }
+        if(!member) {
+            const first = name.text.charCodeAt(0);
+            if(name.text.length === 0 || name.text.includes('-') || (first >= 97 && first <= 122)) { return; }
+        }
+        const facts = new Frames(this.rules.ask(reference, 'binding-declarations'));
+        header(facts, 'binding-declarations');
+        const present = facts.yes();
+        let local = false;
+        if(present) {
+            facts.natural();
+            const count = facts.natural();
+            for(let at = 0; at < count; at++) {
+                const path = facts.field();
+                facts.field();
+                facts.natural();
+                facts.natural();
+                if(path === this.rules.path) { local = true; }
+            }
+        }
+        facts.end();
+        if(present && (this.allowGlobals || this.rules.path.endsWith('.cjs') || local)) { return; }
+        this.rules.findings.push(new Diagnostic('jsx-no-undef', 'jsxIdentifierNotDefined', message,
+            this.rules.byte(this.rules.start(name)), this.rules.byte(name.end), 'react/'));
+    }
+}

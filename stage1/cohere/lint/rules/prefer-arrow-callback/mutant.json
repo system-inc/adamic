@@ -1,0 +1,5 @@
+{
+  "name": "prefer-arrow-callback verdict omitted",
+  "from": "this.engine.run(index);",
+  "to": "if(index < 0) { this.engine.run(index); }"
+}

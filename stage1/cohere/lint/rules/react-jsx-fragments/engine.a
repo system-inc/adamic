@@ -1,0 +1,60 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { jsxDeclarationSyntax, JsxInitializerSyntax } from '../../../typeaware/jsx_declaration_syntax.a';
+
+export const jsxFragmentsKinds: readonly string[] = ['JsxElement', 'JsxSelfClosingElement', 'JsxFragment'];
+const shorthand = 'Prefer fragment shorthand over React.Fragment. The shorthand `<>` says the same thing with less to read, and a named fragment that carries no props is only the long spelling of it.';
+const pragma = 'Prefer React.Fragment over fragment shorthand. The named form is the one this file is configured to use, and it is the only spelling that can carry a `key`.';
+export class JsxFragments {
+    readonly rules: Rules;
+    readonly element: boolean;
+    constructor(rules: Rules, element = false) { this.rules = rules; this.element = element; }
+    initializer(raw: string): boolean {
+        if(raw === '') { return false; }
+        const syntax = new JsxInitializerSyntax(raw);
+        if(syntax.index < 0) { return false; }
+        const parser = syntax.parser;
+        const node = parser.node(syntax.index);
+        if(node.kind === 'Identifier') { return node.text === 'React'; }
+        if(node.kind === 'PropertyAccessExpression') {
+            const object = parser.node(node.children[0] ?? -1);
+            const property = parser.node(node.children[node.children.length - 1] ?? -1);
+            return object.kind === 'Identifier' && object.text === 'React' && property.kind === 'Identifier' && property.text === 'Fragment';
+        }
+        if(node.kind === 'CallExpression' && node.list > 0) {
+            const callee = parser.node(node.children[0] ?? -1);
+            const first = parser.node(node.children[node.children.length - node.list] ?? -1);
+            return callee.kind === 'Identifier' && callee.text === 'require' &&
+                ['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(first.kind) && first.text === 'react';
+        }
+        return false;
+    }
+    fragment(index: number): boolean {
+        const tag = this.rules.parser.node(index);
+        if(tag.kind === 'PropertyAccessExpression') {
+            const object = this.rules.parser.node(tag.children[0] ?? -1);
+            const property = this.rules.parser.node(tag.children[tag.children.length - 1] ?? -1);
+            return object.kind === 'Identifier' && object.text === 'React' && property.kind === 'Identifier' && property.text === 'Fragment';
+        }
+        if(tag.kind !== 'Identifier') { return false; }
+        for(const declaration of jsxDeclarationSyntax(this.rules, index)) {
+            if(declaration.kind === 'ImportSpecifier' && declaration.imported === 'Fragment' && declaration.module === 'react') { return true; }
+            if(declaration.kind === 'BindingElement' && declaration.parent === 'ObjectBindingPattern' && declaration.grand === 'VariableDeclaration' && this.initializer(declaration.initializer)) { return true; }
+            if(declaration.kind === 'VariableDeclaration' && this.initializer(declaration.initializer)) { return true; }
+        }
+        return false;
+    }
+    // Only declared listeners call this entry; kind distinguishes their behavior.
+    visit(node: ParseNode, index: number): void {
+        if(node.kind === 'JsxFragment') {
+            if(this.element) { this.rules.findings.push(new Diagnostic('jsx-fragments', 'preferPragma', pragma, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'react/')); }
+            return;
+        }
+        if(this.element) { return; }
+        const opening = node.kind === 'JsxElement' ? this.rules.parser.node(node.children[0] ?? -1) : node;
+        const attributes = this.rules.parser.node(opening.children[opening.children.length - 1] ?? -1);
+        if(attributes.children.length !== 0 || !this.fragment(opening.children[0] ?? -1)) { return; }
+        this.rules.findings.push(new Diagnostic('jsx-fragments', 'preferFragment', shorthand, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), 'react/'));
+    }
+}

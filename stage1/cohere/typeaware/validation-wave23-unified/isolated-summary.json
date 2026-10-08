@@ -1,0 +1,135 @@
+{
+  "wall_seconds": 574.6239301100004,
+  "rules": {
+    "nexus/correctness-no-collection-misuse": {
+      "pass": 6,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 0.4384089479999602,
+      "native_seconds": 0.6860062889991241,
+      "Node_seconds": 1.9000325289989632,
+      "emitted_seconds": 0.6869566209988989,
+      "identical_bytes": 17519
+    },
+    "nexus/correctness-no-discarded-pure-result": {
+      "pass": 22,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 1.539618866998353,
+      "native_seconds": 2.5281125330002396,
+      "Node_seconds": 6.9658580149989575,
+      "emitted_seconds": 2.3693168570016496,
+      "identical_bytes": 17744
+    },
+    "no-eval": {
+      "pass": 91,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 6.753942736998397,
+      "native_seconds": 10.46021692299928,
+      "Node_seconds": 29.518396232998384,
+      "emitted_seconds": 9.015245619008056,
+      "identical_bytes": 26656
+    },
+    "no-extend-native": {
+      "pass": 60,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 4.257320356998207,
+      "native_seconds": 6.8964602000014565,
+      "Node_seconds": 19.01502840900139,
+      "emitted_seconds": 5.362722486992425,
+      "identical_bytes": 17372
+    },
+    "no-func-assign": {
+      "pass": 48,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 3.7684147810005015,
+      "native_seconds": 5.616808736002895,
+      "Node_seconds": 16.172119218997068,
+      "emitted_seconds": 5.056470185003491,
+      "identical_bytes": 25615
+    },
+    "no-new-func": {
+      "pass": 41,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 2.8194336739998107,
+      "native_seconds": 4.699244987001293,
+      "Node_seconds": 13.264248145001147,
+      "emitted_seconds": 3.845834563999233,
+      "identical_bytes": 14731
+    },
+    "no-new-native-nonconstructor": {
+      "pass": 15,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 1.0147882680003022,
+      "native_seconds": 1.6702527139977974,
+      "Node_seconds": 4.611113228000249,
+      "emitted_seconds": 1.1630191430003833,
+      "identical_bytes": 3127
+    },
+    "no-new-wrappers": {
+      "pass": 23,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 1.7654068329975416,
+      "native_seconds": 2.6533003500017003,
+      "Node_seconds": 7.360604225001225,
+      "emitted_seconds": 2.3361387999993894,
+      "identical_bytes": 7574
+    },
+    "no-throw-literal": {
+      "pass": 47,
+      "fail": 0,
+      "blocked-oracle": 1,
+      "Go_seconds": 3.2952333649973298,
+      "native_seconds": 5.261272594002548,
+      "Node_seconds": 15.064898751003057,
+      "emitted_seconds": 4.481719311998859,
+      "identical_bytes": 10962
+    },
+    "no-useless-backreference": {
+      "pass": 406,
+      "fail": 0,
+      "blocked-oracle": 2,
+      "Go_seconds": 29.047639027000514,
+      "native_seconds": 45.135152590999496,
+      "Node_seconds": 129.33245669899952,
+      "emitted_seconds": 35.58549181999933,
+      "identical_bytes": 97191
+    },
+    "prefer-arrow-callback": {
+      "pass": 81,
+      "fail": 2,
+      "blocked-oracle": 0,
+      "Go_seconds": 6.16543165600433,
+      "native_seconds": 9.200197556002422,
+      "Node_seconds": 26.524546381995606,
+      "emitted_seconds": 8.31976875500186,
+      "identical_bytes": 27141
+    },
+    "react/jsx-fragments": {
+      "pass": 46,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 3.675767311998243,
+      "native_seconds": 5.371998200000235,
+      "Node_seconds": 16.38622919300269,
+      "emitted_seconds": 4.610377015003905,
+      "identical_bytes": 12310
+    },
+    "react/jsx-no-undef": {
+      "pass": 45,
+      "fail": 0,
+      "blocked-oracle": 0,
+      "Go_seconds": 5.257318105001104,
+      "native_seconds": 6.625189258999853,
+      "Node_seconds": 21.747790277001513,
+      "emitted_seconds": 5.447501336999267,
+      "identical_bytes": 12907
+    }
+  }
+}

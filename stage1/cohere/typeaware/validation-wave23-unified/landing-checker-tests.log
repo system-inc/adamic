@@ -1,0 +1,32 @@
+=== RUN   TestCallbackSymbolFacts
+    callback_symbol_facts_test.go:107: 16 identifiers, both raw/read variants agree with direct checker; computed names, shorthand/export targets and malformed questions covered
+--- PASS: TestCallbackSymbolFacts (0.01s)
+=== RUN   TestCoverageCheckerQuestions
+--- PASS: TestCoverageCheckerQuestions (0.01s)
+=== RUN   TestDeclarationAncestryAndAwaitedShape
+    declaration_ancestry_test.go:125: Raw ancestry, instantiated literal declarations, alias written type, awaited identity and malformed-question refusals match direct checker
+--- PASS: TestDeclarationAncestryAndAwaitedShape (0.01s)
+=== RUN   TestFactEncoding
+=== PAUSE TestFactEncoding
+=== RUN   TestShapeAndNameFacts
+=== PAUSE TestShapeAndNameFacts
+=== RUN   TestExactIndexMatchesCompilerNodes
+=== PAUSE TestExactIndexMatchesCompilerNodes
+=== RUN   TestJsxDeclarationSyntax
+--- PASS: TestJsxDeclarationSyntax (0.02s)
+=== RUN   TestAdamicRootKeepsConfigDeclarations
+=== PAUSE TestAdamicRootKeepsConfigDeclarations
+=== RUN   TestTypeAliasInfo
+    type_alias_info_test.go:109: Rest callback element type agrees with direct checker
+    type_alias_info_test.go:110: Readonly alias, default-library declaration and argument identity match direct checker; malformed identities refused
+--- PASS: TestTypeAliasInfo (0.01s)
+=== CONT  TestFactEncoding
+--- PASS: TestFactEncoding (0.00s)
+=== CONT  TestShapeAndNameFacts
+=== CONT  TestExactIndexMatchesCompilerNodes
+=== CONT  TestAdamicRootKeepsConfigDeclarations
+--- PASS: TestShapeAndNameFacts (0.03s)
+--- PASS: TestAdamicRootKeepsConfigDeclarations (0.12s)
+--- PASS: TestExactIndexMatchesCompilerNodes (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo/checker	0.204s

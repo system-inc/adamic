@@ -1,0 +1,54 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { BackreferenceStructure } from '../../../typeaware/backreference_structure.a';
+import { BackreferenceTracking } from '../../../typeaware/backreference_tracking.a';
+import { Bindings } from '../../../typeaware/bindings.ts';
+import { CallbackSymbols } from '../../../typeaware/callback_symbol_facts.a';
+export class NoUselessBackreference {
+    readonly rules: Rules; readonly bindings: Bindings; readonly symbols: CallbackSymbols;
+    constructor(rules: Rules, bindings: Bindings, symbols: CallbackSymbols) { this.rules = rules; this.bindings = bindings; this.symbols = symbols; }
+    report(index: number, pattern: string, flags: string): void {
+        const structure = new BackreferenceStructure(pattern, flags);
+        if(!structure.scan() || !structure.valid()) { return; }
+        for(const reference of structure.references) {
+            const groups = reference.name !== '' ? structure.groups.filter((group) => group.name === reference.name) : structure.groups.filter((group, at) => at + 1 === reference.number);
+            if(groups.length === 0) { continue; }
+            const problems = groups.map((group) => structure.classify(reference, group));
+            if(problems.includes('')) { continue; }
+            let first = 0; let count = groups.length;
+            if(problems.some((problem) => problem !== 'disjunctive')) {
+                count = 0;
+                for(let at = 0; at < problems.length; at++) { if(problems[at] !== 'disjunctive') { if(count === 0) { first = at; } count++; } }
+            }
+            const id = problems[first] ?? ''; const group = groups[first]; if(group === undefined) { continue; }
+            let reason = '';
+            if(id === 'nested') { reason = 'encloses the reference and so has captured nothing yet when it is reached'; }
+            if(id === 'disjunctive') { reason = 'sits in a different branch of the same disjunction, and only one branch ever runs'; }
+            if(id === 'forward') { reason = 'appears later in the pattern, and matching runs left to right'; }
+            if(id === 'backward') { reason = 'appears earlier in a lookbehind, which matches right to left'; }
+            if(id === 'intoNegativeLookaround') { reason = 'sits in a negative lookaround, so it only runs on a path that then fails'; }
+            const also = count === 2 ? ' (and so does one other group of that name)' : count > 2 ? ` (and so do ${count - 1} other groups of that name)` : '';
+            const message = `The backreference ${pattern.slice(reference.start, reference.end)} can never match, because ${pattern.slice(group.start, group.end)} ${reason}${also}. It matches the empty string instead of failing, so the pattern quietly matches more than it looks like it does.`;
+            const node = this.rules.parser.node(index);
+            this.rules.findings.push(new Diagnostic('no-useless-backreference', id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        if(node.kind === 'RegularExpressionLiteral') {
+            const last = node.text.lastIndexOf('/');
+            if(last > 0) { this.report(index, node.text.slice(1, last), node.text.slice(last + 1)); }
+            return;
+        }
+        if(!this.rules.parser.scanner.text.includes('RegExp')) { return; }
+        const tracker = new BackreferenceTracking(this.rules, this.bindings, this.symbols);
+        for(const callIndex of tracker.run(index)) {
+            const node = this.rules.parser.node(callIndex); if(node.list < 1) { continue; }
+            const args = node.children.slice(node.children.length - node.list);
+            const pattern = tracker.constant(args[0] ?? -1); if(!pattern.valid) { continue; }
+            const flags = node.list > 1 ? tracker.constant(args[1] ?? -1).text : '';
+            this.report(callIndex, pattern.text, flags);
+        }
+    }
+
+}

@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strings"
@@ -60,7 +61,7 @@ missing;
 		}
 		n.ForEachChild(func(child *ast.Node) bool { visit(child); return false })
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	visit(sf.AsNode())
 	if len(seen) != 3 {
 		t.Fatal("missing declaration shapes", seen)

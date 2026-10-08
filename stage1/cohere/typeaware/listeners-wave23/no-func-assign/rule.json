@@ -1,6 +1,7 @@
 {
   "name": "no-func-assign",
   "kinds": [
-    "SourceFile"
+    "FunctionExpression",
+    "FunctionDeclaration"
   ]
 }

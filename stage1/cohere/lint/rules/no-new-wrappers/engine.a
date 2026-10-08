@@ -1,0 +1,18 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { CoreReferences } from '../../../typeaware/core_references.a';
+const message = "This calls `new %s()`. Constructed, %s returns an object rather than a primitive, so the result is always truthy, compares equal to nothing by `===`, and reports its `typeof` as \"object\". Drop the `new` and call %s directly.";
+export class NoNewWrappers {
+    readonly rules: Rules;
+    readonly references: CoreReferences;
+    constructor(rules: Rules, references: CoreReferences) { this.rules = rules; this.references = references; }
+    visit(node: ParseNode, index: number): void {
+            const calleeIndex = this.rules.skip(node.children[0] ?? -1);
+            const callee = this.rules.parser.node(calleeIndex);
+            const name = callee.text;
+            if(callee.kind !== 'Identifier' || !["String", "Number", "Boolean"].includes(name) || !this.references.global(calleeIndex)) { return; }
+            this.rules.findings.push(new Diagnostic('no-new-wrappers', 'noNewWrappers', message.replace('%s', name).replace('%s', name).replace('%s', name), this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), ''));
+    }
+
+}

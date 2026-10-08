@@ -1,0 +1,19 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { RuleFacts } from './facts.a';
+import { NoEval } from './engine.a';
+import { CoreReferences } from '../../../typeaware/core_references.a';
+export class Rule {
+    readonly facts: RuleFacts;
+    readonly engine: NoEval;
+    constructor(context: RuleContext) {
+        const facts = new RuleFacts(context);
+        this.facts = facts;
+        this.engine = new NoEval(facts, new CoreReferences(facts), context.settings.read('allowindirect', 'false') === 'true');
+    }
+    visit(node: ParseNode, index: number): void {
+        this.engine.visit(node, index);
+        this.facts.flush();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

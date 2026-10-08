@@ -1,0 +1,18 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { RuleFacts } from './facts.a';
+import { NoCollectionMisuse } from './engine.a';
+export class Rule {
+    readonly facts: RuleFacts;
+    readonly engine: NoCollectionMisuse;
+    constructor(context: RuleContext) {
+        const facts = new RuleFacts(context);
+        this.facts = facts;
+        this.engine = new NoCollectionMisuse(facts);
+    }
+    visit(node: ParseNode, index: number): void {
+        this.engine.visit(node, index);
+        this.facts.flush();
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

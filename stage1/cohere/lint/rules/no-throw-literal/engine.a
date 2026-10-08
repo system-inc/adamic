@@ -1,0 +1,33 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { Rules } from '../../../typeaware/rules.ts';
+import { Diagnostic } from '../../../typeaware/diagnostic.ts';
+import { CallbackSymbols } from '../../../typeaware/callback_symbol_facts.a';
+const objectMessage = "This throws something that cannot be an Error, so whatever catches it gets no message and no stack trace. The failure then surfaces as a bare string or object with no record of where it came from, which is the difference between reading one line and reading the whole call path. Throw `new Error(...)` instead.";
+const undefMessage = "This throws `undefined`, which reaches the handler carrying nothing at all: no message, no stack, no type. It is almost always an expression that was meant to produce an error and did not. Throw `new Error(...)` instead.";
+export class NoThrowLiteral {
+    readonly rules: Rules;
+    readonly symbols: CallbackSymbols;
+    constructor(rules: Rules, symbols: CallbackSymbols) { this.rules = rules; this.symbols = symbols; }
+    could(index: number): boolean {
+        if(index < 0) { return false; }
+        const node = this.rules.parser.node(index);
+        if(['Identifier', 'CallExpression', 'NewExpression', 'PropertyAccessExpression', 'ElementAccessExpression', 'TaggedTemplateExpression', 'YieldExpression', 'AwaitExpression'].includes(node.kind)) { return true; }
+        if(node.kind === 'BinaryExpression') {
+            const op = this.rules.parser.node(node.children[1] ?? -1).kind;
+            const left = node.children[0] ?? -1; const right = node.children[2] ?? -1;
+            if(['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(op)) { return this.could(right); }
+            if(['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(op)) { return this.could(left) || this.could(right); }
+        }
+        if(node.kind === 'ConditionalExpression') { return this.could(node.children[2] ?? -1) || this.could(node.children[4] ?? -1); }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+            if(node.children.length === 0) { return; }
+            const argument = node.children[0] ?? -1; const value = this.rules.parser.node(argument);
+            let id = ''; let message = '';
+            if(!this.could(argument)) { id = 'object'; message = objectMessage; }
+            else if(value.kind === 'Identifier' && value.text === 'undefined' && !this.symbols.get(argument).shadowed) { id = 'undef'; message = undefMessage; }
+            if(id !== '') { this.rules.findings.push(new Diagnostic('no-throw-literal', id, message, this.rules.byte(this.rules.start(node)), this.rules.byte(node.end), '')); }
+    }
+
+}

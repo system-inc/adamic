@@ -1,0 +1,17 @@
+{
+  "name": "no-eval",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "CallExpression",
+    "Identifier",
+    "PropertyAccessExpression",
+    "ElementAccessExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNoEval",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoEval"
+}

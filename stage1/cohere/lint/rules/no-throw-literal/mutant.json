@@ -1,0 +1,5 @@
+{
+  "name": "no-throw-literal verdict omitted",
+  "from": "this.engine.visit(node, index);",
+  "to": "if(index < 0) { this.engine.visit(node, index); }"
+}
