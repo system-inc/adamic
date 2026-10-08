@@ -1,14 +1,6 @@
-=== RUN   TestArrayNeverGap
-=== PAUSE TestArrayNeverGap
 === RUN   TestRecursiveInitializerGap
 === PAUSE TestRecursiveInitializerGap
-=== RUN   TestRetainedWitnesses
-=== PAUSE TestRetainedWitnesses
-=== CONT  TestArrayNeverGap
-=== CONT  TestRetainedWitnesses
 === CONT  TestRecursiveInitializerGap
---- PASS: TestArrayNeverGap (0.39s)
---- PASS: TestRetainedWitnesses (0.99s)
---- PASS: TestRecursiveInitializerGap (3.37s)
+--- PASS: TestRecursiveInitializerGap (0.11s)
 PASS
-ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	3.390s
+ok  	github.com/system-inc/adamic/stage1/cohere/high_level_intermediate_representation/passes/unit-4	0.116s

@@ -15,12 +15,12 @@
     "file": "effects.a",
     "old": "...v.captures.map((p) => flow('capture',p,l))",
     "new": "...v.captures.map((p) => flow('immutable-capture',p,l))",
-    "caught": "source Node root and nested Go comparisons"
+    "caught": "source Node, emitted JavaScript and sanitized native root and nested Go comparisons"
   },
   {
     "file": "effects.a",
     "old": ": signature('read',[],'freeze',true,'frozen')",
     "new": ": signature('read',[],'freeze',true,'mutable')",
-    "caught": "source Node custom-hook Go comparison"
+    "caught": "source Node, emitted JavaScript and sanitized native Go comparisons"
   }
 ]

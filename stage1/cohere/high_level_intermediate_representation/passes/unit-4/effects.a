@@ -16,27 +16,37 @@ function primitiveName(value: ValueType | undefined): string | undefined {
  if(value === undefined || value.kind !== 'Primitive' || !value.literal.startsWith('string:')) { return undefined; }
  const raw = value.literal.slice(7); const payload = new Payload('"' + raw.replace(/"/g,'\\"') + '"'); return payload.textAt(payload.rootHandle());
 }
+function findFunctionPath(graph: ConstructedHIR,target: FunctionIndex,id: FunctionIndex,path: string): string | undefined {
+ const fn = graph.arena.read(id);
+ for(let i = 0; i < fn.functions.length; i++) {
+  const child = fn.functions[i] ?? panic('missing nested index');
+  if(child === target) { return `${path}/${i}`; }
+  const result = findFunctionPath(graph,target,child,`${path}/${i}`);
+  if(result !== undefined) { return result; }
+ } return undefined;
+}
+function resolveModuleHook(table: Map<IdentifierIndex,ValueType>,seen: Set<IdentifierIndex>,id: IdentifierIndex,hook: boolean): boolean {
+   if(seen.has(id)) { return false; } seen.add(id); const p = table.get(id); let result = false;
+   if(p !== undefined) {
+    if(p.kind === 'LoadGlobal') { result = p.bindingKind !== 0 && p.source !== 'react' && (!hook || isHookName(p.name) || isHookName(p.imported)); }
+    else if(p.kind === 'LoadLocal') { result = resolveModuleHook(table,seen,p.place.identifier,hook); }
+    else if(p.kind === 'StoreLocal') { result = resolveModuleHook(table,seen,p.value.identifier,hook); }
+    else if(p.kind === 'PropertyLoad') { result = (!hook || isHookName(p.property)) && resolveModuleHook(table,seen,p.object.identifier,false); }
+    else if(p.kind === 'ComputedLoad') { const name = primitiveName(table.get(p.property.identifier)); result = name !== undefined && (!hook || isHookName(name)) && resolveModuleHook(table,seen,p.object.identifier,false); }
+   } seen.delete(id); return result;
+  }
 export class EffectsPass {
  readonly graph: ConstructedHIR;
  readonly facts: InputFacts;
  constructor(graph: ConstructedHIR,facts: InputFacts) { this.graph = graph; this.facts = facts; }
- private path(index: FunctionIndex): string { if(index === this.graph.root) { return '$'; } const find = (id: FunctionIndex,path: string): string | undefined => { const fn = this.graph.arena.read(id); for(let i = 0; i < fn.functions.length; i++) { const child = fn.functions[i] ?? panic('missing nested index'); if(child === index) { return `${path}/${i}`; } const result = find(child,`${path}/${i}`); if(result !== undefined) { return result; } } return undefined; }; return find(this.graph.root,'$') ?? panic('function outside effects graph'); }
+ private path(index: FunctionIndex): string { return index === this.graph.root ? '$' : findFunctionPath(this.graph,index,this.graph.root,'$') ?? panic('function outside effects graph'); }
  private ast(index: FunctionIndex,instruction: Instruction,key: string): string { return this.facts.require('input.unit4-ast',this.path(index),'instruction',instruction.id.slot,key); }
  private producers(fn: HIRFunction): Map<IdentifierIndex,ValueType> { const table = new Map<IdentifierIndex,ValueType>(); for(const instruction of fn.instructions) { table.set(instruction.lvalue.identifier,instruction.value); if(instruction.value.kind === 'StoreLocal') { table.set(instruction.value.lvalue.identifier,instruction.value); } } return table; }
  private moduleHook(fn: HIRFunction,instruction: Instruction,table: Map<IdentifierIndex,ValueType>): boolean {
   const value = instruction.value; if(value.kind !== 'CallExpression' && value.kind !== 'MethodCall') { return false; } const seen = new Set<IdentifierIndex>();
-  const resolve = (id: IdentifierIndex,hook: boolean): boolean => {
-   if(seen.has(id)) { return false; } seen.add(id); const p = table.get(id); let result = false;
-   if(p !== undefined) {
-    if(p.kind === 'LoadGlobal') { result = p.bindingKind !== 0 && p.source !== 'react' && (!hook || isHookName(p.name) || isHookName(p.imported)); }
-    else if(p.kind === 'LoadLocal') { result = resolve(p.place.identifier,hook); }
-    else if(p.kind === 'StoreLocal') { result = resolve(p.value.identifier,hook); }
-    else if(p.kind === 'PropertyLoad') { result = (!hook || isHookName(p.property)) && resolve(p.object.identifier,false); }
-    else if(p.kind === 'ComputedLoad') { const name = primitiveName(table.get(p.property.identifier)); result = name !== undefined && (!hook || isHookName(name)) && resolve(p.object.identifier,false); }
-   } seen.delete(id); return result;
-  };
-  if(value.kind === 'MethodCall') { const name = primitiveName(table.get(value.property.identifier)); if(name !== undefined) { return isHookName(name) && resolve(value.receiver.identifier,false); } }
-  if(value.kind === 'CallExpression') { return resolve(value.callee.identifier,true); } return resolve(value.property.identifier,true);
+
+  if(value.kind === 'MethodCall') { const name = primitiveName(table.get(value.property.identifier)); if(name !== undefined) { return isHookName(name) && resolveModuleHook(table,seen,value.receiver.identifier,false); } }
+  if(value.kind === 'CallExpression') { return resolveModuleHook(table,seen,value.callee.identifier,true); } return resolveModuleHook(table,seen,value.property.identifier,true);
  }
  private lookup(index: FunctionIndex,instruction: Instruction,table: Map<IdentifierIndex,ValueType>): Signature | undefined {
   const fn = this.graph.arena.read(index); const value = instruction.value;

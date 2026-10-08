@@ -1,3 +1,4 @@
+// Compiler #dv99xzy: a recursive closure initializer captures its own binding.
 function run(): number {
  const recurse = (n: number): number => n === 0 ? 0 : recurse(n - 1);
  return recurse(1);

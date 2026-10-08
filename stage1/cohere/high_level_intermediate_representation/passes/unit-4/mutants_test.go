@@ -96,9 +96,7 @@ func unit4SemanticMutants(t *testing.T, root, pass, manifest, manifestPath strin
 		t.Fatalf("%s semantic mutant survived", pass)
 	}
 	t.Logf("%s semantic mutant caught by Go byte comparison on Node: %s", pass, first)
-	if !strings.HasPrefix(pass, "effects") {
-		unit4MutantBackends(t, root, pass, filepath.Join(directory, entry), manifest, manifestPath)
-	}
+	unit4MutantBackends(t, root, pass, filepath.Join(directory, entry), manifest, manifestPath)
 
 	if pass == "effects" {
 		directory = unit4MutantFiles(t, root, "effects.a", ": signature('read',[],'freeze',true,'frozen')", ": signature('read',[],'freeze',true,'mutable')")
@@ -107,14 +105,11 @@ func unit4SemanticMutants(t *testing.T, root, pass, manifest, manifestPath strin
 			t.Fatal("custom-hook signature mutant survived")
 		}
 		t.Log("custom-hook frozen-result mutant caught by Go byte comparison on Node")
+		unit4MutantBackends(t, root, "custom-hook", filepath.Join(directory, entry), manifest, manifestPath)
 	}
 }
 func unit4Backends(t *testing.T, root, pass, entry, manifest, manifestPath string) {
 	t.Helper()
-	if strings.HasPrefix(pass, "effects") {
-		t.Logf("%s compiled backends stopped: effects.a recursive initializer gap; no certificate claimed", pass)
-		return
-	}
 	javascript := unit4Run(t, root, "go", "run", "./cmd/adamic", "js", entry)
 	js := filepath.Join(t.TempDir(), "primitive.js")
 	if err := os.WriteFile(js, javascript, 0600); err != nil {

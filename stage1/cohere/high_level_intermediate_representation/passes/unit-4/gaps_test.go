@@ -46,16 +46,14 @@ func TestRecursiveInitializerGap(t *testing.T) {
 	if got := string(unit4Run(t, root, "node", "--no-warnings", "oracle/node.mjs", entry)); got != "0\n" {
 		t.Fatalf("Node: %q", got)
 	}
-	for _, source := range []string{entry, filepath.Join(root, "stage1/cohere/high_level_intermediate_representation/passes/unit-4/effects_main.a")} {
-		program, err := load.Load([]string{source})
-		if err != nil {
-			t.Fatal(err)
-		}
-		_, err = lower.Lower(context.Background(), program)
-		var notYet *lower.NotYet
-		if !errors.As(err, &notYet) || notYet.What != "a function value that captures the variable its own initializer declares" {
-			t.Fatalf("recursive initializer gap closed or changed: %v", err)
-		}
-
+	// Compiler #dv99xzy retains the original initializer shape.
+	program, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = lower.Lower(context.Background(), program)
+	var notYet *lower.NotYet
+	if !errors.As(err, &notYet) || notYet.What != "a function value that captures the variable its own initializer declares" {
+		t.Fatalf("recursive initializer gap closed or changed: %v", err)
 	}
 }

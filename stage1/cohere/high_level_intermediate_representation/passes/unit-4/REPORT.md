@@ -1,4 +1,4 @@
-# Unit 4: typed-array workaround and compiled certificates
+# Unit 4: four checkpoint certificates
 
 Merged `origin/stage1-hir/wip` checkpoint commit `9addb0e8` without rebasing.
 Cohere pin: `7945d102a6c18dd36adf9114a758ce646e8b2359`. Exclusive directory: `passes/unit-4/`.
@@ -11,8 +11,8 @@ and the complete shared arena_index.a. No shared file was edited.
 | --- | ---: | ---: | ---: |
 | Primitive property constraints | 1,465 / 1,465 | 1,465 / 1,465 | 1,465 / 1,465 |
 | InferReactive | 1,465 / 1,465 | 1,465 / 1,465 | 1,465 / 1,465 |
-| InferAliasingEffects | 1,465 / 1,465 | 0, compiler refusal | 0, compiler refusal |
-| InferAliasingEffectsForNested | 1,465 / 1,465 | 0, compiler refusal | 0, compiler refusal |
+| InferAliasingEffects | 1,465 / 1,465 | 1,465 / 1,465 | 1,465 / 1,465 |
+| InferAliasingEffectsForNested | 1,465 / 1,465 | 1,465 / 1,465 | 1,465 / 1,465 |
 | ProjectEffects | 0, deferred import | 0, deferred import | 0, deferred import |
 
 All 1,465 original census keys remain, including **23 / 23 Flow graphs** in each
@@ -38,14 +38,14 @@ Four semantic source changes are caught by Go byte comparison after successful
 execution: primitive/other constraints swapped; parameter reactivity omitted;
 closure capture changed to immutable capture; custom-hook frozen result changed
 to mutable. The capture change is run separately for root and nested effects:
-**five source-Node mutant comparisons caught**, plus **two emitted-JavaScript**
-and **two sanitized-native** mutant comparisons (primitive and reactive).
-The effects backends have no claimed mutant certificate.
+**five source-Node**, **five emitted-JavaScript** and **five sanitized-native**
+mutant comparisons caught. Each mutation executes successfully on the full census;
+only the independent Go byte comparison catches it.
 Definitions are in `mutants.json`; exact catches are in `validation/certificates.txt`.
 
 The final owned package runs `TestUnit4Census`, `TestArrayNeverGap`,
 `TestRecursiveInitializerGap` and `TestRetainedWitnesses`; its receipt is
-`validation/certificates.txt`: **4 pass, 0 fail, 0 skip**, **425.573s**. Each top-level test
+`validation/certificates.txt`: **4 pass, 0 fail, 0 skip**, **977.088s**. Each top-level test
 calls t.Parallel. gofmt and lane vet pass. The original Go census exporter retains
 its upstream skipped tests; their classifications belong to the shared census,
 not successful unit-4 observations. Retained fixtures are the Go checkpoints
@@ -74,25 +74,25 @@ its gap 5 comment. The constants are only read, never mutated. See
 it fails the moment the original assignment or coalesce fixture lowers, so the
 workarounds can be removed. Node still prints `0` and `1` respectively.
 
-Removing that refusal exposes a distinct language gap in effects: `effects.a:23:99`,
-the recursive `find` callback used to locate a function's checkpoint path.
-Stage 0 reports `a function value that captures the variable its own initializer declares`.
-Both native and emitted JavaScript refuse before execution. The shortest local
-reproducer retained here is `gaps/recursive-initializer.a:2`, a local recursive arrow
-called with `1`; Node prints `0`. The lowerer rejects it at `internal/lower/locals.go:152`.
-`TestRecursiveInitializerGap` selects the exact NotYet for both that program and
-`effects_main.a`; it fails when either closes or changes. No workaround is made
-for this separate language gap. Go's root/nested effect entrypoints are
-`cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go:493`
-and `:523`. Their Node checkpoints remain green; their compiled certificate
-counts remain zero. Full refusal output is in `validation/effects-native-refusal.txt`
-and `validation/effects-js-refusal.txt`.
+Effects' recursive path search, module-hook resolver and fresh-identifier visitor
+are ordinary module-level function declarations with explicit arguments. Their
+recursion and traversal order are unchanged. No compiler workaround or shared
+file change is involved. Local function declarations are not lowered by this
+stage 0, so the declarations live at module scope.
+
+The original local recursive arrow initializer remains in
+`gaps/recursive-initializer.a`, naming compiler **#dv99xzy**. Node prints `0`.
+`TestRecursiveInitializerGap` selects `*lower.NotYet` with
+`What == "a function value that captures the variable its own initializer declares"`
+and fails when the original shape closes or changes. The production effects
+entrypoint is no longer expected to refuse. Go's root/nested effects entrypoints
+are `cohere/internal/lint/ecmascript/high_level_intermediate_representation/effects.go:493`
+and `:523`.
 
 Projection still waits for the real Adamic mutation_aliasing import/API, as
 instructed. Go `effects.go:1189 ProjectEffects` requires
 `MutableRanges.Get(effect.Into.Identifier).End` at :1196. The lane does not invent
-that module or substitute recorded ranges for its imported API. Once the recursive-closure language
-fix and module land, merge the shared branch, rerun every backend and mutant, and
+that module or substitute recorded ranges for its imported API. Once the module lands, merge the shared branch, rerun every backend and mutant, and
 certify projection. This lane is not declared fully certified.
 
-Final machine observation: nproc 5; load average 0.89, 1.32, 1.03.
+Final machine observation: nproc 5; load average 0.66, 0.95, 0.97.

@@ -1,11 +1,17 @@
 import { panic, programArguments, readTextFile } from 'adamic';
 import { InputFacts, readCheckpoint, writeCheckpoint, decodeCheckpoint, encodeCheckpoint } from '../../replay/index.ts';
-import type { SidecarRow, FunctionIndex, InstructionIndex } from '../../replay/index.ts';
+import type { SidecarRow, FunctionIndex, InstructionIndex, Checkpoint } from '../../replay/index.ts';
 import type { AliasingEffect } from './effect_types.a';
 import { placeText } from '../../dump.ts';
+import type { ConstructedHIR } from '../../core.ts';
 import { EffectsPass } from './effects.a';
 // Gap 5 in values/GAPS.md: stage 0 does not lower an empty array literal as a default yet.
 const noEffects: AliasingEffect[] = [];
+function visitNewIdentifiers(graph: ConstructedHIR,checkpoint: Checkpoint,rows: SidecarRow[],index: FunctionIndex,path: string): void {
+ const fn = graph.arena.read(index); const before = checkpoint.graph.at(path);
+ for(const identifier of fn.identifiers) { if(!before.identifierIds.includes(identifier.id.slot)) { rows.push({namespace: 'input.unit4-ast',functionPath: path,anchorKind: 'identifier',anchorId: identifier.id.slot,key: 'identifier-text',payload: ''}); } }
+ for(let i = 0; i < fn.functions.length; i++) { visitNewIdentifiers(graph,checkpoint,rows,fn.functions[i] ?? panic('missing child'),`${path}/${i}`); }
+}
 const args = programArguments(); const manifest = readTextFile(args[0] ?? panic('missing manifest')); if(manifest.kind === 'Error') { panic(manifest.message); }
 for(const line of manifest.text.split('\n')) {
  if(line === '') { continue; } const fields = line.split('\t'); const key = fields[0] ?? panic('missing key'); const input = readTextFile(fields[1] ?? panic('missing input')); if(input.kind === 'Error') { panic(input.message); }
@@ -19,6 +25,6 @@ for(const line of manifest.text.split('\n')) {
  else { panic('unknown effect pass'); }
  for(const row of checkpoint.sidecars) { if(row.namespace === 'input.unit4-ast') { rows.push(row); } }
  // A callback summary can mint new identifiers with nil syntax; emit their input facts afresh.
- const visit = (index: FunctionIndex,path: string): void => { const fn = graph.arena.read(index); const before = checkpoint.graph.at(path); for(const identifier of fn.identifiers) { if(!before.identifierIds.includes(identifier.id.slot)) { rows.push({namespace: 'input.unit4-ast',functionPath: path,anchorKind: 'identifier',anchorId: identifier.id.slot,key: 'identifier-text',payload: ''}); } } for(let i = 0; i < fn.functions.length; i++) { visit(fn.functions[i] ?? panic('missing child'),`${path}/${i}`); } }; visit(graph.root,'$');
+ visitNewIdentifiers(graph,checkpoint,rows,graph.root,'$');
  console.log(`checkpoint\t${key}`); console.log(writeCheckpoint(encodeCheckpoint(graph,checkpoint,checkpoint.pass,rows,[])).slice(0,-1));
 }
