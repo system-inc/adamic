@@ -6,6 +6,14 @@ const evidence = JSON.parse(fs.readFileSync(path.join(__dirname, process.argv[2]
 const ranks = new Set(process.argv[3] ? process.argv[3].split(',').map(Number) : [331,334,349,352,355,358,361,364,367,376,379,394,397,400,412,481,622,634,748,778]);
 const ledger = JSON.parse(fs.readFileSync(path.join(__dirname, "../unknown-callable-pairs-ranked.json")));
 const families = [];
+const enumDeclarations = new Map();
+const originalTypes = ts.createSourceFile('types.ts',fs.readFileSync('/tmp/lane5-b-original/src/compiler/types.ts','utf8'),ts.ScriptTarget.Latest,true);
+function enums(node) {
+ if (ts.isEnumDeclaration(node)) enumDeclarations.set(node.name.text,node.getText(originalTypes).replace(/^export\s+/,'').replace(/^const\s+enum/,'enum').replace(/\r\n/g,'\n').replace(/[ \t]+$/gm,''));
+ ts.forEachChild(node,enums);
+}
+enums(originalTypes);
+
 for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  const source = ts.createSourceFile('member.a', 'interface Target {' + member.declaration + '}', ts.ScriptTarget.Latest, true);
  const declaration = source.statements[0].members[0];
@@ -16,16 +24,17 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
   ts.forEachChild(node, references);
  }
  references(signature);
- const carriers = [...names].map(([n, arity]) => 'interface ' + n + (arity ? '<' + Array.from({length:arity},(_,i)=>'T'+i).join(',') + '>' : '') + ' { readonly value: number; }').join('\n');
+ const carriers = [...names].map(([n, arity]) => enumDeclarations.get(n) || 'interface ' + n + (arity ? '<' + Array.from({length:arity},(_,i)=>'T'+i).join(',') + '>' : '') + ' { readonly value: number; }').join('\n');
  const parameters = signature.parameters.map(p => p.getText(source)).join(', ');
  const parameterTypes = signature.parameters.map(p => p.type.getText(source));
  const resultType = signature.type.getText(source);
- const args = parameterTypes.map(t => t.includes('[]') ? '[{value:3}]' : t === 'string' ? '"value3"' : t === 'boolean' ? 'true' : t === 'number' ? '3' : '{value:3}');
+ const args = parameterTypes.map(t => t.includes('[]') ? '[{value:3}]' : enumDeclarations.has(t) ? t + '.None' : t === 'string' ? '"value3"' : t === 'boolean' ? 'true' : t === 'number' ? '3' : '{value:3}');
  const observations = signature.parameters.map((p,i) => {
   const n = p.name.getText(source), t = parameterTypes[i];
   if (t.includes('[]')) return t.includes('undefined') ? `if (${n} !== undefined) {for (const element of ${n}) {console.log(\`\${element.value}\`);}}` : `for (const element of ${n}) {console.log(\`\${element.value}\`);}`;
   if (t === 'string') return `console.log(${n});`;
-  if (t === 'boolean' || t === 'number') return `console.log(\`\${${n}}\`);`;
+  if (t === 'boolean' || t === 'number' || enumDeclarations.has(t)) return `console.log(\`\${${n}}\`);`;
+  if (t.includes('string')) return `if (typeof ${n} === \"string\") {console.log(${n});} else {console.log(\`\${${n}.value}\`);}`;
   return t.includes('undefined') ? `if (${n} !== undefined) {console.log(\`\${${n}.value}\`);}` : `console.log(\`\${${n}.value}\`);`;
  }).join('');
  const result = resultType === 'void' ? '' : resultType === 'string' ? 'return "answer3";' : resultType === 'boolean' ? 'return true;' : resultType === 'number' ? 'return 3;' : 'return {value:3};';
@@ -37,6 +46,7 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  else if (member.read.startsWith('context.factory.')) receiver = 'const context = {factory:value as Target};';
  else if (member.read.startsWith('emitHelpers().')) receiver = 'function emitHelpers():Target {return value as Target;}';
  else if (member.read.startsWith('(host as Program).')) receiver = 'const host = value;';
+ else if (/^[A-Za-z_$][\w$]*\(\)\./.test(member.read)) receiver = 'function ' + member.read.slice(0,member.read.indexOf('(')) + '():Target {return value as Target;}';
  else receiver = 'const ' + member.read.slice(0, member.read.lastIndexOf('.')).replace(/\?$/, '') + '=value as Target;';
  const prefix = '// Original declaration and read; adjacent data carriers reduced.\n' + carriers + '\ninterface Base {readonly ' + member.field + ':unknown;}\ninterface Target {' + member.declaration + '}\n' + (member.rank === 622 ? 'interface Program extends Target {}\n' : '') + 'function probe(value:Base):void {' + receiver + call + '}\n';
  const variants = {

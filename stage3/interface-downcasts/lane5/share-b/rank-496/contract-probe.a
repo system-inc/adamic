@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface T {readonly value:number;}
+interface Base {readonly map:unknown;}
+interface Target {map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];}
+function probe(value:Base):void {const deduplicated=value as Target;deduplicated.map(()=>3,undefined);}
+probe({map:7});

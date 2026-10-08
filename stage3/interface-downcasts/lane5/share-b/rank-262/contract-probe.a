@@ -1,0 +1,7 @@
+// Original namespace header; defaults made optional; adjacent Node carrier reduced.
+type AnyFunction = (...args: never[]) => void;
+interface Node {readonly value:number;}
+interface Base {readonly assertLessThanOrEqual:unknown;}
+interface Target {readonly assertLessThanOrEqual: (a: number, b: number, stackCrawlMark?: AnyFunction) => void;}
+function probe(value:Base):void {const Debug:Target=value as Target;console.log(typeof Debug.assertLessThanOrEqual);}
+probe({assertLessThanOrEqual:7});

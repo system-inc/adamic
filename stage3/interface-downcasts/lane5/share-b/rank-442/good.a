@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface PropertyDescriptorAttributes { readonly value: number; }
+interface ObjectLiteralExpression { readonly value: number; }
+interface Base {readonly createPropertyDescriptor:unknown;}
+interface Target {createPropertyDescriptor(attributes: PropertyDescriptorAttributes, singleLine?: boolean): ObjectLiteralExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createPropertyDescriptor({value:3},true).value}`);}
+probe({createPropertyDescriptor:(attributes: PropertyDescriptorAttributes, singleLine?: boolean):ObjectLiteralExpression=>{console.log(`${attributes.value}`);console.log(`${singleLine}`);return {value:3};}});

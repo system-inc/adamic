@@ -1,0 +1,227 @@
+[
+  {
+    "rank": 370,
+    "receiver_type_id": 15322,
+    "type": "Path[]",
+    "field": "push",
+    "candidateReads": 5,
+    "witness": {
+      "file": "src/compiler/builderState.ts",
+      "line": 487,
+      "column": 25
+    },
+    "read": "queue.push",
+    "call": "queue.push(key)",
+    "utf16Start": 19569,
+    "utf16End": 19579,
+    "fileSha256": "51ef79dcaebb2e9b09c5270d07ca8f4abf3eb04e4849eb9014bf2d55f2c570a5",
+    "declaration": "push(...items: T[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-370/contract-probe.a",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 382,
+    "receiver_type_id": 103142,
+    "type": "Statistic[]",
+    "field": "push",
+    "candidateReads": 5,
+    "witness": {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 1107,
+      "column": 5
+    },
+    "read": "statistics.push",
+    "call": "statistics.push(\r\n        { name: \"Projects in scope\", value: getBuildOrderFromAnyBuildOrder(builder.getBuildOrder()).length, type: StatisticType.count },\r\n    )",
+    "utf16Start": 45093,
+    "utf16End": 45108,
+    "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+    "declaration": "push(...items: T[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-382/contract-probe.a",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 388,
+    "receiver_type_id": 1277,
+    "type": "string[]",
+    "field": "sort",
+    "candidateReads": 5,
+    "witness": {
+      "file": "src/compiler/sys.ts",
+      "line": 1873,
+      "column": 17
+    },
+    "read": "files.sort",
+    "call": "files.sort()",
+    "utf16Start": 82816,
+    "utf16End": 82826,
+    "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+    "declaration": "sort(compareFn?: (a: T, b: T) => number): this;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-388/contract-probe.a",
+    "refusal": "checked view read of field sort with unsupported callable contract"
+  },
+  {
+    "rank": 406,
+    "receiver_type_id": 67094,
+    "type": "FileIncludeReason[] | undefined",
+    "field": "forEach",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 220,
+      "column": 17
+    },
+    "read": "reasons?.forEach",
+    "call": "reasons?.forEach(populateRelatedInfo)",
+    "utf16Start": 9779,
+    "utf16End": 9795,
+    "fileSha256": "1def95bb98fb69151be4295c58ccc4599cdb38b4cb710b807f19b7e8433fa8a5",
+    "declaration": "forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-406/contract-probe.a",
+    "refusal": "checked view read of field forEach with unsupported callable contract"
+  },
+  {
+    "rank": 439,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createImportAttributes",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 8474,
+      "column": 31
+    },
+    "read": "factory.createImportAttributes",
+    "call": "factory.createImportAttributes(elements, multiLine, token)",
+    "utf16Start": 418077,
+    "utf16End": 418107,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createImportAttributes(elements: NodeArray<ImportAttribute>, multiLine?: boolean): ImportAttributes;\ncreateImportAttributes(elements: NodeArray<ImportAttribute>, multiLine?: boolean, token?: ImportAttributes[\"token\"]): ImportAttributes;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-439/contract-probe.a",
+    "refusal": "checked view read of field createImportAttributes with unsupported callable contract"
+  },
+  {
+    "rank": 463,
+    "receiver_type_id": 2397,
+    "type": "ObjectConstructor",
+    "field": "create",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 558,
+      "column": 37
+    },
+    "read": "Object.create",
+    "call": "Object.create(Object.prototype)",
+    "utf16Start": 24429,
+    "utf16End": 24442,
+    "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "declaration": "create(o: object | null): any;\ncreate(o: object | null, properties: PropertyDescriptorMap & ThisType<any>): any;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "ObjectConstructor"
+    ],
+    "filename": "rank-463/contract-probe.a",
+    "refusal": "stage 0 can't lower a call returning any yet"
+  },
+  {
+    "rank": 496,
+    "receiver_type_id": 1086,
+    "type": "number[]",
+    "field": "map",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/core.ts",
+      "line": 706,
+      "column": 12
+    },
+    "read": "deduplicated.map",
+    "call": "deduplicated.map(i => array[i])",
+    "utf16Start": 24183,
+    "utf16End": 24199,
+    "fileSha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b",
+    "declaration": "map<U>(callbackfn: (value: T, index: number, array: T[]) => U, thisArg?: any): U[];",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-496/contract-probe.a",
+    "refusal": "checked view read of field map with unsupported callable contract"
+  },
+  {
+    "rank": 511,
+    "receiver_type_id": 88748,
+    "type": "CaseClause[]",
+    "field": "push",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4045,
+      "column": 13
+    },
+    "read": "caseClauses.push",
+    "call": "caseClauses.push(factory.createCaseClause(factory.createStringLiteral(labelMarker), statements))",
+    "utf16Start": 186131,
+    "utf16End": 186147,
+    "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "declaration": "push(...items: T[]): number;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-511/contract-probe.a",
+    "refusal": "checked view read of field push with unsupported callable contract"
+  },
+  {
+    "rank": 523,
+    "receiver_type_id": 10400,
+    "type": "Diagnostic[]",
+    "field": "forEach",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 578,
+      "column": 9
+    },
+    "read": "commandLine.errors.forEach",
+    "call": "commandLine.errors.forEach(reportDiagnostic)",
+    "utf16Start": 23631,
+    "utf16End": 23657,
+    "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+    "declaration": "forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;",
+    "declarationFile": "src/lib/es5.d.ts",
+    "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+    "inheritancePath": [
+      "Array"
+    ],
+    "filename": "rank-523/contract-probe.a",
+    "refusal": "checked view read of field forEach with unsupported callable contract"
+  }
+]

@@ -1,0 +1,10 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ForOfStatement { readonly value: number; }
+interface AwaitKeyword { readonly value: number; }
+interface ForInitializer { readonly value: number; }
+interface Expression { readonly value: number; }
+interface Statement { readonly value: number; }
+interface Base {readonly updateForOfStatement:unknown;}
+interface Target {updateForOfStatement(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;}
+function probe(value:Base):void {const context = {factory:value as Target};console.log(`${context.factory.updateForOfStatement({value:3},{value:3},{value:3},{value:3},{value:3}).value}`);}
+probe({updateForOfStatement:(node:number,awaitModifier:number,initializer:number,expression:number,statement:number):ForOfStatement=>{return {value:3};}});

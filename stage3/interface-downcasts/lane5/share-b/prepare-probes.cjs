@@ -2,8 +2,8 @@
 const fs = require('fs');
 const path = require('path');
 const ts = require('/tmp/lane5-b-original/lib/typescript.js');
-const evidence = require('./batch-02-original.json');
-const ranks = new Set([16, 25, 28, 40, 55, 130, 172, 181, 190, 226, 244, 250, 253, 319, 322]);
+const evidence = require('./'+(process.argv[2]||'batch-02-original.json'));
+const ranks = new Set(process.argv[3] ? process.argv[3].split(',').map(Number) : [16,25,28,40,55,130,172,181,190,226,244,250,253,319,322]);
 const probes = [];
 for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  const source = ts.createSourceFile('probe.a', 'interface Target {'+member.declaration+'}', ts.ScriptTarget.Latest, true);
@@ -21,7 +21,7 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  }
  visit(source);
  const builtin = new Set(['ArrayLike','NonNullable','PropertyDescriptorMap','ThisType']);
- let carriers = [...names].filter(([name])=>!parameters.has(name)&&!builtin.has(name)&&!namespaces.has(name)).map(([name,arity])=>`interface ${name}${arity?'<'+Array.from({length:arity},(_,i)=>'T'+i).join(',')+'>':''} {readonly value:number;}`).join('\n');
+ let carriers = [...names].filter(([name])=>!parameters.has(name)&&!builtin.has(name)&&!namespaces.has(name)).map(([name,arity])=>`interface ${name}${arity?'<'+Array.from({length:arity},(_,i)=>'T'+i).join(',')+'>':''} {readonly value:number;${member.rank===439&&name==='ImportAttributes'?'readonly token?:number;':''}}`).join('\n');
  for (const [name,items] of namespaces) carriers += '\nenum '+name+' {'+[...new Set(items)].map((item,i)=>item+'='+i).join(',')+'}';
  // Enum values are unused: these probes only read the original callable field.
  let receiver = member.read.slice(0, member.read.lastIndexOf('.')).replace(/\?$/, '');
@@ -47,7 +47,7 @@ for (const member of evidence.members.filter(m => ranks.has(m.rank))) {
  const filename = 'rank-'+member.rank+'/contract-probe.a';
  fs.mkdirSync(path.join(__dirname,'rank-'+member.rank),{recursive:true});
  fs.writeFileSync(path.join(__dirname,filename),'// Original member/read; adjacent carriers reduced for signature admission only.\n'+carriers+'\ninterface Base {readonly '+member.field+':unknown;}\ninterface Target {'+member.declaration+'}\nfunction probe(value:Base):void {'+scaffold+member.read+'('+args.join(',')+');}\nprobe({'+member.field+':7});\n');
- probes.push({...member,filename,refusal:member.rank===181 ? 'adamic/no-type-predicate' : 'checked view read of field '+member.field+' with unsupported callable contract'});
+ probes.push({...member,filename,refusal:member.rank===463 ? "stage 0 can't lower a call returning any yet" : member.rank===181 ? 'adamic/no-type-predicate' : 'checked view read of field '+member.field+' with unsupported callable contract'});
 }
-fs.writeFileSync(path.join(__dirname,'batch-02-probes.json'),JSON.stringify(probes,null,2)+'\n');
+fs.writeFileSync(path.join(__dirname,process.argv[4]||'batch-02-probes.json'),JSON.stringify(probes,null,2)+'\n');
 console.log('Prepared '+probes.length+' original-signature admission probes.');

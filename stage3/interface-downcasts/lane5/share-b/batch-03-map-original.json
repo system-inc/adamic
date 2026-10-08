@@ -1,0 +1,121 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 112,
+      "receiver_type_id": 10096,
+      "type": "Map<string, boolean>",
+      "field": "get",
+      "candidateReads": 15,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 1223,
+        "column": 100
+      },
+      "read": "usedLines.get",
+      "call": "usedLines.get(line)",
+      "utf16Start": 41356,
+      "utf16End": 41369,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "get(key: K): V | undefined;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 232,
+      "receiver_type_id": 14773,
+      "type": "Map<string, string>",
+      "field": "has",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1685,
+        "column": 47
+      },
+      "read": "remappedPaths.has",
+      "call": "remappedPaths.has(url)",
+      "utf16Start": 74675,
+      "utf16End": 74692,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declaration": "has(key: K): boolean;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 283,
+      "receiver_type_id": 8212,
+      "type": "Map<string, number>",
+      "field": "clear",
+      "candidateReads": 6,
+      "witness": {
+        "file": "src/compiler/performance.ts",
+        "line": 148,
+        "column": 10
+      },
+      "read": "durations.clear",
+      "call": "durations.clear()",
+      "utf16Start": 4394,
+      "utf16End": 4409,
+      "fileSha256": "b12e3cdedb651fe1d94fceae1bb236c2745530ba7fe0c9dc996d61ba22b6c473",
+      "declaration": "clear(): void;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 343,
+      "receiver_type_id": 10766,
+      "type": "Map<number, Type>",
+      "field": "set",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6692,
+        "column": 13
+      },
+      "read": "context.enclosingSymbolTypes.set",
+      "call": "context.enclosingSymbolTypes.set(id, type)",
+      "utf16Start": 352855,
+      "utf16End": 352887,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "set(key: K, value: V): this;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    },
+    {
+      "rank": 346,
+      "receiver_type_id": 10096,
+      "type": "Map<string, boolean>",
+      "field": "has",
+      "candidateReads": 5,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7052,
+        "column": 26
+      },
+      "read": "leftPrologues.has",
+      "call": "leftPrologues.has(rightPrologue.expression.text)",
+      "utf16Start": 310906,
+      "utf16End": 310923,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "has(key: K): boolean;",
+      "declarationFile": "src/lib/es2015.collection.d.ts",
+      "declarationSha256": "e2887753e0ae7526e47592ffd4da426be9e7be0a91f5291930709ccc8ee59a33",
+      "inheritancePath": [
+        "Map"
+      ]
+    }
+  ]
+}

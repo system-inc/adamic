@@ -1,0 +1,5 @@
+// Original member/read with an actual Map receiver.
+interface Base {readonly has:unknown;}
+interface Target<K,V> {has(key: K): boolean;}
+function probe(value:Base):void {const leftPrologues=value as Target<string,boolean>;console.log(`${leftPrologues.has("value3")}`);}
+const map=new Map<string,boolean>();map.set("value3",true);probe(map);

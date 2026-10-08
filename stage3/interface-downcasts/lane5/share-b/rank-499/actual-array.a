@@ -1,0 +1,5 @@
+// Original member/read with an actual array receiver.
+interface Base {readonly includes:unknown;}
+interface Target<T> {includes(searchElement: T, fromIndex?: number): boolean;}
+function probe(value:Base):void {const conditions=value as Target<string>;conditions?.includes("first",0);console.log("called");}
+probe(["first","second"]);

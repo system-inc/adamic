@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface SymlinkCache { readonly value: number; }
+interface Base {readonly getSymlinkCache:unknown;}
+interface Target {getSymlinkCache: () => SymlinkCache;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.getSymlinkCache().value}`);}
+probe({getSymlinkCache:7});

@@ -1,0 +1,25 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-members
+--- PASS: TestCheckedViewCallableShareBFamilies (5.04s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/good (1.06s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-value (0.93s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity (1.03s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-result (0.99s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-members (1.01s)
+=== RUN   TestCheckedViewCallableShareBArityMutants
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-175
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+--- PASS: TestCheckedViewCallableShareBArityMutants (0.26s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-175 (0.26s)
+=== RUN   TestCheckedViewCallableShareBCounts
+--- PASS: TestCheckedViewCallableShareBCounts (6.25s)
+PASS
+gate cache: native hits=0 misses=48
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	11.561s

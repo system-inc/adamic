@@ -1,0 +1,8 @@
+// Original namespace header; defaults made optional; adjacent Node carrier reduced.
+type AnyFunction = (...args: never[]) => void;
+interface Node {readonly value:number;}
+interface Base {readonly assertNode:unknown;}
+interface Target {readonly assertNode: {<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U;
+(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;};}
+function probe(value:Base):void {const Debug:Target=value as Target;console.log(typeof Debug.assertNode);}
+probe({assertNode:7});

@@ -1,0 +1,28 @@
+[
+  {
+    "rank": 460,
+    "receiver_type_id": 6948,
+    "type": "ObjectAllocator",
+    "field": "getNodeConstructor",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/debug.ts",
+      "line": 706,
+      "column": 13
+    },
+    "read": "objectAllocator.getNodeConstructor",
+    "call": "objectAllocator.getNodeConstructor()",
+    "utf16Start": 32353,
+    "utf16End": 32387,
+    "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "declaration": "getNodeConstructor(): new (kind: SyntaxKind, pos: number, end: number) => Node;",
+    "declarationFile": "src/compiler/utilities.ts",
+    "declarationSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "inheritancePath": [
+      "ObjectAllocator"
+    ],
+    "admitted": true,
+    "basis": "observed lowering returned no error; full constructor-result certification still required",
+    "exploratoryFixture": "rank-460/contract-probe.a"
+  }
+]

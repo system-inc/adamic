@@ -1,0 +1,11 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createModuleDeclaration expected (modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined, flags?: NodeFlags | undefined) => ModuleDeclaration, found function with arity 0\n"
+--- FAIL: TestCheckedViewCallableShareBFamilies (1.08s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity (1.08s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.085s
+FAIL

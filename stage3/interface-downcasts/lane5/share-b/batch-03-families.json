@@ -1,0 +1,349 @@
+[
+  {
+    "rank": 175,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createModuleDeclaration",
+    "candidateReads": 10,
+    "witness": {
+      "file": "src/compiler/parser.ts",
+      "line": 8311,
+      "column": 22
+    },
+    "read": "factory.createModuleDeclaration",
+    "call": "factory.createModuleDeclaration(modifiers, name, body, flags)",
+    "utf16Start": 410229,
+    "utf16End": 410260,
+    "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+    "declaration": "createModuleDeclaration(modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined, flags?: NodeFlags): ModuleDeclaration;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined, flags?: NodeFlags | undefined) => ModuleDeclaration",
+    "directory": "rank-175",
+    "resultType": "ModuleDeclaration",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ],
+    "carrierEnums": [
+      {
+        "name": "NodeFlags",
+        "declaration": "enum NodeFlags {\n    None               = 0,\n    Let                = 1 << 0,  // Variable declaration\n    Const              = 1 << 1,  // Variable declaration\n    Using              = 1 << 2,  // Variable declaration\n    AwaitUsing         = Const | Using, // Variable declaration (NOTE: on a single node these flags would otherwise be mutually exclusive)\n    NestedNamespace    = 1 << 3,  // Namespace declaration\n    Synthesized        = 1 << 4,  // Node was synthesized during transformation\n    Namespace          = 1 << 5,  // Namespace declaration\n    OptionalChain      = 1 << 6,  // Chained MemberExpression rooted to a pseudo-OptionalExpression\n    ExportContext      = 1 << 7,  // Export context (initialized by binding)\n    ContainsThis       = 1 << 8,  // Interface contains references to \"this\"\n    HasImplicitReturn  = 1 << 9,  // If function implicitly returns on one of codepaths (initialized by binding)\n    HasExplicitReturn  = 1 << 10,  // If function has explicit reachable return on one of codepaths (initialized by binding)\n    GlobalAugmentation = 1 << 11,  // Set if module declaration is an augmentation for the global scope\n    HasAsyncFunctions  = 1 << 12, // If the file has async functions (initialized by binding)\n    DisallowInContext  = 1 << 13, // If node was parsed in a context where 'in-expressions' are not allowed\n    YieldContext       = 1 << 14, // If node was parsed in the 'yield' context created when parsing a generator\n    DecoratorContext   = 1 << 15, // If node was parsed as part of a decorator\n    AwaitContext       = 1 << 16, // If node was parsed in the 'await' context created when parsing an async function\n    DisallowConditionalTypesContext = 1 << 17, // If node was parsed in a context where conditional types are not allowed\n    ThisNodeHasError   = 1 << 18, // If the parser encountered an error when parsing the code that created this node\n    JavaScriptFile     = 1 << 19, // If node was parsed in a JavaScript\n    ThisNodeOrAnySubNodesHasError = 1 << 20, // If this node or any of its children had an error\n    HasAggregatedChildData = 1 << 21, // If we've computed data from children and cached it in this node\n\n    // These flags will be set when the parser encounters a dynamic import expression or 'import.meta' to avoid\n    // walking the tree if the flags are not set. However, these flags are just a approximation\n    // (hence why it's named \"PossiblyContainsDynamicImport\") because once set, the flags never get cleared.\n    // During editing, if a dynamic import is removed, incremental parsing will *NOT* clear this flag.\n    // This means that the tree will always be traversed during module resolution, or when looking for external module indicators.\n    // However, the removal operation should not occur often and in the case of the\n    // removal, it is likely that users will add the import anyway.\n    // The advantage of this approach is its simplicity. For the case of batch compilation,\n    // we guarantee that users won't have to pay the price of walking the tree if a dynamic import isn't used.\n    /** @internal */ PossiblyContainsDynamicImport = 1 << 22,\n    /** @internal */ PossiblyContainsImportMeta    = 1 << 23,\n\n    JSDoc                                          = 1 << 24, // If node was parsed inside jsdoc\n    /** @internal */ Ambient                       = 1 << 25, // If node was inside an ambient context -- a declaration file, or inside something with the `declare` modifier.\n    /** @internal */ InWithStatement               = 1 << 26, // If any ancestor of node was the `statement` of a WithStatement (not the `expression`)\n    JsonFile                                       = 1 << 27, // If node was parsed in a Json\n    /** @internal */ TypeCached                    = 1 << 28, // If a type was cached for node at any point\n    /** @internal */ Deprecated                    = 1 << 29, // If has '@deprecated' JSDoc tag\n    /** @internal */ Unreachable                   = 1 << 30, // If node is unreachable according to the binder\n\n    BlockScoped = Let | Const | Using,\n    Constant = Const | Using,\n\n    ReachabilityCheckFlags = HasImplicitReturn | HasExplicitReturn,\n    ReachabilityAndEmitFlags = ReachabilityCheckFlags | HasAsyncFunctions,\n\n    // Parsing context flags\n    ContextFlags = DisallowInContext | DisallowConditionalTypesContext | YieldContext | DecoratorContext | AwaitContext | JavaScriptFile | InWithStatement | Ambient,\n\n    // Exclude these flags when parsing a Type\n    TypeExcludesFlags = YieldContext | AwaitContext,\n\n    // Represents all flags that are potentially set once and\n    // never cleared on SourceFiles which get re-used in between incremental parses.\n    // See the comment above on `PossiblyContainsDynamicImport` and `PossiblyContainsImportMeta`.\n    /** @internal */ PermanentlySetIncrementalFlags = PossiblyContainsDynamicImport | PossiblyContainsImportMeta,\n\n    // The following flags repurpose other NodeFlags as different meanings for Identifier nodes\n    /** @internal */ IdentifierHasExtendedUnicodeEscape = ContainsThis, // Indicates whether the identifier contains an extended unicode escape sequence\n    /** @internal */ IdentifierIsInJSDocNamespace = HasAsyncFunctions, // Indicates whether the identifier is part of a JSDoc namespace\n}",
+        "sourceFile": "src/compiler/types.ts",
+        "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+      }
+    ]
+  },
+  {
+    "rank": 214,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateForOfStatement",
+    "candidateReads": 8,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1342,
+      "column": 16
+    },
+    "read": "context.factory.updateForOfStatement",
+    "call": "context.factory.updateForOfStatement(\r\n            node,\r\n            tokenVisitor ? nodeVisitor(node.awaitModifier, tokenVisitor, isAwaitKeyword) : node.awaitModifier,\r\n            Debug.checkDefined(nodeVisitor(node.initializer, visitor, isForInitializer)),\r\n            Debug.checkDefined(nodeVisitor(node.expression, visitor, isExpression)),\r\n            visitIterationBody(node.statement, visitor, context, nodeVisitor),\r\n        )",
+    "utf16Start": 65193,
+    "utf16End": 65229,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateForOfStatement(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement): ForOfStatement;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement) => ForOfStatement",
+    "directory": "rank-214",
+    "resultType": "ForOfStatement",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 292,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createImportEqualsDeclaration",
+    "candidateReads": 6,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 747,
+      "column": 58
+    },
+    "read": "nodeFactory.createImportEqualsDeclaration",
+    "call": "nodeFactory.createImportEqualsDeclaration(\r\n                    /*modifiers*/ undefined,\r\n                    /*isTypeOnly*/ false,\r\n                    externalHelpersModuleName,\r\n                    nodeFactory.createExternalModuleReference(nodeFactory.createStringLiteral(externalHelpersModuleNameText)),\r\n                )",
+    "utf16Start": 29386,
+    "utf16End": 29427,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "createImportEqualsDeclaration(modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, name: string | Identifier, moduleReference: ModuleReference): ImportEqualsDeclaration;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, name: string | Identifier, moduleReference: ModuleReference) => ImportEqualsDeclaration",
+    "directory": "rank-292",
+    "resultType": "ImportEqualsDeclaration",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 442,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createPropertyDescriptor",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 369,
+      "column": 17
+    },
+    "read": "factory.createPropertyDescriptor",
+    "call": "factory.createPropertyDescriptor({\r\n                    enumerable: factory.createFalse(),\r\n                    configurable: true,\r\n                    get: getAccessor && setTextRange(\r\n                        setOriginalNode(\r\n                            factory.createFunctionExpression(\r\n                                getModifiers(getAccessor),\r\n                                /*asteriskToken*/ undefined,\r\n                                /*name*/ undefined,\r\n                                /*typeParameters*/ undefined,\r\n                                getAccessor.parameters,\r\n                                /*type*/ undefined,\r\n                                getAccessor.body!, // TODO: GH#18217\r\n                            ),\r\n                            getAccessor,\r\n                        ),\r\n                        getAccessor,\r\n                    ),\r\n                    set: setAccessor && setTextRange(\r\n                        setOriginalNode(\r\n                            factory.createFunctionExpression(\r\n                                getModifiers(setAccessor),\r\n                                /*asteriskToken*/ undefined,\r\n                                /*name*/ undefined,\r\n                                /*typeParameters*/ undefined,\r\n                                setAccessor.parameters,\r\n                                /*type*/ undefined,\r\n                                setAccessor.body!, // TODO: GH#18217\r\n                            ),\r\n                            setAccessor,\r\n                        ),\r\n                        setAccessor,\r\n                    ),\r\n                }, !multiLine)",
+    "utf16Start": 12606,
+    "utf16End": 12638,
+    "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+    "declaration": "createPropertyDescriptor(attributes: PropertyDescriptorAttributes, singleLine?: boolean): ObjectLiteralExpression;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "expected": "(attributes: PropertyDescriptorAttributes, singleLine?: boolean | undefined) => ObjectLiteralExpression",
+    "directory": "rank-442",
+    "resultType": "ObjectLiteralExpression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 466,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExpressionsOfCommaDelimitedList",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 2855,
+      "column": 25
+    },
+    "read": "parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList",
+    "call": "parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList(elementsArray)",
+    "utf16Start": 116748,
+    "utf16End": 116812,
+    "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+    "declaration": "parenthesizeExpressionsOfCommaDelimitedList(elements: readonly Expression[]): NodeArray<Expression>;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "ParenthesizerRules"
+    ],
+    "expected": "(elements: readonly Expression[]) => NodeArray<Expression>",
+    "directory": "rank-466",
+    "resultType": "NodeArray<Expression>",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 526,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createAssignHelper",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 540,
+      "column": 34
+    },
+    "read": "emitHelpers().createAssignHelper",
+    "call": "emitHelpers().createAssignHelper([expression, objects[i]])",
+    "utf16Start": 21763,
+    "utf16End": 21795,
+    "fileSha256": "846876b89a5be66536d351c7c89769acc7b8ed45577411f361107963caa09c2d",
+    "declaration": "createAssignHelper(attributesSegments: readonly Expression[]): Expression;",
+    "declarationFile": "src/compiler/factory/emitHelpers.ts",
+    "declarationSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+    "inheritancePath": [
+      "EmitHelperFactory"
+    ],
+    "expected": "(attributesSegments: readonly Expression[]) => Expression",
+    "directory": "rank-526",
+    "resultType": "Expression",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 535,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isBindingCapturedByNode",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4068,
+      "column": 50
+    },
+    "read": "resolver.isBindingCapturedByNode",
+    "call": "resolver.isBindingCapturedByNode(container.initializer, decl)",
+    "utf16Start": 187530,
+    "utf16End": 187562,
+    "fileSha256": "79d70178e4923796212e8900090695875e51c9df60a6c604fbe9e43cd0ffbdf4",
+    "declaration": "isBindingCapturedByNode(node: Node, decl: VariableDeclaration | BindingElement): boolean;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitResolver"
+    ],
+    "expected": "(node: Node, decl: BindingElement | VariableDeclaration) => boolean",
+    "directory": "rank-535",
+    "resultType": "boolean",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result",
+      "wrong-members"
+    ],
+    "ledgerExpected": "(node: Node, decl: VariableDeclaration | BindingElement) => boolean",
+    "diagnosticBasis": "original declaration union order; same members as the ledger display"
+  },
+  {
+    "rank": 538,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "getTextPos",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/emitter.ts",
+      "line": 1036,
+      "column": 35
+    },
+    "read": "writer.getTextPos",
+    "call": "writer.getTextPos()",
+    "utf16Start": 39231,
+    "utf16End": 39248,
+    "fileSha256": "910f74394f8f4cbef48fe25387e5da6224742754b9a7699ef77312af6f453d63",
+    "declaration": "getTextPos(): number;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitTextWriter"
+    ],
+    "expected": "() => number",
+    "directory": "rank-538",
+    "resultType": "number",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  },
+  {
+    "rank": 541,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "writeLiteral",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 6429,
+      "column": 13
+    },
+    "read": "writer.writeLiteral",
+    "call": "writer.writeLiteral(s)",
+    "utf16Start": 250356,
+    "utf16End": 250375,
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "declaration": "writeLiteral(s: string): void;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "EmitTextWriter"
+    ],
+    "expected": "(s: string) => void",
+    "directory": "rank-541",
+    "resultType": "void",
+    "arity": "0",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-members"
+    ]
+  },
+  {
+    "rank": 547,
+    "receiver_type_id": 95248,
+    "type": "HostForUseSourceOfProjectReferenceRedirect",
+    "field": "getSymlinkCache",
+    "candidateReads": 3,
+    "witness": {
+      "file": "src/compiler/program.ts",
+      "line": 4948,
+      "column": 13
+    },
+    "read": "host.getSymlinkCache",
+    "call": "host.getSymlinkCache()",
+    "utf16Start": 258610,
+    "utf16End": 258630,
+    "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "declaration": "getSymlinkCache: () => SymlinkCache;",
+    "declarationFile": "src/compiler/program.ts",
+    "declarationSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+    "inheritancePath": [
+      "HostForUseSourceOfProjectReferenceRedirect"
+    ],
+    "expected": "() => SymlinkCache",
+    "directory": "rank-547",
+    "resultType": "SymlinkCache",
+    "arity": "1",
+    "variants": [
+      "good",
+      "wrong-value",
+      "wrong-arity",
+      "wrong-result"
+    ]
+  }
+]

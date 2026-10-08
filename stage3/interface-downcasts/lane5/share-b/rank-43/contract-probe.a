@@ -1,0 +1,7 @@
+// Original namespace header; defaults made optional; adjacent Node carrier reduced.
+type AnyFunction = (...args: never[]) => void;
+interface Node {readonly value:number;}
+interface Base {readonly assertIsDefined:unknown;}
+interface Target {readonly assertIsDefined: <T>(value: T, message?: string, stackCrawlMark?: AnyFunction) => asserts value is NonNullable<T>;}
+function probe(value:Base):void {const Debug:Target=value as Target;console.log(typeof Debug.assertIsDefined);}
+probe({assertIsDefined:7});

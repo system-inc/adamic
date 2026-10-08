@@ -1,0 +1,38 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createModuleDeclaration expected (modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined, flags?: NodeFlags | undefined) => ModuleDeclaration, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: context.factory.updateForOfStatement expected (node: ForOfStatement, awaitModifier: AwaitKeyword | undefined, initializer: ForInitializer, expression: Expression, statement: Statement) => ForOfStatement, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: nodeFactory.createImportEqualsDeclaration expected (modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, name: string | Identifier, moduleReference: ModuleReference) => ImportEqualsDeclaration, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: factory.createPropertyDescriptor expected (attributes: PropertyDescriptorAttributes, singleLine?: boolean | undefined) => ObjectLiteralExpression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList expected (elements: readonly Expression[]) => NodeArray<Expression>, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: emitHelpers().createAssignHelper expected (attributesSegments: readonly Expression[]) => Expression, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "true\n" stderr "" want "adamic: panic: field read failed: resolver.isBindingCapturedByNode expected (node: Node, decl: BindingElement | VariableDeclaration) => boolean, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-538/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: writer.getTextPos expected () => number, found function with arity 1\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-541/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "" stderr "" want "adamic: panic: field read failed: writer.writeLiteral expected (s: string) => void, found function with arity 0\n"
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-547/wrong-arity
+    checked_views_callable_share_b_test.go:97: backend 0: exit 0 stdout "3\n" stderr "" want "adamic: panic: field read failed: host.getSymlinkCache expected () => SymlinkCache, found function with arity 1\n"
+--- FAIL: TestCheckedViewCallableShareBFamilies (5.52s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity (1.11s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-214/wrong-arity (0.54s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-292/wrong-arity (0.52s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-442/wrong-arity (0.51s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-466/wrong-arity (0.47s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-526/wrong-arity (0.48s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-535/wrong-arity (0.51s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-538/wrong-arity (0.46s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-541/wrong-arity (0.45s)
+    --- FAIL: TestCheckedViewCallableShareBFamilies/rank-547/wrong-arity (0.46s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=20
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.525s
+FAIL

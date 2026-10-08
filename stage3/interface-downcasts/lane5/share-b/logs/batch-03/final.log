@@ -1,0 +1,360 @@
+=== RUN   TestCheckedViewCallableShareBFamilies
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-175/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-214/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-292/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-442/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-466/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-526/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-535/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-538/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-538/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-538/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-538/wrong-result
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-541/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-541/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-541/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-541/wrong-members
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-547/good
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-547/wrong-value
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-547/wrong-arity
+=== RUN   TestCheckedViewCallableShareBFamilies/rank-547/wrong-result
+--- PASS: TestCheckedViewCallableShareBFamilies (25.37s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/good (1.08s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-value (0.90s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-arity (1.03s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-result (1.00s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-175/wrong-members (0.97s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-214/good (0.54s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-214/wrong-value (0.40s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-214/wrong-arity (0.51s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-214/wrong-result (0.51s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-214/wrong-members (0.50s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-292/good (0.53s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-292/wrong-value (0.39s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-292/wrong-arity (0.50s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-292/wrong-result (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-292/wrong-members (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-442/good (0.50s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-442/wrong-value (0.41s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-442/wrong-arity (0.49s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-442/wrong-result (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-442/wrong-members (0.46s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-466/good (0.52s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-466/wrong-value (0.51s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-466/wrong-arity (0.52s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-466/wrong-result (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-466/wrong-members (0.49s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-526/good (0.56s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-526/wrong-value (0.57s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-526/wrong-arity (0.53s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-526/wrong-result (0.61s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-526/wrong-members (0.53s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-535/good (0.54s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-535/wrong-value (0.43s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-535/wrong-arity (0.47s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-535/wrong-result (0.49s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-535/wrong-members (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-538/good (0.45s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-538/wrong-value (0.40s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-538/wrong-arity (0.48s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-538/wrong-result (0.51s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-541/good (0.50s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-541/wrong-value (0.42s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-541/wrong-arity (0.45s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-541/wrong-members (0.46s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-547/good (0.49s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-547/wrong-value (0.38s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-547/wrong-arity (0.46s)
+    --- PASS: TestCheckedViewCallableShareBFamilies/rank-547/wrong-result (0.46s)
+=== RUN   TestCheckedViewCallableShareBArityMutants
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-175
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-214
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-292
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-442
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-466
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-526
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-535
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "true\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "true\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-538
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-541
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout ""
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout ""
+=== RUN   TestCheckedViewCallableShareBArityMutants/rank-547
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 0 ran exit 0 stdout "3\n"
+    checked_views_callable_share_b_test.go:126: arity mutant caught by exit-70/message pin: backend 1 ran exit 0 stdout "3\n"
+--- PASS: TestCheckedViewCallableShareBArityMutants (2.42s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-175 (0.27s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-214 (0.26s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-292 (0.24s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-442 (0.22s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-466 (0.24s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-526 (0.23s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-535 (0.23s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-538 (0.22s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-541 (0.26s)
+    --- PASS: TestCheckedViewCallableShareBArityMutants/rank-547 (0.24s)
+=== RUN   TestCheckedViewCallableShareBCounts
+--- PASS: TestCheckedViewCallableShareBCounts (6.24s)
+=== RUN   TestCheckedViewCallableShareBBlockers
+=== RUN   TestCheckedViewCallableShareBBlockers/debug-assert-contract.a
+    checked_views_callable_share_b_test.go:243: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/gaps/debug-assert-contract.a:6:136: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-assignment.a
+    checked_views_callable_share_b_test.go:243: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/blocked-assignment.a:15:17: Adamic 0.1 refuses checked view read of field createAssignment with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-push.a
+    checked_views_callable_share_b_test.go:243: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/blocked-push.a:7:17: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBBlockers/blocked-join.a
+    checked_views_callable_share_b_test.go:233: JavaScript array receiver observation: exit 70 stdout "" stderr "adamic: panic: field read failed: result.join expected (separator?: string | undefined) => string, found function with unknown signature\n"
+    checked_views_callable_share_b_test.go:234: native array receiver observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2175791919/main.c:53:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           53 |         adamic_function_0_probe(adamic_temporary_15);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2175791919/main.c:24:53: note: passing argument to parameter 'adamic_local_0_value' here
+           24 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+=== RUN   TestCheckedViewCallableShareBBlockers/good.a
+    checked_views_callable_share_b_test.go:243: observed original callable blocker: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-205/good.a:5:77: stage 0 can't lower an optional chain longer than one step yet
+=== RUN   TestCheckedViewCallableShareBBlockers/good.a#01
+    checked_views_callable_share_b_test.go:217: observed signature diagnostic truncation: (node: ArrowFunction, modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: ..., type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken, body: ConciseBody) => ArrowFunction
+--- PASS: TestCheckedViewCallableShareBBlockers (1.35s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/debug-assert-contract.a (0.13s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-assignment.a (0.13s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-push.a (0.13s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/blocked-join.a (0.22s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/good.a (0.14s)
+    --- PASS: TestCheckedViewCallableShareBBlockers/good.a#01 (0.59s)
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-16
+    checked_views_callable_share_b_test.go:300: rank 16 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-16/contract-probe.a:6:63: Adamic 0.1 refuses checked view read of field entries with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-25
+    checked_views_callable_share_b_test.go:300: rank 25 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-25/contract-probe.a:9:64: Adamic 0.1 refuses checked view read of field getGeneratedNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-28
+    checked_views_callable_share_b_test.go:300: rank 28 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-28/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field createKeywordTypeNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-40
+    checked_views_callable_share_b_test.go:300: rank 40 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-40/contract-probe.a:31:64: Adamic 0.1 refuses checked view read of field createToken with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-55
+    checked_views_callable_share_b_test.go:300: rank 55 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-55/contract-probe.a:5:61: Adamic 0.1 refuses checked view read of field max with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-130
+    checked_views_callable_share_b_test.go:300: rank 130 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-130/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field mergeLexicalEnvironment with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-172
+    checked_views_callable_share_b_test.go:300: rank 172 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-172/contract-probe.a:7:64: Adamic 0.1 refuses checked view read of field copyPrologue with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-181
+    checked_views_callable_share_b_test.go:300: rank 181 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-181/contract-probe.a:4:38: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-190
+    checked_views_callable_share_b_test.go:300: rank 190 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-190/contract-probe.a:6:64: Adamic 0.1 refuses checked view read of field restoreEnclosingLabel with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-226
+    checked_views_callable_share_b_test.go:300: rank 226 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-226/contract-probe.a:5:70: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-244
+    checked_views_callable_share_b_test.go:300: rank 244 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-244/contract-probe.a:8:64: Adamic 0.1 refuses checked view read of field getGeneratedPrivateNameForNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-250
+    checked_views_callable_share_b_test.go:300: rank 250 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-250/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field defineProperties with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-253
+    checked_views_callable_share_b_test.go:300: rank 253 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-253/contract-probe.a:5:63: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-319
+    checked_views_callable_share_b_test.go:300: rank 319 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-319/contract-probe.a:6:69: Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-322
+    checked_views_callable_share_b_test.go:300: rank 322 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-322/contract-probe.a:5:65: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-19
+    checked_views_callable_share_b_test.go:300: rank 19 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-19/contract-probe.a:6:88: Adamic 0.1 refuses checked view read of field assertNever with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-43
+    checked_views_callable_share_b_test.go:300: rank 43 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-43/contract-probe.a:5:110: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-46
+    checked_views_callable_share_b_test.go:300: rank 46 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-46/contract-probe.a:5:111: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-262
+    checked_views_callable_share_b_test.go:300: rank 262 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-262/contract-probe.a:6:88: Adamic 0.1 refuses checked view read of field assertLessThanOrEqual with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-370
+    checked_views_callable_share_b_test.go:300: rank 370 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-370/contract-probe.a:5:62: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-382
+    checked_views_callable_share_b_test.go:300: rank 382 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-382/contract-probe.a:5:67: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-388
+    checked_views_callable_share_b_test.go:300: rank 388 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-388/contract-probe.a:5:62: Adamic 0.1 refuses checked view read of field sort with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-406
+    checked_views_callable_share_b_test.go:300: rank 406 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-406/contract-probe.a:5:64: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-439
+    checked_views_callable_share_b_test.go:300: rank 439 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-439/contract-probe.a:8:64: Adamic 0.1 refuses checked view read of field createImportAttributes with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-463
+    checked_views_callable_share_b_test.go:300: rank 463 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-463/contract-probe.a:6:63: stage 0 can't lower a call returning any yet
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-496
+    checked_views_callable_share_b_test.go:300: rank 496 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-496/contract-probe.a:5:69: Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-511
+    checked_views_callable_share_b_test.go:300: rank 511 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-511/contract-probe.a:5:68: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareBAdmissionProbes/rank-523
+    checked_views_callable_share_b_test.go:300: rank 523 admission observation: /workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-523/contract-probe.a:5:77: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewCallableShareBAdmissionProbes (3.59s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-16 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-25 (0.14s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-28 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-40 (0.16s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-55 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-130 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-172 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-181 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-190 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-226 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-244 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-250 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-253 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-319 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-322 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-19 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-43 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-46 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-262 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-370 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-382 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-388 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-406 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-439 (0.15s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-463 (0.13s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-496 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-511 (0.12s)
+    --- PASS: TestCheckedViewCallableShareBAdmissionProbes/rank-523 (0.13s)
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-112
+    checked_views_callable_share_b_test.go:354: rank 112 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-571657711/main.c:63:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           63 |         adamic_function_0_probe(adamic_temporary_19);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-571657711/main.c:25:53: note: passing argument to parameter 'adamic_local_1_value' here
+           25 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 112 JavaScript observation: "adamic: panic: field read failed: usedLines.get expected (key: string) => boolean | undefined, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-232
+    checked_views_callable_share_b_test.go:354: rank 232 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2990100611/main.c:64:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           64 |         adamic_function_0_probe(adamic_temporary_19);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2990100611/main.c:26:53: note: passing argument to parameter 'adamic_local_1_value' here
+           26 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 232 JavaScript observation: "adamic: panic: field read failed: remappedPaths.has expected (key: string) => boolean, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-283
+    checked_views_callable_share_b_test.go:354: rank 283 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-401134154/main.c:58:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           58 |         adamic_function_0_probe(adamic_temporary_12);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-401134154/main.c:22:53: note: passing argument to parameter 'adamic_local_1_value' here
+           22 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 283 JavaScript observation: "adamic: panic: field read failed: durations.clear expected () => void, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-343
+    checked_views_callable_share_b_test.go:354: rank 343 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-772857983/main.c:91:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           91 |         adamic_function_0_probe(adamic_temporary_22);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-772857983/main.c:31:53: note: passing argument to parameter 'adamic_local_1_value' here
+           31 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 343 JavaScript observation: "adamic: panic: field read failed: context.enclosingSymbolTypes.set expected (key: number, value: Type) => Target<number, Type>, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-346
+    checked_views_callable_share_b_test.go:354: rank 346 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2230994636/main.c:63:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           63 |         adamic_function_0_probe(adamic_temporary_19);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2230994636/main.c:25:53: note: passing argument to parameter 'adamic_local_1_value' here
+           25 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 346 JavaScript observation: "adamic: panic: field read failed: leftPrologues.has expected (key: string) => boolean, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-184
+    checked_views_callable_share_b_test.go:354: rank 184 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4049383702/main.c:70:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           70 |         adamic_function_0_probe(adamic_temporary_17);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-4049383702/main.c:25:53: note: passing argument to parameter 'adamic_local_0_value' here
+           25 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 184 JavaScript observation: "adamic: panic: field read failed: statements.slice expected (start?: number | undefined, end?: number | undefined) => Statement[], found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-259
+    checked_views_callable_share_b_test.go:354: rank 259 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-2985866979/main.c:58:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           58 |         adamic_function_0_probe(adamic_temporary_13);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-2985866979/main.c:21:53: note: passing argument to parameter 'adamic_local_0_value' here
+           21 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 259 JavaScript observation: "adamic: panic: field read failed: context.typeStack.pop expected () => number | undefined, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-499
+    checked_views_callable_share_b_test.go:354: rank 499 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-4199657285/main.c:57:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           57 |         adamic_function_0_probe(adamic_temporary_16);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-4199657285/main.c:24:53: note: passing argument to parameter 'adamic_local_0_value' here
+           24 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 499 JavaScript observation: "adamic: panic: field read failed: conditions?.includes expected (searchElement: string, fromIndex?: number | undefined) => boolean, found function with unknown signature\n"
+=== RUN   TestCheckedViewCallableShareBCollectionReceivers/rank-520
+    checked_views_callable_share_b_test.go:354: rank 520 native observation: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1693917928/main.c:82:26: error: incompatible pointer types passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           82 |         adamic_function_0_probe(adamic_temporary_19);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-1693917928/main.c:28:53: note: passing argument to parameter 'adamic_local_0_value' here
+           28 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+              |                                                     ^
+        1 error generated.
+    checked_views_callable_share_b_test.go:355: rank 520 JavaScript observation: "adamic: panic: field read failed: symbol.declarations.slice expected (start?: number | undefined, end?: number | undefined) => Declaration[], found function with unknown signature\n"
+--- PASS: TestCheckedViewCallableShareBCollectionReceivers (2.02s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-112 (0.22s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-232 (0.24s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-283 (0.22s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-343 (0.26s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-346 (0.20s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-184 (0.21s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-259 (0.22s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-499 (0.23s)
+    --- PASS: TestCheckedViewCallableShareBCollectionReceivers/rank-520 (0.21s)
+PASS
+gate cache: native hits=0 misses=48
+gate cache: node hits=0 misses=168
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	40.996s

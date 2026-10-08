@@ -1,0 +1,26 @@
+[
+  {
+    "rank": 448,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateArrowFunction",
+    "candidateReads": 4,
+    "witness": {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 1115,
+      "column": 16
+    },
+    "read": "context.factory.updateArrowFunction",
+    "call": "context.factory.updateArrowFunction(\r\n            node,\r\n            nodesVisitor(node.modifiers, visitor, isModifier),\r\n            nodesVisitor(node.typeParameters, visitor, isTypeParameterDeclaration),\r\n            visitParameterList(node.parameters, visitor, context, nodesVisitor),\r\n            nodeVisitor(node.type, visitor, isTypeNode),\r\n            tokenVisitor ? Debug.checkDefined(nodeVisitor(node.equalsGreaterThanToken, tokenVisitor, isEqualsGreaterThanToken)) : node.equalsGreaterThanToken,\r\n            visitFunctionBody(node.body, visitor, context, nodeVisitor),\r\n        )",
+    "utf16Start": 53450,
+    "utf16End": 53485,
+    "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+    "declaration": "updateArrowFunction(node: ArrowFunction, modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken, body: ConciseBody): ArrowFunction;",
+    "declarationFile": "src/compiler/types.ts",
+    "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+    "inheritancePath": [
+      "NodeFactory"
+    ],
+    "filename": "rank-448/good.a"
+  }
+]

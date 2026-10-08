@@ -10,6 +10,26 @@
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 175,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createModuleDeclaration",
+    "candidateReads": 10,
+    "directory": "rank-175",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 214,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "updateForOfStatement",
+    "candidateReads": 8,
+    "directory": "rank-214",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 277,
     "receiver_type_id": 83084,
     "type": "FlattenContext",
@@ -18,6 +38,16 @@
     "directory": "rank-277",
     "certified": true,
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 292,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createImportEqualsDeclaration",
+    "candidateReads": 6,
+    "directory": "rank-292",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
     "rank": 313,
@@ -230,6 +260,16 @@
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 442,
+    "receiver_type_id": 11739,
+    "type": "NodeFactory",
+    "field": "createPropertyDescriptor",
+    "candidateReads": 4,
+    "directory": "rank-442",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 445,
     "receiver_type_id": 11739,
     "type": "NodeFactory",
@@ -270,6 +310,16 @@
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
+    "rank": 466,
+    "receiver_type_id": 11725,
+    "type": "ParenthesizerRules",
+    "field": "parenthesizeExpressionsOfCommaDelimitedList",
+    "candidateReads": 4,
+    "directory": "rank-466",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
     "rank": 478,
     "receiver_type_id": 28206,
     "type": "Scanner",
@@ -298,6 +348,56 @@
     "directory": "rank-484",
     "certified": true,
     "basis": "complete original member/read; adjacent data carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 526,
+    "receiver_type_id": 12054,
+    "type": "EmitHelperFactory",
+    "field": "createAssignHelper",
+    "candidateReads": 3,
+    "directory": "rank-526",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 535,
+    "receiver_type_id": 10401,
+    "type": "EmitResolver",
+    "field": "isBindingCapturedByNode",
+    "candidateReads": 3,
+    "directory": "rank-535",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 538,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "getTextPos",
+    "candidateReads": 3,
+    "directory": "rank-538",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 541,
+    "receiver_type_id": 10351,
+    "type": "EmitTextWriter",
+    "field": "writeLiteral",
+    "candidateReads": 3,
+    "directory": "rank-541",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
+  },
+  {
+    "rank": 547,
+    "receiver_type_id": 95248,
+    "type": "HostForUseSourceOfProjectReferenceRedirect",
+    "field": "getSymlinkCache",
+    "candidateReads": 3,
+    "directory": "rank-547",
+    "certified": true,
+    "basis": "complete original member/read; original enum representation retained; adjacent object carriers reduced; Node/native release/ASan/UBSan/JavaScript/leaks; pinned negatives and killed arity mutant"
   },
   {
     "rank": 622,

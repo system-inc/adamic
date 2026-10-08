@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly writeLiteral:unknown;}
+interface Target {writeLiteral(s: string): void;}
+function probe(value:Base):void {const writer=value as Target;writer.writeLiteral("value3");}
+probe({writeLiteral:(s:number):void=>{}});

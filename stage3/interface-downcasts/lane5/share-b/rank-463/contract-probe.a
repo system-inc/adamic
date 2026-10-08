@@ -1,0 +1,7 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+
+interface Base {readonly create:unknown;}
+interface Target {create(o: object | null): any;
+create(o: object | null, properties: PropertyDescriptorMap & ThisType<any>): any;}
+function probe(value:Base):void {const Object=value as Target;Object.create({value:3});}
+probe({create:7});

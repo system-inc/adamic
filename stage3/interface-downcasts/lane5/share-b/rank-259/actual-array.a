@@ -1,0 +1,5 @@
+// Original member/read with an actual array receiver.
+interface Base {readonly pop:unknown;}
+interface Target<T> {pop(): T | undefined;}
+function probe(value:Base):void {const context={typeStack:value as Target<number>};context.typeStack.pop();console.log("called");}
+probe([3,4]);

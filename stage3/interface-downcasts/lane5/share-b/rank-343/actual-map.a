@@ -1,0 +1,6 @@
+// Original member/read with an actual Map receiver.
+interface Type {readonly value:number;}
+interface Base {readonly set:unknown;}
+interface Target<K,V> {set(key: K, value: V): this;}
+function probe(value:Base):void {const context={enclosingSymbolTypes:value as Target<number,Type>};context.enclosingSymbolTypes.set(3,{value:3});console.log("stored");}
+const map=new Map<number,Type>();map.set(3,{value:3});probe(map);

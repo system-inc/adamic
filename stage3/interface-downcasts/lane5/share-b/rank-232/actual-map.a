@@ -1,0 +1,5 @@
+// Original member/read with an actual Map receiver.
+interface Base {readonly has:unknown;}
+interface Target<K,V> {has(key: K): boolean;}
+function probe(value:Base):void {const remappedPaths=value as Target<string,string>;console.log(`${remappedPaths.has("value3")}`);}
+const map=new Map<string,string>();map.set("value3","answer3");probe(map);

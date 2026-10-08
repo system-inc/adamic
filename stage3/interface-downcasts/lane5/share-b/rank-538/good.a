@@ -1,0 +1,6 @@
+// Original declaration and read; adjacent data carriers reduced.
+
+interface Base {readonly getTextPos:unknown;}
+interface Target {getTextPos(): number;}
+function probe(value:Base):void {const writer=value as Target;console.log(`${writer.getTextPos()}`);}
+probe({getTextPos:():number=>{return 3;}});

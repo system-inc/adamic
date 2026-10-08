@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface T {readonly value:number;}
+interface Base {readonly forEach:unknown;}
+interface Target {forEach(callbackfn: (value: T, index: number, array: T[]) => void, thisArg?: any): void;}
+function probe(value:Base):void {const reasons=value as Target;reasons?.forEach(()=>3,undefined);}
+probe({forEach:7});

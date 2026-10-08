@@ -1,0 +1,7 @@
+// Original namespace header; defaults made optional; adjacent Node carrier reduced.
+type AnyFunction = (...args: never[]) => void;
+interface Node {readonly value:number;}
+interface Base {readonly assertNever:unknown;}
+interface Target {readonly assertNever: (member: never, message?: string, stackCrawlMark?: AnyFunction) => never;}
+function probe(value:Base):void {const Debug:Target=value as Target;console.log(typeof Debug.assertNever);}
+probe({assertNever:7});

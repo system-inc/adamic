@@ -1,0 +1,6 @@
+// Original member/read; adjacent carriers reduced for signature admission only.
+interface T {readonly value:number;}
+interface Base {readonly sort:unknown;}
+interface Target {sort(compareFn?: (a: T, b: T) => number): this;}
+function probe(value:Base):void {const files=value as Target;files.sort(undefined);}
+probe({sort:7});

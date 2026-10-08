@@ -138,6 +138,20 @@ func TestCheckedViewCallableShareBCounts(t *testing.T) {
 			rows = append(rows, counted(t, path, false, nil, false, false))
 		}
 	}
+	// Receiver-gap fixtures cannot produce counts until their native conversion errors are fixed.
+	for _, filename := range []string{"batch-03-diagnostic-probes.json"} {
+		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var probes []struct{ Filename string }
+		if err := json.Unmarshal(contents, &probes); err != nil {
+			t.Fatal(err)
+		}
+		for _, probe := range probes {
+			rows = append(rows, counted(t, filepath.Join("stage3/interface-downcasts/lane5/share-b", probe.Filename), false, nil, false, false))
+		}
+	}
 	path := filepath.Join(repository, "internal/oracle/counts.md")
 	contents, err := os.ReadFile(path)
 	if err != nil {
@@ -170,6 +184,7 @@ func TestCheckedViewCallableShareBBlockers(t *testing.T) {
 		{"stage3/interface-downcasts/lane5/share-b/blocked-push.a", "2\n", "checked view read of field push with unsupported callable contract"},
 		{"stage3/interface-downcasts/lane5/share-b/blocked-join.a", "first|second\n", "native-array-receiver"},
 		{"stage3/interface-downcasts/lane5/share-b/rank-205/good.a", "3\n", "optional chain longer than one step"},
+		{"stage3/interface-downcasts/lane5/share-b/rank-448/good.a", "3\n3\n3\n3\n3\n3\n3\n3\n", "truncated-callable-name"},
 	} {
 		t.Run(filepath.Base(probe.path), func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, probe.path))
@@ -181,6 +196,27 @@ func TestCheckedViewCallableShareBBlockers(t *testing.T) {
 				t.Fatalf("Node: %#v", truth)
 			}
 			program, err := lowered(t, path)
+			if probe.refusal == "truncated-callable-name" {
+				if err != nil {
+					t.Fatal(err)
+				}
+				contract := program.ViewContracts[callableShareBContract(t, program, "updateArrowFunction")-1]
+				expected := "(node: ArrowFunction, modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: ..., type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken, body: ConciseBody) => ArrowFunction"
+				if contract.Name != expected {
+					t.Fatalf("signature diagnostic frontier: %q", contract.Name)
+				}
+				sanitized, binary := nativelyUncached(t, program)
+				for _, got := range []run{releasedUncached(t, program), sanitized, onJavaScriptBackend(t, program)} {
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatal(difference)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Logf("observed signature diagnostic truncation: %s", contract.Name)
+				return
+			}
 			if probe.refusal == "native-array-receiver" {
 				if err != nil {
 					t.Fatal(err)
@@ -222,14 +258,23 @@ func callableShareBArityMutant(t *testing.T, program *ir.Program, family callabl
 
 // Not parallel: ordered admission evidence is collected for this share's ledger.
 func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
-	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b/batch-02-probes.json"))
-	if err != nil {
-		t.Fatal(err)
+	var data []byte
+	for _, filename := range []string{"batch-02-probes.json", "batch-03-debug-probes.json", "batch-03-signature-probes.json"} {
+		contents, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", filename))
+		if err != nil {
+			t.Fatal(err)
+		}
+		if len(data) == 0 {
+			data = contents
+		} else {
+			data = append(append(data[:len(data)-2], ','), contents[1:]...)
+		}
 	}
 	var probes []struct {
 		Rank     int
 		Filename string
 		Refusal  string
+		Output   string
 	}
 	if err := json.Unmarshal(data, &probes); err != nil {
 		t.Fatal(err)
@@ -241,7 +286,11 @@ func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 				t.Fatal(err)
 			}
 			truth := onNode(t, path)
-			if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "TypeError:") {
+			if probe.Output != "" {
+				if truth.exitCode != 0 || string(truth.stdout) != probe.Output {
+					t.Fatalf("Node: %#v", truth)
+				}
+			} else if truth.exitCode != 70 || !strings.Contains(string(truth.stderr), "TypeError:") {
 				t.Fatalf("Node: %#v", truth)
 			}
 			_, err = lowered(t, path)
@@ -250,5 +299,61 @@ func TestCheckedViewCallableShareBAdmissionProbes(t *testing.T) {
 			}
 			t.Logf("rank %d admission observation: %v", probe.Rank, err)
 		})
+	}
+}
+
+// Not parallel: ordered original-receiver gap observations share their ledger.
+func TestCheckedViewCallableShareBCollectionReceivers(t *testing.T) {
+	for _, group := range []struct{ Filename, NativeType string }{{"batch-03-map-probes.json", "map"}, {"batch-03-array-probes.json", "array"}} {
+		data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", group.Filename))
+		if err != nil {
+			t.Fatal(err)
+		}
+		var probes []struct {
+			Rank                                       int
+			Field, Filename, Output, Refusal, Expected string
+		}
+		if err := json.Unmarshal(data, &probes); err != nil {
+			t.Fatal(err)
+		}
+		for _, probe := range probes {
+			t.Run(filepath.Dir(probe.Filename), func(t *testing.T) {
+				path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-b", probe.Filename))
+				if err != nil {
+					t.Fatal(err)
+				}
+				truth := onNode(t, path)
+				if truth.exitCode != 0 || string(truth.stdout) != probe.Output {
+					t.Fatalf("Node: %#v", truth)
+				}
+				program, err := lowered(t, path)
+				if err != nil {
+					if probe.Refusal == "" {
+						t.Fatalf("unexpected collection lowering refusal: %v", err)
+					}
+					if !strings.Contains(err.Error(), probe.Refusal) {
+						t.Fatal(err)
+					}
+					t.Logf("rank %d lowering observation: %v", probe.Rank, err)
+					return
+				}
+				if probe.Refusal != "" {
+					t.Fatal("receiver now lowers; requires full certification")
+				}
+				buildErr := native.Build(native.C(program), filepath.Join(t.TempDir(), "map"), native.Options{Sanitize: true})
+				if buildErr == nil || !strings.Contains(buildErr.Error(), "incompatible pointer types passing 'adamic_"+group.NativeType+" *'") || !strings.Contains(buildErr.Error(), "adamic_object *") {
+					t.Fatalf("Map receiver frontier: %v", buildErr)
+				}
+				got := onJavaScriptBackend(t, program)
+				if got.exitCode != 70 || len(got.stdout) != 0 || !strings.Contains(string(got.stderr), "function with unknown signature") {
+					t.Fatalf("JavaScript intrinsic frontier: %#v", got)
+				}
+				if probe.Expected != "" && string(got.stderr) != probe.Expected {
+					t.Fatalf("expected %q, got %q", probe.Expected, got.stderr)
+				}
+				t.Logf("rank %d native observation: %v", probe.Rank, buildErr)
+				t.Logf("rank %d JavaScript observation: %q", probe.Rank, got.stderr)
+			})
+		}
 	}
 }

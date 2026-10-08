@@ -34,6 +34,16 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 19,
+    "pair": "typeof Debug.assertNever",
+    "reads": 62,
+    "read": "Debug.assertNever",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-19/contract-probe.a:6:88: Adamic 0.1 refuses checked view read of field assertNever with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "never parameter/result callable contracts and optional AnyFunction rest-never callback contract",
+    "fixture": "rank-19/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
     "rank": 25,
     "pair": "NodeFactory.getGeneratedNameForNode",
     "reads": 58,
@@ -72,6 +82,26 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 43,
+    "pair": "typeof Debug.assertIsDefined",
+    "reads": 39,
+    "read": "Debug.assertIsDefined",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-43/contract-probe.a:5:110: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "needed": "proven original assertion-predicate callable admission, including generic overloads",
+    "fixture": "rank-43/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 46,
+    "pair": "typeof Debug.assertNode",
+    "reads": 38,
+    "read": "Debug.assertNode",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-46/contract-probe.a:5:111: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+    "needed": "proven original assertion-predicate callable admission, including generic overloads",
+    "fixture": "rank-46/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
     "rank": 55,
     "pair": "Math.max",
     "reads": 30,
@@ -80,6 +110,17 @@
     "needed": "rest-parameter callable descriptors and intrinsic signature checks",
     "fixture": "rank-55/contract-probe.a",
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 112,
+    "pair": "Map<string, boolean>.get",
+    "reads": 15,
+    "read": "usedLines.get",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-112/actual-map.a",
+    "expectedJavaScript": "adamic: panic: field read failed: usedLines.get expected (key: string) => boolean | undefined, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
   },
   {
     "rank": 130,
@@ -128,6 +169,17 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 184,
+    "pair": "NodeArray<Statement>.slice",
+    "reads": 9,
+    "read": "statements.slice",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-184/actual-array.a",
+    "expectedJavaScript": "adamic: panic: field read failed: statements.slice expected (start?: number | undefined, end?: number | undefined) => Statement[], found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
     "rank": 190,
     "pair": "NodeFactory.restoreEnclosingLabel",
     "reads": 9,
@@ -174,6 +226,17 @@
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
   },
   {
+    "rank": 232,
+    "pair": "Map<string, string>.has",
+    "reads": 7,
+    "read": "remappedPaths.has",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-232/actual-map.a",
+    "expectedJavaScript": "adamic: panic: field read failed: remappedPaths.has expected (key: string) => boolean, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
     "rank": 244,
     "pair": "NodeFactory.getGeneratedPrivateNameForNode",
     "reads": 7,
@@ -202,6 +265,38 @@
     "needed": "rest-parameter callable descriptors and intrinsic signature checks",
     "fixture": "rank-253/contract-probe.a",
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 259,
+    "pair": "number[].pop",
+    "reads": 7,
+    "read": "context.typeStack.pop",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-259/actual-array.a",
+    "expectedJavaScript": "adamic: panic: field read failed: context.typeStack.pop expected () => number | undefined, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
+    "rank": 262,
+    "pair": "typeof Debug.assertLessThanOrEqual",
+    "reads": 7,
+    "read": "Debug.assertLessThanOrEqual",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-262/contract-probe.a:6:88: Adamic 0.1 refuses checked view read of field assertLessThanOrEqual with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "nested optional AnyFunction callback contract with rest-never parameters",
+    "fixture": "rank-262/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 283,
+    "pair": "Map<string, number>.clear",
+    "reads": 6,
+    "read": "durations.clear",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-283/actual-map.a",
+    "expectedJavaScript": "adamic: panic: field read failed: durations.clear expected () => void, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
   },
   {
     "rank": 310,
@@ -238,6 +333,150 @@
     "needed": "callable descriptors for optional callback parameters and their return contracts",
     "fixture": "rank-322/contract-probe.a",
     "basis": "observed refusal with original member/read and reduced adjacent carriers"
+  },
+  {
+    "rank": 343,
+    "pair": "Map<number, Type>.set",
+    "reads": 5,
+    "read": "context.enclosingSymbolTypes.set",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-343/actual-map.a",
+    "expectedJavaScript": "adamic: panic: field read failed: context.enclosingSymbolTypes.set expected (key: number, value: Type) => Target<number, Type>, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
+    "rank": 346,
+    "pair": "Map<string, boolean>.has",
+    "reads": 5,
+    "read": "leftPrologues.has",
+    "stop": "native Map-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "Map receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-346/actual-map.a",
+    "expectedJavaScript": "adamic: panic: field read failed: leftPrologues.has expected (key: string) => boolean, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
+    "rank": 370,
+    "pair": "Path[].push",
+    "reads": 5,
+    "read": "queue.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-370/contract-probe.a:5:62: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-370/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 382,
+    "pair": "Statistic[].push",
+    "reads": 5,
+    "read": "statistics.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-382/contract-probe.a:5:67: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-382/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 388,
+    "pair": "string[].sort",
+    "reads": 5,
+    "read": "files.sort",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-388/contract-probe.a:5:62: Adamic 0.1 refuses checked view read of field sort with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-388/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 406,
+    "pair": "FileIncludeReason[] | undefined.forEach",
+    "reads": 4,
+    "read": "reasons?.forEach",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-406/contract-probe.a:5:64: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-406/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 439,
+    "pair": "NodeFactory.createImportAttributes",
+    "reads": 4,
+    "read": "factory.createImportAttributes",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-439/contract-probe.a:8:64: Adamic 0.1 refuses checked view read of field createImportAttributes with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original overloaded callable descriptors including indexed result-token types",
+    "fixture": "rank-439/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 448,
+    "pair": "NodeFactory.updateArrowFunction",
+    "reads": 4,
+    "read": "context.factory.updateArrowFunction",
+    "stop": "runtime callable diagnostic name prints parameters: ... instead of the original readonly ParameterDeclaration[] parameter type",
+    "needed": "complete untruncated expected callable type in checked-view failure messages",
+    "fixture": "rank-448/good.a",
+    "basis": "positive backends pass; original complete signature-name pin failed, so no certification claimed"
+  },
+  {
+    "rank": 463,
+    "pair": "ObjectConstructor.create",
+    "reads": 4,
+    "read": "Object.create",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-463/contract-probe.a:6:63: stage 0 can't lower a call returning any yet",
+    "needed": "checked representation for the original any-returning overloaded callable",
+    "fixture": "rank-463/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 496,
+    "pair": "number[].map",
+    "reads": 4,
+    "read": "deduplicated.map",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-496/contract-probe.a:5:69: Adamic 0.1 refuses checked view read of field map with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-496/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 499,
+    "pair": "readonly string[].includes",
+    "reads": 4,
+    "read": "conditions?.includes",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-499/actual-array.a",
+    "expectedJavaScript": "adamic: panic: field read failed: conditions?.includes expected (searchElement: string, fromIndex?: number | undefined) => boolean, found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
+    "rank": 511,
+    "pair": "CaseClause[].push",
+    "reads": 3,
+    "read": "caseClauses.push",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-511/contract-probe.a:5:68: Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-511/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
+  },
+  {
+    "rank": 520,
+    "pair": "Declaration[].slice",
+    "reads": 3,
+    "read": "symbol.declarations.slice",
+    "stop": "native array-to-object argument conversion clang error; JavaScript exit 70 with unknown intrinsic signature",
+    "needed": "array receiver conversion, immutable intrinsic callable metadata, and receiver-preserving checked method dispatch",
+    "fixture": "rank-520/actual-array.a",
+    "expectedJavaScript": "adamic: panic: field read failed: symbol.declarations.slice expected (start?: number | undefined, end?: number | undefined) => Declaration[], found function with unknown signature\n",
+    "basis": "actual collection receiver; complete original generic member declaration retained and instantiated"
+  },
+  {
+    "rank": 523,
+    "pair": "Diagnostic[].forEach",
+    "reads": 3,
+    "read": "commandLine.errors.forEach",
+    "stop": "/workspace/adamic/stage3/interface-downcasts/lane5/share-b/rank-523/contract-probe.a:5:77: Adamic 0.1 refuses checked view read of field forEach with unsupported callable contract; prove or implement the callable contract before reading this field",
+    "needed": "original rest-parameter or callback callable descriptors and immutable intrinsic metadata",
+    "fixture": "rank-523/contract-probe.a",
+    "basis": "observed original signature refusal; namespace default sugar made explicit where required"
   },
   {
     "rank": 637,

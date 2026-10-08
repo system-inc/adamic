@@ -1,0 +1,7 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Expression { readonly value: number; }
+interface NodeArray<T0> { readonly value: number; }
+interface Base {readonly parenthesizeExpressionsOfCommaDelimitedList:unknown;}
+interface Target {parenthesizeExpressionsOfCommaDelimitedList(elements: readonly Expression[]): NodeArray<Expression>;}
+function probe(value:Base):void {function parenthesizerRules():Target {return value as Target;}console.log(`${parenthesizerRules().parenthesizeExpressionsOfCommaDelimitedList([{value:3}]).value}`);}
+probe({parenthesizeExpressionsOfCommaDelimitedList:(elements: readonly Expression[]):NodeArray<Expression>=>{for (const element of elements) {console.log(`${element.value}`);}return {value:3};}});

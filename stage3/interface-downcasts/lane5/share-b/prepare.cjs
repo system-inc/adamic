@@ -55,7 +55,8 @@ for (const pair of pairs) {
   ts.forEachChild(node, visit);
  }
  visit(source);
- const name = pair.type.endsWith('[]') ? 'Array' : pair.type.replace(/ \| undefined$/, '').replace(/<.*>$/, '');
+ const receiver = pair.type.replace(/ \| undefined$/, '');
+ const name = receiver.endsWith('[]') ? (receiver.startsWith('readonly ') ? 'ReadonlyArray' : 'Array') : receiver.replace(/<.*>$/, '');
  const found = member(name, pair.field);
  if (!read || !found) throw Error('missing original ' + pair.rank + ' ' + pair.type + '.' + pair.field);
  const declarationFile = path.relative(original, found.source.fileName);

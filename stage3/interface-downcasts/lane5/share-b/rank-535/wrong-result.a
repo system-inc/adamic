@@ -1,0 +1,8 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface Node { readonly value: number; }
+interface VariableDeclaration { readonly value: number; }
+interface BindingElement { readonly value: number; }
+interface Base {readonly isBindingCapturedByNode:unknown;}
+interface Target {isBindingCapturedByNode(node: Node, decl: VariableDeclaration | BindingElement): boolean;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.isBindingCapturedByNode({value:3},{value:3})}`);}
+probe({isBindingCapturedByNode:(node: Node, decl: VariableDeclaration | BindingElement):number=>9});

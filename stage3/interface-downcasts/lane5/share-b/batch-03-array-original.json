@@ -1,0 +1,99 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "complete original member declarations and reads; adjacent data carriers reduced",
+  "members": [
+    {
+      "rank": 184,
+      "receiver_type_id": 9525,
+      "type": "NodeArray<Statement>",
+      "field": "slice",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7022,
+        "column": 48
+      },
+      "read": "statements.slice",
+      "call": "statements.slice()",
+      "utf16Start": 309267,
+      "utf16End": 309283,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "slice(start?: number, end?: number): T[];",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "NodeArray",
+        "ReadonlyArray"
+      ]
+    },
+    {
+      "rank": 259,
+      "receiver_type_id": 1086,
+      "type": "number[]",
+      "field": "pop",
+      "candidateReads": 7,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6621,
+        "column": 13
+      },
+      "read": "context.typeStack.pop",
+      "call": "context.typeStack.pop()",
+      "utf16Start": 349305,
+      "utf16End": 349326,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "pop(): T | undefined;",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "Array"
+      ]
+    },
+    {
+      "rank": 499,
+      "receiver_type_id": 1823,
+      "type": "readonly string[]",
+      "field": "includes",
+      "candidateReads": 4,
+      "witness": {
+        "file": "src/compiler/moduleNameResolver.ts",
+        "line": 1868,
+        "column": 16
+      },
+      "read": "conditions?.includes",
+      "call": "conditions?.includes(\"import\")",
+      "utf16Start": 89546,
+      "utf16End": 89566,
+      "fileSha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
+      "declaration": "includes(searchElement: T, fromIndex?: number): boolean;",
+      "declarationFile": "src/lib/es2016.array.include.d.ts",
+      "declarationSha256": "c91d6d83d8e051810bee33b99d990fc13a4398ddfef240f903c98efb454d5731",
+      "inheritancePath": [
+        "ReadonlyArray"
+      ]
+    },
+    {
+      "rank": 520,
+      "receiver_type_id": 6829,
+      "type": "Declaration[]",
+      "field": "slice",
+      "candidateReads": 3,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 2684,
+        "column": 53
+      },
+      "read": "symbol.declarations.slice",
+      "call": "symbol.declarations.slice()",
+      "utf16Start": 109902,
+      "utf16End": 109927,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "slice(start?: number, end?: number): T[];",
+      "declarationFile": "src/lib/es5.d.ts",
+      "declarationSha256": "d3527ec5aa76f79514f3ec02c72055761042bd34d272d4dc439fab01d8089235",
+      "inheritancePath": [
+        "Array"
+      ]
+    }
+  ]
+}

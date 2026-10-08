@@ -1,0 +1,16 @@
+--- FAIL: TestCheckedViewCallableShareBCounts (5.99s)
+    counts_test.go:118: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-1005715305/main.c:63:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+           63 |         adamic_function_0_probe(adamic_temporary_19);
+              |                                 ^~~~~~~~~~~~~~~~~~~
+        /tmp/adamic-gate/adamic-build-1005715305/main.c:25:53: note: passing argument to parameter 'adamic_local_1_value' here
+           25 | static void adamic_function_0_probe(adamic_object * adamic_local_1_value) {
+              |                                                     ^
+        1 error generated.
+
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.998s
+FAIL

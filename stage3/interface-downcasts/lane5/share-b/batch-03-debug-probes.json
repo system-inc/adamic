@@ -1,0 +1,103 @@
+[
+  {
+    "rank": 19,
+    "type": "typeof Debug",
+    "field": "assertNever",
+    "candidateReads": 62,
+    "witness": {
+      "file": "src/compiler/semver.ts",
+      "line": 118,
+      "column": 24
+    },
+    "read": "Debug.assertNever",
+    "declaration": "readonly assertNever: (member: never, message?: string, stackCrawlMark?: AnyFunction) => never;",
+    "originalFunctionHeaders": [
+      "export function assertNever(member: never, message = \"Illegal value:\", stackCrawlMark?: AnyFunction): never"
+    ],
+    "defaultConversion": "string literal initializer becomes optional string parameter",
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "fileSha256": "1b5cbc707e9a7e1dd413b3dd69e2e5cb2c816a6675ce6ae6f3a3cc2d6fc0eabe",
+    "utf16Start": 5353,
+    "utf16End": 5370,
+    "filename": "rank-19/contract-probe.a",
+    "output": "number\n",
+    "refusal": "checked view read of field assertNever with unsupported callable contract"
+  },
+  {
+    "rank": 43,
+    "type": "typeof Debug",
+    "field": "assertIsDefined",
+    "candidateReads": 39,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 10769,
+      "column": 5
+    },
+    "read": "Debug.assertIsDefined",
+    "declaration": "readonly assertIsDefined: <T>(value: T, message?: string, stackCrawlMark?: AnyFunction) => asserts value is NonNullable<T>;",
+    "originalFunctionHeaders": [
+      "export function assertIsDefined<T>(value: T, message?: string, stackCrawlMark?: AnyFunction): asserts value is NonNullable<T>"
+    ],
+    "defaultConversion": "string literal initializer becomes optional string parameter",
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "utf16Start": 429288,
+    "utf16End": 429309,
+    "filename": "rank-43/contract-probe.a",
+    "output": "number\n",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 46,
+    "type": "typeof Debug",
+    "field": "assertNode",
+    "candidateReads": 38,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 11672,
+      "column": 33
+    },
+    "read": "Debug.assertNode",
+    "declaration": "readonly assertNode: {<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U;\n(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;};",
+    "originalFunctionHeaders": [
+      "export function assertNode<T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string, stackCrawlMark?: AnyFunction): asserts node is U;",
+      "export function assertNode(node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string, stackCrawlMark?: AnyFunction): void;"
+    ],
+    "defaultConversion": "string literal initializer becomes optional string parameter",
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "utf16Start": 476598,
+    "utf16End": 476614,
+    "filename": "rank-46/contract-probe.a",
+    "output": "number\n",
+    "refusal": "adamic/no-type-predicate"
+  },
+  {
+    "rank": 262,
+    "type": "typeof Debug",
+    "field": "assertLessThanOrEqual",
+    "candidateReads": 7,
+    "witness": {
+      "file": "src/compiler/utilities.ts",
+      "line": 2448,
+      "column": 5
+    },
+    "read": "Debug.assertLessThanOrEqual",
+    "declaration": "readonly assertLessThanOrEqual: (a: number, b: number, stackCrawlMark?: AnyFunction) => void;",
+    "originalFunctionHeaders": [
+      "export function assertLessThanOrEqual(a: number, b: number, stackCrawlMark?: AnyFunction): void"
+    ],
+    "defaultConversion": "string literal initializer becomes optional string parameter",
+    "declarationFile": "src/compiler/debug.ts",
+    "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+    "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+    "utf16Start": 83337,
+    "utf16End": 83364,
+    "filename": "rank-262/contract-probe.a",
+    "output": "number\n",
+    "refusal": "checked view read of field assertLessThanOrEqual with unsupported callable contract"
+  }
+]

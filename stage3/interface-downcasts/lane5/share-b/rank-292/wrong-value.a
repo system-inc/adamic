@@ -1,0 +1,9 @@
+// Original declaration and read; adjacent data carriers reduced.
+interface ModifierLike { readonly value: number; }
+interface Identifier { readonly value: number; }
+interface ModuleReference { readonly value: number; }
+interface ImportEqualsDeclaration { readonly value: number; }
+interface Base {readonly createImportEqualsDeclaration:unknown;}
+interface Target {createImportEqualsDeclaration(modifiers: readonly ModifierLike[] | undefined, isTypeOnly: boolean, name: string | Identifier, moduleReference: ModuleReference): ImportEqualsDeclaration;}
+function probe(value:Base):void {const nodeFactory=value as Target;console.log(`${nodeFactory.createImportEqualsDeclaration([{value:3}],true,{value:3},{value:3}).value}`);}
+probe({createImportEqualsDeclaration:7});

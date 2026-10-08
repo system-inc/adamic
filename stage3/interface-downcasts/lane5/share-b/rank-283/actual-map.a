@@ -1,0 +1,5 @@
+// Original member/read with an actual Map receiver.
+interface Base {readonly clear:unknown;}
+interface Target<K,V> {clear(): void;}
+function probe(value:Base):void {const durations=value as Target<string,number>;durations.clear();console.log("cleared");}
+const map=new Map<string,number>();map.set("value3",3);probe(map);
