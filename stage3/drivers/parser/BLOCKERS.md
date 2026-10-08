@@ -1,3 +1,37 @@
+# Restart from front-3: stopped on convention merge conflicts
+
+Fresh scratch started from front-3 0059e65c. Convention 22fd701a was not an
+ancestor and its merge conflicted in 28 files, including
+internal/lower/non_null.go, closure emission/runtime, record and array handling.
+The merge was resolved in scratch before the subsequent user instruction to
+leave these conflicts to compiler/front-3's merger. No compiler source or merge
+is pushed. The user instruction now supersedes continuing this scratch.
+
+Area/stage3 6a8eebf4 merged cleanly. Ancestry checks led to namespace 47a6fabe,
+enum-init-reach 2152fc3b, host-method-presence 51761b0, method-presence-test
+16cb9b10, views-callables 37fa06d3 and debugger 7d2cbc89 merges, with their
+conflicts resolved locally. Predicates-2 0f722679 was already included. Scratch
+68c9fdbd contains every requested input but remains unvalidated; its integration
+resolutions must not be treated as compiler's accepted decisions.
+
+Intermediate merge-boundary Go errors were corrected locally, including missing
+incoming view metadata/helpers and duplicate definitions. Final Go compiler
+build exited 0 before the stop instruction was observed. This establishes only
+a buildable Go artifact, not compiler semantics. Exact logs/scripts and full
+scratch diff are retained for review; no native run followed.
+
+I did not build the slice in either split mode, confirm a first source stop,
+rerun green probes, run new mutants, or attempt either native acceptance reference
+or performance metrics. The validated slice and references remain unchanged.
+No new source re-cut was performed. The old quarantined scratch was not used.
+
+[Evidence](evidence/front29/report.json) records original convention conflicts,
+ancestry checks, local resolutions, failures and final Go build. Per the user's
+latest instruction, stop here and wait for front-3's SHA with the reconciled
+convention. The next run starts fresh from that integration, not this scratch.
+
+---
+
 # Front-3 retry: integration merge blocked before build
 
 Fresh unpushed scratch starts at origin/compiler/stage3-front-3 21243ee4.
