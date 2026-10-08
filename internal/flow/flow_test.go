@@ -51,6 +51,12 @@ func programs(t *testing.T) []string {
 	paths = slices.DeleteFunc(paths, func(path string) bool {
 		return filepath.Base(path) == "killed_after_output.a" || filepath.Base(path) == "size_class_churn.a" || filepath.Base(path) == "bitwise_sweep.a" || filepath.Base(path) == "typed_arrays_primes_large.a" || filepath.Base(path) == "normalize_coverage_long.a"
 	})
+	// The NonNullable<T> cancellation witness is registered as stopped by the oracle.
+	// It has no concrete generic return representation and therefore no IR to verify.
+	// Its concrete witness remains in this list and exercises both specializations.
+	paths = slices.DeleteFunc(paths, func(path string) bool {
+		return filepath.Base(path) == "representation_clock_nonnullable_t.a"
+	})
 	if len(paths) < 60 {
 		t.Fatalf("found only %d programs: the globs no longer find the fixtures", len(paths))
 	}

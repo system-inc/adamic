@@ -1,0 +1,7 @@
+=== RUN   TestEveryFunctionIsInSingleAssignment
+=== PAUSE TestEveryFunctionIsInSingleAssignment
+=== CONT  TestEveryFunctionIsInSingleAssignment
+    flow_test.go:119: 4206 functions: 648 phis, 4517 values, 12659 uses checked
+--- PASS: TestEveryFunctionIsInSingleAssignment (26.66s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	26.689s
