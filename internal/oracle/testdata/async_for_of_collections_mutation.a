@@ -1,0 +1,42 @@
+async function changeMap(items: Map<string, number>): Promise<void> {
+    await Promise.resolve();
+    items.delete("b");
+    items.set("d", 4);
+}
+async function changeSet(items: Set<string>): Promise<void> {
+    await Promise.resolve();
+    items.delete("b");
+    items.add("d");
+}
+async function walk(): Promise<void> {
+    const map = new Map<string, number>([["a", 1], ["b", 2], ["c", 3]]);
+    for (const [key, value] of map) {
+        if (key === "a") {
+            const pending = changeMap(map);
+            await pending;
+        } else {
+            await Promise.resolve();
+        }
+        console.log(`map:${key}:${value}`);
+    }
+    for (const item of new Set<number>([2, 4, 6])) {
+        await Promise.resolve();
+        console.log(`number:${item}`);
+    }
+    const set = new Set<string>(["a", "b", "c"]);
+    for (const item of set) {
+        if (item === "a") {
+            const pending = changeSet(set);
+            await pending;
+        } else {
+            await Promise.resolve();
+        }
+        console.log(`set:${item}`);
+    }
+    for (const item of set) {
+        await Promise.resolve();
+        console.log(`break:${item}`);
+        break;
+    }
+}
+await walk();

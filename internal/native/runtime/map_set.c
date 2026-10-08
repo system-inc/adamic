@@ -124,3 +124,33 @@ adamic_object *adamic_collection_iterator(adamic_map *collection, int part, int 
 	if (adamic_graph_is(collection)) { object = adamic_graph_adopt_owned(object, sizeof *object + sizeof(adamic_value)); }
 	return object;
 }
+
+static const char *const string_state_names[] = {"string", "offset"};
+static const bool string_state_references[] = {true, false};
+static const adamic_shape string_state_shape = {2, string_state_names, string_state_references, NULL};
+
+static adamic_value string_next(adamic_closure *self, adamic_value *arguments) {
+	(void)arguments;
+	adamic_object *state = self->cells[0]->value.reference;
+	adamic_string *string = state->slots[0].reference;
+	size_t offset = (size_t)state->slots[1].number;
+	adamic_object *result = adamic_object_new(&result_shapes[1]);
+	result->slots[0].boolean = offset >= string->length;
+	if (offset < string->length) {
+		size_t size = adamic_string_next(string, offset);
+		result->slots[1].reference = adamic_string_slice_bytes(string, offset, size);
+		state->slots[1].number = (double)(offset + size);
+	}
+	return (adamic_value){.reference = result};
+}
+
+adamic_object *adamic_string_iterator(adamic_string *string) {
+	adamic_object *state = adamic_object_new(&string_state_shape);
+	adamic_retain(string);
+	state->slots[0].reference = string;
+	adamic_closure *next = adamic_closure_new(string_next, 1);
+	next->cells[0] = adamic_cell_new((adamic_value){.reference = state}, true);
+	adamic_object *object = adamic_object_new(&iterator_shape);
+	object->slots[0].reference = next;
+	return object;
+}
