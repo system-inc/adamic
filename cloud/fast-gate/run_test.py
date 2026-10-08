@@ -586,6 +586,36 @@ class LongestFirst(unittest.TestCase):
             self.assertEqual(gate.exits["tests"], 1)
 
 
+class ScopedEnvironment(unittest.TestCase):
+    setUp = FailClosed.setUp
+
+    def gate(self):
+        arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=self.tree, sha=self.sha, base=self.sha,
+                                          full=False, complete=True, branch="cloud/land-x", branch_source="", session="", session_source="")
+        return run.Gate(arguments)
+
+    def test_a_scoped_gate_refuses_and_a_clean_one_records_it(self):
+        with mock.patch.dict(os.environ, {"ADAMIC_LINT_RULES": "no-debugger"}):
+            gate = self.gate()
+            gate.run()
+        self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
+        self.assertEqual(gate.failure["step"], "environment")
+        environment = dict(os.environ)
+        environment.pop("ADAMIC_LINT_RULES", None)
+        with mock.patch.dict(os.environ, environment, clear=True):
+            gate = self.gate()
+            with mock.patch.object(gate, "git", side_effect=RuntimeError("past the check")):
+                with self.assertRaises(RuntimeError):
+                    gate.run()
+        self.assertEqual(gate.result["scoped_env"], [])
+
+    def test_set_but_empty_still_refuses(self):
+        with mock.patch.dict(os.environ, {"ADAMIC_LINT_RULES": ""}):
+            gate = self.gate()
+            gate.run()
+        self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
+
+
 @unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
 class StopTests(unittest.TestCase):
     setUp = FailClosed.setUp

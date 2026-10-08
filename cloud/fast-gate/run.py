@@ -53,6 +53,10 @@ oracleLanes = {"TestNativeAgreesWithNode": [], "TestWASIAgreesWithNode": [], "Te
 fixtureEntry = re.compile(r'^\s*\}?\{?"(internal/oracle/testdata/[^"]+)", (true|false), (true|false)\}?\)?,?\s*$')
 
 
+# Variables that narrow what a gate's tests check; any of them set refuses the gate.
+scopingEnvironment = ("ADAMIC_LINT_RULES",)
+
+
 class TestSeconds:
     def __init__(self, path=None):
         self.path = path or os.path.expanduser("~/fast-gate/test-seconds.tsv")
@@ -227,6 +231,12 @@ class Gate:
         self.stopThread.start()
 
     def run(self):
+        # A scoped run skips corpus-wide tests by name, so a gate that can land anything on main refuses
+        # to run scoped (#60hxabf, cohere's rule-scoped lint): push-main.sh lands only a clean scoped_env.
+        self.result["scoped_env"] = sorted(name for name in scopingEnvironment if os.environ.get(name) is not None)
+        if self.result["scoped_env"]:
+            self.fail("environment", "refused: a gate that can land on main never runs scoped, and %s is set" % ", ".join(self.result["scoped_env"]))
+            return
         tree = self.arguments.tree
         head = self.git(tree, "rev-parse", "HEAD")
         if head != self.arguments.sha:
