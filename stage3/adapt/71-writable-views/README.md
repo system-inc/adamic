@@ -70,3 +70,8 @@ Both composed sink patterns occur exactly once. Batch 5 full apply passes;
 all two wrong-type, three family runtime, and four plan mutants are rejected
 before source writes. [evidence/batch5-composition.json](evidence/batch5-composition.json)
 records these nine catches. Historical census counts are not remeasured here.
+
+Batch 5b repeats the full apply and all nine composition mutants on the
+45487a80 base, without either hidden-source branch. All mutants are rejected
+before source writes. [evidence/batch5b-composition.json](evidence/batch5b-composition.json)
+records this fresh run.

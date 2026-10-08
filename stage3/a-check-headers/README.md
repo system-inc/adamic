@@ -21,7 +21,7 @@ both mutants. Headers are restored after every experiment.
 Batch 5b is rebuilt from 45487a80 without the two hidden-source branches.
 Its own compiler accepts all 85 added or modified programs in place: 34 checked
 (including 31 NotYet), 21 refused, and 30 checker errors. Only 29 headers
-changed: 16 refusal reasons and 13 checker codes. The 39 added or modified
+changed: 16 refusal reasons and 13 checker codes. The 36 added or modified
 driver paths are checked in place. [batch5b-headers.json](batch5b-headers.json)
 records actual reasons and unchanged body hashes; its 29 wrong-header and
 29 removed-header mutants are all caught by the unchanged pinned predicate.
