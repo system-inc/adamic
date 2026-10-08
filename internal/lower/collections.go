@@ -137,7 +137,7 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	if element != ir.Object {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
-	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
+	return l.mapProducer(node, ir.MapNew{Key: key, Value: value, Pairs: pairs}), nil
 }
 
 // pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its

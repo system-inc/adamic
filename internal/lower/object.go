@@ -1450,7 +1450,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	lowered := ir.MapNew{Key: key, Value: value}
+	lowered := l.mapProducer(node, ir.MapNew{Key: key, Value: value})
 	if created.Arguments == nil || len(created.Arguments.Nodes) == 0 {
 		return lowered, nil
 	}

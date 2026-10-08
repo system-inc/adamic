@@ -70,6 +70,9 @@ func (e *emitter) viewField(property ir.Property) string {
 			return test
 		}(), cString(property.View), cString(name), literalOf, literalValue)
 	}
+	if of == ir.Map {
+		e.mapViewCertificate(property, value)
+	}
 	if of == ir.Object {
 		if property.Optional || property.Absent {
 			e.line("if (%s != NULL) {", value)

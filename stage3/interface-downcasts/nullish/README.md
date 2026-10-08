@@ -151,3 +151,42 @@ number-both control catches nullable dispatch after the integration merge.
 passes in 12.188s. Production inventory remains 2,018 pairs/9,101 reads awaiting
 lowering and reaching-view proof; fixture support is not subtracted. Ledger
 inserted checks belong to stricter-checks worker 01a118d0 and are outside this unit.
+
+## Map certificates, October 8
+
+This supersedes the collection-certificate gap above. Map constructors now carry
+complete scalar key/value contract identities, including finite literal sets.
+Native headers and the JavaScript private WeakMap preserve producer evidence;
+casts never manufacture it. Viewed reads compare that evidence with the target:
+readonly schemas permit covariance, mutable schemas require invariance and the
+same physical storage. Existing mutable-alias checks preserve certificates across
+writes. Cloned maps receive the declared constructor schema. Unknown producers
+stop at the read with exit 70 and name the field, expected type and source schema.
+Nullable Map/primitive unions select the Map member and verify its certificate.
+
+Number, boolean, string and finite scalar schemas have Node/backend evidence.
+Structural, array, callable, branded and mixed-union entry schemas retain named
+Map key/value read refusals. Multiple indistinguishable reference alternatives
+remain refused. These are explicit boundaries, not fabricated certificates.
+
+The combined nullable, selection, lazy-flow and Map oracle plus selected legacy
+Map/Set regressions passed in 98.340s (sanitized/release native, JavaScript and
+positive leak checks). Additional mixed-union controls passed in 2.554s; boolean
+and phantom-brand controls passed in 0.600s. The brand fixture initially used an
+unsupported unique-symbol brand declaration; it was corrected to a valid void
+brand so the test demonstrates refusal at the Map field read. Scoped lower,
+native and JavaScript packages passed in 4.109s/30.203s/0.932s; full IR and
+JavaScript packages and go vet also passed. The full repository gate was not run.
+
+Wrong key/value schemas, wrong present kinds, excluded nullish alternatives,
+mutable widening and uncertified producers are caught by read checks or the
+existing invariant-mutable diagnostic. Temporarily disabling the native Map
+certificate guard made the oracle fail: a boolean-valued producer ran on through
+a number-valued view. Restoring it passed the Map and selection suite in 17.953s.
+Compressed command/output logs are in evidence/; the implementation mutation is
+recorded in implementation-mutants.json.
+
+After this push the exact production inventory remains **2,018 pairs/9,101
+reads awaiting lowering and reaching-view proof**. No production site counts
+are subtracted from fixture coverage. Ledger-driven option checks remain owned
+by stricter-checks worker 01a118d0.
