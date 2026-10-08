@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D068"
+  ],
+  "read": "typeParameters[typeArgumentPosition]",
+  "receiver": "readonly object array, position local",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nconst typeParameters: readonly Type[] = absent ? [] : [{ flags: 7 }];\nconst typeArgumentPosition = 0;\nconst relevantTypeParameter = typeParameters[typeArgumentPosition];\nconst value: Type = relevantTypeParameter;\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n"
+}
