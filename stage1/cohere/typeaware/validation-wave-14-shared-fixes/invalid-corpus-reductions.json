@@ -1,0 +1,23 @@
+[
+  {
+    "source": "new Promise(@dec async () => {})",
+    "bytes": 32,
+    "exit": 2,
+    "stdout": "",
+    "stderr": "panic: invalid corpus /tmp/wave14-fixes-repro/invalid.ts: [Expression expected. ',' expected.]; source=\"new Promise(@dec async () => {})\"\n\ngoroutine 1 [running]:\nmain.collect({0x241cf8745080, 0x22}, {0x241cf8829f00, 0x20}, {0x241cf88bf200, 0x7, 0x8}, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x241cf8745080?, 0x23?}, 0x1, 0x241cf87cda00, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "source": "f(@x)",
+    "bytes": 5,
+    "exit": 2,
+    "stdout": "",
+    "stderr": "panic: invalid corpus /tmp/wave14-fixes-repro/invalid.ts: [Expression expected.]; source=\"f(@x)\"\n\ngoroutine 1 [running]:\nmain.collect({0x3afc341f230, 0x22}, {0x3afc35c4620, 0x5}, {0x3afc359d200, 0x7, 0x8}, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x3afc341f230?, 0x23?}, 0x1, 0x3afc34ada80, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  },
+  {
+    "source": "@",
+    "bytes": 1,
+    "exit": 2,
+    "stdout": "",
+    "stderr": "panic: invalid corpus /tmp/wave14-fixes-repro/invalid.ts: [Expression expected.]; source=\"@\"\n\ngoroutine 1 [running]:\nmain.collect({0x22e863fab230, 0x22}, {0x1335c20, 0x1}, {0x22e86412b200, 0x7, 0x8}, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:186 +0xafe\nmain.run({0x22e863fab230?, 0x23?}, 0x1, 0x22e864039a80, 0x0)\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:68 +0x171\nmain.main()\n\t/workspace/wave14-checker-landing/cohere/adamic_lint_oracle.go:292 +0x595\n"
+  }
+]

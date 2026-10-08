@@ -1,0 +1,87 @@
+[
+  {
+    "name": "base",
+    "source": "let String;String({})",
+    "bytes": 21,
+    "counts": {
+      "strict": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "force": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "name": "base",
+    "source": "let String=x=>0;String({})",
+    "bytes": 26,
+    "counts": {
+      "strict": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "force": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "name": "listener",
+    "source": "declare global{interface Document{addEventListener():0}}document.addEventListener('',e=>e.target as HTMLBRElement)",
+    "bytes": 114,
+    "counts": {
+      "strict": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "force": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "name": "listener",
+    "source": "declare global{interface Document{addEventListener():0}}document.addEventListener('',e=>e.target as SVGAElement)",
+    "bytes": 112,
+    "counts": {
+      "strict": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "force": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "name": "listener",
+    "source": "declare global{interface Window{addEventListener():0}}window.addEventListener('',e=>e.target as SVGAElement)",
+    "bytes": 108,
+    "counts": {
+      "strict": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "force": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      }
+    }
+  }
+]

@@ -1,0 +1,47 @@
+[
+  {
+    "source": "await new C",
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "source": "await new C()",
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "0\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "source": "new C",
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "1\n",
+        "stderr": ""
+      }
+    }
+  }
+]

@@ -1,0 +1,66 @@
+[
+  {
+    "source": "await new Promise();\nexport {};\n",
+    "bytes": 32,
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nfixed\tawait new Promise();\\u000aexport {};\\u000a\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-array-delete no program\nskipped @typescript-eslint/no-base-to-string no program\nskipped @typescript-eslint/no-extraneous-class no program\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nskipped nexus/correctness-no-global-listener-target-assertion no program\nskipped nexus/correctness-no-leaked-number-render no program\nskipped no-label-var no program\n/tmp/wave14-fixes-repro/await-0.ts:1:7\n  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.\n\nrange 6 20 noNewStatement \t\t\t6 20\nfixed\tawait new Promise();\\u000aexport {};\\u000a\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "source": "await new C;export{}",
+    "bytes": 20,
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nfixed\tawait new C;export{}\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-array-delete no program\nskipped @typescript-eslint/no-base-to-string no program\nskipped @typescript-eslint/no-extraneous-class no program\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nskipped nexus/correctness-no-global-listener-target-assertion no program\nskipped nexus/correctness-no-leaked-number-render no program\nskipped no-label-var no program\n/tmp/wave14-fixes-repro/await-1.ts:1:7\n  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.\n\nrange 6 12 noNewStatement \t\t\t6 12\nfixed\tawait new C;export{}\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "source": "await new C",
+    "bytes": 11,
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nfixed\tawait new C\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-array-delete no program\nskipped @typescript-eslint/no-base-to-string no program\nskipped @typescript-eslint/no-extraneous-class no program\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nskipped nexus/correctness-no-global-listener-target-assertion no program\nskipped nexus/correctness-no-leaked-number-render no program\nskipped no-label-var no program\n/tmp/wave14-fixes-repro/await-2.ts:1:7\n  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.\n\nrange 6 11 noNewStatement \t\t\t6 11\nfixed\tawait new C\n",
+        "stderr": ""
+      }
+    }
+  },
+  {
+    "source": "export{};await new C",
+    "bytes": 20,
+    "results": {
+      "Go": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nfixed\texport{};await new C\n",
+        "stderr": ""
+      },
+      "native": {
+        "exit": 0,
+        "stdout": "case 0\nskipped @typescript-eslint/no-array-delete no program\nskipped @typescript-eslint/no-base-to-string no program\nskipped @typescript-eslint/no-extraneous-class no program\nskipped @typescript-eslint/no-unnecessary-boolean-literal-compare no program\nskipped nexus/correctness-no-global-listener-target-assertion no program\nskipped nexus/correctness-no-leaked-number-render no program\nskipped no-label-var no program\n/tmp/wave14-fixes-repro/await-3.ts:1:16\n  no-new  This constructs an object and then throws it away, so the only thing the line can accomplish is whatever the constructor does on the side. A constructor that works by side effect is doing a function's job under a name that promises a value, and the next reader cannot tell the discarded result from a mistake. Call a function instead, or keep the object and use it.\n\nrange 15 20 noNewStatement \t\t\t15 20\nfixed\texport{};await new C\n",
+        "stderr": ""
+      }
+    }
+  }
+]

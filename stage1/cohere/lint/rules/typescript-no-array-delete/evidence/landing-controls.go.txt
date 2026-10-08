@@ -58,6 +58,13 @@ func TestWave14UnifiedRuleCases(t *testing.T) {
 	}
 	names := []string{"@typescript-eslint/no-array-delete", "@typescript-eslint/no-base-to-string", "@typescript-eslint/no-extraneous-class", "nexus/correctness-no-global-listener-target-assertion", "nexus/correctness-no-leaked-number-render", "no-label-var"}
 	for _, name := range names {
+		inventory := 0
+		for _, row := range rows {
+			if strings.Split(row, "\t")[1] == name {
+				inventory++
+			}
+		}
+		t.Logf("owned upstream inventory: %s = %d", name, inventory)
 		t.Run(name, func(t *testing.T) {
 			count := 0
 			for _, row := range rows {

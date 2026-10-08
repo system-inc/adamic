@@ -1,0 +1,1 @@
+declare global{interface Window{addEventListener():0}}window.addEventListener('',e=>e.target as SVGAElement)
