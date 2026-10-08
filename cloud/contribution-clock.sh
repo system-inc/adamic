@@ -36,7 +36,7 @@ writeRow() {
   git -C "${records}" fetch -q origin
   git -C "${records}" ls-remote --exit-code origin "refs/heads/${branch}" > /dev/null && git -C "${records}" switch -q --detach "origin/${branch}"
   mkdir -p "$(dirname "${records}/${csv}")"
-  local header="dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds,first_verdict,rounds,t0_source"
+  local header="dispatched_utc,pushed_utc,verdict_utc,brief,branch,sha,session,verdict,dispatch_to_push_seconds,push_to_verdict_seconds,total_seconds,first_verdict,rounds,t0_source,packages"
   # Columns are only ever added at the end, so an older row reads with its new fields empty.
   if [ -f "${records}/${csv}" ]; then
     { echo "${header}"; tail -n +2 "${records}/${csv}"; } > "${records}/${csv}.new" && mv "${records}/${csv}.new" "${records}/${csv}"
@@ -50,6 +50,18 @@ writeRow() {
 }
 
 iso() { date -u -r "$1" +%FT%TZ 2>/dev/null || date -u -d "@$1" +%FT%TZ; }
+
+# The packages a verdict's gate tested, from its published fast.json, space-separated and relative to the
+# module (internal/oracle, stage1/cohere/json): the hour's wall swings with them (@system_adamic, Oct 8
+# 01:19: brief 03 touched internal/oracle and ran 808 s of tests), so the chart splits rows by them.
+packagesOf() {
+  local commit
+  commit=$(sed -nE 's/^published gate-logs\/[^ ]+ \(([0-9a-f]{40})\)$/\1/p' "${watchState}/logs/${1:0:12}.log" 2> /dev/null | tail -1)
+  [ -n "${commit}" ] || return 0
+  git -C "${here}" fetch -q origin "${commit}" 2> /dev/null
+  git -C "${here}" show "${commit}:fast.json" 2> /dev/null |
+    python3 -c 'import json, sys; print(" ".join(p.split("/adamic/", 1)[-1] for p in json.load(sys.stdin).get("packages", [])))' 2> /dev/null
+}
 
 # An attempt in flight is a file of shell assignments in ${state}/inflight, rewritten at every step, so
 # a restart (launchd, a reboot, an edit to this file) resumes the wait instead of losing the attempt's row.
@@ -67,7 +79,7 @@ save() {
 #   verdict no verdict in 90 minutes pushed, and the gate never answered (a voided gate shows up here)
 #   verdict no push in 90 minutes    the worker never pushed
 follow() {
-  local file=$1 name="" target="" t0="" session="" t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" tip line excerpt
+  local file=$1 name="" target="" t0="" session="" t1="" sha="" first="" rounds=0 answered="" verdict="" t2="" tip line excerpt packages=""
   . "${file}"
   # t1: the branch first appears on origin. Give the worker up to 90 minutes.
   while [ -z "${t1}" ] && [ $(( $(date -u +%s) - t0 )) -lt 5400 ]; do
@@ -111,7 +123,8 @@ follow() {
     red) [ "${rounds}" -ge 3 ] && verdict="red out of rounds" || verdict="red out of time" ;;
     *) verdict="no verdict in 90 minutes" ;;
   esac
-  record "$(iso "${t0}"),$(iso "${t1}"),${t2:+$(iso "${t2}")},${name},${target},${sha},${session},${verdict},$(( t1 - t0 )),${t2:+$(( t2 - t1 ))},${t2:+$(( t2 - t0 ))},${first},${rounds},${t0Source}"
+  [ -n "${t2}" ] && packages=$(packagesOf "${sha}")
+  record "$(iso "${t0}"),$(iso "${t1}"),${t2:+$(iso "${t2}")},${name},${target},${sha},${session},${verdict},$(( t1 - t0 )),${t2:+$(( t2 - t1 ))},${t2:+$(( t2 - t0 ))},${first},${rounds},${t0Source},${packages}"
   echo "$(date -u +%H:%M:%S) ${target}: ${verdict}, $(( ${t2:-$t1} - t0 )) s from dispatch"
   rm -f "${file}"
 }
