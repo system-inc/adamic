@@ -1,0 +1,80 @@
+async function nested(): Promise<void> {
+    outer: for (let i = 0; i < 2; i++) {
+        try {
+            inner: for (const item of [1, 2]) {
+                try {
+                    await Promise.resolve();
+                    console.log(`body${i}:${item}`);
+                    continue outer;
+                } finally {
+                    await Promise.resolve();
+                    console.log(`inner cleanup${i}:${item}`);
+                }
+            }
+            console.log(`after inner${i}`);
+        } finally {
+            await Promise.resolve();
+            console.log(`outer cleanup${i}`);
+        }
+    }
+    console.log('nested done');
+}
+async function switches(): Promise<void> {
+    loop: for (let i = 0; i < 3; i++) {
+        choice: switch (i) {
+            case 0:
+                try { await Promise.resolve(); console.log('break loop'); break loop; }
+                finally { await Promise.resolve(); console.log('loop cleanup'); }
+            default: console.log('missed loop break');
+        }
+        console.log('missed loop exit');
+    }
+    for (let i = 0; i < 2; i++) {
+        choice: switch (i) {
+            case 0:
+                try { await Promise.resolve(); console.log('break switch'); break choice; }
+                finally { await Promise.resolve(); console.log('switch cleanup'); }
+            default: console.log(`default${i}`);
+        }
+        console.log(`switch tail${i}`);
+    }
+}
+async function block(): Promise<void> {
+    done: {
+        for (const item of [3, 4]) {
+            try { await Promise.resolve(); console.log(`block${item}`); break done; }
+            finally { await Promise.resolve(); console.log(`block cleanup${item}`); }
+        }
+        console.log('missed block exit');
+    }
+    console.log('block done');
+}
+async function override(): Promise<void> {
+    target: for (let i = 0; i < 3; i++) {
+        for (const item of [5, 6]) {
+            try { await Promise.resolve(); console.log(`pending break${i}:${item}`); break target; }
+            finally {
+                await Promise.resolve();
+                if (i === 0) { console.log('override continue'); continue target; }
+                console.log('keep break');
+            }
+        }
+        console.log('missed target exit');
+    }
+    console.log('override done');
+}
+async function directArrayBreak(): Promise<void> {
+    outer: for (const item of [7, 8]) {
+        for (const next of [9, 10]) {
+            await Promise.resolve();
+            console.log(`direct${item}:${next}`);
+            break outer;
+        }
+        console.log('missed array exit');
+    }
+}
+await nested();
+await switches();
+await block();
+await override();
+await directArrayBreak();

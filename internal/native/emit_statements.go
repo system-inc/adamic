@@ -245,7 +245,7 @@ func (e *emitter) statement(statement ir.Statement) {
 			e.line("goto %s;", target.label)
 		}
 	case ir.Continue:
-		current := e.loops[len(e.loops)-1]
+		current := e.loops[len(e.loops)-1-statement.Depth]
 		current.continued = true
 		e.finallies(e.innerHandlers(current.depth))
 		e.releaseScopes(current.depth)

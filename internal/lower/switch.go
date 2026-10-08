@@ -73,15 +73,37 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup, 
 func (l *lowering) labeledBreak(node *ast.Node) ([]ir.Statement, error) {
 	depth := 0
 	for parent := node.Parent; parent != nil; parent = parent.Parent {
-		if parent.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(parent, false) {
+		iteration := ast.IsIterationStatement(parent, false)
+		block := parent.Kind == ast.KindBlock && parent.Parent != nil && parent.Parent.Kind == ast.KindLabeledStatement
+		if parent.Kind != ast.KindSwitchStatement && !iteration && !block {
 			continue
 		}
+		if node.Label() == nil && !block {
+			return []ir.Statement{ir.Break{Depth: depth}}, nil
+		}
 		for label := parent.Parent; label != nil && label.Kind == ast.KindLabeledStatement; label = label.Parent {
-			if label.Label().Text() == node.Label().Text() {
+			if node.Label() != nil && label.Label().Text() == node.Label().Text() {
 				return []ir.Statement{ir.Break{Depth: depth}}, nil
 			}
 		}
 		depth++
 	}
-	return nil, l.notYet(node, "a break to a label that is not a loop or switch")
+	return nil, l.notYet(node, "a break to a label that is not a loop, switch or block")
+}
+
+// Continue counts loops alone: a switch or a labeled block has no update target.
+func (l *lowering) labeledContinue(node *ast.Node) ([]ir.Statement, error) {
+	depth := 0
+	for parent := node.Parent; parent != nil; parent = parent.Parent {
+		if !ast.IsIterationStatement(parent, false) {
+			continue
+		}
+		for label := parent.Parent; label != nil && label.Kind == ast.KindLabeledStatement; label = label.Parent {
+			if label.Label().Text() == node.Label().Text() {
+				return []ir.Statement{ir.Continue{Depth: depth}}, nil
+			}
+		}
+		depth++
+	}
+	return nil, l.notYet(node, "a continue to a label that is not a loop")
 }

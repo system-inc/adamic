@@ -7,7 +7,9 @@ import (
 	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
+	"os"
 	"path/filepath"
+	"reflect"
 	"regexp"
 	"strings"
 	"testing"
@@ -705,6 +707,159 @@ func TestAsyncBuiltinIteratorWrongEntryMutant(t *testing.T) {
 				}
 				t.Logf("Node catches %s wrong entry", name)
 			}
+		})
+	}
+}
+
+func TestAsyncFinallyPendingValueMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_finally_completion.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	mutateFallthroughStatements(reflect.ValueOf(&program.Functions).Elem(), func(statement ir.Statement) ir.Statement {
+		assignment, ok := statement.(ir.Assign)
+		if ok && program.Locals[assignment.Local].Name == "pending return" && assignment.Value.Type() == ir.String {
+			assignment.Value = ir.StringConstant{Index: len(program.Strings)}
+			program.Strings = append(program.Strings, "dropped")
+			changed++
+			return assignment
+		}
+		return statement
+	})
+	if changed == 0 {
+		t.Fatal("no pending payload mutated")
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("pending-value mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("dropped pending return payload caught by Node stdout; sanitizer and leak checks clean")
+}
+
+func TestAsyncLabelInnerTargetMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_labels.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	mutateFallthroughStatements(reflect.ValueOf(&program.Functions).Elem(), func(statement ir.Statement) ir.Statement {
+		jump, ok := statement.(ir.Continue)
+		if ok && jump.Depth > 0 {
+			jump.Depth = 0
+			changed++
+			return jump
+		}
+		return statement
+	})
+	if changed == 0 {
+		t.Fatal("no outer continue mutated")
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("inner-label mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("inner continue target caught by Node stdout; sanitizer and leak checks clean")
+}
+
+func TestAsyncFinallyInnerLabelMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_labels_finally.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	mutant := strings.Replace(string(source), "continue outer;", "continue inner;", 1)
+	if mutant == string(source) {
+		t.Fatal("no labeled target mutated")
+	}
+	mutantPath := filepath.Join(t.TempDir(), "inner-label.a")
+	if err := os.WriteFile(mutantPath, []byte(mutant), 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, mutantPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("inner-label mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("source jump to inner label caught by Node stdout; sanitizer and leak checks clean")
+}
+
+// Source unlabeled break must skip the synthetic default-only block switch.
+// Change only that jump; label breaks to the wrapper must retain their target.
+func TestLabelBlockUnlabeledBreakMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/label_block_edges.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := onNode(t, path)
+	for _, name := range []string{"syncBreak", "asyncBreak"} {
+		t.Run(name, func(t *testing.T) {
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			changed := 0
+			for index := range program.Functions {
+				if program.Functions[index].Name != name {
+					continue
+				}
+				mutateFallthroughStatements(reflect.ValueOf(&program.Functions[index].Body).Elem(), func(statement ir.Statement) ir.Statement {
+					jump, ok := statement.(ir.Break)
+					if ok && jump.Depth == 1 {
+						jump.Depth = 0
+						changed++
+						return jump
+					}
+					return statement
+				})
+			}
+			if changed != 1 {
+				t.Fatalf("want exactly one unlabeled break mutated, got %d", changed)
+			}
+			backend := onJavaScriptBackend(t, program)
+			if backend.exitCode != 0 || len(backend.stderr) != 0 || disagreement(oracle, backend) != "stdout differs" {
+				t.Fatalf("JavaScript block-target mutant survived or failed uncleanly: %+v", backend)
+			}
+			observed, sanitized := natively(t, program)
+			if observed.exitCode != 0 || len(observed.stderr) != 0 || disagreement(oracle, observed) != "stdout differs" {
+				t.Fatalf("native block-target mutant survived or failed uncleanly: %+v", observed)
+			}
+			if report := leaks(t, program, sanitized); report != "" {
+				t.Fatalf("mutant leaks: %s", report)
+			}
+			t.Log("unlabeled break to block wrapper caught by Node in both backends; sanitizer and leak checks clean")
 		})
 	}
 }

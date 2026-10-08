@@ -230,8 +230,13 @@ func (b *builder) statement(at *ir.Statement) {
 		depth := len(b.jumps) - 1 - statement.Depth
 		b.terminate(&Goto{Block: b.route(b.jumps[depth].breakTo, b.leaving(depth))})
 	case ir.Continue:
+		skipped := statement.Depth
 		for index := len(b.jumps) - 1; index >= 0; index-- {
 			if b.jumps[index].continueTo != InvalidBlock {
+				if skipped > 0 {
+					skipped--
+					continue
+				}
 				b.terminate(&Goto{Block: b.route(b.jumps[index].continueTo, b.leaving(index))})
 				return
 			}

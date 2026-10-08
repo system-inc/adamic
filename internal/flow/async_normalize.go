@@ -34,7 +34,9 @@ func NormalizeAsync(program *ir.Program) error {
 			continue
 		}
 		normalizer := asyncNormalizer{program: program, function: index}
-		body, err := normalizer.statements(function.Body)
+		completion := asyncCompletion{n: &normalizer, loops: map[int]bool{}}
+		completed := completion.statements(function.Body)
+		body, err := normalizer.statements(append(completion.locals, completed...))
 		if err != nil {
 			return err
 		}
@@ -308,12 +310,6 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 			value.Body, err = n.statements(value.Body)
 			statement = value
 		case ir.Try:
-			if containsAwait(reflect.ValueOf(value.Catch)) || containsAwait(reflect.ValueOf(value.Finally)) {
-				return nil, fmt.Errorf("await in catch or finally is not yet proven")
-			}
-			if value.HasFinally {
-				return nil, fmt.Errorf("async finally completion routing is not yet proven")
-			}
 			value.Body, err = n.statements(value.Body)
 			if err == nil {
 				value.Catch, err = n.statements(value.Catch)
@@ -322,15 +318,6 @@ func (n *asyncNormalizer) statements(statements []ir.Statement) ([]ir.Statement,
 		case ir.ForOf:
 			if value.RegexIterator || (value.Iterable.Type() != ir.Array && value.Iterable.Type() != ir.String && value.Iterable.Type() != ir.Map) || (value.Pattern != nil && value.MapPart == "") {
 				return nil, fmt.Errorf("async for-of over this iterable or pattern is not yet proven")
-			}
-			var outerBreak bool
-			inspectAsyncIR(reflect.ValueOf(value.Body), func(node any) {
-				if jump, ok := node.(ir.Break); ok && jump.Depth > 0 {
-					outerBreak = true
-				}
-			})
-			if outerBreak && containsAwait(reflect.ValueOf(value.Body)) {
-				return nil, fmt.Errorf("async for-of labeled outer break is not yet proven")
 			}
 			if value.Iterable.Type() != ir.Array {
 				iterable := n.expression(value.Iterable, &before, true)
