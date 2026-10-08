@@ -70,3 +70,26 @@ func TestClassWrongOutput108(t *testing.T) {
 		t.Fatalf("want pinned symbol-key-view refusal, got %v", err)
 	}
 }
+
+func TestClassWrongOutput106(t *testing.T) {
+	for _, probe := range []struct{ name, output, member string }{
+		{"classfeat_static_private_instance", "s1\nt2\nhidden t2\n", "#secret"},
+		{"classfeat_static_private_method", "first function\nhidden s1\n", "#hidden"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			observed := onNode(t, path)
+			if observed.exitCode != 0 || string(observed.stdout) != probe.output || len(observed.stderr) != 0 {
+				t.Fatalf("Node: %+v", observed)
+			}
+			_, err = lowered(t, path)
+			var refusal *lower.Refused
+			if !errors.As(err, &refusal) || refusal.What != "instance private storage reached from a static member: Box."+probe.member+" (adamic/private-instance-from-static)" || refusal.Fix != "move the private access into an instance method; call that instance method from the static member" {
+				t.Fatalf("want pinned private-instance-from-static refusal, got %v", err)
+			}
+		})
+	}
+}

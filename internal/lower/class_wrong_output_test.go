@@ -43,3 +43,10 @@ func TestClassWrongOutputKeysRepair(t *testing.T) {
 		t.Fatalf("explicit string-key copy refused: %v", err)
 	}
 }
+
+func TestClassWrongOutputPrivateRepair(t *testing.T) {
+	source := "class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } reveal(): string { return this.#secret; } static peek(box: Box): string { return box.reveal(); } } console.log(Box.peek(new Box(`s${1}`)));"
+	if _, err := lowerSource(t, source); err != nil {
+		t.Fatalf("instance delegation refused: %v", err)
+	}
+}
