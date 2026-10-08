@@ -1,0 +1,3 @@
+interface MapLike { readonly [key: string]: number; }
+function pick(record: MapLike | undefined, key: string): number | undefined { return record?.[key]; }
+console.log(`${pick(undefined, 'name')} ${pick({ name: 7 }, 'name')} ${pick({}, 'name')}`);
