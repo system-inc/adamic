@@ -3,14 +3,14 @@ package unicodeproperties
 import (
 	"bufio"
 	"bytes"
-	"context"
 	"fmt"
 	"os/exec"
 	"sort"
 	"strconv"
 	"strings"
 	"testing"
-	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func TestCanonicalizeExamples(t *testing.T) {
@@ -296,6 +296,7 @@ func formatCodePoints(points []uint32) string {
 }
 
 const legacyValueScript = `
+const fs = require("node:fs");
 const lines = [];
 for (let codeUnit = 0; codeUnit <= 0xFFFF; codeUnit++) {
   const upper = String.fromCharCode(codeUnit).toUpperCase();
@@ -305,6 +306,7 @@ for (let codeUnit = 0; codeUnit <= 0xFFFF; codeUnit++) {
     if (!(codeUnit >= 128 && mapped < 128)) canon = mapped;
   }
   if (canon !== codeUnit) lines.push(codeUnit.toString(16) + " " + canon.toString(16));
+  if ((codeUnit + 1) % 4096 === 0) fs.writeSync(2, "legacy value progress: " + (codeUnit + 1) + "\n");
 }
 console.log(lines.join("\n"));
 console.log(".");
@@ -312,7 +314,7 @@ console.log(".");
 
 func legacyValuesAgainstNode(t *testing.T) (int, []string) {
 	t.Helper()
-	output := runNode(t, legacyValueScript, "", 2*time.Minute)
+	output := runNode(t, legacyValueScript, "")
 	got := map[uint16]uint16{}
 	for _, line := range strings.Split(strings.TrimSuffix(output, "\n.\n"), "\n") {
 		if line == "" || line == "." {
@@ -396,6 +398,7 @@ for (const line of lines) {
   const want = fields.slice(1).map(part => parseInt(part, 16));
   const got = scan(pattern);
   checked++;
+  if (checked % 8 === 0) fs.writeSync(2, "canonicalize progress: " + checked + "\n");
   if (!same(got, want)) {
     const extra = [];
     const missing = [];
@@ -411,7 +414,7 @@ console.log("TOTAL " + checked);
 
 func runLegacyBatch(t *testing.T, input string) (int, []string) {
 	t.Helper()
-	output := runNode(t, legacyScanScript, input, 3*time.Minute)
+	output := runNode(t, legacyScanScript, input)
 	return parseBatch(t, output, 65536)
 }
 
@@ -494,6 +497,7 @@ for (const line of lines) {
   want = want.slice().sort((a, b) => a - b);
   const got = matchesOf(pattern, flags);
   checked++;
+  if (checked % 8 === 0) fs.writeSync(2, "canonicalize progress: " + checked + "\n");
   if (!same(got, want)) {
     const extra = [];
     const missing = [];
@@ -510,7 +514,7 @@ console.log("TOTAL " + checked);
 
 func runUnicodeBatch(t *testing.T, input string) (int, []string) {
 	t.Helper()
-	output := runNode(t, unicodeScanScript, input, 4*time.Minute)
+	output := runNode(t, unicodeScanScript, input)
 	return parseBatch(t, output, 0x110000)
 }
 
@@ -544,16 +548,14 @@ func parseBatch(t *testing.T, output string, perPattern int) (int, []string) {
 	return checked * perPattern, problems
 }
 
-func runNode(t *testing.T, script, input string, timeout time.Duration) string {
+func runNode(t *testing.T, script, input string) string {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), timeout)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "--eval", script)
+	command := exec.Command("node", "--eval", script)
 	command.Stdin = strings.NewReader(input)
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	if err := command.Run(); err != nil {
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
 		tail := stdout.String()
 		if len(tail) > 800 {
 			tail = tail[len(tail)-800:]

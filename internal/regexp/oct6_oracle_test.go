@@ -98,6 +98,7 @@ func oct6NodeLoops(t *testing.T, loops []oct6Loop) [][]executionResult {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Safe: 38 bounded loops took 0.092s against this 30s bound (>300x).
 	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, "node", "-e", `

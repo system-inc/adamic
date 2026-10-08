@@ -3,7 +3,6 @@ package regexp
 import (
 	"bytes"
 	"compress/gzip"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -14,8 +13,9 @@ import (
 	"reflect"
 	"strings"
 	"testing"
-	"time"
 	"unicode/utf16"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 type executionCase struct {
@@ -62,25 +62,27 @@ func nodeResults(t *testing.T, cases []executionCase) []executionResult {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.'))throw Error('Node 24 required');
-const results=cases.map(c=>{
+const fs=require('fs');fs.writeSync(2,'regex progress: start\n');
+const results=cases.map((c,index)=>{
  const pattern=c.patternUnits?String.fromCharCode(...c.patternUnits):c.pattern;
  const r=new RegExp(pattern,c.flags.includes('d')?c.flags:c.flags+'d');
  r.lastIndex=c.lastIndex;const input=String.fromCharCode(...c.input);
- const m=r.exec(input);return {captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
+ const m=r.exec(input);
+ if((index+1)%128===0) fs.writeSync(2,'regex progress: '+(index+1)+'/'+cases.length+'\n');
+ return {captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
 });process.stdout.write(JSON.stringify(results));`)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Node execution oracle: %v\n%s", err, output)
+	var output, progress bytes.Buffer
+	command.Stdout, command.Stderr = &output, &progress
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
+		t.Fatalf("Node execution oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
 	}
 	var results []executionResult
-	if err = json.Unmarshal(output, &results); err != nil {
-		t.Fatalf("Node decode: %v\n%s", err, output)
+	if err = json.Unmarshal(output.Bytes(), &results); err != nil {
+		t.Fatalf("Node decode: %v\n%s", err, output.Bytes())
 	}
 	if len(results) != len(cases) {
 		t.Fatal("Node result count")

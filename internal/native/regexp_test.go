@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"github.com/system-inc/adamic/internal/childguard"
 	regex "github.com/system-inc/adamic/internal/regexp"
 	"math/rand"
 	"os"
@@ -124,6 +125,7 @@ static bool pair_equal(adamic_object *pair,const ptrdiff_t *expected) {
 }
 int main(int argc,char **argv) {
  adamic_start(argc,argv);adamic_regex_set_step_limit(argc>1?0:10000000);size_t disagreements=0;
+ puts("native regex progress: start");fflush(stdout);
  for(size_t index=0;index<sizeof probes/sizeof probes[0];index++) {
   const probe *p=&probes[index];double *codes=malloc((p->length+1)*sizeof *codes);if(codes==NULL) abort();
   for(size_t k=0;k<p->length;k++) codes[k]=input_units[p->input+k];
@@ -148,6 +150,7 @@ int main(int argc,char **argv) {
   }
   if(!same) {printf("DISAGREEMENT case=%zu test=%d expected=%d lastIndex=%.0f expected=%llu captures=%zu expected=%zu\n",index,tested,p->count!=0,regex->slots[1].number,(unsigned long long)p->final,match==NULL?0:match->length,p->count);disagreements++;}
   adamic_release(match);adamic_release(regex);adamic_release(input);
+  if((index+1)%128==0 || index+1==sizeof probes/sizeof probes[0]) {printf("native regex progress: %zu/%zu\n",index+1,sizeof probes/sizeof probes[0]);fflush(stdout);}
  }
  printf("native execution totals: %zu cases, %zu disagreements\n",sizeof probes/sizeof probes[0],disagreements);return disagreements==0?0:1;
 }
@@ -157,12 +160,10 @@ int main(int argc,char **argv) {
 	if err := Build(source.String(), binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
 	for _, arguments := range [][]string{nil, {"unlimited"}} {
-		command := exec.CommandContext(ctx, binary, arguments...)
+		command := exec.Command(binary, arguments...)
 		command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=1")
-		output, err := command.CombinedOutput()
+		output, err := childguard.CombinedOutput(command, childguard.Options{})
 		if err != nil {
 			t.Fatalf("native regex oracle (%v): %v\n%s", arguments, err, output)
 		}
@@ -213,24 +214,26 @@ func TestRegExpBytecodeRandomNode(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 30*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, "node", "-e", `
+	command := exec.Command("node", "-e", `
 const cases=JSON.parse(require('fs').readFileSync(0,'utf8'));
 if(!process.version.startsWith('v24.')) throw Error('Node 24 required');
+const fs=require('fs');fs.writeSync(2,'regex progress: start\n');
+let completed=0;
 for(const c of cases) {
  const r=new RegExp(c.pattern,c.flags.includes('d')?c.flags:c.flags+'d');
  r.lastIndex=c.lastIndex;
  const m=r.exec(String.fromCharCode(...c.input));
  c.expected={captures:m?Array.from(m.indices,x=>x??null):null,lastIndex:r.lastIndex,groups:m?.indices.groups?Object.fromEntries(Object.entries(m.indices.groups).map(([k,v])=>[k,v??null])):null};
+ if(++completed%128===0) fs.writeSync(2,'regex progress: '+completed+'/'+cases.length+'\n');
 }
 process.stdout.write(JSON.stringify(cases));`)
 	command.Stdin = bytes.NewReader(data)
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("Node oracle: %v\\n%s", err, output)
+	var output, progress bytes.Buffer
+	command.Stdout, command.Stderr = &output, &progress
+	if err := childguard.Run(command, childguard.Options{}); err != nil {
+		t.Fatalf("Node oracle: %v\n%s\n%s", err, progress.Bytes(), output.Bytes())
 	}
-	if err = json.Unmarshal(output, &cases); err != nil {
+	if err = json.Unmarshal(output.Bytes(), &cases); err != nil {
 		t.Fatal(err)
 	}
 	runRegexCases(t, cases)
@@ -256,6 +259,7 @@ int main(int argc,char **argv) {
 	if err := Build(source, binary, Options{Sanitize: true}); err != nil {
 		t.Fatal(err)
 	}
+	// Safe: the child enforces a 1,000-instruction CPU budget, not a corpus sweep.
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 	command := exec.CommandContext(ctx, binary)
