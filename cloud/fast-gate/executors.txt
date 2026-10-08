@@ -1,7 +1,9 @@
 # Every changed path a gate sees maps to an executor, or the gate is red with "no gate covers <path>"
 # (@system_adamic's ruling, Oct 7 20:48). A path in a Go package (its directory, its testdata, or a
-# file it embeds) is that package's tests and needs no line here. Everything else matches the first
-# line below whose glob fits it (fnmatch: * spans directories). Adding an inert line is a ruling.
+# file it embeds, or the nearest package above it) is that package's tests and needs no line here.
+# Everything else matches the first line below whose glob fits it (fnmatch: * spans directories).
+# Script executors (stage3, cohere, workers, bench-workers, darwin) also run for paths a package
+# owns, in addition to its tests. Adding an inert line is a ruling.
 #
 # "mode report" records uncovered paths in fast.json without failing; "mode enforce" makes them red.
 mode enforce
@@ -48,3 +50,9 @@ cohere      cohere-mirrors.json
 cohere      stage1/cohere/config/*
 # Read by path from outside a package's tree: the Node oracle runners the oracle's tests start.
 package:internal/oracle  oracle/*
+# Platforms' Cloudflare Workers (@system_adamic_platforms, Oct 7 20:59): workers/compute/verify.mjs,
+# workers/replay-all.mjs and workers/compute/verify-handler.mjs with a freshly built adamic, plus
+# workers/compute/verify-url.mjs when the transport changes. The workerd runs are proofs, not gates.
+workers        workers/*
+# Measurement harnesses that need workerd and refuse to time wrong answers: syntax only.
+bench-workers  bench/workers/*.mjs

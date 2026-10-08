@@ -121,6 +121,13 @@ class Gate:
         changed = git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
         packages, unowned = self.touched(changed)
+        # Stage 1's corpus tests sample in the landing gate (@system_adamic's ruling; the interface agreed
+        # with @system_cohere_adamic): the main sha the gate diffs against sets the stride's offset, and the
+        # changed paths name the corpus files that always run. The full gate sets neither, so it runs all.
+        changedList = os.path.join(os.path.abspath(self.arguments.out), "changed-paths.txt")
+        with open(changedList, "w") as handle:
+            handle.write("".join(path + "\n" for path in changed))
+        self.sampling = {"ADAMIC_GATE_SAMPLE": self.arguments.base, "ADAMIC_GATE_CHANGED": changedList}
         executors = self.cover(unowned, changed)
         if executors is None:
             return
@@ -150,6 +157,9 @@ class Gate:
                    self.guarded("smoke", self.smoke, smoke, log)]
         if "stage3" in executors:
             threads.append(self.guarded("stage3", self.stage3))
+        if executors & {"workers", "bench-workers"}:
+            self.planned.append("workers")
+            threads.append(self.guarded("workers", self.workers, executors))
         for thread in threads:
             thread.start()
         for thread in threads:
@@ -211,6 +221,14 @@ class Gate:
         if "cloud/fast-gate/executors.txt" in changed:
             # The map itself changed: every executor it names runs, so it can't quietly lose a path.
             executors.update(name for name, _ in rules if name not in ("inert", "build"))
+        # Script executors also run for paths a package owns (bench/workers lives in bench's tree).
+        scripted = ("stage3", "cohere", "workers", "bench-workers", "darwin")
+        self.scriptedPaths = {}
+        for path in changed:
+            executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
+            if executor in scripted:
+                executors.add(executor)
+                self.scriptedPaths.setdefault(executor, []).append(path)
         for path in unowned:
             executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
             if executor is None:
@@ -220,7 +238,7 @@ class Gate:
                 covered[executor] = covered.get(executor, 0) + 1
                 if executor == "a-check":
                     unchecked.append(path)
-                if executor == "darwin":
+                if executor == "darwin" and path not in self.result.get("needs_darwin", []):
                     self.result.setdefault("needs_darwin", []).append(path)
         self.result["unchecked_a_files"] = unchecked
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
@@ -234,6 +252,9 @@ class Gate:
             self.fail("coverage", "no gate covers %d changed path%s:\n%s" % (len(uncovered), "" if len(uncovered) == 1 else "s", "\n".join(uncovered[:200])))
             return None
         self.exits["coverage"] = 0
+        for path in self.scriptedPaths.get("darwin", []):
+            if path not in self.result.get("needs_darwin", []):
+                self.result.setdefault("needs_darwin", []).append(path)
         if "darwin" in executors:
             # Never green on this box alone: the Mac's darwin leg is attached by integration.
             self.planned.append("darwin")
@@ -279,6 +300,37 @@ class Gate:
         self.exits["stage3"] = 1 if failed else 0
         if failed:
             self.fail("stage3", "stage 3 tier 1 failed: %s (logs: %s)" % (", ".join("%s exit %s" % (name, codes.get(name)) for name in failed), ", ".join(name + ".log" for name in failed)))
+
+    def workers(self, executors):
+        """Platforms' executors for Cloudflare Workers (their inventory, Oct 7 20:59), each from the
+        repository root on Node 24, and node --check for the workerd-only measurement harnesses."""
+        started = time.monotonic()
+        node = ["node", "--disable-warning=ExperimentalWarning"]
+        commands = []
+        if "workers" in executors:
+            adamic = os.path.realpath(self.arguments.tree) + "-binaries/adamic"
+            commands += [("workers-build-adamic", ["go", "build", "-o", adamic, "./cmd/adamic"]),
+                         ("workers-verify", node + ["workers/compute/verify.mjs"]),
+                         ("workers-replay-all", node + ["workers/replay-all.mjs"]),
+                         ("workers-verify-handler", node + ["workers/compute/verify-handler.mjs", adamic])]
+            if set(self.scriptedPaths.get("workers", [])) & {"workers/replay.mjs", "workers/compute/verify-url.mjs"}:
+                commands.append(("workers-verify-url", node + ["workers/compute/verify-url.mjs"]))
+        for path in self.scriptedPaths.get("bench-workers", []):
+            if os.path.exists(os.path.join(self.arguments.tree, path)):
+                commands.append(("bench-workers-check-" + path.replace("/", "_"), ["node", "--check", path]))
+        codes = {}
+        # The handler check needs the adamic it builds first; the rest run in order too, to keep it simple.
+        for name, command in commands:
+            with open(os.path.join(self.arguments.out, name + ".log"), "w") as output:
+                codes[name] = self.spawn(command, output).wait()
+            if codes[name] != 0:
+                break
+        self.steps["workers"] = round(time.monotonic() - started, 1)
+        self.result["workers_exits"] = codes
+        failed = [name for name, _ in commands if codes.get(name) != 0]
+        self.exits["workers"] = 1 if failed else 0
+        if failed:
+            self.fail("workers", "workers executor failed: %s (log %s.log)" % (failed[0], failed[0]))
 
     def npmPackages(self):
         """The pinned npm packages a tree's tests read (stage3/api's @types/node for node:* imports),
@@ -651,6 +703,14 @@ class Gate:
                     log.write(line)
             for watch in self.watchers:
                 watch(line)
+            if "gate-sample: " in line:
+                # A corpus test's sample, for status.txt and fast.json: what this landing didn't check.
+                try:
+                    sampled = json.loads(line).get("Output", "")
+                except ValueError:
+                    sampled = line
+                with self.lock:
+                    self.result.setdefault("gate_samples", []).append(sampled.split("gate-sample: ", 1)[1].strip())
             try:
                 event = json.loads(line)
             except ValueError:
@@ -699,6 +759,8 @@ class Gate:
                 raise SystemExit(1)
             # Uncached: the oracle's result caches would otherwise answer a test without running it.
             variables = dict(os.environ, **gateEnvironment)
+            if not self.arguments.full:
+                variables.update(getattr(self, "sampling", {}))
             # The box has Node but no npm; stage 3's apply runs npm ci, so the gates' pinned npm is on PATH.
             variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
             variables.update(environment or {})
@@ -756,6 +818,8 @@ class Gate:
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
+            if self.result.get("gate_samples"):
+                steps += "; sampled: %s" % "; ".join(sorted(set(self.result["gate_samples"]))[:10])
             if self.result.get("unchecked_a_files"):
                 steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
         if green:
