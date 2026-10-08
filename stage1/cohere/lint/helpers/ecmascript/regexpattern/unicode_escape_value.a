@@ -1,0 +1,14 @@
+import { OctalValue } from './octal_escape_value.a';
+import { allHexDigits } from '../../regexsyntax/all_hex_digits.a';
+import { parseHexUint } from '../../regexsyntax/parse_hex_uint.a';
+export function unicodeEscapeValue(text: number[]): OctalValue {
+ if(text.length < 3) { return new OctalValue(0, false); }
+ if(text[2] === 123) {
+  if(text[text.length-1] !== 125) { return new OctalValue(0, false); }
+  const digits = text.slice(3,text.length-1);
+  if(digits.length === 0 || !allHexDigits(digits)) { return new OctalValue(0, false); }
+  return new OctalValue(parseHexUint(digits), true);
+ }
+ if(text.length !== 6 || !allHexDigits(text.slice(2))) { return new OctalValue(0, false); }
+ return new OctalValue(parseHexUint(text.slice(2)), true);
+}

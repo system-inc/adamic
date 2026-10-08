@@ -1,0 +1,11 @@
+import { parseRegexCharacterClass } from './parse_regex_character_class.a';
+import type { RegexFlags } from './flags.a';
+import type { ClassResult } from './types.a';
+export function parseRegexCharacterClassWithEnd(bytes: readonly number[], start: number, end: number, flags: RegexFlags): ClassResult {
+ if(start < 0 || end <= start || end > bytes.length || bytes[end-1] !== 93) { return {elements:[],nil:true,end:start,ok:false}; }
+ let capacity = 0;
+ if(!flags.unicodeSets) { capacity = end-start-2; if(capacity < 0) { capacity = 0; } else if(capacity > 16384) { capacity = 16384; } }
+ const r = parseRegexCharacterClass(bytes,start,flags,capacity);
+ if(!r.ok || r.end !== end) { return {elements:[],nil:true,end:start,ok:false}; }
+ r.nil = r.elements.length === 0; return r;
+}

@@ -1,0 +1,68 @@
+{
+  "pin": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+  "calls": {
+    "Walk": 368,
+    "applyQuantifier": 327,
+    "braceQuantifierEnd": 397,
+    "consumeDigits": 464,
+    "decodeRune": 56412,
+    "emit": 3905,
+    "emitAndQuantify": 2373,
+    "escapeValue": 789,
+    "extendOctalEscape": 1643,
+    "groupPrologueEnd": 242,
+    "isAsciiLetter": 291,
+    "kindFromSource": 1791,
+    "octalEscapeValue": 66,
+    "quantifierAt": 2684,
+    "readEscape": 705,
+    "run": 716,
+    "unicodeEscapeValue": 133,
+    "walkClass": 278
+  },
+  "inputSets": {
+    "core": {
+      "Walk": 133,
+      "applyQuantifier": 13,
+      "braceQuantifierEnd": 7,
+      "consumeDigits": 7,
+      "decodeRune": 625,
+      "emit": 748,
+      "emitAndQuantify": 654,
+      "escapeValue": 41,
+      "extendOctalEscape": 45,
+      "groupPrologueEnd": 7,
+      "kindFromSource": 135,
+      "quantifierAt": 688,
+      "readEscape": 45,
+      "run": 133,
+      "unicodeEscapeValue": 9,
+      "walkClass": 34
+    },
+    "regexpattern": {
+      "Walk": 235,
+      "applyQuantifier": 314,
+      "braceQuantifierEnd": 390,
+      "consumeDigits": 457,
+      "decodeRune": 55787,
+      "emit": 3157,
+      "emitAndQuantify": 1719,
+      "escapeValue": 748,
+      "extendOctalEscape": 1598,
+      "groupPrologueEnd": 235,
+      "isAsciiLetter": 291,
+      "kindFromSource": 1656,
+      "octalEscapeValue": 66,
+      "quantifierAt": 1996,
+      "readEscape": 660,
+      "run": 583,
+      "unicodeEscapeValue": 124,
+      "walkClass": 244
+    }
+  },
+  "consumerFixtures": {
+    "no-control-regex": 19,
+    "no-regex-spaces": 126
+  },
+  "dependency": "ecmascript/regexsyntax bca49a5ac1694099bcae388642126bf5281f1702"
+}

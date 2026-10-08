@@ -1,0 +1,14 @@
+export function kindFromSource(pattern: number[], start: number, end: number): number {
+ if(start < 0 || end > pattern.length || end - start < 1) { return 0; }
+ if((pattern[start] ?? 0) !== 92 || end - start < 2) { return 0; }
+ const b = (pattern[start + 1] ?? 0);
+ switch(b) {
+ case 120: return 3;
+ case 117: return 4;
+ case 99: return 5;
+ case 110: case 114: case 116: case 118: case 102: case 98: return 1;
+ case 48: return end - start === 2 ? 2 : 6;
+ }
+ if(b >= 49 && b <= 57) { return 6; }
+ return 7;
+}
