@@ -71,23 +71,14 @@ func TestRuntimeReferenceMutants(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	divergenceReturn := regexp.MustCompile(`(?s)return nil, &V8DivergenceError\{.*?
-\s*\}`).FindString(string(source))
-	if divergenceReturn == "" {
-		t.Fatal("missing divergence return")
-	}
-	mutants := []struct{ name, old, new string }{
-		{"stop on embedded NUL", "(stop == 0 || p.peek() != stop)", "p.peek() != stop"},
-		{"drop Other_ID_Start", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || (r != 0x2118 && property.Contains(r))"},
-		{"drop Other_ID_Continue", "r == 0x200D || property.Contains(r)", "r == 0x200D || (r != 0x00b7 && property.Contains(r))"},
-		{"accept Pattern_Syntax letter", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || r == 0x2e2f || property.Contains(r)"},
-		{"wrap oversized Unicode escape", "d < 0 || n > (utf8.MaxRune-d)/16", "d < 0"},
-		{"silently accept clamped reversed bounds", divergenceReturn, "return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: true}, nil"},
-		{"classify divergence as SyntaxError", divergenceReturn, `return nil, p.failAt(start, "quantifier range out of order")`},
+	mutants := runtimeReferenceMutantShards(t, string(source))
+	if err := checkRuntimeReferenceMutantCoverage(mutants); err != nil {
+		t.Fatal(err)
 	}
 	original, _ := filepath.Abs("parser.go")
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			if strings.Count(string(source), mutant.old) != 1 {
 				t.Fatal("mutation location changed")
 			}
@@ -113,5 +104,25 @@ func TestRuntimeReferenceMutants(t *testing.T) {
 			}
 			t.Logf("caught %s: %s", mutant.name, output)
 		})
+	}
+}
+
+type runtimeReferenceMutant struct{ name, old, new string }
+
+func runtimeReferenceMutantShards(t *testing.T, source string) []runtimeReferenceMutant {
+	t.Helper()
+	divergenceReturn := regexp.MustCompile(`(?s)return nil, &V8DivergenceError\{.*?
+\s*\}`).FindString(string(source))
+	if divergenceReturn == "" {
+		t.Fatal("missing divergence return")
+	}
+	return []runtimeReferenceMutant{
+		{"stop on embedded NUL", "(stop == 0 || p.peek() != stop)", "p.peek() != stop"},
+		{"drop Other_ID_Start", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || (r != 0x2118 && property.Contains(r))"},
+		{"drop Other_ID_Continue", "r == 0x200D || property.Contains(r)", "r == 0x200D || (r != 0x00b7 && property.Contains(r))"},
+		{"accept Pattern_Syntax letter", "return r == '$' || r == '_' || property.Contains(r)", "return r == '$' || r == '_' || r == 0x2e2f || property.Contains(r)"},
+		{"wrap oversized Unicode escape", "d < 0 || n > (utf8.MaxRune-d)/16", "d < 0"},
+		{"silently accept clamped reversed bounds", divergenceReturn, "return &Quantifier{Atom: atom, Min: min, Max: max, Greedy: true}, nil"},
+		{"classify divergence as SyntaxError", divergenceReturn, `return nil, p.failAt(start, "quantifier range out of order")`},
 	}
 }
