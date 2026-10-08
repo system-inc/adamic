@@ -49,8 +49,13 @@ codex/stage3-	stage3
 codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
 codex/views-	hold	@system_adamic_compiler: the views are compiler's area-views, integrated by hand (typescript asked to come off, Oct 8)
 codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
+codex/scout-19-	hold	@system_adamic_library: library's scouts for step 19 (Maps and Sets), cut from area/library
 codex/scout-23-	hold	@system_adamic_library: library's scouts for step 23 (regex), cut from area/library
-codex/scout-	hold	@system_adamic_compiler: scouts for the walls behind step 04, cut from the area-next candidate; they land through compiler once their step reaches wave 0
+codex/scout-generics	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-optional-calls	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-map-keys	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-iteration	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-exceptions	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
 # Platforms
 codex/platforms-	platforms
 codex/wasm	platforms
