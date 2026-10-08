@@ -252,3 +252,92 @@ python3 docs/step-16-generics/audit.py --mutant-selection > /tmp/scout-selection
 ```
 
 The parameters file is the sorted unique names of every TypeParameterDeclaration in the pinned compiler AST, parsed with TypeScript 6.0.3. The complete name list is retained in baseline.json.gz. The census SHA-256 pins the complete scratch measurement; selected findings remain reviewable without that scratch file.
+
+## Design and disposition
+
+The contract is [0.1.md](0.1.md): concrete monomorphization, nominal invariant classes, Node meaning, and unbounded polymorphic recursion refused. [escape-hatches.md](escape-hatches.md) requires proof at each cast, predicate and mutable view. A successful generic instantiation cannot convert a refused program into an accepted one by replacing a parameter with its constraint. The census contains attempts at generic declarations without a concrete caller; their free binders are evidence about representation demand, not proof that concrete calls fail.
+
+| Shape | Representation and lowering | Disposition |
+| --- | --- | --- |
+| Direct `T` result, argument or local | Substitute the checker's concrete type throughout the body, then use its existing IR representation and ownership rules. Cache by declaration and checker type identities, including the nested frame owner. | Already lowers for concrete number and string calls. Unspecialized `T` remains NotYet; do not invent a type. |
+| `T \| undefined`, callback result `U \| undefined`, optional containers | Read each declaration binder through the resolved call signature's actual mapper, then compose its target with the enclosing mapper. Choose the existing concrete optional representation after substitution. Absence and falsy presence must remain distinct. | Compiler lesson within the existing generic contract. The first build targets optional results for represented concrete instantiations. Unsupported concrete unions remain NotYet. |
+| `ArenaIndex<Tag>` inside `Arena<Tag>.push` | Substitute the enclosing class argument before finding the inner class layout. Instantiate fields, constructor, methods and results together. Keep layouts and method targets keyed by checker identity, not only C storage. | The reduced nesting already lowers on this base. Add an ownership and identity regression. No class invariance change. |
+| Generic interface, alias, array, tuple, map or conditional/indexed type inside another generic | Ask the checker to instantiate the whole type, including dependent arguments, before representation selection. Reuse the existing concrete container ABI; no runtime type parameter slot. | No universal erased `T` representation. A concrete unsupported container/member continues to say NotYet. Dependent readonly/mutable and nominal checks still apply. |
+| Generic function assigned to a concrete callable slot | A specialization adapter needs a concrete callable ABI. A separate source identity must survive adapters, imports, aliases and repeated reads. Captured declarations additionally need the proper environment identity and lifetime. | Proposal below; generic function values stay NotYet in this build. |
+| A genuinely polymorphic function value, callable at several types | Either whole-program flow discovers every concrete call and gives each one an adapter, or a proven tagged value ABI and explicit dictionary carries all required operations. Both must preserve source identity and ownership. | Proposal only. No unchecked erased callable or constraint fallback. |
+| Recursion at the same concrete type | Register the specialization before lowering its body and reuse it on the recursive edge. | Existing finite monomorphization. |
+| Ever-growing instantiations | Retain a compilation bound and diagnose exhaustion; never emit a partially instantiated body. | Existing refusal retained. Distinguishing finite deep nesting from truly unbounded recursion needs the proposal below. |
+| Generic soundness refusals | Recheck instantiated mutation, optional presence, readonly-to-writable views, method variance, nominal bounds, casts and predicates using concrete checker types. | Remain refused unless their separate proof obligations are met. Hidden bytes do not authorize relaxing them. |
+
+Several Refused rows print the same T on both sides, or relate never/undefined to a constrained binder. Spelling does not establish checker identity or inhabitation, especially on checker-rejected measurement input. Keep these refusals pending checker-clean reductions and binder-aware relation proofs. Generic overloads with additional implementation binders remain NotYet; result narrowing without an implementation proof remains Refused. This build does not reclassify either family.
+
+The implementation should obtain concrete binders from the resolved signature, using the existing checker shim bridge rather than duplicating checker inference. Reading parameters/results structurally is incomplete: `GetNonNullableType(T)` may be `NonNullable<T>`, which is an intersection, and a type parameter may occur only inside a conditional, optional or object type. The mapper must describe this call, not a previous instantiation of the same declaration. If unavailable, retain conservative inference and NotYet at the first unsupported representation. Never silently substitute the upper bound.
+
+The change belongs in `internal/lower/generic.go`; the existing shim bridge is in `internal/lower/instantiate.go`. It needs no new IR, C runtime allocation, backend entry point, or language policy. Existing concrete representations decide retains/releases, undefined tags and return ownership. Acceptance of an already-approved generic shape is a compiler capability change; changes to the normative refusal rules below are proposals for @system_adamic and are not implemented here.
+
+## Proposals for @system_adamic, not implementation
+
+**Generic function values and identity.** The current NotYet must remain until a value has both a concrete call adapter and stable source identity. Decide whether finite whole-program specialization covers the first release and how a polymorphic value escaping discovery is diagnosed. These currently unsupported programs are part of the proposal:
+
+```a
+function identity<T>(value: T): T { return value; }
+const text: (value: string) => string = identity;
+const number: (value: number) => number = identity;
+const left: unknown = text;
+const right: unknown = number;
+console.log(`${left === right}`); // Node: true, despite different call ABIs.
+```
+
+```a
+function identity<T>(value: T): T { return value; }
+function pass<F>(value: F): F { return value; }
+const polymorphic = pass(identity);
+console.log(`${polymorphic(4)} ${polymorphic('x')}`);
+```
+
+A pointer per specialization would silently print false for the first program. A single untyped pointer would risk calling the wrong ABI in the second. An adapter must carry the stable declaration/environment identity; a closure allocation must not become a different function on each generic reference evaluation. The proposal includes aliasing through unknown, Map/Set keys, multiple imports, repeated reads, generic factories, captured environments and recursive callable fields.
+
+**Monomorphization bounds.** The implementation has a depth limit of 32. The present diagnostic calls exhaustion "instantiated without end", but a finite chain can exhaust the same budget. Propose a separate resource-limit diagnostic and a specified configurable compilation budget, without accepting arbitrary polymorphic recursion or changing the limit in this build. The refused family is:
+
+```a
+function grow<T>(value: T, depth: number): number {
+    if (depth === 0) return 0;
+    return grow([value], depth - 1);
+}
+console.log(`${grow(1, 1)}`);
+```
+
+The runtime branch does not bound static monomorphization. A finite chain of more than 32 distinct generic calls is a separate counterexample to inferring infinity from this implementation guard. Proving or specializing such programs requires an explicit policy decision. Unbounded native code generation is not an escape hatch.
+
+**Generic casts, predicates and mutable views.** No relaxation is proposed. These must continue to fail even after a concrete specialization is available:
+
+```a
+function manufacture<T>(value: unknown): T { return value as T; }
+```
+
+```a
+interface Animal { readonly name: string; }
+interface Dog extends Animal { readonly bark: () => string; }
+function poison<Pack extends Animal[]>(pack: Pack, animal: Animal): void {
+    pack.push(animal);
+}
+const dogs: Dog[] = [];
+poison(dogs, {name: 'cat'});
+```
+
+The first has no runtime proof of an arbitrary `T`. The second writes through a constraint that is wider than the instantiated mutable element. A readonly contract, a checked schema or a proven narrowing can satisfy a separate existing rule; specializing cannot supply the missing proof.
+
+## Silent-miscompile audit
+
+The following are distinct obligations; merely reaching C emission verifies none of them.
+
+- Binder identity: alpha-renamed parameters, shadowed binders, defaults, explicit arguments, overload implementation signatures, dependent constraints and `T` inside intersections/conditionals must map to the actual call. Name equality is not type identity.
+- Enclosing substitution: a nested generic function, generic method or class construction must retain both its own binder substitutions and the enclosing class/function environment. Restoring the previous mapper, locals and captures must also happen on failure.
+- Cache identity: different structural members, literal unions, array mutability, nominal classes and callbacks can share a native representation. Keys must retain checker identity and nested owner; recursion must not reuse another specialization's body.
+- Function identity and ABI: adapter identity, environment identity, parameter count/defaults, omitted arguments, optional results, primitive boxing and unboxing must agree between calls and stored callable slots.
+- Optional results: distinguish undefined from zero, false, empty text and a present object. Do not treat `T`'s constraint or `NonNullable<T>` as a concrete binder, or erase the undefined tag.
+- Ownership: dynamically allocated strings, arrays, class instances and callback environments returned as `T` must retain exactly the owner the caller receives. Optional absence owns nothing. Shared object identity must survive calls; captures and recursive graphs still need the existing cycle proof.
+- Soundness: instantiate readonly/writable and optional-field relations, mutation through constraints, nominal bounds, predicate contracts, cast schemas and function variance before erasure. Both explicit and inferred type arguments need checks.
+- Evaluation: side effects in arguments, class constructors, callback calls and optional branches execute once in source order. A specialization may not fold runtime generic operations just because a test uses literal inputs.
+- Failure and limits: an unread binder, exhausted budget or unsupported member must produce Refused/NotYet, never reuse an unread-key body with an incompatible signature or leave a partially lowered function reachable.
+- Census claims: a generic declaration attempted without arguments cannot be made concrete by the meter. Replayed roots, checker eligibility, first exposed reasons and hidden bytes require separate before/after evidence. No full tsc compilation follows from retiring one blocker.
