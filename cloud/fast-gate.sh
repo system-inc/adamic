@@ -95,6 +95,8 @@ set -e
 
 local=$(mktemp -d)
 scp -q -r "${box}:${out}" "${local}/fast"
+# Logs only: anything over 5 MB (a binary that strayed into the out directory) is never published.
+find "${local}/fast" -type f -size +5M -print -exec mv {} "${local}" \;
 logBranch=gate-logs/${sha:0:12}/${stamp}/fast
 index=$(mktemp -u)
 gitDirectory=$(git -C "${here}" rev-parse --absolute-git-dir)

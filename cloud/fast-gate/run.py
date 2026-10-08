@@ -325,7 +325,9 @@ class Gate:
         its own process, all of them side by side on the box's threads. One package's tests no longer
         wait on each other in one process (round 59 proved the verdicts identical this way)."""
         started = time.monotonic()
-        binaries = os.path.join(self.arguments.out, "binaries")
+        # Beside the slot's tree, never in the out directory: everything there is published, and a test
+        # binary is tens of megabytes. One slot runs one gate at a time, so each run overwrites its own.
+        binaries = os.path.realpath(self.arguments.tree) + "-binaries"
         os.makedirs(binaries, exist_ok=True)
         slots = threading.Semaphore(self.arguments.parallel)
         threads = []
