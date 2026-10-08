@@ -1475,6 +1475,18 @@ through a view is refused before lowering because `slotContract`
 are `lane2/ranked10-*.a`, held by TestCheckedViewRanked10ArrayContracts and
 TestCheckedViewRanked10Frontiers; the report is `lane2/RANKED10_ARRAYS_REPORT.md`.
 
+### Lane 2 eleventh ranked arrays
+
+The eleventh ranked group (fourteen pairs: ClassDeclaration.typeParameters,
+declaration modifiers, FunctionExpression.parameters, ImportAttributes.elements,
+IndexInfo.components, InterfaceDeclaration heritage and members,
+SourceFile.libReferenceDirectives, NodeBuilderContext.reverseMappedStack) needed no
+new hook. Arrays of intersections check the intersection tag at the element read.
+CallExpression | NewExpression and HasDecorators are union-target casts for lane 4;
+CompilerOptions.lib sits on an index-signature declaration 0.1 refuses. Fixtures are
+`lane2/ranked11-*.a`, held by TestCheckedViewRanked11ArrayContracts; the report is
+`lane2/RANKED11_ARRAYS_REPORT.md`.
+
 
 
 ## Lane 5 source hooks on ba59427 (October 8)
