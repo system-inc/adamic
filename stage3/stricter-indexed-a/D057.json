@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D057"
+  ],
+  "read": "targets[i]",
+  "receiver": "readonly callable array, loop index",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nconst targets: readonly (() => Type)[] = absent ? [] : [() => ({ flags: 7 })];\nconst sources: readonly number[] = [0];\nfor (let i = 0; i < sources.length; i++) {\nconst value: () => Type = targets[i];\nconsole.log(value === undefined ? \"undefined\" : `${value().flags}`);\n}\n"
+}

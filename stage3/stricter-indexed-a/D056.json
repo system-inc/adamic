@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D056"
+  ],
+  "read": "types[unionIndex]",
+  "receiver": "readonly object array, variable index",
+  "source": "interface Type { readonly flags: number; }\nconst absent = ABSENT;\nconst types: readonly Type[] = absent ? [] : [{ flags: 7 }];\nconst unionIndex = 0;\nconst value: Type = types[unionIndex];\nconsole.log(value === undefined ? \"undefined\" : `${value.flags}`);\n"
+}
