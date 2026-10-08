@@ -1,0 +1,1704 @@
+{
+  "before": {
+    "compiler_commit": "3ce9a33b7ece5d51ec32645b8d66af1763db7802",
+    "boundaries": 116,
+    "credited_hidden_bytes": 28321,
+    "diagnostic_sites": 135,
+    "clearTimeout_annotation": {
+      "boundaries": 1,
+      "attributed_hidden_bytes": 74
+    },
+    "return_any": {
+      "boundaries": 8,
+      "credited_hidden_bytes": 1010
+    },
+    "all_hidden_bytes": 3652681,
+    "reasons": [
+      {
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "boundary_count": 73,
+        "bytes_revealed_if_fixed_alone": 26048
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a function returning any",
+        "boundary_count": 8,
+        "bytes_revealed_if_fixed_alone": 1010
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a generic function whose type argument R is any or unresolved",
+        "boundary_count": 1,
+        "bytes_revealed_if_fixed_alone": 430
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a call returning any",
+        "boundary_count": 3,
+        "bytes_revealed_if_fixed_alone": 336
+      },
+      {
+        "kind": "NotYet",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "boundary_count": 2,
+        "bytes_revealed_if_fixed_alone": 204
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "boundary_count": 4,
+        "bytes_revealed_if_fixed_alone": 190
+      },
+      {
+        "kind": "NotYet",
+        "reason": "storing any in a field",
+        "boundary_count": 1,
+        "bytes_revealed_if_fixed_alone": 55
+      },
+      {
+        "kind": "NotYet",
+        "reason": "an array of any",
+        "boundary_count": 24,
+        "bytes_revealed_if_fixed_alone": 48
+      }
+    ],
+    "diagnostics": [
+      {
+        "kind": "NotYet",
+        "where": "builder.ts:1919:25",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/builder.ts:1919:25: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "builder.ts:2133:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/builder.ts:2133:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:11031:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:11031:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:12094:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:12094:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:12480:74",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:12480:74: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:14491:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:14491:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:15334:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:15334:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:19773:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:19773:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:1992:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:1992:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:1997:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:1997:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:25068:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:25068:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:2596:45",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:2596:45: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:32515:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:32515:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:32518:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:32518:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33718:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33718:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33719:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33719:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33720:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33720:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:35971:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:35971:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:35972:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:35972:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38534:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38534:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38535:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38535:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38538:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38538:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38539:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38539:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38541:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38541:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:4361:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:4361:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:9099:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:9099:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:2472:17",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:2472:17: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:2611:72",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:2611:72: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3018:44",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3018:44: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3065:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3065:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3355:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3355:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3359:43",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3359:43: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3411:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3411:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3466:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3466:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3469:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3469:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3502:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3502:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3604:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3604:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3730:45",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3730:45: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3738:48",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3738:48: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3744:48",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3744:48: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3757:47",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3757:47: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3770:47",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3770:47: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3776:44",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3776:44: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2220:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2220:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2223:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2223:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2242:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2242:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1057:39",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1057:39: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1131:37",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1131:37: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1133:71",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1133:71: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1017:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1017:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1509:44",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1509:44: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1916:36",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1916:36: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "executeCommandLine.ts:350:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/executeCommandLine.ts:350:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "expressionToTypeNode.ts:515:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/expressionToTypeNode.ts:515:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "expressionToTypeNode.ts:626:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/expressionToTypeNode.ts:626:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "factory/emitHelpers.ts:650:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/factory/emitHelpers.ts:650:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "factory/emitHelpers.ts:662:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/factory/emitHelpers.ts:662:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:1847:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:1847:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2625:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2625:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2977:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2977:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2980:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2980:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1105:16",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1105:16: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1154:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1154:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1155:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1155:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:1653:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:1653:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:1663:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:1663:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3102:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3102:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3662:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3662:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3696:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3696:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:6173:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:6173:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:7101:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:7101:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8164:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8164:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8278:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8278:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8292:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8292:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8317:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8317:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9199:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9199:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9319:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9319:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9694:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9694:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9858:25",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9858:25: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:646:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:646:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:661:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:661:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:672:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:672:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "performanceCore.ts:64:38",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/performanceCore.ts:64:38: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "program.ts:4054:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/program.ts:4054:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "program.ts:4902:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/program.ts:4902:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "resolutionCache.ts:1084:15",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/resolutionCache.ts:1084:15: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1630:18",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1630:18: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1673:18",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1673:18: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1747:34",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1747:34: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1773:18",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1773:18: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1888:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1888:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1927:18",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1927:18: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1940:18",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1940:18: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:1950:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:1950:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:378:63",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:378:63: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:464:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:464:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:52:31",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:52:31: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tracing.ts:222:15",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tracing.ts:222:15: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tracing.ts:232:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tracing.ts:41:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tracing.ts:41:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "transformers/jsx.ts:624:77",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/transformers/jsx.ts:624:77: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2065:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2080:5",
+        "reason": "storing any in a field",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2080:5: stage 0 can't lower storing any in a field yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2094:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2094:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:7793:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:7793:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:7809:17",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:7809:17: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:8556:25",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:8556:25: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:8765:54",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:8765:54: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "watch.ts:679:21",
+        "reason": "a generic function whose type argument R is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:679:21: stage 0 can't lower a generic function whose type argument R is any or unresolved yet"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:1039:34",
+        "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:1039:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:381:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:388:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:388:12: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:726:12: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:727:9",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:727:9: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:728:20",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:728:20: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:728:9",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:728:9: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "emitter.ts:1483:36",
+        "reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:510:48",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:510:48: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:511:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:511:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:517:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:517:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:518:49",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:518:49: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:519:61",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:519:61: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:522:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:522:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:523:48",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:523:48: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:524:61",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:524:61: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:527:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:527:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:528:53",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:528:53: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:533:56",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:533:56: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:534:51",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:534:51: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:536:66",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:536:66: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:543:20",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:543:20: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sys.ts:378:79",
+        "reason": "a function taking string seen as one taking any[] (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:378:79: Adamic 0.1 refuses a function taking string seen as one taking any[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "kind": "Refused",
+        "where": "visitorPublic.ts:604:12",
+        "reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "watch.ts:679:21",
+        "reason": "a function taking [callback: (...args: any[]) => void, ms: number, ...args: any[]] seen as one taking (...args: any[]) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:679:21: Adamic 0.1 refuses a function taking [callback: (...args: any[]) => void, ms: number, ...args: any[]] seen as one taking (...args: any[]) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "kind": "Refused",
+        "where": "watch.ts:680:23",
+        "reason": "a function taking [timeoutId: any] seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:680:23: Adamic 0.1 refuses a function taking [timeoutId: any] seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      }
+    ],
+    "ledger_sha256": "b28dcd6fbf3137d90be3e9326c967be7b47bfdb2b773b16fc4193ea6cd89fede",
+    "checker_rejected": true,
+    "measured_files": 79
+  },
+  "after": {
+    "compiler_commit": "7d2611f744902fa1e98d3dac3722177dbda79e36",
+    "boundaries": 103,
+    "credited_hidden_bytes": 28154,
+    "diagnostic_sites": 123,
+    "clearTimeout_annotation": {
+      "boundaries": 0,
+      "attributed_hidden_bytes": 0
+    },
+    "return_any": {
+      "boundaries": 3,
+      "credited_hidden_bytes": 1010
+    },
+    "all_hidden_bytes": 3642530,
+    "reasons": [
+      {
+        "kind": "NotYet",
+        "reason": "a value of type any",
+        "boundary_count": 65,
+        "bytes_revealed_if_fixed_alone": 25881
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a function returning any",
+        "boundary_count": 3,
+        "bytes_revealed_if_fixed_alone": 1010
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a generic function whose type argument R is any or unresolved",
+        "boundary_count": 1,
+        "bytes_revealed_if_fixed_alone": 430
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a call returning any",
+        "boundary_count": 3,
+        "bytes_revealed_if_fixed_alone": 336
+      },
+      {
+        "kind": "NotYet",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "boundary_count": 2,
+        "bytes_revealed_if_fixed_alone": 204
+      },
+      {
+        "kind": "NotYet",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "boundary_count": 4,
+        "bytes_revealed_if_fixed_alone": 190
+      },
+      {
+        "kind": "NotYet",
+        "reason": "storing any in a field",
+        "boundary_count": 1,
+        "bytes_revealed_if_fixed_alone": 55
+      },
+      {
+        "kind": "NotYet",
+        "reason": "an array of any",
+        "boundary_count": 24,
+        "bytes_revealed_if_fixed_alone": 48
+      }
+    ],
+    "diagnostics": [
+      {
+        "kind": "NotYet",
+        "where": "builder.ts:1919:25",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/builder.ts:1919:25: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "builder.ts:2133:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/builder.ts:2133:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:11031:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:11031:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:12094:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:12094:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:12480:74",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:12480:74: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:14491:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:14491:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:15334:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:15334:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:19773:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:19773:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:1992:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:1992:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:1997:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:1997:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:25068:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:25068:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:2596:45",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:2596:45: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:32515:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:32515:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:32518:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:32518:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33718:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33718:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33719:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33719:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:33720:44",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:33720:44: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:35971:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:35971:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:35972:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:35972:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38534:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38534:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38535:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38535:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38538:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38538:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38539:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38539:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:38541:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:38541:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:4361:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:4361:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "checker.ts:9099:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/checker.ts:9099:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:2472:17",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:2472:17: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:2611:72",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:2611:72: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3018:44",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3018:44: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3065:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3065:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3355:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3355:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3359:43",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3359:43: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3411:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3411:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3466:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3466:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3469:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3469:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3502:5",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3502:5: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3604:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3604:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3730:45",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3730:45: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3738:48",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3738:48: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3744:48",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3744:48: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3757:47",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3757:47: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3770:47",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3770:47: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "commandLineParser.ts:3776:44",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/commandLineParser.ts:3776:44: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2220:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2220:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2223:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2223:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "core.ts:2242:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:2242:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1057:39",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1057:39: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1131:37",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1131:37: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "debug.ts:1133:71",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/debug.ts:1133:71: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1017:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1017:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1509:44",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1509:44: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "emitter.ts:1916:36",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1916:36: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "executeCommandLine.ts:350:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/executeCommandLine.ts:350:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "expressionToTypeNode.ts:515:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/expressionToTypeNode.ts:515:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "expressionToTypeNode.ts:626:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/expressionToTypeNode.ts:626:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "factory/emitHelpers.ts:650:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/factory/emitHelpers.ts:650:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "factory/emitHelpers.ts:662:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/factory/emitHelpers.ts:662:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:1847:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:1847:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2625:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2625:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2977:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2977:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleNameResolver.ts:2980:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleNameResolver.ts:2980:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1105:16",
+        "reason": "a generic function whose type argument T is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1105:16: stage 0 can't lower a generic function whose type argument T is any or unresolved yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1154:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1154:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "moduleSpecifiers.ts:1155:11",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/moduleSpecifiers.ts:1155:11: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:1653:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:1653:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:1663:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:1663:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3102:17",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3102:17: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3662:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3662:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:3696:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:3696:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:6173:13",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:6173:13: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:7101:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:7101:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8164:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8164:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8278:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8278:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8292:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8292:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:8317:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:8317:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9199:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9199:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9319:21",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9319:21: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9694:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9694:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "parser.ts:9858:25",
+        "reason": "an array of any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/parser.ts:9858:25: stage 0 can't lower an array of any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:646:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:646:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:661:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:661:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "path.ts:672:13",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/path.ts:672:13: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "program.ts:4054:21",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/program.ts:4054:21: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "program.ts:4902:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/program.ts:4902:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "resolutionCache.ts:1084:15",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/resolutionCache.ts:1084:15: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:378:63",
+        "reason": "a call returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:378:63: stage 0 can't lower a call returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "sys.ts:464:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:464:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tracing.ts:232:19",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tracing.ts:232:19: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "transformers/jsx.ts:624:77",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/transformers/jsx.ts:624:77: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2065:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2065:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2080:5",
+        "reason": "storing any in a field",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2080:5: stage 0 can't lower storing any in a field yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "tsbuildPublic.ts:2094:17",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/tsbuildPublic.ts:2094:17: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:7793:9",
+        "reason": "a value of type any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:7793:9: stage 0 can't lower a value of type any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:7809:17",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:7809:17: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:8556:25",
+        "reason": "a function returning any",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:8556:25: stage 0 can't lower a function returning any yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "utilities.ts:8765:54",
+        "reason": "Array.isArray on a tuple or an erased object/any/unknown view",
+        "text": "/tmp/timeout-scout-tree/src/compiler/utilities.ts:8765:54: stage 0 can't lower Array.isArray on a tuple or an erased object/any/unknown view yet"
+      },
+      {
+        "kind": "NotYet",
+        "where": "watch.ts:679:21",
+        "reason": "a generic function whose type argument R is any or unresolved",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:679:21: stage 0 can't lower a generic function whose type argument R is any or unresolved yet"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:1039:34",
+        "reason": "a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:1039:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:381:26",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:381:26: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:388:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:388:12: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:726:12",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:726:12: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:727:9",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:727:9: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:728:20",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:728:20: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "core.ts:728:9",
+        "reason": "a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/core.ts:728:9: Adamic 0.1 refuses a value of type NonNullable<T> seen as T, a type parameter whose constraint any can be written, so it can write what NonNullable<T> can't hold; take it as NonNullable<T>, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "emitter.ts:1483:36",
+        "reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/emitter.ts:1483:36: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:510:48",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:510:48: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:511:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:511:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:517:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:517:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:518:49",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:518:49: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:519:61",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:519:61: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:522:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:522:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:523:48",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:523:48: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:524:61",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:524:61: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:527:52",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:527:52: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:528:53",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:528:53: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:533:56",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:533:56: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:534:51",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:534:51: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:536:66",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:536:66: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sourcemap.ts:543:20",
+        "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sourcemap.ts:543:20: Adamic 0.1 refuses a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "sys.ts:378:79",
+        "reason": "a function taking string seen as one taking any[] (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/sys.ts:378:79: Adamic 0.1 refuses a function taking string seen as one taking any[] (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "kind": "Refused",
+        "where": "visitorPublic.ts:604:12",
+        "reason": "a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold",
+        "text": "/tmp/timeout-scout-tree/src/compiler/visitorPublic.ts:604:12: Adamic 0.1 refuses a value of type any seen as T, a type parameter whose constraint Node can be written, so it can write what any can't hold; take it as any, or constrain T to something readonly, which can't write (adamic/invariant-mutable)"
+      },
+      {
+        "kind": "Refused",
+        "where": "watch.ts:679:21",
+        "reason": "a function taking [callback: (...args: any[]) => void, ms: number, ...args: any[]] seen as one taking (...args: any[]) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:679:21: Adamic 0.1 refuses a function taking [callback: (...args: any[]) => void, ms: number, ...args: any[]] seen as one taking (...args: any[]) => void (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      },
+      {
+        "kind": "Refused",
+        "where": "watch.ts:680:23",
+        "reason": "a function taking [timeoutId: any] seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take",
+        "text": "/tmp/timeout-scout-tree/src/compiler/watch.ts:680:23: Adamic 0.1 refuses a function taking [timeoutId: any] seen as one taking unknown (tsc relates a method's parameters both ways), so it can be handed what it can't take; write the method as a property holding a function (handle: (animal: Animal) => void), which tsc checks one way, or take the wider type in the method (method-signature-style)"
+      }
+    ],
+    "ledger_sha256": "ca2e38dd109c362a09f128dde1abaac8ad2928430a10a07702ada0002c43b29e",
+    "checker_rejected": true,
+    "measured_files": 79
+  },
+  "reduction": {
+    "boundaries": 13,
+    "credited_hidden_bytes": 167,
+    "diagnostic_sites": 12,
+    "all_hidden_bytes": 10151
+  },
+  "provenance": {
+    "scout_commit": "4e6121d3",
+    "adaptation_commit": "1e920a31b601422c75a26ead083e9c1423c34b66",
+    "verified_source_files": 82,
+    "stock_sha256": "eeb724697792d49f8f65b8e1187e40cf781e7ada497072847939c9fd73f04052",
+    "measurement": "measured on a checker-rejected program",
+    "definition": "Any-type bucket: NotYet/Refused reason text containing the word any, excluding the English quantifier in the object-union in refusal; hidden-byte credit uses the unchanged outermost-cause partition. Conflicts remain separate. These are refused measurement boundaries, not compiled programs."
+  }
+}

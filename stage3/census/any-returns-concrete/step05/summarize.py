@@ -23,7 +23,8 @@ for name, metadata in stock.items():
  assert len(data) == metadata['bytes'] and hashlib.sha256(data).hexdigest() == metadata['sha256'], name
 
 def is_any(kind, reason):
- return kind in {'NotYet', 'Refused'} and re.search(r'\bany\b', reason) is not None
+ return (kind in {'NotYet', 'Refused'} and re.search(r'\bany\b', reason) is not None
+  and reason != 'in that narrows a union of object types (any object with the key passes)')
 
 def snapshot(ledger, sha):
  rows = hidden.read_rows(ledger)
@@ -56,6 +57,6 @@ result = dict(before=before,after=after,
  provenance=dict(scout_commit='4e6121d3',adaptation_commit='1e920a31b601422c75a26ead083e9c1423c34b66',
   verified_source_files=len(stock),stock_sha256=hashlib.sha256(stock_path.read_bytes()).hexdigest(),
   measurement='measured on a checker-rejected program',
-  definition='Any bucket: NotYet/Refused reason text containing the word any; hidden-byte credit uses the unchanged outermost-cause partition. Conflicts remain separate. These are refused measurement boundaries, not compiled programs.'))
+  definition='Any-type bucket: NotYet/Refused reason text containing the word any, excluding the English quantifier in the object-union in refusal; hidden-byte credit uses the unchanged outermost-cause partition. Conflicts remain separate. These are refused measurement boundaries, not compiled programs.'))
 output.write_text(json.dumps(result,indent=2)+'\n')
 print(json.dumps({'before':{k:before[k] for k in ('boundaries','credited_hidden_bytes')},'after':{k:after[k] for k in ('boundaries','credited_hidden_bytes')},'reduction':result['reduction']}))
