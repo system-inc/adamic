@@ -473,3 +473,6 @@ erased guards caught (holes-group1.log, 6.102s). Further hole groups follow.
 Second hole group D175, D184, D185, D186 and D189 passes all backend and
 sanitized mutant assertions (holes-group2.log, 6.570s). Total completed hole
 variants so far: 10 of 23 standalone shapes, plus the three record-chain holes.
+
+Third hole group D191, D192, D193, D194 and D225 passes (holes-group3.log,
+9.382s), including each independently erased guard. 15 standalone holes proven.
