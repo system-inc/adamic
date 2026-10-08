@@ -148,3 +148,28 @@ func TestCheckedViewNullishMapReadRefusals(t *testing.T) {
 		}
 	}
 }
+
+func TestCheckedViewNullishLiterals(t *testing.T) {
+	for _, mutation := range []string{"", "-wrong"} {
+		t.Run("literal"+mutation, func(t *testing.T) {
+			program, path := interfaceFixture(t, "nullish/fixtures/literal-both"+mutation)
+			truth := onNode(t, path)
+			checked, binary := nativelyUncached(t, program)
+			for _, got := range []run{checked, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if mutation == "" {
+					if difference := disagreement(truth, got); difference != "" {
+						t.Fatal(difference)
+					}
+				} else if got.exitCode != 70 || !strings.Contains(string(got.stderr), "node.value") || !strings.Contains(string(got.stderr), "made-here") {
+					t.Fatalf("finite nullish literal mutant ran on: %#v", got)
+				}
+			}
+			if mutation == "" {
+				if report := leaks(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+			}
+			t.Logf("Node: exit=%d stdout=%q; checked literal variant %q", truth.exitCode, truth.stdout, mutation)
+		})
+	}
+}
