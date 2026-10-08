@@ -1,0 +1,15 @@
+import type { CoreArena } from './nodes.a';
+import { tryStatementExits } from './try_statement_exits.a';
+import { switchStatementExits } from './switch_statement_exits.a';
+export function bodyDefinitelyExits(arena: CoreArena, index: number): boolean {
+    if(index < 0) { return false; } const node = arena.node(index);
+    switch(node.kind) {
+        case 'ReturnStatement': case 'ThrowStatement': return true;
+        case 'Block': for(const statement of node.statements) { if(bodyDefinitelyExits(arena, statement)) { return true; } } return false;
+        case 'IfStatement': return bodyDefinitelyExits(arena, node.thenNode) && bodyDefinitelyExits(arena, node.elseNode);
+        case 'TryStatement': return tryStatementExits(arena, index);
+        case 'SwitchStatement': return switchStatementExits(arena, index);
+        case 'LabeledStatement': case 'WithStatement': return bodyDefinitelyExits(arena, node.statement);
+    }
+    return false;
+}
