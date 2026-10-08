@@ -1,3 +1,4 @@
+// a-check: refused this escaping a base constructor before derived fields are initialized
 interface Note { readonly text: string; }
 class Base {
     readonly field = 1;

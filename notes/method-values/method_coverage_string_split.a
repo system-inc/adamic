@@ -1,3 +1,4 @@
+// a-check: type error TS2345
 const method = String.prototype.split;
 console.log(method.call('a|b|', '|').join('|'));
 console.log(method.apply('a|b|', ['|']).join('|'));

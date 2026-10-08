@@ -1,1 +1,2 @@
+// a-check: refused a method read as a value (get would lose its object, and this with it)
 const object = { value: 1, get(): number { return this.value; } }; const method = object.get; console.log(`${method()}`);
