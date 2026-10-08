@@ -1,0 +1,179 @@
+package lower
+
+import (
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// Discover contracts before function bodies or global save locals are lowered.
+// This retains the existing conservative field-name view propagation.
+func (l *lowering) factoryFieldOrigin(name string) string {
+	if l.result.FactoryFields == nil {
+		l.result.FactoryFields = map[string]string{}
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindAsExpression && l.constructionCast(node) {
+				factory := "literal factory"
+				for parent := node.Parent; parent != nil; parent = parent.Parent {
+					if parent.Kind == ast.KindFunctionDeclaration || parent.Kind == ast.KindFunctionExpression || parent.Kind == ast.KindArrowFunction {
+						if parent.Name() != nil {
+							factory = parent.Name().Text()
+						}
+						break
+					}
+				}
+				for _, field := range l.checker.GetPropertiesOfType(l.concrete(l.checker.GetTypeAtLocation(node))) {
+					if old := l.result.FactoryFields[field.Name]; old == "" {
+						l.result.FactoryFields[field.Name] = factory
+					} else if old != factory && !strings.Contains(old, factory) {
+						l.result.FactoryFields[field.Name] = old + ", " + factory
+					}
+				}
+			}
+			return node.ForEachChild(visit)
+		}
+		for _, file := range l.program.Files() {
+			file.AsNode().ForEachChild(visit)
+		}
+		// The rehearsal has no observable null-placeholder implementation. A
+		// field-name collision must fail closed, never turn its null! into undefined.
+		var nulls ast.Visitor
+		nulls = func(node *ast.Node) bool {
+			if (node.Kind == ast.KindPropertyDeclaration || node.Kind == ast.KindPropertyAssignment) && node.Name() != nil && l.uninitializedInitializer(node.Initializer()) {
+				value := ast.SkipParentheses(node.Initializer())
+				for value.Kind == ast.KindAsExpression {
+					value = ast.SkipParentheses(value.AsAsExpression().Expression)
+				}
+				if value.Kind == ast.KindNonNullExpression && ast.SkipParentheses(value.AsNonNullExpression().Expression).Kind == ast.KindNullKeyword {
+					if name, known := l.methodName(node); known && l.result.FactoryFields[name] != "" {
+						l.result.FactoryFields[name] = "pending null placeholder"
+					}
+				}
+			}
+			return node.ForEachChild(nulls)
+		}
+		for _, file := range l.program.Files() {
+			file.AsNode().ForEachChild(nulls)
+		}
+	}
+	return l.result.FactoryFields[name]
+}
+
+func (l *lowering) savedFactoryOrigin(node *ast.Node, seen map[*ast.Symbol]bool) string {
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		if layout, _, known := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression))); known {
+			if _, err := layout.Read(node.Name().Text()); err == nil {
+				return "field '" + node.Name().Text() + "', factory 'NodeArray allocation'"
+			}
+		}
+		if origin := l.factoryFieldOrigin(node.Name().Text()); origin != "" {
+			return "field '" + node.Name().Text() + "', factory '" + origin + "'"
+		}
+	}
+	if !ast.IsIdentifier(node) {
+		return ""
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
+		return ""
+	}
+	seen[symbol] = true
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent.Flags&ast.NodeFlagsConst == 0 || declaration.Type() != nil || declaration.Initializer() == nil {
+		return ""
+	}
+	return l.savedFactoryOrigin(declaration.Initializer(), seen)
+}
+
+func untypedSave(node *ast.Node) bool {
+	for node.Parent != nil && node.Parent.Kind == ast.KindParenthesizedExpression {
+		node = node.Parent
+	}
+	return node.Parent != nil && node.Parent.Kind == ast.KindVariableDeclaration && node.Parent.Initializer() == node && node.Parent.Type() == nil && node.Parent.Parent.Flags&ast.NodeFlagsConst != 0
+}
+
+// Observation and a bounded save carry an existing tagged union. A receiving
+// optional slot still checks T, permitting its real nullish members explicitly.
+func (l *lowering) unsetObserved(node *ast.Node) bool {
+	if comparedWithUndefined(node) || untypedSave(node) {
+		return true
+	}
+	parent := node.Parent
+	for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+		parent = parent.Parent
+	}
+	if parent == nil {
+		return false
+	}
+	if parent.Kind == ast.KindTypeOfExpression || parent.Kind == ast.KindTemplateSpan {
+		return true
+	}
+	return parent.Kind == ast.KindCallExpression && l.isLibraryGlobal(parent.AsCallExpression().Expression, "String")
+}
+
+func (l *lowering) unsetSpecialization(node *ast.Node, value ir.Expression, declared *checker.Type, origin string) (ir.Expression, error) {
+	if l.unsetObserved(node) {
+		return value, nil
+	}
+	present := l.checker.GetNonNullableType(declared)
+	held, known := l.representation(present)
+	if !known || held < ir.Number || held > ir.String {
+		return nil, l.notYet(node, "an unset field use requiring a non-scalar result specialization")
+	}
+	b := l.libraryArrayBuilder([]ir.Expression{value})
+	observed := b.read(b.parameters[0])
+	name := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[held]
+	matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: observed}, Right: ir.StringConstant{Index: l.constant(name)}})
+	if allowed := l.viewLiterals(declared); len(allowed) != 0 {
+		var fits ir.Expression
+		for _, allowedValue := range allowed {
+			test := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.Narrow{Value: observed, To: held}, Right: allowedValue})
+			if fits == nil {
+				fits = test
+			} else {
+				fits = ir.Binary{Operator: ir.Or, Left: fits, Right: test}
+			}
+		}
+		matches = ir.Binary{Operator: ir.And, Left: matches, Right: fits}
+	}
+	optional := l.includesUndefined(l.checker.GetTypeAtLocation(node))
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.includesUndefined(contextual) {
+		optional = true
+	}
+	if optional {
+		matches = ir.Binary{Operator: ir.Or, Left: ir.IsUndefined{Value: observed}, Right: matches}
+	}
+	message := "unset use failed: " + origin + ", use '" + sourceExpression(node) + "' at " + l.program.Where(node) + "; expected " + l.checker.TypeToString(declared)
+	b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
+	result := ir.Expression(ir.Narrow{Value: observed, To: held})
+	if optional && (held == ir.Number || held == ir.Boolean) {
+		result = ir.Conditional{Condition: ir.IsUndefined{Value: observed}, WhenTrue: ir.MaybeOf{Of: ir.Maybe(held)}, WhenNot: ir.MaybeOf{Of: ir.Maybe(held), Value: result}}
+	}
+	return b.finish("factory_unset_specialization", result), nil
+}
+
+func (l *lowering) factoryFieldRead(node *ast.Node, object ir.Expression, name string) (ir.Expression, bool, error) {
+	origin := l.factoryFieldOrigin(name)
+	if origin == "" {
+		return nil, false, nil
+	}
+	if origin == "pending null placeholder" {
+		return nil, true, l.notYet(node, "observable null placeholder awaiting codex/placeholder-nonnull")
+	}
+	field := l.checker.GetSymbolAtLocation(node.Name())
+	if field == nil || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 {
+		return nil, false, nil
+	}
+	declared := l.checker.GetTypeOfSymbol(field)
+	present := l.checker.GetNonNullableType(declared)
+	if !interfaceScalar(present) {
+		return nil, false, nil
+	}
+	value := ir.DynamicProperty{Object: fit(object, ir.Union), Name: name}
+	checked, err := l.unsetSpecialization(node, value, declared, "field '"+name+"', factory '"+origin+"'")
+	return checked, true, err
+}

@@ -1,4 +1,3 @@
-// a-check: refused a cast the runtime can't check
 // Reduced NodeArray declarations from TypeScript 050880ce; enum values 0 and 1 retained.
 interface Node {kind:number;}
 interface TextRange {pos:number;end:number;}

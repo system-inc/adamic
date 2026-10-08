@@ -6,12 +6,10 @@ import (
 	"testing"
 )
 
-// These pins describe real train boundaries. Their success is not parser acceptance.
+// The original scout's base factory preserves one allocation through its checked
+// Identifier view; reservation permits later writes without synthesizing own keys.
 func TestParserAheadFactoryBoundaries(t *testing.T) {
-	for _, row := range []struct{ name, stdout, message string }{
-		{"complete", "ready\n", "field read failed: <write>.text is not initialized; expected string, found missing"},
-		{"escaped", "undefined\n", "field read failed: node.text is not initialized; expected string, found missing"},
-	} {
+	for _, row := range []struct{ name, stdout string }{{"complete", "ready\n"}, {"escaped", "undefined\n"}} {
 		t.Run(row.name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/factories", row.name+".a"))
 			if err != nil {
@@ -19,20 +17,22 @@ func TestParserAheadFactoryBoundaries(t *testing.T) {
 			}
 			truth := onNode(t, path)
 			if truth.exitCode != 0 || string(truth.stdout) != row.stdout || len(truth.stderr) != 0 {
-				t.Fatalf("source Node %+v", truth)
+				t.Fatalf("Node %+v", truth)
 			}
 			program, err := lowered(t, path)
 			if err != nil {
 				t.Fatal(err)
 			}
-			want := run{exitCode: 70, stderr: []byte("adamic: panic: " + row.message + "\n")}
-			actual, _ := nativelyUncached(t, program)
+			actual, binary := nativelyUncached(t, program)
 			for backend, got := range map[string]run{"native": actual, "JavaScript": onJavaScriptBackend(t, program)} {
-				if difference := disagreement(want, got); difference != "" {
-					t.Fatalf("%s: %s", backend, difference)
+				if d := disagreement(truth, got); d != "" {
+					t.Fatalf("%s: %s", backend, d)
 				}
 			}
-			t.Log("pending: staged field allocation and writes; this is a boundary pin, not native acceptance")
+			if report := leaksUncached(t, program, binary); report != "" {
+				t.Fatal(report)
+			}
+			t.Log("base factory source matches both backends; rehearsal pending codex/placeholder-nonnull")
 		})
 	}
 }
@@ -96,7 +96,20 @@ func TestParserAheadNodeArraySource(t *testing.T) {
 			if truth.exitCode != 0 || string(truth.stdout) != row.stdout || len(truth.stderr) != 0 {
 				t.Fatalf("source Node %+v", truth)
 			}
-			_, err = lowered(t, path)
+			program, err := lowered(t, path)
+			if row.name == "fields" && err == nil {
+				actual, binary := nativelyUncached(t, program)
+				for _, got := range []run{actual, onJavaScriptBackend(t, program)} {
+					if d := disagreement(truth, got); d != "" {
+						t.Fatal(d)
+					}
+				}
+				if report := leaksUncached(t, program, binary); report != "" {
+					t.Fatal(report)
+				}
+				t.Log("all four NodeArray metadata fields match source Node; rehearsal pending codex/placeholder-nonnull")
+				return
+			}
 			if err == nil || !strings.Contains(err.Error(), row.reason) {
 				t.Fatalf("pending lowering boundary changed: %v", err)
 			}

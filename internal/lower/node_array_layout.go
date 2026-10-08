@@ -2,6 +2,8 @@ package lower
 
 import (
 	"fmt"
+	"strconv"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -22,7 +24,7 @@ type NodeArrayField struct {
 type ArrayLayout struct{ Fields []NodeArrayField }
 
 // NodeArrayLayout assigns fixed metadata slots after the existing array header.
-// Byte offsets and allocation emission await the array runtime owner. Optional
+// The native allocation holds its metadata inline. Optional
 // fields carry distinct presence and initialization states; absence is not a value.
 func NodeArrayLayout(element ir.Type, extras []FieldContract) (ArrayLayout, error) {
 	if element < ir.Number || element > ir.Float64Array {
@@ -34,6 +36,9 @@ func NodeArrayLayout(element ir.Type, extras []FieldContract) (ArrayLayout, erro
 	}{{"pos", ir.Number}, {"end", ir.Number}, {"hasTrailingComma", ir.Boolean}, {"transformFlags", ir.Number}}
 	byName := map[string]FieldContract{}
 	for _, field := range extras {
+		if _, err := strconv.ParseUint(field.Name, 10, 32); err == nil || strings.ContainsRune(field.Name, 0) || field.Name == "__proto__" || strings.HasPrefix(field.Name, "#") {
+			return ArrayLayout{}, fmt.Errorf("stage 0 can't lower NodeArray metadata key %s yet", field.Name)
+		}
 		if _, duplicate := byName[field.Name]; duplicate {
 			return ArrayLayout{}, fmt.Errorf("duplicate NodeArray metadata field %s", field.Name)
 		}

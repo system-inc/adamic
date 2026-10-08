@@ -16,6 +16,8 @@ type castProof struct {
 	field          string
 	allowed        []*checker.Type
 	classes        []*checker.Type
+	construction bool
+	nodeArray bool
 }
 
 const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
@@ -109,6 +111,12 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	}
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
+	}
+	if l.nodeArrayCast(node) {
+		return castProof{nodeArray: true}, nil
+	}
+	if l.constructionCast(node) {
+		return castProof{construction: true}, nil
 	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true
