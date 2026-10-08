@@ -27,3 +27,11 @@ whose cohere checkout is a symlink, set `GOFLAGS=-buildvcs=false`.
 The area replay creates `/tmp/imports-max-order-proof/input.ts` and saves full
 outputs there; create that directory before the replay. Remove the temporary Go
 test after replay. The committed witness is `../../testdata/source-file-order.ts.txt`.
+
+`organized-area-failure.txt` records the organized-imports branch's combined-witness
+failure on the uncorrected area. Both new rule branches pass upstream parity, their
+mutants, TestJsxInventoryDiscovery, and TestJsxLintTrees with the area's discovery.
+Organized imports' own history and diff contain no max-classes change.
+`integrated.log` proves TestOwnedWitnesses, JSX discovery/tree checks, and all three
+relevant mutants after independently merging both rule branches and this correction
+onto the area. The report-order discrepancy is fixed without bundling another rule.

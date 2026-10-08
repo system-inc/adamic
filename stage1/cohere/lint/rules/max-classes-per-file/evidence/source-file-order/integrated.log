@@ -1,0 +1,185 @@
+=== RUN   TestJsxLintTrees
+=== PAUSE TestJsxLintTrees
+=== RUN   TestJsxInventoryDiscovery
+=== RUN   TestJsxInventoryDiscovery/new_rule_and_cases_require_no_inventory_edit
+=== RUN   TestJsxInventoryDiscovery/missing_JSX_coverage_is_refused
+=== RUN   TestJsxInventoryDiscovery/unregistered_captured_rule_is_refused
+=== RUN   TestJsxInventoryDiscovery/malformed_row_is_refused
+=== RUN   TestJsxInventoryDiscovery/empty_JSX_inventory_is_refused
+--- PASS: TestJsxInventoryDiscovery (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/new_rule_and_cases_require_no_inventory_edit (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/missing_JSX_coverage_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/unregistered_captured_rule_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/malformed_row_is_refused (0.00s)
+    --- PASS: TestJsxInventoryDiscovery/empty_JSX_inventory_is_refused (0.00s)
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestJsxLintTrees
+=== CONT  TestOwnedWitnesses
+=== CONT  TestMutants
+=== RUN   TestMutants/one_excess_class_is_silently_allowed
+=== PAUSE TestMutants/one_excess_class_is_silently_allowed
+=== RUN   TestMutants/property_source_trivia_collapsed
+=== PAUSE TestMutants/property_source_trivia_collapsed
+=== RUN   TestMutants/react_framework_priority_reversed
+=== PAUSE TestMutants/react_framework_priority_reversed
+=== CONT  TestMutants/one_excess_class_is_silently_allowed
+=== CONT  TestMutants/property_source_trivia_collapsed
+=== CONT  TestMutants/react_framework_priority_reversed
+=== NAME  TestMutants/one_excess_class_is_silently_allowed
+    lint_test.go:147: checker compilation phases: load=478.63006ms lower=12.066790509s C=1.860670978s JavaScript=89.155403ms
+=== NAME  TestMutants/property_source_trivia_collapsed
+    lint_test.go:147: checker compilation phases: load=531.093577ms lower=12.155456226s C=2.133458304s JavaScript=123.703721ms
+=== NAME  TestMutants/react_framework_priority_reversed
+    lint_test.go:147: checker compilation phases: load=697.260468ms lower=12.806310291s C=2.253567654s JavaScript=125.246981ms
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker compilation phases: load=463.083452ms lower=13.072678146s C=1.424190028s JavaScript=173.118059ms
+=== NAME  TestJsxLintTrees
+    lint_test.go:283: cohere cases: 4845 unique source/rule/options combinations
+    jsx_integration_test.go:122: discovered captured JSX cases by rule map[nexus/consistency-no-abbreviated-identifier:5 nexus/consistency-no-ambiguous-identifier:4 react/jsx-curly-brace-presence:159 react/jsx-no-comment-textnodes:40 react/no-deprecated:4 react/no-find-dom-node:9 react/no-is-mounted:5]
+=== NAME  TestMutants/one_excess_class_is_silently_allowed
+    lint_test.go:155: checker native mutant build: 1m23.561732888s
+=== NAME  TestMutants/react_framework_priority_reversed
+    lint_test.go:155: checker native mutant build: 1m24.491488971s
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker native build: 1m24.568048345s
+    registration_test.go:55: typed runtime time: Go program and lint=186.947861ms native program, lint and recording=1.076551105s
+=== NAME  TestMutants/one_excess_class_is_silently_allowed
+    lint_test.go:845: one excess class is silently allowed caught on Node: case 85 line 4500: port "fixed\t/* leading trivia */\\u000aclass First {}\\u000aclass Second {}\\u000a/* trailing trivia */\\u000a", Go "/workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 21 51 maximumExceeded 			21 51
+        fixed	/* leading trivia */\u000aclass First {}\u000aclass Second {}\u000a/* trailing trivia */\u000a
+    lint_test.go:845: one excess class is silently allowed caught on emitted JavaScript: case 85 line 4500: port "fixed\t/* leading trivia */\\u000aclass First {}\\u000aclass Second {}\\u000a/* trailing trivia */\\u000a", Go "/workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 21 51 maximumExceeded 			21 51
+        fixed	/* leading trivia */\u000aclass First {}\u000aclass Second {}\u000a/* trailing trivia */\u000a
+    lint_test.go:845: one excess class is silently allowed caught on native: case 85 line 4500: port "fixed\t/* leading trivia */\\u000aclass First {}\\u000aclass Second {}\\u000a/* trailing trivia */\\u000a", Go "/workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /workspace/imports-review-tmp/TestMutantsone_excess_class_is_silently_allowed2736652889/016/max-classes-per-file-0.ts:2:1
+          max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class.
+        
+        range 21 51 maximumExceeded 			21 51
+        fixed	/* leading trivia */\u000aclass First {}\u000aclass Second {}\u000a/* trailing trivia */\u000a
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: typed runtime time: native=1.076551105s
+    registration_test.go:55: typed runtime time: Node=787.802336ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=116.045588ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 2066 bytes
+=== NAME  TestMutants/react_framework_priority_reversed
+    lint_test.go:845: react framework priority reversed caught on Node: case 86 line 4509: port "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport Link from 'next/link'; // Link documentation\\u000aimport React from 'react';\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250", Go "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport React from 'react';\\u000aimport Link from 'next/link'; // Link documentation\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250"
+        Go context:
+        fixed	// Dependencies - Frameworks\u000aimport React from 'react';\u000aclass First {}\u000aclass Second {}\u000a
+        case 86
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/017/structure-consistency-require-organized-imports-1.ts:3:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+        
+        range 34 63 importsNotOrganized fix	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000a		0 250
+        fixed	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000aexport const result = 1;\u000a
+        case 87
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/018/structure-consistency-require-organized-imports-2.ts:2:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+    lint_test.go:845: react framework priority reversed caught on emitted JavaScript: case 86 line 4509: port "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport Link from 'next/link'; // Link documentation\\u000aimport React from 'react';\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250", Go "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport React from 'react';\\u000aimport Link from 'next/link'; // Link documentation\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250"
+        Go context:
+        fixed	// Dependencies - Frameworks\u000aimport React from 'react';\u000aclass First {}\u000aclass Second {}\u000a
+        case 86
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/017/structure-consistency-require-organized-imports-1.ts:3:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+        
+        range 34 63 importsNotOrganized fix	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000a		0 250
+        fixed	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000aexport const result = 1;\u000a
+        case 87
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/018/structure-consistency-require-organized-imports-2.ts:2:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+    lint_test.go:845: react framework priority reversed caught on native: case 86 line 4509: port "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport Link from 'next/link'; // Link documentation\\u000aimport React from 'react';\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250", Go "range 34 63 importsNotOrganized fix\t'use client'; // Uses client-only features\\u000a\\u000a/* File overview */\\u000a\\u000a// Dependencies - Frameworks\\u000aimport React from 'react';\\u000aimport Link from 'next/link'; // Link documentation\\u000a\\u000a// Dependencies - Types\\u000aimport type { Thing } from '@structure/source/components/Thing';\\u000a\\u000a// Dependencies - Hooks\\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\\u000a\t\t0 250"
+        Go context:
+        fixed	// Dependencies - Frameworks\u000aimport React from 'react';\u000aclass First {}\u000aclass Second {}\u000a
+        case 86
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/017/structure-consistency-require-organized-imports-1.ts:3:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+        
+        range 34 63 importsNotOrganized fix	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000a		0 250
+        fixed	'use client'; // Uses client-only features\u000a\u000a/* File overview */\u000a\u000a// Dependencies - Frameworks\u000aimport React from 'react';\u000aimport Link from 'next/link'; // Link documentation\u000a\u000a// Dependencies - Types\u000aimport type { Thing } from '@structure/source/components/Thing';\u000a\u000a// Dependencies - Hooks\u000aimport { Thing as useThing } from '@structure/source/components/Thing';\u000aexport const result = 1;\u000a
+        case 87
+        /workspace/imports-review-tmp/TestMutantsreact_framework_priority_reversed2311014229/018/structure-consistency-require-organized-imports-2.ts:2:1
+          structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker native build: 21.316309ms
+    registration_test.go:55: typed runtime time: Go program and lint=85.221088ms native program, lint and recording=115.743526ms
+    registration_test.go:55: typed runtime time: native=115.743526ms
+    registration_test.go:55: typed runtime time: Node=465.022551ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=88.660288ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 5468 bytes
+=== NAME  TestMutants/property_source_trivia_collapsed
+    lint_test.go:155: checker native mutant build: 1m30.012611387s
+    lint_test.go:845: property source trivia collapsed caught on Node: case 86 line 4522: port "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:2:1", Go "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1"
+        Go context:
+        case 86
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:1:1
+          react/no-deprecated  React.createClass is deprecated since React 15.5.0, use the npm module create-react-class instead
+        
+        range 0 17 deprecated 			0 17
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+          react/no-deprecated  React.PropTypes.component is deprecated since React 0.12.0, use React.PropTypes.element instead
+        
+        range 50 75 deprecated 			50 75
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+    lint_test.go:845: property source trivia collapsed caught on emitted JavaScript: case 86 line 4522: port "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:2:1", Go "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1"
+        Go context:
+        case 86
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:1:1
+          react/no-deprecated  React.createClass is deprecated since React 15.5.0, use the npm module create-react-class instead
+        
+        range 0 17 deprecated 			0 17
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+          react/no-deprecated  React.PropTypes.component is deprecated since React 0.12.0, use React.PropTypes.element instead
+        
+        range 50 75 deprecated 			50 75
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+    lint_test.go:845: property source trivia collapsed caught on native: case 86 line 4522: port "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:2:1", Go "/workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1"
+        Go context:
+        case 86
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:1:1
+          react/no-deprecated  React.createClass is deprecated since React 15.5.0, use the npm module create-react-class instead
+        
+        range 0 17 deprecated 			0 17
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+          react/no-deprecated  React.PropTypes.component is deprecated since React 0.12.0, use React.PropTypes.element instead
+        
+        range 50 75 deprecated 			50 75
+        /workspace/imports-review-tmp/TestMutantsproperty_source_trivia_collapsed332487734/017/react-no-deprecated-1.ts:3:1
+--- PASS: TestMutants (5.07s)
+    --- PASS: TestMutants/one_excess_class_is_silently_allowed (110.07s)
+    --- PASS: TestMutants/react_framework_priority_reversed (110.56s)
+    --- PASS: TestMutants/property_source_trivia_collapsed (116.58s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:71: checker native build: 61.469105ms
+    registration_test.go:71: Go, Node, emitted JavaScript, native identical: 404486 bytes
+--- PASS: TestOwnedWitnesses (123.92s)
+=== NAME  TestJsxLintTrees
+    jsx_integration_test.go:146: 226 captured cohere JSX sources: 138579 identical whole-tree bytes
+--- PASS: TestJsxLintTrees (125.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	126.296s

@@ -1,0 +1,8 @@
+Organized imports merged with area 334509eea, without the max-classes fix.
+TestOwnedWitnesses fails on the organized-imports file-tie witness:
+import React from 'react';
+class First {}
+class Second {}
+
+    registration_test.go:71: Node: case 259 line 3615: port "  structure/consistency-require-organized-imports  The imports in this file are not grouped and ordered the way the rest of the tree is. Every file opens with the same twenty-three named blocks in the same sequence, each under its own comment header and alphabetized inside itself, so a reader looking for where a symbol comes from goes to the block rather than reading the whole list, and a reviewer sees a new dependency land in the block that says what kind of dependency it is.", Go "  max-classes-per-file  File has too many classes (2). Maximum allowed is 1. A file holding several classes makes the reader hold several vocabularies at once, and the import that names the file no longer says which one it wanted. Split them into a file each, named for the class."
+--- FAIL: TestOwnedWitnesses (107.15s)
