@@ -220,6 +220,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		value, err = l.predicateCheckedRead(node, value)
+	}
+	if err == nil {
 		value = l.graphAllocation(value, node)
 		if node.Kind == ast.KindCallExpression {
 			l.recordOrdinaryPredicateChecks(node.AsCallExpression())

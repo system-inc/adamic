@@ -1,0 +1,12 @@
+type Expression = { readonly kind: 'expression'; readonly label: string };
+type Statement = { readonly kind: 'statement'; readonly label: string };
+type Node = Expression | Statement;
+function isExpression(node: Node): node is Expression {
+    return node.kind === 'expression';
+}
+function cast(node: Node, test: (node: Node) => node is Expression): Expression {
+    if (test(node)) { return node; }
+    throw new Error('not an expression');
+}
+const node: Node = { kind: 'expression', label: ['callback', 'held'].join(' ') };
+console.log(cast(node, isExpression).label);

@@ -1,0 +1,6 @@
+--- FAIL: TestPredicateCheckedNarrowing (0.08s)
+    --- FAIL: TestPredicateCheckedNarrowing/callback (0.08s)
+        predicate_contracts_test.go:45: /tmp/adamic-gate/TestPredicateCheckedNarrowingcallback1119431392/001/hatch.ts:5:49: Adamic 0.1 refuses a type predicate whose return is not proven (callback arguments do not all have independent body proofs); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.094s
+FAIL

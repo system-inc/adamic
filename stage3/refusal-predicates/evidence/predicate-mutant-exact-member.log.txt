@@ -1,0 +1,6 @@
+--- FAIL: TestPredicateOpenContractsStayRefused (0.05s)
+    --- FAIL: TestPredicateOpenContractsStayRefused/extra_refinement (0.05s)
+        predicate_contracts_test.go:83: uncheckable .ts contract must stay refused: <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.066s
+FAIL

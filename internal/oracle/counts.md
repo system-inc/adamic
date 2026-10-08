@@ -2212,3 +2212,5 @@ compiler proof counts, independent of the runtime allocation counts above.
 | internal/lower/testdata/predicates/overload_some_false_valid.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_objects.a | 1 | 1 | 1 | 1 |
 | internal/lower/testdata/predicates/overload_some_true_only.a | 1 | 1 | 1 | 1 |
+| internal/oracle/testdata/predicate_callback_contract.a | 4 | 4 | 8 | 10 | 4 | 0 |
+| internal/oracle/testdata/predicate_helper_return.a | 8 | 8 | 6 | 6 | 4 | 0 |
