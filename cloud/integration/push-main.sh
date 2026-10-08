@@ -176,17 +176,21 @@ VERDICT
 	read -r pass fail skip <<<"$(printf '%s\n' "$verdict" | sed -n 3p)"
 	fastNote=$(printf '%s\n' "$verdict" | sed -n 4p)
 	# The fast gate chose its packages by the gated tree's difference from its base, a main. That
-	# choice is this landing's only if main has since moved by record commits at most; the landing
-	# itself may be a record-only merge over main (below), whose tree differs from the gated one only
-	# in record paths, which no package reads.
+	# choice is this landing's only if every path main has changed since, beyond record commits, is in
+	# that difference too: main moved by records only, or by commits this landing already holds (a
+	# stack whose lower candidate landed first), which the gate then tested along with the rest. The
+	# landing itself may be a record-only merge over main (below), whose tree differs from the gated
+	# one only in record paths, which no package reads; that check refuses a stack that doesn't hold
+	# main's other commits.
 	git fetch -q origin main
 	if ! git merge-base --is-ancestor "$fastBase" origin/main; then
 		echo "refused: the fast gate diffed against ${fastBase:0:8}, which isn't on main's line" >&2
 		exit 1
 	fi
 	movedSince=$(git diff --name-only "$fastBase" origin/main | grep -v -e '^documentation/velocity/landings\.csv$' -e '^stage3/meter/runs/' -e '^stage3/progress\.json$' | grep . || true)
-	if [ -n "$movedSince" ]; then
-		echo "refused: main moved past the fast gate's base ${fastBase:0:8} beyond record commits ($(printf '%s' "$movedSince" | head -n 3 | paste -sd ' ' -)); merge main in and fast-gate again" >&2
+	untested=$(comm -23 <(printf '%s\n' "$movedSince" | grep . | sort) <(git diff --name-only "$fastBase" "$sha" | sort) || true)
+	if [ -n "$untested" ]; then
+		echo "refused: main moved past the fast gate's base ${fastBase:0:8} in paths the gate didn't see change ($(printf '%s' "$untested" | head -n 3 | paste -sd ' ' -)); merge main in and fast-gate again" >&2
 		exit 1
 	fi
 	# The fast gate reads its smoke list from the gated tree when the tree has one, so a landing could
