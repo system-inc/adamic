@@ -13,15 +13,15 @@ MEASUREMENT = 'measured on a checker-rejected program'
 
 
 def reason_owner(reason, owners):
+    # The variance family owns every such message, including ones that also
+    # begin with a mapped type or generic-return prefix.
+    if ' seen as ' in reason and 'seen as' in owners:
+        return owners['seen as']
     if reason in owners:
         return owners[reason]
     for prefix in sorted(owners, key=lambda key: (-len(key), key)):
         if prefix != 'seen as' and reason.startswith(prefix):
             return owners[prefix]
-    # Variance messages put the source type before this phrase, so a prefix
-    # cannot match them. The explicit map entry owns this diagnostic family.
-    if ' seen as ' in reason and 'seen as' in owners:
-        return owners['seen as']
     return 'OWNER BLANK'
 
 
@@ -120,7 +120,7 @@ def unowned_table(trees):
     return ordered, lines
 
 
-def report(tree, run, stamp):
+def report(tree, run, stamp, compiler_commit=None):
     compiler = tree / 'src/compiler'
     expected = {str(path.resolve()): path for path in compiler.rglob('*') if path.is_file()}
     records = [json.loads(line) for line in (run / 'census.jsonl').read_text().splitlines()]
@@ -183,7 +183,7 @@ def report(tree, run, stamp):
     }
     result = {
         'timestamp_utc': stamp,
-        'adamic_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
+        'adamic_commit': compiler_commit or subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip(),
         'profile': 'unmodified stage 0 checker options and prelude',
         'adapted_tree': str(tree),
         'unlocated_diagnostics': len(unlocated),
@@ -210,9 +210,22 @@ def report(tree, run, stamp):
 
 
 def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
+    metadata_path = run / 'compiler-mode.json'
+    metadata = json.loads(metadata_path.read_text()) if metadata_path.exists() else None
+    mode = metadata['mode'] if metadata else 'single'
+    if mode not in ('single', 'per-ref'):
+        raise ValueError('invalid compiler mode')
+    if metadata:
+        commits = metadata['commits']
+        if set(commits) != {'main', 'area'} or any(not re.fullmatch(r'[0-9a-f]{40}', sha) for sha in commits.values()):
+            raise ValueError('invalid compiler commits')
+        if mode == 'per-ref' and commits != {'main': main_commit, 'area': area_commit}:
+            raise ValueError('per-ref compiler commits do not match source pins')
+        if mode == 'single' and commits['main'] != commits['area']:
+            raise ValueError('single compiler commits differ')
     trees = {}
     for label, tree, commit in [('main', main_tree, main_commit), ('area', area_tree, area_commit)]:
-        trees[label] = report(tree, run / label, stamp)
+        trees[label] = report(tree, run / label, stamp, metadata['commits'][label] if metadata else None)
         trees[label]['tree_ref'] = 'origin/main' if label == 'main' else 'origin/area/stage3'
         trees[label]['tree_commit'] = commit
         trees[label]['latent_lowering'] = latent_summary(tree, run / label)
@@ -221,15 +234,21 @@ def report_pair(main_tree, area_tree, run, stamp, main_commit, area_commit):
         (run / label / 'report.json').write_text(json.dumps(trees[label], indent=2) + '\n')
     # Preserve the existing area's single-tree fields for JSON consumers.
     unowned, unowned_lines = unowned_table(trees)
-    result = dict(trees['area'], trees=trees, unowned_reasons=unowned)
+    result = dict(trees['area'], trees=trees, unowned_reasons=unowned, compiler_mode=mode)
     (run / 'report.json').write_text(json.dumps(result, indent=2) + '\n')
     lines = []
     for key, title in [('checker_whole_program', 'Whole program'), ('checker_own_file', 'Own file')]:
         values = [f"{label}: {trees[label]['totals'][key]}/{trees[label]['totals']['source_files']}" for label in trees]
         lines.append(f"{title}: " + '; '.join(values))
+    if mode == 'single':
+        compilers = f"Both measured with Adamic {result['adamic_commit']} and ordinary stage 0 options."
+    else:
+        compilers = (f"Main measured with Adamic {trees['main']['adamic_commit']}; "
+                     f"area measured with Adamic {trees['area']['adamic_commit']}. "
+                     'Each compiler is built from its pinned ref with ordinary stage 0 options.')
     lines += ['', f'Stage 3 meter {stamp}', '',
               f'Main: origin/main at {main_commit}. Area: origin/area/stage3 at {area_commit}.',
-              f"Both measured with Adamic {result['adamic_commit']} and ordinary stage 0 options.", '',
+              compilers, '',
               '| File | Main whole program | Main own file | Area whole program | Area own file |',
               '| --- | --- | --- | --- | --- |']
     rows = {label: {row['file']: row for row in tree['files']} for label, tree in trees.items()}

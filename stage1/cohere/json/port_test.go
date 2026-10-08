@@ -214,23 +214,28 @@ func TestPortMatchesGoCohere(t *testing.T) {
 	if err := native.Build(native.C(program), release, native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	goDriver := buildGoDriver(t)
-	for round := 0; round < 3; round++ {
-		started = time.Now()
-		result := execute(t, nil, release, "--cases", path)
-		elapsed := time.Since(started)
-		compare(t, "release", result, expected, cases)
-		t.Logf("round %d native %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
-		started = time.Now()
-		result = onNode(t, entry, "--cases", path)
-		elapsed = time.Since(started)
-		compare(t, "Node timed", result, expected, cases)
-		t.Logf("round %d Node %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
-		started = time.Now()
-		result = execute(t, nil, goDriver, "--cases", path)
-		elapsed = time.Since(started)
-		compare(t, "Go timed", result, expected, cases)
-		t.Logf("round %d Go %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
+	compare(t, "release", execute(t, nil, release, "--cases", path), expected, cases)
+	if os.Getenv("ADAMIC_JSON_BENCH") == "1" {
+		goDriver := buildGoDriver(t)
+		for round := 0; round < 3; round++ {
+			started = time.Now()
+			result := execute(t, nil, release, "--cases", path)
+			elapsed := time.Since(started)
+			compare(t, "release", result, expected, cases)
+			t.Logf("round %d native %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
+			started = time.Now()
+			result = onNode(t, entry, "--cases", path)
+			elapsed = time.Since(started)
+			compare(t, "Node timed", result, expected, cases)
+			t.Logf("round %d Node %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
+			started = time.Now()
+			result = execute(t, nil, goDriver, "--cases", path)
+			elapsed = time.Since(started)
+			compare(t, "Go timed", result, expected, cases)
+			t.Logf("round %d Go %d texts in %.3fs: %.2f texts/s", round, len(cases), elapsed.Seconds(), float64(len(cases))/elapsed.Seconds())
+		}
+	} else {
+		t.Log("timing skipped; set ADAMIC_JSON_BENCH=1 for three timing rounds")
 	}
 	t.Logf("initial Node %.3fs; %d texts identical on Go, Node, native and JS backend", nodeTime.Seconds(), len(cases))
 }

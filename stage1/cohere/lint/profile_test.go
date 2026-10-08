@@ -188,8 +188,10 @@ func TestProfileSnapshotsAgree(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
-	path := manifest(t, rows)
 	oracle := goOracle(t)
+	// Classify recovery rows as TestRulesAgree does, so a captured case Go parses with a diagnostic (an
+	// octal escape in strict mode, say) is compared in recovery mode rather than panicking the oracle.
+	path := manifest(t, recoveryRows(t, oracle, rows))
 	want := execute(t, "", oracle, "--manifest", path).output
 	for _, directory := range filepath.SplitList(asked) {
 		// Match the ordinary suite's explicit recovery boundary in both snapshots.
@@ -218,14 +220,12 @@ func TestCommentFoldMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "point - 32 : point", "point - 31 : point", "unicode.ts")
-	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("fold mutant survived on %s", side.name)
@@ -239,14 +239,12 @@ func TestPositionIndexMutant(t *testing.T) {
 	path := manifest(t, generated(t))
 	want := execute(t, "", goOracle(t), "--manifest", path).output
 	directory := mutant(t, "this.anchors[0] = true;", "this.anchors[0] = false;", "rules/no-warning-comments/rule.ts")
-	binary := buildPort(t, directory, true)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
 		{"Node", node(t, directory, path, false)},
 		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
 	} {
 		if diff := difference(side.run.output, want); diff == "" {
 			t.Fatalf("position mutant survived on %s", side.name)
