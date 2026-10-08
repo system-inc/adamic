@@ -1,0 +1,1 @@
+export function message(name: string, custom: string): string {return custom!=='' ? custom : `Prop "${name}" is forbidden on DOM Nodes`;}
