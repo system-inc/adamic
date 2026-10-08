@@ -1,0 +1,38 @@
+function show(label: string, values: Uint16Array): void {
+    let text = `${label} length ${values.length} bytes ${values.byteLength}`;
+    for (const value of values) { text += ` ${value}/${1 / value}`; }
+    console.log(text);
+}
+const values = new Uint16Array([65535, 10, 2, 0, 65535, 2, 1, 10]);
+console.log(`same ${values.sort() === values}`);
+show('sorted', values);
+show('again', values.sort());
+const empty = new Uint16Array(0);
+console.log(`empty same ${empty.sort() === empty}`);
+show('empty', empty);
+const single = new Uint16Array([10]);
+console.log(`single same ${single.sort() === single}`);
+show('single', single);
+const parent = new Uint16Array([77, 10, 2, 3, 2, 66]);
+const view = parent.subarray(1, -1);
+const nested = view.subarray(0);
+console.log(`view same ${nested.sort() === nested}`);
+show('parent', parent);
+show('view', view);
+nested[0] = 11;
+show('write through', parent);
+show('empty view', parent.subarray(3, 3).sort());
+function surviving(): Uint16Array {
+    const root = new Uint16Array([88, 10, 2, 1, 99]);
+    return root.subarray(1, -1).sort();
+}
+show('surviving', surviving().sort());
+show('temporary', new Uint16Array([10, 2, 1]).sort());
+const many = new Uint16Array(1025);
+let state = 42;
+for (let index = 0; index < many.length; index += 1) {
+    state = (state * 1664525 + 1013904223) >>> 0;
+    many[index] = state % 10001 - 5000;
+}
+many.sort();
+for (const value of many) { console.log(`many ${value}`); }

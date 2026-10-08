@@ -433,3 +433,12 @@ introduced. This entry records this extension, not an inventory of earlier units
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## Typed array numeric sort, October 8, 2026
+
+`runtime-file:typed_array_sort.c` adds no mutable static storage. Each nontrivial
+sort allocates one temporary buffer of the receiver's length and element width,
+uses automatic pointers and indexes, then frees that buffer before returning.
+Empty and singleton sorts allocate nothing. Sort mutates only the receiver's
+range, including when it is a view. It takes and returns a borrowed reference,
+without changing any counts. The only local static is a const panic message.
