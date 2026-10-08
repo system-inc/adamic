@@ -22,29 +22,29 @@ adamic_closure *adamic_closure_new(adamic_code code, size_t count) {
 }
 
 adamic_environment *adamic_environment_new(size_t count) {
- adamic_environment *environment = adamic_allocate(sizeof *environment + count * sizeof(adamic_cell), adamic_kind_environment);
- adamic_heap heap = environment->heap;
- adamic_environment_init(environment, (adamic_cell *)(void *)(environment + 1), count);
- environment->heap = heap;
- return environment;
+	adamic_environment *environment = adamic_allocate(sizeof *environment + count * sizeof(adamic_cell), adamic_kind_environment);
+	adamic_heap heap = environment->heap;
+	adamic_environment_init(environment, (adamic_cell *)(void *)(environment + 1), count);
+	environment->heap = heap;
+	return environment;
 }
 void adamic_environment_init(adamic_environment *environment, adamic_cell *cells, size_t count) {
- environment->heap = (adamic_heap){.kind = adamic_kind_environment};
- environment->count = count;
- environment->cells = cells;
- adamic_environment_initialize_cells(&environment->heap, cells, count);
+	environment->heap = (adamic_heap){.kind = adamic_kind_environment};
+	environment->count = count;
+	environment->cells = cells;
+	adamic_environment_initialize_cells(&environment->heap, cells, count);
 }
 void adamic_environment_end(adamic_environment *environment) {
- adamic_environment_drop_cells(environment->cells, environment->count, adamic_release);
+	adamic_environment_drop_cells(environment->cells, environment->count, adamic_release);
 }
 
 void adamic_environment_initialize_cells(adamic_heap *owner, adamic_cell *cells, size_t count) {
- for (size_t index = 0; index < count; index++) {
-  cells[index] = (adamic_cell){.heap = {.kind = adamic_kind_cell}, .owner = owner};
- }
+	for (size_t index = 0; index < count; index++) {
+		cells[index] = (adamic_cell){.heap = {.kind = adamic_kind_cell}, .owner = owner};
+	}
 }
 void adamic_environment_drop_cells(adamic_cell *cells, size_t count, void (*drop)(void *)) {
- for (size_t index = 0; index < count; index++) {
-  if (cells[index].references) drop(cells[index].value.reference);
- }
+	for (size_t index = 0; index < count; index++) {
+		if (cells[index].references) drop(cells[index].value.reference);
+	}
 }

@@ -1,0 +1,20 @@
+function start(seed: number): Promise<string> {
+    const text = `seed${seed}`;
+    function read(): string { return text; }
+    async function later(): Promise<string> {
+        await Promise.resolve();
+        return read();
+    }
+    return later();
+}
+async function use(read: () => string): Promise<string> {
+    await Promise.resolve();
+    return read();
+}
+function forward(seed: number): Promise<string> {
+    const text = `forward${seed}`;
+    function read(): string { return text; }
+    return use(read);
+}
+console.log(await start(3));
+console.log(await forward(4));

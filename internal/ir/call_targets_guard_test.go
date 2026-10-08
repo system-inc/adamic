@@ -24,6 +24,7 @@ import (
 type targetReader struct{ owner, reason string }
 
 var targetReaders = map[string]targetReader{
+	"internal/native/region.go:environmentEscapes:CallClosure.Closure":            {"runtime", "follows carrier lifetime through callee evaluation; target identity comes from ClosureTargets"},
 	"internal/flow/build.go:CanThrow:ArraySort.Comparator":                        {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:libraryFailure:ArraySort.Comparator":            {"compiler", "MayThrow and library failure propagation, routed in step 2"},
 	"internal/lower/exceptions.go:throwsOut:ArraySort.Comparator":                 {"compiler", "MayThrow and library failure propagation, routed in step 2"},

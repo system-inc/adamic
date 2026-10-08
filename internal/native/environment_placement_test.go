@@ -47,8 +47,7 @@ func TestEnvironmentPlacement(t *testing.T) {
 	}
 }
 
-// Source lowering currently throws only Error objects and has no async frame or
-// parallel pool IR. A thrown carrier is nevertheless an escape in the proof.
+// A thrown carrier is an escape even when source throws only Error objects.
 func TestThrownEnvironmentStaysOnHeap(t *testing.T) {
 	t.Parallel()
 	program := &ir.Program{
@@ -69,7 +68,7 @@ func TestEnvironmentParameterAllTargets(t *testing.T) {
 	program := &ir.Program{
 		Locals: []ir.Local{{Type: ir.Closure}, {Type: ir.Closure}, {Type: ir.Closure, Global: true}},
 		Functions: []ir.Function{
-			{Parameters: []int{0}, Body: []ir.Statement{ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}}}}},
+			{Parameters: []int{0}, Body: []ir.Statement{ir.Evaluate{Value: ir.CallClosure{Closure: ir.Read{Local: 0, Of: ir.Closure}, Returns: ir.String}}}},
 			{Parameters: []int{1}, Body: []ir.Statement{ir.Assign{Local: 2, Value: ir.Read{Local: 1, Of: ir.Closure}}}},
 		},
 	}
@@ -103,5 +102,44 @@ func TestUnknownEnvironmentTransferStaysOnHeap(t *testing.T) {
 	plan := planRegions(program)
 	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
 		t.Fatal("unknown handoff placed its carrier in the frame")
+	}
+}
+
+func TestAsyncEnvironmentStaysCounted(t *testing.T) {
+	t.Parallel()
+	program := &ir.Program{
+		Locals: []ir.Local{{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true}},
+		Functions: []ir.Function{
+			{Async: true, FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}}},
+		},
+	}
+	plan := planRegions(program)
+	if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
+		t.Fatal("async cells placed in call storage")
+	}
+}
+
+func TestAsyncCarrierAndArgumentsEscape(t *testing.T) {
+	t.Parallel()
+	for _, callback := range []bool{false, true} {
+		program := &ir.Program{
+			Locals: []ir.Local{{Type: ir.String, Function: 0, Captured: true, EnvironmentCell: true}, {Type: ir.Closure, Function: 1}},
+			Functions: []ir.Function{
+				{FrameEnvironment: []int{0}, Body: []ir.Statement{ir.AllocateEnvironment{Cells: []int{0}}}},
+				{Async: true, Closure: true, Parameters: []int{1}, Environment: []int{0}},
+			},
+		}
+		var call ir.Expression = ir.CallClosure{Closure: ir.MakeClosure{Function: 1}, Returns: ir.Promise}
+		if callback {
+			call = ir.ArrayVisit{Array: ir.ArrayLiteral{Element: ir.Number}, Callback: ir.MakeClosure{Function: 1}}
+		}
+		program.Functions[0].Body = append(program.Functions[0].Body, ir.Evaluate{Value: call})
+		plan := planRegions(program)
+		if plan.environments[&program.Functions[0].Body[0]] != environmentHeap {
+			t.Fatal("async carrier placed in call storage")
+		}
+		if !plan.environmentCallEscapes(ir.FunctionTargets{Functions: []int{1}}, 0) {
+			t.Fatal("async argument treated as borrowed")
+		}
 	}
 }

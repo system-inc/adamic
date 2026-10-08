@@ -64,6 +64,11 @@ func (e *emitter) functionBody(function ir.Function) {
 		}
 	}
 	for _, parameter := range function.Parameters {
+		local := e.program.Locals[parameter]
+		if local.Captured && local.Type.IsReference() && local.Borrowed {
+			// Captured parameters own an entry reference independent of the cell.
+			panic(fmt.Sprintf("native: a store into the borrowed parameter %s", local.Name))
+		}
 		switch {
 		case e.reuse.consumed[parameter]:
 			// Its caller handed over a reference (reuse.go): it's the callee's to let go of.

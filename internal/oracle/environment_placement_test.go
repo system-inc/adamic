@@ -11,7 +11,7 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large", "captured_parameters"} {
+	for _, name := range []string{"direct", "callbacks", "loop", "siblings", "returned", "field", "array", "map", "set", "global", "capture", "keeping_call", "unknown_call", "local_call", "callback_escape", "virtual_call", "unknown_callback", "exits", "large", "captured_parameters", "async"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

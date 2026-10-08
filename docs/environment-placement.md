@@ -1,5 +1,9 @@
 # Closure environment placement
 
+The adaptation to the current area is recorded in
+[on-area.md](../notes/environment-placement/on-area.md). The sections below
+record the original implementation and its original base.
+
 The base is codex/nested-functions b15216d with codex/call-targets 280fc49
 merged first as b6e7738. The profile motivation is not an escape proof:
 checkTypeRelatedTo and getFlowTypeOfReference account for about 48% of the

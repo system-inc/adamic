@@ -43,6 +43,7 @@ type regionPlan struct {
 	classObjects         map[int]int
 	environments         map[*ir.Statement]environmentPlacement
 	environmentArguments map[int]map[int]bool
+	asyncLocals          map[int]bool
 	cleanups             map[string]string
 }
 
@@ -453,6 +454,12 @@ const (
 const stackEnvironmentSlots = 64
 
 func (plan *regionPlan) planEnvironments() {
+	plan.asyncLocals = map[int]bool{}
+	for local, binding := range plan.program.Locals {
+		if !binding.Global && binding.Function >= 0 && binding.Function < len(plan.program.Functions) && plan.program.Functions[binding.Function].Async {
+			plan.asyncLocals[local] = true
+		}
+	}
 	for index, function := range plan.program.Functions {
 		plan.environmentArguments[index] = map[int]bool{}
 		for position, parameter := range function.Parameters {
@@ -525,16 +532,6 @@ func (plan *regionPlan) environmentCallEscapes(targets ir.FunctionTargets, posit
 // Stores into containers are deliberately escapes even for local containers.
 func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [][]ir.Statement) bool {
 	escaped, changed := false, true
-	asyncLocals := map[int]bool{}
-	for index, function := range plan.program.Functions {
-		if function.Async {
-			for local, binding := range plan.program.Locals {
-				if binding.Function == index {
-					asyncLocals[local] = true
-				}
-			}
-		}
-	}
 	var derived func(ir.Expression) bool
 	derived = func(value ir.Expression) bool {
 		switch value := value.(type) {
@@ -650,7 +647,7 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 			switch statement := statement.(type) {
 			case ir.Declare:
 				if derived(statement.Value) {
-					if asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
 						escaped = true
 					}
 					if !aliases[statement.Local] {
@@ -660,7 +657,7 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 				}
 			case ir.Assign:
 				if derived(statement.Value) {
-					if asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
+					if plan.asyncLocals[statement.Local] || plan.program.Locals[statement.Local].Global || plan.program.Locals[statement.Local].Captured {
 						escaped = true
 					}
 					if !aliases[statement.Local] {
@@ -691,9 +688,9 @@ func (plan *regionPlan) environmentEscapes(cells, aliases map[int]bool, bodies [
 }
 
 // Async entry keeps its carrier after the call returns. Unknown calls with a
-// synchronous non-void result cannot use the promise-returning async ABI.
+// non-void result outside Promise and Union cannot use the async ABI.
 func (plan *regionPlan) environmentCalleeEscapes(targets ir.FunctionTargets, returns ir.Type) bool {
-	if (targets.Unknown || len(targets.Functions) == 0) && (returns == 0 || returns == ir.Promise) {
+	if (targets.Unknown || len(targets.Functions) == 0) && (returns == 0 || returns == ir.Promise || returns == ir.Union) {
 		return true
 	}
 	for _, target := range targets.Functions {
