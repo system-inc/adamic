@@ -1,0 +1,38 @@
+{
+  "typescript": "6.0.3",
+  "tree": "/workspace/scratch/scanner-main-full/adapted",
+  "entries": [
+    "src/compiler/scanner.ts:createScanner",
+    "src/compiler/types.ts:ScriptTarget",
+    "src/compiler/types.ts:SyntaxKind"
+  ],
+  "declarations": 166,
+  "copied_spans": 168,
+  "namespace_wrapper_spans": 2,
+  "value_declarations": 150,
+  "type_declarations": 16,
+  "files": 78,
+  "declaration_files": 8,
+  "code_declarations": 89,
+  "export_facade_records": 77,
+  "evaluation_only_files": 70,
+  "preserves_evaluation": true,
+  "declaration_lines": 7284,
+  "declaration_bytes": 822350,
+  "rewritten_import_lines": 177
+}
+PASS: 168 byte-identical source spans; 78 ordered module import lists
+{"checkedReads":10}
+{"inferredPrivateReturn":1}
+{"removedDebugger":1}
+{"callableMarkers":3,"restoredOpaqueMarkers":0}
+{"calls":11,"members":1}
+{"changes":4}
+{"optionalOperand":1}
+{"errorCaptureCasts":2}
+{"jsxParameter":1}
+{"wrappers":3}
+{"lexicalLocals":23}
+{"stringCodepointCasts":2,"availabilityObservations":1}
+{"constructors":2,"reads":6}
+PASS: 168 byte-identical source spans; 78 ordered module import lists

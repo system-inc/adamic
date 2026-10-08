@@ -1,0 +1,3 @@
+/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:14:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:15:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.
+/workspace/scratch/scanner-main-proof/main.a:4:21: error TS2591: Cannot find name 'node:util'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.

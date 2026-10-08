@@ -1,0 +1,8 @@
+--- /workspace/scratch/scanner-main-proof/node.stdout	2026-10-08 09:38:42.572821675 +0000
++++ /workspace/scratch/scanner-main-proof/node-byte-mutant.stdout	2026-10-08 09:38:42.700409437 +0000
+@@ -1,4 +1,4 @@
+-ExportKeyword	0	70	76	1	"export"
++DxportKeyword	0	70	76	1	"export"
+ AsteriskToken	76	77	78	0	"*"
+ FromKeyword	78	79	83	0	"from"
+ StringLiteral	83	84	108	0	"\"../moduleSpecifiers.js\""

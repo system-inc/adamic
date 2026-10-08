@@ -1,0 +1,44 @@
+{
+  "node_exit": 0,
+  "full_tree_diff_exit": 0,
+  "tokens": 509014,
+  "bytes": 27879197,
+  "sha256": "c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f",
+  "compiler": "ef3141e9b1152ab51b51497f8ce3a2799449c8a3",
+  "slice": "/workspace/scratch/scanner-main-slice",
+  "input_tree": "/workspace/scratch/scanner-main-inputs",
+  "files": 81,
+  "driver_source": "61241e6ff:stage3/drivers/scanner/main.a",
+  "native": "blocked at checker",
+  "node_byte_mutant_diff_exit": 1,
+  "builds": [
+    {
+      "split": 0,
+      "exit": 1,
+      "wall_seconds": 0.07337142100004712,
+      "stderr": "/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:14:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:15:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/scanner-main-proof/main.a:4:21: error TS2591: Cannot find name 'node:util'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    },
+    {
+      "split": 1,
+      "exit": 1,
+      "wall_seconds": 0.09025641200423706,
+      "stderr": "/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:14:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/scanner-main-proof/adapted/src/compiler/debug.ts:15:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/scanner-main-proof/main.a:4:21: error TS2591: Cannot find name 'node:util'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\n"
+    }
+  ],
+  "first_stop": {
+    "file": "adapted/src/compiler/debug.ts",
+    "line": 14,
+    "column": 19,
+    "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+    "minimal_program": "probes/main-error-host-declaration.a",
+    "node_exit": 0,
+    "node_stdout": "ok\n",
+    "native_build_exit": 1
+  },
+  "notes": [
+    "Both native modes stop before C emission. Jobs used host cpu count in initial diagnostic-only attempts; corrected to nproc=5 for subsequent builds.",
+    "The current validated slice profile is used; historical six-field skipped-trivia driver is copied unchanged from 61241e6ff.",
+    "Fixed corpus reconstructs pre-50 inputs; full-tree and slice Node hashes reproduce the historical reference.",
+    "No native scanner comparison or metrics yet."
+  ]
+}

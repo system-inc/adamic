@@ -1,5 +1,35 @@
 # Scanner blockers
 
+## October 8: current main deadline retry, first checker stop
+
+Fresh scratch starts at main ef3141e9b1152ab51b51497f8ce3a2799449c8a3.
+Both split modes stop at debug.ts:14:19 with TS2339: Property
+'captureStackTrace' does not exist on type 'ErrorConstructor'. The next
+returned findings are the same property at 15:19 and the driver node:util
+import at 4:21 (TS2591). Main's loader has no Node declaration adapter;
+its options select Types: [] and lib.es2024. The independently tested minimal
+program is probes/main-error-host-declaration.a. Node exits 0 and prints ok;
+main refuses its captureStackTrace at 2:7 with TS2339.
+
+The validated slice audit passes. The untouched skipped-trivia driver from
+61241e6ff scans all 81 compiler files on Node and matches the full-tree reference:
+509,014 tokens, 27,879,197 bytes, SHA-256
+c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f.
+Fixed inputs reconstruct adaptations 00/10 before the two adaptation-50
+returns. The initial default corpus had 509,017 tokens and is not used for
+this claim. The one-byte Node-output mutant is caught by diff exit 1.
+No native output, C, clang timing, binary size or runtime timing exists yet.
+
+Setup required a workaround: interrupted redundant TypeScript history fetching,
+then used local object alternates to check out main's exact d92d9bfee pin.
+The local fetch attempt also failed with git-pack-objects error; logs retained.
+The final required setup succeeds: Node 0.020s, Go 0.021s, markdown 0.053s,
+submodules 0.077s, clang 0.206s, Go build 156.253s, cache 156.332s,
+done 156.356s; nproc 5. Sourced /workspace/adamic-tools/env.sh.
+No compiler edits or full compiler gate. This is an early pushed stop;
+feature merge and up-to-fifteen throwing-placeholder discovery follow.
+Evidence: evidence/main-deadline/first-stop.json and adjacent logs.
+
 ## October 8: reconciled closure restart stops at checked narrowing integration
 
 Fresh scratch `/workspace/scratch/scanner-proof-restart-20261008` starts directly

@@ -1,0 +1,3 @@
+// Main's loader lacks the Node ErrorConstructor declaration.
+Error.captureStackTrace(new Error());
+console.log('ok');
