@@ -1,5 +1,0 @@
-class Base<T> { x: T; constructor(x: T) { this.x = x; } }
-class Derived<T extends number> extends Base<T | undefined> { y = 'wrong'; constructor() { super(undefined); } }
-const view: Base<number | undefined> = new Derived<number>();
-const wider: { x: number | undefined; y?: number } = view;
-console.log(typeof wider.y);

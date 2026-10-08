@@ -46,13 +46,7 @@ child.next = child;`, "cycle-capable", "Weak"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
-			if probe.rule == "cycle-capable" {
-				if err != nil || len(program.GraphTypes) == 0 {
-					t.Fatalf("want graph ownership, got %v", err)
-				}
-				return
-			}
+			_, err := lowerSource(t, probe.source)
 			var refused *Refused
 			if !errors.As(err, &refused) || !strings.Contains(err.Error(), probe.rule) || !strings.Contains(err.Error(), probe.fix) {
 				t.Fatalf("want refusal naming %s with fix %q, got %v", probe.rule, probe.fix, err)
@@ -260,13 +254,7 @@ class Child<T> extends Link<T> {}
 const child = new Child<Holder>(); const holder: Holder = { back: child }; child.set(holder);`, "cycle-capable"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			program, err := lowerSource(t, probe.source)
-			if probe.rule == "cycle-capable" {
-				if err != nil || len(program.GraphTypes) == 0 {
-					t.Fatalf("want graph ownership, got %v", err)
-				}
-				return
-			}
+			_, err := lowerSource(t, probe.source)
 			var refusal *Refused
 			if !errors.As(err, &refusal) || !strings.Contains(err.Error(), probe.rule) {
 				t.Fatalf("want %s refusal, got %v", probe.rule, err)

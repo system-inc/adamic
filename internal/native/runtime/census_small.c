@@ -3,7 +3,6 @@
 bool adamic_census_to_boolean(const adamic_heap *value) {
     if (value == NULL) return false;
     switch (value->kind) {
-    case adamic_kind_null: return false;
     case adamic_kind_number: {
         double number = ((const adamic_number_box *)value)->number;
         return number != 0.0 && !isnan(number);

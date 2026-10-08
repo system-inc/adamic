@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRankedArrayUnionContracts (0.00s)
-    --- FAIL: TestCheckedViewRankedArrayUnionContracts/ranked3-pattern-wrong-element (0.47s)
-        checked_views_ranked_array_unions_test.go:41: stderr differs; stderr "adamic: panic: field read failed: values[0].kind is not initialized; expected \"binding\" | \"omitted\", found missing\n"; stdout ""; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.485s
-FAIL

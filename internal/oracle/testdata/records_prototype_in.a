@@ -1,3 +1,0 @@
-const r: Record<string, number> = {};
-function has(key: string): void {console.log(String(key in r));}
-has('constructor');

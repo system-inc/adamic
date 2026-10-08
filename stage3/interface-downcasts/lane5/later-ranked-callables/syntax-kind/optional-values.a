@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-type SyntaxKind=number;
-interface Base {readonly formatSyntaxKind:unknown;}
-interface Target {formatSyntaxKind(kind: SyntaxKind | undefined): string;}
-function probe(value:Base):void {const Debug=value as Target;const kind:SyntaxKind=80;console.log(Debug.formatSyntaxKind(undefined));console.log(Debug.formatSyntaxKind(kind));console.log(Debug.formatSyntaxKind(0));}
-probe({formatSyntaxKind:(kind:SyntaxKind|undefined):string=>kind===undefined?"undefined":kind===80?"Identifier":"Unknown"});

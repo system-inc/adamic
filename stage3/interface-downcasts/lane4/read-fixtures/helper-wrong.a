@@ -1,8 +1,0 @@
-interface Base { readonly kind: 'box' | 'other' }
-interface Box extends Base { readonly kind: 'box'; readonly unsupported: boolean }
-function helper(value: Box): void { console.log(String(value.unsupported)); }
-const raw = {kind: 'box' as const, unsupported: 42};
-const base: Base = raw;
-const ordinary: Box = {kind: 'box', unsupported: true};
-helper(ordinary);
-helper(base as Box);

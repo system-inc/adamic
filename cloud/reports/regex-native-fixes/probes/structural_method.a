@@ -1,3 +1,0 @@
-interface Tester { test(text: string): boolean; }
-function run(tester: Tester): boolean { return tester.test('xa'); }
-console.log(`${run(/a/)}`);

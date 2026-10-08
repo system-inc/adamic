@@ -1,8 +1,0 @@
-import type { LeftHandSideExpression, Identifier } from 'original-tsc-types';
-interface Base { readonly kind: 'box' | 'other'; }
-interface Carrier extends Base { readonly kind: 'box'; readonly child: LeftHandSideExpression & Identifier; }
-function helper(value: LeftHandSideExpression & Identifier): void { console.log(String(value.escapedText)); }
-const raw = {kind: 'box' as const, child: {kind: 80, escapedText: 42}};
-const base: Base = raw;
-const carrier = base as Carrier;
-helper(carrier.child);

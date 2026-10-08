@@ -1,2 +1,0 @@
-const values: readonly (string | number | false | undefined)[] = ['word', 42, false, undefined];
-for (const value of values) console.log(typeof value + ':' + String(value));

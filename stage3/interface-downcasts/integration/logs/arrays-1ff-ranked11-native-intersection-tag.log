@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRanked11ArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRanked11ArrayContracts/ranked11-index-components-wrong-name (0.71s)
-        checked_views_ranked11_arrays_test.go:60: stderr differs; stderr "adamic: panic: field read failed: components[0].name.expression is not initialized; expected Identifier, found missing\n"; stdout ""; exit 70
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.723s
-FAIL

@@ -1,8 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface CallExpression {readonly value:number;}
-interface Expression {readonly value:number;}
-interface TypeNode {readonly value:number;}
-interface Base {readonly updateCallExpression:unknown;}
-interface Target {updateCallExpression(node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallExpression;}
-function probe(value:Base):void {const factory=value as Target;const node:CallExpression={value:1};console.log(`${factory.updateCallExpression(node,{value:2},undefined,[{value:4}]).value}`);console.log(`${factory.updateCallExpression(node,{value:2},[],[]).value}`);console.log(`${factory.updateCallExpression(node,{value:2},[{value:3}],[{value:4}]).value}`);}
-probe({updateCallExpression:(node:CallExpression,expression:Expression,typeArguments:readonly TypeNode[]|undefined,argumentsArray:readonly Expression[]):CallExpression=>{const typeArgument=typeArguments===undefined?undefined:typeArguments[0];const argument=argumentsArray[0];return {value:node.value+expression.value+(typeArgument===undefined?0:typeArgument.value)+(argument===undefined?0:argument.value)};}});

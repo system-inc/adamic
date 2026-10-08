@@ -1,5 +1,0 @@
-interface Value { readonly value: string | number | undefined; }
-function helper(value: Value): void { const {value: result}=value; console.log(String(result)); }
-helper({value: 'word'.concat('-built')});
-helper({value: 42});
-helper({value: undefined});

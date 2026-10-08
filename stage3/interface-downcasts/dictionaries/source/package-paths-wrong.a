@@ -1,6 +1,0 @@
-interface MapLike<T> { [key: string]: T; }
-interface PackageJsonPathFields { readonly [key: string]: MapLike<string> | undefined; }
-const payload = { imports: 42 };
-const base: {} = payload;
-const view = base as PackageJsonPathFields;
-console.log(typeof view['imports']);

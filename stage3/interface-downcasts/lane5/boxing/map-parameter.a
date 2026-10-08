@@ -1,3 +1,0 @@
-const values = new Map<string,number>();
-values.set("one",1);
-values.forEach((value:number|string,key:string):void => {console.log(`${key}:${value}`);});

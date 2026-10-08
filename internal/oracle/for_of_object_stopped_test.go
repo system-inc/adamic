@@ -1,8 +1,11 @@
 package oracle
 
 import (
+	"errors"
 	"path/filepath"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/lower"
 )
 
 func init() {
@@ -10,12 +13,13 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{path: "internal/oracle/testdata/for_of_object_stopped/" + name + ".a", lowers: true})
+		}{path: "internal/oracle/testdata/for_of_object_stopped/" + name + ".a"})
 	}
 }
 
-// These formerly stopped reductions now use checked array ancestry and fixed metadata.
-func TestForOfObjectNodeArrayLowers(t *testing.T) {
+// NodeArray carries array elements and metadata. Until both have a native representation,
+// these source reductions must stop before either backend receives a usable program.
+func TestForOfObjectNodeArrayStops(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ name, stdout string }{
 		{"binder_432", "2\n"},
@@ -32,8 +36,9 @@ func TestForOfObjectNodeArrayLowers(t *testing.T) {
 				t.Fatalf("Node: %+v; want stdout %q", observed, probe.stdout)
 			}
 			program, err := lowered(t, path)
-			if program == nil || err != nil {
-				t.Fatalf("want the certified NodeArray reduction to lower, got program %v, error %v", program != nil, err)
+			var stop *lower.NotYet
+			if program != nil || !errors.As(err, &stop) || stop.What != "for...of over an object" {
+				t.Fatalf("want the NodeArray representation stop and no IR, got program %v, error %v", program != nil, err)
 			}
 		})
 	}

@@ -11,12 +11,9 @@ import (
 // The proof contains checker types only, so refusals precede representation lowering of unknown
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
-	view          bool
-	lowering      castLoweringKind
-	deferredError error
-	field         string
-	allowed       []*checker.Type
-	classes       []*checker.Type
+	field   string
+	allowed []*checker.Type
+	classes []*checker.Type
 }
 
 const castRepair = "use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
@@ -98,11 +95,7 @@ func castMembers(proven *checker.Type) []*checker.Type {
 
 func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	as := node.AsAsExpression()
-	if l.viewCallableDiscardedMarker(node) {
-		return castProof{}, nil
-	}
-	// A qualified name (NodeJS.ErrnoException) has no Text; only a bare `const` is as const.
-	if as.Type.Kind == ast.KindTypeReference && ast.IsIdentifier(as.Type.AsTypeReferenceNode().TypeName) && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
 		return castProof{}, nil
 	}
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
@@ -115,22 +108,10 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	if source.Flags()&checker.TypeFlagsAny != 0 || target.Flags()&checker.TypeFlagsAny != 0 {
 		return castProof{}, refused
 	}
-	if kind := l.deferredCastCandidate(node, source, target, true); kind != castLoweringNone {
-		return castProof{lowering: kind, deferredError: refused}, nil
-	}
 	members, targets := castMembers(source), castMembers(target)
 	allClasses := true
 	for _, member := range append(append([]*checker.Type{}, members...), targets...) {
 		allClasses = allClasses && isClassInstance(member)
-	}
-	if l.dictionaryCastNeedsView(source, target) {
-		if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
-			return castProof{}, l.notYet(node, "a writable-slot checked dictionary view requiring source contract certification")
-		}
-		if _, err := l.viewSchema(node, target); err != nil {
-			return castProof{}, err
-		}
-		return castProof{view: true}, nil
 	}
 	var upcastFailure error
 	// A structural assignability result is only an upcast candidate. Nominal
@@ -186,32 +167,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 		}
 		return castProof{classes: targets}, nil
 	}
-	if kind := l.deferredCastCandidate(node, source, target, false); kind != castLoweringNone {
-		return castProof{lowering: kind, deferredError: refused}, nil
-	}
 	if source.Flags()&checker.TypeFlagsUnion == 0 {
-		if proof, err := l.viewUnionTargetProof(node, source, target); proof != nil || err != nil {
-			if err != nil {
-				return castProof{}, err
-			}
-			return *proof, nil
-		}
-		// Shared views certify each read; mutable source slots still require
-		// the same reverse relation as the interface-downcast entry point.
-		if source.Flags()&checker.TypeFlagsObject != 0 && target.Flags()&checker.TypeFlagsObject != 0 && !isClassInstance(target) && l.checker.IsTypeAssignableTo(target, source) {
-			if l.widened(target, source, map[[2]*checker.Type]bool{}) != nil {
-				return castProof{}, l.notYet(node, "a writable-slot checked view requiring source contract certification")
-			}
-			if _, err := l.viewSchema(node, target); err != nil {
-				return castProof{}, err
-			}
-			for _, property := range l.checker.GetPropertiesOfType(source) {
-				if literal := l.fieldLiteral(target, property.Name); literal != nil {
-					return castProof{view: true, field: property.Name, allowed: []*checker.Type{literal}}, nil
-				}
-			}
-			return castProof{view: true}, nil
-		}
 		return castProof{}, refused
 	}
 	if !l.castUnionWrites(source) {

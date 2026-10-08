@@ -1,9 +1,0 @@
---- FAIL: TestCheckedViewRankedArrayContracts (0.00s)
-    --- FAIL: TestCheckedViewRankedArrayContracts/ranked-intersection-wrong-field (0.73s)
-        checked_views_ranked_arrays_test.go:35: exit codes differ; got oracle.run{stdout:[]uint8{0x77, 0x72, 0x6f, 0x6e, 0x67, 0xa}, stderr:[]uint8{}, exitCode:0}
-FAIL
-gate cache: native hits=0 misses=0
-gate cache: node hits=0 misses=2
-gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.745s
-FAIL

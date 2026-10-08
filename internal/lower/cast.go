@@ -14,9 +14,6 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
-	if l.nodeRequirePerformanceProjection(node) {
-		return l.expression(as.Expression)
-	}
 	proof, err := l.castProof(node)
 	if err != nil {
 		return nil, err
@@ -30,37 +27,16 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
-	if proof.lowering != castLoweringNone {
-		source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
-		target := l.concrete(l.checker.GetTypeAtLocation(node))
-		checked, err := l.lowerDeferredCast(proof.lowering, node, value, source, target)
-		if checked != nil || err != nil {
-			return checked, err
-		}
-		return nil, proof.deferredError
-	}
-	if !proof.view && len(proof.allowed) == 0 && len(proof.classes) == 0 {
+	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
 	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
-	if proof.view {
-		if checked, err := l.interfaceCast(node, value, source, target); checked != nil || err != nil {
-			return checked, err
-		}
-		if checked, err := l.structuralViewCast(node, value, source, target); checked != nil || err != nil {
-			return checked, err
-		}
-		return nil, refused
-	}
 	if value.Type() != ir.Object {
 		return nil, refused
 	}
 	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
 	if len(proof.classes) > 0 {
 		return l.checkedClassCast(node, value, proof.classes, message)
-	}
-	if proof.view && len(proof.allowed) == 0 {
-		return l.view(node, value, target)
 	}
 	cast := ir.CheckedCast{Value: value, Field: proof.field, Message: message}
 	for _, literal := range proof.allowed {
@@ -71,11 +47,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 		cast.Allowed = append(cast.Allowed, allowed)
 		cast.FieldType = fieldType
 	}
-	if _, err := l.view(node, value, target); err != nil {
-		return nil, err
-	}
-	cast.CheckedFields = true
-	return l.certifiedCheckedCast(node, cast, target)
+	return cast, nil
 }
 
 // fieldLiteral is a member's type for a field when it's a single literal ('Circle', 1, true), the

@@ -1,6 +1,0 @@
---- FAIL: TestPrepareViewCallableRead (0.03s)
-    --- FAIL: TestPrepareViewCallableRead/interface_Result_{_unread:_unknown;_};_type_Target_=_(value:_number)_=>_Result; (0.03s)
-        view_callables_read_test.go:44: /tmp/adamic-gate/TestPrepareViewCallableReadinterface_Result_{_unread_unknown_2609968417/001/read.a:1:40: stage 0 can't lower checked-view representation for unknown yet
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.034s
-FAIL

@@ -11,14 +11,11 @@ import (
 
 // variables lowers const and let declarations, each to a local of its own.
 func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
-	if list.Flags&ast.NodeFlagsBlockScoped == 0 && !assertionVarList(list) {
+	if list.Flags&ast.NodeFlagsBlockScoped == 0 {
 		return nil, &Refused{Where: l.program.Where(list), What: "var", Fix: "use const or let"}
 	}
 	statements := []ir.Statement{}
 	for _, declaration := range list.AsVariableDeclarationList().Declarations.Nodes {
-		if l.nodeRequireBinding(declaration) {
-			continue
-		}
 		name := declaration.Name()
 		if name.Kind == ast.KindArrayBindingPattern || name.Kind == ast.KindObjectBindingPattern {
 			// const [a, b] = tuple, and const { x, y } = object (collections.go).
@@ -32,39 +29,9 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 		if !ast.IsIdentifier(name) {
 			return nil, l.notYet(name, "a destructuring declaration")
 		}
-
-		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
-			if symbol := l.symbol(name); symbol != nil && len(symbol.Declarations) > 1 {
-				return nil, &Refused{Where: l.program.Where(declaration), What: "repeated var assertion declarations", Fix: "use one declaration and subsequent assignments"}
-			}
-		}
 		local, err := l.declareLocal(name)
 		if err != nil {
 			return nil, err
-		}
-		if list.Flags&ast.NodeFlagsBlockScoped == 0 {
-			l.result.Locals[local].Hoisted = true
-		}
-		if l.uninitializedDeclaration(declaration) {
-			l.result.Locals[local].Uninitialized = true
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true})
-			continue
-		}
-
-		if initializer := declaration.AsVariableDeclaration().Initializer; assertionInitializer(initializer) {
-			prefix, present, value, err := l.lazyAssertion(initializer, l.result.Locals[local].Type)
-			if err != nil {
-				return nil, err
-			}
-			if known, ok := present.(ir.BooleanConstant); ok && known.Value && len(prefix) == 0 {
-				statements = append(statements, ir.Declare{Local: local, Value: value})
-				continue
-			}
-			l.result.Locals[local].Uninitialized = true
-			l.result.Locals[local].InitializerExpression = sourceExpression(initializer)
-			statements = append(statements, prefix...)
-			statements = append(statements, ir.Declare{Local: local, Uninitialized: true}, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: local, Value: value}}})
-			continue
 		}
 		var value ir.Expression
 		if initializer := declaration.AsVariableDeclaration().Initializer; initializer != nil {
@@ -72,11 +39,7 @@ func (l *lowering) variables(list *ast.Node) ([]ir.Statement, error) {
 				l.initializing = map[int]*ast.Node{}
 			}
 			l.initializing[local] = name
-			if l.detachedOwnDeclaration(declaration) {
-				value = ir.BooleanConstant{Value: true}
-			} else {
-				value, err = l.expression(initializer)
-			}
+			value, err = l.expression(initializer)
 			delete(l.initializing, local)
 			if err != nil {
 				return nil, err
@@ -107,11 +70,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 		return 0, errors.New("lower: " + l.program.Where(name) + ": the checker gave a declaration no symbol")
 	}
 	valueType := ir.Object
-	if l.detachedOwnAlias(name) != nil {
-		valueType = ir.Boolean
-	} else if l.detachedOwnObjectParameter(name) {
-		valueType = ir.Object
-	} else if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
+	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			return 0, err
@@ -126,13 +85,7 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	l.locals[symbol] = len(l.result.Locals)
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text(), Type: valueType, Function: l.functionIndex})
-	proven := l.checker.GetTypeAtLocation(name)
-	if l.detachedOwnAlias(name) != nil {
-		// This local holds only the readiness marker. The intrinsic cannot escape,
-		// so cycle analysis must not treat it as a user closure capturing cells.
-		proven = l.checker.GetBooleanType()
-	}
-	l.noteLocal(l.locals[symbol], proven, name)
+	l.noteLocal(l.locals[symbol], l.checker.GetTypeAtLocation(name), name)
 	return l.locals[symbol], nil
 }
 
@@ -215,7 +168,7 @@ func (l *lowering) touch(local int) {
 // checked reports whether touching a local must be checked against the temporal dead zone: a
 // global reached from a function or a cyclic module body may precede its declaration.
 func (l *lowering) checked(local int) bool {
-	return (l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)) || (l.function != nil && l.result.Locals[local].Preallocated && l.result.Locals[local].Captured)
+	return l.result.Locals[local].Global && (l.function != nil || l.cyclicModules)
 }
 
 func (l *lowering) constant(value string) int {

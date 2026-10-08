@@ -1,6 +1,0 @@
-import {readTextFile} from 'adamic';
-interface Base {readonly kind: string;}
-interface Failure extends Base {readonly kind: 'Error'; readonly message: string;}
-const held: Base = readTextFile('/adamic-lane3-path-that-does-not-exist');
-const view = held as Failure;
-console.log(`${view.message.length > 0}`);

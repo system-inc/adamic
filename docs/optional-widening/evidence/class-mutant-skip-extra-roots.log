@@ -1,6 +1,0 @@
---- FAIL: TestOptionalWideningWholeProgram (0.00s)
-    --- FAIL: TestOptionalWideningWholeProgram/false (0.06s)
-        optional_widening_test.go:149: want imported subclass refusal, got <nil>
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.075s
-FAIL

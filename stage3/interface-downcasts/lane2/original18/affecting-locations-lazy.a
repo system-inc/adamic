@@ -1,6 +1,0 @@
-import type { ResolvedModuleWithFailedLookupLocations } from 'original-tsc-types';
-interface Base { readonly resolvedModule: undefined; }
-const raw = { resolvedModule: undefined, affectingLocations: 'bad' };
-const base: Base = raw;
-const viewed = base as ResolvedModuleWithFailedLookupLocations;
-console.log(`${typeof viewed.resolvedModule}`);

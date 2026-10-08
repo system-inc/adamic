@@ -1,6 +1,0 @@
---- FAIL: TestViewArraysNode (0.14s)
-    --- FAIL: TestViewArraysNode/second (0.06s)
-        view_arrays_test.go:60: exit 0, stdout "7\n", stderr ""; want 70, "7\n", "adamic: panic: element read failed: node.items[1] expected number, found string\n"
-FAIL
-FAIL	github.com/system-inc/adamic/internal/javascript	0.146s
-FAIL

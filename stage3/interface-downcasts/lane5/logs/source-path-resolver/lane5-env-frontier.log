@@ -1,2 +1,0 @@
-adamic: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/environment-variable/good.a:5:67: Adamic 0.1 refuses a method read as a value (getEnvironmentVariable would lose its object, and this with it); call it in an arrow that keeps the object: (name) => system.getEnvironmentVariable(name) (unbound-method)
-exit status 1

@@ -1,6 +1,0 @@
---- FAIL: TestNativeAgreesWithNode (0.11s)
-    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_array_holes_callbacks.a (0.14s)
-        oracle_test.go:738: Lower: /workspace/adamic/internal/oracle/testdata/library_array_holes_callbacks.a:12:37: Adamic 0.1 refuses an unproven predicate argument for parameter predicate (argument "(value) => value !== undefined"); pass a named function or arrow whose body proves both predicate branches; return a boolean and narrow at the caller (adamic/no-type-predicate)
-FAIL
-FAIL	github.com/system-inc/adamic/internal/oracle	0.325s
-FAIL

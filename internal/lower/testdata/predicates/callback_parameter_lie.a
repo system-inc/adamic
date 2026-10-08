@@ -1,8 +1,0 @@
-// Inference through a lying overload cannot certify this argument body.
-function isDefined(value: string | undefined): value is string;
-function isDefined(value: string | undefined): boolean { return true; }
-function read(value: string | undefined, test: (value: string | undefined) => value is string): string {
-    if (test(value)) return value.toUpperCase();
-    return "missing";
-}
-console.log(read(undefined, (value: string | undefined) => isDefined(value)));

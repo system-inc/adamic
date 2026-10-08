@@ -1,1 +1,0 @@
-class Value{label='before';} class Sub extends Value{extra=1;} const actual={x:1,y:new Value()}; const source:{x:number}=actual; const wider:{x:number;y?:{label:string}}=source; wider.y=new Sub(); console.log(actual.y.label);

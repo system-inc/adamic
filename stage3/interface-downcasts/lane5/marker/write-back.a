@@ -1,5 +1,0 @@
-type AnyFunction = (...args: never[]) => void;
-const original: { shouldLog: () => boolean } = { shouldLog: (): boolean => true };
-const wider: { shouldLog: AnyFunction } = original;
-wider.shouldLog = (): void => {};
-console.log(`${original.shouldLog()}`);

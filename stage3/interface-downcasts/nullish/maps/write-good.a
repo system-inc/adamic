@@ -1,4 +1,0 @@
-const map=new Map<string,number>([['key',1]]);
-const alias:Map<string,number>=map;
-alias.set('key',2);
-console.log(String(map.get('key')));

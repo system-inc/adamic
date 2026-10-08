@@ -1,1 +1,0 @@
-enum E{A=1,B=2} const actual={x:1,y:3}; const source:{x:number}=actual; const wider:{x:number;y?:E}=source; console.log(`${wider.y}`);

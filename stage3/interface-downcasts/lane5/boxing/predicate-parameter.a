@@ -1,2 +1,0 @@
-const predicate = (value:number|string):value is number => typeof value === "number";
-console.log([1,2,3].filter(predicate).join(","));

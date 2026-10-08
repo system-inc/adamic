@@ -1,3 +1,0 @@
-const values = [1, 2, 3];
-const predicate = (value:number|string):boolean => typeof value === "number" && value > 1;
-console.log(values.filter(predicate).join(","));

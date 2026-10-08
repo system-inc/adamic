@@ -1,7 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface TypeNode {readonly value:number;}
-interface ParenthesizedTypeNode {readonly value:number;}
-interface Base {readonly createParenthesizedType:unknown;}
-interface Target {createParenthesizedType(type: TypeNode): ParenthesizedTypeNode;}
-function probe(value:Base):void {const factory=value as Target;const checkType:TypeNode={value:3};console.log(`${factory.createParenthesizedType(checkType).value}`);}
-probe({createParenthesizedType:():ParenthesizedTypeNode=>({value:9})});

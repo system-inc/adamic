@@ -1,6 +1,0 @@
-import type { BuildOptions } from 'original-tsc-tsbuildPublic';
-interface Base { readonly verbose: boolean; }
-function read(node: BuildOptions, key: string): string { return typeof node[key]; }
-const concrete = {verbose:true};
-const base: Base = concrete;
-console.log(read(base as BuildOptions, 'verbose'));

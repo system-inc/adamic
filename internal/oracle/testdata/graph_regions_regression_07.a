@@ -1,8 +1,0 @@
-interface Room {
-	readonly name: string;
-	readonly visits: Map<Room, number>;
-}
-const visits = new Map<Room, number>();
-const hall: Room = { name: 'hall', visits };
-visits.set(hall, 1);
-

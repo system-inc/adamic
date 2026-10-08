@@ -59,7 +59,6 @@ func (e *emitter) functionBody(function ir.Function) {
 			e.line("%s %s = %s;", cType(local.Type), e.localName(parameter), value)
 		}
 	}
-	e.allocateEnvironment(function.FrameEnvironment)
 	for _, parameter := range function.Parameters {
 		switch {
 		case e.reuse.consumed[parameter]:
@@ -69,9 +68,6 @@ func (e *emitter) functionBody(function ir.Function) {
 			// A borrowed parameter is its caller's, kept alive for the whole call.
 			e.line("adamic_retain(%s);", e.localName(parameter))
 			e.hold(e.localName(parameter))
-		}
-		if e.program.Locals[parameter].Uninitialized && !e.program.Locals[parameter].Captured {
-			e.line("bool %s = true;", readyName(parameter))
 		}
 		if e.program.Locals[parameter].Captured {
 			// A closure captured this parameter: from here on it lives in a cell.
@@ -218,9 +214,6 @@ func (e *emitter) arguments(call ir.Call) []string {
 // Method), the receiver's own function value or its class's method, found before the arguments are
 // evaluated, as JavaScript reads object.name first.
 func (e *emitter) callThrough(expression ir.CallClosure, closure string, receiver string) string {
-	if expression.CheckedDiscard {
-		return e.emitViewCallableDiscard(ir.Property{ViewContract: expression.DiscardContract, View: expression.DiscardView}, closure)
-	}
 	method := ""
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
@@ -228,17 +221,10 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
-			if property.View != "" && property.ViewContract != 0 && (e.program.ViewContracts[property.ViewContract-1].Result != 0 || e.program.ViewContracts[property.ViewContract-1].DiscardResult) {
-				e.emitViewCallableMethodCertificate(property, method)
-			}
 		} else {
 			method = e.temporary()
 			e.line("adamic_method %s = NULL;", method)
-			if property.View != "" {
-				closure = e.emitViewCallableRead(property, receiver, method)
-			} else {
-				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
-			}
+			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
 		}
 	}
 	arguments := []string{}
@@ -249,14 +235,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	if len(arguments) > 0 {
 		packed = "(adamic_value[]){" + strings.Join(arguments, ", ") + "}"
 	}
-	invoke := "adamic_node_performance_invoke"
-	if closure != "" && expression.Direct == 0 {
-		invoke = e.viewCallableBoxedInvoke(expression, false)
-	}
-	call := fmt.Sprintf("%s(%s, %s, %d, %t)", invoke, closure, packed, len(arguments), expression.Returns == 0)
-	if expression.Direct > 0 {
-		call = fmt.Sprintf("%s(%s, %s, %d)", e.functionName(expression.Direct-1), closure, packed, len(arguments))
-	}
+	call := fmt.Sprintf("%s->code(%s, %s, %d)", closure, closure, packed, len(arguments))
 	if receiver != "" {
 		if closure == "" {
 			call = fmt.Sprintf("%s(%s, %s, %d)", method, receiver, packed, len(arguments))
@@ -266,8 +245,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 				received += ", " + strings.Join(arguments, ", ")
 			}
 			received += "}"
-			receivedInvoke := e.viewCallableBoxedInvoke(expression, true)
-			call = fmt.Sprintf("(%s != NULL ? (%s->receiver ? %s(%s, %s, %d, %t) : %s(%s, %s, %d, %t)) : %s(%s, %s, %d))", closure, closure, receivedInvoke, closure, received, len(arguments)+1, expression.Returns == 0, invoke, closure, packed, len(arguments), expression.Returns == 0, method, receiver, packed, len(arguments))
+			call = fmt.Sprintf("(%s != NULL ? %s->code(%s, %s->receiver ? %s : %s, %d + (%s->receiver ? 1 : 0)) : %s(%s, %s, %d))", closure, closure, closure, closure, received, packed, len(arguments), closure, method, receiver, packed, len(arguments))
 		}
 	}
 	if expression.Returns == 0 {

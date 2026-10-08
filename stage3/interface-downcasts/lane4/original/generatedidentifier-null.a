@@ -1,6 +1,0 @@
-import type { GeneratedIdentifier } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-function helper(value: GeneratedIdentifier): void { console.log(String(value.escapedText)); }
-const raw = { kind: 80, escapedText: null };
-const base: Base = raw;
-helper(base as GeneratedIdentifier);

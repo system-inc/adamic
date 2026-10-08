@@ -1,6 +1,0 @@
---- FAIL: TestPhantomRefusals (0.00s)
-    --- FAIL: TestPhantomRefusals/nonvoid (0.04s)
-        phantom_brands_test.go:32: got <nil>, want Refused
-FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.047s
-FAIL

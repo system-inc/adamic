@@ -1,6 +1,0 @@
-// Original tsc declaration/read; adjacent carriers and helpers reduced.
-interface EmitResolver {readonly value:number;}
-interface Base {readonly getEmitResolver:unknown;}
-interface Target {getEmitResolver(): EmitResolver;}
-function probe(value:Base):void {const context=value as Target;console.log(`${context.getEmitResolver().value}`);}
-probe({getEmitResolver:(unused:number):EmitResolver=>({value:9})});

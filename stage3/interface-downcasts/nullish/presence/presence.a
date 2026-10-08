@@ -1,7 +1,0 @@
-interface RecordValue { first?: number | undefined; }
-const record: RecordValue = {};
-console.log(String('first' in record));
-console.log('[' + Object.keys(record).join(',') + ']');
-record.first = undefined;
-console.log(String('first' in record));
-console.log('[' + Object.keys(record).join(',') + ']');

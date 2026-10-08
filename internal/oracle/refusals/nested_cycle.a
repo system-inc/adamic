@@ -1,8 +1,0 @@
-function make(): () => number {
- let saved: (() => number) | undefined = undefined;
- function read(): number { return saved === undefined ? 0 : 1; }
- saved = read;
- return read;
-}
-const held = make();
-console.log(String(held()));

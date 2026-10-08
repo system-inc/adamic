@@ -1,6 +1,0 @@
-import type { TypeAliasDeclaration } from 'original-tsc-types';
-interface Base { readonly kind: number; }
-const raw = { kind: 266, modifiers: 'bad' };
-const base: Base = raw;
-const viewed = base as TypeAliasDeclaration;
-console.log(`${viewed.kind}`);

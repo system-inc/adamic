@@ -1,4 +1,0 @@
-internal/lower/testdata/predicates/overload_some_false_read.a:7:9: predicate overload 1 of some
-  true: unobservable (proven); no narrowed read in the true region
-  false: checked; a narrowed read consumes this direction
-adamic: predicate checks: proven 1 checked 1 unobservable 1

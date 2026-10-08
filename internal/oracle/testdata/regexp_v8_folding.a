@@ -1,1 +1,0 @@
-console.log(`${/[\q{AB}]/iv.test('ab')} ${/[\q{ab}]/iv.test('AB')} ${/[\q{Ss}]/iv.test('sſ')}`);
