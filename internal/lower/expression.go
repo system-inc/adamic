@@ -1086,7 +1086,10 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}
