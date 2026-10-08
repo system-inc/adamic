@@ -1,0 +1,8 @@
+=== RUN   TestInitializerUnitOwnership
+=== PAUSE TestInitializerUnitOwnership
+=== CONT  TestInitializerUnitOwnership
+    outline_test.go:129: initializer global table owned by module_table_2e_a_3ce1e07785b0c8ec071b8598a902b4240991ec91b8a2538928b09c4477e90a2a_initialize_06.c, want module_table_2e_a_3ce1e07785b0c8ec071b8598a902b4240991ec91b8a2538928b09c4477e90a2a.c
+--- FAIL: TestInitializerUnitOwnership (0.62s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.660s
+FAIL

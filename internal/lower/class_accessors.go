@@ -139,7 +139,7 @@ func (l *lowering) accessorLiteral(node *ast.Node) (ir.Expression, bool, error) 
 		return nil, false, nil
 	}
 	class := len(l.result.Classes) + 1
-	l.result.Classes = append(l.result.Classes, ir.Class{Name: "literal_accessors", Constructor: -1, Literal: true})
+	l.result.Classes = append(l.result.Classes, ir.Class{Source: l.sourceIdentity(node), Name: "literal_accessors", Constructor: -1, Literal: true})
 	literal := ir.ObjectLiteral{Class: class}
 	keys := map[string]bool{}
 	for _, property := range properties {

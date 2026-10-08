@@ -1,0 +1,8 @@
+package main
+import("context";"encoding/json";"fmt";"os";"os/exec";"path/filepath";"time";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower";"github.com/system-inc/adamic/internal/native")
+func main(){
+ p,e:=load.Load([]string{"stage1/cohere/markdownblocks/testdata/ast_probe.ts"});if e!=nil{panic(e)}
+ ir,e:=lower.Lower(context.Background(),p);if e!=nil{panic(e)};c:=native.C(ir)
+ label:=os.Args[1];split:=len(os.Args)>2; jobs:=0;if len(os.Args)>3{fmt.Sscan(os.Args[3],&jobs)}
+ for i:=0;i<3;i++{dir,e:=os.MkdirTemp("", "split-measure-");if e!=nil{panic(e)};os.Setenv("XDG_CACHE_HOME",dir);os.Setenv("ADAMIC_GATE_UNCACHED","1");before,_:=os.ReadFile("/proc/loadavg");options:=native.Options{Sanitize:true,Split:split,Jobs:jobs};start:=time.Now();_,e=native.RuntimeLibrary("",options);if e!=nil{panic(e)};runtimeSeconds:=time.Since(start).Seconds();programStart:=time.Now();e=native.Build(c,filepath.Join(dir,"probe"),options);programSeconds:=time.Since(programStart).Seconds();seconds:=time.Since(start).Seconds();after,_:=os.ReadFile("/proc/loadavg");if e!=nil{panic(e)};version,_:=exec.Command("clang","--version").Output();row:=map[string]any{"label":label,"round":i,"seconds":seconds,"runtime_seconds":runtimeSeconds,"program_seconds":programSeconds,"jobs":jobs,"bytes":len(c),"load_before":string(before),"load_after":string(after),"clang":string(version)};b,_:=json.Marshal(row);fmt.Println(string(b))}
+}

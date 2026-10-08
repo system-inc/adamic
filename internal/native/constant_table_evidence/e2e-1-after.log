@@ -1,0 +1,5 @@
+=== RUN   TestOutlineEndToEnd
+    constant_end_to_end_test.go:34: after sanitized full frontend and native build: 14.277431 s
+--- PASS: TestOutlineEndToEnd (14.32s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	14.333s

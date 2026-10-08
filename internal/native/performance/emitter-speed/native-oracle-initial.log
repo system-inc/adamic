@@ -1,0 +1,18 @@
+--- FAIL: TestFieldStoresMatchNode (1.74s)
+    emit_speed_test.go:99: /tmp/adamic-gate/TestFieldStoresMatchNode2284302931/001/borrowed-store: exit status 1
+        
+        =================================================================
+        ==24591==ERROR: LeakSanitizer: detected memory leaks
+        
+        Direct leak of 76 byte(s) in 1 object(s) allocated from:
+            #0 0x564d5e29c244 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3
+            #1 0x564d5e2f2fef in adamic_allocate /home/agent/.cache/adamic/runtime/.build-3166904869/heap.c:196:10
+            #2 0x564d5e320c0e in adamic_string_repeat /home/agent/.cache/adamic/runtime/.build-3166904869/string_repeat_impl.h:27:9
+            #3 0x564d5e2e0c00 in main /tmp/adamic-gate/adamic-build-921038727/main.c:294:31
+            #4 0x7f40f275bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)
+        
+        SUMMARY: AddressSanitizer: 76 byte(s) leaked in 1 allocation(s).
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	151.696s
+ok  	github.com/system-inc/adamic/internal/oracle	140.810s
+FAIL

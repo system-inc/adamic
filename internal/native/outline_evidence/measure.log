@@ -1,0 +1,22 @@
+=== RUN   TestMeasureOutlinedBuild
+    outline_measure_test.go:30: 0-before-sanitized 15.689849s
+    outline_measure_test.go:30: 0-after-sanitized 7.242398s
+    outline_measure_test.go:30: 0-before-release 4.192759s
+    outline_measure_test.go:30: 0-after-release 2.979413s
+    outline_measure_test.go:30: 0-before-line-tables 14.878673s
+    outline_measure_test.go:30: 0-after-line-tables 5.549771s
+    outline_measure_test.go:30: 1-after-sanitized 6.906890s
+    outline_measure_test.go:30: 1-before-sanitized 15.350609s
+    outline_measure_test.go:30: 1-after-release 2.885614s
+    outline_measure_test.go:30: 1-before-release 4.208229s
+    outline_measure_test.go:30: 1-after-line-tables 5.845179s
+    outline_measure_test.go:30: 1-before-line-tables 15.215484s
+    outline_measure_test.go:30: 2-before-sanitized 15.798602s
+    outline_measure_test.go:30: 2-after-sanitized 7.136490s
+    outline_measure_test.go:30: 2-before-release 4.381083s
+    outline_measure_test.go:30: 2-after-release 3.107951s
+    outline_measure_test.go:30: 2-before-line-tables 15.674412s
+    outline_measure_test.go:30: 2-after-line-tables 5.921954s
+--- PASS: TestMeasureOutlinedBuild (168.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	168.306s

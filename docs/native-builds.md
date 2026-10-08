@@ -51,6 +51,20 @@ with existing count/slab/CPU options in their existing order.
 TestNonShippingFlagsStayIdentical compares argument bytes and order
 against independent literals from before ThinLTO.
 
+Sanitized and counted native builds split generated C into stable owned units
+by default, and compile a cold runtime archive in parallel too. Options.Jobs
+selects the job limit, followed by ADAMIC_NATIVE_JOBS; zero or an unset value
+uses the machine CPU count. Each build bounds its workers by its unit count.
+ADAMIC_NATIVE_SPLIT=0 selects the previous single-unit path for comparisons;
+Options.Split or ADAMIC_NATIVE_SPLIT=1 explicitly selects splitting for other
+nonshipping native builds. The same policy applies with the TSGo checker.
+Shipped release builds always keep their single-unit ThinLTO/profile path,
+even under an explicit split request. WASI keeps its previous build policy.
+Scheduling does not change runtime archive order, compiler flags or cache keys.
+Handwritten C runtime harnesses keep their previous single-unit path; automatic
+splitting recognizes emitter output, including TSGoC output. Explicit split
+requests still invoke the emitter-declaration splitter and reject unknown syntax.
+
 ## Shipped release oracle
 
 The additional lane is opt-in and skipped in ordinary test runs:

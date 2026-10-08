@@ -1,0 +1,8 @@
+=== RUN   TestInitializerChunksKeepStorageAndOrder
+=== PAUSE TestInitializerChunksKeepStorageAndOrder
+=== CONT  TestInitializerChunksKeepStorageAndOrder
+    outline_test.go:50: large initialization wrapper or chunk: 2038 lines
+--- FAIL: TestInitializerChunksKeepStorageAndOrder (1.10s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	1.109s
+FAIL

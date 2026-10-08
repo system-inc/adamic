@@ -1,0 +1,289 @@
+
+adamic_function_22_Scanner_code:        # @adamic_function_22_Scanner_code
+.Lfunc_begin85:
+	pushq	%rbp
+	movq	%rsp, %rbp
+	pushq	%r15
+	pushq	%r14
+	pushq	%rbx
+	pushq	%rax
+	movsd	%xmm0, -32(%rbp)                # 8-byte Spill
+.Ltmp15010:
+	movq	adamic_stack_limit@GOTPCREL(%rip), %rax
+	cmpq	%rbp, (%rax)
+	ja	.LBB85_47
+.Ltmp15011:
+	movq	%rdi, %rbx
+	testb	$1, %sil
+	jne	.LBB85_3
+.Ltmp15012:
+	xorps	%xmm0, %xmm0
+	movsd	%xmm0, -32(%rbp)                # 8-byte Spill
+.Ltmp15013:
+.LBB85_3:
+	movq	16(%rbx), %rax
+	leaq	adamic_shape_0(%rip), %r15
+	cmpq	%r15, %rax
+	je	.LBB85_4
+.Ltmp15014:
+	movq	24(%rbx), %rcx
+	testq	%rcx, %rcx
+.Ltmp15015:
+	je	.LBB85_8
+.Ltmp15016:
+	cmpb	$1, 64(%rcx)
+	jne	.LBB85_8
+.Ltmp15017:
+	leaq	.L.str.2(%rip), %rsi
+.Ltmp15018:
+	leaq	adamic_cache_573(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_static_field@PLT
+.Ltmp15019:
+	jmp	.LBB85_11
+.Ltmp15020:
+.LBB85_8:
+	cmpq	%rax, adamic_cache_573(%rip)
+	je	.LBB85_9
+.Ltmp15021:
+	leaq	.L.str.2(%rip), %rsi
+.Ltmp15022:
+	leaq	adamic_cache_573(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_object_find@PLT
+.Ltmp15023:
+	jmp	.LBB85_11
+.Ltmp15024:
+.LBB85_4:
+	movq	40(%rbx), %r14
+.Ltmp15025:
+	leaq	48(%rbx), %rax
+	jmp	.LBB85_19
+.Ltmp15026:
+.LBB85_9:
+	movq	adamic_cache_573+8(%rip), %rax
+	leaq	(%rbx,%rax,8), %rax
+	addq	$40, %rax
+.Ltmp15027:
+.LBB85_11:
+	movq	16(%rbx), %rcx
+	movq	(%rax), %r14
+.Ltmp15028:
+	cmpq	%r15, %rcx
+	je	.LBB85_12
+.Ltmp15029:
+	movq	24(%rbx), %rax
+	testq	%rax, %rax
+.Ltmp15030:
+	je	.LBB85_16
+.Ltmp15031:
+	cmpb	$1, 64(%rax)
+	jne	.LBB85_16
+.Ltmp15032:
+	leaq	.L.str.348(%rip), %rsi
+	leaq	adamic_cache_575(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_static_field@PLT
+.Ltmp15033:
+	jmp	.LBB85_19
+.Ltmp15034:
+.LBB85_16:
+	cmpq	%rcx, adamic_cache_575(%rip)
+	je	.LBB85_17
+.Ltmp15035:
+	leaq	.L.str.348(%rip), %rsi
+	leaq	adamic_cache_575(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_object_find@PLT
+.Ltmp15036:
+	jmp	.LBB85_19
+.Ltmp15037:
+.LBB85_12:
+	leaq	48(%rbx), %rax
+	jmp	.LBB85_19
+.Ltmp15038:
+.LBB85_17:
+	movq	adamic_cache_575+8(%rip), %rax
+	leaq	(%rbx,%rax,8), %rax
+	addq	$40, %rax
+.Ltmp15039:
+.LBB85_19:
+	movsd	(%rax), %xmm0                   # xmm0 = mem[0],zero
+.Ltmp15040:
+	movq	16(%r14), %rax
+.Ltmp15041:
+	movq	%rax, %xmm1
+	punpckldq	.LCPI85_0(%rip), %xmm1  # xmm1 = xmm1[0],mem[0],xmm1[1],mem[1]
+.Ltmp15042:
+	addsd	-32(%rbp), %xmm0                # 8-byte Folded Reload
+	subpd	.LCPI85_1(%rip), %xmm1
+	movapd	%xmm1, %xmm2
+	unpckhpd	%xmm1, %xmm2                    # xmm2 = xmm2[1],xmm1[1]
+	addsd	%xmm1, %xmm2
+	ucomisd	%xmm0, %xmm2
+.Ltmp15043:
+	jbe	.LBB85_23
+.Ltmp15044:
+	xorpd	%xmm1, %xmm1
+	ucomisd	%xmm1, %xmm0
+	jb	.LBB85_23
+.Ltmp15045:
+	incq	%rax
+	cmpq	%rax, 32(%r14)
+	jne	.LBB85_23
+.Ltmp15046:
+	cvttsd2si	%xmm0, %rax
+	movq	24(%r14), %rcx
+	movq	%rax, %rdx
+	subsd	.LCPI85_2(%rip), %xmm0
+	sarq	$63, %rdx
+	cvttsd2si	%xmm0, %rsi
+	andq	%rdx, %rsi
+	orq	%rax, %rsi
+	movzbl	(%rcx,%rsi), %eax
+	xorps	%xmm1, %xmm1
+	cvtsi2sd	%eax, %xmm1
+.Ltmp15047:
+	ucomisd	.LCPI85_3(%rip), %xmm1
+	jae	.LBB85_25
+	jmp	.LBB85_45
+.Ltmp15048:
+.LBB85_23:
+	movq	%r14, %rdi
+	callq	adamic_string_char_code@PLT
+.Ltmp15049:
+	movapd	%xmm0, %xmm1
+.Ltmp15050:
+	ucomisd	.LCPI85_3(%rip), %xmm1
+	jb	.LBB85_45
+.Ltmp15051:
+.LBB85_25:
+	movsd	.LCPI85_4(%rip), %xmm0          # xmm0 = [5.6319E+4,0.0E+0]
+	ucomisd	%xmm1, %xmm0
+	jb	.LBB85_45
+.Ltmp15052:
+	movq	16(%rbx), %rax
+	cmpq	%r15, %rax
+	je	.LBB85_27
+.Ltmp15053:
+	movq	24(%rbx), %rcx
+	testq	%rcx, %rcx
+.Ltmp15054:
+	je	.LBB85_31
+.Ltmp15055:
+	cmpb	$1, 64(%rcx)
+	jne	.LBB85_31
+.Ltmp15056:
+	leaq	.L.str.2(%rip), %rsi
+	leaq	adamic_cache_578(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_static_field@PLT
+.Ltmp15057:
+	jmp	.LBB85_34
+.Ltmp15058:
+.LBB85_45:
+	movapd	%xmm1, %xmm0
+	cmpunordsd	%xmm1, %xmm0
+	movsd	.LCPI85_5(%rip), %xmm2          # xmm2 = [-1.0E+0,0.0E+0]
+	andpd	%xmm0, %xmm2
+	andnpd	%xmm1, %xmm0
+	orpd	%xmm2, %xmm0
+.Ltmp15059:
+	jmp	.LBB85_46
+.Ltmp15060:
+.LBB85_31:
+	cmpq	%rax, adamic_cache_578(%rip)
+	je	.LBB85_32
+.Ltmp15061:
+	leaq	.L.str.2(%rip), %rsi
+	leaq	adamic_cache_578(%rip), %rdx
+	movq	%rbx, %rdi
+	callq	adamic_object_find@PLT
+.Ltmp15062:
+	jmp	.LBB85_34
+.Ltmp15063:
+.LBB85_27:
+	movq	40(%rbx), %rdi
+.Ltmp15064:
+	addq	$48, %rbx
+.Ltmp15065:
+	jmp	.LBB85_43
+.Ltmp15066:
+.LBB85_32:
+	movq	adamic_cache_578+8(%rip), %rax
+	leaq	(%rbx,%rax,8), %rax
+	addq	$40, %rax
+.Ltmp15067:
+.LBB85_34:
+	movq	16(%rbx), %rcx
+	movq	(%rax), %rdi
+.Ltmp15068:
+	cmpq	%r15, %rcx
+	je	.LBB85_35
+.Ltmp15069:
+	movq	24(%rbx), %rax
+	testq	%rax, %rax
+.Ltmp15070:
+	je	.LBB85_39
+.Ltmp15071:
+	cmpb	$1, 64(%rax)
+	jne	.LBB85_39
+.Ltmp15072:
+	leaq	.L.str.348(%rip), %rsi
+	leaq	adamic_cache_580(%rip), %rdx
+	movq	%rdi, %r14
+.Ltmp15073:
+	movq	%rbx, %rdi
+	callq	adamic_static_field@PLT
+.Ltmp15074:
+	jmp	.LBB85_42
+.Ltmp15075:
+.LBB85_39:
+	cmpq	%rcx, adamic_cache_580(%rip)
+	je	.LBB85_40
+.Ltmp15076:
+	leaq	.L.str.348(%rip), %rsi
+	leaq	adamic_cache_580(%rip), %rdx
+	movq	%rdi, %r14
+.Ltmp15077:
+	movq	%rbx, %rdi
+	callq	adamic_object_find@PLT
+.Ltmp15078:
+.LBB85_42:
+	movq	%r14, %rdi
+	movq	%rax, %rbx
+.Ltmp15079:
+	jmp	.LBB85_43
+.Ltmp15080:
+.LBB85_35:
+	addq	$48, %rbx
+.Ltmp15081:
+	jmp	.LBB85_43
+.Ltmp15082:
+.LBB85_40:
+	movq	adamic_cache_580+8(%rip), %rax
+	leaq	(%rbx,%rax,8), %rbx
+.Ltmp15083:
+	addq	$40, %rbx
+.Ltmp15084:
+.LBB85_43:
+	movsd	-32(%rbp), %xmm0                # 8-byte Reload
+	addsd	(%rbx), %xmm0
+	callq	adamic_string_code_point_at@PLT
+.Ltmp15085:
+	testb	$1, %al
+	jne	.LBB85_46
+.Ltmp15086:
+	movsd	.LCPI85_5(%rip), %xmm0          # xmm0 = [-1.0E+0,0.0E+0]
+.Ltmp15087:
+.LBB85_46:
+	addq	$8, %rsp
+	popq	%rbx
+	popq	%r14
+	popq	%r15
+	popq	%rbp
+	retq
+.Ltmp15088:
+.LBB85_47:
+	callq	adamic_stack_overflow@PLT
+.Ltmp15089:

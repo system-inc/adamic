@@ -40,21 +40,31 @@ func cProgram(program *ir.Program, handler int) string {
 	if program.HasPromises() {
 		builder.WriteString("#include \"async.h\"\n#include <string.h>\n")
 	}
-	for index, value := range program.Strings {
+	seenStrings := map[string]bool{}
+	for _, value := range program.Strings {
+		if seenStrings[value] {
+			continue
+		}
+		seenStrings[value] = true
 		if len(value) <= longestLiteral {
-			fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING(%s);\n", index, cLiteral(value))
+			fmt.Fprintf(&builder, "static adamic_string %s = ADAMIC_STRING(%s);\n", stringName(value), cLiteral(value))
 			continue
 		}
 		// Longer than a C string literal may be under -pedantic: its bytes as an array instead.
-		fmt.Fprintf(&builder, "static const char adamic_bytes_%d[%d] = {%s};\n", index, len(value), cBytes(value))
-		fmt.Fprintf(&builder, "static adamic_string adamic_string_%d = ADAMIC_STRING_BYTES(adamic_bytes_%d, %d);\n", index, index, len(value))
+		fmt.Fprintf(&builder, "static const char %s_bytes[%d] = {%s};\n", stringName(value), len(value), cBytes(value))
+		fmt.Fprintf(&builder, "static adamic_string %s = ADAMIC_STRING_BYTES(%s_bytes, %d);\n", stringName(value), stringName(value), len(value))
 	}
 	if len(program.Strings) > 0 {
 		builder.WriteString("\n")
 	}
 
-	for _, regex := range program.Regexps {
-		builder.WriteString(regex.Declarations)
+	seenRegexps := map[string]bool{}
+	for index := range program.Regexps {
+		name := emitter.regexName(index)
+		if !seenRegexps[name] {
+			builder.WriteString(emitter.regexDeclarations(index))
+			seenRegexps[name] = true
+		}
 	}
 	globals := false
 	for index, local := range program.Locals {
@@ -63,7 +73,7 @@ func cProgram(program *ir.Program, handler int) string {
 		}
 		globals = true
 		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
-		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
+		fmt.Fprintf(&builder, "static bool %s = false;\n", emitter.readyName(index))
 	}
 	if globals {
 		builder.WriteString("\n")
@@ -71,6 +81,7 @@ func cProgram(program *ir.Program, handler int) string {
 
 	// Bodies first: the shapes and field caches they use are found while they're emitted.
 	bodies := strings.Builder{}
+	emittedBodies := map[string]string{}
 	for index, function := range program.Functions {
 		if function.Async {
 			bodies.WriteString(emitter.asyncFunction(index))
@@ -78,37 +89,61 @@ func cProgram(program *ir.Program, handler int) string {
 		}
 		for _, inRegion := range emitter.regionVariants(index) {
 			emitter.inRegion = inRegion
-			fmt.Fprintf(&bodies, "static %s {\n", emitter.signature(index))
+			emitter.resetCounters()
+			signature := emitter.signature(index)
 			emitter.indent = 1
 			emitter.functionIndex = index
 			emitter.functionBody(function)
-			bodies.WriteString(emitter.out.String())
+			body := emitter.out.String()
 			emitter.out.Reset()
-			bodies.WriteString("}\n\n")
+			name := emitter.functionName(index)
+			if inRegion {
+				name = emitter.regionFunctionName(index)
+			}
+			definition := "static " + signature + " {\n" + body + "}\n\n"
+			if previous, found := emittedBodies[name]; found {
+				if previous != definition {
+					panic("native: conflicting definitions for stable symbol " + name)
+				}
+			} else {
+				emittedBodies[name] = definition
+				fmt.Fprintf(&bodies, "// adamic-module %q\n", function.Source.Module)
+				bodies.WriteString(definition)
+			}
 		}
 	}
 	emitter.inRegion = false
-	bodies.WriteString("int main(int argc, char **argv) {\n")
-	bodies.WriteString("\tadamic_start(argc, argv);\n")
+	emitter.resetCounters()
 	emitter.indent = 1
 	emitter.asyncMain()
-	emitter.block(program.Main, nil)
+	// The async scheduler and its root stay in main, outside initializer chunks.
+	prefix := emitter.out.String()
+	emitter.out.Reset()
+	bodies.WriteString(emitter.moduleMain())
+	bodies.WriteString("int main(int argc, char **argv) {\n\tadamic_start(argc, argv);\n")
+	bodies.WriteString(prefix)
 	if program.HasPromises() && program.AsyncEntry == 0 {
 		emitter.line("adamic_async_run();")
 	}
 	if handler < 0 {
 		emitter.releaseGlobals()
 	}
+
 	bodies.WriteString(emitter.out.String())
 	bodies.WriteString("\treturn 0;\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
 	}
 
+	prototypes := map[string]bool{}
 	for index := range program.Functions {
 		for _, inRegion := range emitter.regionVariants(index) {
 			emitter.inRegion = inRegion
-			fmt.Fprintf(&builder, "static %s;\n", emitter.signature(index))
+			signature := emitter.signature(index)
+			if !prototypes[signature] {
+				fmt.Fprintf(&builder, "static %s;\n", signature)
+				prototypes[signature] = true
+			}
 		}
 	}
 	emitter.inRegion = false
@@ -187,8 +222,10 @@ type emitter struct {
 	self     bool
 	lent     bool
 
-	// temporaries counts the C temporaries made so far, for unique names.
+	// temporaries and caches count names within the body being emitted.
 	temporaries int
+	caches      int
+	mainModule  string
 
 	// owned is the string temporaries the statement being emitted releases when it ends.
 	owned []string
@@ -204,12 +241,15 @@ type emitter struct {
 	breakables []*breakable
 
 	// declarations are file-scope lines the bodies need: object shapes and field caches.
-	declarations []string
+	declarations          []string
+	generatedDeclarations map[string]bool
+	functionNames         map[int]string
+	localNames            map[int]string
 
 	// shapes names each object layout already declared, by its fields.
 	shapes map[string]string
 	// thunks are the methods whose adamic_method is declared (methodThunk).
-	thunks map[int]bool
+	thunks map[string]bool
 
 	// fieldOffsets proves uniform named slots across the program (fields.go).
 	fieldOffsets map[string]int
@@ -238,5 +278,16 @@ func (e *emitter) line(format string, arguments ...any) {
 
 func (e *emitter) temporary() string {
 	e.temporaries++
+	if e.mainModule != "" {
+		return fmt.Sprintf("adamic_temporary_%s_%d", e.mainModule, e.temporaries)
+	}
 	return fmt.Sprintf("adamic_temporary_%d", e.temporaries)
+}
+
+// resetCounters starts a function body (each region variant has its own counters).
+func (e *emitter) resetCounters() {
+	e.temporaries = 0
+	e.caches = 0
+	// Region facts use C temporary names, whose lifetime now ends with this body.
+	e.regionValues = map[string]bool{}
 }

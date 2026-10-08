@@ -1,0 +1,12 @@
+=== RUN   TestConstantTablesMatchNode
+=== PAUSE TestConstantTablesMatchNode
+=== RUN   TestConstantRecordConstructorsStayBounded
+=== PAUSE TestConstantRecordConstructorsStayBounded
+=== RUN   TestConstantDescriptorDoesNotMigrate
+--- PASS: TestConstantDescriptorDoesNotMigrate (0.00s)
+=== CONT  TestConstantTablesMatchNode
+=== CONT  TestConstantRecordConstructorsStayBounded
+--- PASS: TestConstantTablesMatchNode (7.26s)
+--- PASS: TestConstantRecordConstructorsStayBounded (15.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	15.395s

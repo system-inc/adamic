@@ -1,0 +1,22 @@
+[
+  {
+    "mutant": "number-element-order",
+    "exit": 1,
+    "caught_by": "TestConstantTablesMatchNode: native stdout differs from Node; compiled and ran"
+  },
+  {
+    "mutant": "record-element-order",
+    "exit": 1,
+    "caught_by": "TestConstantTablesMatchNode: native stdout differs from Node; compiled and ran"
+  },
+  {
+    "mutant": "runtime-expression-as-constant",
+    "exit": 1,
+    "caught_by": "TestConstantTablesMatchNode: native stdout differs from Node; compiled and ran"
+  },
+  {
+    "mutant": "lose-negative-zero",
+    "exit": 1,
+    "caught_by": "TestConstantTablesMatchNode: native stdout differs from Node; compiled and ran"
+  }
+]
