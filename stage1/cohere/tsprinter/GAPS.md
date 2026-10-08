@@ -368,3 +368,11 @@ macOS leak-check integration is waiting for internal/leakcheck to land on main f
 origin/devtools/stage1-leaks (f6eef5df). This branch does not merge that development branch or
 replace the helper with local ASan option switching. Named oracle skips now cite
 #xq2ecw6 (setup --gate-inputs), the work that installs the pins and removes the skips.
+
+## Import declarations
+
+Side-effect, default, namespace, named and type-only import clauses, per-specifier type markers, defer phases and `with` attributes compose with supported statements. The printer preserves aliases, source order, width-dependent groups and the single `type` attribute's flat layout from Go's print_module.go. Legacy `assert` remains refused as it is by the pinned Go parser. Comments, source trivia, exports, import-equals and general type printing remain explicit gaps.
+
+`testdata/import-clauses.json` holds 61 accepted fixtures with exact Go and Prettier 3.9.6 bytes, including pinned public and TypeScript excerpts and Go's own module-test prefix. `testdata/side-effect-imports.json` retains bare-import boundaries and 30 complete pinned public files. Tests in mutants_test.go compare live Go, pinned npm Prettier, source Node, sanitized native and emitted JavaScript, with leak checks. Eleven import mutants must compile and finish normally before differing bytes qualify as a catch. The existing statement driver runs all inputs; no scout driver or census data is required.
+
+This landing uses the format-area parser as it stands. It carries no lint-area recovery changes or 06c6e7cbf source-context calls. The four invalid import-local cases and export/default modifier loss remain parser-lane handoffs.
