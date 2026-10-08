@@ -145,7 +145,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return e.objectLiteral(expression)
 	case ir.Property:
 		if expression.View != "" {
-			return e.viewField(expression)
+			return e.viewRead(expression)
 		}
 		if expression.Readiness == "" {
 			if taken, ok := e.take(expression); ok {
@@ -311,6 +311,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return closure
 	case ir.CallClosure:
 		property, isProperty := expression.Closure.(ir.Property)
+		if isProperty {
+			e.requireViewFrame(property.ViewContract)
+		}
 		if !isProperty || !property.Method {
 			return e.callThrough(expression, e.value(expression.Closure), "")
 		}

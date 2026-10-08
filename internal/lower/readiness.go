@@ -264,10 +264,12 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 				}
 				node = expression
 			case ir.Property:
-				if !program.CheckedFields[expression.Name] || expression.Method {
+				expression.ViewContract = program.ViewContractTypes[expression.ViewTypeID]
+				if !program.CheckedFields[expression.Name] || expression.Method || expression.ViewOrdinary {
 					expression.View = ""
 					expression.ViewType = ""
 					expression.ViewAllowed = nil
+					expression.ViewContract = 0
 				}
 				proven := false
 				if local, ok := readinessObject(expression.Object); ok {

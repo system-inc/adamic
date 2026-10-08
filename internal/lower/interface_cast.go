@@ -11,6 +11,11 @@ import (
 
 // A tag chooses the interface; its fields remain checked at every read.
 func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, target *checker.Type) (ir.Expression, error) {
+	sourceOf, sourceKnown := l.representation(source)
+	targetOf, targetKnown := l.representation(target)
+	if !sourceKnown || !targetKnown || sourceOf != ir.Object || targetOf != ir.Object {
+		return nil, nil
+	}
 	if source.Flags()&checker.TypeFlagsObject == 0 || target.Flags()&checker.TypeFlagsObject == 0 || value.Type() != ir.Object || isClassInstance(target) {
 		return nil, nil
 	}
@@ -36,27 +41,9 @@ func (l *lowering) interfaceCast(node *ast.Node, value ir.Expression, source, ta
 // conservative: aliases and function boundaries cannot lose a checked read.
 // More precise view propagation and erasure can reduce that set without trusting casts.
 func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Type) (ir.Expression, error) {
-	if l.callableViewContract(target) {
-		return nil, &Refused{Where: l.program.Where(node), What: "a checked view with a callable contract", Fix: "prove the callable body rather than asserting its signature"}
-	}
-	// Diagnose unreifiable contracts before temporary backend limitations.
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-	}
-	fields := map[string]bool{}
-	for _, property := range l.checker.GetPropertiesOfType(target) {
-		declared := l.checker.GetTypeOfSymbol(property)
-		if l.callableViewContract(declared) {
-			return nil, &Refused{Where: l.program.Where(node), What: "a checked view with callable field " + property.Name, Fix: "prove the callable body rather than asserting its signature"}
-		}
-		of, known := l.representation(declared)
-		if property.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(declared) || !known || of < ir.Number || of > ir.String {
-			return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
-		}
-		fields[property.Name] = true
+	fields, err := l.viewSchema(node, target)
+	if err != nil {
+		return nil, err
 	}
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -80,7 +67,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 				if name != nil && fields[name.Text()] {
 					declared := l.checker.GetTypeAtLocation(binding.Name())
 					of, known := l.representation(declared)
-					if !known || of < ir.Number || of > ir.String || !interfaceScalar(declared) {
+					if !known || of < ir.Number || of > ir.Object || !viewDataType(declared) {
 						found = l.notYet(binding, "a checked destructured alias requiring a representation conversion")
 					}
 				}
@@ -90,9 +77,16 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 {
+				if field != nil && !l.callableViewContract(l.checker.GetTypeOfSymbol(field)) {
 					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
-					if !interfaceScalar(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.String || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
+					if of == ir.Object && ast.IsAssignmentTarget(part) {
+						found = l.notYet(part, "writing a checked object field without its source-slot type certificate")
+					}
+					if declared := l.checker.GetTypeOfSymbol(field); l.checker.IsArrayType(declared) || declared.Flags()&checker.TypeFlagsUnion != 0 && !interfaceScalar(declared) {
+						// V2/V3 own these reads. Keep the base diagnostic on a demanded
+						// union/array field while its descriptor may remain unread.
+						found = l.notYet(node, "checked view field "+field.Name+" of type "+l.checker.TypeToString(l.checker.GetTypeOfSymbol(field)))
+					} else if !viewDataType(l.checker.GetTypeOfSymbol(field)) || !known || of < ir.Number || of > ir.Object || field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field) {
 						found = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 					}
 				}
@@ -115,6 +109,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	for field := range fields {
 		l.result.CheckedFields[field] = true
 	}
+	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	return value, nil
 }
 
@@ -324,4 +319,44 @@ func (l *lowering) callableViewContract(proven *checker.Type) bool {
 		}
 	}
 	return len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) != 0 || len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindConstruct)) != 0
+}
+
+func (l *lowering) viewSchema(node *ast.Node, target *checker.Type) (map[string]bool, error) {
+	// Preserve the base's proven tagged primitive union casts. V1 adds no union certificate.
+	if target.Flags()&checker.TypeFlagsUnion != 0 {
+		fields := map[string]bool{}
+		for _, property := range l.checker.GetPropertiesOfType(target) {
+			declared := l.checker.GetTypeOfSymbol(property)
+			of, known := l.representation(declared)
+			if property.Flags&ast.SymbolFlagsOptional != 0 || !interfaceScalar(declared) || !known || of < ir.Number || of > ir.String {
+				return nil, l.notYet(node, "checked view field "+property.Name+" of type "+l.checker.TypeToString(declared))
+			}
+			fields[property.Name] = true
+		}
+		return fields, nil
+	}
+
+	id, err := l.viewContract(node, target)
+	if err != nil {
+		return nil, err
+	}
+	if l.result.ViewContracts[id-1].Unsupported != "" {
+		return nil, l.notYet(node, "a "+l.result.ViewContracts[id-1].Unsupported+" checked view")
+	}
+	fields := map[string]bool{}
+	seen := map[ir.ViewContractID]bool{}
+	var visit func(ir.ViewContractID)
+	visit = func(id ir.ViewContractID) {
+		if id == 0 || seen[id] {
+			return
+		}
+		seen[id] = true
+		c := l.result.ViewContracts[id-1]
+		for _, f := range c.Fields {
+			fields[f.Name] = true
+			visit(f.Contract)
+		}
+	}
+	visit(id)
+	return fields, nil
 }

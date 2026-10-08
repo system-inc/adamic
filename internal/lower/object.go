@@ -534,8 +534,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 	property.View = sourceExpression(node)
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
-		property.ViewType = l.checker.TypeToString(declared)
-		property.ViewAllowed = l.viewLiterals(declared)
+		property = l.markViewRead(node, property, declared)
 	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {

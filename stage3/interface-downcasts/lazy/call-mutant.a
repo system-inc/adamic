@@ -1,0 +1,10 @@
+interface Base { readonly kind: 'identifier' | 'literal'; }
+interface Identifier extends Base {
+ readonly kind: 'identifier';
+ readonly name: string;
+ readonly opaque: (value: number) => number;
+}
+class Producer { readonly kind: 'identifier' = 'identifier'; readonly name = 'ok'; opaque(value: number): number { return value + 1; } }
+function identifier(value: Base): Identifier { return value as Identifier; }
+function helper(value: Identifier): number { return value.opaque(2); }
+console.log(String(helper(identifier(new Producer()))));

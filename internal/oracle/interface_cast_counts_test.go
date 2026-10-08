@@ -49,5 +49,20 @@ func interfaceCastCounts(t *testing.T) []string {
 	for _, name := range []string{"identifier", "identifier-uninitialized", "number", "number-uninitialized"} {
 		rows = append(rows, counted(t, interfaceSource("readiness-"+name), false, nil, false, false))
 	}
+	for _, name := range []string{
+		"lane1/objects-good", "lane1/objects-untagged-good", "lane1/objects-untagged-wrong",
+		"lane1/objects-wrong-nested", "lane1/objects-missing-nested", "lane1/objects-uninitialized-nested",
+		"lane1/interfaces-good", "lane1/interfaces-missing-inherited", "lane1/interfaces-wrong-inherited",
+		"lane1/interfaces-uninitialized-object", "lazy/unread", "lazy/unread-untagged", "lazy/ordinary-disjoint", "lazy/optional-unread",
+	} {
+		rows = append(rows, counted(t, interfaceSource(name), false, nil, false, false))
+	}
+	for _, path := range []string{
+		"stage3/fixtures/assertions/11_parenthesized_kind.a",
+		"stage3/fixtures/assertions/13_flag_downcast.a",
+		"stage3/fixtures/assertions/20_type_flag_mask.a",
+	} {
+		rows = append(rows, counted(t, path, false, nil, false, false))
+	}
 	return rows
 }

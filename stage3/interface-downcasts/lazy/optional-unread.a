@@ -1,0 +1,5 @@
+interface Node { readonly kind: 'identifier' | 'number'; readonly pos: number; }
+interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; }
+function make(): Node { const kind: 'identifier' = 'identifier'; const raw = { kind, pos: 0 }; return raw; }
+function optional(node: Node): Optional { return node as Optional; }
+console.log(optional(make()).kind);

@@ -1,0 +1,6 @@
+interface Node { readonly kind: 'container' | 'other'; }
+interface Container extends Node { readonly kind: 'container'; readonly child: { readonly ready: boolean; readonly label: string; }; }
+function narrow(node: Node): Container { return node as Container; }
+class Payload { ready!: boolean; label = 'ok'; }
+const raw:{kind:'container';child:{ready:boolean;label:string}}={kind:'container',child:new Payload()};
+const held:Node=raw; const view=narrow(held); console.log(`${view.child.ready}`);
