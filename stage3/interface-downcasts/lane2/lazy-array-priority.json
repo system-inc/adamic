@@ -81,6 +81,46 @@
       "read_count": 70,
       "test": "TestCheckedViewRankedArrayContracts",
       "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 7305,
+      "type": "VariableDeclarationList",
+      "field": "declarations",
+      "read_count": 63,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 6920,
+      "type": "CallExpression",
+      "field": "arguments",
+      "read_count": 62,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 7288,
+      "type": "ObjectLiteralExpression",
+      "field": "properties",
+      "read_count": 49,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 10808,
+      "type": "TupleType",
+      "field": "elementFlags",
+      "read_count": 43,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 8700,
+      "type": "ArrayLiteralExpression",
+      "field": "elements",
+      "read_count": 42,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
     }
   ],
   "candidate_queue": [
