@@ -7,7 +7,7 @@ import (
 )
 
 func TestClassWrongOutputIteratorReceiver(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/iterators_override_this.a")
+	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_override_this.a")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -34,7 +34,7 @@ func TestClassWrongOutputIteratorReceiver(t *testing.T) {
 }
 
 func TestClassWrongOutputKeysRepair(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/iterators_sym_keys_view.a")
+	source, err := os.ReadFile("../oracle/testdata/class_wrong_output_refused/iterators_sym_keys_view.a")
 	if err != nil {
 		t.Fatal(err)
 	}
