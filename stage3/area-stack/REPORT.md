@@ -1,5 +1,7 @@
 # Group 2 ruled statics delivery
 
+Catalog on 7941cee0fcc51626e00b11ac761d071bb2c31122: exit 0, 255.426s, all 11 applicable undo patches applied and were caught; five recorded nonapplicable entries stayed skipped. Command: `bash verify/catalog/check.sh HEAD --jobs 2`. No undo patch needed refresh.
+
 Built structural static-method dispatch through the existing counted method ABI; conditions remain delivered.
 Commits: d69d05ca0 and 36441fa62 replay b6aa4f00 and 1db2b324; 829446f68 adapts the mutant anchors to counted dispatch.
 Checks: lower 46.956s, IR 28.961s, flow 172.762s; six topic oracle fixtures passed against Node in both backends (1.555s); counts refresh passed (82.739s).
