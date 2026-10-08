@@ -1,0 +1,20 @@
+TRACE concrete before=T | U after=any mapper=0x1d21bc24aac0 count=2 depth=99
+TRACE concrete before=((t: T) => U) | undefined after=any mapper=0x1d21c11ef200 count=6 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21b88bc760 count=1 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21b88bc760 count=2 depth=99
+TRACE concrete before=((value: T) => boolean) | undefined after=any mapper=0x1d21b88bc760 count=3 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21bb826280 count=4 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21bb826280 count=5 depth=99
+TRACE concrete before=((value: T) => boolean) | undefined after=any mapper=0x1d21bb826280 count=7 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21b88bc220 count=9 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21b88bc220 count=10 depth=99
+TRACE concrete before=U & ({} | null) after=any mapper=0x1d21cf344340 count=2 depth=99
+TRACE concrete before=readonly T[] | undefined after=any mapper=0x1d21cf344340 count=4 depth=99
+/tmp/any-returns-adapted/src/compiler/checker.ts 2494 13933 measured on a checker-rejected program
+TRACE memoize signature before=() => T after=any mapper=0x1d21b938c440
+TRACE memoize signature before=() => T after=any mapper=0x1d21d7d7af80
+TRACE memoize signature before=() => T after=any mapper=0x1d21bc085640
+TRACE memoize signature before=() => T after=any mapper=0x1d21c28406c0
+TRACE memoize signature before=() => T after=any mapper=0x1d21be987ae0
+TRACE memoize signature before=() => T after=any mapper=0x1d21bad1b540
+/tmp/any-returns-adapted/src/compiler/emitter.ts 442 2189 measured on a checker-rejected program
