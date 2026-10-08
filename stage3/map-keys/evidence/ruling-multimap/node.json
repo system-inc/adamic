@@ -1,0 +1,18 @@
+{
+  "tscPin": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "coreSha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+  "original": "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\ntrue\n2\n",
+  "adapted": "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\ntrue\n2\n",
+  "composed": "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\ntrue\n2\n",
+  "originalProtocol": "true\n[\"a\",[1]]\n[\"c\",[3]]\nbound:true:a:1\nbound:true:c:3\n[object Map]\n0\n",
+  "composedProtocol": "true\n[\"a\",[1]]\n[\"c\",[3]]\nbound:true:a:1\nbound:true:c:3\n[object Map]\n0\n",
+  "semanticDiagnostics": 0,
+  "declarationsIdentical": true,
+  "mutant": "1,2,3:1\n1,3\n1,3\n1\n1\ntrue:left\nfalse:right\ntrue\n2\n",
+  "mutantCaught": true,
+  "scope": "upstream expando versus composed helpers and applied factory; reduced driver plus Map protocol; no whole native tsc claim"
+}

@@ -1,0 +1,19 @@
+import {createMultiMap,multiMapAdd,multiMapRemove} from '../../../stage3/map-keys/multimap.a';
+const map=createMultiMap<string,number>();
+const first=multiMapAdd(map,`key-${1}`,1);
+multiMapAdd(map,'key-1',2);multiMapAdd(map,'key-1',3);
+console.log(`${first.join(',')}:${map.map.size}`);
+multiMapRemove(map,'key-1',2);console.log(first.join(','));
+multiMapRemove(map,'key-1',99);multiMapRemove(map,'missing',1);console.log(first.join(','));
+multiMapRemove(map,'key-1',1);multiMapRemove(map,'key-1',3);console.log(`${map.map.size}`);
+multiMapAdd(map,'key-2',NaN);multiMapRemove(map,'key-2',NaN);console.log(`${map.map.get('key-2')?.length}`);
+interface Key{readonly id:number;}
+const left:Key={id:1};const right:Key={id:1};
+const objects=createMultiMap<Key,string>();multiMapAdd(objects,left,'left');multiMapAdd(objects,right,'right');
+for(const [key,values] of objects.map)console.log(`${key===left}:${values.join(',')}`);
+// A generic receiving type that admits undefined must keep stored undefined.
+function required<V>(source:Map<string,V>):V {if(source.has('key'))return source.get('key');return source.get('key');}
+const optional=new Map<string,number|undefined>();optional.set('key',undefined);
+console.log(`${required(optional)===undefined}`);
+const optionalValues=createMultiMap<string,number|undefined>();multiMapAdd(optionalValues,'key',undefined);multiMapAdd(optionalValues,'key',2);
+multiMapRemove(optionalValues,'key',undefined);console.log(`${optionalValues.map.get('key')?.join(',')}`);

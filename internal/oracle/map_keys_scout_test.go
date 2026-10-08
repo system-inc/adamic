@@ -13,6 +13,7 @@ func init() {
 		path    string
 		checked bool
 	}{
+		{"scout_multimap_composition.a", false},
 		{"scout_array_to_map.a", false}, {"scout_array_to_map_invalidated.a", true},
 		{"scout_map_presence.a", false}, {"scout_map_presence_invalidated.a", true},
 		{"scout_map_brands.a", false}, {"scout_map_brand_boundary.a", true},
@@ -202,4 +203,33 @@ func TestScoutArrayRangeInvalidationContract(t *testing.T) {
 			t.Fatalf("%s invalidated proof: %s; exit %d stdout %q stderr %q", backend, difference, result.exitCode, result.stdout, result.stderr)
 		}
 	}
+}
+
+func TestScoutMultiMapEmptyBucketMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_multimap_composition.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := native.C(program)
+	code := strings.ReplaceAll(original, "adamic_map_delete(", "scout_keep_empty_bucket(")
+	if code == original {
+		t.Fatal("mutant changed no deletion")
+	}
+	code = insertCollectionMutant(code, `static bool scout_keep_empty_bucket(adamic_map *map, adamic_value key) {(void)map;(void)key;return false;}`)
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+	if actual.exitCode != 0 || len(actual.stderr) != 0 {
+		t.Fatalf("want clean semantic mutant, got %d %s", actual.exitCode, actual.stderr)
+	}
+	if difference := disagreement(onNode(t, path), actual); difference != "stdout differs" {
+		t.Fatalf("want original Node to catch retained empty bucket, got %q", difference)
+	}
+	t.Log("retained empty bucket: clean native exit 0, ASAN/UBSAN/leaks clean; source Node catches wrong size")
 }

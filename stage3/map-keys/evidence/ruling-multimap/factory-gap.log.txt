@@ -1,0 +1,5 @@
+=== RUN   TestScoutMultiMapFactoryNativeGap
+    map_keys_scout_test.go:195: /tmp/adamic-gate/TestScoutMultiMapFactoryNativeGap3875051839/001/main.a:6:5: stage 0 can't lower a method with a computed name yet
+--- PASS: TestScoutMultiMapFactoryNativeGap (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.042s

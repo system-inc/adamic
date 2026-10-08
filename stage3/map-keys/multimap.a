@@ -1,0 +1,24 @@
+// Step 19 ruling #pvvzhmy; composition adaptation tracked under #pcwk8fh.
+// Reduced from TypeScript core.ts:1527-1565. Map remains an ordinary Map.
+export interface MultiMap<K,V> { readonly map: Map<K,V[]>; }
+export function createMultiMap<K,V>():MultiMap<K,V>{return {map:new Map<K,V[]>()};}
+export function multiMapAdd<K,V>(receiver:MultiMap<K,V>,key:K,value:V):V[]{
+ let values=receiver.map.get(key);
+ if(values!==undefined)values.push(value);
+ else receiver.map.set(key,values=[value]);
+ return values;
+}
+export function multiMapRemove<K,V>(receiver:MultiMap<K,V>,key:K,value:V):void{
+ const values=receiver.map.get(key);
+ if(values!==undefined){
+  for(let i=0;i<values.length;i++){
+   if(values[i]===value){
+    const last:V=values[values.length-1];
+    values[i]=last;
+    values.pop();
+    break;
+   }
+  }
+  if(values.length===0)receiver.map.delete(key);
+ }
+}

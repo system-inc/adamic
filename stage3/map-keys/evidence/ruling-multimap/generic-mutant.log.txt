@@ -1,0 +1,25 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:770: exit codes differ
+        node:   exit 0, stdout "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\ntrue\n2\n", stderr ""
+        native: exit 70, stdout "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\n", stderr "adamic: panic: collection lookup failed: source.get('key') is undefined\n"
+    oracle_test.go:776: JavaScript backend: exit codes differ
+        node:    exit 0, stdout "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\ntrue\n2\n", stderr ""
+        backend: exit 70, stdout "1,2,3:1\n1,3\n1,3\n0\n1\ntrue:left\nfalse:right\n", stderr "adamic: panic: collection lookup failed: source.get('key') is undefined\n"
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a (0.72s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.776s
+FAIL

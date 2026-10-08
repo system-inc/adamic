@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_multimap_composition.a (0.61s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.648s

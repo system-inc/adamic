@@ -15,7 +15,7 @@ func (l *lowering) collectionRangeProven(node *ast.Node) bool {
 	}
 	access := lookup.AsElementAccessExpression()
 	elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression))
-	if len(elements) != 1 || l.includesUndefined(elements[0]) || l.includesNull(elements[0]) {
+	if len(elements) != 1 || l.includesUndefined(l.concrete(elements[0])) || l.includesNull(l.concrete(elements[0])) {
 		return false
 	}
 	index := ast.SkipParentheses(access.ArgumentExpression)

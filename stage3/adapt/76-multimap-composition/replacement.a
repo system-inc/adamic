@@ -1,0 +1,42 @@
+class ComposedMultiMap<K, V> implements MultiMap<K, V> {
+    private readonly map = new Map<K, V[]>();
+    get size(): number { return this.map.size; }
+    get [Symbol.toStringTag](): string { return this.map[Symbol.toStringTag]; }
+    clear(): void { this.map.clear(); }
+    delete(key: K): boolean { return this.map.delete(key); }
+    get(key: K): V[] | undefined { return this.map.get(key); }
+    has(key: K): boolean { return this.map.has(key); }
+    set(key: K, values: V[]): this { this.map.set(key, values); return this; }
+    add(key: K, value: V): V[] { return multiMapAdd(this.map, key, value); }
+    remove(key: K, value: V): void { multiMapRemove(this.map, key, value); }
+    entries(): MapIterator<[K, V[]]> { return this.map.entries(); }
+    keys(): MapIterator<K> { return this.map.keys(); }
+    values(): MapIterator<V[]> { return this.map.values(); }
+    [Symbol.iterator](): MapIterator<[K, V[]]> { return this.map[Symbol.iterator](); }
+    forEach(action: (values: V[], key: K, map: Map<K, V[]>) => void, thisArg?: unknown): void {
+        this.map.forEach((values, key) => action.call(thisArg, values, key, this));
+    }
+}
+export function createMultiMap<K, V>(): MultiMap<K, V> {
+    return new ComposedMultiMap<K, V>();
+}
+function multiMapAdd<K, V>(receiver: Map<K, V[]>, key: K, value: V) {
+    let values = receiver.get(key);
+    if (values !== undefined) {
+        values.push(value);
+    }
+    else {
+        receiver.set(key, values = [value]);
+    }
+    return values;
+}
+function multiMapRemove<K, V>(receiver: Map<K, V[]>, key: K, value: V) {
+    const values = receiver.get(key);
+    if (values !== undefined) {
+        unorderedRemoveItem(values, value);
+        if (values.length === 0) {
+            receiver.delete(key);
+        }
+    }
+}
+

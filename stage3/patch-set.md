@@ -26,4 +26,5 @@ Rows measure incremental edits; total measures the final tree against pristine.
 | 64-temporary-parser-range-read | 1 | 1 | 1 |
 | 70-readonly-views | 7 | 22 | 22 |
 | 75-optional-widening | 1 | 17 | 6 |
-| **Total** | 78 | 5128 | 5102 |
+| 76-multimap-composition | 1 | 27 | 11 |
+| **Total** | 78 | 5155 | 5113 |

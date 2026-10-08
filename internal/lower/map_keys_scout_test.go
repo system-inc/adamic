@@ -177,3 +177,30 @@ func TestScoutArrayRangeRules(t *testing.T) {
 		})
 	}
 }
+
+func TestScoutMultiMapFactoryNativeGap(t *testing.T) {
+	replacement, err := os.ReadFile(filepath.Join("..", "..", "stage3", "adapt", "76-multimap-composition", "replacement.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := `interface MultiMap<K,V> extends Map<K,V[]> {add(key:K,value:V):V[];remove(key:K,value:V):void;}
+ function unorderedRemoveItem<T>(array:T[],value:T):boolean {const index=array.indexOf(value);if(index<0)return false;const last:T=array[array.length-1];array[index]=last;array.pop();return true;}
+ ` + string(replacement) + `const map=createMultiMap<string,number>();map.add('key',1);`
+	_, err = lowerSource(t, source)
+	var refused *Refused
+	var gap *NotYet
+	if !errors.As(err, &refused) && !errors.As(err, &gap) {
+		t.Fatalf("want explicit factory dependency, got %v", err)
+	}
+	t.Log(err)
+}
+
+func TestScoutMultiMapExpandoStaysRefused(t *testing.T) {
+	_, err := lowerSource(t, `interface MultiMap extends Map<string,number[]> {add(key:string,value:number):number[];} const map=new Map<string,number[]>() as MultiMap;map.add=(key,value)=>[value];`)
+	var refused *Refused
+	var gap *NotYet
+	if !errors.As(err, &refused) && !errors.As(err, &gap) {
+		t.Fatalf("want a loud expando refusal, got %v", err)
+	}
+	t.Log(err)
+}

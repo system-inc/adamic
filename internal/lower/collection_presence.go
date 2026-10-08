@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -79,7 +80,7 @@ func (l *lowering) collectionPresenceProven(node *ast.Node) bool {
 	}
 	receiver := ast.SkipParentheses(lookup.AsCallExpression().Expression).AsPropertyAccessExpression().Expression
 	arguments := l.typeArguments(l.checker.GetTypeAtLocation(receiver))
-	if len(arguments) != 2 || l.includesUndefined(arguments[1]) || l.includesNull(arguments[1]) {
+	if len(arguments) != 2 || l.includesUndefined(l.concrete(arguments[1])) || l.includesNull(l.concrete(arguments[1])) {
 		return false
 	}
 	child := lookup
@@ -122,7 +123,10 @@ func (l *lowering) collectionRequiredRead(node *ast.Node, value ir.Expression) (
 	if !l.program.CheckedCollectionRead(node) {
 		return value, nil
 	}
-	of, known := l.representation(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node)))
+	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.includesUndefined(l.concrete(contextual)) {
+		return value, nil
+	}
+	of, known := l.representation(l.checker.GetNonNullableType(l.concrete(l.checker.GetTypeAtLocation(node))))
 	if !known || (!value.Type().IsMaybe() && !value.Type().IsReference()) || (value.Type() != of && value.Type().Present() != of) {
 		return nil, l.notYet(node, "a checked collection lookup without a compatible presence representation")
 	}

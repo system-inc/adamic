@@ -328,3 +328,30 @@ go test ./internal/oracle -run '^TestScoutArrayRangeInvalidationContract$' -coun
 Logs are preserved as .log.txt evidence under stage3/map-keys/evidence/ruling-range; the preceding presence logs are also preserved with that extension.
 
 All unmutated range checks passed. The broad affected-fixture run records 57 native misses and 40 Node misses, zero hits. No whole package test or full gate was run.
+
+### Piece 4: MultiMap composition and concrete generic reads
+
+Adaptation 76, tracked under the ruled #pcwk8fh adaptation list, replaces tsc's expando factory with a class owning a Map and explicit receiver helpers. It retains the MultiMap interface and factory signature. The delegated Map API preserves callback receiver identity, bound forEach callbacks and live iteration. The applied tree's extracted declarations pass strict TypeScript checking and emit the same declarations as the original. Composition changes native-brand reflection such as instanceof Map and own-field enumeration; that is a representation consequence of the sanctioned adaptation, not a claim that the class is an intrinsic Map. The adapter checks the exact reviewed source hash and the exact applied replacement. Its measured patch row is one file, 27 added lines and 11 removed lines. A repeat makes no writes; a changed-source mutant exits 1.
+
+The native acceptance fixture uses the reduced generic composition library in stage3/map-keys/multimap.a. Its add/remove helpers preserve the returned bucket alias, first-occurrence strict equality, unordered removal, deletion of empty buckets, allocated string keys, object key identity, insertion order and stored undefined. It is held to Node in both backends with sanitizers and successful-program leak counts: 33 allocations, 33 frees, 59 retains, 90 releases, peak 16, zero regions. Independent Node verification extracts tsc's original expando implementation and compares both this reduction and the actual adapted class, including its complete delegated protocol. The source and native empty-bucket mutants are caught by changed size output; the native mutant exits 0 with no sanitizer or leak finding.
+
+Concrete generic receiving types are now examined before imposing a checked lookup obligation. A receiving type instantiated with undefined keeps that value. Presence/range proofs also inspect instantiated element types. Removing the generic receiving-type guard makes both generated backends panic on source.get('key') while source Node returns stored undefined, and the oracle fails with exit 1.
+
+The complete adapted class is still native NotYet: a method with a computed name at its Symbol.toStringTag getter. Its probe uncovered an accessor-name prepass panic. The prepass now skips unsupported computed names and lets the existing precise gap report; reverting that guard reproduces the panic and fails the test. The original expando shape remains loudly rejected. Neither the complete class's native execution nor whole tsc is claimed. Frozen census roots retired here: zero; no hidden-byte credit.
+
+Exact scoped commands, with environment sourced and output redirected:
+
+```sh
+python3 stage3/apply.py /tmp/scout19-composed-tsc --write-table > /tmp/scout19-multimap-apply.log 2>&1
+node stage3/adapt/76-multimap-composition/adapt.cjs /tmp/scout19-composed-tsc > /tmp/scout19-multimap-idempotence.log 2>&1
+NODE_PATH=/home/agent/.cache/adamic-stage3/api/node_modules node stage3/map-keys/verify_multimap.cjs /tmp/scout-map-keys-adapted /tmp/scout19-composed-tsc /tmp/scout19-multimap-node.json > /tmp/scout19-multimap-node.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_multimap_composition[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-multimap-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutMultiMapEmptyBucketMutant$' -count=1 -v > /tmp/scout19-multimap-mutant.log 2>&1
+go test ./internal/lower -run '^(TestScout.*|TestClass.*Accessor.*|TestLiteral.*Accessor.*|TestAccessor.*)$' -count=1 -v > /tmp/scout19-multimap-lower.log 2>&1
+go test ./internal/lower -run '^TestScoutMultiMap' -count=1 -v > /tmp/scout19-multimap-boundaries.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_(map|array|multimap)_.*[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-multimap-regression.log 2>&1
+go vet ./internal/load ./internal/lower ./internal/oracle > /tmp/scout19-multimap-vet.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-multimap-counts.log 2>&1
+```
+
+All unmutated checks pass, with no full package test or full gate. The uncached regression records 27 native misses, 20 Node misses and no hits. Compiler and adapter mutant logs are preserved under ruling-multimap alongside Node output and source hashes. The new stage 3 adaptation has Node/protocol/type evidence; no complete upstream test suite was run.

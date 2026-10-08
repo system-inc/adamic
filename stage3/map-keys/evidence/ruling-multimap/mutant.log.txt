@@ -1,0 +1,9 @@
+=== RUN   TestScoutMultiMapEmptyBucketMutant
+    map_keys_scout_test.go:231: gate cache node miss
+    map_keys_scout_test.go:234: retained empty bucket: clean native exit 0, ASAN/UBSAN/leaks clean; source Node catches wrong size
+--- PASS: TestScoutMultiMapEmptyBucketMutant (0.46s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.467s

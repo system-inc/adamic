@@ -1,0 +1,8 @@
+=== RUN   TestScoutMultiMapFactoryNativeGap
+    map_keys_scout_test.go:195: /tmp/adamic-gate/TestScoutMultiMapFactoryNativeGap895285982/001/main.a:6:5: stage 0 can't lower a method with a computed name yet
+--- PASS: TestScoutMultiMapFactoryNativeGap (0.03s)
+=== RUN   TestScoutMultiMapExpandoStaysRefused
+    map_keys_scout_test.go:205: /tmp/adamic-gate/TestScoutMultiMapExpandoStaysRefused3390326993/001/main.a:1:100: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestScoutMultiMapExpandoStaysRefused (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.067s

@@ -410,7 +410,7 @@ func (l *lowering) noteAccessorNames(modules []*ast.SourceFile) {
 	for _, module := range modules {
 		var visit ast.Visitor
 		visit = func(node *ast.Node) bool {
-			if node.Kind == ast.KindGetAccessor && node.Name() != nil {
+			if node.Kind == ast.KindGetAccessor && node.Name() != nil && node.Name().Kind != ast.KindComputedPropertyName {
 				l.accessorNames[node.Name().Text()] = true
 			}
 			return node.ForEachChild(visit)
