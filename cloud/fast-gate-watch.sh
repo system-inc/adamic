@@ -325,13 +325,16 @@ while true; do
     if ! grep -q '^canary/main ' "${state}"/running/* 2>/dev/null &&
        { [ ! -f "${state}/storm" ] || [ "$((now - last))" -ge 600 ]; }; then
       free=$(freeSlots) draining=$(drainingBoxes)
-      box=$(usableSlots canary/main | awk '$2 == "S" && box == "" {box = $1} END {print box}')
+      # A small slot first, else any usable slot: with every small slot busy and Server draining for a
+      # reservation, an S-only canary froze all dispatch behind it while Home's area slot sat idle
+      # (Oct 8 16:42Z, 18 tips queued).
+      read -r box canarySlot <<< "$(usableSlots canary/main | awk '$2 == "S" && small == "" {small = $1} big == "" {big = $1 " " $2} END {print (small != "" ? small " S" : big)}')"
       sha=$(git -C "${here}" ls-remote origin refs/heads/main | awk '$2 == "refs/heads/main" {print $1; exit}')
       if [ -n "${box}" ] && [ -n "${sha}" ]; then
         log=$(mktemp "${state}/logs/canary-${sha:0:12}-${now}.XXXXXX")
-        dispatch canary/main "${sha}" S "${box}" S "${log}"
+        dispatch canary/main "${sha}" "${canarySlot}" "${box}" S "${log}"
         echo "${now}" > "${state}/canary-started"
-        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} (S on ${box}, log ${log})"
+        echo "$(date -u +%H:%M:%S) gating canary/main ${sha} (${canarySlot} on ${box}, log ${log})"
       fi
     fi
   fi

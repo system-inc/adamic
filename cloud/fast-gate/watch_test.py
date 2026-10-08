@@ -222,6 +222,18 @@ class WatchTests(unittest.TestCase):
         self.assertTrue(reserved.endswith(' B server'), reserved)
         w.wait(lambda: any(x.startswith('codex/third ') and x.endswith(' other') for x in w.read('starts').splitlines()))
 
+    def test_canary_takes_a_big_slot_when_no_small_one_is_free(self):
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        (w.state / 'slots').write_text('busy S\nhome B\n')
+        # A gate already on busy's only small slot, from before this watcher started.
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' ).mkdir(exist_ok=True)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/old ' + 'c' * 40 + ' S busy S x ' + str(w.state / 'logs/old.log') + '\n')
+        w.wait(lambda: 'canary/main' in w.read('starts'))
+        self.assertTrue(w.read('starts').splitlines()[0].endswith(' B home'), w.read('starts'))
+
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
