@@ -1,0 +1,34 @@
+static double adamic_function_22_Scanner_code(adamic_object * adamic_local_61_this, adamic_maybe_number adamic_local_63_offset) {
+	ADAMIC_CHECK_STACK();
+	double adamic_temporary_572;
+	if (adamic_local_63_offset.present) {
+		adamic_temporary_572 = adamic_local_63_offset.number;
+	} else {
+		adamic_temporary_572 = (0x0p+00);
+	}
+	double adamic_local_62_offset = adamic_temporary_572;
+	adamic_string * adamic_temporary_574 = ((adamic_string *)(adamic_local_61_this->shape == &adamic_shape_0 ? &adamic_local_61_this->slots[0] : adamic_object_field(adamic_local_61_this, "text", &adamic_cache_573))->reference);
+	double adamic_temporary_576 = (adamic_local_61_this->shape == &adamic_shape_0 ? &adamic_local_61_this->slots[1] : adamic_object_field(adamic_local_61_this, "pos", &adamic_cache_575))->number;
+	double adamic_temporary_577 = adamic_string_char_code_at(adamic_temporary_574, (adamic_temporary_576 + adamic_local_62_offset));
+	double adamic_local_99_unit = adamic_temporary_577;
+	if ((adamic_local_99_unit >= (0x1.bp+15)) && (adamic_local_99_unit <= (0x1.b7fep+15))) {
+		{
+			adamic_string * adamic_temporary_579 = ((adamic_string *)(adamic_local_61_this->shape == &adamic_shape_0 ? &adamic_local_61_this->slots[0] : adamic_object_field(adamic_local_61_this, "text", &adamic_cache_578))->reference);
+			double adamic_temporary_581 = (adamic_local_61_this->shape == &adamic_shape_0 ? &adamic_local_61_this->slots[1] : adamic_object_field(adamic_local_61_this, "pos", &adamic_cache_580))->number;
+			adamic_maybe_number adamic_temporary_582 = adamic_string_code_point_at(adamic_temporary_579, (adamic_temporary_581 + adamic_local_62_offset));
+			adamic_maybe_number adamic_temporary_583 = adamic_temporary_582;
+			double adamic_temporary_584;
+			if (adamic_temporary_583.present) {
+				adamic_temporary_584 = adamic_temporary_583.number;
+			} else {
+				adamic_temporary_584 = (-(0x1p+00));
+			}
+			double adamic_temporary_585 = adamic_temporary_584;
+			return adamic_temporary_585;
+		}
+	}
+	double adamic_temporary_586 = (isnan(adamic_local_99_unit) ? (-(0x1p+00)) : adamic_local_99_unit);
+	return adamic_temporary_586;
+	adamic_unreachable();
+}
+

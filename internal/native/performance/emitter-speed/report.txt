@@ -1,0 +1,64 @@
+Built: general inline field stores using fieldSlot, with frozen/private rules and static own-property marking preserved.
+Commits: cf4deae initial claim; beca535 revised claim; 137c46b implementation, based on origin/main f8013f0.
+Commands and outputs: SPLIT harness, release clang -O2 -g with flags.txt, whole parse 9,259,842,254 -> 7,954,309,128 Ir; batch 8 cmp exit 0.
+Mutants: frozen guard omitted -> Node exit mismatch; release before retain -> ASan use-after-free; static fallback omitted -> pinned own-property failure.
+Not covered: full repository gate, one-third emitter-bucket reduction, stack-guard elision, numeric switches, or the pre-existing inherited static-read bug.
+
+All native instruction counts below use clang 20.1.8 with the complete release flags in flags.txt, no sanitizers and no ADAMIC_COUNT. Valgrind is 3.24.0. Go assembly uses Go 1.27.1 with optimized defaults and the exact -gcflags command in flags.txt. Source and execution outputs are logged, never piped from a test.
+
+Measured result, release clang flags.txt:
+                             Before          After           Saved
+Whole parse process          9,259,842,254   7,954,309,128   1,305,533,126 Ir
+Parser.file inclusive        7,440,160,400   6,134,779,765   1,305,380,635 Ir
+write_field self               725,047,843               0     725,047,843 Ir
+check_write self               523,645,837               0     523,645,837 Ir
+Each field runtime's calls     40,280,449               0
+
+Whole-process Ir falls 14.098870%, exceeding the revised approximately 12% first-fix target. The 1,248,693,680 Ir eliminated runtime bodies do not explain the entire saving: the net caller/inlining difference is another 56,839,446 Ir. This is an instruction result, not a wall-time result. Both raw profiles reconcile exactly with their self totals. Both binaries print 0 and exit 0. The preserved Valgrind brk-segment warnings are nonfatal.
+
+The paired baseline is rebuilt with the f8013f0 compiler and runtime, not substituted from the earlier branch. Its whole-process Ir is 580,969 above SPLIT's 9,259,261,285 under the same release flags. This small difference is recorded, not silently attributed to the fix. Both paired binaries use the identical runtime translation units and the same 77 files. corpus.sha256 compares byte for byte with codex/parse-speed's committed hashes.
+
+Ranking and assembly evidence, release clang flags.txt:
+1. Ordinary field writes call write_field even when the closed-program read-side proof gives a slot: 725,047,843 exclusive Ir in the supplied baseline and this paired baseline.
+2. Every ordinary field write calls check_write although its common result is just !object->frozen: 523,645,837 exclusive Ir in both baselines.
+3. Per-entry generated stack-guard source lines carry 185,164,606 self Ir across the supplied baseline. This is a measured source-line group, not a proven count of redundant checks. Stack/recursion/callback proof would be required before any removal. No stack guard is changed.
+These are the largest measured overhead sites inspected here, not a claim that all of site 3 is removable. Numeric Scanner.punctuation switch comparison lines carry 23,377,311 self Ir in the supplied baseline; the whole function is 34,958,843 self Ir. A numeric-switch prototype was deferred when the user reassigned the store path. It is not part of this branch's implementation or performance result.
+
+The hottest generated scanner function is Scanner.code: 624,410,321 self Ir in the supplied baseline, under release clang flags.txt. scanner-code-c.txt and scanner-code-clang.s.txt preserve its emitted C and clang assembly; scanner-go-assembly.txt preserves optimized compiler output for cohere's unmodified char, charAt, charAndSize, and the start of Scan. No cohere source was copied or modified.
+
+Clang removes the mere declaration-to-declaration temporary copies. The default offset still uses the optional-argument ABI and spills across the character call; shape dispatch and loads survive, and the high-surrogate branch re-reads fields across the call. Those character reads and read-side field lowerings remain outside this store authorization. Go's char uses integer offsets and a direct byte load with a bounds path; its Unicode decoding is separate. This is the corresponding scanner work, not literally identical source semantics: Adamic code returns a UTF-16-aware code point while Go char first returns a byte. Go Scan inlines char and uses an indexed jump table after a range check; the native punctuation C contains a floating-point comparison chain. The observed temporary declarations are not assigned fictitious instruction costs.
+
+Implementation:
+SetProperty retains its existing undefined-object check after RHS evaluation. writeFieldSlot guards check_write with object->frozen for public names, omitting it for #private internal slots exactly as the runtime does. Ordinary objects use fieldSlot. Programs containing static layouts retain the runtime class/is_static distinction even through structural views, calling write_field only for a static object. The old reference is saved, the new value is retained or transferred into the slot, and only then is the old pointer released. That ownership lowering is unchanged. No runtime, read lowering, emit.go, native.go, lower.go or oracle_test.go is edited.
+
+Proof and limitations:
+The complete oracle passed uncached in 140.810s using:
+  source /workspace/adamic-tools/env.sh
+  ADAMIC_GATE_UNCACHED=1 go test ./internal/native ./internal/oracle -count=1 -timeout 30m > /tmp/emitter-stores-native-oracle.log 2>&1
+The final complete native package passed in 64.829s using:
+  go test ./internal/native -count=1 -timeout 30m > /tmp/emitter-native-final.log 2>&1
+The final focused control passed in 0.550s. go vet ./... exited 0 with no diagnostics, gofmt -l cmd internal printed nothing, and git diff --check printed nothing.
+
+The earlier simultaneous native run found a defect in the new synthetic-class harness: the descriptor omitted its destruction count. That harness was corrected, then the native package and focused control rerun. Subsequent harness diagnostics needed stdio.h; the final controls and mutant log are the ones preserved separately. native-oracle-initial.log retains the unsuccessful native result rather than presenting the combined command as green.
+
+The focused test compiles source directly compared with Node in release and ASan/UBSan modes. It also calls the generated borrowed-parameter ABI with a heap string whose sole strong owner is the destination slot, so ordinary argument temporaries cannot mask the ownership mutant. The synthetic static descriptor has count 2 and a flag slot, and tests that the store marks an own property. The passing control leaks nothing.
+
+Frozen mutant: replace the generated frozen branch condition with false && object->frozen, via a Go overlay. Both library_object_freeze_write.a and library_object_freeze_alias.a compile and run; native exits 0 while Node exits 70 with the precise read-only-property message. No compiler warning kills it.
+Ownership mutant: emit the old-pointer release before the new retain/store, via a separate statements overlay. The final pinned test reaches an executable and ASan reports heap-use-after-free in adamic_retain on the heap string. It exits 1.
+Static mutant: disable the static-layout fallback in the helper, via a separate overlay. It reaches an executable and exits 1 with 'static store failed to mark an own property'. The failure path frees its harness objects. None of these overlays changes production source.
+
+Full unchanged batch 8 release output with release clang flags.txt compares byte for byte with the reconstructed Go oracle: 11,444,678 bytes on both sides, cmp exit 0, SHA-256 fc2df7405f773b1234ad1edf4d14d8f60da68be59666460651782529effd9322. This differs from SPLIT's reported 11,442,907 bytes; the current-main replay's bytes are not represented as an exact reproduction of that historical output. The batch 8 driver comes from 4189abd3490757e8abe13722ceb365c451293e92. Cohere is unchanged at 715ba94f3608a6500086b1076ce5cb7e51b836db, its TypeScript submodule at 8d550c837c90bd1805b047b7eeccc2baac2d5e7a. Corpus TypeScript is pinned to 050880ce59e30b356b686bd3144efe24f875ebc8.
+
+The inherited static-read probe is independently reproduced using the before compiler and release clang flags.txt: static-read.a prints 0 natively and 2 on Node. uniformFieldSlot bypasses static inherited-read handling when the field offset is uniform. Fixing that needs the read-side field proof in fields.go / fieldSlot, outside the newly authorized store path. No fix is smuggled into this unit.
+
+No after mechanism-bucket split is claimed. Moving runtime stores into emitted code changes where self instructions are charged, so the whole-process reduction cannot honestly be called a measured one-third reduction of SPLIT's original generated-control buckets. No full repository gate or second performance fix is claimed.
+
+Setup: bash cloud/setup.sh > /tmp/emitter-setup.log 2>&1; Go ready 0s, clang/Node/submodules ready 1s, cache warm and done 106s; nproc 5, cgroup quota 400000/100000, 17.6 GB. Source /workspace/adamic-tools/env.sh in each build/test shell.
+
+Reproduction:
+  git show origin/codex/parse-speed:internal/native/performance/parse-speed/prepare.py
+Use that helper with its repository path resolved to /workspace/adamic; it reconstructs batch 8, exact corpus hashes, Go overlays and parse-only driver in scratch. Build f8013f0 and 137c46b compilers separately, sharing the f8013f0 runtime and source checkout. Generate each parse C with 'adamic c scratch/emitter-speed/batch8/parse.a'. Compile each C with every flag in flags.txt, all tracked runtime *.c in lexical order and -lm. Run each binary under the Callgrind command in flags.txt with the same compiler.txt manifest. stage1/typescript/scanner/profile.py:summarize produces the reconciled totals and Parser.file inclusive row. Compressed generated C and raw profiles are preserved here.
+
+Go batch oracle is built read-only from cohere:
+  go build -overlay=/workspace/adamic/scratch/emitter-speed/overlay.json -o /workspace/adamic/scratch/emitter-speed/go-batch8 /workspace/adamic/cohere/adamic_batch8_oracle.go
+Run full batch8 native and go-batch8 with --manifest compiler.txt, no --count, output to separate files, then cmp. No PR is opened. Only codex/emitter-speed is pushed.

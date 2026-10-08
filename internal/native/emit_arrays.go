@@ -203,8 +203,10 @@ func joinKind(element ir.Type) string {
 // comparator declares, once per sort, an adapter from the runtime's comparison to the program's
 // comparator: JavaScript reads its result's sign, and NaN as 0.
 func (e *emitter) comparator(sort ir.ArraySort) string {
-	e.temporaries++
-	name := fmt.Sprintf("adamic_compare_%d", e.temporaries)
+	name, exists := e.sharedDeclaration("adamic_compare", e.functionName(sort.Comparator)+fmt.Sprint(sort.Element))
+	if exists {
+		return name
+	}
 	argument := unslotted(sort.Element, "left."+member(sort.Element)) + ", " + unslotted(sort.Element, "right."+member(sort.Element))
 	e.declarations = append(e.declarations, fmt.Sprintf(
 		"static int %s(adamic_value left, adamic_value right, void *context) {\n\t(void)context;\n\tdouble result = %s(%s);\n\treturn result < 0 ? -1 : result > 0 ? 1 : 0;\n}",

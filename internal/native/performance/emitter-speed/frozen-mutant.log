@@ -1,0 +1,26 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 70, stdout "true\n", stderr "adamic: panic: TypeError: Cannot assign to read only property 'value' of object '#<Object>'\n"
+        native: exit 0, stdout "true\n2\n", stderr ""
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a
+    oracle_test.go:618: exit codes differ
+        node:   exit 70, stdout "true true old-n\n", stderr "adamic: panic: TypeError: Cannot assign to read only property 'name' of object '#<Object>'\n"
+        native: exit 0, stdout "true true old-n\nnew-n\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_write.a (0.47s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/library_object_freeze_alias.a (0.51s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.526s
+FAIL

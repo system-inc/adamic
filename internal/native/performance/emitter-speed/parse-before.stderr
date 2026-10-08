@@ -1,0 +1,14 @@
+==17445== Callgrind, a call-graph generating cache profiler
+==17445== Copyright (C) 2002-2017, and GNU GPL'd, by Josef Weidendorfer et al.
+==17445== Using Valgrind-3.24.0 and LibVEX; rerun with -h for copyright info
+==17445== Command: /workspace/adamic/scratch/emitter-speed/native-before --manifest /workspace/adamic/scratch/emitter-speed/compiler.txt --count
+==17445== 
+==17445== For interactive control, run 'callgrind_control -h'.
+==17445== brk segment overflow in thread #1: can't grow to 0x4838000
+==17445== (see section Limitations in user manual)
+==17445== NOTE: further instances of this message will not be shown
+==17445== 
+==17445== Events    : Ir
+==17445== Collected : 9259842254
+==17445== 
+==17445== I   refs:      9,259,842,254

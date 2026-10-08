@@ -14,9 +14,12 @@ func (e *emitter) jsonSchema(schema *ir.JSONSchema) string {
 	fields := []string{}
 	for _, f := range schema.Fields {
 		child := e.jsonSchema(f.Schema)
-		fields = append(fields, fmt.Sprintf("{&adamic_string_%d, %d, %s}", f.Name, f.Slot, child))
+		fields = append(fields, fmt.Sprintf("{&%s, %d, %s}", stringName(e.program.Strings[f.Name]), f.Slot, child))
 	}
-	name := e.temporary() + "_json_schema"
+	name, exists := e.sharedDeclaration("adamic_json_schema", schema.Kind+"/"+element+"/"+strings.Join(fields, ","))
+	if exists {
+		return "&" + name
+	}
 	list := "NULL"
 	if len(fields) > 0 {
 		list = name + "_fields"

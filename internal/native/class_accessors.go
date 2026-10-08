@@ -12,11 +12,11 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 		return "NULL"
 	}
 	entries := []string{}
-	for i, accessor := range class.Accessors {
+	for _, accessor := range class.Accessors {
 		getter, setter := "NULL", "NULL"
 		of := ir.Type(0)
 		if accessor.Getter >= 0 {
-			getter = fmt.Sprintf("adamic_getter_%d_%d", classID, i)
+			getter = stableName("adamic_getter", accessor.Name, e.functionKey(accessor.Getter, map[int]bool{}))
 			function := e.program.Functions[accessor.Getter]
 			of = function.Returns
 			fmt.Fprintf(builder, "static adamic_value %s(adamic_object *object) {\n", getter)
@@ -25,7 +25,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				self = "adamic_retain(object)"
 			}
 			if function.Closure {
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, (adamic_value[]){{.reference = %s}});\n", cString(fmt.Sprintf("#accessor:%d", accessor.Getter)), e.functionName(accessor.Getter), self)
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\treturn %s(closure, (adamic_value[]){{.reference = %s}});\n", cString(e.accessorStorageName(accessor.Getter)), e.functionName(accessor.Getter), self)
 			} else {
 				code := fmt.Sprintf("%s(%s)", e.functionName(accessor.Getter), self)
 				fmt.Fprintf(builder, "\treturn (adamic_value){.%s = %s};\n", member(of), slotted(of, code))
@@ -33,7 +33,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 			builder.WriteString("}\n")
 		}
 		if accessor.Setter >= 0 {
-			setter = fmt.Sprintf("adamic_setter_%d_%d", classID, i)
+			setter = stableName("adamic_setter", accessor.Name, e.functionKey(accessor.Setter, map[int]bool{}))
 			function := e.program.Functions[accessor.Setter]
 			input := e.program.Locals[function.Parameters[1]].Type
 			fmt.Fprintf(builder, "static void %s(adamic_object *object, adamic_value value, int type) {\n\t(void)type;\n", setter)
@@ -60,7 +60,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 				}
 			}
 			if function.Closure {
-				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, (adamic_value[]){{.reference = %s}, {.%s = %s}});\n", cString(fmt.Sprintf("#accessor:%d", accessor.Setter)), e.functionName(accessor.Setter), self, member(input), slotted(input, argument))
+				fmt.Fprintf(builder, "\tadamic_slot_cache cache = {0};\n\tadamic_closure *closure = adamic_object_field(object, %s, &cache)->reference;\n\t(void)%s(closure, (adamic_value[]){{.reference = %s}, {.%s = %s}});\n", cString(e.accessorStorageName(accessor.Setter)), e.functionName(accessor.Setter), self, member(input), slotted(input, argument))
 			} else {
 				fmt.Fprintf(builder, "\t%s(%s, %s);\n", e.functionName(accessor.Setter), self, argument)
 			}
@@ -71,7 +71,7 @@ func (e *emitter) accessorDeclarations(builder *strings.Builder, classID int, cl
 		}
 		entries = append(entries, fmt.Sprintf("{%s, %s, %s, %d}", cString(accessor.Name), getter, setter, of))
 	}
-	name := fmt.Sprintf("adamic_accessors_%d", classID)
+	name := e.className(classID) + "_accessors"
 	fmt.Fprintf(builder, "static const adamic_accessor %s[] = {%s};\n", name, strings.Join(entries, ", "))
 	return name
 }
