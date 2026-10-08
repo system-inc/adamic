@@ -175,9 +175,7 @@ media-feature "Â" @8 before="" after=" "
 
 cohere's own oracle test didn't see it, because none of its non-ASCII fixtures puts the character before a colon inside parentheses (`(max-width:\xc2\xa0100px)` has it after). The fix is one line: `mediaFeature += stringNormalized[i : i+1]`.
 
-**How the test holds it:** mediaquery_test.go lays that one line into cohere's parsers.go by `go test -overlay`, so not a byte of the submodule changes, and holds the port to the fixed Go. It also runs the unfixed Go on the same cases and requires it to differ (it does on 8 of the 4,103), so the fix is one the cases need. If cohere fixes the line, the test says so, and the overlay can go. With `ADAMIC_MEDIA_QUERY_LIBRARY` set to a directory where `npm install postcss-media-query-parser@0.2.3` ran, it also holds the port to the library itself, case for case; it was run that way on this Linux container, and all 4,103 agree.
-
-Not fixed in cohere from here: this stream's access is to the adamic repository only. The fix belongs in cohere's parsers.go, with a fixture like `( )` in its oracle test.
+**Fixed upstream:** cohere commit `61ed9f4a` preserves the feature's bytes. The bump to `cbe755d3` removes the parser-source overlay and compares the port with Go cohere unchanged. The port already kept the characters, so its behavior does not change. The earlier test ran unfixed and fixed Go on the same cases and found 8 differing answers among 4,103 cases. With `ADAMIC_MEDIA_QUERY_LIBRARY` set to a directory where `npm install postcss-media-query-parser@0.2.3` ran, the test also compares the port with the library itself.
 
 ## What lowered as written
 

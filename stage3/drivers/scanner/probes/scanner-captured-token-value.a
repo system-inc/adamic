@@ -1,0 +1,12 @@
+function createScanner(): () => string {
+    var tokenValue!: string;
+    const setTokenValue = (value: string): void => { tokenValue = value; };
+    const getTokenValue = (): string => tokenValue;
+    const getTokenLength = (): number => tokenValue.length;
+    setTokenValue('assigned before read');
+    console.log(`${getTokenValue()} ${getTokenLength()}`);
+    setTokenValue('assigned again');
+    return getTokenValue;
+}
+const getTokenValue = createScanner();
+console.log(getTokenValue());

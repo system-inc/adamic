@@ -1,0 +1,22 @@
+v24.19.0
+setup: node ready (0.052s)
+go version go1.27.1 linux/amd64
+setup: go ready (0.066s)
+Cloning into '/tmp/stage3-meter-landing/cohere'...
+setup: markdown dependencies skipped (validated lock and installed bytes); step-duration=0.009s
+setup: markdown dependencies ready (0.128s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.388s)
+From https://github.com/system-inc/cohere
+ * branch            7945d102a6c18dd36adf9114a758ce646e8b2359 -> FETCH_HEAD
+Submodule path 'cohere': checked out '7945d102a6c18dd36adf9114a758ce646e8b2359'
+Submodule 'TypeScript' (https://github.com/system-inc/TypeScript.git) registered for path 'cohere/TypeScript'
+Cloning into '/tmp/stage3-meter-landing/cohere/TypeScript'...
+From https://github.com/system-inc/TypeScript
+ * branch                  d92d9bfee114c80be2c375d72edae966176e3a4f -> FETCH_HEAD
+Submodule path 'cohere/TypeScript': checked out 'd92d9bfee114c80be2c375d72edae966176e3a4f'
+setup: submodules ready (269.394s)
+# github.com/microsoft/TypeScript/tsc/shim/parser
+compile: writing output: write $WORK/b249/_pkg_.a: no space left on device
+# github.com/microsoft/TypeScript/tsc/internal/printer
+compile: writing output: write $WORK/b187/_pkg_.a: no space left on device

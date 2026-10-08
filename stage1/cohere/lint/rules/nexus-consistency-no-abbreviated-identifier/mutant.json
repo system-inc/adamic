@@ -1,0 +1,6 @@
+{
+  "name": "nexus-abbreviated-identifier whole-word finding suppressed",
+  "file": "abbreviation_vocabulary.a",
+  "from": "if(text === word && entry[3] !== '')",
+  "to": "if(text === word && entry[3] !== '' && text !== 'props')"
+}

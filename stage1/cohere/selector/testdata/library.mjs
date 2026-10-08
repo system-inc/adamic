@@ -1,8 +1,8 @@
 // Independent oracle: the exact upstream release cohere follows.
 import { createRequire } from 'node:module';
-import { readFileSync, readdirSync, writeFileSync } from 'node:fs';
-import { join } from 'node:path';
-const [directory, mode, root, destination, testTexts] = process.argv.slice(2);
+import { readFileSync, writeFileSync } from 'node:fs';
+import { join, relative } from 'node:path';
+const [directory, mode, root, destination, testTexts, fileList] = process.argv.slice(2);
 const require = createRequire(join(directory, 'package.json'));
 if(require('postcss-selector-parser/package.json').version !== '2.2.3') {
     throw new Error('expected postcss-selector-parser 2.2.3');
@@ -36,8 +36,25 @@ function dump(value, text) {
     return out;
 }
 const loops = 'postcss-selector-parser 2.2.3 never returns on this selector: a namespace bar it does not consume';
+// cohere f46be797 vendored these fixtures. Go's selector oracle and PostCSS both reject them.
+// Exact paths keep every other file in the comparison; a newly parseable exclusion must fail.
+const expectedCSSErrors = new Set([
+    'internal/format/css/testdata/prettier/css/_errors_/less-syntax.css',
+    'internal/format/css/testdata/prettier/css/_errors_/scss-syntax.css',
+    'internal/format/css/testdata/prettier/css/front-matter/custom-parser.css',
+    'internal/format/css/testdata/prettier/css/front-matter/embedded-language-formatting/yaml.css',
+    'internal/format/css/testdata/prettier/css/range/issue2267.css',
+    'internal/format/css/testdata/prettier/css/yaml/comment_after.css',
+    'internal/format/css/testdata/prettier/css/yaml/dirty.css',
+    'internal/format/css/testdata/prettier/css/yaml/ignore.css',
+    'internal/format/css/testdata/prettier/css/yaml/malformed-2.css',
+    'internal/format/css/testdata/prettier/css/yaml/with_comments.css',
+    'internal/format/css/testdata/prettier/css/yaml/without-newline-after.css',
+    'internal/format/css/testdata/prettier/css/yaml/yaml.css',
+]);
 if(mode === 'corpus') {
-    let files = 0;
+    let files = 0,
+        expectedErrors = 0;
     const selectors = [];
     function extract(text, file) {
         postcss.parse(text, { from: file }).walk((node) => {
@@ -63,21 +80,20 @@ if(mode === 'corpus') {
             }
         });
     }
-    function walk(path) {
-        for(const entry of readdirSync(path, { withFileTypes: true }).sort((a, b) => a.name.localeCompare(b.name))) {
-            if(entry.name === '.git' || entry.name === 'node_modules') continue;
-            const file = join(path, entry.name);
-            if(entry.isDirectory()) {
-                walk(file);
-                continue;
-            }
-            if(!entry.name.endsWith('.css')) continue;
-            files++;
-            // A malformed CSS file is a corpus failure, never quietly omitted.
+    if(!fileList) throw new Error('corpus requires an explicit Git-selected file list');
+    for(const file of JSON.parse(readFileSync(fileList, 'utf8'))) {
+        files++;
+        const expectedError = expectedCSSErrors.has(relative(root, file).split('\\').join('/'));
+        try {
             extract(readFileSync(file, 'utf8'), file);
+            if(expectedError) throw new Error(`expected CSS error became parseable: ${file}`);
+        }
+        catch(error) {
+            if(error.name !== 'CssSyntaxError' || !expectedError) throw error;
+            expectedErrors++;
+            console.log(`expected CSS error: ${file}: ${error.reason}`);
         }
     }
-    walk(root);
     const fileSelectors = selectors.length;
     let candidates = 0,
         invalidSnippets = 0;
@@ -97,7 +113,7 @@ if(mode === 'corpus') {
         `${candidates} brace-containing CSS test constants, ${invalidSnippets} not valid stylesheets, ${selectors.length - fileSelectors} extracted test selectors`,
     );
     writeFileSync(destination, selectors.map((s) => JSON.stringify(s)).join('\n') + '\n');
-    console.log(`${files} CSS files, ${selectors.length} selectors (including repeats)`);
+    console.log(`${files} CSS files, ${expectedErrors} expected CSS errors, ${selectors.length} selectors (including repeats)`);
 }
 else if(mode === 'count') {
     const texts = readFileSync(root, 'utf8').split('\n').filter(Boolean).map(decode);
