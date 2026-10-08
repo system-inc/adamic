@@ -1,6 +1,6 @@
-Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 15 sites proven.
-Base 390af985; latest preceding commit e3b48cfed00b8e4cdfbf409889955968225e5a24; branch codex/stricter-indexed-b only.
-Logged filtered go tests: 15 proven, 0 blocked, 12 remaining; final gate recorded below.
+Built 27 isolated project-.ts fixture templates and a Node/native/JavaScript witness harness; 19 sites proven.
+Base 390af985; latest preceding commit bff31ede914f99e7aa447c0ab6d1d27ffb1e2d25; branch codex/stricter-indexed-b only.
+Logged filtered go tests: 19 proven, 1 blocked, 7 remaining; final gate recorded below.
 Every proven site has an emitted-C erase-panic mutant that builds under sanitizers and loses the pinned exit-70 observation.
 Whole-program compilation, sparse holes, typed arrays and records are not covered; refused shapes are never counted as proven.
 
@@ -56,11 +56,11 @@ must list exactly one checked indexed-presence site, count one, and trust zero.
 | D207 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
 | D208 | 1889 | `clause.expression` | object union array | proven, erase-panic caught |
 | D209 | 1911 | `clauseLabels[defaultClauseIndex]` | number[] | proven, erase-panic caught |
-| D210 | 1918 | `clauseLabels[i]` | number[] | remaining |
-| D211 | 1919 | `caseBlock.clauses` | object union array | remaining |
-| D212 | 2446 | `supportsLabeledBreakOrContinue(containingBlock)` | object union array | remaining |
-| D213 | 2469 | `supportsLabeledBreakOrContinue(block)` | object union array | remaining |
-| D214 | 2472 | `supportsUnlabeledBreak(block)` | object union array | remaining |
+| D210 | 1918 | `clauseLabels[i]` | number[] | proven, erase-panic caught |
+| D211 | 1919 | `caseBlock.clauses` | object union array | proven, erase-panic caught |
+| D212 | 2446 | `supportsLabeledBreakOrContinue(containingBlock)` | object union array | blocked: main.ts:5:21: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case |
+| D213 | 2469 | `supportsLabeledBreakOrContinue(block)` | object union array | proven, erase-panic caught |
+| D214 | 2472 | `supportsUnlabeledBreak(block)` | object union array | proven, erase-panic caught |
 | D215 | 2480 | `supportsUnlabeledBreak(block)` | object union array | remaining |
 | D216 | 2499 | `supportsUnlabeledContinue(block)` | object union array | remaining |
 | D217 | 2507 | `supportsUnlabeledContinue(block)` | object union array | remaining |
@@ -76,6 +76,7 @@ All test output is written to log files, never piped. Current proof logs:
 - `/tmp/stricter-indexed-b-group1-final.log`
 - `/tmp/stricter-indexed-b-group2-final.log`
 - `/tmp/stricter-indexed-b-group3-final.log`
+- `/tmp/stricter-indexed-b-group4-final.log`
 
 Setup: `export GOPROXY='https://proxy.golang.org|direct'; bash cloud/setup.sh`
 with `/workspace/adamic-tools/env.sh` sourced for builds and tests. nproc=5.
