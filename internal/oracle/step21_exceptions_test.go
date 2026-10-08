@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"context"
+	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -143,4 +144,44 @@ func step21MutateHandler(statements []ir.Statement, finally bool, marker ir.Stat
 		}
 	}
 	return false
+}
+
+// Source Node reads the original array after the callback assignment throws.
+// This pins the old value's lifetime before the earlier consuming grow call.
+func TestStep21ThrowPathLiveness(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_liveness.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for function, body := range program.Functions {
+		if body.Name != "read" {
+			continue
+		}
+		text := -1
+		for local, value := range program.Locals {
+			if value.Function == function && value.Name == "text" {
+				text = local
+			}
+		}
+		if text < 0 {
+			t.Fatal("missing text local")
+		}
+		graph := flow.Build(program, function)
+		live := flow.LiveOut(graph)
+		for _, instruction := range graph.Instructions {
+			if _, ok := (*instruction.At).(ir.WriteLine); ok {
+				if !live[instruction.Id][flow.DeclarationId(text+1)] {
+					t.Fatal("old text is dead before a callback that throws into a catch reading it")
+				}
+				return
+			}
+		}
+		t.Fatal("missing consuming statement")
+	}
+	t.Fatal("missing read function")
 }
