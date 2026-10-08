@@ -32,7 +32,7 @@ func InsertedChecks(program *Program) []InsertedCheck {
 		if value.Kind() == reflect.Struct && value.CanInterface() {
 			if call, ok := value.Interface().(ObjectCall); ok {
 				switch call.Method {
-				case "optionalWritePresence", "optionalSpreadPresence", "optionalViewStorage":
+				case "optionalWritePresence", "optionalSpreadPresence", "optionalViewStorage", "optionalArrayPresence", "optionalFunctionStorage":
 					checks = append(checks, InsertedCheck{Kind: "optional-write", Where: call.Readiness})
 				}
 			}

@@ -56,6 +56,10 @@ func (p *Program) ExplainedOptionalChecks() []string {
 	result := []string{}
 	for where := range p.checkedOptions {
 		if view, ok := p.optionalViews[where]; ok {
+			if view.Tree != nil {
+				result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: nested optional contract preserves own presence", where, view.Site.Code))
+				continue
+			}
 			if view.Storage {
 				result = append(result, fmt.Sprintf("%s: checked TS%d exactOptionalPropertyTypes: optional view uses separate own-presence storage", where, view.Site.Code))
 				continue

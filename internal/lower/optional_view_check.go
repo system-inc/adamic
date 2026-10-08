@@ -7,6 +7,9 @@ import (
 )
 
 func (l *lowering) checkedOptionalView(node *ast.Node, value ir.Expression, contract load.OptionalViewContract) (ir.Expression, error) {
+	if contract.Tree != nil {
+		return l.checkedOptionalNested(node, value, contract.Tree)
+	}
 	if value.Type() != ir.Object {
 		return nil, l.notYet(node, "optional view check requires own-presence object storage")
 	}

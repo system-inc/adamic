@@ -22,10 +22,18 @@ func (p *Program) scheduleOptionSite(site OptionSite) OptionDisposition {
 	case len(site.Options) > 0 && site.Options[0] == "noUncheckedIndexedAccess" && (len(site.Options) == 1 || len(site.Options) == 2 && site.Options[1] == "exactOptionalPropertyTypes"):
 		// checkedIndexedRead must emit presence or refuse its representation.
 		row.Kind = "indexed-presence"
-	case p.acceptOptionalWrite(site), p.acceptOptionalRelation(site), p.acceptOptionalLiteral(site), p.acceptOptionalView(site), p.acceptOptionalDefined(site):
+	case p.acceptOptionalWrite(site), p.acceptOptionalRelation(site), p.acceptOptionalLiteral(site), p.acceptOptionalView(site), p.acceptOptionalDefined(site), p.acceptOptionalNested(site):
 		row.Kind = "optional-presence"
 	default:
 		row.State = OptionRemainingError
+		if len(site.Options) == 1 {
+			switch site.Options[0] {
+			case "useUnknownInCatchVariables":
+				row.Kind = "catch-error"
+			case "exactOptionalPropertyTypes":
+				row.Kind = "optional-presence"
+			}
+		}
 		row.Reason = "no use-site guard contract supports this diagnostic: " + site.Message
 	}
 	return row

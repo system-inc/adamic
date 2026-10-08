@@ -1,3 +1,11 @@
+Built Effects cleanup scopes and contracts for all 67 exact-only optional rows; 67 scheduled, zero emitted in production.
+Commits: cleanup a593d04e; required views 6db50e57; propagated results 4b1922bd; optional storage a022b1e1; final four-row group recorded in branch history.
+Focused final-family oracle passes in 9.028s; load/lower/commands in 3.796s, 0.704s, 0.010s; production retains 194 errors.
+28 run mutants: guards catch bad writes, undefined results and bad storage; Node catches representation mismatches; leaks and counts catch outer cleanup.
+Not covered: whole-program emitted checks, the 90 declaration contracts, the other worker's 104 flag contracts, and the full repository gate.
+
+Historical reports below retain the earlier batch observations; the latest production evidence and remaining.json supersede their counts.
+
 Built direct-write and fresh-construction presence guards and a recorded implements representation relation.
 Commits: integration d335b9b1; direct-write batch 58e743bf; construction batch 9af86993; CLI verification commit recorded in git history on codex/stricter-optional-writes.
 Focused loader/lower/command tests pass; runtime Node/native/JavaScript proofs pass; production schedules 50, emits 0.
@@ -240,3 +248,132 @@ There are now 22 run mutants. Focused oracle passes in 11.337s; load/lower/comma
 in 3.682s, 0.719s, 0.007s. Production schedules 63/67, emits zero whole-program
 checks, and retains 198 errors: 90 declarations, 104 other flags, four optional
 contracts. Date remains October 10 UTC.
+
+Final four-row contract group (October 8 UTC): moduleNameResolver.ts:2772 and
+classFields.ts:2745 use recursive object contracts. The guard descends through
+required fields, allows nullable inner values, and checks required source fields
+that become optional through the target view. Fixtures cover readonly data,
+readonly nullable value, and nullish assignment, with Node/native/JavaScript,
+ASan/UBSan and explicit leaks. Each leaf-only absent mutant leaves its enclosing
+container intact and stops at the inner own-presence guard with exit 70.
+
+commandLineParser.ts:2677 uses an object-array contract: it checks the nullable
+array storage, its reference-element ABI, each object's presence storage, and
+required source fields through the optional element view. A mapped-array fixture
+covers present and undefined arrays, with all four observations against Node.
+Its missing-inner-field mutant stops at the presence check.
+
+checker.ts:1683 uses an object-return callback representation contract. Lowering
+first requires an object-return ABI, otherwise it stops with a named NotYet; the
+runtime check requires closure storage. It does not call the callback early or
+forbid legitimate absent optional properties in its return. Both compiled
+backends preserve the same object-return presence representation. A wrong-closure
+storage mutant stops at the ABI guard with exit 70. A lost returned-property
+presence mutant exits zero and is caught by independent Node observations.
+This is separate proof of the representation and of the runtime guard.
+
+There are now 28 run mutants. The final family passes in 9.028s, focused loader/
+lower/commands in 3.796s, 0.704s, 0.010s. All 171 option identities remain in the
+pinned production probe: 67 exact-only optional contracts scheduled, zero emitted
+whole-program checks, 194 errors (90 declaration contracts and 104 other flags).
+remaining.json is empty because no optional contract is unhandled, not because
+the whole program has compiled. Runtime fixtures compile checks of every kind.
+All-67 contract implementation date: October 8 UTC. The provisional whole-program
+date remains October 10 UTC, contingent on the routed declaration contracts and
+the other worker's flag checks; it is not a verified delivery date.
+
+Complete production declaration routing list follows. Each need is an inference
+from its recorded diagnostic chain or ledger cause; no routed fix is claimed.
+
+| Location | Code / ledger row | What it needs |
+| --- | --- | --- |
+| src/compiler/builder.ts:1246:69 | TS2345 / D001 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1258:65 | TS2488 / D002 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1292:61 | TS2488 / D003 | Checker diagnostic owner: reconcile repeated tuple-destructuring failure reporting with the stock project baseline. |
+| src/compiler/builder.ts:1345:64 | TS2345 / D004 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1347:41 | TS2345 / D005 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1347:97 | TS2345 / D006 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1493:60 | TS2345 / D007 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1495:26 | TS2345 / D008 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1496:45 | TS2345 / D009 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:1562:64 | TS2345 / D010 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:2377:13 | TS2769 / D013 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:2379:45 | TS2345 / D014 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:395:118 | TS2345 / D015 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:395:85 | TS2345 / D016 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/builder.ts:991:17 | TS2345 / D017 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10022:63 | TS2345 / D018 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10022:86 | TS18048 / D019 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10026:97 | TS2345 / D020 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10033:67 | TS18048 / D021 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10033:79 | TS18048 / D022 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10053:53 | TS2345 / D023 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10061:90 | TS18048 / D024 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10062:69 | TS18048 / D025 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10063:69 | TS2345 / D026 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10064:47 | TS18048 / D027 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10064:93 | TS2345 / D028 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10065:122 | TS18048 / D029 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10066:103 | TS2345 / D030 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10070:50 | TS2345 / D031 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10319:83 | TS2345 / D032 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10320:51 | TS2345 / D033 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10324:76 | TS2769 / D034 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:10336:86 | TS2345 / D035 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:13986:47 | TS2345 / D038 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:13990:49 | TS2345 / D039 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:14643:66 | TS2345 / D040 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15145:9 | TS2322 / D041 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15695:41 | TS18048 / D042 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15697:22 | TS18048 / D043 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15697:47 | TS18048 / D044 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15700:51 | TS18048 / D045 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15701:42 | TS2345 / D046 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15704:43 | TS2345 / D047 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:15706:52 | TS2345 / D048 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:16689:70 | TS2345 / D049 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:16693:62 | TS2322 / D050 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:1779:9 | TS2322 / D052 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:18662:15 | TS2322 / D055 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:25972:13 | TS2322 / D062 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:25974:9 | TS2322 / D063 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:2900:36 | TS2488 / D064 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:35290:33 | TS2769 / D065 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:35291:79 | TS2345 / D066 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:46734:64 | TS2345 / D075 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:46736:167 | TS2345 / D076 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:51465:110 | TS2345 / D078 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:51530:21 | TS18048 / D079 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:51532:25 | TS18048 / D080 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:51533:41 | TS18048 / D081 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:5564:33 | TS2769 / D098 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:8566:17 | TS2322 / D102 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:8861:21 | TS2322 / D103 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:9363:17 | TS2322 / D104 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/checker.ts:9591:37 | TS2345 / D105 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/commandLineParser.ts:1874:96 | TS2345 / D106 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/commandLineParser.ts:2689:66 | TS2345 / D111 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/commandLineParser.ts:2952:13 | TS2322 / D112 | JSON worker: reconcile the production stringify return contract with the project, keeping the undefined-result runtime obligation. |
+| src/compiler/commandLineParser.ts:3449:55 | TS2322 / D113 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/commandLineParser.ts:4014:5 | TS2322 / D114 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/core.ts:1626:37 | TS2322 / not in original ledger | Prelude/library owner: reconcile SetIterator.next result done with stock IteratorYieldResult (false or undefined), without treating undefined as done. |
+| src/compiler/core.ts:1637:11 | TS2740 / D115 | Prelude/library owner: use the project ES2024 Set surface or adapt the implementation for all required ES2025 methods. |
+| src/compiler/core.ts:1731:21 | TS2322 / not in original ledger | Prelude/library owner: reconcile SetIterator.next result done with stock IteratorYieldResult (false or undefined), without treating undefined as done. |
+| src/compiler/program.ts:4988:28 | TS2345 / D136 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/program.ts:5038:14 | TS2488 / D137 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/resolutionCache.ts:1616:118 | TS2345 / D145 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/resolutionCache.ts:1618:39 | TS18048 / D146 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/resolutionCache.ts:1619:46 | TS2345 / D147 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/resolutionCache.ts:1619:74 | TS2345 / D148 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/resolutionCache.ts:1619:99 | TS18048 / D149 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/sys.ts:1708:56 | TS2345 / D154 | JSON worker: reconcile the production stringify return contract with the project, keeping the undefined-result runtime obligation. |
+| src/compiler/transformers/es2017.ts:325:21 | TS2322 / D176 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/transformers/es2017.ts:327:17 | TS18048 / D177 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/transformers/esnext.ts:205:52 | TS2345 / D190 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/transformers/jsx.ts:174:24 | TS2488 / D222 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/transformers/jsx.ts:187:172 | TS18046 / D223 | Collection iterator declaration fix, then recheck the downstream JSX callback inference; no catch-variable change. |
+| src/compiler/transformers/jsx.ts:187:188 | TS18046 / D224 | Collection iterator declaration fix, then recheck the downstream JSX callback inference; no catch-variable change. |
+| src/compiler/tsbuildPublic.ts:1064:76 | TS18048 / D232 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/tsbuildPublic.ts:1065:62 | TS18048 / D233 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/tsbuildPublic.ts:1066:42 | TS18048 / D234 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |
+| src/compiler/tsbuildPublic.ts:1776:54 | TS2345 / D235 | Reconcile the production collection iterator next overload with the owning project library so generic Iterable inference does not inject undefined; preserve genuine end-of-iteration checks. |

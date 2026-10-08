@@ -1,0 +1,6 @@
+interface Fields { slot?: number | undefined; }
+const source: { slot: number | undefined } = { slot: undefined };
+function wrap(data: typeof source): { readonly data: typeof source } { return { data }; }
+const carrier: { readonly data: Fields } = wrap(source);
+const record = carrier.data;
+console.log(`${'slot' in record}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}|${String(record.slot)}`);

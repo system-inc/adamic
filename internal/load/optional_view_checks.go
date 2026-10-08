@@ -15,6 +15,7 @@ type OptionalViewContract struct {
 	Defined  bool
 	Storage  bool
 	Nullable bool
+	Tree     *OptionalObjectContract
 }
 
 func (p *Program) acceptOptionalView(site OptionSite) bool {

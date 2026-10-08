@@ -50,6 +50,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			}
 		}
 	}
+	if l.numericTypedArray(proven) {
+		return ir.Object, true
+	}
 	if l.nodeBufferType(proven, "Buffer") {
 		return ir.Array, true
 	}

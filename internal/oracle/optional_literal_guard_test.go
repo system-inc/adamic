@@ -21,6 +21,21 @@ func TestOptionalConditionalGuard(t *testing.T) {
 func TestOptionalDefinedGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_defined_guard.a", false)
 }
+func TestOptionalArrayGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_array_guard.a", false)
+}
+func TestOptionalCallbackGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_callback_guard.a", false)
+}
+func TestOptionalNestedNullableGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_nested_nullable_guard.a", false)
+}
+func TestOptionalNestedAssignmentGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_nested_assignment_guard.a", false)
+}
+func TestOptionalNestedGuard(t *testing.T) {
+	testOptionalConstruction(t, "optional_nested_guard.a", false)
+}
 func TestOptionalNullableViewGuard(t *testing.T) {
 	testOptionalConstruction(t, "optional_nullable_view_guard.a", false)
 }
@@ -58,6 +73,12 @@ func testOptionalConstruction(t *testing.T, fixtureName string, spread bool) {
 	}
 	checks := program.ExplainedOptionalChecks()
 	wantChecks := 1
+	if fixtureName == "optional_array_guard.a" {
+		wantChecks = 2
+	}
+	if fixtureName == "optional_nested_nullable_guard.a" {
+		wantChecks = 2
+	}
 	if fixtureName == "optional_nullable_view_guard.a" {
 		wantChecks = 3
 	}
@@ -201,6 +222,10 @@ static adamic_object *mutant_absent_literal(const adamic_shape *shape) {
  return object;
 }
 `
+	if strings.HasPrefix(fixtureName, "optional_nested_") || fixtureName == "optional_array_guard.a" || fixtureName == "optional_callback_guard.a" {
+		helper = strings.ReplaceAll(helper, "#include \"adamic.h\"", "#include \"adamic.h\"\n#include <string.h>")
+		helper = strings.ReplaceAll(helper, "adamic_object_absent(object,i);", "if (strcmp(shape->names[i], \"slot\") == 0) adamic_object_absent(object,i);")
+	}
 	if spread {
 		mutant = strings.ReplaceAll(c, "adamic_object_copy_reserving_checked(", "mutant_absent_spread(")
 		if mutant == c {
@@ -213,6 +238,36 @@ static adamic_object *mutant_absent_spread(const adamic_object *source, const ad
  return object;
 }
 `
+	}
+	if fixtureName == "optional_callback_guard.a" {
+		binary := filepath.Join(t.TempDir(), "absent-callback-result-mutant")
+		if err := native.Build(helper+mutant, binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result := execute(t, binary)
+		if result.exitCode != 0 || disagreement(expected, result) == "" {
+			t.Fatalf("Node did not catch lost callback result presence: %d %s %s", result.exitCode, result.stdout, result.stderr)
+		}
+		kind := strings.ReplaceAll(c, "adamic_optional_function_storage(", "mutant_callback_storage(")
+		if kind == c {
+			t.Fatal("callback storage mutant target absent")
+		}
+		wrapper := `#include "adamic.h"
+extern bool adamic_optional_function_storage(const adamic_closure *, const char *);
+static bool mutant_callback_storage(const adamic_closure *callback, const char *site) {
+ if (callback != NULL) ((adamic_closure *)callback)->heap.kind = adamic_kind_array;
+ return adamic_optional_function_storage(callback, site);
+}
+`
+		if err := native.Build(wrapper+kind, binary, native.Options{Sanitize: true}); err != nil {
+			t.Fatal(err)
+		}
+		result = execute(t, binary)
+		if result.exitCode != 70 || !strings.Contains(string(result.stderr), "optional contract lacks object-return closure storage") {
+			t.Fatalf("callback ABI check did not catch mutant: %d %s", result.exitCode, result.stderr)
+		}
+		t.Log("callback result lost presence caught by Node; wrong closure storage caught by runtime ABI check, exit 70")
+		return
 	}
 	binary = filepath.Join(t.TempDir(), "mutant")
 	if err := native.Build(helper+mutant, binary, native.Options{Sanitize: true}); err != nil {
