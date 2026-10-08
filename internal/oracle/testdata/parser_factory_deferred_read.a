@@ -1,0 +1,9 @@
+// The ruling requires this missing field read to stop, although Node goes on.
+interface SourceNode { kind: string; bindDiagnostics: number; }
+function createSourceFile(): SourceNode {
+ const node = { kind: 'SourceFile' } as SourceNode;
+ return node;
+}
+const node = createSourceFile();
+console.log('before');
+console.log(`${node.bindDiagnostics}`);

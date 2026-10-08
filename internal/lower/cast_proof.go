@@ -12,6 +12,7 @@ import (
 // operands. Concrete generic instantiations are proved again when they are lowered.
 type castProof struct {
 	interfaceView bool
+	stagedFactory bool
 	field         string
 	allowed       []*checker.Type
 	classes       []*checker.Type
@@ -102,6 +103,9 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
+	if staged, err := l.factoryStage(node, target); staged || err != nil {
+		return castProof{stagedFactory: staged}, err
+	}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		return castProof{}, refused

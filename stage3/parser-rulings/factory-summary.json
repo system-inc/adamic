@@ -1,0 +1,30 @@
+{
+  "evidence_pin": "3027b839",
+  "evidence_sha256": "d6c8e9472d89cc151d8a515668eeb3cfbfc86db3d1f74ed92f038e4b6b8f4c04",
+  "factories": 492,
+  "explicit_undefined_pairs": 428,
+  "deferred_names": [
+    "ambientModuleNames",
+    "amdDependencies",
+    "bindDiagnostics",
+    "emitNode",
+    "identifiers",
+    "imports",
+    "libReferenceDirectives",
+    "lineMap",
+    "moduleAugmentations",
+    "parent",
+    "parseDiagnostics",
+    "pragmas",
+    "referencedFiles",
+    "symbol",
+    "typeReferenceDirectives"
+  ],
+  "counts": {
+    "target_proven": 3692,
+    "observed_refused": 4437,
+    "target_checked": 745,
+    "excluded_type_brands": 1476
+  },
+  "observation": "Full parser driver refused during Load; no source-only status is a native proof."
+}

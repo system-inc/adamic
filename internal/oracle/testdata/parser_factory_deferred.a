@@ -1,0 +1,9 @@
+// SourceFile diagnostics are filled after the factory returns.
+interface SourceNode { kind: string; bindDiagnostics: readonly string[]; }
+function createSourceFile(): SourceNode {
+ const node = { kind: 'SourceFile' } as SourceNode;
+ return node;
+}
+const node = createSourceFile();
+node.bindDiagnostics = [];
+console.log(`${node.kind}:${node.bindDiagnostics.length}`);

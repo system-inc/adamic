@@ -53,6 +53,7 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // between declarations: an assignment makes the slot ready, and calls cannot unset it.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	certificates := FactoryCompletion(program)
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {
@@ -90,7 +91,7 @@ func readiness(program *ir.Program) {
 	if !marked {
 		clear := func(body []ir.Statement) []ir.Statement {
 			for index, statement := range body {
-				body[index] = readinessStatement(statement, program, names, nil, nil)
+				body[index] = readinessStatement(statement, program, names, nil, nil, certificates)
 			}
 			return body
 		}
@@ -173,7 +174,7 @@ func readiness(program *ir.Program) {
 						}
 					}
 					beforeLast = slices.Clone(state)
-					readinessWrite(program, graph, instruction, state, fieldSlots)
+					readinessWrite(program, graph, instruction, state, fieldSlots, certificates)
 				}
 				if !slices.Equal(outs[block.Id], state) {
 					outs[block.Id] = state
@@ -195,15 +196,15 @@ func readiness(program *ir.Program) {
 					}
 				}
 				if instruction.Part == 0 {
-					*instruction.At = readinessStatement(*instruction.At, program, names, state, fieldSlots)
+					*instruction.At = readinessStatement(*instruction.At, program, names, state, fieldSlots, certificates)
 				}
-				readinessWrite(program, graph, instruction, state, fieldSlots)
+				readinessWrite(program, graph, instruction, state, fieldSlots, certificates)
 			}
 		}
 	}
 }
 
-func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow.Instruction, state []bool, fields map[fieldReadiness]int) {
+func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow.Instruction, state []bool, fields map[fieldReadiness]int, certificates map[int]map[string]bool) {
 	for _, place := range instruction.Defines {
 		local := int(graph.Identifiers[place.Identifier].Declaration) - 1
 		ready := true
@@ -214,6 +215,16 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 		for field, slot := range fields {
 			if field.local == local {
 				state[slot] = false
+				if declaration, ok := (*instruction.At).(ir.Declare); ok {
+					if call, ok := declaration.Value.(ir.Call); ok {
+						state[slot] = certificates[call.Function][field.name]
+					}
+				}
+				if assignment, ok := (*instruction.At).(ir.Assign); ok {
+					if call, ok := assignment.Value.(ir.Call); ok {
+						state[slot] = certificates[call.Function][field.name]
+					}
+				}
 			}
 		}
 	}
@@ -227,7 +238,7 @@ func readinessWrite(program *ir.Program, graph *flow.Function, instruction *flow
 }
 
 // Transform just this instruction's expressions. Nested statements have their own graph locations.
-func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int) ir.Statement {
+func readinessStatement(statement ir.Statement, program *ir.Program, fields map[string]bool, ready []bool, fieldSlots map[fieldReadiness]int, certificates map[int]map[string]bool) ir.Statement {
 	var transform func(reflect.Value) reflect.Value
 	transform = func(value reflect.Value) reflect.Value {
 		if value.Kind() == reflect.Interface {
@@ -270,6 +281,9 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					expression.ViewAllowed = nil
 				}
 				proven := false
+				if call, direct := expression.Object.(ir.Call); direct {
+					proven = certificates[call.Function][expression.Name]
+				}
 				if local, ok := readinessObject(expression.Object); ok {
 					if slot, found := fieldSlots[fieldReadiness{local, expression.Name}]; found {
 						proven = ready[slot]
