@@ -1,0 +1,24 @@
+enum Mapping { Upper, Lower }
+const mappings = new Map<string, Mapping>([['upper', Mapping.Upper], ['lower', Mapping.Lower]]);
+function map(name: string, texts: readonly string[]): readonly string[] {
+    switch (mappings.get(name)) {
+        case Mapping.Upper:
+            return texts.map(text => text.toUpperCase());
+        case Mapping.Lower:
+            return texts.map(text => text.toLowerCase());
+    }
+    return texts;
+}
+for (const name of ['upper', 'lower', 'missing']) {
+    console.log(map(name, ['MiXeD', 'tEXT']).join(','));
+}
+function optional(value: boolean | undefined): string {
+    switch (value) {
+        case true: return 'true';
+        case false: return 'false';
+        default: return 'missing';
+    }
+}
+console.log(optional(true));
+console.log(optional(false));
+console.log(optional(undefined));
