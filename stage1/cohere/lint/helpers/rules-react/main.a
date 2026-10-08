@@ -1,0 +1,29 @@
+import {panic, readTextFile, programArguments} from 'adamic';
+import {OptionsJson} from '../options_json.ts';
+import {isComponentIdentifierName} from './is_component_identifier_name.a';
+import {mentionsRef} from './mentions_ref.a';
+import {isJavaScriptIdentifier} from './is_java_script_identifier.a';
+import {commentValueOf} from './comment_value_of.a';
+import {jsxAnnotationIn} from './jsx_annotation_in.a';
+import {isReactComponentBaseName} from './is_react_component_base_name.a';
+import {isHookIdentifierName} from './is_hook_identifier_name.a';
+import {decodeCompilerRuleOptions} from './decode_compiler_rule_options.a';
+import {decodeNoMethodSetStateOptions} from './decode_no_method_set_state_options.a';
+function units(text:string):string {let out='';for(let i=0;i<text.length;i++){out+=`${text.charCodeAt(i)},`;}return out;}
+const input=readTextFile(programArguments()[0] ?? panic('path'));if(input.kind==='Error'){panic(input.message);}
+const c=new OptionsJson(input.text);const root=c.parse();if(root<0){panic(c.error);}
+function value(row:number,key:string):string {const r=c.node(row);return c.node(r.children[r.keys.indexOf(key)] ?? panic(key)).text;}
+for(const row of c.node(root).children){
+ const name=value(row,'Name');const text=value(row,'Text');let result='';
+ if(name==='isComponentIdentifierName'){result=`${isComponentIdentifierName(text)}`;}
+ else if(name==='mentionsRef'){result=`${mentionsRef(text)}`;}
+ else if(name==='isJavaScriptIdentifier'){result=`${isJavaScriptIdentifier(text)}`;}
+ else if(name==='commentValueOf'){result=commentValueOf(text,value(row,'Block')==='true');}
+ else if(name==='jsxAnnotationIn'){const a=jsxAnnotationIn(text);result=`${a.found}|${a.name}`;}
+ else if(name==='isReactComponentBaseName'){result=`${isReactComponentBaseName(text)}`;}
+ else if(name==='isHookIdentifierName'){result=`${isHookIdentifierName(text)}`;}
+ else if(name==='DecodeCompilerRuleOptions'){result=decodeCompilerRuleOptions(text).error;}
+ else if(name==='DecodeNoMethodSetStateOptions'){const value=decodeNoMethodSetStateOptions(text);result=`${value.disallowInFunc}|${value.error}`;}
+ else{panic(name);}
+ console.log(`${name}|${units(result)}`);
+}

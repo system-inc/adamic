@@ -1,0 +1,6 @@
+import type {RuleContext} from '../../context.ts';
+import {forFile} from '../comments/for_file.ts';
+import {commentValueOf} from './comment_value_of.a';
+import {jsxAnnotationIn} from './jsx_annotation_in.a';
+import {isJavaScriptIdentifier} from './is_java_script_identifier.a';
+export function reactPragmaFor(context:RuleContext):string {for(const comment of forFile(context.parser,context.root,undefined)){const candidate=jsxAnnotationIn(commentValueOf(comment.text,comment.isBlock));if(candidate.found){return isJavaScriptIdentifier(candidate.name) ? candidate.name : 'React';}}return 'React';}

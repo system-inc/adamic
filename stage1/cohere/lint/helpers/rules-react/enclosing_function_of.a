@@ -1,0 +1,6 @@
+import type {RuleContext} from '../../context.ts';
+import {isFunctionLike} from './is_function_like.a';
+export function enclosingFunctionOf(context: RuleContext, index: number): number {
+    for(let current=context.parent(index);current>=0;current=context.parent(current)) { if(isFunctionLike(context,current)){return current;} }
+    return -1;
+}
