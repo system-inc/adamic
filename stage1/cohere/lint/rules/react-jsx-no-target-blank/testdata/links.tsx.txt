@@ -1,0 +1,1 @@
+const x = <><a target="_blank" href="//x.com"/><a target="_blank" href="http://x.com" rel="noopener"/><a target={c ? "_blank" : "_self"} href="http://x" rel={c ? "x" : "noreferrer"}/></>;

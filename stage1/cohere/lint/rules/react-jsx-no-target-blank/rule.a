@@ -1,0 +1,142 @@
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { matchIgnoringCase } from '../../helpers/jsx/match_ignoring_case.a';
+import { noreferrer, noopener } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ constructor(context: RuleContext) { this.context = context; }
+ name(index: number): string {
+  if (index < 0) { return ''; }
+  const node = this.context.node(index);
+  const name = node.children[0] ?? -1;
+  return node.kind === 'JsxAttribute' && name >= 0 && this.context.node(name).kind === 'Identifier' ? this.context.node(name).text : '';
+ }
+ last(properties: readonly number[], wanted: string): number {
+  for (let i = properties.length - 1; i >= 0; i--) { if (this.name(properties[i] ?? -1) === wanted) { return i; } }
+  return -1;
+ }
+ value(properties: readonly number[], position: number): number {
+  const index = properties[position] ?? -1;
+  return index < 0 ? -1 : this.context.node(index).children[1] ?? -1;
+ }
+ expression(value: number): number { return value >= 0 && this.context.node(value).kind === 'JsxExpression' ? this.context.node(value).children[0] ?? -1 : -1; }
+ blank(value: number): boolean {
+  if (value < 0) { return false; }
+  const node = this.context.node(value);
+  if (node.kind === 'StringLiteral') { return matchIgnoringCase(node.text,'_blank'); }
+  const expression = this.expression(value);
+  if (expression < 0) { return false; }
+  const expr = this.context.node(expression);
+  if (expr.kind === 'StringLiteral') { return matchIgnoringCase(expr.text,'_blank'); }
+  if (expr.kind !== 'ConditionalExpression') { return false; }
+  for (const branch of [expr.children[4] ?? -1,expr.children[2] ?? -1]) {
+   if (branch >= 0 && this.context.node(branch).kind === 'StringLiteral' && matchIgnoringCase(this.context.node(branch).text,'_blank')) { return true; }
+  }
+  return false;
+ }
+ external(text: string): boolean {
+  if (text.startsWith('//')) { return true; }
+  for (let i=0;i<text.length;i++) {
+   const c=text.charCodeAt(i);
+   if(c===58) { return i>0; }
+   if(!(c===95 || c>=65 && c<=90 || c>=97 && c<=122 || c>=48 && c<=57)) { return false; }
+  }
+  return false;
+ }
+ dangerous(properties: readonly number[], wanted: string, spread: number, warn: boolean): boolean {
+  const position=this.last(properties,wanted);
+  const value=this.value(properties,position);
+  if(value>=0 && this.context.node(value).kind==='StringLiteral' && this.external(this.context.node(value).text)) { return true; }
+  if(warn && position<spread) { return true; }
+  if(this.context.settings.read('enforcedynamiclinks','always')==='never' || this.context.settings.read('enforcedynamiclinksnever','false')==='true') { return false; }
+  for(const property of properties) {
+   if(this.name(property)!==wanted) { continue; }
+   const initializer=this.context.node(property).children[1] ?? -1;
+   if(initializer>=0 && this.context.node(initializer).kind==='JsxExpression') { return true; }
+  }
+  return false;
+ }
+ relStrings(value: number, target: number): string[] {
+  const ctx=this.context;
+  if(value<0) { return []; }
+  if(ctx.node(value).kind==='StringLiteral') { return [ctx.node(value).text]; }
+  const expression=this.expression(value);
+  if(expression<0) { return []; }
+  const expr=ctx.node(expression);
+  if(expr.kind==='StringLiteral' || expr.kind==='NoSubstitutionTemplateLiteral') { return [expr.text]; }
+  if(expr.kind==='TemplateExpression') {
+   const head=expr.children[0] ?? -1; return head<0 ? [] : [ctx.node(head).text];
+  }
+  if(expr.kind!=='ConditionalExpression') { return []; }
+  let branches=[expr.children[2] ?? -1,expr.children[4] ?? -1];
+  const targetExpression=this.expression(target);
+  if(targetExpression>=0 && ctx.node(targetExpression).kind==='ConditionalExpression') {
+   const targetNode=ctx.node(targetExpression);
+   const targetTest=targetNode.children[0] ?? -1;const relTest=expr.children[0] ?? -1;
+   if(targetTest>=0 && relTest>=0 && ctx.node(targetTest).kind==='Identifier' && ctx.node(relTest).kind==='Identifier' && ctx.node(targetTest).text===ctx.node(relTest).text) {
+    let paired=-1;
+    for(const i of [2,4]) { const branch=targetNode.children[i] ?? -1; if(branch>=0 && ctx.node(branch).kind==='StringLiteral' && ctx.node(branch).text==='_blank') { paired=i; break; } }
+    if(paired<0) { return []; }
+    branches=[expr.children[paired] ?? -1];
+   }
+  }
+  const strings: string[]=[];
+  for(const branch of branches) { if(branch<0 || ctx.node(branch).kind!=='StringLiteral') { return []; } strings.push(ctx.node(branch).text); }
+  return strings;
+ }
+ secure(properties: readonly number[], allow: boolean, warn: boolean, spread: number): boolean {
+  const rel=this.last(properties,'rel');
+  if(rel<0 || warn && rel<spread) { return false; }
+  const strings=this.relStrings(this.value(properties,rel),this.value(properties,this.last(properties,'target')));
+  if(strings.length===0) { return false; }
+  for(const value of strings) {
+   const parts=value.toLowerCase().split(' ');
+   if(!parts.includes('noreferrer') && !(allow && parts.includes('noopener'))) { return false; }
+  }
+  return true;
+ }
+ replacement(text: string): string {
+  const parts: string[]=[];for(const part of text.split('noreferrer')) { if(part!=='') { parts.push(part); } } parts.push('noreferrer');return '"'+parts.join(' ')+'"';
+ }
+ fixes(properties: readonly number[], target: number, spread: number, inserted: string): SuggestionEdit[] {
+  const ctx=this.context;let rel=-1;
+  for(let i=0;i<properties.length;i++) { if(this.name(properties[i] ?? -1)==='rel') { rel=i;break; } }
+  if(target<spread || spread>=0 && rel<0) { return []; }
+  if(rel<0) {
+   const last=properties[properties.length-1] ?? -1;
+   if(last<0) { return []; }
+   const end=ctx.node(last).end;return [new SuggestionEdit(end,end,' rel="'+inserted+'"')];
+  }
+  const property=properties[rel] ?? -1;if(property<0) { return []; }
+  const value=this.value(properties,rel);
+  if(value<0) { const end=ctx.node(property).end;return [new SuggestionEdit(end,end,'="'+inserted+'"')]; }
+  if(ctx.node(value).kind==='StringLiteral') { return [ctx.edit(value,this.replacement(ctx.node(value).text))]; }
+  const expression=this.expression(value);
+  if(expression<0) { return []; }
+  const expr=ctx.node(expression);
+  if(expr.kind==='StringLiteral') { return [ctx.edit(expression,this.replacement(expr.text))]; }
+  if(['NumericLiteral','BigIntLiteral','TrueKeyword','FalseKeyword','NullKeyword'].includes(expr.kind)) { return [ctx.edit(value,'"noreferrer"')]; }
+  return [];
+ }
+ visit(index: number): void {
+  const ctx=this.context;const node=ctx.node(index);const tag=node.children[0] ?? -1;
+  if(tag<0 || ctx.node(tag).kind!=='Identifier') { return; }
+  const name=ctx.node(tag).text;if(name!=='a' && name!=='form') { return; }
+  let attrs=-1;for(const child of node.children) { if(ctx.node(child).kind==='JsxAttributes') { attrs=child; } }
+  if(attrs<0) { return; }const properties=ctx.node(attrs).children;
+  const target=this.last(properties,'target');let spread=-1;
+  for(let i=properties.length-1;i>=0;i--) { const property=properties[i] ?? -1;if(property>=0 && ctx.node(property).kind==='JsxSpreadAttribute') { spread=i;break; } }
+  const warn=ctx.settings.read('warnonspreadattributes','false')==='true';
+  if(!this.blank(this.value(properties,target)) && !(warn && spread>=0)) { return; }
+  const allow=ctx.settings.read('allowreferrer','false')==='true';
+  if(name==='form') {
+   if(ctx.settings.read('forms','false')!=='true' || this.secure(properties,false,false,-1) || !this.dangerous(properties,'action',-1,false)) { return; }
+  } else {
+   if(!this.dangerous(properties,'href',spread,warn) || this.secure(properties,allow,warn,spread)) { return; }
+  }
+  let edits: SuggestionEdit[] = [];
+  if(name !== 'form') { edits = this.fixes(properties,target,spread,allow ? 'noopener' : 'noreferrer'); }
+  ctx.reportNode(index,'react/jsx-no-target-blank',allow ? 'noTargetBlankWithoutNoopener' : 'noTargetBlankWithoutNoreferrer',allow ? noopener : noreferrer,edits);
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
