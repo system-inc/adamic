@@ -33,6 +33,7 @@ adamic_view_dictionary_result adamic_view_dictionary_read(const adamic_record *r
             value.kind = adamic_view_union_boolean;
             value.payload.boolean = ((const adamic_boolean_box *)boxed)->boolean;
             break;
+        case adamic_kind_null: value.kind = adamic_view_union_null; break;
         case adamic_kind_string: value.kind = adamic_view_union_string; break;
         case adamic_kind_object: value.kind = adamic_view_union_object; break;
         case adamic_kind_array: value.kind = adamic_view_union_array; break;
@@ -58,6 +59,7 @@ static adamic_view_union_value dictionary_boxed_value(const adamic_heap *boxed) 
     switch (boxed->kind) {
     case adamic_kind_number: value.kind = adamic_view_union_number; value.payload.number = ((const adamic_number_box *)boxed)->number; break;
     case adamic_kind_boolean: value.kind = adamic_view_union_boolean; value.payload.boolean = ((const adamic_boolean_box *)boxed)->boolean; break;
+    case adamic_kind_null: value.kind = adamic_view_union_null; break;
     case adamic_kind_string: value.kind = adamic_view_union_string; break;
     case adamic_kind_object: value.kind = adamic_view_union_object; break;
     case adamic_kind_array: value.kind = adamic_view_union_array; break;
@@ -129,6 +131,7 @@ adamic_view_dictionary_result adamic_view_dictionary_source_read(const adamic_ob
 }
 
 adamic_heap *adamic_view_dictionary_box(adamic_view_union_value value) {
+    if (value.kind == adamic_view_union_null) return &adamic_null;
     if (value.kind == adamic_view_union_number) return adamic_box_number(value.payload.number);
     if (value.kind == adamic_view_union_boolean) return value.payload.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
     return adamic_retain(value.payload.reference);

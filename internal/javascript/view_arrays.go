@@ -48,6 +48,9 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 `
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
+	if read.Element == ir.Union {
+		return e.emitPrimitiveArrayIndex(read)
+	}
 	array, index := e.value(read.Array), e.value(read.Index)
 	allowed := []string{}
 	for _, literal := range read.ViewAllowed {

@@ -2294,3 +2294,45 @@ both untagged-object and primitive property preparation, and scoped fallback
 with integration callable exemptions. Global unknown fallback remains intact.
 Integration callable implementation-name validation supersedes the narrower
 producer-name helper, retaining computed-name refusal and binding-pattern safety.
+
+### Lane 4 read-only primitive array indexes
+
+Named primitiveArrayIndexRead in object.go recognizes only complete primitive
+member descriptors at an indexed read. elementType, producers, writes and other
+consumers stay unchanged. Owned view_array_primitives.go files in lower/native/
+javascript plus runtime/view_array_primitives.{h,c} retain the receiver before
+index evaluation, validate physical producer metadata, snapshot one slot, select
+its declared member, and return an owned scalar box. No allocation layout or ABI
+rewrite. Native evaluate and JS array-read dispatch are minimal named hooks.
+
+PrimitiveArrayReads IR metadata enables existing producer storage certificates
+for ordinary primitive array reads too. emit_slots.go's arrayIndexSlot uses the
+same selector and owned box for typeof, so typeof cannot bypass selection.
+
+### Lane 4 dictionary primitive and nullish selection
+
+Named DictionaryReadKinds ViewNull admission and native kind mask now retain
+null separately from undefined. The dictionary slot normalizers classify the
+existing adamic_null heap sentinel, and adamic_view_dictionary_box preserves
+that sentinel for both scalar null slots and boxed records. No lookup, absence,
+enumeration, allocation layout or ownership ABI is changed. Lane 6 owns those
+operations; lane 4 certifies only the scalar/nullish component of rich original
+CompilerOptions, OptionsBase and BuildOptions element unions.
+
+DictionaryReadKinds unwraps only supported nullable descriptors, preserving
+Unsupported, unknown and cycle refusals. Named primitiveDictionaryStringValue
+in library_string.go permits stringification only after a dictionary selector
+whose full admitted kind set is primitive/nullish. JS dictionary classification
+uses existing adamicTypeOf so AdamicClosure receives its function tag.
+Original rich dictionary candidates still refuse their unsupported reference
+member selection; generic selector controls earn no original-pair credit.
+
+Named dictionaryPrimitiveReadContract selects complete open string/number/boolean
+plus nullish arms from a rich original union without erasing its full descriptor.
+DictionaryPrimitive records a distinct read certificate; original ViewTypeID
+and cast contracts remain intact. records.go attaches it at get; readiness
+retains it; lazy admission uses it only after PrimitiveDictionaryReadCertificate
+proves every admitted runtime kind primitive/nullish. Unknown flow fallback is
+unchanged. Actual reference kinds are excluded and stop at this read until their
+owning lane provides selection, so unread reference alternatives cannot poison
+a selected scalar. Object and array alternatives receive no certification credit.

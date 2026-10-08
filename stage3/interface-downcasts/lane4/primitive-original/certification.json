@@ -706,8 +706,11 @@
   "private_source_sha256": "b2c971b6674b3312e43cd198ee250dba86a55fea8b06b28388737e4db7b32c7f",
   "certified_pairs": 14,
   "certified_reads": 91,
-  "remaining_nonbrand_pairs": 14,
-  "remaining_nonbrand_reads": 47,
-  "corrected_remaining_nonbrand_pairs": 12,
-  "corrected_remaining_nonbrand_reads": 43
+  "remaining_nonbrand_pairs": 10,
+  "remaining_nonbrand_reads": 38,
+  "corrected_remaining_nonbrand_pairs": 8,
+  "corrected_remaining_nonbrand_reads": 34,
+  "owned_remaining_components_pairs": 0,
+  "owned_remaining_components_reads": 0,
+  "note": "Top certified_pairs/reads describe fourteen property groups only. Four array pairs / nine reads have separate array-certification.json. Three scalar/nullish dictionary components / fourteen reads have dictionary-certification.json, with no full-union reference credit."
 }

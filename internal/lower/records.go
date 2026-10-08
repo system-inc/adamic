@@ -138,7 +138,7 @@ func (l *lowering) recordExpression(node *ast.Node) (ir.Expression, bool, error)
 			if contractErr != nil {
 				return nil, true, contractErr
 			}
-			if _, supported := ir.DictionaryReadKinds(l.result, id); supported {
+			if _, supported := ir.DictionaryReadKinds(l.result, id); supported || l.primitiveDictionaryCandidate(l.concrete(l.checker.GetTypeAtLocation(node))) {
 				checked, err := l.dictionaryRead(node, r, k)
 				if err != nil {
 					return nil, true, err

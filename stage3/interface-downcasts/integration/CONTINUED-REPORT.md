@@ -12,12 +12,12 @@ Limits: latest owner integration is unresolved; additional optional suites and t
 | Untagged object unions | cd32db4234fb0a65a6ad199474b802c9e7491054 | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
 | Lazy admission owner | d5b3c4a9bde6ee28fe38568ef4b720aa9c2b68e3 | Aborted before resolving 18 paths; Map adapter restoration must preserve boxed dispatch and ownership | d718a9ffa0432245b69a3545c3ca080db865e0bb | Not runtime-tested; unresolved merge boundary |
 | Arrays and parser | a3b0e3570fdf83fa3071b7f34ff9780d5334d5f7 | Plan: retain existing duplicate sections, whitespace and both final reports; counts: retain every distinct row and reject differing values for one fixture | e636841dd3d2996e471d97dd23712e7dbaa6aaeb | Required filter passes; inherited failures below |
-| Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | This merge | Stale compile-only helper expectation fixed; inherited failures unchanged |
-| Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | Pending | Pending | Pending |
+| Mixed unions, first tip | d78c3f5cf19959be2bdb2ba4b72951750303cc4a | One plan hunk: append both independent reports; update the primitive helper to preserve its wrong-boolean runtime refusal | 6d9811a91da9346217f45c0c5223df9d194363eb | Stale compile-only helper expectation fixed; inherited failures unchanged |
+| Mixed unions, requested newer tip | 37763565c317a80c3b362e475edab8b61ab0eafd | No conflicts; retain producer certificates and original reference obligations; update stale array-gap assertions | This merge | Required tests pass; same 41 inherited counts failures |
 | Object and primitive unions | 8abb52a1518b9d8c3f0dbde993551d4f01ba10e2 | Pending | Pending | Pending |
 | Intersections | 4c3c3009c1ab74e4da902ffa9357b81ec0cf7d95 | Pending | Pending | Pending |
-| Callables | baa72933a1504a6d186e5f307a0a4c9684c95615 | Pending | Pending | Pending |
-| Tuples | 21fd3587d6a32fef3f195a31be84605c02f58953 | Pending | Pending | Pending |
+| Callables | 0040752305d151dff23d234213edc47aaddbd305 | Pending | Pending | Pending |
+| Tuples | 5c54e8c6583462ae061557d5fc4618deaf4b67ee | Pending | Pending | Pending |
 | Dictionaries | deec3c933543c7b5e7ba0d9db0964265d03c494c | Already an ancestor | d718a9ffa0432245b69a3545c3ca080db865e0bb | None introduced |
 
 ## Owner boundary
@@ -134,3 +134,26 @@ User steering during validation supplied newer lane4 tip
 before moving to lane4b.
 
 Fresh mixed filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	637.595s
+
+## Mixed union newer tip
+
+37763565 merged without conflicts. Primitive array reads decode producer storage
+metadata before enforcing the original member contract. Dictionary selectors
+retain the original reference-member obligation while permitting certified
+scalar and nullish reads. No callable exemption or refusal was changed.
+
+Scoped backend tests pass: lower 8.994s, native 30.726s, JavaScript 2.202s.
+Primitive dictionary IR checks pass in 0.007s. Complete declaration-backed
+primitive array and dictionary probes pass in 62.055s, including 28 executing
+member-check and first-member mutant witnesses. The native runtime test catches
+a forged producer storage certificate; dictionary selector tests also execute
+member and null-erasure mutants. Counts refresh fails in 54.879s on the identical
+41 baseline fixtures, with no additions or removals.
+
+The first newer-tip filtered run finished in 643.345s with only six obsolete
+primitive-array gap assertions. Homogeneous string/number producers now execute
+checked reads and agree with Node on all three backend modes with no leaks;
+heterogeneous literals retain exact producer NotYet diagnostics at line 5:46.
+The corrected six-case test passes in 3.130s. No compiler guard was changed.
+
+Fresh newer mixed filtered oracle: ok  	github.com/system-inc/adamic/internal/oracle	600.969s
