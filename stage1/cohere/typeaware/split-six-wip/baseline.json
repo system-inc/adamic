@@ -1,0 +1,680 @@
+{
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "command": {
+    "wall": 731.203558032,
+    "load_start": [
+      8.0595703125,
+      5.06787109375,
+      2.1005859375
+    ],
+    "load_end": [
+      1.9990234375,
+      2.77685546875,
+      2.77685546875
+    ],
+    "exit": 0
+  },
+  "test_wall_seconds": 648.98,
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "generated_files": 409,
+  "compiler_files": 77,
+  "repository_manifest_files": 287,
+  "targeted_counts": {
+    "pass_count": 1,
+    "fail_count": 0,
+    "skip_count": 0
+  },
+  "phase_totals": {
+    "builds": 608.9738674163818,
+    "generated agreement and source filter": 0.3679978847503662,
+    "mutant and guard runs": 0.7753686904907227,
+    "fact cost runs": 3.71598482131958,
+    "compiler agreement": 14.303933143615723,
+    "compiler benchmarks": 20.849231004714966
+  },
+  "phase_timing_method": "Artifact birth time to next command artifact birth time, final command to test pass event. These windows include comparisons, fixture writes and logging between commands; comparisons are not separately timed.",
+  "phases": [
+    {
+      "name": "001-stage0",
+      "category": "builds",
+      "window_seconds": 82.29162693023682
+    },
+    {
+      "name": "002-checker",
+      "category": "builds",
+      "window_seconds": 110.187490940094
+    },
+    {
+      "name": "003-checker-asan",
+      "category": "builds",
+      "window_seconds": 6.003972053527832
+    },
+    {
+      "name": "004-suite-asan",
+      "category": "builds",
+      "window_seconds": 29.959861040115356
+    },
+    {
+      "name": "005-suite",
+      "category": "builds",
+      "window_seconds": 17.123920917510986
+    },
+    {
+      "name": "006-oracle-build",
+      "category": "builds",
+      "window_seconds": 25.319883108139038
+    },
+    {
+      "name": "007-source-filter",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.0279998779296875
+    },
+    {
+      "name": "008-six-generated-go",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.039999961853027344
+    },
+    {
+      "name": "009-six-generated-native",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.1959991455078125
+    },
+    {
+      "name": "010-six-nonstrict-go",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.016000032424926758
+    },
+    {
+      "name": "011-six-nonstrict-native",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.03599882125854492
+    },
+    {
+      "name": "012-six-cross-file-go",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.016000032424926758
+    },
+    {
+      "name": "013-six-cross-file-native",
+      "category": "generated agreement and source filter",
+      "window_seconds": 0.03600001335144043
+    },
+    {
+      "name": "014-declaration-source-checker",
+      "category": "builds",
+      "window_seconds": 9.295957088470459
+    },
+    {
+      "name": "015-declaration-source-suite",
+      "category": "builds",
+      "window_seconds": 16.427923917770386
+    },
+    {
+      "name": "016-declaration-source-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.016000032424926758
+    },
+    {
+      "name": "017-inspect-unlinked",
+      "category": "builds",
+      "window_seconds": 0.04399991035461426
+    },
+    {
+      "name": "018-wrong-node",
+      "category": "builds",
+      "window_seconds": 16.58392310142517
+    },
+    {
+      "name": "019-wrong-node-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06800007820129395
+    },
+    {
+      "name": "020-last-declaration",
+      "category": "builds",
+      "window_seconds": 16.851921796798706
+    },
+    {
+      "name": "021-last-declaration-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06400012969970703
+    },
+    {
+      "name": "022-nullable-default",
+      "category": "builds",
+      "window_seconds": 16.239924907684326
+    },
+    {
+      "name": "023-nullable-default-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06000018119812012
+    },
+    {
+      "name": "024-union-members",
+      "category": "builds",
+      "window_seconds": 16.31192398071289
+    },
+    {
+      "name": "025-union-members-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06399989128112793
+    },
+    {
+      "name": "026-type-name-checker",
+      "category": "builds",
+      "window_seconds": 8.971959114074707
+    },
+    {
+      "name": "027-type-name-suite",
+      "category": "builds",
+      "window_seconds": 16.203924894332886
+    },
+    {
+      "name": "028-type-name-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.05999898910522461
+    },
+    {
+      "name": "029-raw-shape-constraint-checker",
+      "category": "builds",
+      "window_seconds": 8.163963079452515
+    },
+    {
+      "name": "030-raw-shape-constraint-suite",
+      "category": "builds",
+      "window_seconds": 16.415923833847046
+    },
+    {
+      "name": "031-raw-shape-constraint-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06400012969970703
+    },
+    {
+      "name": "032-assignability-direction-checker",
+      "category": "builds",
+      "window_seconds": 8.627959966659546
+    },
+    {
+      "name": "033-assignability-direction-suite",
+      "category": "builds",
+      "window_seconds": 16.363924026489258
+    },
+    {
+      "name": "034-assignability-direction-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.07200002670288086
+    },
+    {
+      "name": "035-resolved-signature-checker",
+      "category": "builds",
+      "window_seconds": 9.135957956314087
+    },
+    {
+      "name": "036-resolved-signature-suite",
+      "category": "builds",
+      "window_seconds": 16.491925954818726
+    },
+    {
+      "name": "037-resolved-signature-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.06399893760681152
+    },
+    {
+      "name": "038-released-inspect",
+      "category": "builds",
+      "window_seconds": 3.243986129760742
+    },
+    {
+      "name": "039-released-inspect-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.01599907875061035
+    },
+    {
+      "name": "040-retained-handle-checker",
+      "category": "builds",
+      "window_seconds": 5.467975854873657
+    },
+    {
+      "name": "041-retained-handle",
+      "category": "builds",
+      "window_seconds": 3.215985059738159
+    },
+    {
+      "name": "042-retained-handle-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.016000032424926758
+    },
+    {
+      "name": "043-facts-length-checker",
+      "category": "builds",
+      "window_seconds": 4.627979040145874
+    },
+    {
+      "name": "044-facts-length",
+      "category": "builds",
+      "window_seconds": 27.51987385749817
+    },
+    {
+      "name": "045-facts-length-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.0839991569519043
+    },
+    {
+      "name": "046-facts-empty-bad-checker",
+      "category": "builds",
+      "window_seconds": 5.099977970123291
+    },
+    {
+      "name": "047-facts-empty-bad",
+      "category": "builds",
+      "window_seconds": 16.619926929473877
+    },
+    {
+      "name": "048-facts-empty-bad-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.03600001335144043
+    },
+    {
+      "name": "049-facts-integer-bad-checker",
+      "category": "builds",
+      "window_seconds": 6.167972087860107
+    },
+    {
+      "name": "050-facts-integer-bad",
+      "category": "builds",
+      "window_seconds": 16.51992177963257
+    },
+    {
+      "name": "051-facts-integer-bad-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.027999162673950195
+    },
+    {
+      "name": "052-facts-length-bad-checker",
+      "category": "builds",
+      "window_seconds": 6.059973955154419
+    },
+    {
+      "name": "053-facts-length-bad",
+      "category": "builds",
+      "window_seconds": 16.487929105758667
+    },
+    {
+      "name": "054-facts-length-bad-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.031999826431274414
+    },
+    {
+      "name": "055-facts-version-bad-checker",
+      "category": "builds",
+      "window_seconds": 5.843975067138672
+    },
+    {
+      "name": "056-facts-version-bad",
+      "category": "builds",
+      "window_seconds": 16.068562984466553
+    },
+    {
+      "name": "057-facts-version-bad-run",
+      "category": "mutant and guard runs",
+      "window_seconds": 0.031373023986816406
+    },
+    {
+      "name": "058-facts-cost",
+      "category": "builds",
+      "window_seconds": 3.3439879417419434
+    },
+    {
+      "name": "059-facts-cost-go-build",
+      "category": "builds",
+      "window_seconds": 9.667971134185791
+    },
+    {
+      "name": "060-facts-cost-assignable-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.039999961853027344
+    },
+    {
+      "name": "061-facts-cost-assignable-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.032000064849853516
+    },
+    {
+      "name": "062-facts-cost-assignable-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.03599977493286133
+    },
+    {
+      "name": "063-facts-cost-assignable-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.03199911117553711
+    },
+    {
+      "name": "064-facts-cost-assignable-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.03600001335144043
+    },
+    {
+      "name": "065-facts-cost-assignable-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.0279998779296875
+    },
+    {
+      "name": "066-facts-cost-declarations-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.040000200271606445
+    },
+    {
+      "name": "067-facts-cost-declarations-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04399991035461426
+    },
+    {
+      "name": "068-facts-cost-declarations-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.03600001335144043
+    },
+    {
+      "name": "069-facts-cost-declarations-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.039999961853027344
+    },
+    {
+      "name": "070-facts-cost-declarations-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.03999900817871094
+    },
+    {
+      "name": "071-facts-cost-declarations-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04399991035461426
+    },
+    {
+      "name": "072-facts-cost-signature-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.09600019454956055
+    },
+    {
+      "name": "073-facts-cost-signature-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09199881553649902
+    },
+    {
+      "name": "074-facts-cost-signature-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.09600019454956055
+    },
+    {
+      "name": "075-facts-cost-signature-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09999990463256836
+    },
+    {
+      "name": "076-facts-cost-signature-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.09599900245666504
+    },
+    {
+      "name": "077-facts-cost-signature-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09599995613098145
+    },
+    {
+      "name": "078-facts-cost-raw-type-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.04800009727478027
+    },
+    {
+      "name": "079-facts-cost-raw-type-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04399991035461426
+    },
+    {
+      "name": "080-facts-cost-raw-type-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.05199909210205078
+    },
+    {
+      "name": "081-facts-cost-raw-type-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04799985885620117
+    },
+    {
+      "name": "082-facts-cost-raw-type-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.05200004577636719
+    },
+    {
+      "name": "083-facts-cost-raw-type-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04400014877319336
+    },
+    {
+      "name": "084-facts-cost-nullable-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.09999895095825195
+    },
+    {
+      "name": "085-facts-cost-nullable-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.10399985313415527
+    },
+    {
+      "name": "086-facts-cost-nullable-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.10400009155273438
+    },
+    {
+      "name": "087-facts-cost-nullable-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.10399889945983887
+    },
+    {
+      "name": "088-facts-cost-nullable-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.10400009155273438
+    },
+    {
+      "name": "089-facts-cost-nullable-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09999895095825195
+    },
+    {
+      "name": "090-facts-cost-union-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.09200000762939453
+    },
+    {
+      "name": "091-facts-cost-union-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09200000762939453
+    },
+    {
+      "name": "092-facts-cost-union-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.10399913787841797
+    },
+    {
+      "name": "093-facts-cost-union-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09200000762939453
+    },
+    {
+      "name": "094-facts-cost-union-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.07999992370605469
+    },
+    {
+      "name": "095-facts-cost-union-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.09999895095825195
+    },
+    {
+      "name": "096-facts-cost-signature-shape-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.04399991035461426
+    },
+    {
+      "name": "097-facts-cost-signature-shape-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.05200004577636719
+    },
+    {
+      "name": "098-facts-cost-signature-shape-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.05200004577636719
+    },
+    {
+      "name": "099-facts-cost-signature-shape-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04399895668029785
+    },
+    {
+      "name": "100-facts-cost-signature-shape-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.04800009727478027
+    },
+    {
+      "name": "101-facts-cost-signature-shape-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.04799985885620117
+    },
+    {
+      "name": "102-facts-cost-raw-shape-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.03600001335144043
+    },
+    {
+      "name": "103-facts-cost-raw-shape-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.032000064849853516
+    },
+    {
+      "name": "104-facts-cost-raw-shape-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.039999961853027344
+    },
+    {
+      "name": "105-facts-cost-raw-shape-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.03999900817871094
+    },
+    {
+      "name": "106-facts-cost-raw-shape-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.039999961853027344
+    },
+    {
+      "name": "107-facts-cost-raw-shape-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.032000064849853516
+    },
+    {
+      "name": "108-facts-cost-type-shape-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.0559999942779541
+    },
+    {
+      "name": "109-facts-cost-type-shape-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.059999942779541016
+    },
+    {
+      "name": "110-facts-cost-type-shape-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.05999898910522461
+    },
+    {
+      "name": "111-facts-cost-type-shape-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.05200004577636719
+    },
+    {
+      "name": "112-facts-cost-type-shape-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.0559999942779541
+    },
+    {
+      "name": "113-facts-cost-type-shape-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.0559999942779541
+    },
+    {
+      "name": "114-facts-cost-options-1-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.0280001163482666
+    },
+    {
+      "name": "115-facts-cost-options-1-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.019999980926513672
+    },
+    {
+      "name": "116-facts-cost-options-2-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.023999929428100586
+    },
+    {
+      "name": "117-facts-cost-options-2-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.019999027252197266
+    },
+    {
+      "name": "118-facts-cost-options-3-native",
+      "category": "fact cost runs",
+      "window_seconds": 0.0280001163482666
+    },
+    {
+      "name": "119-facts-cost-options-3-go",
+      "category": "fact cost runs",
+      "window_seconds": 0.25999879837036133
+    },
+    {
+      "name": "120-six-compiler-go",
+      "category": "compiler agreement",
+      "window_seconds": 1.5759940147399902
+    },
+    {
+      "name": "121-six-compiler-native",
+      "category": "compiler agreement",
+      "window_seconds": 12.727939128875732
+    },
+    {
+      "name": "122-six-bench-1-suite",
+      "category": "compiler benchmarks",
+      "window_seconds": 5.9639739990234375
+    },
+    {
+      "name": "123-six-bench-1-oracle",
+      "category": "compiler benchmarks",
+      "window_seconds": 1.7399919033050537
+    },
+    {
+      "name": "124-six-bench-2-oracle",
+      "category": "compiler benchmarks",
+      "window_seconds": 1.571993112564087
+    },
+    {
+      "name": "125-six-bench-2-suite",
+      "category": "compiler benchmarks",
+      "window_seconds": 4.891978979110718
+    },
+    {
+      "name": "126-six-bench-3-suite",
+      "category": "compiler benchmarks",
+      "window_seconds": 5.127976894378662
+    },
+    {
+      "name": "127-six-bench-3-oracle",
+      "category": "compiler benchmarks",
+      "window_seconds": 1.5533161163330078
+    }
+  ],
+  "implementation": "measurement only; no split or new test units",
+  "full_package_run": null,
+  "after": null,
+  "union_check": null,
+  "planted_test": null,
+  "vet": "pass"
+}
