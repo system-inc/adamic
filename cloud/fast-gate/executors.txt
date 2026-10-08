@@ -54,6 +54,11 @@ cohere      stage1/cohere/config/*
 # the root tsconfig.json, the compiler options internal/load gives every program (the smoke set runs too).
 package:internal/oracle  oracle/*
 package:internal/load    tsconfig.json
+# A .gitignore outside a package isn't inert: a line that matched a tracked file would hide it from every
+# walker that honors ignores. The gitignore port's test asks git and the port about the live tree's ignore
+# files (askedCases), so it is the executor (area/library 4a3880a7 added /logs/, Oct 8).
+package:stage1/cohere/gitignore  .gitignore
+package:stage1/cohere/gitignore  */.gitignore
 # Platforms' Cloudflare Workers (@system_adamic_platforms, Oct 7 20:59): workers/compute/verify.mjs,
 # workers/replay-all.mjs and workers/compute/verify-handler.mjs with a freshly built adamic, plus
 # workers/compute/verify-url.mjs when the transport changes. The workerd runs are proofs, not gates.
