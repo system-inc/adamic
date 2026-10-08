@@ -1128,6 +1128,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "source-path-resolver",
+      "pairs": 2,
+      "candidateReads": 32,
+      "members": [
+        {
+          "receiver_type_id": 9939,
+          "type": "Program",
+          "field": "getSourceFileByPath",
+          "declared_types": [
+            "(path: Path) => SourceFile | undefined"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 16,
+          "witness": {
+            "file": "src/compiler/watchUtilities.ts",
+            "line": 641,
+            "column": 15
+          },
+          "rank": 103,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "getEmitResolver",
+          "declared_types": [
+            "() => EmitResolver"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 16,
+          "witness": {
+            "file": "src/compiler/transformers/utilities.ts",
+            "line": 180,
+            "column": 22
+          },
+          "rank": 107,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

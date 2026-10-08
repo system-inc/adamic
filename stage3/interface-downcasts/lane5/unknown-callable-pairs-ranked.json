@@ -2007,7 +2007,8 @@
       "column": 15
     },
     "rank": 103,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 73,
@@ -2083,7 +2084,8 @@
       "column": 22
     },
     "rank": 107,
-    "certified": false
+    "certified": true,
+    "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
   },
   {
     "receiver_type_id": 91285,

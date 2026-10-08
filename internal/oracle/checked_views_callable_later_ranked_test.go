@@ -8,6 +8,8 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"source-file-path", "getSourceFileByPath", "3\n", "0\n", "0", "sourceFile.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"emit-resolver", "getEmitResolver", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
 		{"export-declaration", "createExportDeclaration", "3\n", "0\n14\n", "0", "exportClause.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"computed-name", "updateComputedPropertyName", "7\n", "", "0", "node.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"source-file-update", "updateSourceFile", "7\n", "7\n13\n", "0", "statement.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
@@ -154,6 +156,28 @@ func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
 			}
 			// Native compilation is the separately logged representation-conversion
 			// frontier. This test pins the existing JavaScript refusal only.
+		})
+	}
+}
+
+func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
+	for _, witness := range []struct{ directory, output, refusal string }{
+		{"literal-type", "3\n", "unsupported untagged object union contract"},
+		{"environment-variable", "abc\n", "unbound-method"},
+	} {
+		t.Run(witness.directory, func(t *testing.T) {
+			path, err := filepath.Abs(repository + "/stage3/interface-downcasts/lane5/later-ranked-callables/" + witness.directory + "/good.a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != witness.output {
+				t.Fatalf("Node %#v", truth)
+			}
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), witness.refusal) {
+				t.Fatalf("original read refusal: %v", err)
+			}
 		})
 	}
 }
