@@ -282,6 +282,46 @@ func (l *lowering) finishAccessors() error {
 		l.result.Functions = append(l.result.Functions, function)
 		return index
 	}
+	// Resolve a callee before evaluating its arguments. For an ordinary method, return a
+	// closure that retains its receiver and performs the original method lookup when called.
+	// For a getter, return its result directly. This keeps getter side effects before arguments.
+	methodResolvers := map[string]int{}
+	resolveMethod := func(property ir.Property, call ir.CallClosure) ir.Expression {
+		key := fmt.Sprintf("%s:%d", property.Name, call.Returns)
+		for _, argument := range call.Arguments {
+			key += fmt.Sprintf(":%d", argument.Type())
+		}
+		if index, exists := methodResolvers[key]; exists {
+			return ir.Call{Function: index, Arguments: []ir.Expression{property.Object}, Returns: ir.Closure}
+		}
+		getter := dispatch(property.Name, ir.Closure, false, 0)
+		index := len(l.result.Functions)
+		methodResolvers[key] = index
+		self := len(l.result.Locals)
+		l.result.Locals = append(l.result.Locals, ir.Local{Name: "object", Type: ir.Object, Function: index, Captured: true})
+		object := ir.Read{Local: self, Of: ir.Object}
+		l.result.Functions = append(l.result.Functions, ir.Function{Name: "resolve_" + property.Name, Returns: ir.Closure, Parameters: []int{self}})
+		thunkIndex := len(l.result.Functions)
+		thunk := ir.Function{Name: "bound_" + property.Name, Returns: call.Returns, Closure: true, Environment: []int{self}}
+		invoke := ir.CallClosure{Closure: ir.Property{Object: object, Name: property.Name, Of: ir.Closure, Method: true}, Returns: call.Returns}
+		for _, argument := range call.Arguments {
+			local := len(l.result.Locals)
+			l.result.Locals = append(l.result.Locals, ir.Local{Name: "argument", Type: argument.Type(), Function: thunkIndex})
+			thunk.Parameters = append(thunk.Parameters, local)
+			invoke.Arguments = append(invoke.Arguments, ir.Read{Local: local, Of: argument.Type()})
+		}
+		if call.Returns == 0 {
+			thunk.Body = []ir.Statement{ir.Evaluate{Value: invoke}}
+		} else {
+			thunk.Body = []ir.Statement{ir.Return{Value: invoke}}
+		}
+		l.result.Functions = append(l.result.Functions, thunk)
+		l.result.Functions[index].Body = []ir.Statement{
+			ir.If{Condition: ir.HasAccessor{Object: object, Name: property.Name}, Then: []ir.Statement{ir.Return{Value: ir.Call{Function: getter, Arguments: []ir.Expression{object}, Returns: ir.Closure}}}},
+			ir.Return{Value: ir.MakeClosure{Function: thunkIndex}},
+		}
+		return ir.Call{Function: index, Arguments: []ir.Expression{property.Object}, Returns: ir.Closure}
+	}
 	var transform func(reflect.Value) reflect.Value
 	transform = func(value reflect.Value) reflect.Value {
 		if !value.IsValid() {
@@ -290,6 +330,20 @@ func (l *lowering) finishAccessors() error {
 		if value.Kind() == reflect.Interface {
 			if value.IsNil() {
 				return value
+			}
+			if call, ok := value.Elem().Interface().(ir.CallClosure); ok {
+				if property, ok := call.Closure.(ir.Property); ok && property.Method && names[property.Name] {
+					if property.Optional {
+						failure = &NotYet{Where: l.result.Source, What: "an optional accessor callee"}
+						return value
+					}
+					property.Object = transform(reflect.ValueOf(&property.Object).Elem()).Interface().(ir.Expression)
+					call.Arguments = transform(reflect.ValueOf(call.Arguments)).Interface().([]ir.Expression)
+					call.Closure = resolveMethod(property, call)
+					result := reflect.New(value.Type()).Elem()
+					result.Set(reflect.ValueOf(call))
+					return result
+				}
 			}
 			mapped := transform(value.Elem())
 			node := mapped.Interface()

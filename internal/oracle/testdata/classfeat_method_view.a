@@ -1,0 +1,5 @@
+interface Runner { run(): string }
+class Worker implements Runner { #label: string; constructor(label: string) { this.#label = label; } run(): string { return `worker ${this.#label}`; } }
+class Lazy { get run(): () => string { return () => 'lazy'; } }
+function go(runner: Runner): string { return runner.run(); }
+console.log(go(new Worker(`one${1}`))); const lazy = new Lazy(); console.log(lazy.run());
