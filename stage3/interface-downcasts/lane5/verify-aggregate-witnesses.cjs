@@ -11,7 +11,7 @@ const pairs = JSON.parse(fs.readFileSync(path.join(__dirname,'unknown-callable-p
 if(pairs.length!==ranks.size)throw Error("missing requested candidate rank");
 const rows = [];
 for (const pair of pairs) {
- const declarationFile=pair.type==='FormatDiagnosticsHost'?'src/compiler/program.ts':pair.type==='ProgramDiagnostics'?'src/compiler/programDiagnostics.ts':pair.type==='Scanner'?'src/compiler/scanner.ts':(pair.type==='System'||pair.type==='FileWatcher')?'src/compiler/sys.ts':pair.type==='ResolutionCacheHost'?'src/compiler/resolutionCache.ts':pair.type.includes('ts.performance')?'src/compiler/performance.ts':'src/compiler/types.ts';
+ const declarationFile=pair.type==='typeof Debug'?'src/compiler/debug.ts':pair.type==='FormatDiagnosticsHost'?'src/compiler/program.ts':pair.type==='ProgramDiagnostics'?'src/compiler/programDiagnostics.ts':pair.type==='Scanner'?'src/compiler/scanner.ts':(pair.type==='System'||pair.type==='FileWatcher')?'src/compiler/sys.ts':pair.type==='ResolutionCacheHost'?'src/compiler/resolutionCache.ts':pair.type.includes('ts.performance')?'src/compiler/performance.ts':'src/compiler/types.ts';
  const declarationBytes=fs.readFileSync(path.join(pin,declarationFile));
  const types=ts.createSourceFile(declarationFile,declarationBytes.toString('utf8'),ts.ScriptTarget.Latest,true);
  const w = pair.witness;
@@ -29,7 +29,7 @@ for (const pair of pairs) {
   ts.forEachChild(node,visit);
  }
  function declaration(node) {
-  if(pair.type.includes('ts.performance')&&ts.isFunctionDeclaration(node)&&node.name?.text===pair.field&&node.body) {
+  if((pair.type.includes('ts.performance')||pair.type==='typeof Debug')&&ts.isFunctionDeclaration(node)&&node.name?.text===pair.field&&node.body) {
    decl=node;
    originalHeader=types.text.slice(node.getStart(types),node.body.getStart(types)).trim();
    inheritancePath=[pair.type];

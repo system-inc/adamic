@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"lexical-end", "endLexicalEnvironment", "3\n", "0\n", "1", "statement.value", "3\n", "0\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"module-format", "getEmitModuleFormatOfFile", "3\n", "", "0", "sourceFile.value", "3\n3\n", "bad\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"false", "createFalse", "3\n", "", "1", "", "", "undefined\n", "good,wrong-value,wrong-arity,wrong-result"},
+		{"parenthesized-type", "createParenthesizedType", "3\n", "", "0", "type.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"variable-update-tagged", "updateVariableDeclaration", "7\n", "10\n5\n", "0", "name.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"conditional-expression", "createConditionalExpression", "12\n", "15\n", "0", "condition.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"binary-update", "updateBinaryExpression", "10\n", "11\n", "0", "node.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

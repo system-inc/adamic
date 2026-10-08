@@ -1209,6 +1209,176 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 9365
+    },
+    {
+      "rank": 146,
+      "type": "NodeFactory",
+      "field": "updateForStatement",
+      "candidateReads": 12,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1323,
+        "column": 16
+      },
+      "read": "context.factory.updateForStatement",
+      "readKind": "property",
+      "call": "context.factory.updateForStatement(\r\n            node,\r\n            nodeVisitor(node.initializer, visitor, isForInitializer),\r\n            nodeVisitor(node.condition, visitor, isExpression),\r\n            nodeVisitor(node.incrementor, visitor, isExpression),\r\n            visitIterationBody(node.statement, visitor, context, nodeVisitor),\r\n        )",
+      "utf16Start": 64180,
+      "utf16End": 64214,
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "declaration": "updateForStatement(node: ForStatement, initializer: ForInitializer | undefined, condition: Expression | undefined, incrementor: Expression | undefined, statement: Statement): ForStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9045
+    },
+    {
+      "rank": 148,
+      "type": "ParenthesizerRules",
+      "field": "parenthesizeOperandOfPrefixUnary",
+      "candidateReads": 12,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 3143,
+        "column": 27
+      },
+      "read": "parenthesizerRules().parenthesizeOperandOfPrefixUnary",
+      "readKind": "property",
+      "call": "parenthesizerRules().parenthesizeOperandOfPrefixUnary(expression)",
+      "utf16Start": 131805,
+      "utf16End": 131858,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "parenthesizeOperandOfPrefixUnary(operand: Expression): UnaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8684
+    },
+    {
+      "rank": 151,
+      "type": "typeof Debug",
+      "field": "formatSyntaxKind",
+      "candidateReads": 12,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 7231,
+        "column": 52
+      },
+      "read": "Debug.formatSyntaxKind",
+      "readKind": "property",
+      "call": "Debug.formatSyntaxKind(kind)",
+      "utf16Start": 322772,
+      "utf16End": 322794,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "formatSyntaxKind(kind: SyntaxKind | undefined): string;",
+      "declarationFile": "src/compiler/debug.ts",
+      "declarationSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "declarationLine": 444,
+      "declarationHeader": "export function formatSyntaxKind(kind: SyntaxKind | undefined): string",
+      "declarationKind": "exported-function"
+    },
+    {
+      "rank": 154,
+      "type": "NodeFactory",
+      "field": "createClassStaticBlockDeclaration",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7938,
+        "column": 43
+      },
+      "read": "factory.createClassStaticBlockDeclaration",
+      "readKind": "property",
+      "call": "factory.createClassStaticBlockDeclaration(body)",
+      "utf16Start": 391522,
+      "utf16End": 391563,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createClassStaticBlockDeclaration(body: Block): ClassStaticBlockDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8872
+    },
+    {
+      "rank": 155,
+      "type": "NodeFactory",
+      "field": "createPrefixUnaryExpression",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 531,
+        "column": 9
+      },
+      "read": "factory.createPrefixUnaryExpression",
+      "readKind": "property",
+      "call": "factory.createPrefixUnaryExpression(operator, temp)",
+      "utf16Start": 19728,
+      "utf16End": 19763,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "createPrefixUnaryExpression(operator: PrefixUnaryOperator, operand: Expression): PrefixUnaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8977
+    },
+    {
+      "rank": 156,
+      "type": "NodeFactory",
+      "field": "getInternalName",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 962,
+        "column": 31
+      },
+      "read": "factory.getInternalName",
+      "readKind": "property",
+      "call": "factory.getInternalName(node)",
+      "utf16Start": 37755,
+      "utf16End": 37778,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "getInternalName(node: Declaration, allowComments?: boolean, allowSourceMaps?: boolean): Identifier;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9412
+    },
+    {
+      "rank": 157,
+      "type": "NodeFactory",
+      "field": "updateCallExpression",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/factory/parenthesizerRules.ts",
+        "line": 442,
+        "column": 33
+      },
+      "read": "factory.updateCallExpression",
+      "readKind": "property",
+      "call": "factory.updateCallExpression(\r\n                    emittedExpression,\r\n                    setTextRange(factory.createParenthesizedExpression(callee), callee),\r\n                    emittedExpression.typeArguments,\r\n                    emittedExpression.arguments,\r\n                )",
+      "utf16Start": 21457,
+      "utf16End": 21485,
+      "fileSha256": "94aa00739f9d2b7f41ca6c5d0aaa5495a1d4d4b7c8af1919361a64a7abf90764",
+      "declaration": "updateCallExpression(node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]): CallExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8954
+    },
+    {
+      "rank": 158,
+      "type": "NodeFactory",
+      "field": "updateClassDeclaration",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 6588,
+        "column": 29
+      },
+      "read": "factory.updateClassDeclaration",
+      "readKind": "property",
+      "call": "factory.updateClassDeclaration(\r\n                    classDecl,\r\n                    classDecl.modifiers,\r\n                    /*name*/ undefined,\r\n                    classDecl.typeParameters,\r\n                    classDecl.heritageClauses,\r\n                    classDecl.members,\r\n                )",
+      "utf16Start": 347530,
+      "utf16End": 347560,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declaration": "updateClassDeclaration(node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]): ClassDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9074
     }
   ]
 }
