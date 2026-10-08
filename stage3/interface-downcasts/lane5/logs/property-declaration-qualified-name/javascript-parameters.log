@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.87s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-declaration/wrong-members (0.47s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 0 stdout "24\n" stderr "" want "createPropertyDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPropertyDeclaration expected (modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: ExclamationToken | QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/qualified-name/wrong-members (0.38s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 0 stdout "7\n" stderr "" want "createQualifiedName" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createQualifiedName expected (left: EntityName, right: string | Identifier) => QualifiedName, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.875s
+FAIL

@@ -2032,6 +2032,53 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "property-declaration-qualified-name",
+      "pairs": 2,
+      "candidateReads": 20,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createPropertyDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: QuestionToken | ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 10,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 7825,
+            "column": 22
+          },
+          "rank": 176,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createQualifiedName",
+          "declared_types": [
+            "(left: EntityName, right: string | Identifier) => QualifiedName"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 10,
+          "witness": {
+            "file": "src/compiler/parser.ts",
+            "line": 3599,
+            "column": 17
+          },
+          "rank": 177,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.90s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-declaration/wrong-result (0.46s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createPropertyDeclaration([{value:2}],{kind:80,value:4},{kind:58,value:5},{value:6},{value:7}).value is not initialized; expected number, found missing\n" want "createPropertyDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPropertyDeclaration expected (modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: ExclamationToken | QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration, found function with incompatible result representation\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/qualified-name/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createQualifiedName({kind:80,value:3},{kind:80,value:4}).value is not initialized; expected number, found missing\n" want "createQualifiedName" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createQualifiedName expected (left: EntityName, right: string | Identifier) => QualifiedName, found function with incompatible result representation\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.904s
+FAIL

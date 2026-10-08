@@ -8,6 +8,8 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"property-declaration", "createPropertyDeclaration", "24\n", "4\n4\n4\n4\n4\n4\n4\n3\n8\n", "0", "modifier.value", "2\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"qualified-name", "createQualifiedName", "7\n", "7\n7\n7\n7\n", "0", "left.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"import-declaration", "createImportDeclaration", "10\n", "3\n3\n10\n", "0", "moduleSpecifier.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"function-call-call", "createFunctionCallCall", "6\n", "3\n6\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"partial-expression", "createPartiallyEmittedExpression", "7\n", "3\n3\n7\n", "0", "expression.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

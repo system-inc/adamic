@@ -1582,6 +1582,48 @@
       "declarationLine": 9091
     },
     {
+      "rank": 176,
+      "type": "NodeFactory",
+      "field": "createPropertyDeclaration",
+      "candidateReads": 10,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7825,
+        "column": 22
+      },
+      "read": "factory.createPropertyDeclaration",
+      "readKind": "property",
+      "call": "factory.createPropertyDeclaration(\r\n            modifiers,\r\n            name,\r\n            questionToken || exclamationToken,\r\n            type,\r\n            initializer,\r\n        )",
+      "utf16Start": 385840,
+      "utf16End": 385873,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createPropertyDeclaration(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: QuestionToken | ExclamationToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined): PropertyDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8851
+    },
+    {
+      "rank": 177,
+      "type": "NodeFactory",
+      "field": "createQualifiedName",
+      "candidateReads": 10,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 3599,
+        "column": 17
+      },
+      "read": "factory.createQualifiedName",
+      "readKind": "property",
+      "call": "factory.createQualifiedName(\r\n                    entity,\r\n                    parseRightSideOfDot(allowReservedWords, /*allowPrivateIdentifiers*/ false, /*allowUnicodeEscapeSequenceInIdentifierName*/ true) as Identifier,\r\n                )",
+      "utf16Start": 181553,
+      "utf16End": 181580,
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declaration": "createQualifiedName(left: EntityName, right: string | Identifier): QualifiedName;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 8829
+    },
+    {
       "rank": 185,
       "type": "NodeFactory",
       "field": "createFunctionCallCall",

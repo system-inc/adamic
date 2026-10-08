@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Identifier {readonly kind:80;readonly value:number;}
+interface QualifiedName {readonly kind:167;readonly value:number;}
+type EntityName = Identifier | QualifiedName;
+interface Base {readonly createQualifiedName:unknown;}
+interface Target {createQualifiedName(left: EntityName, right: string | Identifier): QualifiedName;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createQualifiedName({kind:80,value:3},{kind:80,value:4}).value}`);}
+probe({createQualifiedName:(left:EntityName,right:string|Identifier):number=>0});

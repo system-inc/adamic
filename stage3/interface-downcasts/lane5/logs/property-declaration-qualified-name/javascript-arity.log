@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.82s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/property-declaration/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 0 stdout "9\n" stderr "" want "createPropertyDeclaration" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPropertyDeclaration expected (modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, questionOrExclamationToken: ExclamationToken | QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined) => PropertyDeclaration, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/qualified-name/wrong-arity (0.37s)
+        checked_views_callable_later_ranked_test.go:84: gate cache node hit
+        checked_views_callable_later_ranked_test.go:104: gate cache node miss
+        checked_views_callable_later_ranked_test.go:124: backend2 exit 0 stdout "9\n" stderr "" want "createQualifiedName" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createQualifiedName expected (left: EntityName, right: string | Identifier) => QualifiedName, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.833s
+FAIL

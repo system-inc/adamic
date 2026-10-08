@@ -21,6 +21,8 @@ function collect(source) {
 }
 for (const [name, node] of collect(original)) originalNodes.set(name, node);
 const families = new Map([
+ [176, {directory:'property-declaration', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral'], tokens:['QuestionToken','ExclamationToken']}],
+ [177, {directory:'qualified-name', aliases:['EntityName'], carriers:['Identifier','QualifiedName']}],
  [159, {directory:'parameter-update', aliases:['BindingName','BindingPattern'], carriers:['Identifier','ObjectBindingPattern','ArrayBindingPattern'], tokens:['DotDotDotToken','QuestionToken']}],
  [160, {directory:'property-update', aliases:['PropertyName'], carriers:['Identifier','StringLiteral','NoSubstitutionTemplateLiteral','NumericLiteral','ComputedPropertyName','PrivateIdentifier','BigIntLiteral'], tokens:['QuestionToken','ExclamationToken']}],
  [122, {directory:'variable-update-tagged', aliases:['BindingName','BindingPattern'], carriers:['Identifier','ObjectBindingPattern','ArrayBindingPattern']}],
