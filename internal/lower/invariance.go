@@ -417,6 +417,12 @@ func (l *lowering) refuseWidening(node *ast.Node) error {
 	if l.nodeFSFileReadOnlyArgument(node) {
 		return nil
 	}
+	if l.typeMapper == nil {
+		if err := l.explicitGenericArrayViews(node); err != nil {
+			return err
+		}
+
+	}
 	var own, contextual *checker.Type
 	var found *widening
 	switch {
