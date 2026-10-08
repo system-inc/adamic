@@ -1,0 +1,2 @@
+class Box { #secret: string; constructor(secret: string) { this.#secret = secret; } view(): { readonly shown: string } { const box: Box = this; return { get shown(): string { return `seen ${box.#secret}`; } }; } }
+console.log(new Box(`s${1}`).view().shown);
