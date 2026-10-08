@@ -1,0 +1,14 @@
+FIRST FAILURE (stage3, at 662.6 s):
+stage 3 tier 1 failed: stage3-apply-tests exit 1, stage3-lane exit 1 (logs: stage3-apply-tests.log, stage3-lane.log)
+FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log
+stage3-apply-tests, last lines:
+  File "/usr/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['bash', '/tmp/adamic-gate/stage3-apply-checkout-ir07quhi/source/stage3/apply.sh', '/tmp/adamic-gate/stage3-apply-checkout-ir07quhi/adapted']' returned non-zero exit status 1.
+----------------------------------------------------------------------
+Ran 1 test in 641.713s
+FAILED (errors=1)
+stage3-lane, last lines:
+/home/ahra/fast-gate/tree-2-stage3-lane
+apply exit: expected 0, observed 1; see apply.log
+FAIL stage3 landing lane: apply exit: expected 0, observed 1; see apply.log
