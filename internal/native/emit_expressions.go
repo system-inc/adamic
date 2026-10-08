@@ -26,13 +26,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
-		return "NULL"
+		return nullReference(expression.Type())
 	case ir.IsNull:
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
 			return "false"
 		}
-		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
+		return nullTest(expression.Value.Type(), e.value(expression.Value), expression.IncludeUndefined)
 	case ir.NumberConstant:
 		return cNumber(expression.Value)
 	case ir.BooleanConstant:
@@ -179,7 +179,14 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		return fmt.Sprintf("(%s).%s", value, member(expression.Type()))
 	case ir.Defined:
 		value := e.value(expression.Value)
-		e.checkDefined(value, expression.Message)
+		if expression.Null && expression.Value.Type().UsesNullSentinel() {
+			e.line("if (%s) {", nullTest(expression.Value.Type(), value, true))
+			e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+			e.line("\tadamic_panic(message, sizeof message - 1);")
+			e.line("}")
+		} else {
+			e.checkDefined(value, expression.Message)
+		}
 		return value
 	case ir.MaybeOf:
 		if expression.Value == nil {
@@ -213,7 +220,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.StringLength:
 		if expression.Optional {
 			text := e.value(expression.Value)
-			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s == NULL ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", text, zero(ir.MaybeNumber), text))
+			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("(%s ? %s : (adamic_maybe_number){true, adamic_string_length(%s)})", nullTest(expression.Value.Type(), text, true), zero(ir.MaybeNumber), text))
 		}
 		return fmt.Sprintf("adamic_string_length(%s)", e.value(expression.Value))
 	case ir.CharCodeAt:
@@ -423,9 +430,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		if expression.Pairs != nil {
 			pairs = e.value(expression.Pairs)
 		}
-		created := e.own(ir.Map, newMap(expression.Key, expression.Value.IsReference()))
+		creation := newMap(expression.Key, expression.Value.IsReference())
+		if expression.Record {
+			creation = fmt.Sprintf("adamic_record_new(%t)", expression.Value.IsReference())
+		}
+		created := e.own(expression.Type(), creation)
 		for _, entry := range entries {
-			e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			if expression.Record {
+				e.line("adamic_record_define(%s, %s, %s);", created, retained(entry[0]), held(expression.Value, entry[1]))
+			} else {
+				e.line("adamic_map_set(%s, %s, %s);", created, held(expression.Key, entry[0]), held(expression.Value, entry[1]))
+			}
 		}
 		if expression.Pairs != nil {
 			e.line("adamic_map_add_pairs(%s, %s);", created, pairs)
@@ -522,6 +537,13 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 		array := e.value(expression.Array)
 		separator := e.value(expression.Separator)
 		return e.own(ir.String, fmt.Sprintf("adamic_array_join(%s, %s, %s)", array, separator, joinKind(expression.Element)))
+	case ir.TypedArrayNew:
+		return e.value(ir.ObjectLiteral{Fields: []ir.Field{{Name: "0", Value: ir.ArrayFill{Length: expression.Length, Value: ir.NumberConstant{Value: 0}, Element: ir.Number}}}})
+	case ir.TypedArrayData:
+		object := e.value(expression.Value)
+		return e.snapshot(ir.Array, fmt.Sprintf("(adamic_array *)%s->slots[0].reference", object))
+	case ir.ArrayHoles:
+		return e.own(ir.Array, fmt.Sprintf("adamic_array_holes(%s, %t)", e.value(expression.Length), expression.Element.IsReference()))
 	case ir.ArrayLiteral:
 		if spread, ok := e.spreadArray(expression); ok {
 			return spread

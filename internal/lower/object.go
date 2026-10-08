@@ -263,7 +263,7 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		// const values: number[] = []. So is [node] written into a Weak<Node>[]: its elements are
 		// kept weakly.
 		if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); len(literal.AsArrayLiteralExpression().Elements.Nodes) == 0 || declared == ir.Weak || l.nullSentinelType(l.checker.GetElementTypeOfArrayType(contextual)) {
 				arrayType = contextual
 			}
 		}
@@ -294,6 +294,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	access := node.AsPropertyAccessExpression()
 	name := l.fieldName(node.Name())
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) && name != "length" {
+		return nil, l.notYet(node, "typed array properties other than length require buffer and view semantics")
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -354,6 +357,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		if name != "length" || access.QuestionDotToken != nil {
+			return nil, l.notYet(node, "typed array properties other than length require buffer and view semantics")
+		}
+		return ir.Length{Array: ir.TypedArrayData{Value: object}}, nil
 	}
 	if object.Type() == ir.Object && l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(access.Expression)), "RegExp") {
 		switch name {
@@ -571,6 +580,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if err := l.typedArrayCall(node); err != nil {
+		return nil, true, err
+	}
+	if err := l.sparseCall(node); err != nil {
+		return nil, true, err
+	}
 	if value, handled, err := l.userMethodCall(node); handled {
 		return value, true, err
 	}
@@ -797,6 +812,21 @@ var numberConstants = map[string]float64{
 
 // forOf lowers for (const element of array).
 func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(node.AsForInOrOfStatement().Expression)) {
+		return nil, l.notYet(node, "typed array iteration requires buffer and iterator semantics")
+	}
+	if l.program.ContainsSparseArrays() && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsForInOrOfStatement().Expression))) {
+		return nil, l.notYet(node, "for...of over arrays in a program with sparse arrays")
+	}
+	iterated := ast.SkipParentheses(node.AsForInOrOfStatement().Expression)
+	if iterated.Kind == ast.KindCallExpression {
+		if err := l.typedArrayCall(iterated); err != nil {
+			return nil, err
+		}
+		if err := l.sparseCall(iterated); err != nil {
+			return nil, err
+		}
+	}
 	if statements, known, err := l.libraryArrayForOf(node); known {
 		return statements, err
 	}
@@ -1624,6 +1654,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		return l.typedArrayIndex(node, object)
+	}
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		if index.Kind != ast.KindStringLiteral {
 			return nil, l.notYet(node, "a computed named-group key")
@@ -1693,6 +1726,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 // setIndex lowers array[index] = value, as a statement.
 func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
 	access := target.AsElementAccessExpression()
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		return nil, l.notYet(target, "typed array writes require numeric coercion and buffer aliasing")
+	}
 	array, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
@@ -1968,7 +2004,14 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "element", Type: ir.Number, Function: l.functionIndex})
 	arrayRead := ir.Read{Local: arrayLocal, Of: ir.Array}
 	indexRead := ir.Read{Local: indexLocal, Of: ir.Number}
-	current := ir.Unwrap{Value: ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}}
+	lookup := ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}
+	var current ir.Expression = ir.Unwrap{Value: lookup}
+	if l.program.RequiresIndexedPresenceChecks() {
+		current, err = l.checkedIndexedRead(target, lookup)
+		if err != nil {
+			return nil, err
+		}
+	}
 	right, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err

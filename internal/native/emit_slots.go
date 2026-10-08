@@ -26,13 +26,21 @@ func (e *emitter) mapGetSlot(expression ir.MapGet) string {
 	object := e.value(expression.Map)
 	key := e.value(expression.Key)
 	slot := e.temporary()
-	e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+	if expression.Map.Type() == ir.Record {
+		e.line("adamic_value *%s = adamic_record_get(%s, %s);", slot, object, key)
+	} else {
+		e.line("adamic_value *%s = adamic_map_get(%s, %s);", slot, object, borrowed(expression.KeyType, key))
+	}
 	return slot
 }
 
 // typeOfReference evaluates a reference once and retains the lookup's presence where null and
 // undefined could otherwise collapse into the same pointer. The classifier remains union_typeof.
 func (e *emitter) typeOfReference(observation ir.TypeOf) (string, string) {
+	if observation.Value.Type().UsesNullSentinel() {
+		// Sentinel identity carries null through locals; NULL always means undefined.
+		return e.value(observation.Value), "false"
+	}
 	if observation.Null {
 		var slot string
 		var of ir.Type

@@ -1,0 +1,129 @@
+=== RUN   TestRecordsAgainstNode
+=== PAUSE TestRecordsAgainstNode
+=== RUN   TestRecordMutants
+=== PAUSE TestRecordMutants
+=== RUN   TestRecordReadMutants
+=== PAUSE TestRecordReadMutants
+=== CONT  TestRecordsAgainstNode
+=== CONT  TestRecordReadMutants
+=== CONT  TestRecordMutants
+=== RUN   TestRecordReadMutants/prototype-membership-restored
+=== RUN   TestRecordMutants/indices-in-insertion-order
+=== RUN   TestRecordsAgainstNode/semantics
+    record_test.go:75: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== RUN   TestRecordsAgainstNode/prototypes
+    record_test.go:75: adamic: counts: allocations 22 frees 22 retains 15 releases 39 peak 5 regions 0
+=== RUN   TestRecordsAgainstNode/reads
+    record_test.go:75: adamic: counts: allocations 27 frees 27 retains 3 releases 28 peak 5 regions 0
+=== RUN   TestRecordsAgainstNode/references
+    record_test.go:75: adamic: counts: allocations 350024 frees 350024 retains 10005 releases 50025 peak 300000 regions 0
+=== RUN   TestRecordsAgainstNode/iteration
+    record_test.go:75: adamic: counts: allocations 19 frees 19 retains 10 releases 18 peak 12 regions 0
+=== RUN   TestRecordsAgainstNode/numeric
+    record_test.go:75: adamic: counts: allocations 350004 frees 350004 retains 100001 releases 350002 peak 100005 regions 0
+=== RUN   TestRecordsAgainstNode/workload-1000000
+    record_test.go:75: adamic: counts: allocations 3500004 frees 3500004 retains 500001 releases 3000002 peak 1000003 regions 0
+=== NAME  TestRecordMutants/indices-in-insertion-order
+    record_test.go:213: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/uint32-max-as-index
+=== NAME  TestRecordReadMutants/prototype-membership-restored
+    record_test.go:251: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:262: caught by exact diagnostic and exit check; forbidden result "1\n"
+=== RUN   TestRecordReadMutants/missing-read-silent
+=== RUN   TestRecordsAgainstNode/bench-1000
+    record_test.go:75: adamic: counts: allocations 3504 frees 3504 retains 501 releases 3002 peak 1003 regions 0
+=== NAME  TestRecordsAgainstNode
+    record_test.go:89: Object.getOwnPropertyNames(Object.prototype) on Node v24.19.0: constructor, __defineGetter__, __defineSetter__, hasOwnProperty, __lookupGetter__, __lookupSetter__, isPrototypeOf, propertyIsEnumerable, toString, valueOf, __proto__, toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-get/constructor
+=== RUN   TestRecordsAgainstNode/missing-has/constructor
+=== RUN   TestRecordsAgainstNode/missing-get/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__defineSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-has/hasOwnProperty
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupGetter__
+=== RUN   TestRecordsAgainstNode/missing-get/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-has/__lookupSetter__
+=== RUN   TestRecordsAgainstNode/missing-get/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-has/isPrototypeOf
+=== RUN   TestRecordsAgainstNode/missing-get/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-has/propertyIsEnumerable
+=== RUN   TestRecordsAgainstNode/missing-get/toString
+=== RUN   TestRecordsAgainstNode/missing-has/toString
+=== RUN   TestRecordsAgainstNode/missing-get/valueOf
+=== RUN   TestRecordsAgainstNode/missing-has/valueOf
+=== RUN   TestRecordsAgainstNode/missing-get/__proto__
+=== RUN   TestRecordsAgainstNode/missing-has/__proto__
+=== RUN   TestRecordsAgainstNode/missing-get/toLocaleString
+=== RUN   TestRecordsAgainstNode/missing-has/toLocaleString
+=== RUN   TestRecordsAgainstNode/proto-assignment
+--- PASS: TestRecordsAgainstNode (9.24s)
+    --- PASS: TestRecordsAgainstNode/semantics (0.05s)
+    --- PASS: TestRecordsAgainstNode/prototypes (0.04s)
+    --- PASS: TestRecordsAgainstNode/reads (0.04s)
+    --- PASS: TestRecordsAgainstNode/references (0.24s)
+    --- PASS: TestRecordsAgainstNode/iteration (0.05s)
+    --- PASS: TestRecordsAgainstNode/numeric (1.26s)
+    --- PASS: TestRecordsAgainstNode/workload-1000000 (7.05s)
+    --- PASS: TestRecordsAgainstNode/bench-1000 (0.04s)
+    --- PASS: TestRecordsAgainstNode/missing-get/constructor (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/constructor (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__defineSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__defineSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/hasOwnProperty (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/hasOwnProperty (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupGetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__lookupSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__lookupSetter__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/isPrototypeOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/isPrototypeOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/propertyIsEnumerable (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/propertyIsEnumerable (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toString (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toString (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/valueOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/valueOf (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/__proto__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/__proto__ (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-get/toLocaleString (0.00s)
+    --- PASS: TestRecordsAgainstNode/missing-has/toLocaleString (0.00s)
+    --- PASS: TestRecordsAgainstNode/proto-assignment (0.00s)
+=== NAME  TestRecordMutants/uint32-max-as-index
+    record_test.go:213: adamic: counts: allocations 91 frees 91 retains 129 releases 116 peak 25 regions 0
+=== NAME  TestRecordReadMutants/missing-read-silent
+    record_test.go:251: adamic: counts: allocations 3 frees 3 retains 0 releases 2 peak 3 regions 0
+    record_test.go:262: caught by exact diagnostic and exit check; forbidden result "0\n"
+=== RUN   TestRecordReadMutants/own-read-checked-as-missing
+=== NAME  TestRecordMutants/uint32-max-as-index
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/deleted-key-iterated
+    record_test.go:213: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0
+=== NAME  TestRecordReadMutants/own-read-checked-as-missing
+    record_test.go:244: caught by the own-hit fixture
+--- PASS: TestRecordReadMutants (15.56s)
+    --- PASS: TestRecordReadMutants/prototype-membership-restored (5.59s)
+    --- PASS: TestRecordReadMutants/missing-read-silent (5.03s)
+    --- PASS: TestRecordReadMutants/own-read-checked-as-missing (4.93s)
+=== NAME  TestRecordMutants/deleted-key-iterated
+    record_test.go:220: caught by Node
+=== RUN   TestRecordMutants/overwrite-key-leaked
+    record_test.go:220: caught by LeakSanitizer
+=== RUN   TestRecordMutants/stored-key-freed
+    record_test.go:220: caught by AddressSanitizer: heap-use-after-free
+=== RUN   TestRecordMutants/own-slot-null-read
+    record_test.go:220: caught by runtime error: member access within null pointer
+--- PASS: TestRecordMutants (30.49s)
+    --- PASS: TestRecordMutants/indices-in-insertion-order (5.55s)
+    --- PASS: TestRecordMutants/uint32-max-as-index (5.09s)
+    --- PASS: TestRecordMutants/deleted-key-iterated (4.93s)
+    --- PASS: TestRecordMutants/overwrite-key-leaked (5.10s)
+    --- PASS: TestRecordMutants/stored-key-freed (5.08s)
+    --- PASS: TestRecordMutants/own-slot-null-read (4.74s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	30.502s

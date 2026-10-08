@@ -1,0 +1,63 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D129
+=== RUN   TestLedgerWitnesses/D129/present
+    witness_test.go:233: PRESENT D129 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D129/absent
+    witness_test.go:223: PROVEN D129 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D129/hole
+    witness_test.go:223: PROVEN D129 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D129/outer-present
+    witness_test.go:233: PRESENT D129 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D129/outer-absent
+    witness_test.go:223: PROVEN D129 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D130
+=== RUN   TestLedgerWitnesses/D130/present
+    witness_test.go:233: PRESENT D130 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D130/absent
+    witness_test.go:223: PROVEN D130 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D130/hole
+    witness_test.go:223: PROVEN D130 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D130/outer-present
+    witness_test.go:233: PRESENT D130 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D130/outer-absent
+    witness_test.go:223: PROVEN D130 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D131
+=== RUN   TestLedgerWitnesses/D131/present
+    witness_test.go:233: PRESENT D131 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D131/absent
+    witness_test.go:223: PROVEN D131 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D131/hole
+    witness_test.go:223: PROVEN D131 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D131/outer-present
+    witness_test.go:233: PRESENT D131 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D131/outer-absent
+    witness_test.go:223: PROVEN D131 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:148: BLOCKED D119 record of records of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD119present4105058837/001/D119.ts:1:24: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet; Node "7\n"
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:148: BLOCKED D119 record of records of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD119absent1091987707/001/D119.ts:1:24: stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet; Node "undefined\n"
+--- PASS: TestLedgerWitnesses (14.81s)
+    --- PASS: TestLedgerWitnesses/D129 (4.09s)
+        --- PASS: TestLedgerWitnesses/D129/present (0.68s)
+        --- PASS: TestLedgerWitnesses/D129/absent (1.00s)
+        --- PASS: TestLedgerWitnesses/D129/hole (0.92s)
+        --- PASS: TestLedgerWitnesses/D129/outer-present (0.63s)
+        --- PASS: TestLedgerWitnesses/D129/outer-absent (0.86s)
+    --- PASS: TestLedgerWitnesses/D130 (3.94s)
+        --- PASS: TestLedgerWitnesses/D130/present (0.73s)
+        --- PASS: TestLedgerWitnesses/D130/absent (0.88s)
+        --- PASS: TestLedgerWitnesses/D130/hole (0.82s)
+        --- PASS: TestLedgerWitnesses/D130/outer-present (0.68s)
+        --- PASS: TestLedgerWitnesses/D130/outer-absent (0.83s)
+    --- PASS: TestLedgerWitnesses/D131 (4.08s)
+        --- PASS: TestLedgerWitnesses/D131/present (0.66s)
+        --- PASS: TestLedgerWitnesses/D131/absent (0.85s)
+        --- PASS: TestLedgerWitnesses/D131/hole (0.89s)
+        --- PASS: TestLedgerWitnesses/D131/outer-present (0.73s)
+        --- PASS: TestLedgerWitnesses/D131/outer-absent (0.96s)
+    --- PASS: TestLedgerWitnesses/D119 (0.54s)
+        --- PASS: TestLedgerWitnesses/D119/present (0.27s)
+        --- PASS: TestLedgerWitnesses/D119/absent (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	14.816s

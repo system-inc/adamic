@@ -23,6 +23,9 @@ func (l *lowering) console(call *ast.Node) (ir.Statement, error) {
 	if err != nil {
 		return nil, err
 	}
+	if value.Type().UsesNullSentinel() {
+		value = l.spelled(arguments[0], value)
+	}
 	return ir.WriteLine{Stream: stream, Value: value}, nil
 }
 

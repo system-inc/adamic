@@ -49,6 +49,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	// object that happens to have fields of those names.
 	builder.WriteString("class AdamicClosure {\n\tconstructor(code, cells) {\n\t\tthis.code = code;\n\t\tthis.cells = cells;\n\t}\n}\n")
 	builder.WriteString("const adamicTypeOf = (value) => value instanceof AdamicClosure ? 'function' : typeof value;\n")
+	builder.WriteString(recordRuntime)
 	builder.WriteString(collectionIteratorRuntime)
 	builder.WriteString(jsonStringifyRuntime)
 	builder.WriteString("const adamicCall = (closure, values) => closure.code(closure, values);\n")
@@ -569,6 +570,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.AlwaysFalse {
 			return "(" + e.value(expression.Value) + ", false)"
 		}
+		if expression.IncludeUndefined {
+			return "(" + e.value(expression.Value) + " == null)"
+		}
 		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)
@@ -652,6 +656,12 @@ func (e *emitter) value(expression ir.Expression) string {
 			return e.value(expression.Object) + "?.[" + quote(expression.Name) + "]"
 		}
 		return e.value(expression.Object) + "[" + quote(expression.Name) + "]"
+	case ir.TypedArrayNew:
+		return "new " + expression.Name + "(" + e.value(expression.Length) + ")"
+	case ir.TypedArrayData:
+		return e.value(expression.Value)
+	case ir.ArrayHoles:
+		return "new Array(" + e.value(expression.Length) + ")"
 	case ir.ArrayLiteral:
 		elements := []string{}
 		for index, element := range expression.Elements {
@@ -758,6 +768,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.ReferenceAnd {
 			return "(" + e.value(expression.Value) + " && " + e.value(expression.Fallback) + ")"
 		}
+		if expression.UndefinedOnly && expression.Panic != nil {
+			return "adamicDefined(" + e.value(expression.Value) + ", " + e.value(expression.Panic) + ")"
+		}
 		if expression.Panic != nil {
 			return "(" + e.value(expression.Value) + " ?? panic(" + e.value(expression.Panic) + "))"
 		}
@@ -863,6 +876,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.Pairs != nil {
 			return "new Map(" + e.value(expression.Pairs) + ")"
 		}
+		if expression.Record {
+			return "Object.fromEntries([" + strings.Join(entries, ", ") + "])"
+		}
 		return "new Map([" + strings.Join(entries, ", ") + "])"
 	case ir.MapKeys:
 		return "[..." + e.value(expression.Map) + ".keys()]"
@@ -873,6 +889,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.MapForEach:
 		return "adamicCollectionVisit(" + e.value(expression.Map) + ", " + e.value(expression.Callback) + ")"
 	case ir.MapGet:
+		if expression.Map.Type() == ir.Record {
+			return "adamicRecordGet(" + e.value(expression.Map) + ", " + e.value(expression.Key) + ")"
+		}
 		return e.value(expression.Map) + ".get(" + e.value(expression.Key) + ")"
 	case ir.MapSet:
 		return e.value(expression.Map) + ".set(" + e.value(expression.Key) + ", " + e.value(expression.Value) + ")"

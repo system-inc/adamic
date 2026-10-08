@@ -63,10 +63,12 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	uint64_t hash = 14695981039346656037ull;
 	if (map->string_keys) {
 		const adamic_string *string = key.reference;
+		if (adamic_reference_is_sentinel(string)) {
+			return 0x9e3779b97f4a7c15ull;
+		}
 		if (string == NULL) {
 			// undefined, which a string | undefined key holds as NULL. It hashes as the empty string
-			// does, and same_key tells the two apart: adamic_string_equal holds undefined equal only
-			// to itself.
+			// does, and same_key tells the two apart by identity.
 			return hash;
 		}
 		for (size_t index = 0; index < string->length; index++) {
@@ -90,7 +92,12 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return adamic_map_maybe_key_equal(left.number, right.number);
 	}
 	if (map->string_keys) {
-		return adamic_string_equal(left.reference, right.reference);
+		const adamic_string *a = left.reference, *b = right.reference;
+		if (adamic_reference_is_sentinel(a) || adamic_reference_is_sentinel(b)) {
+			return a == b;
+		}
+		if (a == NULL || b == NULL) { return a == b; }
+		return a->length == b->length && (a == b || a->length == 0 || memcmp(a->bytes, b->bytes, a->length) == 0);
 	}
 	if (map->boolean_keys) {
 		return left.boolean == right.boolean;

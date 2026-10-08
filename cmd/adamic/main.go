@@ -26,8 +26,9 @@ import (
 const usage = `usage:
   adamic types <file.a|file.ts>...
   adamic c <file.a|file.ts>
-  adamic js <file.a|file.ts>
-  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>]`
+  adamic js <file.a|file.ts> [--explain-checks]
+  adamic --explain-checks <file.a|file.ts>
+  adamic build [--target wasm32-wasi] <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]`
 
 func main() {
 	os.Exit(run(os.Args[1:]))
@@ -37,6 +38,13 @@ func main() {
 // be compiled, 2 for a usage error.
 func run(arguments []string) int {
 	switch {
+	case len(arguments) == 2 && arguments[0] == "--explain-checks":
+		lowered, code := compile(arguments[1])
+		if lowered == nil {
+			return code
+		}
+		explainChecks(lowered, os.Stdout)
+		return 0
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {
@@ -46,7 +54,7 @@ func run(arguments []string) int {
 			fmt.Printf("%s:%d:%d: %s %s: %s\n", relative(declaration.File), declaration.Line, declaration.Column, declaration.Kind, declaration.Name, declaration.Type)
 		}
 		return 0
-	case len(arguments) == 2 && arguments[0] == "c":
+	case (len(arguments) == 2 || len(arguments) == 3 && arguments[2] == "--explain-checks") && arguments[0] == "c":
 		lowered, code := compile(arguments[1])
 		if lowered == nil {
 			return code
@@ -55,9 +63,12 @@ func run(arguments []string) int {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo requires a native build with --tsgo <archive>")
 			return 1
 		}
+		if len(arguments) == 3 {
+			explainChecks(lowered, os.Stderr)
+		}
 		fmt.Print(native.C(lowered))
 		return 0
-	case len(arguments) == 2 && arguments[0] == "js":
+	case (len(arguments) == 2 || len(arguments) == 3 && arguments[2] == "--explain-checks") && arguments[0] == "js":
 		lowered, code := compile(arguments[1])
 		if lowered == nil {
 			return code
@@ -65,6 +76,9 @@ func run(arguments []string) int {
 		if native.UsesTSGo(lowered) {
 			fmt.Fprintln(os.Stderr, "adamic: tsgo is an external native checker library; JavaScript is not supported")
 			return 1
+		}
+		if len(arguments) == 3 {
+			explainChecks(lowered, os.Stderr)
 		}
 		fmt.Print(javascript.JavaScript(lowered))
 		return 0

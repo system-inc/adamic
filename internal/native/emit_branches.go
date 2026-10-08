@@ -124,6 +124,9 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 		return e.referenceAnd(coalesce, value)
 	}
 	present, unwrapped := value+" != NULL", value
+	if coalesce.Value.Type().UsesNullSentinel() && !coalesce.UndefinedOnly {
+		present = "!(" + nullTest(coalesce.Value.Type(), value, true) + ")"
+	}
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}

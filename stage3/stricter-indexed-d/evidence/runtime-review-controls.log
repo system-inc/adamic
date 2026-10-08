@@ -1,0 +1,101 @@
+=== RUN   TestNullableRuntimeReview
+=== RUN   TestNullableRuntimeReview/map-set
+    runtime_review_test.go:58: Node "3\nempty\nnil\ntext\nempty\nupdated\ntrue\ntrue\nfalse\ntrue\n3\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\ntrue\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:65: map address-check mutant caught: exit=0 stdout="2\nempty\ntext\ntext\nempty\nupdated\ntrue\ntrue\nfalse\nfalse\n2\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\nfalse\n" stderr=""
+=== RUN   TestNullableRuntimeReview/narrow-concat
+    runtime_review_test.go:57: native sanitize=false: {stdout:abc!
+        !
+        null!
+         stderr:adamic: panic: null where the checker narrowed it away: a call since the narrowing put it back
+         code:70}, want {stdout:abc!
+        !
+        null!
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/narrow-length
+    runtime_review_test.go:57: native sanitize=false: {stdout:3
+        0
+        4
+         stderr:adamic: panic: TypeError: Cannot read properties of null (reading 'length')
+         code:70}, want {stdout:3
+        0
+        4
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/narrow-json
+    runtime_review_test.go:57: native sanitize=false: {stdout:"abc"
+        ""
+        "null"
+         stderr:adamic: panic: null where the checker narrowed it away: a call since the narrowing put it back
+         code:70}, want {stdout:"abc"
+        ""
+        "null"
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/narrow-slice
+    runtime_review_test.go:57: native sanitize=false: {stdout:bc
+
+        ul
+         stderr:adamic: panic: TypeError: Cannot read properties of null (reading 'slice')
+         code:70}, want {stdout:bc
+
+        ul
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/narrow-comparison
+    runtime_review_test.go:57: native sanitize=false: {stdout:false
+        true
+        false
+        true
+        true
+        false
+         stderr:adamic: panic: null where the checker narrowed it away: a call since the narrowing put it back
+         code:70}, want {stdout:false
+        true
+        false
+        true
+        true
+        false
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/null-template
+    runtime_review_test.go:57: native sanitize=false: {stdout:value:undefined
+        value:null
+         stderr: code:0}, want {stdout:value:null
+        value:null
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/null-concat
+    runtime_review_test.go:57: native sanitize=false: {stdout:value:undefined
+        undefined:value
+        value:null
+        null:value
+         stderr: code:0}, want {stdout:value:null
+        null:value
+        value:null
+        null:value
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/null-json
+    runtime_review_test.go:57: native sanitize=false: {stdout:undefined
+        "null"
+        null
+         stderr: code:0}, want {stdout:null
+        "null"
+        null
+         stderr: code:0}
+=== RUN   TestNullableRuntimeReview/null-string
+    runtime_review_test.go:57: native sanitize=false: {stdout:undefined
+        null
+        null
+         stderr: code:0}, want {stdout:null
+        null
+        null
+         stderr: code:0}
+--- FAIL: TestNullableRuntimeReview (11.52s)
+    --- PASS: TestNullableRuntimeReview/map-set (8.27s)
+    --- FAIL: TestNullableRuntimeReview/narrow-concat (0.34s)
+    --- FAIL: TestNullableRuntimeReview/narrow-length (0.36s)
+    --- FAIL: TestNullableRuntimeReview/narrow-json (0.44s)
+    --- FAIL: TestNullableRuntimeReview/narrow-slice (0.35s)
+    --- FAIL: TestNullableRuntimeReview/narrow-comparison (0.36s)
+    --- FAIL: TestNullableRuntimeReview/null-template (0.35s)
+    --- FAIL: TestNullableRuntimeReview/null-concat (0.34s)
+    --- FAIL: TestNullableRuntimeReview/null-json (0.36s)
+    --- FAIL: TestNullableRuntimeReview/null-string (0.36s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-d	11.527s
+FAIL

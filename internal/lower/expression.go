@@ -40,6 +40,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		if target := l.weakTarget(proven); target != nil {
 			return l.representation(target)
 		}
+		if l.hasStringRecordIndex(proven) {
+			return 0, false
+		}
 		return l.objectIntersection(proven)
 	}
 	switch {
@@ -54,6 +57,12 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	case flags&checker.TypeFlagsObject != 0 && l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
 		// A Set is held as a Map whose values aren't used (set.go).
 		return ir.Map, true
+	case flags&checker.TypeFlagsObject != 0 && l.hasStringRecordIndex(proven):
+		_, supported := l.recordInfo(proven)
+		if !supported {
+			return 0, false
+		}
+		return ir.Record, true
 	case flags&checker.TypeFlagsObject != 0 && len(l.checker.GetSignaturesOfType(proven, checker.SignatureKindCall)) == 0:
 		return ir.Object, true
 	case flags&checker.TypeFlagsObject != 0:
@@ -61,7 +70,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) {
-			// Nullable references use NULL. A type also holding undefined needs a tag.
+			// Migrated reference kinds share one sentinel for null, even when undefined joins them.
+			if l.nullSentinelType(proven) {
+				return ir.String, true
+			}
+			// Nullable match results still use NULL until their kind migrates.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
@@ -77,8 +90,22 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 				nullable = of
 			}
 		}
+		typed, other := false, false
+		for _, member := range proven.Types() {
+			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+				continue
+			}
+			if l.numericTypedArray(member) {
+				typed = true
+			} else {
+				other = true
+			}
+		}
+		if typed && other {
+			return 0, false
+		}
 		var shared ir.Type
-		mixed, weak := false, false
+		mixed, weak, record := false, false, false
 		for _, member := range proven.Types() {
 			if member.Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
 				// undefined joins a union of references as a null pointer; it's checked below that
@@ -94,6 +121,7 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if !isKnown {
 				return 0, false
 			}
+			record = record || memberType == ir.Record
 			if shared != 0 && memberType != shared {
 				mixed = true
 			}
@@ -101,6 +129,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		}
 		if weak {
 			return ir.Weak, shared == 0
+		}
+		if mixed && record {
+			return 0, false
 		}
 		if mixed {
 			// Members held differently (string | number) are one Union, which holds undefined too.
@@ -161,6 +192,14 @@ func (l *lowering) includesNull(proven *checker.Type) bool {
 // is read here as its target, so no value of a Weak type goes further; keeping one is fit's WeakOf.
 func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	if err := l.nullableReferenceObservation(node); err != nil {
+	}
+	if err := l.typedArrayExpression(node); err != nil {
+		return nil, err
+	}
+	if err := l.recordUse(node); err != nil {
+		return nil, err
+	}
+	if err := l.sparseExpression(node); err != nil {
 		return nil, err
 	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
@@ -170,6 +209,12 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil {
+		value, err = l.checkedIndexedRead(node, value)
+		if err == nil {
+			value = l.checkedJSONStringifyUse(node, value)
+		}
+	}
 	if literal := ast.SkipParentheses(node).Kind; err == nil && value.Type().IsReference() && literal != ast.KindArrayLiteralExpression && literal != ast.KindObjectLiteralExpression {
 		// The checker lets { v: Box } be seen as { v: Weak<Box> } and back, an array of Box as one of
 		// Weak<Box>, and (x: Weak<Box>) => ... as (x: Box) => ...; but one keeps a handle where the
@@ -222,7 +267,14 @@ func (l *lowering) sameKeeping(from *checker.Type, to *checker.Type, visited map
 	if from == nil || to == nil || from == to || visited[[2]*checker.Type{from, to}] {
 		return true
 	}
+	if l.numericTypedArray(from) != l.numericTypedArray(to) {
+		// Structural views must not expose the holder's private storage as ordinary fields.
+		return false
+	}
 	visited[[2]*checker.Type{from, to}] = true
+	if !l.sameRecordView(from, to) {
+		return false
+	}
 	same := func(inside, viewed *checker.Type) bool {
 		fromKept, _ := l.kept(inside)
 		toKept, _ := l.kept(viewed)
@@ -506,7 +558,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
-		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+		if null && !operand.Type().UsesNullSentinel() && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
@@ -537,6 +589,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if lowered, handled, err := l.referenceLogical(node, left, right); handled {
 			return lowered, err
 		}
+		if binary.OperatorToken.Kind == ast.KindPlusToken && (left.Type() == ir.String || right.Type() == ir.String) {
+			if _, isNull := left.(ir.Null); isNull {
+				left = ir.StringConstant{Index: l.constant("null")}
+			}
+			if _, isNull := right.(ir.Null); isNull {
+				right = ir.StringConstant{Index: l.constant("null")}
+			}
+		}
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
@@ -548,6 +608,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindConditionalExpression:
 		return l.conditional(node)
 	case ast.KindObjectLiteralExpression:
+		if value, handled, err := l.recordLiteral(node); handled {
+			return value, err
+		}
 		return l.objectLiteral(node)
 	case ast.KindArrayLiteralExpression:
 		if l.emptyNeverArrayLiteral(node) {
@@ -557,10 +620,19 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindPropertyAccessExpression:
 		return l.property(node)
 	case ast.KindElementAccessExpression:
+		if value, handled, err := l.recordIndex(node); handled {
+			return value, err
+		}
 		return l.elementAccess(node)
 	case ast.KindNewExpression:
 		if err := l.genericFunctionIdentityNew(node); err != nil {
 			return nil, err
+		}
+		if value, handled, err := l.newTypedArray(node); handled {
+			return value, err
+		}
+		if value, handled, err := l.newSparseArray(node); handled {
+			return value, err
 		}
 		return l.newExpression(node)
 	case ast.KindThisKeyword:
@@ -668,6 +740,9 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if prefix.Operator == ast.KindExclamationToken {
+		operand = libraryIteratorDoneTruth(operand)
+	}
 	switch {
 	case prefix.Operator == ast.KindMinusToken && operand.Type() == ir.Number:
 		return ir.Unary{Operator: ir.Negate, Operand: operand}, nil
@@ -723,9 +798,12 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		// Strings compare in UTF-16 code unit order, as JavaScript's do.
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken || l.nullishComparison(node) {
 		_, leftNull := left.(ir.Null)
 		_, rightNull := right.(ir.Null)
+		if leftNull && rightNull && l.nullishComparison(node) {
+			return ir.BooleanConstant{Value: operator == ast.KindEqualsEqualsToken}, nil
+		}
 		if leftNull != rightNull {
 			value := left
 			if leftNull {
@@ -738,8 +816,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
-			if operator == ast.KindExclamationEqualsEqualsToken {
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.nullishComparison(node) && !value.Type().UsesNullSentinel() && !l.includesNull(l.checker.GetTypeAtLocation(operand)), IncludeUndefined: l.nullishComparison(node)})
+			if operator == ast.KindExclamationEqualsEqualsToken || operator == ast.KindExclamationEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
 			return test, nil
@@ -765,7 +843,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if !value.Type().UsesNullSentinel() && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -812,6 +890,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type().UsesNullSentinel() && l.typeOfNull(node) {
+		return ir.UnionToString{Value: fit(value, ir.Union)}
+	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}
@@ -829,6 +910,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 		value, err := l.expression(span.AsTemplateSpan().Expression)
 		if err != nil {
 			return nil, err
+		}
+		if _, isNull := value.(ir.Null); isNull {
+			value = ir.StringConstant{Index: l.constant("null")}
 		}
 		switch value.Type() {
 		case ir.Number:
@@ -1111,7 +1195,10 @@ func (l *lowering) optionalCall(call *ast.Node) error {
 
 // callClosure lowers a call through a function value.
 func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
-	closure, err := l.expression(node.AsCallExpression().Expression)
+	closure, handled, err := l.libraryIteratorNextClosure(node)
+	if !handled {
+		closure, err = l.expression(node.AsCallExpression().Expression)
+	}
 	if err != nil {
 		return nil, err
 	}

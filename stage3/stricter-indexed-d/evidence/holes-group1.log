@@ -1,0 +1,29 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:223: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2476869512/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D171
+=== RUN   TestLedgerWitnesses/D171/hole
+    witness_test.go:223: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D172
+=== RUN   TestLedgerWitnesses/D172/hole
+    witness_test.go:223: PROVEN D172 read=declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D173
+=== RUN   TestLedgerWitnesses/D173/hole
+    witness_test.go:223: PROVEN D173 read=funcStatements[classBodyStart]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D174
+=== RUN   TestLedgerWitnesses/D174/hole
+    witness_test.go:223: PROVEN D174 read=segments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (6.09s)
+    --- PASS: TestLedgerWitnesses/D107 (0.80s)
+        --- PASS: TestLedgerWitnesses/D107/hole (0.80s)
+    --- PASS: TestLedgerWitnesses/D171 (0.79s)
+        --- PASS: TestLedgerWitnesses/D171/hole (0.79s)
+    --- PASS: TestLedgerWitnesses/D172 (0.81s)
+        --- PASS: TestLedgerWitnesses/D172/hole (0.81s)
+    --- PASS: TestLedgerWitnesses/D173 (0.79s)
+        --- PASS: TestLedgerWitnesses/D173/hole (0.79s)
+    --- PASS: TestLedgerWitnesses/D174 (0.75s)
+        --- PASS: TestLedgerWitnesses/D174/hole (0.75s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	6.102s

@@ -27,7 +27,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
 	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
 	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
@@ -73,6 +72,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if node.Kind == ast.KindIndexSignature {
+			if _, supported := l.recordInfo(l.checker.GetTypeAtLocation(node.Parent)); !supported {
+				found = l.notYet(node, recordLimit)
+				return true
+			}
+		}
 		if node.Kind == ast.KindTypePredicate {
 			if err := l.provePredicate(node); err != nil {
 				found = err
@@ -106,7 +111,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.nullishComparison(node) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}

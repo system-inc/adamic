@@ -1,0 +1,35 @@
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:130: BLOCKED D119 record of records of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD119present3972000808/001/D119.ts:1:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "7\n"
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:130: BLOCKED D119 record of records of string arrays: /tmp/adamic-gate/TestLedgerWitnessesD119absent676141413/001/D119.ts:1:24: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added; Node "undefined\n"
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:128: expected representation refusal "an indexed presence check on nullable array elements": /tmp/adamic-gate/TestLedgerWitnessesD151present4065282252/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:128: expected representation refusal "an indexed presence check on nullable array elements": /tmp/adamic-gate/TestLedgerWitnessesD151absent1469643500/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:128: expected representation refusal "an indexed presence check on nullable array elements": /tmp/adamic-gate/TestLedgerWitnessesD151null3693063962/001/D151.ts:2:7: stage 0 can't lower a value of type string | null yet
+=== RUN   TestLedgerWitnesses/D170
+=== RUN   TestLedgerWitnesses/D170/present
+    witness_test.go:197: PRESENT D170 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D170/absent
+    witness_test.go:195: PROVEN D170 read=clause.types[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D170/hole
+    witness_test.go:119: HOLE BLOCKED D170 NodeArray of object: /tmp/adamic-gate/TestLedgerWitnessesD170hole79635353/001/D170.ts:2:62: stage 0 can't lower new an Identifier yet; Node "undefined\n"
+--- FAIL: TestLedgerWitnesses (8.36s)
+    --- PASS: TestLedgerWitnesses/D119 (0.46s)
+        --- PASS: TestLedgerWitnesses/D119/present (0.22s)
+        --- PASS: TestLedgerWitnesses/D119/absent (0.23s)
+    --- FAIL: TestLedgerWitnesses/D151 (0.70s)
+        --- FAIL: TestLedgerWitnesses/D151/present (0.23s)
+        --- FAIL: TestLedgerWitnesses/D151/absent (0.24s)
+        --- FAIL: TestLedgerWitnesses/D151/null (0.23s)
+    --- PASS: TestLedgerWitnesses/D170 (1.65s)
+        --- PASS: TestLedgerWitnesses/D170/present (0.64s)
+        --- PASS: TestLedgerWitnesses/D170/absent (0.78s)
+        --- PASS: TestLedgerWitnesses/D170/hole (0.23s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-d	8.372s
+FAIL
