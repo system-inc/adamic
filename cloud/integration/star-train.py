@@ -21,6 +21,7 @@ directory = os.path.dirname(os.path.abspath(__file__))
 dryRun = "--dry-run" in sys.argv
 watch = os.path.expanduser("~/.adamic-fast-gate-watch")
 state = os.path.expanduser("~/.adamic-star-train")
+requests = os.path.expanduser("~/.adamic-full-gate/requests")
 ahra = os.path.expanduser("~/Projects/ahra")
 os.makedirs(state, exist_ok=True)
 
@@ -119,6 +120,11 @@ for number, (slug, source, owner) in enumerate(slices(), start=1):
         for other, otherSha in trainHeads.items():
             if other.startswith(f"cloud/land-train-{number}-") and other != name and not dryRun:
                 appendOnce(os.path.join(watch, "skip"), f"{other} {otherSha}")
+    # Every slice's whole gate runs ahead, in train order (Kirk, October 8): the full-gate loop takes
+    # the oldest line of its request file between mains and drops it when the record publishes.
+    if not dryRun:
+        os.makedirs(os.path.dirname(requests), exist_ok=True)
+        appendOnce(requests, candidate)
     chain.append((number, slug, source, owner, name, candidate, base))
     base = candidate
 
