@@ -613,6 +613,31 @@ class WatchTests(unittest.TestCase):
         # The box side refuses too, so a caller that skips the script can't widen the match.
         self.assertIn('is not 40 hex digits', w.read('stop-command'))
 
+    def test_an_ahead_tip_outranks_every_step_without_the_star_s_box(self):
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('ready', ' 9  #aaaaaaa  Running  first\n 3  #bbbbbbb  Running  second\n')
+        w.put('task-aaaaaaa', 'Branches: codex/step-a*\n')
+        w.put('task-bbbbbbb', 'Branches: codex/step-b*\n')
+        (w.state / 'slots').write_text('')
+        (w.state / 'front').write_text('cloud/land-train-*\n')
+        (w.state / 'ahead').write_text('# test-only splits\ncloud/land-test-split-*\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.wait(lambda: (w.state / 'step-globs').exists() and 'codex/step-b*' in (w.state / 'step-globs').read_text())
+        tips = [('codex/step-b-x', '1' * 40), ('cloud/land-test-split-flow', '2' * 40)]
+        (w.state / 'seen').write_text(''.join('%s %s\n' % t for t in tips))
+        w.put('tips', ''.join('%s\trefs/heads/%s\n' % (sha, b) for b, sha in tips))
+        (w.state / 'queue').write_text('S 700 codex/step-b-x %s\nS 900 cloud/land-test-split-flow %s\n' % ('1' * 40, '2' * 40))
+        w.put('mode', 'pass')
+        (w.state / 'slots').write_text('box S\n')
+        w.wait(lambda: len([x for x in w.read('starts').splitlines() if not x.startswith('canary/')]) == 2)
+        self.assertEqual([x.split()[0] for x in w.read('starts').splitlines() if not x.startswith('canary/')],
+                         ['cloud/land-test-split-flow', 'codex/step-b-x'])
+        # Not the star: no whole box, and its box is never a star box.
+        self.assertNotIn('cloud/land-test-split-flow', w.read('whole'))
+        self.assertEqual((w.state / 'star-boxes').read_text(), '')
+
     def test_staged_tools_run_on_the_canary_box_until_a_real_green_promotes_them(self):
         # Tips, queue and slots are in place before the watcher starts: with no deploy barrier to hold it,
         # a write after its first poll races the watcher's own rewrite of the queue.

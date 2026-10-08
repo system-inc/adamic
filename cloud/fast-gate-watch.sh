@@ -383,9 +383,12 @@ preemptForStar() {
     fi
   done
 }
+# ${state}/ahead (a glob per line, # comments) ranks a tip with the front, behind the star itself, but without the
+# star's box: test-only split landings, which go behind the star's slice and ahead of other side work
+# (@system_adamic, Oct 8 22:35Z).
 stepPosition() {
   local branch=$1 glob index
-  for glob in ${frontList[@]+"${frontList[@]}"}; do
+  for glob in ${frontList[@]+"${frontList[@]}"} ${aheadList[@]+"${aheadList[@]}"}; do
     [[ ${branch} == ${glob} ]] && { echo 0; return; }
   done
   for index in ${stepGlobList[@]+"${!stepGlobList[@]}"}; do
@@ -398,9 +401,12 @@ stepPosition() {
 # queue test), and a reap waited behind each one.
 loadRanking() {
   local glob position
-  reservationList=() frontList=() stepGlobList=() stepPositions=() priorityList=()
+  reservationList=() frontList=() aheadList=() stepGlobList=() stepPositions=() priorityList=()
   while read -r glob; do [ -n "${glob}" ] && reservationList+=("${glob}"); done <<< "$(reservationGlobs)"
   while read -r glob; do [ -n "${glob}" ] && frontList+=("${glob}"); done <<< "$(frontGlobs)"
+  if [ -f "${state}/ahead" ]; then
+    while read -r glob _; do [ -n "${glob}" ] && [[ ${glob} != \#* ]] && aheadList+=("${glob}"); done < "${state}/ahead"
+  fi
   while read -r position glob; do
     [ -n "${glob}" ] && { stepPositions+=("${position}"); stepGlobList+=("${glob}"); }
   done < "${state}/step-globs.poll"
