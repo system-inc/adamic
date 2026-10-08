@@ -74,6 +74,10 @@ IN THE SOFTWARE.
   - Object sealing, freezing and extensibility, including constructor-proven internal-slot receivers
     (`internal/native/runtime/object_integrity.c`, after
     src/builtins/builtins-object.cc and src/objects/js-objects.cc, V8 13.6.233);
+  - String substr (`internal/lower/library_string_substr.go`, after
+    src/builtins/string-substr.tq);
+  - variadic Array push (`internal/lower/library_array_push.go`, after
+    GenericArrayPush in src/builtins/builtins-array.cc, Node.js v24.19.0);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
@@ -281,6 +285,12 @@ any build of the compiler.
 maintenance from cohere's high-level IR (`cohere/internal/lint/ecmascript/high_level_intermediate_representation`),
 which follows the React Compiler's (Copyright (c) Meta Platforms, Inc. and affiliates, MIT); that notice is in
 cohere's THIRD_PARTY_NOTICES.md.
+
+The reductions in `internal/oracle/testdata/library_tsc_census_*.a` adapt calls
+from the pinned TypeScript compiler sources under
+`cohere/TypeScript/tsc/testdata/fixtures/compiler` (Copyright Microsoft Corporation,
+Apache-2.0). Their source file and line are recorded in each fixture. The Apache
+license is reproduced in [LICENSE-APACHE](LICENSE-APACHE).
 
 ### @types/node
 

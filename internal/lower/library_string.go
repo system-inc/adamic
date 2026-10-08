@@ -204,7 +204,7 @@ func (l *lowering) libraryString(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	if of, _ := l.representation(l.checker.GetTypeAtLocation(receiver)); of == ir.String {
 		switch name {
-		case "charAt", "substring", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed":
+		case "charAt", "substring", "substr", "concat", "toString", "valueOf", "startsWith", "endsWith", "isWellFormed", "toWellFormed":
 			value, err := l.expression(receiver)
 			if err != nil {
 				return nil, true, err
@@ -276,7 +276,7 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		shape.optional = 1
 		known = true
 	}
-	if name == "substring" {
+	if name == "substring" || name == "substr" {
 		shape.arguments = []ir.Type{ir.Number, ir.Number}
 		shape.optional = 2
 		known = true
@@ -298,6 +298,17 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 		}
 		if err != nil {
 			return nil, true, err
+		}
+		if name == "substr" {
+			fallback := ir.Expression(ir.NumberConstant{Value: 0})
+			if index == 1 {
+				fallback = ir.NumberConstant{Value: math.Inf(1)}
+			}
+			if _, missing := lowered.(ir.Undefined); missing {
+				lowered = fallback
+			} else if lowered.Type() == ir.MaybeNumber {
+				lowered = ir.Coalesce{Value: lowered, Fallback: fallback, Of: ir.Number}
+			}
 		}
 		if (name == "startsWith" || name == "endsWith") && index == 1 {
 			fallback := ir.Expression(ir.NumberConstant{Value: 0})
@@ -329,6 +340,8 @@ func (l *lowering) libraryStringMethodValues(node *ast.Node, value ir.Expression
 			position = arguments[0]
 		}
 		return ir.CharCodeAt{Value: value, Index: position}, true, nil
+	case "substr":
+		return l.stringSubstr(value, arguments), true, nil
 	case "charAt", "substring":
 		return l.stringIndexMethod(value, name, arguments), true, nil
 	case "codePointAt":
