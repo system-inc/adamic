@@ -6,14 +6,25 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// arrayFrom lowers Array.from({ length }, (_, index) => ...), the one form of Array.from 0.1 has
-// (docs/0.1.md): a new array of length elements, each what the callback returns for its index.
+// arrayFrom copies a library collection iterator without a mapper, or lowers
+// Array.from({ length }, (_, index) => ...) to an array of callback results.
 //
 // The object is never made. It has no elements, so what the callback receives first is always
 // undefined; the checker types that parameter unknown, and it's lowered as a reference that's always
 // missing (alwaysUndefined), which is exactly what it holds.
 func (l *lowering) arrayFrom(node *ast.Node) (ir.Expression, bool, error) {
 	arguments := node.AsCallExpression().Arguments.Nodes
+	// A collection iterator already yields fitted values. Copy its references
+	// directly, just as spreading the iterator does, without boxing a second time.
+	if len(arguments) == 1 {
+		if element, iterator := l.libraryIteratorElement(arguments[0]); iterator {
+			value, err := l.expression(arguments[0])
+			if err != nil {
+				return nil, true, err
+			}
+			return l.libraryIteratorArray(node, value, element), true, nil
+		}
+	}
 	if len(arguments) > 0 {
 		if plan, err := l.planIteration(arguments[0]); err != nil {
 			return nil, true, err

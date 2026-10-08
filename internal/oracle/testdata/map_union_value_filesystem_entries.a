@@ -1,0 +1,16 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+interface MutableFileSystemEntries { readonly files: string[]; readonly directories: string[]; }
+type Value = false | MutableFileSystemEntries;
+function show(value: Value | undefined): string {
+ if (value === undefined) { return 'missing'; }
+ if (value === false) { return 'false'; }
+ return `${value.files.join(',')}/${value.directories.join(',')}`;
+}
+const entries: MutableFileSystemEntries = {files: ['file'.repeat(2)], directories: ['dir'.repeat(2)]};
+const map = new Map<string, Value>([['a', entries], ['b', false]]);
+const held = map.get('a'); map.set('a', false);
+console.log(`${show(held)} ${show(map.get('a'))} ${show(map.get('missing'))}`);
+map.set('b', entries); const copy = new Map(map); map.clear();
+console.log(`${copy.delete('a')} ${copy.delete('a')}`); copy.set('a', entries);
+for (const [key, value] of copy) { console.log(`${key}=${show(value)}`); }
+copy.clear(); console.log(`${copy.size}`);

@@ -944,13 +944,19 @@ func (l *lowering) writable(proven *checker.Type) bool {
 	return true
 }
 
-// slotless reports whether a value of the type can't yet be held in one word: a field, an element, a
-// map's value, a cell, or a function value's argument or result. number | undefined is packed into
-// one (a reserved NaN is undefined); boolean | undefined is two words that aren't packed yet, and a
-// Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
-// result takes one.
+// slotless is the conservative check for paths that have not arranged Union
+// boxing, including general object fields and function-value results. Optional
+// booleans still need two words. A Union is one reference once fitted; paths
+// that fit writes or carry already boxed values use boxedSlot instead.
 func slotless(valueType ir.Type) bool {
 	return valueType == ir.MaybeBoolean || valueType == ir.Union
+}
+
+// boxedSlot reports whether a fitted value occupies one adamic_value. Unlike
+// general object fields, these callers box on writes and read the stored type.
+// A Union is one counted reference; optional booleans still need two words.
+func boxedSlot(valueType ir.Type) bool {
+	return !slotless(valueType) || valueType == ir.Union
 }
 
 // call lowers a call to one of the module's functions, or to a function value.
@@ -1083,7 +1089,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if slotless(declared.Type) {
+		if !boxedSlot(declared.Type) {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1168,7 +1174,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	for _, argument := range arguments {
-		if slotless(argument.Type()) {
+		if !boxedSlot(argument.Type()) {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}

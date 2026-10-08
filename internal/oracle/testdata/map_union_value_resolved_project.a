@@ -1,0 +1,17 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+interface ResolvedProjectReference { readonly name: string; readonly sourceFile: {readonly version: number}; }
+type Value = false | ResolvedProjectReference;
+function show(value: Value | undefined): string {
+ if (value === undefined) { return 'missing'; }
+ if (value === false) { return 'false'; }
+ return `${value.name}:${value.sourceFile.version}`;
+}
+const project: ResolvedProjectReference = {name: 'project'.repeat(2), sourceFile: {version: 4}};
+const map = new Map<string, Value>([['a', project], ['b', false]]);
+const held = map.get('a'); map.set('a', false);
+console.log(`${show(held)} ${show(map.get('a'))} ${show(map.get('missing'))}`);
+map.set('b', project);
+const copy = new Map(map); map.clear();
+console.log(`${copy.delete('a')} ${copy.delete('a')}`); copy.set('a', project);
+for (const [key, value] of copy) { console.log(`${key}=${show(value)}`); }
+copy.clear(); console.log(`${copy.size}`);
