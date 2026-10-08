@@ -1,0 +1,47 @@
+[
+  {
+    "path": "internal/javascript/view_arrays.go",
+    "calls": [
+      "nominalViewRead",
+      "tupleArrayUnionCheck",
+      "tupleViewContract"
+    ]
+  },
+  {
+    "path": "internal/lower/view_array_adapter.go",
+    "calls": [
+      "tupleViewSlot"
+    ]
+  },
+  {
+    "path": "internal/lower/view_array_writes.go",
+    "calls": [
+      "mapNominalEntrySlot",
+      "prepareViewCallableRead",
+      "runtimeViewCallableShape"
+    ]
+  },
+  {
+    "path": "internal/lower/view_arrays.go",
+    "calls": [
+      "prepareUntaggedStructuralRead",
+      "tupleScalarUnionType",
+      "viewCallableCall"
+    ]
+  },
+  {
+    "path": "internal/native/view_array_writes.go",
+    "calls": [
+      "nominalViewRead"
+    ]
+  },
+  {
+    "path": "internal/native/view_arrays.go",
+    "calls": [
+      "emitTupleArrayUnionIndex",
+      "emitTupleArrayUnionSlot",
+      "nominalViewRead",
+      "viewCallableBoxedComparator"
+    ]
+  }
+]

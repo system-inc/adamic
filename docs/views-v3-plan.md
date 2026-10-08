@@ -1,3 +1,34 @@
+Prepared: one scoped net patch per array lane and the rehearsal dependency audit for V3, step 11 #6wfvfhm.
+Commits: preparation b07876ee; source tips 7cd02813 and 7676bf57; rehearsal prerequisite currently 9f16421c.
+Commands/results: both net patches generated once, family dependencies audited; rehearsal fetched repeatedly, with no views-v2 subject observed.
+Mutants: no production V3 check introduced or run; full sweep starts after a compiling V3 push.
+Not covered: application, build/vet, admission, runtime tests or a pushed V3 train SHA. V3 starts only after views-v2 is on rehearsal.
+
+## Current method and train protocol
+
+This section supersedes the historical commit-by-commit dry-run method and compiler/views-v1 waiting rule below. Current base is origin/compiler/views-rehearsal. Order is V1, V2, V3, V4, V5, V6. Do not apply V3 before its log contains a subject starting views-v2: . Red tests do not block application once the predecessor applies and compiles.
+
+Prepared lane nets:
+
+- Arrays/parser: 4dbf3b6a (the parent of the first array-owned 8346b28c hook commit) to 7cd02813. The scoped patch includes array-owned helpers/tests/fixtures and 29 shared candidate files. Shared files require one array-only conflict resolution each; this raw scoped diff is not permission to restore other families. Final-tree callable helpers, new .ts files, graph_regions/fresh_refused paths and all four protected files are excluded.
+- Arrays B: 70522aa1, the shared branch fork, to 7676bf57. Four original own commits add the B fixture/test checkpoints. Counts are regenerated and compared against the eventual predecessor rather than importing the historical table.
+
+The compressed patches, complete manifests, source commit subjects and cross-family dependency audit are under [views-v3-evidence/net](views-v3-evidence/net/manifest.json). The source provenance lists include non-merge dependencies touching shared candidate files; audit them against the historical owned-commit inventory below before listing the actual lane commits in a landing message. Do not take every provenance row as a V3 admission.
+
+Apply one net diff per lane, resolving each changed file once with the approved merge judgments. Preserve the actual rehearsal calling convention, representation table, readiness and other slices' boundaries. Six array files refer directly to unavailable callable/nominal/tuple helpers: view_array_adapter.go, view_array_writes.go, view_arrays.go in lowering; view_array_writes.go and view_arrays.go in native; view_arrays.go in JavaScript. The exact called names are in family-dependencies.json. Child contracts that V2 does not supply remain deferred/refused, and callable/Map/intersection admission stays outside V3. Do not create fake producer certificates to make these compile.
+
+Each actual lane commit subject starts views-v3: and lists original owned commit SHAs and subjects. Earlier V3 commits have no Train-slice trailer. The last V3 commit has exactly Train-slice: views-v3 in its body. The shared train must not contain later slice commits in this candidate.
+
+Before each push fetch rehearsal, put V3 commits on its current tip, run go build ./... and go vet ./internal/... with output redirected to logs, and push fast-forward only. If rejected fetch/rebase/rebuild/retry, never force. Publish the same last slice commit as compiler/views-v3. Push immediately on successful compilation/vet, even if the sweep is red. Report the exact contents, remaining refusals and each pushed SHA.
+
+Run the complete original comparison/sweep after the push: a-check, stage3 after npm ci and with the local platform guard lifted, stage1 gaps by name, V3-only counts, full flow/lower/IR/JavaScript/oracle comparison and independent omission mutants. Do not treat a compiling checkpoint as a completed semantic slice.
+
+A fix before any later slice appears has subject views-v3 fix: and trailer Train-slice: views-v3. A fix after a later slice appears uses views-v3 fix: with no trailer; report its SHA to compiler immediately so integration can place it without enclosing later slices in the V3 candidate. Never rewrite pushed history.
+
+The local build worktree /tmp/adamic-views-v3-build is on compiler/views-v3-net-prep, created from rehearsal 9f16421c. No net patch has been applied there. The earlier local compiler/views-v3 pointer from a9df95d5 is unpublished and is not the rehearsal landing candidate.
+
+## Historical dry-run record
+
 Prepared: V3 array commit inventory, main-based cherry-pick conflict receipts and the ruled integration plan for step 11 #6wfvfhm.
 Commits: dry-run base origin/main 54cbc125; array sources 7cd02813 and 7676bf57; rulings source c923d1cc; no delivery compiler commit.
 Commands/results: fetched named lanes; 77 independent non-merge cherry-pick dry runs, 6 clean and 71 conflicted; compiler/views-v1 absent in recorded remote checks; setup completed in 41.569s, nproc 5.
