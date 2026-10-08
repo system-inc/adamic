@@ -1,0 +1,10 @@
+--- FAIL: TestNewExpressionScannerArrayDependencies (0.18s)
+    --- FAIL: TestNewExpressionScannerArrayDependencies/scanner_array_notyet (0.18s)
+        new_expression_scanner_test.go:35: gate cache node miss
+        new_expression_scanner_test.go:42: want an array of any NotYet, got /workspace/adamic/internal/oracle/testdata/new_expression_scanner_array_notyet.a:1:56: stage 0 can't lower an Array constructor creating holes yet
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.193s
+FAIL
