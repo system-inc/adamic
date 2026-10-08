@@ -62,7 +62,7 @@ func (l *lowering) viewArrayString(node *ast.Node, value ir.Expression) (ir.Expr
 	if err != nil {
 		return nil, err
 	}
-	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber {
+	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber && element != ir.Union {
 		return nil, l.notYet(node, "an array template requiring recursive element string conversion")
 	}
 	return ir.ArrayJoin{Array: value, Separator: ir.StringConstant{Index: l.constant(",")}, Element: element, Stringify: true, ViewRead: l.viewArrayUse(node, node, element, false)}, nil

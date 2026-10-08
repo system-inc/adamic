@@ -149,7 +149,13 @@ func TestCheckedViewMapUndefinedStorageMutant(t *testing.T) {
 }
 
 func TestCheckedViewMapNestedPayloadMutant(t *testing.T) {
-	program, path := interfaceFixture(t, "nullish/maps/entry-convert-nested-array")
+	for _, name := range []string{"entry-convert-nested-array", "entry-convert-nested-union"} {
+		t.Run(name, func(t *testing.T) { checkedViewMapNestedPayloadMutant(t, name) })
+	}
+}
+
+func checkedViewMapNestedPayloadMutant(t *testing.T, name string) {
+	program, path := interfaceFixture(t, "nullish/maps/"+name)
 	truth := onNode(t, path)
 	changed := false
 	for index, statement := range program.Main {
@@ -294,4 +300,33 @@ func TestCheckedViewMapNominalProducerMutants(t *testing.T) {
 			})
 		}
 	}
+}
+
+func TestCheckedViewMapNestedUnionLiteralMutant(t *testing.T) {
+	program, path := interfaceFixture(t, "nullish/maps/entry-convert-nested-union-finite")
+	truth := onNode(t, path)
+	changed := false
+	for index, statement := range program.Main {
+		if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "item" {
+			literal, ok := declaration.Value.(ir.ArrayLiteral)
+			if !ok {
+				t.Fatal("array producer changed")
+			}
+			literal.Elements[0] = ir.NumberConstant{Value: 2}
+			declaration.Value = literal
+			program.Main[index] = declaration
+			changed = true
+			break
+		}
+	}
+	if !changed {
+		t.Fatal("finite payload mutant missed")
+	}
+	native, _ := nativelyUncached(t, program)
+	for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+		if got.exitCode != 70 || !strings.Contains(string(got.stderr), "values[0]") {
+			t.Fatalf("finite union helper trusted wrong number: %#v", got)
+		}
+	}
+	t.Logf("Node=%q; actual number 2 with declared literal 1 stopped at helper values[0]", truth.stdout)
 }

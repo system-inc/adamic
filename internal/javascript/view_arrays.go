@@ -40,7 +40,7 @@ const viewArrayElementsRuntime = `const adamicViewArrayIndex = (array, index, re
 };
 const adamicViewArrayElement = (value, expression, type, expected, allowed, required = false) => {
     if (value === undefined) { if (required) panic("element read failed: " + expression + " expected " + expected + ", found undefined"); return value; }
-    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : false;
+    const valid = type === 1 || type === 7 ? typeof value === "number" : type === 2 ? typeof value === "boolean" : type === 3 ? typeof value === "string" : type === 4 ? value !== null && typeof value === "object" && !Array.isArray(value) && !(value instanceof Map) : type === 5 ? Array.isArray(value) : type === 8 ? adamicTypeOf(value) === "function" : type === 10 ? value === null || typeof value === "number" || typeof value === "boolean" || typeof value === "string" : false;
     if (!valid) panic("element read failed: " + expression + " expected " + expected + ", found " + (value === null ? "nullish" : Array.isArray(value) ? "array" : adamicTypeOf(value)));
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
@@ -63,6 +63,9 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	checked := fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => adamicViewArrayElement(value, %s, %d, %s, [%s], %t))", array, index, read.Relative, quote(read.View), read.Element, quote(read.ViewType), strings.Join(allowed, ", "), !read.UndefinedAllowed)
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
+	}
+	if read.Element == ir.Union {
+		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
 	}
 	return checked
 }
@@ -147,6 +150,9 @@ func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) str
 	checked := fmt.Sprintf("adamicViewArrayElement(%s, %s, %d, %s, [%s], %t)", value, quote(read.View), read.Element, quote(read.ViewType), strings.Join(literals, ", "), !read.UndefinedAllowed)
 	if read.Element == ir.Object && read.ViewContract != 0 {
 		checked = "((adamicElement) => adamicElement === undefined ? undefined : " + e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, "adamicElement") + ")(" + checked + ")"
+	}
+	if read.Element == ir.Union {
+		checked = e.arrayPrimitiveUnionRead(read.ViewContract, checked, read.View, read.ViewType)
 	}
 	return checked
 }

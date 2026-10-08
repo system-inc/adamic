@@ -57,14 +57,25 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	return value
 }
 
+func (e *emitter) viewArrayReadOwner(element ir.Type) string {
+	if element != ir.Union {
+		return "NULL"
+	}
+	return e.own(ir.Array, "adamic_array_new(0, true)")
+}
+
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) string {
+	return e.emitViewArrayReadWithOwner(read, array, index, e.viewArrayReadOwner(read.Element))
+}
+
+func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, owner string) string {
 	snapshot, slot := e.temporary(), e.temporary()
 	e.line("adamic_value %s;", snapshot)
-	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %d, %s, %s, &%s);", slot, array, index, read.Relative, read.UndefinedAllowed, read.Element, cString(read.ViewType), cString(read.View), snapshot)
+	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %d, %s, %s, &%s, %s);", slot, array, index, read.Relative, read.UndefinedAllowed, read.Element, cString(read.ViewType), cString(read.View), snapshot, owner)
 	if read.Required {
 		e.line("if (%s == NULL) adamic_view_array_missing(%s, %s);", slot, cString(read.View), cString(read.ViewType))
 	}
-	if len(read.ViewAllowed) != 0 {
+	if len(read.ViewAllowed) != 0 && read.Element != ir.Union {
 		tests := []string{}
 		for _, literal := range read.ViewAllowed {
 			switch literal.Of {
@@ -87,11 +98,16 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) str
 		e.indent--
 		e.line("}")
 	}
+	if read.Element == ir.Union {
+		e.line("if (%s != NULL) {", slot)
+		e.arrayPrimitiveUnionRead(read.ViewContract, snapshot+".reference", read.View, read.ViewType)
+		e.line("}")
+	}
 	return slot
 }
 
-func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index string) string {
-	slot := e.emitViewArrayRead(read.Index(), array, index)
+func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owner string) string {
+	slot := e.emitViewArrayReadWithOwner(read.Index(), array, index, owner)
 	value := e.temporary()
 	fallback := "(adamic_value){.reference = NULL}"
 	if read.Element == ir.MaybeNumber {
@@ -125,8 +141,20 @@ func (e *emitter) emitViewArrayPop(pop ir.ArrayPop) string {
 }
 
 func (e *emitter) emitViewArrayString(join ir.ArrayJoin) string {
-	array := e.value(join.Array)
+	array := e.snapshot(ir.Array, e.value(join.Array))
 	separator := e.value(join.Separator)
+	if join.Element == ir.Union {
+		result := e.own(ir.String, "&adamic_string_undefined")
+		e.line("if (%s != NULL) {", array)
+		outer := e.owned
+		e.owned = nil
+		text := e.emitViewArrayJoinSource(join, array, separator)
+		e.line("%s = adamic_retain(%s);", result, text)
+		e.end()
+		e.owned = outer
+		e.line("}")
+		return result
+	}
 	allowed := e.viewArrayStringLiterals(join.ViewRead.ViewAllowed)
 	return e.own(ir.String, fmt.Sprintf("adamic_view_array_string(%s, %s, %t, %d, %t, %s, %s, %d, %s)", array, separator, join.ViewRead.View != "", join.Element, join.ViewRead.UndefinedAllowed, cString(join.ViewRead.ViewType), cString(join.ViewRead.View), len(join.ViewRead.ViewAllowed), allowed))
 }
@@ -176,13 +204,18 @@ func (e *emitter) viewArrayStringLiterals(literals []ir.ViewLiteral) string {
 func (e *emitter) emitViewArrayJoin(join ir.ArrayJoin) string {
 	array := e.snapshot(ir.Array, e.value(join.Array))
 	separator := e.snapshot(ir.String, e.value(join.Separator))
+	return e.emitViewArrayJoinSource(join, array, separator)
+}
+
+func (e *emitter) emitViewArrayJoinSource(join ir.ArrayJoin, array, separator string) string {
 	strings := e.own(ir.Array, "adamic_array_new(0, true)")
+	owner := e.viewArrayReadOwner(join.Element)
 	index := e.temporary()
 	e.line("for (size_t %s = 0; %s < %s->length; %s++) {", index, index, array, index)
 	e.indent++
 	read := join.ViewRead.Index()
 	read.Required = false
-	slot := e.emitViewArrayRead(read, array, "(double)"+index)
+	slot := e.emitViewArrayReadWithOwner(read, array, "(double)"+index, owner)
 	empty, yes, no := e.temporary(), e.temporary(), e.temporary()
 	e.declarations = append(e.declarations, fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"\");", empty), fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"true\");", yes), fmt.Sprintf("static adamic_string %s = ADAMIC_STRING(\"false\");", no))
 	text := e.temporary()
@@ -190,6 +223,8 @@ func (e *emitter) emitViewArrayJoin(join ir.ArrayJoin) string {
 	e.line("if (%s != NULL) {", slot)
 	e.indent++
 	switch join.Element {
+	case ir.Union:
+		e.line("if (%s->reference != NULL && %s->reference != &adamic_null) %s = adamic_union_to_string(%s->reference);", slot, slot, text, slot)
 	case ir.Number:
 		e.line("%s = adamic_string_from_number(%s->number);", text, slot)
 	case ir.MaybeNumber:

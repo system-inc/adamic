@@ -226,6 +226,13 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	}
 	literal := ir.ArrayLiteral{Element: element}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
+	if element == ir.Union {
+		for _, item := range items {
+			if item.Kind == ast.KindSpreadElement {
+				return nil, l.notYet(item, "spreading a boxed primitive array requiring storage conversion")
+			}
+		}
+	}
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
 		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
 		if !known || declared != element {
@@ -328,6 +335,18 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return of, nil
 	}
 	valueType, isKnown := l.kept(element)
+	if isKnown && valueType == ir.Union {
+		id, err := l.viewContract(node, element)
+		if err != nil {
+			return 0, err
+		}
+		if ir.PrimitiveArrayContract(l.result, id) {
+			if _, err := l.viewContract(node, arrayType); err != nil {
+				return 0, err
+			}
+			return valueType, nil
+		}
+	}
 	if !isKnown || slotless(valueType) {
 		// An element is one adamic_value, and number | undefined needs two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
@@ -751,6 +770,9 @@ func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
 		array, err := l.expression(receiver)
 		if err != nil {
 			return nil, true, err
+		}
+		if element == ir.Union {
+			return nil, true, l.notYet(node, "boxed primitive array consumer .pop requiring storage conversion")
 		}
 		return ir.ArrayPop{Array: array, Element: element, ViewRead: l.viewArrayUse(node, receiver, element, false)}, true, nil
 	}
@@ -1188,6 +1210,13 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 	if err != nil {
 		return nil, true, err
 	}
+	if element == ir.Union {
+		switch name {
+		case "join", "map", "forEach", "filter", "some", "every", "find", "findIndex", "reduce", "slice", "at", "push", "indexOf", "includes":
+		default:
+			return nil, true, l.notYet(node, "boxed primitive array consumer ."+name+" requiring storage conversion")
+		}
+	}
 	if name == "sort" {
 		return l.arraySort(node, array, element)
 	}
@@ -1313,7 +1342,7 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		}
 		return ir.ArrayConcat{Array: array, Others: arguments}, true, nil
 	}
-	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber {
+	if element != ir.Number && element != ir.Boolean && element != ir.String && element != ir.MaybeNumber && element != ir.Union {
 		// JavaScript writes an object as "[object Object]", a function as its source, and an array as
 		// its own join, flattened; 0.1 has no use for any of that.
 		return nil, true, l.notYet(node, "join on an array of objects, arrays, maps or functions")

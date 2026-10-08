@@ -333,6 +333,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		source := e.temporary()
 		e.line("adamic_array *%s = %s;", source, e.value(expression.Array))
 		callback := e.value(expression.Callback)
+		owner := e.viewArrayReadOwner(expression.Element)
 		mapped := e.own(ir.Array, fmt.Sprintf("adamic_array_new(%s->length, %t)", source, expression.Result.IsReference()))
 		e.adoptGraph(mapped, "sizeof *"+mapped, e.graphTypes(expression.GraphTypes))
 		count, index := e.temporary(), e.temporary()
@@ -348,7 +349,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 		element := e.temporary()
 		argument := fmt.Sprintf("%s->elements[%s]", source, index)
 		if expression.ViewRead.View != "" {
-			argument = e.viewArrayElementSlot(expression.ViewRead, source, index)
+			argument = e.viewArrayElementSlot(expression.ViewRead, source, index, owner)
 		}
 		e.line("adamic_value %s = %s->code(%s, (adamic_value[]){%s, {.number = (double)%s}, {.reference = %s}}, 3);", element, callback, callback, argument, index, source)
 		// What's mapped so far is the statement's, let go with its temporaries.

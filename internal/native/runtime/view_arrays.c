@@ -30,7 +30,7 @@ void adamic_view_array_storage_check(const adamic_array *array, unsigned char st
     if (storage == 4 || storage == 5 || storage == 6 || storage == 8 || storage == 9 || storage == 10) { array_view_failure(expression, array_storage_name(storage), "uncertified source element contract"); }
 }
 
-adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot) {
+adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool relative, bool undefined_allowed, unsigned char wanted, const char *expected, const char *expression, adamic_value *snapshot, adamic_array *owner) {
     if (array == NULL) array_view_failure(expression, expected, "undefined");
     if (relative) {
         index = isnan(index) ? 0 : trunc(index);
@@ -54,9 +54,16 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
         else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }
     }
-    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 10 && array->element_kind == 10)) { array_view_failure(expression, expected, array_storage_name(actual)); }
+    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 10 && (actual == 1 || actual == 2 || actual == 3 || (array->references && slot->reference == &adamic_null)))) { array_view_failure(expression, expected, array_storage_name(actual)); }
     if (wanted == 7 && actual == 1) { snapshot->number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot->number}); }
-    if (wanted == 10) { *snapshot = *slot; }
+    if (wanted == 10) {
+        if (array->references) { *snapshot = *slot; }
+        else {
+            if (owner == NULL) array_view_failure(expression, expected, "missing boxed read owner");
+            snapshot->reference = actual == 1 ? adamic_box_number(snapshot->number) : (snapshot->boolean ? &adamic_box_true.heap : &adamic_box_false.heap);
+            adamic_array_push(owner, *snapshot);
+        }
+    }
     return snapshot;
 }
 
@@ -74,7 +81,7 @@ adamic_string *adamic_view_array_string(const adamic_array *array, const adamic_
     parts->length = array->length;
     for (size_t index = 0; index < array->length; index++) {
         adamic_value snapshot;
-        adamic_value *slot = checked ? adamic_view_array_at(array, (double)index, false, undefined_allowed, wanted, expected, expression, &snapshot) : adamic_array_holes_at(array, (double)index);
+        adamic_value *slot = checked ? adamic_view_array_at(array, (double)index, false, undefined_allowed, wanted, expected, expression, &snapshot, NULL) : adamic_array_holes_at(array, (double)index);
         if (slot != NULL && checked && allowed_count != 0) {
             bool accepted = false;
             for (size_t literal = 0; literal < allowed_count; literal++) {

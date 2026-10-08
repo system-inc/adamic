@@ -392,6 +392,12 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	if !e.elementBorrows[e.at] {
 		e.hold(held)
 	}
+	owner := "NULL"
+	if !overMap && !overString && !overRegex && statement.ViewRead.View != "" && statement.Element == ir.Union {
+		owner = e.viewArrayReadOwner(statement.Element)
+		e.taken(owner)
+		e.hold(owner)
+	}
 	e.end()
 	index := e.temporary()
 	size := e.temporary()
@@ -423,7 +429,7 @@ func (e *emitter) forOf(statement ir.ForOf) {
 	e.scopes = append(e.scopes, nil)
 	element := unslotted(statement.Element, fmt.Sprintf("%s->elements[%s].%s", held, index, member(statement.Element)))
 	if statement.ViewRead.View != "" {
-		slot := e.viewArrayElementSlot(statement.ViewRead, held, index)
+		slot := e.viewArrayElementSlot(statement.ViewRead, held, index, owner)
 		element = unslotted(statement.Element, slot+"."+member(statement.Element))
 	}
 	// bindEntry declares a local from the step's key or value, retained, since the body may delete

@@ -11,6 +11,10 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('boxed-native-member', 'internal/native/view_arrays_union.go', 'if (!(%s)) adamic_nullish_failure', 'if (false && !(%s)) adamic_nullish_failure', '^TestCheckedViewMapNestedUnionLiteralMutant$'),
+ ('boxed-javascript-member', 'internal/javascript/view_arrays_union.go', 'if (!(%s)) panic', 'if (false && !(%s)) panic', '^TestCheckedViewMapNestedUnionLiteralMutant$'),
+ ('boxed-number-payload', 'internal/native/runtime/view_arrays.c', 'adamic_box_number(snapshot->number)', 'adamic_box_number(0)', 'entry-convert-nested-union'),
+ ('boxed-owner', 'internal/native/runtime/view_arrays.c', 'adamic_array_push(owner, *snapshot);', '(void)owner;', 'entry-convert-nested-union'),
  ('nominal-native', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewMapNominalProducerMutants$'),
  ('nominal-javascript', 'internal/javascript/view_maps_nominal.go', '"((entry) => (" + strings.Join', '"((entry) => (true || " + strings.Join', '^TestCheckedViewMapNominalProducerMutants$'),
  ('key-presence', runtime, 'if (!query.present) { return NULL; }', 'if (false && !query.present) { return NULL; }', 'entry-convert-key'),

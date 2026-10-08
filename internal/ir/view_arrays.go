@@ -6,6 +6,13 @@ func HasArrayViews(program *Program) bool {
 	// Constructor schemas can intern arrays without introducing a checked view.
 	// Only admitted view origins enable the conservative program-wide policy.
 	if len(program.ViewOrigins) == 0 {
+		// Boxed primitive array consumers require the same adapters even without an
+		// assertion: raw scalar slots and boxed references must never be confused.
+		for _, contract := range program.ViewContracts {
+			if contract.Kind == ViewArray && contract.Element != 0 && program.ViewContracts[contract.Element-1].Of == Union && PrimitiveArrayContract(program, contract.Element) {
+				return true
+			}
+		}
 		return false
 	}
 	for _, contract := range program.ViewContracts {

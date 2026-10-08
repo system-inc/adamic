@@ -596,3 +596,46 @@ internal/lower/phantom_brands.go:133, function (*lowering).phantomRefusal:
 brand void (or optional and typed undefined) so the brand is phantom". Both read
 and unread controls refuse at the type declaration. This is not a lazy-view
 read refusal.
+
+## October 8 nested primitive boxed arrays
+
+Continued on the owner branch per the lead, without adopting the reverted
+callable boundary or changing primitive-brand refusals. Readonly Map certificates
+now admit nested array conversions from scalar/packed-number storage to primitive
+boxed union elements. A private temporary array owns newly boxed numeric reads
+for each consuming operation; the original array keeps its physical storage and
+identity. This owner can retain O(consumed elements) boxes until operation exit.
+Escaping results retain their own references. No second flow graph was added.
+
+Each extraction validates full primitive union membership, including finite
+literals and distinct null/undefined. Helpers, indexes, iteration, join, map,
+filter, forEach, reduce and searches use the shared read adapter; copied slices
+retain source storage metadata. Searches compare boxed primitive payloads and
+implement includes(NaN). Unwired boxed-array consumers and spreads refuse at
+the consumer. Nullable primitive String conversion uses the existing union
+runtime. Array templates use the checked join loop; object/callable union arrays
+remain outside this admission. Packed boolean sources remain the next group.
+
+Node controls cover number/boolean/string widening, NaN, negative zero, identity,
+original-alias pushes, mixed entries containing real null and undefined, finite
+literals and helper consumers. Wrong schema stops at node.value. A real IR
+producer mutation stores strings under the unchanged number certificate and
+stops at values[element] in both backends. A second stores actual 2 under the
+unchanged literal-1 certificate and stops at values[0] in both backends.
+
+Four independent implementation counterfactuals were run and restored: omit
+native membership, omit JavaScript membership, box number 0 instead of the read
+number, and omit the temporary owner's take. The first two let the finite mutant
+run on and are caught; boxing 0 disagrees with Node; dropping the owner leaks
+1,080 bytes in 45 allocations under LeakSanitizer. All are semantic failures,
+not compiler warnings. The reproducible runner and raw compressed logs are
+under evidence/map-nested-boxed-* and evidence/map-boxed-*.
+
+Validation: uncached Map|Nullish|NullableSelection oracle 169.625s passes; touched
+IR/lower/native/JavaScript packages with View|Map|Contract|Callable|Tuple and the
+recorded Phantom baseline exclusion pass (.012s, 4.269s, 63.318s, 1.091s); whole
+vet passes. Expanded controls and finite payload mutant pass in 4.803s. The full
+repository gate and production reachability census were not rerun. Remaining
+conservative inventory is still 2,018 pairs / 9,101 reads, with exact remaining
+production pairs/reads unmeasured. Reduced pending groups are packed booleans,
+boxed key domains and nominal entries beneath aggregates.

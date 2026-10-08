@@ -198,9 +198,9 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 					return false
 				}
 			}
-			// The shared array reader converts number to packed number|undefined
-			// at each extraction. Other nested storage still lacks that adapter.
-			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber
+			// Shared array readers convert packed numbers and primitive boxes at
+			// each extraction, without rewriting the producer storage.
+			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && (program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || PrimitiveArrayUnionStorage(program, source.Element, target.Element))
 			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		for _, id := range ScalarWriteContracts(program, from) {
@@ -223,4 +223,46 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 // their original calling and storage conventions.
 func MapReadStorageCompatible(source, target Type) bool {
 	return source == target || target == Union && (source == Number || source == Boolean || source == MaybeNumber || source == MaybeBoolean || source.IsReference() && source != Weak) || target == MaybeNumber && source == Number || target == MaybeBoolean && source == Boolean
+}
+
+// PrimitiveArrayUnionStorage requires a complete primitive target contract. The
+// array reader boxes scalars into a private owner, preserving source identity.
+func PrimitiveArrayUnionStorage(program *Program, source, target ViewContractID) bool {
+	if source == 0 || target == 0 {
+		return false
+	}
+	from, to := program.ViewContracts[source-1], program.ViewContracts[target-1]
+	if to.Of != Union || from.Of != Number && from.Of != Boolean && from.Of != String && from.Of != MaybeNumber && from.Of != Union {
+		return false
+	}
+	return PrimitiveArrayContract(program, target)
+}
+
+func PrimitiveArrayContract(program *Program, id ViewContractID) bool {
+	if id == 0 {
+		return false
+	}
+	c := program.ViewContracts[id-1]
+	if c.Unsupported != "" {
+		return false
+	}
+	switch c.Kind {
+	case ViewScalar:
+		return c.Of.Present() == Number || c.Of.Present() == Boolean || c.Of.Present() == String
+	case ViewNull, ViewUndefined:
+		return true
+	case ViewNullable:
+		return c.Element != 0 && PrimitiveArrayContract(program, c.Element)
+	case ViewUnion:
+		if len(c.Members) == 0 {
+			return false
+		}
+		for _, member := range c.Members {
+			if !PrimitiveArrayContract(program, member) {
+				return false
+			}
+		}
+		return true
+	}
+	return false
 }

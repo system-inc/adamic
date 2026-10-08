@@ -19,6 +19,7 @@ func (e *emitter) emitViewArraySearch(search ir.ArraySearch) string {
 	if search.From != nil {
 		from = e.snapshot(ir.Number, e.value(search.From))
 	}
+	owner := e.viewArrayReadOwner(search.Element)
 	count, index := e.temporary(), e.temporary()
 	e.line("double %s = (double)%s->length;", count, array)
 	start := e.temporary()
@@ -43,7 +44,7 @@ func (e *emitter) emitViewArraySearch(search ir.ArraySearch) string {
 	if !search.Includes {
 		e.line("if (adamic_array_holes_at(%s, %s) == NULL) continue;", array, index)
 	}
-	slot := e.emitViewArrayRead(search.ViewRead.Index(), array, index)
+	slot := e.emitViewArrayReadWithOwner(search.ViewRead.Index(), array, index, owner)
 	equal, missing := "false", "false"
 	switch search.Element {
 	case ir.Number:
@@ -60,6 +61,12 @@ func (e *emitter) emitViewArraySearch(search ir.ArraySearch) string {
 			equal += " || (" + value + ".present && isnan(" + present + ".number) && isnan(" + value + ".number))"
 		}
 		missing = "!" + value + ".present"
+	case ir.Union:
+		equal = "adamic_union_equal(" + slot + "->reference, " + value + ")"
+		if search.Includes {
+			equal += " || (" + slot + "->reference != NULL && " + value + " != NULL && " + "((adamic_heap *)" + slot + "->reference)->kind == adamic_kind_number && " + value + "->kind == adamic_kind_number && isnan(((adamic_number_box *)" + slot + "->reference)->number) && isnan(((adamic_number_box *)" + value + ")->number))"
+		}
+		missing = value + " == NULL"
 	case ir.String:
 		equal = "(" + value + " != NULL && adamic_string_equal(" + slot + "->reference, " + value + "))"
 		missing = value + " == NULL"

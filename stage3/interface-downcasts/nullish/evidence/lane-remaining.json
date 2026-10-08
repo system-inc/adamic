@@ -6,11 +6,6 @@
   "certified_remaining_reads": null,
   "fixture_gaps": [
     {
-      "family": "nested boxed union storage",
-      "read": "node.value",
-      "outcome": "runtime exit 70"
-    },
-    {
       "family": "nested packed boolean storage",
       "read": "node.value",
       "outcome": "runtime exit 70"
@@ -37,5 +32,12 @@
       "outcome": "existing language refusal: brand member must be void"
     }
   ],
-  "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share"
+  "delegated": "optional and rest tuples belong to lane 4c; the inventory combines array and tuple rows and cannot isolate the tuple share",
+  "closed_fixture_groups": [
+    {
+      "family": "nested primitive boxed union storage",
+      "scope": "number, boolean, string, packed number and primitive boxed sources; scalar/null/undefined target members; finite literals checked at the element read",
+      "production_reaching_view_counts": "unmeasured"
+    }
+  ]
 }
