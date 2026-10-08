@@ -32,9 +32,9 @@ The fixture evidence has two distinct kinds:
   without grep. A TypeScript AST transform wraps only the two regex literals
   in the selector port. Running the original parser on those fixtures records
   the actual substrings reaching `String.prototype[Symbol.split]`. The trace
-  preserves fixture text and file:line. `selector-fixtures.json` preserves the
-  original inputs. It does not claim the full selector reaches a substring
-  regex or use fabricated fixture strings.
+  preserves the original fixture text and file:line in the consumed inventory.
+  It does not claim the full selector reaches a substring regex or use
+  fabricated fixture strings.
 
 The corpus does not trace all cohere APIs, resolve cross-file calls, or recover
 all dynamic fixture inputs. Most implementation patterns consequently have

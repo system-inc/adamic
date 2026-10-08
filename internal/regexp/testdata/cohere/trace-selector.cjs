@@ -42,6 +42,5 @@ try {
   const {parse}=load(path.join(root,'stage1/cohere/selector/parser.ts'));
   for(const fixture of fixtures) { current=fixture;parse(fixture.text); }
 } finally { RegExp.prototype[Symbol.split]=original; }
-fs.writeFileSync(`${__dirname}/selector-fixtures.json`,JSON.stringify(fixtures,null,2)+'\n');
 fs.writeFileSync(`${__dirname}/inventory.json`,JSON.stringify(inventory,null,2)+'\n');
 console.log(JSON.stringify({fixtures:fixtures.length,observedCalls:inventory.patterns.filter(p=>p.file==='stage1/cohere/selector/parser.ts').reduce((n,p)=>n+p.inputs.length,0)}));

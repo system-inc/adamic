@@ -462,7 +462,7 @@ not the safety of the rows explicitly marked unsafe.
 
 Runtime compiler/library merge: `regexp.c:regex_regular_mode:1` is a process-wide test/embedding dispatch selector, initialized to 1 before any pool. Setters and matching use C11 atomic storage, so concurrent setters and parallelMap reads cannot race. This keeps the area dispatch choice and the concurrency branch protection.
 
-Library runtime files audited at this merge: `runtime-file:object_integrity.c`, `runtime-file:object_integrity.h`, `runtime-file:object_names.c`, `runtime-file:regexp_regular.c`, `runtime-file:string_wellformed.c`, `runtime-file:string_wellformed.h`. Integrity and well-formedness helpers use only call-local state and supplied heap values. The regular matcher owns its bounded DFA/NFA scratch arrays per call; no lazy global tables or caches are added.
+Library runtime files audited at this merge: `runtime-file:object_integrity.c`, `runtime-file:object_integrity.h`, `runtime-file:object_names.c`, `runtime-file:regexp_regular.c`, `runtime-file:string_wellformed.c`, `runtime-file:string_wellformed.h`. Well-formedness helpers use only call-local state and supplied heap values; the l2 integrity registry is audited separately below. The regular matcher owns its bounded DFA/NFA scratch arrays per call; no lazy global tables or caches are added.
 
 Additional storage inherited from area/library, audited during the runtime compiler merge:
 
@@ -471,3 +471,39 @@ Additional storage inherited from area/library, audited during the runtime compi
 - `from_codes.c:name_cache:1`: name slot cache. The merged packed cache publishes and reads with atomic operations, including concurrent error construction.
 - `node_fs_directory.c:target_before:1`, `node_fs_directory.c:arrow:1`, and `node_fs_directory.c:quote:2`: immortal error-message strings initialized statically. No literal cache writes or registration.
 - `union.c:shape_types:1`: area/library's process-wide shape-type metadata registry, written by adamic_register_shape_types during generated object construction and read by dynamic_slot. Preserved from the area, not added by the regex compiler. Unsafe today for concurrent registration/dynamic reads: neither this head nor metadata next links are protected. Requires the area's registry owner to arrange registration before the pool or synchronized publication; this merge does not certify that inherited concurrency behavior.
+
+
+Library l2 runtime inventory
+
+Reviewed files: `runtime-file:array_sort.h`, `runtime-file:date.c`,
+`runtime-file:date_metadata.c`, `runtime-file:date_parse_impl.h`,
+`runtime-file:json_parse.c`, `runtime-file:json_parse.h`,
+`runtime-file:object_descriptors.c`, and `runtime-file:object_descriptors.h`.
+Sort scratch, Date calculation and parsing state, and JSON parser state are
+call-local or owned heap values. Date metadata and shapes are const storage;
+the headers add only types, functions, and immutable declarations. The following
+non-const declarations need explicit classifications:
+
+- `exceptions.c:error_labels:1` and `node_process.c:names:1`: arrays of
+  statically initialized immortal Error-name strings. Initialization precedes
+  the pool. Their zero reference counts and literal-index sentinels prevent
+  retain/release and lazy string-cache writes; no later writers.
+- `json_parse.c:undefined_text:1` and `json_parse.c:empty:1`: statically
+  initialized immortal strings for null input and the reviver's root key.
+  No writers after initialization; the literal-index sentinel prevents cache
+  mutation and zero reference counts prevent ownership-count writes.
+- `regexp.c:message:1`, `regexp.c:message:2`, `regexp.c:message:3`, and
+  `regexp.c:slash:1`: statically initialized immortal strings used by matchAll,
+  replaceAll, callback replacement, and RegExp string conversion. No writers
+  after initialization; ownership and string caches never mutate these literals.
+- `object_descriptors.c:descriptors:1`: process-wide linked-list head and
+  descriptor entries. Descriptor lookup and property definition read or write
+  the registry; object destruction unlinks entries. Unsafe today for concurrent
+  definition, lookup, or destruction: no lock or atomic publication. This
+  inventory records the existing l2 behavior, not a concurrency guarantee.
+- `object_integrity.c:collections:1`: process-wide linked-list head and
+  collection integrity entries. Integrity mutation inserts or updates entries,
+  integrity queries read them, and collection destruction unlinks them. Unsafe
+  today for concurrent mutation, query, or destruction: no lock or atomic
+  publication. The registry owner must provide synchronized access or keep
+  these operations outside a worker pool.
