@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"substitution-hook", "onSubstituteNode", "4\n", "", "0", "node.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"internal-name", "getInternalName", "3\n", "3\n3\n4\n5\n6\n", "0", "node.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"call-update", "updateCallExpression", "10\n", "7\n3\n10\n", "0", "argument.value", "4\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"class-update", "updateClassDeclaration", "21\n", "1\n7\n21\n", "0", "member.value", "6\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"prefix-operand", "parenthesizeOperandOfPrefixUnary", "3\n", "", "0", "operand.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"syntax-kind", "formatSyntaxKind", "Identifier\n", "undefined\nIdentifier\nUnknown\n", "0", "", "", "3\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members"},
 		{"static-block", "createClassStaticBlockDeclaration", "3\n", "", "0", "body.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
@@ -185,6 +189,8 @@ func TestCheckedViewCallableLaterRankedIntrinsicSetRefusal(t *testing.T) {
 	}
 }
 
+// variable-update is the earlier untagged reduction. The original BindingName
+// tags are certified separately by variable-update-tagged.
 func TestCheckedViewCallableLaterRankedOriginalReadRefusals(t *testing.T) {
 	for _, witness := range []struct{ directory, output, refusal string }{
 		{"for-update", "15\n", "unsupported untagged object union contract"},

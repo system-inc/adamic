@@ -1724,6 +1724,93 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "substitution-internal-call-class",
+      "pairs": 4,
+      "candidateReads": 46,
+      "members": [
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "onSubstituteNode",
+          "declared_types": [
+            "(hint: EmitHint, node: Node) => Node"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 13,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 254,
+            "column": 38
+          },
+          "rank": 136,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "getInternalName",
+          "declared_types": [
+            "(node: Declaration, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined) => Identifier"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 962,
+            "column": 31
+          },
+          "rank": 156,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateCallExpression",
+          "declared_types": [
+            "(node: CallExpression, expression: Expression, typeArguments: readonly TypeNode[] | undefined, argumentsArray: readonly Expression[]) => CallExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/factory/parenthesizerRules.ts",
+            "line": 442,
+            "column": 33
+          },
+          "rank": 157,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "updateClassDeclaration",
+          "declared_types": [
+            "(node: ClassDeclaration, modifiers: readonly ModifierLike[] | undefined, name: Identifier | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, heritageClauses: readonly HeritageClause[] | undefined, members: readonly ClassElement[]) => ClassDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 11,
+          "witness": {
+            "file": "src/compiler/checker.ts",
+            "line": 6588,
+            "column": 29
+          },
+          "rank": 158,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }
