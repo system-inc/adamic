@@ -71,3 +71,5 @@ Delivery main is `6f16a1693ff41bc102c4d9bfac83b6330277c479`, verified against th
 ## Assignment continuation
 
 The subsequent assignment-value group is recorded in [ASSIGNMENTS.md](ASSIGNMENTS.md), including 43 fixtures, ten killed mutants, exact before/after replays, touched-package tests, 190 original operator-family sites and the known array-length target boundary. The earlier 190-site deferral above describes the logical/equality commits, not the current branch.
+
+Current continuation and delivery status, including the c41c0e06 merge, exact per-group coverage limits, all mutants and pending conditional ownership, are in [FINAL.md](FINAL.md). Older delivery/deferred-work statements describe their respective commits.

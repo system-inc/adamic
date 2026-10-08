@@ -44,7 +44,7 @@ go run ./stage3/census/latent/replay -project /tmp/notyet-binary-adapted/src/tsc
 go run ./stage3/census/latent/replay -project /tmp/notyet-binary-adapted/src/tsc/tsc.ts -where /tmp/notyet-binary-adapted/src/compiler/sys.ts:156:35 -kind NotYet -reason 'a BinaryExpression with a value and a value'
 ```
 
-Toolchain setup and nproc are recorded in README.md: setup done 221.364s, nproc 5. No protected file was edited, no code copied from cohere, and no full package or repository gate run.
+Toolchain setup and nproc are recorded in README.md: setup done 221.364s, nproc 5. No code was copied from cohere and no full repository gate ran. Touched-package runs under the expanded permission are recorded below.
 
 ## Touched-package verification under the expanded permission
 

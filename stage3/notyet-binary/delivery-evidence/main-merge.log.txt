@@ -1,0 +1,12 @@
+Merge made by the 'ort' strategy.
+ documentation/velocity/landings.csv    |   1 +
+ internal/childguard/childguard.go      | 173 +++++++++++++++++++++++++++++++++
+ internal/childguard/childguard_test.go | 120 +++++++++++++++++++++++
+ stage1/cohere/json/audit_test.go       |  11 ++-
+ stage1/cohere/json/chunks_test.go      |   2 +-
+ stage1/cohere/json/port_test.go        |   7 +-
+ stage1/cohere/json/progress_test.go    | 152 ++++-------------------------
+ stage1/cohere/json/repository_test.go  |   7 +-
+ 8 files changed, 330 insertions(+), 143 deletions(-)
+ create mode 100644 internal/childguard/childguard.go
+ create mode 100644 internal/childguard/childguard_test.go
