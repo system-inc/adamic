@@ -12,6 +12,8 @@ import os
 from pathlib import Path
 import re
 import sqlite3
+import shlex
+import uuid
 import subprocess
 import time
 
@@ -177,7 +179,7 @@ def hold_job(branch, sha, reason, dry=False):
         if target in entry['reported_to']:
             continue
         try:
-            result = run('ahra', 'os', 'send', target, message,
+            result = run('ahra', 'os', 'send', target, message, '--from', 'system_adamic_developer_tools',
                          cwd='/Users/kirkouimet/Projects/ahra', check=False)
             if result.returncode:
                 log(f'hold report to {target} failed for {branch}: {result.stdout.strip()}')
@@ -245,6 +247,94 @@ def enabled():
     return (STATE / 'auto-area-merge').is_file()
 
 
+class SlotWaitCancelled(Exception):
+    pass
+
+
+def cloud_area_free():
+    """The watcher's arithmetic: total threadripper B entries minus used B slots."""
+    slots = STATE / 'slots'
+    if not slots.exists():
+        return False
+    total = sum(line.split()[:2] == ['threadripper', 'B'] for line in slots.read_text().splitlines())
+    used = 0
+    for path in (STATE / 'running').glob('*'):
+        try:
+            fields = path.read_text().split()
+        except FileNotFoundError:
+            continue
+        if len(fields) >= 3 and fields[2] == 'B' and (fields[3] if len(fields) >= 4 else 'threadripper') == 'threadripper':
+            used += 1
+    return total > used
+
+
+def remote_merge(root, area, branch, sha, dry):
+    """Claim the watcher's Cloud slot before feeding any merge commands to SSH."""
+    running = STATE / 'running'
+    running.mkdir(exist_ok=True)
+    guard = STATE / 'slot-table.lock'
+    process = None
+    entry = None
+    token = uuid.uuid4().hex
+    relative_out = 'area-merge/out/' + token
+    integration = git('rev-parse', 'HEAD', cwd=root)
+    arguments = [area, branch, sha, integration, relative_out] + (['--no-push'] if dry else [])
+    command = ['ssh', '-l', 'ahra', 'cloud', 'bash', '-s', '--', shlex.join(arguments)]
+    script = (HERE / 'cloud/auto-area-merge-remote.sh').read_text()
+    while process is None:
+        if not dry and not enabled():
+            raise SlotWaitCancelled('auto area merge disabled while waiting for Cloud area slot')
+        try:
+            guard.mkdir()
+        except FileExistsError:
+            time.sleep(1)
+            continue
+        try:
+            if cloud_area_free():
+                # SSH starts a remote shell that waits on stdin; it cannot merge before its claim exists.
+                process = subprocess.Popen(command, cwd=HERE, text=True, stdin=subprocess.PIPE,
+                                           stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+                entry = running / str(process.pid)
+                entry.write_text(f'area-merge/{area} {sha} B threadripper B\n')
+        except BaseException:
+            if process is not None:
+                process.kill()
+                process.wait()
+            if entry is not None:
+                entry.unlink(missing_ok=True)
+            raise
+        finally:
+            guard.rmdir()
+        if process is None:
+            time.sleep(1)
+    log(f'claimed Cloud area slot with SSH pid {process.pid}: area/{area}')
+    try:
+        output, _ = process.communicate(script)
+        result = subprocess.CompletedProcess(command, process.returncode, output)
+    finally:
+        if process.poll() is None:
+            process.kill()
+            process.wait()
+        entry.unlink(missing_ok=True)
+    # This is artifact transfer only; the CPU slot is free as soon as the merge's SSH ends.
+    destination = STATE / ('dry-run' if dry else 'area-logs')
+    destination.mkdir(exist_ok=True)
+    bundle = destination / token
+    bundle.mkdir(exist_ok=True)
+    (bundle / 'output.log').write_text(result.stdout)
+    copied = run('scp', '-q', '-r', '-o', 'User=ahra', 'cloud:' + relative_out, str(destination), check=False)
+    if copied.returncode:
+        log(f'remote log copy failed: {copied.stdout.strip()}')
+    else:
+        manifest = bundle / 'logs.json'
+        if manifest.exists():
+            mapping = json.loads(manifest.read_text())
+            for remote, relative in sorted(mapping.items(), key=lambda item: -len(item[0])):
+                result.stdout = result.stdout.replace(remote, str(bundle / relative))
+        log(f'remote output and logs copied to {bundle}')
+    return result
+
+
 def attempt(root, branch, sha, dry, routing=None):
     start = time.monotonic()
     utc = datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%dT%H:%M:%SZ')
@@ -257,11 +347,8 @@ def attempt(root, branch, sha, dry, routing=None):
         outcome = 'no-area'
     else:
         log(f'{branch} {sha} -> area/{area}' + (' (--no-push)' if dry else ''))
-        arguments = ['bash', str(root / 'cloud/integration/area-merge.sh'), area, branch, sha]
-        if dry:
-            arguments.append('--no-push')
-        # area-merge owns all local/origin locks, main catch-up, tests, merges and area pushes.
-        result = run(*arguments, cwd=root, check=False)
+        # Integration merges and tests run only over SSH in Cloud's reserved area slot.
+        result = remote_merge(root, area, branch, sha, dry)
         output = result.stdout
         print(output, end='', flush=True)
         refusals = re.findall(r'^refused:.*$', output, re.MULTILINE)
@@ -355,7 +442,11 @@ def main():
                 path.rename(queued)
                 path = queued
                 log(f'requeued held branch {branch}: routing changed or area lock retry')
-            outcome = attempt(root, branch, sha, False, routing=routing)
+            try:
+                outcome = attempt(root, branch, sha, False, routing=routing)
+            except SlotWaitCancelled as error:
+                log(str(error))
+                break
             if outcome in ('merged', 'red', 'conflict'):
                 path.rename(path.with_suffix('.done'))
             else:
