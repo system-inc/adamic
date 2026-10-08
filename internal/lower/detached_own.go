@@ -85,7 +85,7 @@ func (l *lowering) detachedOwnRefusal(node *ast.Node) error {
 				contextual = nil
 			}
 		}
-		if contextual != nil && contextual.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+		if contextual != nil && contextual.Flags()&checker.TypeFlagsNonPrimitive != 0 && l.detachedOwnOpaqueArgument(at) {
 			of, known := l.representation(l.checker.GetTypeAtLocation(node))
 			if l.detachedOwnObjectParameter(ast.SkipParentheses(node)) {
 				of, known = ir.Object, true
@@ -232,4 +232,28 @@ func (l *lowering) detachedOwnObjectParameter(node *ast.Node) bool {
 	}
 	function.Body().ForEachChild(visit)
 	return safe && used
+}
+
+// Library's ordinary object parameters use tagged Union storage. Restrict this
+// representation check to the own-property-only helper whose parameter is a
+// native Object, so unrelated library adapters keep their existing proofs.
+func (l *lowering) detachedOwnOpaqueArgument(at *ast.Node) bool {
+	call := at.Parent
+	if call == nil || call.Kind != ast.KindCallExpression {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(call)
+	if signature == nil {
+		return false
+	}
+	for index, argument := range call.AsCallExpression().Arguments.Nodes {
+		if argument != at || index >= len(signature.Parameters()) {
+			continue
+		}
+		parameter := signature.Parameters()[index]
+		if len(parameter.Declarations) == 1 && parameter.Declarations[0].Kind == ast.KindParameter {
+			return l.detachedOwnObjectParameter(parameter.Declarations[0].Name())
+		}
+	}
+	return false
 }

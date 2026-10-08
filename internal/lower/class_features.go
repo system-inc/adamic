@@ -8,11 +8,46 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-func memberKey(name *ast.Node, class int) string {
+// memberKey is a class member's slot or method name. A private name is qualified by the class that
+// declares it (privateName), the same spelling fieldName gives every read and write of it, so a
+// definition and its uses always agree, whichever instantiation or static object holds it.
+func (l *lowering) memberKey(name *ast.Node, class int) string {
 	if name.Kind == ast.KindPrivateIdentifier {
+		if declaring := l.declaringClass(name); declaring != nil {
+			return l.privateName(name.Text(), declaring)
+		}
 		return name.Text() + "@" + strconv.Itoa(class)
 	}
 	return name.Text()
+}
+
+// declaringClass is the class declaration a private name belongs to, or nil.
+func (l *lowering) declaringClass(name *ast.Node) *ast.Node {
+	if symbol := l.checker.GetSymbolAtLocation(name); symbol != nil && len(symbol.Declarations) > 0 {
+		if class := symbol.Declarations[0].Parent; class != nil && class.Kind == ast.KindClassDeclaration {
+			return class
+		}
+	}
+	if name.Parent != nil && name.Parent.Parent != nil && name.Parent.Parent.Kind == ast.KindClassDeclaration {
+		return name.Parent.Parent
+	}
+	return nil
+}
+
+// privateName is a private name's field name: its spelling qualified by the class declaring it, numbered
+// in the order classes are first met. By the declaration, not an instantiation: inside Box<number>,
+// other.#label with other a Box<string> is Box<string>'s slot, and every instantiation holds its private
+// members under the same names; a class chain holds each declaration once, so names never collide.
+func (l *lowering) privateName(spelling string, class *ast.Node) string {
+	if l.privateOwners == nil {
+		l.privateOwners = map[*ast.Node]int{}
+	}
+	owner, isKnown := l.privateOwners[class]
+	if !isKnown {
+		owner = len(l.privateOwners) + 1
+		l.privateOwners[class] = owner
+	}
+	return spelling + "@" + strconv.Itoa(owner)
 }
 
 func (l *lowering) hasPrivateStorage(proven *checker.Type) bool {

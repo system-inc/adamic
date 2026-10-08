@@ -1,0 +1,4 @@
+stock unit ledger audit passed
+baseline: Counter({'Refused': 5162, 'NotYet': 1468, 'panic': 3, 'SkippedDependency': 3})
+full: Counter({'Boundary': 21433, 'NotYet': 15284, 'Refused': 12272, 'panic': 25, 'SkippedDependency': 3, 'error': 2})
+actual lowering: Counter({'Boundary': 21433, 'NotYet': 15274, 'Refused': 2774, 'panic': 23, 'SkippedDependency': 3, 'error': 2})

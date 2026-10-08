@@ -24,20 +24,14 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
 	ast.KindDebuggerStatement: {"debugger", "remove it"},
-	ast.KindModuleDeclaration: {"a namespace", "use a module: a file of its own, with named exports"},
-	ast.KindVoidExpression:    {"the void operator", "evaluate the expression as a statement"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
 }
 
 // refusedOperators are binary operators 0.1 refuses.
 var refusedOperators = map[ast.Kind]refusal{
-	ast.KindEqualsEqualsToken:             {"==", "use ===, which doesn't coerce"},
-	ast.KindExclamationEqualsToken:        {"!=", "use !==, which doesn't coerce"},
-	ast.KindInKeyword:                     {"in", "an object's shape is known; use a discriminant, or a Map"},
-	ast.KindCommaToken:                    {"the comma operator", "write each expression as its own statement"},
-	ast.KindAmpersandAmpersandEqualsToken: {"&&=", "write the if"},
-	ast.KindBarBarEqualsToken:             {"||=", "write the if"},
+	ast.KindEqualsEqualsToken:      {"==", "use ===, which doesn't coerce"},
+	ast.KindExclamationEqualsToken: {"!=", "use !==, which doesn't coerce"},
 }
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
@@ -60,6 +54,26 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			line, column := scanner.GetLineAndCharacterOfPosition(module, pragma.Pos())
 			return &Refused{Where: fmt.Sprintf("%s:%d:%d", l.program.FileName(module), line+1, column+1), What: "@" + pragma.Name + " checking pragma", Fix: "remove it and fix any type errors"}
 		}
+	}
+	// Validate arguments before visiting their annotations, so a failed contract
+	// names the actual argument and parameter even for an inline arrow.
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) bool {
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+			node.ForEachChild(contracts)
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	if contractError != nil {
+		return contractError
 	}
 	var found error
 	var visit ast.Visitor
@@ -85,12 +99,25 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: "delete", Fix: "fixed objects cannot lose fields; use a record or Map"}
 			return true
 		}
-		if refused, isRefused := refusals[node.Kind]; isRefused {
+		if node.Kind == ast.KindTypePredicate {
+			found = l.predicateRefusal(node)
+			return found != nil
+		}
+		if err := l.nodeLibraryRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		// FileName restores the loader's .a alias; real .ts sources keep checked !.
+		if refused, isRefused := refusals[node.Kind]; isRefused && (node.Kind != ast.KindNonNullExpression || l.program.FileName(module) != module.FileName().AsString()) {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
-		if node.Kind == ast.KindTypePredicate {
-			if err := l.provePredicate(node); err != nil {
+		if err := l.typedArrayUnsupported(node); err != nil {
+			found = err
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			if err := l.predicateArguments(node); err != nil {
 				found = err
 				return true
 			}
@@ -106,23 +133,14 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 				found = err
 				return true
 			}
-			checkedCast = len(proof.allowed) > 0 || len(proof.classes) > 0
+			checkedCast = proof.interfaceView || len(proof.allowed) > 0 || len(proof.classes) > 0
 		}
 		if err := l.recordStorageView(node); err != nil {
 			found = err
 			return true
 		}
-		var assertion *ast.Node
-		if node.Kind == ast.KindPropertyDeclaration {
-			if token := node.PostfixToken(); token != nil && token.Kind == ast.KindExclamationToken {
-				assertion = token
-			}
-		}
-		if node.Kind == ast.KindVariableDeclaration {
-			assertion = node.AsVariableDeclaration().ExclamationToken
-		}
-		if assertion != nil {
-			found = &Refused{Where: l.program.Where(assertion), What: "a definite assignment assertion !", Fix: "remove ! and initialize it where it is declared or in the constructor, or type it T | undefined"}
+		if err := l.namespaceRefusal(node); err != nil {
+			found = err
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
@@ -151,11 +169,29 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if node.Kind == ast.KindIdentifier && node.Text() == "arguments" {
 			// JavaScript's arguments object, not a variable the program named arguments.
 			if symbol := l.checker.GetSymbolAtLocation(node); symbol != nil && len(symbol.Declarations) == 0 {
-				found = &Refused{Where: l.program.Where(node), What: "arguments", Fix: "name the parameters, or take a rest parameter"}
+				if err := l.argumentsRefusal(node); err != nil {
+					found = err
+					return true
+				}
+			}
+		}
+		if (node.Kind == ast.KindPropertyAccessExpression || node.Kind == ast.KindElementAccessExpression) && !called(node) {
+			if err := l.nodeBufferUnsupportedUse(node); err != nil {
+				found = err
 				return true
 			}
 		}
-		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryMethodReadAllowed(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.detachedOwnMethod(node) {
+		if node.Kind == ast.KindShorthandPropertyAssignment {
+			if symbol := l.checker.GetShorthandAssignmentValueSymbol(node); symbol != nil && len(symbol.Declarations) == 1 && symbol.Declarations[0].Kind == ast.KindVariableDeclaration {
+				if initializer := symbol.Declarations[0].AsVariableDeclaration().Initializer; initializer != nil {
+					if _, known := l.libraryMethod(initializer, map[*ast.Symbol]bool{}); known {
+						found = l.notYet(node, "a library method value outside a const alias (an object field erases its receiver and callable ABI); use an arrow")
+						return true
+					}
+				}
+			}
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && !called(node) && !l.libraryNumberBoundMethod(node) && !l.stringMethodObservation(node) && !l.libraryArrayObservedMethod(node) && !l.libraryMethodReadAllowed(node) && !l.detachedOwnMethod(node) {
 			// A method read as a value loses its object: this is undefined when it's called.
 			access := node.AsPropertyAccessExpression()
 			if access.Name().Text() == "isPrototypeOf" && l.libraryMember(node) {

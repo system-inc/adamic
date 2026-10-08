@@ -111,7 +111,7 @@ func ProveWrites(program *ir.Program) []Write {
 func directlyCalled(program *ir.Program) map[int]bool {
 	direct := map[int]bool{}
 	for index, function := range program.Functions {
-		if function.Closure {
+		if function.Closure || function.RestElement != 0 {
 			continue
 		}
 		direct[index] = true
@@ -824,6 +824,8 @@ func (a *analysis) run(id flow.InstructionId) {
 		a.value(statement.Index)
 		held := a.value(statement.Value)
 		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.AllocateEnvironment:
+		// Empty captured storage allocates no user value and changes no existing slot.
 	case ir.Declare:
 		a.define(statement.Local, a.value(statement.Value))
 	case ir.Assign:
@@ -1032,6 +1034,53 @@ func (a *analysis) value(expression ir.Expression) value {
 			return outsideValue()
 		}
 		return held.copy()
+	case ir.Void:
+		a.value(expression.Value)
+		return value{}
+	case ir.Comma:
+		a.value(expression.Left)
+		return a.value(expression.Right)
+	case ir.Effects:
+		for _, statement := range expression.Body {
+			a.expressionEffect(statement)
+		}
+		return a.value(expression.Result)
+	case ir.LogicalAssignment:
+		result := a.value(expression.Read)
+		a.value(expression.Key)
+		before := a.state.copy()
+		switch write := expression.Write.(type) {
+		case ir.Assign:
+			held := a.value(write.Value)
+			result.merge(held)
+			a.define(write.Local, held)
+		case ir.SetProperty:
+			holder := a.value(write.Object)
+			held := a.value(write.Value)
+			result.merge(held)
+			if expression.Key != nil {
+				for _, name := range expression.KeyNames {
+					a.write(WriteField, write.Site, name, holder, held, name)
+				}
+			} else {
+				a.write(WriteField, write.Site, write.Name, holder, held, write.Name)
+			}
+		case ir.SetIndex:
+			holder := a.value(write.Array)
+			a.value(write.Index)
+			held := a.value(write.Value)
+			result.merge(held)
+			a.write(WriteElement, write.Site, "", holder, held, elementKey)
+		}
+		a.state.join(before)
+		return result
+	case ir.Truthy:
+		a.value(expression.Value)
+		return value{}
+	case ir.Logical:
+		result := a.value(expression.Left)
+		result.merge(a.value(expression.Right))
+		return result
 	case ir.Unary:
 		a.value(expression.Operand)
 		return value{}
@@ -1174,6 +1223,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MaybeToString:
 		a.value(expression.Value)
 		return value{}
+	case ir.ArrayIsArray:
+		a.value(expression.Value)
+		return value{}
 	case ir.TypeOf:
 		a.value(expression.Value)
 		return value{}
@@ -1296,6 +1348,8 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.ReadDirectory:
 		a.value(expression.Path)
 		return a.fresh(anyField, a.fresh(elementKey, value{}))
+	case ir.NodeFSFile:
+		return a.nodeFSFile(expression)
 	case ir.FileStatus:
 		a.value(expression.Path)
 		return a.fresh(anyField, value{})
@@ -1319,6 +1373,11 @@ func (a *analysis) value(expression ir.Expression) value {
 			elements.merge(a.load(a.value(other), elementKey))
 		}
 		return a.fresh(elementKey, elements)
+	case ir.HasProperty:
+		a.value(expression.Object)
+		return value{}
+	case ir.DynamicProperty:
+		return a.load(a.value(expression.Object), expression.Name)
 	case ir.HasAccessor:
 		a.value(expression.Object)
 		return value{}
@@ -1416,7 +1475,7 @@ func (a *analysis) value(expression ir.Expression) value {
 		for _, argument := range expression.Arguments {
 			operands = append(operands, a.value(argument))
 		}
-		if a.proof.top {
+		if a.proof.top || a.proof.program.CallExpandsArguments(expression) {
 			return a.call(operands, expression.Returns)
 		}
 		before := a.state.copy()
@@ -1896,4 +1955,35 @@ func sortedKeys(set map[int]bool) []int {
 // (whose cells can), a union that may be one, or a Weak. Numbers, booleans and strings can't.
 func mutable(valueType ir.Type) bool {
 	return valueType.IsReference() && valueType != ir.String
+}
+
+// expressionEffect interprets only effects that lowering admits inside expressions.
+func (a *analysis) expressionEffect(statement ir.Statement) {
+	switch statement := statement.(type) {
+	case ir.Assign:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Declare:
+		a.define(statement.Local, a.value(statement.Value))
+	case ir.Evaluate:
+		a.value(statement.Value)
+	case ir.WriteLine:
+		a.value(statement.Value)
+	case ir.Panic:
+		a.value(statement.Message)
+	case ir.SetProperty:
+		holder := a.value(statement.Object)
+		held := a.value(statement.Value)
+		a.write(WriteField, statement.Site, statement.Name, holder, held, statement.Name)
+	case ir.SetIndex:
+		holder := a.value(statement.Array)
+		a.value(statement.Index)
+		held := a.value(statement.Value)
+		a.write(WriteElement, statement.Site, "", holder, held, elementKey)
+	case ir.Block:
+		for _, inner := range statement.Body {
+			a.expressionEffect(inner)
+		}
+	default:
+		a.unknown(statement)
+	}
 }

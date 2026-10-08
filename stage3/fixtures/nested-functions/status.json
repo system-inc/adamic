@@ -1,6 +1,6 @@
 [
   {
-    "file": "01_scanner_frame.a",
+    "file": "refused/01_scanner_frame.a",
     "tsc": [
       "src/compiler/scanner.ts:1022",
       "src/compiler/scanner.ts:1131",
@@ -37,10 +37,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/nested-functions/01_scanner_frame.a:49:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/nested-functions/refused/01_scanner_frame.a:49:12: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "02_scanner_digits.a",
@@ -55,10 +52,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/02_scanner_digits.a:17:14: stage 0 can't lower reading scanDigits yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "03_scanner_hoisting.a",
@@ -71,10 +65,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/03_scanner_hoisting.a:5:12: stage 0 can't lower reading getText yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "04_scanner_escaped_text.a",
@@ -87,10 +78,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/04_scanner_escaped_text.a:5:12: stage 0 can't lower reading getText yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "05_scanner_reassigned_text.a",
@@ -103,10 +91,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/05_scanner_reassigned_text.a:6:5: stage 0 can't lower a function inside a function (a closure) yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "06_parser_token_state.a",
@@ -120,10 +105,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/06_parser_token_state.a:8:14: stage 0 can't lower reading token yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_binder_symbol_count.a",
@@ -136,10 +118,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/07_binder_symbol_count.a:13:14: stage 0 can't lower reading createSymbol yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "08_checker_symbol_recursion.a",
@@ -152,10 +131,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/08_checker_symbol_recursion.a:6:12: stage 0 can't lower reading getSymbolPath yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "09_checker_constituent_recursion.a",
@@ -169,10 +145,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:15:94: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"
-    }
+    "stage0": {"outcome":"Refused","what":"stage3/fixtures/nested-functions/09_checker_constituent_recursion.a:16:94: Adamic 0.1 refuses the non-null assertion !; write ?? panic('why it can't be missing'), or narrow and handle the missing case"}
   },
   {
     "file": "10_checker_arrow_cleanup.a",
@@ -185,10 +158,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/10_checker_arrow_cleanup.a:15:7: stage 0 can't lower a value of type undefined yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "11_scanner_method_wrapper.a",
@@ -201,9 +171,6 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/nested-functions/11_scanner_method_wrapper.a:8:16: stage 0 can't lower reading getText yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   }
 ]

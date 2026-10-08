@@ -1,0 +1,48 @@
+--- /tmp/maplike-next-raw-before.c	2026-10-08 16:32:15.127152270 +0000
++++ /tmp/maplike-next-raw-after.c	2026-10-08 16:32:15.211154429 +0000
+@@ -480,41 +480,37 @@
+ 	adamic_ready_1 = true;
+ 	adamic_array * adamic_temporary_118 = adamic_retain(adamic_global_1_empty);
+ 	adamic_object * adamic_temporary_119 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_119->slots[0].reference = adamic_retain(((adamic_heap *)(adamic_temporary_118)));
++	adamic_temporary_119->slots[0].reference = adamic_temporary_118;
+ 	adamic_string * adamic_temporary_120 = adamic_function_5_library_string_raw(adamic_temporary_119, &adamic_string_8);
+ 	adamic_write_line(adamic_stdout, adamic_temporary_120);
+ 	adamic_release(adamic_temporary_120);
+ 	adamic_release(adamic_temporary_119);
+-	adamic_release(adamic_temporary_118);
+ 	adamic_array * adamic_temporary_121 = adamic_array_new(1, true);
+ 	adamic_array_push(adamic_temporary_121, (adamic_value){.reference = adamic_retain(&adamic_string_9)});
+ 	adamic_object * adamic_temporary_122 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_122->slots[0].reference = adamic_retain(((adamic_heap *)(adamic_temporary_121)));
++	adamic_temporary_122->slots[0].reference = adamic_temporary_121;
+ 	adamic_string * adamic_temporary_123 = adamic_function_6_library_string_raw(adamic_temporary_122, &adamic_string_8);
+ 	adamic_write_line(adamic_stdout, adamic_temporary_123);
+ 	adamic_release(adamic_temporary_123);
+ 	adamic_release(adamic_temporary_122);
+-	adamic_release(adamic_temporary_121);
+ 	adamic_array * adamic_temporary_124 = adamic_array_new(2, true);
+ 	adamic_array_push(adamic_temporary_124, (adamic_value){.reference = adamic_retain(&adamic_string_2)});
+ 	adamic_array_push(adamic_temporary_124, (adamic_value){.reference = adamic_retain(&adamic_string_3)});
+ 	adamic_object * adamic_temporary_125 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_125->slots[0].reference = adamic_retain(((adamic_heap *)(adamic_temporary_124)));
++	adamic_temporary_125->slots[0].reference = adamic_temporary_124;
+ 	adamic_string * adamic_temporary_126 = adamic_function_7_library_string_raw(adamic_temporary_125, &adamic_string_10, &adamic_string_11);
+ 	adamic_write_line(adamic_stdout, adamic_temporary_126);
+ 	adamic_release(adamic_temporary_126);
+ 	adamic_release(adamic_temporary_125);
+-	adamic_release(adamic_temporary_124);
+ 	adamic_array * adamic_temporary_127 = adamic_array_new(2, true);
+ 	adamic_array_push(adamic_temporary_127, (adamic_value){.reference = adamic_retain(&adamic_string_12)});
+ 	adamic_array_push(adamic_temporary_127, (adamic_value){.reference = adamic_retain(&adamic_string_13)});
+ 	adamic_object * adamic_temporary_128 = adamic_object_new(&adamic_shape_1);
+-	adamic_temporary_128->slots[0].reference = adamic_retain(((adamic_heap *)(adamic_temporary_127)));
++	adamic_temporary_128->slots[0].reference = adamic_temporary_127;
+ 	adamic_string * adamic_temporary_129 = adamic_function_8_library_string_raw(adamic_temporary_128);
+ 	adamic_write_line(adamic_stdout, adamic_temporary_129);
+ 	adamic_release(adamic_temporary_129);
+ 	adamic_release(adamic_temporary_128);
+-	adamic_release(adamic_temporary_127);
+ 	adamic_string * adamic_temporary_130 = adamic_global_2_order;
+ 	adamic_global_2_order = adamic_retain(&adamic_string_6);
+ 	adamic_release(adamic_temporary_130);

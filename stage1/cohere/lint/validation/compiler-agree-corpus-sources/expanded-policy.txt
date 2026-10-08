@@ -1,0 +1,8 @@
+=== RUN   TestCompilerCorpusSourcesExcludeOnlyNamedFolders
+=== PAUSE TestCompilerCorpusSourcesExcludeOnlyNamedFolders
+=== CONT  TestCompilerCorpusSourcesExcludeOnlyNamedFolders
+    corpus_sources_test.go:57: compiler corpus exclusions grew beyond the named folders: ["evidence" "testdata" "tests" "validation"]
+--- FAIL: TestCompilerCorpusSourcesExcludeOnlyNamedFolders (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	0.044s
+FAIL
