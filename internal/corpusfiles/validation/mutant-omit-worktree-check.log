@@ -1,0 +1,82 @@
+=== RUN   TestConvertedPackageContracts
+=== RUN   TestConvertedPackageContracts/scanner
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscanner2654808536/001 root stage1 pin 5e785a9ad607a5b59eb3f190f0c828edd44b9af7 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsscanner2654808536/001 root stage1 pin 5e785a9ad607a5b59eb3f190f0c828edd44b9af7 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscanner2654808536/001 root stage1 pin 5e785a9ad607a5b59eb3f190f0c828edd44b9af7 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsscanner2654808536/001 root stage1: dirty, untracked or ignored upstream paths: ["?? stage1/stray.ts"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/scanner/profile-runtime
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime1589797115/001 root internal/native/runtime pin e6bba71aa7b40b49b7f418d86857706aa8ad72fc count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime1589797115/001 root internal/native/runtime pin e6bba71aa7b40b49b7f418d86857706aa8ad72fc count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime1589797115/001 root internal/native/runtime pin e6bba71aa7b40b49b7f418d86857706aa8ad72fc count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsscannerprofile-runtime1589797115/001 root internal/native/runtime: dirty, untracked or ignored upstream paths: ["?? internal/native/runtime/stray.c"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/typeaware
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractstypeaware4262802410/001 root src/compiler pin 948789b71fd6689ba9bba3dfa5e3edcd56d283f1 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractstypeaware4262802410/001 root src/compiler pin 948789b71fd6689ba9bba3dfa5e3edcd56d283f1 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractstypeaware4262802410/001 root src/compiler pin 948789b71fd6689ba9bba3dfa5e3edcd56d283f1 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractstypeaware4262802410/001 root src/compiler: dirty, untracked or ignored upstream paths: ["?? src/compiler/stray.ts"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdowninline
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3537199052/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3537199052/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3537199052/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsmarkdowninline3537199052/001 root .: dirty, untracked or ignored upstream paths: ["?? stray.md"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/yaml
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsyaml1024645433/001 root .github/workflows pin 9414f3e19f6faf5d46cfb2e658f4b6b605dd7e95 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsyaml1024645433/001 root .github/workflows pin 9414f3e19f6faf5d46cfb2e658f4b6b605dd7e95 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsyaml1024645433/001 root .github/workflows pin 9414f3e19f6faf5d46cfb2e658f4b6b605dd7e95 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsyaml1024645433/001 root .github/workflows: dirty, untracked or ignored upstream paths: ["?? .github/workflows/stray.yml"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/cssstrings
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssstrings356525287/001 root internal/format/css/testdata/prettier pin 802d0434f06cdc3b520f308bc1497d0fe79ab1d3 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractscssstrings356525287/001 root internal/format/css/testdata/prettier pin 802d0434f06cdc3b520f308bc1497d0fe79ab1d3 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssstrings356525287/001 root internal/format/css/testdata/prettier pin 802d0434f06cdc3b520f308bc1497d0fe79ab1d3 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractscssstrings356525287/001 root internal/format/css/testdata/prettier: dirty, untracked or ignored upstream paths: ["?? internal/format/css/testdata/prettier/stray.css"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/cssnumbers
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssnumbers568223654/001 root internal/format/css/testdata/prettier pin bb41cb58f68c9380b2f1e268d4294c9ba8635b4b count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractscssnumbers568223654/001 root internal/format/css/testdata/prettier pin bb41cb58f68c9380b2f1e268d4294c9ba8635b4b count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractscssnumbers568223654/001 root internal/format/css/testdata/prettier pin bb41cb58f68c9380b2f1e268d4294c9ba8635b4b count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractscssnumbers568223654/001 root internal/format/css/testdata/prettier: dirty, untracked or ignored upstream paths: ["?? internal/format/css/testdata/prettier/stray.scss"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/graphql/printer
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter818669490/001 root internal/format/graphql pin 8685a340959ba29e9da2e856aa040213749cb5ae count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter818669490/001 root internal/format/graphql pin 8685a340959ba29e9da2e856aa040213749cb5ae count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter818669490/001 root internal/format/graphql pin 8685a340959ba29e9da2e856aa040213749cb5ae count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsgraphqlprinter818669490/001 root internal/format/graphql: dirty, untracked or ignored upstream paths: ["?? internal/format/graphql/stray_test.go"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdownblocks/default
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault2673238296/001 root stage1/cohere/markdownblocks pin e4f412bdcc57cc6602902d8a4702f8888ded37d3 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault2673238296/001 root stage1/cohere/markdownblocks pin e4f412bdcc57cc6602902d8a4702f8888ded37d3 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault2673238296/001 root stage1/cohere/markdownblocks pin e4f412bdcc57cc6602902d8a4702f8888ded37d3 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblocksdefault2673238296/001 root stage1/cohere/markdownblocks: dirty, untracked or ignored upstream paths: ["?? stage1/cohere/markdownblocks/stray.md"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/markdownblocks/census
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus3579978249/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus3579978249/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus3579978249/001 root . pin 479cd7cc0266dbb5df661189c47fb307eb133d6c count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsmarkdownblockscensus3579978249/001 root .: dirty, untracked or ignored upstream paths: ["?? stray.md"]
+    files_test.go:93: planted corpus fault survived
+=== RUN   TestConvertedPackageContracts/selector
+    files_test.go:76: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsselector1262749255/001 root internal/format/css pin d271b1da0d0bd4af8c21f70d4a4ebc9f3b9ac789 count 1
+    files_test.go:80: corpus-files: upstream /tmp/adamic-gate/TestConvertedPackageContractsselector1262749255/001 root internal/format/css pin d271b1da0d0bd4af8c21f70d4a4ebc9f3b9ac789 count 1
+    files_test.go:85: corpus-files: repository /tmp/adamic-gate/TestConvertedPackageContractsselector1262749255/001 root internal/format/css pin d271b1da0d0bd4af8c21f70d4a4ebc9f3b9ac789 count 1
+    files_test.go:88: caught: /tmp/adamic-gate/TestConvertedPackageContractsselector1262749255/001 root internal/format/css: dirty, untracked or ignored upstream paths: ["?? internal/format/css/stray.css"]
+    files_test.go:93: planted corpus fault survived
+--- FAIL: TestConvertedPackageContracts (0.52s)
+    --- FAIL: TestConvertedPackageContracts/scanner (0.05s)
+    --- FAIL: TestConvertedPackageContracts/scanner/profile-runtime (0.05s)
+    --- FAIL: TestConvertedPackageContracts/typeaware (0.05s)
+    --- FAIL: TestConvertedPackageContracts/markdowninline (0.05s)
+    --- FAIL: TestConvertedPackageContracts/yaml (0.06s)
+    --- FAIL: TestConvertedPackageContracts/cssstrings (0.05s)
+    --- FAIL: TestConvertedPackageContracts/cssnumbers (0.05s)
+    --- FAIL: TestConvertedPackageContracts/graphql/printer (0.05s)
+    --- FAIL: TestConvertedPackageContracts/markdownblocks/default (0.04s)
+    --- FAIL: TestConvertedPackageContracts/markdownblocks/census (0.04s)
+    --- FAIL: TestConvertedPackageContracts/selector (0.04s)
+FAIL
+FAIL	corpusmutant	0.520s
+FAIL
