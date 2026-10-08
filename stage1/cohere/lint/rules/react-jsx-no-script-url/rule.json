@@ -1,0 +1,12 @@
+{
+  "name": "react/jsx-no-script-url",
+  "kinds": [
+    "JsxAttribute"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleJsxNoScriptUrl",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxNoScriptUrl"
+}

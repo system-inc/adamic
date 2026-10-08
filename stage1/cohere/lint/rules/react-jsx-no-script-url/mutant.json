@@ -1,0 +1,5 @@
+{
+  "name": "script-url-protocol-inverted",
+  "from": "if(code!==wanted) {return false;}",
+  "to": "if(code===wanted) {return false;}"
+}
