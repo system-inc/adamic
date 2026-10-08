@@ -2,7 +2,7 @@ import type { IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo } from 'orig
 interface Base { readonly kind: 'box' | 'other'; }
 interface Carrier extends Base { readonly kind: 'box'; readonly child: IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo; }
 function helper(value: IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo): void { console.log(String(value.signature)); }
-const raw = {kind: 'box' as const, child: {signature: 42}};
+const raw = {kind: 'box' as const, child: {version: 'version', affectsGlobalScope: undefined, impliedFormat: undefined, signature: 42}};
 const base: Base = raw;
 const carrier = base as Carrier;
 helper(carrier.child);

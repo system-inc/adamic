@@ -1,14 +1,14 @@
 {
   "basis": "Static candidates; original full declarations, not whole-tsc execution",
   "integration": "267fd75b",
-  "certified_pairs": 54,
-  "certified_candidate_reads": 665,
-  "remaining_pairs": 7,
-  "remaining_candidate_reads": 21,
+  "certified_pairs": 55,
+  "certified_candidate_reads": 667,
+  "remaining_pairs": 6,
+  "remaining_candidate_reads": 19,
   "lane6_dictionary_reference_pairs": 3,
   "lane6_dictionary_reference_reads": 14,
-  "owned_remaining_pairs": 4,
-  "owned_remaining_reads": 7,
+  "owned_remaining_pairs": 3,
+  "owned_remaining_reads": 5,
   "groups": [
     {
       "pair": "7536:value",
@@ -21,6 +21,12 @@
       "reads": 4,
       "evidence": "logs/command-default-full-fields.log; remaining-candidates.json",
       "result": "all five member kinds; wrong null and nested code pins; six backend semantic mutant kills"
+    },
+    {
+      "pair": "97892:signature",
+      "reads": 2,
+      "evidence": "logs/builder-signature-green.log",
+      "result": "seven original cases; four backend member and first-member mutant kills"
     }
   ]
 }

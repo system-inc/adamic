@@ -411,7 +411,7 @@ func assertPrimitiveBooleanFirstMember(t *testing.T, program *ir.Program, field,
 	}
 }
 
-func TestCheckedViewOriginalBuilderSignatureReceiverGap(t *testing.T) {
+func TestCheckedViewOriginalBuilderSignature(t *testing.T) {
 	directory := os.Getenv("ADAMIC_BRAND_ORIGINAL_DECLS")
 	if directory == "" {
 		t.Skip("set original declarations")
@@ -432,11 +432,44 @@ func TestCheckedViewOriginalBuilderSignatureReceiverGap(t *testing.T) {
 			if diff := disagreement(run{stdout: []byte(text)}, onNode(t, file)); diff != "" {
 				t.Fatal("Node: " + diff)
 			}
-			_, err = lowered(t, file)
-			if err == nil || !strings.Contains(err.Error(), "field child with unsupported compound intersection payload contract") {
-				t.Fatalf("original intersection receiver guard: %v", err)
+			program, err := lowered(t, file)
+			if err != nil {
+				t.Fatal(err)
 			}
-			t.Log("original primitive selector component exists; intersection receiver remains lane 7")
+			assertOriginalPrimitiveFields(t, directory, program, "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo", "IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo")
+			want := run{stdout: []byte(text)}
+			if variant == "wrong" || variant == "wrong-number" || variant == "null" {
+				found := map[string]string{"wrong": "boolean", "wrong-number": "number", "null": "null"}[variant]
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.signature matches no member of string | false | undefined; expected string | false | undefined, found " + found + "\n")}
+			}
+			if variant == "missing" {
+				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: value.signature is not initialized; expected string | false | undefined, found missing\n")}
+			}
+			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+				if diff := disagreement(want, got); diff != "" {
+					t.Fatalf("%s: %#v", diff, got)
+				}
+			}
+			if want.exitCode == 0 {
+				got, _ := nativelyUncached(t, program)
+				if diff := disagreement(want, got); diff != "" {
+					t.Fatalf("sanitized: %s %#v", diff, got)
+				}
+			}
+			if variant == "undefined" {
+				assertPrimitiveFirstMemberMutant(t, program, "signature", false, text)
+			}
+			if variant == "wrong" {
+				if skipPrimitiveMemberChecks(program, "signature") != 1 {
+					t.Fatal("expected one member-check mutant")
+				}
+				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 0 || string(got.stdout) != text {
+						t.Fatalf("mutant must run: %#v", got)
+					}
+					t.Log("member-check bypass caught by named refusal pin")
+				}
+			}
 		})
 	}
 }

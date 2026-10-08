@@ -2342,3 +2342,11 @@ field read from its unsupported static untagged union receiver. Direct unsupport
 field descriptors, scoped source-family checks and the global unknown fallback
 remain intact. Owned lower/view_primitive_property_contracts.go and negative
 certificate tests; no emitter or runtime change in this group.
+
+Named lane 4 intersection descendant hook: viewIntersectionReadFamily calls
+primitiveIntersectionDescendant for complete primitive union/nullable children.
+Their own selectors remain at subsequent field reads. Unknown, never, objects
+and unsupported descendants do not acquire this exemption. Owned
+lower/view_intersection_primitives.go and negative-boundary tests.
+Original builder signature witnesses now populate every required original
+field, including version, affectsGlobalScope and impliedFormat.

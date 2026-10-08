@@ -1,0 +1,25 @@
+=== RUN   TestCheckedViewOriginalBuilderSignature
+=== RUN   TestCheckedViewOriginalBuilderSignature/string
+=== RUN   TestCheckedViewOriginalBuilderSignature/false
+=== RUN   TestCheckedViewOriginalBuilderSignature/undefined
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+    checked_views_primitives_original_test.go:460: first-member substitution caught by Node control
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+    checked_views_primitives_original_test.go:470: member-check bypass caught by named refusal pin
+=== RUN   TestCheckedViewOriginalBuilderSignature/wrong-number
+=== RUN   TestCheckedViewOriginalBuilderSignature/null
+=== RUN   TestCheckedViewOriginalBuilderSignature/missing
+--- PASS: TestCheckedViewOriginalBuilderSignature (16.35s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/string (2.99s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/false (2.82s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/undefined (2.90s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong (2.25s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/wrong-number (1.75s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/null (1.57s)
+    --- PASS: TestCheckedViewOriginalBuilderSignature/missing (2.07s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.392s

@@ -183,6 +183,11 @@ func (l *lowering) viewIntersectionReadFamily(id ir.ViewContractID, target *chec
 					return family
 				}
 			}
+		case ir.ViewUnion, ir.ViewNullable:
+			if l.primitiveIntersectionDescendant(id) {
+				return "" // Complete primitive selection remains at the descendant read.
+			}
+			return "compound intersection payload"
 		case ir.ViewCallable:
 			return "" // Kind now; the shared callable proof is demanded by member reads.
 		case ir.ViewUnknown:

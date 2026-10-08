@@ -298,3 +298,19 @@ global unknown fallback are unchanged. Lower/IR selected certificate and
 intersection/lazy tests passed; vet passed. Full gate is not claimed.
 Column now 54 / 665 certified, 7 / 21 remaining; exclude lane 6 three /
 fourteen from owned work, leaving four / seven. Counts remain candidates.
+
+Builder signature checkpoint: IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo
+.signature (one pair / two candidate reads) now certified. The cause was the
+intersection visitor treating a complete primitive-union descendant as a
+compound unsupported payload before its field read. The minimal named hook
+defers only complete primitive descendants; unsupported, never, unknown and
+object alternatives retain the guard. Fixtures retain full original Omit
+intersection declarations and populate all required fields. Seven cases
+pass Node, release C, JavaScript, native positive sanitizers and four semantic
+backend mutant kills (member omission and first-member substitution).
+Standalone uncached TestCheckedViewOriginalBuilderSignature passed 16.392s;
+negative certificate/intersection/lazy package checks and vet passed.
+Full repository gate not claimed. Property certificate ledger is now 15 / 93.
+Combined column now 55 / 667 certified, 6 / 19 remaining. Lane 6 dictionary
+reference exclusion is unchanged at three / fourteen; owned remainder three /
+five, including the measured tuple-position false positive pending correction.
