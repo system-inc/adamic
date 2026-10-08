@@ -138,7 +138,7 @@ func TestLedgerWitnesses(t *testing.T) {
 						t.Fatalf("site: %q, want %q", checks[0].Where, where)
 					}
 					explain := run(cli, "--explain-checks", path)
-					if explain.code != 0 || !strings.Contains(explain.stdout+explain.stderr, ": checked indexed-presence\n") || !strings.Contains(explain.stdout+explain.stderr, "checked: indexed-presence=1") || !strings.Contains(explain.stdout+explain.stderr, "trusted: 0") {
+					if explain.code != 0 || !strings.Contains(explain.stdout+explain.stderr, fmt.Sprintf("%s:%d:%d: checked indexed-presence\n", filepath.Base(path), line, column)) || !strings.Contains(explain.stdout+explain.stderr, "checked: indexed-presence=1") || !strings.Contains(explain.stdout+explain.stderr, "trusted: 0") {
 						t.Fatalf("explain: %+v", explain)
 					}
 					expected := node
@@ -180,7 +180,7 @@ func TestLedgerWitnesses(t *testing.T) {
 						if got == expected {
 							t.Fatal("erased guard survived")
 						}
-						t.Logf("PROVEN %s read=%s; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit %d", s.ID, s.Read, got.code)
+						t.Logf("PROVEN %s read=%s; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught: exit %d stdout=%q stderr=%q", s.ID, s.Read, got.code, got.stdout, got.stderr)
 					} else {
 						t.Logf("PRESENT %s matches source Node in release/sanitized and JS", s.ID)
 					}

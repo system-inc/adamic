@@ -1,8 +1,8 @@
-Built a ledger-linked generated .ts harness; D107 and D171 dense reads are proven.
-Base commit: 390af985; witness commits will be recorded below.
-Commands: cloud/setup.sh and the first group test, with output in /tmp/stricter-indexed-d-*.log.
-Mutants: D107 and D171 erase-panic mutants caught, each cleanly exits 0.
-Not covered yet: remaining groups; record chains and holes require observed refusal evidence.
+Built 24 ledger-linked generated .ts witnesses: 21 dense read shapes proven, 3 record chains refused.
+Commits: 8f28caf6, e4ebd182, ee0a5320, 3c5c85b4, 9359c2d5; final evidence commit in git history.
+Commands: census, two witness packages, filtered oracle and vet pass; detailed outputs below.
+Mutants: all 21 erased site guards caught; D107 UBSan exit 1, the other 20 exit 0.
+Not covered: records, 21 hole variants, whole-program compilation, full gate, and the 3 unspecified rows implied by 27.
 
 ## Scope and assumptions
 
@@ -36,7 +36,7 @@ No receiver in this exact slice is a Map, typed array or indexed string.
 
 ## Progress
 
-Toolchain dependency checkout is in progress. The first attempted test exited 1
+Toolchain setup is complete. The first attempted test exited 1
 before compilation: cohere/TypeScript/tsc/go.mod was not yet available during
 setup's recursive submodule checkout. This is not a witness or mutant result.
 
@@ -83,3 +83,92 @@ and exit 0, caught by exact named-stop assertions. All four hole variants refuse
 Total: 21 dense reads proven, 3 record rows blocked, 0 known matching rows
 remaining. Command filter: `-run 'TestLedgerWitnesses/(D228|D229|D230|D231)$'`;
 exit 0, package 11.659s, log `/tmp/stricter-indexed-d-group5.log`.
+
+
+Group 5 commit: 9359c2d5, pushed to codex/stricter-indexed-d.
+
+## Final verification, October 8, 2026
+
+All 24 exact matching rows are assessed. Dense/out-of-range proof is complete for
+21. D129, D130 and D131 are blocked by the index-signature refusal above. All
+21 array hole variants are separately blocked by the constructor refusal above.
+These gaps belong to the representation worker; no implementation is added here.
+No known matching rows remain. The extra three rows implied by the prompt's 27
+were not identifiable in either pinned ledger file and are not claimed covered.
+
+Every supported present control prints `7\n`, no stderr, exit 0 on source Node,
+backend Node, release native and sanitized native. Every supported empty-array
+source prints `undefined\n`, no stderr, exit 0 on Node. Both backends instead
+produce no stdout, exact `adamic: panic: indexed read is absent: file:line:column\n`
+stderr, exit 70. The independently calculated read location must match IR and
+CLI explain output, with indexed-presence=1 and trusted=0.
+
+Every mutant erases exactly the one panic in generated C. Native sanitizer
+builds succeed. The named-stop assertion catches all 21. D107 then reaches a
+null string use: UBSan reports member access within null pointer of type
+adamic_string in string_build_impl.h:40:21 and exit 1. The other 20 exit 0.
+The first checkpoint summary incorrectly said both initial mutants exited 0;
+D107 actually exited 1 in that run too. This report corrects that observation.
+No build failure is counted as a mutant kill.
+
+Commands (environment sourced from /workspace/adamic-tools/env.sh):
+
+```sh
+python3 stage3/stricter-indexed-d/census.py > /tmp/stricter-indexed-d-census.log 2>&1
+go test ./stage3/stricter-indexed-d ./stage3/stricter-options -count=1 -timeout 10m -v > /tmp/stricter-indexed-d-final.log 2>&1
+go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(indexing|string_index|narrowed_reads|narrowed_numbers)\.a$' -count=1 -timeout 10m -v > /tmp/stricter-indexed-d-oracle.log 2>&1
+go test ./stage3/stricter-indexed-d -run 'TestLedgerWitnesses/D107$' -count=1 -timeout 10m -v > /tmp/stricter-indexed-d-mutant-D107.log 2>&1
+go vet ./stage3/stricter-indexed-d > /tmp/stricter-indexed-d-vet.log 2>&1
+git diff --check
+```
+
+All commands exit 0. Census: 24 rows, 0 missing, 0 extra, exact metadata.
+New witness package: 47.338s. Inherited stricter-options package: 10.164s.
+Filtered oracle: 3.617s, all four named fixtures pass. D107 supplemental run:
+3.595s, preserving mutant stderr after adding output logging. Vet and diff check
+emit no diagnostics. The supplemental change only logs mutant outputs; it does
+not alter the witnesses or assertions verified by the combined run.
+
+The inherited package also reruns its eight indexed and three JSON erase-check
+mutants. Those remain generic predecessor proofs, not additional ledger rows
+credited to this unit. Full repository gate and whole TypeScript native build
+were not run. Minimal object element types retain the receiver category and
+index expression, not the full AST union representation. An actual whole-program
+emitted guard count or whole-program completion date cannot be established by
+these shape witnesses. No compiler implementation or another worker's files
+were changed. Only codex/stricter-indexed-d was pushed; no PR was opened.
+
+Raw successful output is preserved under [evidence](evidence/).
+
+## Per-site result and mutant inventory
+
+Each dense row below also has a separately observed hole-constructor refusal.
+Each record row has present and empty-inner-array Node observations plus the
+native representation refusal, and has no emitted guard or mutant claim.
+
+| Ledger ID | Source file and line | Traced read | Receiver | Result | Erase-panic mutant |
+|---|---|---|---|---|---|
+| D107 | src/compiler/commandLineParser.ts:2077 | `args[i]` | array of string | Dense read proven; hole blocked | Caught: UBSan exit 1 |
+| D129 | src/compiler/program.ts:4157 | `options.paths[key][i]` | record of string arrays | Blocked: index signature | Not emitted |
+| D130 | src/compiler/program.ts:4160 | `options.paths[key][i]` | record of string arrays | Blocked: index signature | Not emitted |
+| D131 | src/compiler/program.ts:4160 | `options.paths[key][i]` | record of string arrays | Blocked: index signature | Not emitted |
+| D171 | src/compiler/transformers/es2015.ts:2803 | `node.declarations[0]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D172 | src/compiler/transformers/es2015.ts:3046 | `declarations[0]` | array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D173 | src/compiler/transformers/es2015.ts:4437 | `funcStatements[classBodyStart]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D174 | src/compiler/transformers/es2015.ts:4691 | `segments[0]` | array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D175 | src/compiler/transformers/es2015.ts:4693 | `segments[0]` | array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D184 | src/compiler/transformers/esDecorators.ts:1164 | `superPath[superPathDepth]` | readonly array of number | Dense read proven; hole blocked | Caught: exit 0 |
+| D185 | src/compiler/transformers/esDecorators.ts:1165 | `superPath[superPathDepth]` | readonly array of number | Dense read proven; hole blocked | Caught: exit 0 |
+| D186 | src/compiler/transformers/esDecorators.ts:1192 | `superPath[superPathDepth]` | readonly array of number | Dense read proven; hole blocked | Caught: exit 0 |
+| D189 | src/compiler/transformers/esnext.ts:183 | `node.statements[pos]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D191 | src/compiler/transformers/esnext.ts:344 | `statementsIn[i]` | readonly array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D192 | src/compiler/transformers/esnext.ts:384 | `statementsIn[i]` | readonly array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D193 | src/compiler/transformers/esnext.ts:767 | `statements[i]` | readonly array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D194 | src/compiler/transformers/esnext.ts:767 | `statements[i]` | readonly array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D225 | src/compiler/transformers/jsx.ts:309 | `nonWhitespaceChildren[0]` | readonly array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D226 | src/compiler/transformers/jsx.ts:502 | `expressions[0]` | array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D227 | src/compiler/transformers/module/esnextAnd2015.ts:100 | `node.arguments[0]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D228 | src/compiler/transformers/module/esnextAnd2015.ts:163 | `importsAndRequiresToRewriteOrShim[0]` | array of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D229 | src/compiler/transformers/module/esnextAnd2015.ts:194 | `node.arguments[0]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D230 | src/compiler/transformers/module/esnextAnd2015.ts:196 | `node.arguments[0]` | NodeArray of object | Dense read proven; hole blocked | Caught: exit 0 |
+| D231 | src/compiler/transformers/module/esnextAnd2015.ts:251 | `importRequireStatements[1].declarationList.declarations[0]` | NodeArray of object inside tuple | Dense read proven; hole blocked | Caught: exit 0 |
