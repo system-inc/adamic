@@ -1,5 +1,9 @@
 # Native tsc entry measurement
 
+The current-main rerun is recorded in [REFRESH.md](REFRESH.md), with evidence
+under `evidence/main-efe9f404/` and exact-message comparison against
+`stage3/census/latent/REPORT.md`. The original unit remains in `REPORT.md`.
+
 This unit starts at adapted TypeScript 6.0.3's `src/tsc/tsc.ts`.
 The compiler is unchanged main, pinned in `evidence/provenance.json`.
 All source replacements live in a disposable copy outside the repository.
@@ -53,7 +57,9 @@ parameter is the stopping site, the enclosing function whose body contains that
 parameter is replaced. This can change inferred types; the report flags messages
 absent from the pristine build.
 
-`collect.py PROGRESS_DIRECTORY` gathers evidence and compares message text with
+`collect.py PROGRESS_DIRECTORY --evidence EVIDENCE --census-report stage3/census/latent/REPORT.md`
+compares messages with the main exact-reasons table in the requested latent
+report. Without these options, `collect.py PROGRESS_DIRECTORY` compares with
 the newest main meter's latent lowering `per_reason` counts. It replays recorded
 UTF-16 replacements to map scratch coordinates to the original adapted source.
 It never commits or copies a modified tree. The checked-in witness outputs are
