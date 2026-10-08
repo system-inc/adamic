@@ -1,0 +1,3 @@
+// Reduced from scanner.ts:696:32 in 2a34651e main-area-next-replay.
+// scanNumber: mainFragment = "" + +tokenValue.
+console.log('' + +'08');

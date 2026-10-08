@@ -1,0 +1,3 @@
+// Reduced from scanner.ts:1221:26 in 2a34651e main-area-next-replay.
+// checkBigIntSuffix: tokenValue = "" + numericValue.
+console.log('' + 8);

@@ -817,8 +817,16 @@ var comparisons = map[ast.Kind]ir.Operator{
 // combine lowers a binary operator on two lowered operands.
 func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression, right ir.Expression) (ir.Expression, error) {
 	both := func(want ir.Type) bool { return left.Type() == want && right.Type() == want }
-	if operator == ast.KindPlusToken && both(ir.String) {
-		return ir.Concat{Parts: []ir.Expression{left, right}}, nil
+	if operator == ast.KindPlusToken {
+		// Mixed addition spells numbers exactly as templates do, in operand order.
+		if left.Type() == ir.String && right.Type() == ir.Number {
+			right = ir.NumberToString{Value: right}
+		} else if left.Type() == ir.Number && right.Type() == ir.String {
+			left = ir.NumberToString{Value: left}
+		}
+		if both(ir.String) {
+			return ir.Concat{Parts: []ir.Expression{left, right}}, nil
+		}
 	}
 	if lowered, isArithmetic := arithmetic[operator]; isArithmetic && both(ir.Number) {
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil

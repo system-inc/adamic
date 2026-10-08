@@ -1,0 +1,39 @@
+// Number spelling shared by binary addition, compound addition and templates.
+const values = [0, -0, 7, -42, NaN, Infinity, -Infinity, 1e21, 1e20, 1e-7, 1e-6, 0.5, -0.125, 1.23456789012345, 5e-324, 1.7976931348623157e308];
+for (const value of values) {
+	console.log('left:' + value);
+	console.log(value + ':right');
+	let text = 'slot:'.repeat(1);
+	text += value;
+	console.log(text);
+	console.log(`template:${value}`);
+}
+console.log(1 + 2 + ':sum');
+console.log('chain:' + 1 + 2);
+
+let trace = '';
+function numberOperand(): number {
+	trace += 'number';
+	return 1e-7;
+}
+function stringOperand(): string {
+	trace += 'string';
+	return 'built:'.repeat(1);
+}
+console.log(stringOperand() + numberOperand());
+console.log(trace);
+trace = '';
+console.log(numberOperand() + stringOperand());
+console.log(trace);
+
+let slot = 'saved:'.repeat(1);
+function replaceSlot(): number {
+	slot = 'replaced:'.repeat(1);
+	return -0;
+}
+slot += replaceSlot();
+console.log(slot);
+console.log(slot += 1.5);
+const holder = { text: 'field:'.repeat(1) };
+holder.text += NaN;
+console.log(holder.text);
