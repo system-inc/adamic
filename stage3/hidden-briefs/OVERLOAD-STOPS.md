@@ -124,3 +124,40 @@ visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter vi
 All 82 adapted hashes remain pinned to 388096e6; total assigned hidden bytes
 fall from 58,158 to 50,110. This is an intersection measurement on a
 checker-rejected project, not a whole-compiler emission claim.
+
+## After fixed return admission
+
+Compiler `c09a96043e7ff87c434c4dcf0f078247b8f9dccd` admits a closed ordinary
+fixed-return call only when its result satisfies forward covariance, writable
+invariance and field storage. It does not reverse the relation from a wide
+annotation. The three admission refusals now name the exact failing relation.
+
+| Region | Hidden before | Hidden after | Additional revealed | Next stop | Owner / raising function |
+|---|---:|---:|---:|---|---|
+| 01 large | 13,625 | 13,625 | 0 | declarations.ts:1387:5 excluded body; TS2345 at declarations.ts:1678:110 | Checker, #k881crd; isSignatureApplicable |
+| 01 small | 6,899 | 6,899 | 0 | Same excluded body and TS2345 | Checker, #k881crd; isSignatureApplicable |
+| 05 large | 6,078 | 6,078 | 0 | es2018.ts:828:9; visitorPublic.ts:123:5 visitNode parameter node | Lowering, censusOverload; waits on checked views ★11 |
+| 05 small | 5,748 | 5,748 | 0 | es2015.ts:3193:9; same visitNode refusal | Lowering, censusOverload; waits on checked views ★11 |
+| 06 | 3,369 | 3,369 | 0 | esDecorators.ts:1250:13; visitorPublic.ts:196:5 visitor input Node to TIn | Lowering, censusOverload |
+| 13 | 7,289 | 7,289 | 0 | es2017.ts:736:5; result.kind SyntaxKind to SyntaxKind.Block | Lowering, censusOverload |
+| 14 | 7,102 | 7,102 | 0 | evaluate body entry; utilities.ts:11320:5 result.value wide to narrow readonly value | Lowering, censusOverload |
+
+```text
+visitorPublic.ts:196:5: Adamic 0.1 refuses overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor; callback contravariance at callback.parameter1 requires Node to fit TIn; make the implementation accept every value admitted by this overload, without mutable widening or bivariance
+transformers/es2017.ts:736:5: Adamic 0.1 refuses overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody at result.kind; readonly covariance requires SyntaxKind to fit SyntaxKind.Block; prove every return for this overload's admitted arguments, preserving result variance
+utilities.ts:11320:5: Adamic 0.1 refuses overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined> at result.value; readonly covariance requires string | number | undefined to fit string | undefined; prove every return for this overload's admitted arguments, preserving result variance
+```
+
+13 needs the non-arrow input-to-Block return correlation, including the complete
+Block shape; 14 needs TemplateExpression preservation through skipParentheses and
+the resulting string/undefined return correlation. 06 needs the visitor invocation
+domain through visitArrayWorker, then the tested NodeArray<TOut> element contract.
+None of these follows merely from reversing covariance. The full admission
+refusals stay in place. 05 remains unchanged on checked views, as instructed.
+
+[Report with proof requirements](../../docs/overload-results/groups/admission/REPORT.md),
+[comparison](../../docs/overload-results/groups/admission/regions.json),
+[exact stops](../../docs/overload-results/groups/admission/next-stops.json), and
+[raw census](../../docs/overload-results/groups/admission/after.jsonl.gz).
+Total assigned hidden bytes remain 50,110; the preceding 8,048-byte reveal in
+06 is retained. All 82 adapted hashes remain pinned to 388096e6.
