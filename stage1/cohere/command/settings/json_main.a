@@ -1,0 +1,11 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Document } from './json.a';
+const args = programArguments();
+const read = readTextFile(args[0] ?? panic('JSON cases required'));
+if(read.kind === 'Error') panic(read.message);
+const inputs = new Document(read.text); inputs.parse();
+if(inputs.message !== '') panic(inputs.message);
+for(const child of inputs.node(inputs.root).children) {
+    const doc = new Document(inputs.node(child).text); doc.parse();
+    console.log(doc.message);
+}

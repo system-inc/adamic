@@ -1,0 +1,13 @@
+// The output interface captures exact strings; this driver uses console only to
+// expose the capture to tests. It is not the ruled operating-system adapter.
+import { panic } from 'adamic';
+import { reportRefusal } from './host.a';
+for(const message of ['', 'bad configuration', 'a\nb', '\ufeffé😀']) {
+    const stdout: string[] = [];
+    const stderr: string[] = [];
+    const status = reportRefusal({
+        stdout: (text: string) => { stdout.push(text); },
+        stderr: (text: string) => { stderr.push(text); },
+    }, { kind: 'Refused', message, status: 1, leftover: false });
+    console.log(JSON.stringify({ status, stdout: stdout.join(''), stderr: stderr.join('') }) ?? panic('report JSON'));
+}

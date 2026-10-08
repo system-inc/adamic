@@ -33,3 +33,24 @@ on PATH. It copies stage1 into scratch, generates registration there, builds
 the unchanged checker archive, measures the whole-program archive link and
 compares native output with Node. The measurement wrapper targets this cloud's
 Linux clang; no shared source or generation output is changed.
+
+
+The settings follow-up lives in `settings/`. Run its mandatory offline checks:
+
+```sh
+source /workspace/adamic-tools/env.sh
+ADAMIC_SETTINGS_KEEP=/tmp/scout42-settings-evidence go test -v -count=1 -run '^TestSettings' -timeout 15m ./stage1/cohere/command
+```
+
+Go and Node compare exact settings answers from every held pin and Go settings
+controls. The strict JSON reader builds natively and sanitized, with mutants.
+The full native resolver and reporting probe deliberately retain two observed
+compiler refusals; the tests prove those boundaries. The integer-domain mismatch
+is also held as a boundary, not counted as parity. SCOUT.md records the supplied
+host rulings and exact shared files needed before command integration. The
+inherited formatting CLI still uses its fixed defaults.
+
+`testdata/settings_sources.py` refreshes selected public source blobs and eight
+embedded sets; `settings_cases.py` regenerates the Go-derived control list;
+`go run stage1/cohere/command/testdata/settings_tables.go` regenerates Go's
+quoting table. No downloaded config or repository script is executed.

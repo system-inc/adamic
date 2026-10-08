@@ -1,0 +1,2547 @@
+[
+  {
+    "name": "zero config",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {},
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nearest ancestor",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./NexusCohereSettings.json\",\"rules\":{}}",
+      "NexusCohereSettings.json": "{\"format\":{\"tabWidth\":4,\"printWidth\":120,\"singleQuote\":true,\"bracketSameLine\":true}}",
+      "libraries/structure/package.json": "{\"name\":\"structure\"}"
+    },
+    "queries": [
+      "libraries/structure/source/probe.css",
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "house chain",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./structure/StructureCohereSettings.json\",\"rules\":{}}",
+      "structure/StructureCohereSettings.json": "{\"extends\":\"../nexus/NexusCohereSettings.json\",\"rules\":{}}",
+      "nexus/NexusCohereSettings.json": "{\"rules\":{},\"format\":{\"tabWidth\":4,\"useTabs\":false,\"semi\":true,\"singleQuote\":true,\"printWidth\":120}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings no format",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"rules\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "own chain no format",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./base/Base.json\"}",
+      "base/Base.json": "{\"rules\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "unified project block",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"cohere:system-inc/base\",\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "unified intermediate block",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./shared/Shared.json\"}",
+      "shared/Shared.json": "{\"extends\":\"cohere:system-inc/structure\",\"format\":{\"printWidth\":100}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "outsider empty",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"cohere:typescript\",\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "outsider own",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":100,\"ignore\":[\"generated/\"]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "outsider base",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./base/Base.json\"}",
+      "base/Base.json": "{\"format\":{\"semi\":false}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "own block replaces base",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./base/Base.json\",\"format\":{\"tabWidth\":8}}",
+      "base/Base.json": "{\"format\":{\"semi\":false}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "ignore order",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./base.json\",\"ignorePatterns\":[\"own/\"],\"format\":{\"ignore\":[\"generated/\"]}}",
+      "base.json": "{\"ignorePatterns\":[\"base/\"]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "per file nearest",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":8}}",
+      "nested/CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css",
+      "nested/source/probe.css",
+      "source/../source/again.css"
+    ]
+  },
+  {
+    "name": "leftover below settings",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{}}",
+      "source/.prettierrc": "{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "leftover above winning settings ignored",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc": "{}",
+      "source/CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest first before legacy",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "package.json": "{\"prettier\":null}",
+      ".prettierrc": "{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy package.yaml",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "package.yaml": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.json",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.json": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.yaml",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.yaml": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.yml",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.yml": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.json5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.json5": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.js",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.js": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.js",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.js": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.ts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.ts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.ts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.ts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.mjs",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.mjs": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.mjs",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.mjs": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.mts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.mts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.mts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.mts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.cjs",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.cjs": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.cjs",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.cjs": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.cts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.cts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy prettier.config.cts",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "prettier.config.cts": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy .prettierrc.toml",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.toml": "{}",
+      "CohereSettings.json": "{\"format\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "legacy ordered",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      ".prettierrc.toml": "{}",
+      "prettier.config.cts": "{}",
+      ".prettierrc.cts": "{}",
+      "prettier.config.cjs": "{}",
+      ".prettierrc.cjs": "{}",
+      "prettier.config.mts": "{}",
+      ".prettierrc.mts": "{}",
+      "prettier.config.mjs": "{}",
+      ".prettierrc.mjs": "{}",
+      "prettier.config.ts": "{}",
+      ".prettierrc.ts": "{}",
+      "prettier.config.js": "{}",
+      ".prettierrc.js": "{}",
+      ".prettierrc.json5": "{}",
+      ".prettierrc.yml": "{}",
+      ".prettierrc.yaml": "{}",
+      ".prettierrc.json": "{}",
+      ".prettierrc": "{}",
+      "package.yaml": "{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest 'null'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "null"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '[]'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "[]"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '0'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "0"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '\"x\"'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "\"x\""
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest 'true'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "true"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"prettier\":false}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"prettier\":false}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"prettier\":{}}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"prettier\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '\\ufeff{}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "\ufeff{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\":}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\":}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\" 1}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\" 1}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\":1,}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\":1,}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '[1,]'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "[1,]"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{}{}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{}{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\":\"\\\\q\"}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\":\"\\q\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\":\"\\\\uQQQQ\"}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\":\"\\uQQQQ\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '{\"a\":\"\\n\"}'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "{\"a\":\"\n\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '01'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "01"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '1.'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "1."
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest '1e+'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "1e+"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "manifest 'truX'",
+    "source": "cohere/internal/format/formatoptions/resolve.go:414",
+    "files": {
+      "package.json": "truX"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth 2e1",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":2e1}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth -2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":-2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth 9223372036854775808",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":9223372036854775808}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format printWidth -9223372036854775809",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"printWidth\":-9223372036854775809}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth 2e1",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":2e1}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth -2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":-2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth 9223372036854775808",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":9223372036854775808}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format tabWidth -9223372036854775809",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":-9223372036854775809}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format useTabs 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"useTabs\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format semi 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"semi\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format singleQuote 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"singleQuote\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format trailingComma 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSpacing 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSpacing\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format bracketSameLine 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"bracketSameLine\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format arrowParens 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format endOfLine 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore [\"generated/\",null]",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":[\"generated/\",null]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format ignore [2]",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"ignore\":[2]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format quoteProps 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"quoteProps\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins null",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins {}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":{}}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins []",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":[]}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins true",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins \"x\"",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":\"x\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins 2",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "format plugins 2.5",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"plugins\":2.5}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings null",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "null"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings []",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "[]"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings 0",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "0"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "\"x\""
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings true",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "true"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":null}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":[]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":true}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":true}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"root\":true,\"parser\":{}}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"root\":true,\"parser\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"overrides\":[{\"files\":[\"*.ts\"],\"excludedFiles\":[\"*.d.ts\"]}]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[{\"files\":[\"*.ts\"],\"excludedFiles\":[\"*.d.ts\"]}]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":2}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":[\"\"]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":[\"\"]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":[null]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":[null]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":[2]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":\"cohere:unknown\"}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"cohere:unknown\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":\"./missing.json\"}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./missing.json\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":\"./CohereSettings.json\"}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./CohereSettings.json\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"extends\":[\"cohere:react\",\"cohere:next\"]}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"extends\":[\"cohere:react\",\"cohere:next\"]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":{\"tabWidth\":8,\"tabWidth\":null}}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":8,\"tabWidth\":null}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":{\"tabWidth\":2.5,\"tabWidth\":2}}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"tabWidth\":2.5,\"tabWidth\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "settings {\"format\":{\"endOfLine\":\"crlf\",\"quoteProps\":true}}",
+    "source": "cohere/internal/lint/configuration/configuration.go:666",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"endOfLine\":\"crlf\",\"quoteProps\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape departures null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"departures\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape reasons null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape plugins null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"plugins\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape rules null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"rules\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape ignorePatterns null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"ignorePatterns\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape overrides null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape cohere null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"cohere\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings 2",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":2}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings \"x\"",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":\"x\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings []",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings {}",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":{}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings [2]",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "raw shape settings null",
+    "source": "cohere/internal/lint/configuration/configuration.go:964",
+    "files": {
+      "CohereSettings.json": "{\"settings\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"overrides\":[2]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[2]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"overrides\":[{\"files\":2}]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[{\"files\":2}]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"overrides\":[{\"files\":[2]}]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[{\"files\":[2]}]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"overrides\":[{\"rules\":2}]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[{\"rules\":2}]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"overrides\":[{\"reason\":2}]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"overrides\":[{\"reason\":2}]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"reasons\":{\"x\":2}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"reasons\":{\"x\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "nested {\"departures\":{\"x\":2}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"departures\":{\"x\":2}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "two-node cycle",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./base.json\"}",
+      "base.json": "{\"extends\":\"./CohereSettings.json\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "diamond order",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":[\"./a.json\",\"./b.json\"]}",
+      "a.json": "{\"extends\":\"./shared.json\",\"ignorePatterns\":[\"a\"]}",
+      "b.json": "{\"extends\":\"./shared.json\",\"ignorePatterns\":[\"b\"]}",
+      "shared.json": "{\"ignorePatterns\":[\"shared\"]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "ignore unknown order",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"z\":false,\"a\":false}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"format\":{\"arrowParens\":\"\\ud800\"}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":\"\\ud800\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"format\":{\"trailingComma\":\"\\udc00\"}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"trailingComma\":\"\\udc00\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"format\":{\"arrowParens\":\"\\ud83d\\ude00\"}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"arrowParens\":\"\\ud83d\\ude00\"}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"\\ue000\":true,\"\\ud800\\udc00\":true}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"\\ue000\":true,\"\\ud800\\udc00\":true}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"\\u2028\":true}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"\\u2028\":true}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "Unicode settings {\"format\":{\"\\u0007\":true}}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"format\":{\"\\u0007\":true}}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "duplicate extends {\"extends\":\"./missing.json\",\"extends\":null}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./missing.json\",\"extends\":null}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "duplicate extends {\"extends\":\"./missing.json\",\"extends\":\"\"}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./missing.json\",\"extends\":\"\"}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "duplicate extends {\"extends\":\"./missing.json\",\"extends\":[]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"./missing.json\",\"extends\":[]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  },
+  {
+    "name": "duplicate extends {\"extends\":\"cohere:react\",\"extends\":[\"cohere:next\"]}",
+    "source": "cohere/internal/format/formatoptions/resolve_test.go",
+    "files": {
+      "CohereSettings.json": "{\"extends\":\"cohere:react\",\"extends\":[\"cohere:next\"]}"
+    },
+    "queries": [
+      "source/probe.css"
+    ]
+  }
+]

@@ -1,0 +1,306 @@
+[
+  {
+    "repo": "actualbudget/actual",
+    "commit": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "angular/angular",
+    "commit": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+    "discovered": [
+      ".prettierrc"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc",
+        "fixture": "settings-corpus/angular__angular-c0dc8c4b/.prettierrc",
+        "sha256": "d6f449c2a7f3c9404284817859e83180277761cb1d7943a07d0a45639576c536"
+      }
+    ]
+  },
+  {
+    "repo": "babel/babel",
+    "commit": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+    "discovered": [
+      ".prettierrc"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc",
+        "fixture": "settings-corpus/babel__babel-f67453d5/.prettierrc",
+        "sha256": "075e8114a55f22b9b7cb70183f74dc75bd3ec10ca2838a029b590e67dd3c1f7e"
+      }
+    ]
+  },
+  {
+    "repo": "backstage/backstage",
+    "commit": "532931240eec03b318efaadb39e24d9ee6d7076c",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "calcom/cal.diy",
+    "commit": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "date-fns/date-fns",
+    "commit": "717ce0a807ea4c6b540d015b5c408723175b2838",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "excalidraw/excalidraw",
+    "commit": "ed10ac7dca7e40f3f4a31269b4bfba980d0db41e",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "grafana/grafana",
+    "commit": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+    "discovered": [
+      ".prettierrc.js"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc.js",
+        "fixture": "settings-corpus/grafana__grafana-c7a7b797/.prettierrc.js",
+        "sha256": "d3cb39110537d81850b5d3eb8fed62c3d216aa7e123d08bfed04dc6ca1d62a8a"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/playwright",
+    "commit": "2a8ba77a33a5a39a52372c42f12d254506296c76",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "n8n-io/n8n",
+    "commit": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+    "discovered": [
+      ".prettierrc.js",
+      "packages/@n8n/node-cli/src/template/templates/shared/default/.prettierrc.js"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc.js",
+        "fixture": "settings-corpus/n8n-io__n8n-e77e30c7/.prettierrc.js",
+        "sha256": "cea7f303f216713d8e655cdd28702f1f445fee6f632dec452cafe50645b962c9"
+      },
+      {
+        "source": "packages/@n8n/node-cli/src/template/templates/shared/default/.prettierrc.js",
+        "fixture": "settings-corpus/n8n-io__n8n-e77e30c7/packages/@n8n/node-cli/src/template/templates/shared/default/.prettierrc.js",
+        "sha256": "cea7f303f216713d8e655cdd28702f1f445fee6f632dec452cafe50645b962c9"
+      }
+    ]
+  },
+  {
+    "repo": "nestjs/nest",
+    "commit": "35142c3eca8edaaf6abc5984d915da2fbd458aa2",
+    "discovered": [
+      ".prettierrc",
+      "sample/25-dynamic-modules/.prettierrc",
+      "sample/26-queues/.prettierrc",
+      "sample/27-scheduling/.prettierrc",
+      "sample/28-sse/.prettierrc",
+      "sample/30-event-emitter/.prettierrc",
+      "sample/31-graphql-federation-code-first/gateway/.prettierrc",
+      "sample/31-graphql-federation-code-first/posts-application/.prettierrc",
+      "sample/31-graphql-federation-code-first/users-application/.prettierrc",
+      "sample/32-graphql-federation-schema-first/gateway/.prettierrc",
+      "sample/32-graphql-federation-schema-first/posts-application/.prettierrc",
+      "sample/32-graphql-federation-schema-first/users-application/.prettierrc"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc",
+        "fixture": "settings-corpus/nestjs__nest-35142c3e/.prettierrc",
+        "sha256": "e5b0cbd5f09172c9f24ecd8cf95044c9bef0689f20549614f274c2d61569a97f"
+      },
+      {
+        "source": "sample/25-dynamic-modules/.prettierrc",
+        "fixture": "settings-corpus/nestjs__nest-35142c3e/sample/25-dynamic-modules/.prettierrc",
+        "sha256": "fd8ec9f75b7f8e40ae62d490431aa0dcee9af62c3710a0a27216ff2967ca0ef7"
+      },
+      {
+        "source": "sample/26-queues/.prettierrc",
+        "fixture": "settings-corpus/nestjs__nest-35142c3e/sample/26-queues/.prettierrc",
+        "sha256": "fd8ec9f75b7f8e40ae62d490431aa0dcee9af62c3710a0a27216ff2967ca0ef7"
+      }
+    ]
+  },
+  {
+    "repo": "outline/outline",
+    "commit": "478e8121cbe517b9d7773e9d68d20bfe26056c59",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "prisma/prisma",
+    "commit": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "shadcn-ui/ui",
+    "commit": "a2e305c2e15b6affdb760e65058be69e8212713f",
+    "discovered": [
+      "packages/registry/test/fixtures/frameworks/remix-indie-stack/prettier.config.js",
+      "packages/registry/test/fixtures/frameworks/t3-app/prettier.config.js",
+      "prettier.config.cjs",
+      "templates/astro-app/.prettierrc",
+      "templates/astro-monorepo/.prettierrc",
+      "templates/next-app/.prettierrc",
+      "templates/next-monorepo/.prettierrc",
+      "templates/react-router-app/.prettierrc",
+      "templates/react-router-monorepo/.prettierrc",
+      "templates/start-app/.prettierrc",
+      "templates/start-monorepo/.prettierrc",
+      "templates/vite-app/.prettierrc",
+      "templates/vite-monorepo/.prettierrc"
+    ],
+    "files": [
+      {
+        "source": "prettier.config.cjs",
+        "fixture": "settings-corpus/shadcn-ui__ui-a2e305c2/prettier.config.cjs",
+        "sha256": "ef5e9eac5b02d735ef2d9bea0a2a43881750b12f8b811722c21d265617676099"
+      },
+      {
+        "source": "packages/registry/test/fixtures/frameworks/remix-indie-stack/prettier.config.js",
+        "fixture": "settings-corpus/shadcn-ui__ui-a2e305c2/packages/registry/test/fixtures/frameworks/remix-indie-stack/prettier.config.js",
+        "sha256": "d61ef452746a9655b7c583b9f5cb1ffaf820685906e4b9a633fcb1ae44659db0"
+      },
+      {
+        "source": "packages/registry/test/fixtures/frameworks/t3-app/prettier.config.js",
+        "fixture": "settings-corpus/shadcn-ui__ui-a2e305c2/packages/registry/test/fixtures/frameworks/t3-app/prettier.config.js",
+        "sha256": "97e4ad23a4c84bd209d8e45caa148aedc651bd8cb0050d3b118eeac48aebfe48"
+      }
+    ]
+  },
+  {
+    "repo": "supabase/supabase",
+    "commit": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+    "discovered": [
+      "examples/user-management/react-user-management/.prettierrc",
+      "examples/user-management/solid-user-management/.prettierrc",
+      "examples/user-management/svelte-user-management/.prettierrc",
+      "examples/user-management/sveltekit-user-management/.prettierrc",
+      "examples/user-management/vue3-user-management/.prettierrc",
+      "prettier.config.mjs"
+    ],
+    "files": [
+      {
+        "source": "prettier.config.mjs",
+        "fixture": "settings-corpus/supabase__supabase-87681812/prettier.config.mjs",
+        "sha256": "b10ca5c86601728eb7189d98861d798b7f913a8cb7632d1ef7c70745ed6a4312"
+      },
+      {
+        "source": "examples/user-management/react-user-management/.prettierrc",
+        "fixture": "settings-corpus/supabase__supabase-87681812/examples/user-management/react-user-management/.prettierrc",
+        "sha256": "274fbc781bf7507174d904fc8ec2e0af9dbefade099fd8bf46827d3705fd01d8"
+      },
+      {
+        "source": "examples/user-management/solid-user-management/.prettierrc",
+        "fixture": "settings-corpus/supabase__supabase-87681812/examples/user-management/solid-user-management/.prettierrc",
+        "sha256": "cb3a19c93797049cf91076d7639e20f3aabe9f2952c3c95a2fe9b711a7e9713e"
+      }
+    ]
+  },
+  {
+    "repo": "TanStack/query",
+    "commit": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+    "discovered": [
+      "prettier.config.js"
+    ],
+    "files": [
+      {
+        "source": "prettier.config.js",
+        "fixture": "settings-corpus/TanStack__query-eaa75f4f/prettier.config.js",
+        "sha256": "50f307b53643985479891e63c997e87b6f5a1c54dda87a90224cb5de2285c24b"
+      }
+    ]
+  },
+  {
+    "repo": "tldraw/tldraw",
+    "commit": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+    "discovered": [
+      ".prettierrc"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc",
+        "fixture": "settings-corpus/tldraw__tldraw-db1c86ea/.prettierrc",
+        "sha256": "9ffc3e4070323fe9a437edb0251caa68599ec88a585b017e843584ed213f858c"
+      }
+    ]
+  },
+  {
+    "repo": "trpc/trpc",
+    "commit": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+    "discovered": [
+      "prettier.config.js"
+    ],
+    "files": [
+      {
+        "source": "prettier.config.js",
+        "fixture": "settings-corpus/trpc__trpc-d756e591/prettier.config.js",
+        "sha256": "51fa66ac902144d49d646c7d66edb7be58b6d70d56236ba50d6f2109f6b3ef55"
+      }
+    ]
+  },
+  {
+    "repo": "twentyhq/twenty",
+    "commit": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "typeorm/typeorm",
+    "commit": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+    "discovered": [
+      ".prettierrc.js",
+      "packages/codemod/.prettierrc.js"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc.js",
+        "fixture": "settings-corpus/typeorm__typeorm-c64a1f05/.prettierrc.js",
+        "sha256": "4b11dca494c5ad4b8fcab5b80ba184e68ae0417c09083621cdf68ea2ef6e0e52"
+      },
+      {
+        "source": "packages/codemod/.prettierrc.js",
+        "fixture": "settings-corpus/typeorm__typeorm-c64a1f05/packages/codemod/.prettierrc.js",
+        "sha256": "0efb4a1ddb5b99d9de3381baf2b47bcca089a47d4dfa902a207d3a997e471b3b"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "commit": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "discovered": [],
+    "files": []
+  },
+  {
+    "repo": "vuejs/core",
+    "commit": "4ab865a848a1da3d10fb674f857e5fff13094644",
+    "discovered": [
+      ".prettierrc"
+    ],
+    "files": [
+      {
+        "source": ".prettierrc",
+        "fixture": "settings-corpus/vuejs__core-4ab865a8/.prettierrc",
+        "sha256": "7d6dfbf97110390d5ef7464432021d26fc5af1fb5e2a907fb86493d376b028cd"
+      }
+    ]
+  }
+]

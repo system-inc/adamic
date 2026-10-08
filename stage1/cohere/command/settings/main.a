@@ -1,0 +1,32 @@
+// Offline host adapter: exact source snapshots, no repository scripts executed.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { Document } from './json.a';
+import { Resolver } from './resolve.a';
+import { reportRefusal } from './host.a';
+const args = programArguments();
+const input = readTextFile(args[0] ?? panic('settings manifest required'));
+if(input.kind === 'Error') panic(input.message);
+const doc = new Document(input.text); doc.parse();
+if(doc.message !== '') panic(doc.message);
+for(const row of doc.node(doc.root).children) {
+    const fileIndex = doc.field(row, 'files');
+    const files = new Map<string, string>();
+    const fileObject = doc.node(fileIndex);
+    for(let index = 0; index < fileObject.keys.length; index++) files.set(fileObject.keys[index] ?? panic('file path'), doc.node(fileObject.children[index] ?? panic('file contents')).text);
+    const cwd = doc.node(doc.field(row, 'cwd')).text;
+    const resolver = new Resolver({
+        read: (path: string) => { const text = files.get(path); return text === undefined ? { kind: 'Error', message: `open ${path}: no such file or directory` } : { kind: 'Ok', text }; },
+        exists: (path: string) => files.has(path),
+    }, cwd);
+    const queries = doc.node(doc.field(row, 'queries'));
+    for(const query of queries.children) {
+        const answer = resolver.forFile(doc.node(query).text);
+        if(answer.kind === 'Refused') {
+            const stderr: string[] = [];
+            const stdout: string[] = [];
+            const status = reportRefusal({ stdout: (text: string) => { stdout.push(text); }, stderr: (text: string) => { stderr.push(text); } }, answer);
+            console.log(JSON.stringify({ kind: answer.kind, message: answer.message, status, leftover: answer.leftover, stderr: stderr.join(''), stdout: stdout.join('') }) ?? panic('JSON refusal'));
+        }
+        else console.log(JSON.stringify(answer) ?? panic('JSON resolution'));
+    }
+}

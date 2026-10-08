@@ -1,0 +1,203 @@
+// Strict encoding/json data grammar. Nodes own only numeric child indexes.
+import { panic } from 'adamic';
+import { printable } from './printable.a';
+export class Value {
+    readonly keys: string[] = [];
+    readonly children: number[] = [];
+    readonly kind: string;
+    readonly raw: string;
+    readonly text: string;
+    constructor(kind: string, raw: string, text: string) { this.kind = kind; this.raw = raw; this.text = text; }
+}
+export class Document {
+    readonly values: Value[] = [];
+    position = 0;
+    message = '';
+    root = 0;
+    readonly source: string;
+    constructor(source: string) { this.source = source; }
+    node(index: number): Value { return this.values[index] ?? panic('missing settings JSON node'); }
+    add(kind: string, raw: string, text: string): number {
+        const index = this.values.length;
+        this.values.push(new Value(kind, raw, text));
+        return index;
+    }
+    field(index: number, key: string): number {
+        const node = this.node(index);
+        for(let at = node.keys.length - 1; at >= 0; at--) {
+            if(node.keys[at] === key) return node.children[at] ?? panic('missing settings JSON member');
+        }
+        return -1;
+    }
+    whitespace(): void {
+        while(this.position < this.source.length && [' ', '\t', '\r', '\n'].includes(this.source.slice(this.position, this.position + 1))) this.position++;
+    }
+    fail(context: string): void {
+        if(this.message !== '') return;
+        if(this.position >= this.source.length) { this.message = 'unexpected end of JSON input'; return; }
+        const code = this.source.codePointAt(this.position) ?? 0;
+        const char = this.source.slice(this.position, this.position + (code > 0xffff ? 2 : 1));
+        let display = char;
+        if(char === '\n') display = '\\n';
+        else if(char === '\r') display = '\\r';
+        else if(char === '\t') display = '\\t';
+        else if(char === '\\') display = '\\\\';
+        else if(char === "'") display = "\\'";
+        else display = escaped(char, true);
+        this.message = `invalid character '${display}' ${context}`;
+    }
+    string(): string {
+        this.position++;
+        const parts: string[] = [];
+        while(this.position < this.source.length && this.message === '') {
+            const char = this.source.slice(this.position, this.position + 1);
+            if(char === '"') { this.position++; return normalized(parts.join('')); }
+            if(char.charCodeAt(0) < 32) { this.fail('in string'); return ''; }
+            if(char !== '\\') { parts.push(char); this.position++; continue; }
+            this.position++;
+            const escape = this.source.slice(this.position, this.position + 1);
+            this.position++;
+            if(escape === '"' || escape === '\\' || escape === '/') parts.push(escape);
+            else if(escape === 'b') parts.push('\b');
+            else if(escape === 'f') parts.push('\f');
+            else if(escape === 'n') parts.push('\n');
+            else if(escape === 'r') parts.push('\r');
+            else if(escape === 't') parts.push('\t');
+            else if(escape === 'u') {
+                let code = 0;
+                for(let at = 0; at < 4; at++) {
+                    const digit = this.source.slice(this.position, this.position + 1).toLowerCase();
+                    const number = '0123456789abcdef'.indexOf(digit);
+                    if(digit === '' || number < 0) {
+                        if(this.position + 4 - at > this.source.length) this.message = 'unexpected end of JSON input';
+                        else this.message = 'invalid escape sequence `' + this.source.slice(this.position - at - 2, this.position - at + 4) + '` in string';
+                        return '';
+                    }
+                    code = code * 16 + number;
+                    this.position++;
+                }
+                parts.push(String.fromCharCode(code));
+            }
+            else { this.message = escape === '' ? 'unexpected end of JSON input' : 'invalid escape sequence `\\' + escape + '` in string'; return ''; }
+        }
+        this.fail('in string');
+        return '';
+    }
+    value(): number {
+        this.whitespace();
+        const start = this.position;
+        const char = this.source.slice(start, start + 1);
+        if(char === '"') {
+            const text = this.string();
+            return this.add('string', this.source.slice(start, this.position), text);
+        }
+        if(char === '{' || char === '[') {
+            const object = char === '{';
+            const index = this.add(object ? 'object' : 'array', '', '');
+            const node = this.node(index);
+            const close = object ? '}' : ']';
+            this.position++;
+            this.whitespace();
+            if(this.source.slice(this.position, this.position + 1) === close) { this.position++; return index; }
+            while(this.message === '') {
+                if(object) {
+                    if(this.source.slice(this.position, this.position + 1) !== '"') { this.fail('looking for beginning of object key string'); break; }
+                    node.keys.push(this.string());
+                    this.whitespace();
+                    if(this.source.slice(this.position, this.position + 1) !== ':') { this.fail('after object key'); break; }
+                    this.position++;
+                }
+                node.children.push(this.value());
+                if(this.message !== '') break;
+                this.whitespace();
+                const next = this.source.slice(this.position, this.position + 1);
+                if(next === close) { this.position++; break; }
+                if(next !== ',') { this.fail(object ? 'after object key:value pair' : 'after array element'); break; }
+                this.position++;
+                this.whitespace();
+            }
+            return index;
+        }
+        for(const literal of ['true', 'false', 'null']) {
+            if(char === literal.slice(0, 1)) {
+                for(let at = 0; at < literal.length; at++) {
+                    if(this.source.slice(this.position, this.position + 1) !== literal.slice(at, at + 1)) { this.fail(`in literal ${literal} (expecting '${literal.slice(at, at + 1)}')`); break; }
+                    this.position++;
+                }
+                return this.add(literal === 'null' ? 'null' : 'bool', literal, literal);
+            }
+        }
+        if(char === '-' || (char >= '0' && char <= '9' && char !== '')) {
+            if(char === '-') this.position++;
+            let first = this.source.slice(this.position, this.position + 1);
+            if(first === '0') this.position++;
+            else {
+                if(first === '' || first < '1' || first > '9') this.fail('in numeric literal');
+                while(first >= '0' && first <= '9' && first !== '') { this.position++; first = this.source.slice(this.position, this.position + 1); }
+            }
+            if(this.source.slice(this.position, this.position + 1) === '.') {
+                this.position++;
+                first = this.source.slice(this.position, this.position + 1);
+                if(first === '' || first < '0' || first > '9') this.fail('after decimal point in numeric literal');
+                while(first >= '0' && first <= '9' && first !== '') { this.position++; first = this.source.slice(this.position, this.position + 1); }
+            }
+            first = this.source.slice(this.position, this.position + 1);
+            if(first === 'e' || first === 'E') {
+                this.position++;
+                first = this.source.slice(this.position, this.position + 1);
+                if(first === '+' || first === '-') this.position++;
+                first = this.source.slice(this.position, this.position + 1);
+                if(first === '' || first < '0' || first > '9') this.fail('in exponent of numeric literal');
+                while(first >= '0' && first <= '9' && first !== '') { this.position++; first = this.source.slice(this.position, this.position + 1); }
+            }
+            const raw = this.source.slice(start, this.position);
+            return this.add('number', raw, raw);
+        }
+        this.fail('looking for beginning of value');
+        return this.add('null', 'null', 'null');
+    }
+    parse(): void {
+        this.root = this.value();
+        this.whitespace();
+        if(this.message === '' && this.position !== this.source.length) this.fail('after top-level value');
+    }
+}
+function normalized(text: string): string {
+    const parts: string[] = [];
+    for(let index = 0; index < text.length; index++) {
+        const code = text.charCodeAt(index);
+        if(code >= 0xd800 && code <= 0xdbff) {
+            const next = text.charCodeAt(index + 1);
+            if(next >= 0xdc00 && next <= 0xdfff) { parts.push(text.slice(index, index + 2)); index++; }
+            else parts.push('\ufffd');
+        }
+        else parts.push(code >= 0xdc00 && code <= 0xdfff ? '\ufffd' : text.slice(index, index + 1));
+    }
+    return parts.join('');
+}
+function escaped(char: string, rune: boolean): string {
+    const code = char.codePointAt(0) ?? 0;
+    if(char === '\\' || char === (rune ? "'" : '"')) return '\\' + char;
+    if(code === 7) return '\\a';
+    if(code === 8) return '\\b';
+    if(code === 9) return '\\t';
+    if(code === 10) return '\\n';
+    if(code === 11) return '\\v';
+    if(code === 12) return '\\f';
+    if(code === 13) return '\\r';
+    if(code < 32 || code === 127) return '\\x' + code.toString(16).padStart(2, '0');
+    for(const range of printable) {
+        if(code >= (range[0] ?? panic('printable start')) && code <= (range[1] ?? panic('printable end'))) return char;
+    }
+    return (code < 0x10000 ? '\\u' : '\\U') + code.toString(16).padStart(code < 0x10000 ? 4 : 8, '0');
+}
+export function quote(text: string): string {
+    const parts: string[] = ['"'];
+    for(const char of normalized(text)) parts.push(escaped(char, false));
+    parts.push('"');
+    return parts.join('');
+}
+export function mismatch(value: Value, target: string): string {
+    const got = value.kind === 'bool' ? 'bool' : value.kind;
+    return `json: cannot unmarshal ${got} into Go value of type ${target}`;
+}

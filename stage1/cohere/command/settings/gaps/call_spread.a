@@ -1,0 +1,4 @@
+const values: string[] = [];
+const base: readonly string[] = ['x'];
+values.push(...base);
+console.log(values.join(','));

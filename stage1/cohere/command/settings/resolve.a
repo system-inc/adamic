@@ -1,0 +1,283 @@
+import { panic, utf8At, utf8Length } from 'adamic';
+import { Document, mismatch, quote } from './json.a';
+import type { Value } from './json.a';
+import { absolute, parent } from './host.a';
+import type { SettingsHost, Failure } from './host.a';
+import { embedded } from './sets.a';
+export type Options = {
+    readonly tabWidth: number; readonly useTabs: boolean; readonly semi: boolean;
+    readonly singleQuote: boolean; readonly printWidth: number; readonly trailingComma: string;
+    readonly bracketSpacing: boolean; readonly bracketSameLine: boolean; readonly arrowParens: string;
+    readonly endOfLine: string;
+};
+export const prettier: Options = { tabWidth: 2, useTabs: false, semi: true, singleQuote: false, printWidth: 80, trailingComma: 'all', bracketSpacing: true, bracketSameLine: false, arrowParens: 'always', endOfLine: 'lf' };
+export type Resolution = { readonly kind: 'Ok'; readonly options: Options; readonly source: string; readonly houseIgnore: readonly string[]; readonly houseIgnoreDeclared: boolean; readonly ignorePatterns: readonly string[] };
+export type Answer = Resolution | Failure;
+function compare(left: string, right: string): number {
+    const length = Math.min(utf8Length(left), utf8Length(right));
+    for(let index = 0; index < length; index++) {
+        const difference = utf8At(left, index) - utf8At(right, index);
+        if(difference !== 0) return difference;
+    }
+    return utf8Length(left) - utf8Length(right);
+}
+function integer64(raw: string): boolean {
+    if(!/^-?\d+$/.test(raw)) return false;
+    const negative = raw.startsWith('-');
+    const digits = negative ? raw.slice(1) : raw;
+    const bound = negative ? '9223372036854775808' : '9223372036854775807';
+    return digits.length < bound.length || (digits.length === bound.length && digits <= bound);
+}
+function refused(message: string, leftover: boolean = false): Failure { return { kind: 'Refused', message, status: 1, leftover }; }
+const legacy = ['package.yaml', '.prettierrc', '.prettierrc.json', '.prettierrc.yaml', '.prettierrc.yml', '.prettierrc.json5', '.prettierrc.js', 'prettier.config.js', '.prettierrc.ts', 'prettier.config.ts', '.prettierrc.mjs', 'prettier.config.mjs', '.prettierrc.mts', 'prettier.config.mts', '.prettierrc.cjs', 'prettier.config.cjs', '.prettierrc.cts', 'prettier.config.cts', '.prettierrc.toml'];
+const topKeys = ['extends', 'departures', 'reasons', 'plugins', 'rules', 'ignorePatterns', 'overrides', 'cohere', 'settings', '$schema', 'jsPlugins', 'format', 'output'];
+const formatKeys = ['printWidth', 'tabWidth', 'useTabs', 'semi', 'singleQuote', 'trailingComma', 'bracketSpacing', 'bracketSameLine', 'arrowParens', 'endOfLine', 'ignore'];
+class Layer {
+    readonly path: string;
+    readonly document: Document;
+    readonly ignores: readonly string[];
+    constructor(path: string, document: Document, ignores: readonly string[]) { this.path = path; this.document = document; this.ignores = ignores; }
+}
+type Layers = { readonly kind: 'Ok'; readonly layers: readonly Layer[] } | Failure;
+type Strings = { readonly kind: 'Ok'; readonly values: readonly string[] } | { readonly kind: 'Error'; readonly message: string };
+function strings(doc: Document, index: number): Strings {
+    if(index < 0 || doc.node(index).kind === 'null') return { kind: 'Ok', values: [] };
+    const value = doc.node(index);
+    if(value.kind !== 'array') return { kind: 'Error', message: mismatch(value, '[]string') };
+    const values: string[] = [];
+    for(let at = 0; at < value.children.length; at++) {
+        const item = doc.node(value.children[at] ?? panic('missing list item'));
+        if(item.kind !== 'string' && item.kind !== 'null') return { kind: 'Error', message: `json: cannot unmarshal ${item.kind === 'bool' ? 'bool' : item.kind} into .${at} of type string` };
+        values.push(item.kind === 'null' ? '' : item.text);
+    }
+    return { kind: 'Ok', values };
+}
+function typeError(value: Value, target: string, field: string): string {
+    const got = value.kind === 'bool' ? 'bool' : value.kind;
+    const numeric = /^[0-9]+$/.test(field.slice(field.lastIndexOf('.') + 1));
+    return `json: cannot unmarshal ${got} into ${numeric ? '' : 'Go struct field '}rawConfig.${field} of type ${target}`;
+}
+function structShape(doc: Document): string {
+    const root = doc.node(doc.root);
+    if(root.kind === 'null') return '';
+    if(root.kind !== 'object') return mismatch(root, 'configuration.rawConfig');
+    let first = '';
+    for(let at = 0; at < root.keys.length; at++) {
+        const key = root.keys[at] ?? panic('missing config key');
+        const index = root.children[at] ?? panic('missing config value');
+        const value = doc.node(index);
+        if(value.kind === 'null') continue;
+        let error = '';
+        if(key === 'extends') {
+            if(value.kind === 'string') continue;
+            const list = strings(doc, index);
+            if(list.kind === 'Error') return '"extends" names a path or a rule set, or a list of them: ' + list.message;
+            if(list.values.includes('')) return '"extends" lists an empty entry';
+        }
+        else if(key === 'cohere') {
+            if(value.kind !== 'string') error = typeError(value, 'string', key);
+        }
+        else if(['departures', 'reasons', 'rules', 'settings'].includes(key)) {
+            const target = key === 'departures' || key === 'reasons' ? 'map[string]string' : 'map[string]jsontext.Value';
+            if(value.kind !== 'object') error = typeError(value, target, key);
+            else if(key === 'departures' || key === 'reasons') {
+                for(let at = 0; at < value.children.length; at++) {
+                    const item = doc.node(value.children[at] ?? panic('missing map value'));
+                    if(item.kind !== 'string' && item.kind !== 'null' && error === '') error = typeError(item, 'string', key + '.' + (value.keys[at] ?? panic('missing map key')));
+                }
+            }
+        }
+        else if(key === 'plugins' || key === 'ignorePatterns') {
+            if(value.kind !== 'array') error = typeError(value, '[]string', key);
+            else for(let at = 0; at < value.children.length; at++) {
+                const item = doc.node(value.children[at] ?? panic('missing array value'));
+                if(item.kind !== 'string' && item.kind !== 'null' && error === '') error = typeError(item, 'string', `${key}.${at}`);
+            }
+        }
+        else if(key === 'overrides') {
+            if(value.kind !== 'array') error = typeError(value, '[]configuration.rawOverride', key);
+            else for(let at = 0; at < value.children.length; at++) {
+                const item = doc.node(value.children[at] ?? panic('missing override'));
+                if(item.kind === 'null') continue;
+                if(item.kind !== 'object') { if(error === '') error = typeError(item, 'configuration.rawOverride', `${key}.${at}`); continue; }
+                for(let n = 0; n < item.keys.length; n++) {
+                    const name = item.keys[n] ?? panic('missing override key');
+                    const part = doc.node(item.children[n] ?? panic('missing override value'));
+                    if(part.kind === 'null') continue;
+                    const target = name === 'files' ? '[]string' : name === 'rules' ? 'map[string]jsontext.Value' : 'string';
+                    const kind = name === 'files' ? 'array' : name === 'rules' ? 'object' : 'string';
+                    if(['files', 'rules', 'reason'].includes(name) && part.kind !== kind && error === '') error = typeError(part, target, `overrides.${at}.${name}`);
+                    if(name === 'files' && part.kind === 'array') for(let element = 0; element < part.children.length; element++) {
+                        const entry = doc.node(part.children[element] ?? panic('missing override selector'));
+                        if(entry.kind !== 'string' && entry.kind !== 'null' && error === '') error = typeError(entry, 'string', `overrides.${at}.files.${element}`);
+                    }
+                }
+            }
+        }
+        if(first === '' && error !== '') first = error;
+    }
+    return first;
+}
+function unknownKeys(doc: Document, path: string): string {
+    const root = doc.node(doc.root);
+    if(root.kind !== 'object') return '';
+    const unknown: string[] = [];
+    for(const key of root.keys) if(!topKeys.includes(key) && !unknown.includes(key)) unknown.push(key);
+    unknown.sort(compare);
+    if(unknown.length > 0) return `lint config ${path} declares ${unknown.map((key) => quote(key)).join(', ')}, which this loader does not implement: the key would be discarded silently and whatever it configures would never take effect. Either implement it in \`rawConfig\` and act on it, or add it to \`ignoredTopLevelKeys\` with a note saying why ignoring it is correct`;
+    const overrides = doc.field(doc.root, 'overrides');
+    if(overrides < 0 || doc.node(overrides).kind !== 'array') return '';
+    // The Go precheck ignores all overrides if decoding any element as a map fails.
+    for(const child of doc.node(overrides).children) if(!['object', 'null'].includes(doc.node(child).kind)) return '';
+    let index = 0;
+    for(const child of doc.node(overrides).children) {
+        const keys: string[] = [];
+        for(const key of doc.node(child).keys) if(!['files', 'rules', 'reason'].includes(key) && !keys.includes(key)) keys.push(key);
+        keys.sort(compare);
+        if(keys.length > 0) return `lint config ${path}: override ${index} declares ${keys.map((key) => quote(key)).join(', ')}, which this loader does not read: the key would be discarded silently. An override takes "files", "rules" and "reason"`;
+        index++;
+    }
+    return '';
+}
+export class Resolver {
+    readonly answers = new Map<string, Answer>();
+    readonly host: SettingsHost;
+    readonly cwd: string;
+    constructor(host: SettingsHost, cwd: string) { this.host = host; this.cwd = cwd; }
+    source(path: string): { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string } {
+        return path.startsWith('cohere:') ? embedded(path) : this.host.read(path);
+    }
+    layers(path: string, chain: readonly string[]): Layers {
+        if(chain.includes(path)) return refused(`lint config ${path} extends itself: ${[...chain, path].join(' -> ')}`);
+        const read = this.source(path);
+        if(read.kind === 'Error') return refused(`reading lint config ${path}: ${read.message}`);
+        const doc = new Document(read.text);
+        doc.parse();
+        if(doc.message !== '') return refused(`parsing lint config ${path}: ${doc.message}`);
+        const unknown = unknownKeys(doc, path);
+        if(unknown !== '') return refused(unknown);
+        const shape = structShape(doc);
+        if(shape !== '') return refused(`parsing lint config ${path}: ${shape}`);
+        let bases: string[] = [];
+        const root = doc.node(doc.root);
+        for(let at = 0; at < root.keys.length; at++) {
+            if(root.keys[at] !== 'extends') continue;
+            const value = doc.node(root.children[at] ?? panic('missing extends value'));
+            if(value.kind === 'string') { if(value.text !== '') bases = [value.text]; }
+            else if(value.kind === 'array') {
+                const next: string[] = [];
+                for(const child of value.children) next.push(doc.node(child).text);
+                bases = next;
+            }
+        }
+        const layers: Layer[] = [];
+        const seen: string[] = [];
+        for(const base of bases) {
+            if(path.startsWith('cohere:') && !base.startsWith('cohere:')) return refused(`rule set ${path} extends ${base}, which is a path: a set may extend only other sets`);
+            const basePath = base.startsWith('cohere:') ? base : absolute(base, parent(path));
+            const answer = this.layers(basePath, [...chain, path]);
+            if(answer.kind === 'Refused') return refused(`lint config ${path} extends ${base}: ${answer.message}`);
+            for(const layer of answer.layers) if(!seen.includes(layer.path)) { seen.push(layer.path); layers.push(layer); }
+        }
+        const ignores = strings(doc, doc.field(doc.root, 'ignorePatterns'));
+        if(ignores.kind === 'Error') return refused(ignores.message);
+        layers.push(new Layer(path, doc, ignores.values));
+        return { kind: 'Ok', layers };
+    }
+    block(path: string, doc: Document, index: number): Answer {
+        const block = doc.node(index);
+        if(block.kind !== 'object' && block.kind !== 'null') return refused(`${path}: the "format" block is not a JSON object: ${mismatch(block, 'map[string]jsontext.Value')}`);
+        let options = prettier;
+        const keys: string[] = [];
+        for(const key of block.keys) if(!keys.includes(key)) keys.push(key);
+        keys.sort(compare);
+        for(const key of keys) {
+            if(!formatKeys.includes(key)) return refused(`${path}: format option ${quote(key)} is not one cohere applies; add it to Options rather than formatting without it`);
+            if(key === 'ignore') continue;
+            const value = doc.node(doc.field(index, key));
+            if(value.kind === 'null') continue;
+            const number = key === 'printWidth' || key === 'tabWidth';
+            const string = ['trailingComma', 'arrowParens', 'endOfLine'].includes(key);
+            const target = number ? 'int' : string ? 'string' : 'bool';
+            if(value.kind !== (number ? 'number' : string ? 'string' : 'bool') || (number && !integer64(value.raw))) return refused(`${path}: format option ${quote(key)}: ${value.kind === 'number' && number ? `json: cannot unmarshal number ${value.raw} into Go value of type int` : mismatch(value, target)}`);
+            if(key === 'printWidth') options = { ...options, printWidth: Number(value.raw) };
+            else if(key === 'tabWidth') options = { ...options, tabWidth: Number(value.raw) };
+            else if(key === 'useTabs') options = { ...options, useTabs: value.text === 'true' };
+            else if(key === 'semi') options = { ...options, semi: value.text === 'true' };
+            else if(key === 'singleQuote') options = { ...options, singleQuote: value.text === 'true' };
+            else if(key === 'bracketSpacing') options = { ...options, bracketSpacing: value.text === 'true' };
+            else if(key === 'bracketSameLine') options = { ...options, bracketSameLine: value.text === 'true' };
+            else if(key === 'trailingComma') options = { ...options, trailingComma: value.text };
+            else if(key === 'arrowParens') options = { ...options, arrowParens: value.text };
+            else if(key === 'endOfLine') options = { ...options, endOfLine: value.text };
+        }
+        if(options.endOfLine !== 'lf') return refused(`${path} sets endOfLine ${quote(options.endOfLine)}; only "lf" is supported`);
+        const ignoreIndex = doc.field(index, 'ignore');
+        const ignores = strings(doc, ignoreIndex);
+        if(ignores.kind === 'Error') return refused(`${path}: the format block's "ignore" is not a list of patterns: ${ignores.message}`);
+        return { kind: 'Ok', options, source: '', houseIgnore: ignores.values, houseIgnoreDeclared: ignoreIndex >= 0, ignorePatterns: [] };
+    }
+    house(): Answer {
+        const read = embedded('cohere:typescript');
+        if(read.kind === 'Error') return refused(read.message);
+        const doc = new Document(read.text); doc.parse();
+        const answer = this.block('cohere:typescript', doc, doc.field(doc.root, 'format'));
+        if(answer.kind === 'Refused') return answer;
+        return { ...answer, houseIgnoreDeclared: true };
+    }
+    chain(path: string): Answer {
+        const read = this.layers(path, []);
+        if(read.kind === 'Refused') return read;
+        const sources = [...read.layers].reverse();
+        const ours = sources.some((layer) => layer.path.startsWith('cohere:system-inc/'));
+        let answer = this.house();
+        if(answer.kind === 'Refused') return answer;
+        if(ours) {
+            for(const layer of sources) {
+                if(layer.path !== 'cohere:typescript' && layer.document.field(layer.document.root, 'format') >= 0) return refused(`${layer.path} has a "format" block; formatting is unified in our tiers, and only the Nexus tier (cohere:typescript) holds the format block, so remove it here`);
+            }
+        }
+        else {
+            for(const layer of sources) {
+                const block = layer.document.field(layer.document.root, 'format');
+                if(block < 0 || layer.path === 'cohere:typescript') continue;
+                const own = this.block(layer.path, layer.document, block);
+                if(own.kind === 'Refused') return own;
+                answer = { ...answer, options: own.options, houseIgnore: own.houseIgnoreDeclared ? own.houseIgnore : answer.houseIgnore };
+                break;
+            }
+        }
+        const patterns: string[] = [];
+        for(const layer of read.layers) patterns.push(...layer.ignores);
+        return { ...answer, source: path, ignorePatterns: patterns };
+    }
+    resolve(directory: string): Answer {
+        const path = absolute(directory, this.cwd);
+        const known = this.answers.get(path);
+        if(known !== undefined) return known;
+        const answer = this.here(path);
+        this.answers.set(path, answer);
+        return answer;
+    }
+    here(directory: string): Answer {
+        const manifestPath = absolute('package.json', directory);
+        const manifest = this.host.read(manifestPath);
+        let leftover = '';
+        if(manifest.kind === 'Ok') {
+            const doc = new Document(manifest.text); doc.parse();
+            if(doc.message !== '') return refused(`${manifestPath} is not valid JSON: ${doc.message}`);
+            if(!['object', 'null'].includes(doc.node(doc.root).kind)) return refused(`${manifestPath} is not valid JSON: ${mismatch(doc.node(doc.root), 'map[string]jsontext.Value')}`);
+            if(doc.field(doc.root, 'prettier') >= 0) leftover = manifestPath + ' (its "prettier" key)';
+        }
+        if(leftover === '') for(const candidate of legacy) {
+            const path = absolute(candidate, directory);
+            if(this.host.exists(path)) { leftover = path; break; }
+        }
+        if(leftover !== '') return refused(`${leftover}: Prettier config remains where cohere no longer reads it; delete it, since cohere reads format options only from a "format" block in CohereSettings.json`, true);
+        const path = absolute('CohereSettings.json', directory);
+        if(this.host.exists(path)) return this.chain(path);
+        const up = parent(directory);
+        return up === directory ? this.house() : this.resolve(up);
+    }
+    forFile(file: string): Answer { return this.resolve(parent(absolute(file, this.cwd))); }
+}

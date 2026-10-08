@@ -1,0 +1,32 @@
+// The resolver returns command status; the host implements the ruled main return
+// and exact writes when those shared APIs land. Paths here are UTF-8 test paths.
+export type ReadResult = { readonly kind: 'Ok'; readonly text: string } | { readonly kind: 'Error'; readonly message: string };
+export interface SettingsHost {
+    readonly read: (path: string) => ReadResult;
+    readonly exists: (path: string) => boolean;
+}
+export type Failure = { readonly kind: 'Refused'; readonly message: string; readonly status: 1; readonly leftover: boolean };
+export interface CommandOutput {
+    readonly stdout: (text: string) => void;
+    readonly stderr: (text: string) => void;
+}
+export function reportRefusal(output: CommandOutput, refusal: Failure): number {
+    output.stderr(refusal.message + '\n');
+    return refusal.status;
+}
+export function clean(path: string): string {
+    const parts: string[] = [];
+    for(const part of path.split('/')) {
+        if(part === '' || part === '.') continue;
+        if(part === '..') { if(parts.length > 0) parts.pop(); }
+        else parts.push(part);
+    }
+    return '/' + parts.join('/');
+}
+export function parent(path: string): string {
+    const index = path.lastIndexOf('/');
+    return index <= 0 ? '/' : path.slice(0, index);
+}
+export function absolute(path: string, directory: string): string {
+    return clean(path.startsWith('/') ? path : directory + '/' + path);
+}

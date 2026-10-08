@@ -1,0 +1,2 @@
+const status = 1;
+console.log(JSON.stringify({ status }) ?? '');
