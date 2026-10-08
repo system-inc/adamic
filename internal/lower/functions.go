@@ -245,8 +245,30 @@ func (l *lowering) permitsImplicitReturn(declaration *ast.Node) bool {
 // This belongs to signatures; values in ordinary typed slots are checked separately.
 func (l *lowering) signatureResult(proven *checker.Type) (ir.Type, bool) {
 	concrete := l.concrete(proven)
+	if concrete.Flags()&checker.TypeFlagsNonPrimitive != 0 {
+		// TypeScript's object includes arrays, maps and callable references.
+		// Preserve their dynamic heap kinds, including a function's typeof.
+		return ir.Union, true
+	}
 	if concrete.Flags()&checker.TypeFlagsUndefined != 0 {
 		return ir.Object, true
+	}
+	if concrete.Flags()&checker.TypeFlagsUnion != 0 {
+		objectMember := false
+		for _, member := range concrete.Types() {
+			objectMember = objectMember || member.Flags()&checker.TypeFlagsNonPrimitive != 0
+		}
+		if objectMember {
+			for _, member := range concrete.Types() {
+				if member.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsUndefined) != 0 {
+					continue
+				}
+				if _, known := l.signatureResult(member); !known {
+					return 0, false
+				}
+			}
+			return ir.Union, true
+		}
 	}
 	if concrete.Flags()&checker.TypeFlagsUnion != 0 && signatureIncludesVoid(concrete) {
 		var shared ir.Type
