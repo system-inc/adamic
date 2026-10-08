@@ -71,7 +71,7 @@ func TestHiddenTNodeConstraintRepresentation(t *testing.T) {
 }
 
 func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/hidden_boundary_generic_tnode_value.a")
+	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_value.a")
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -83,7 +83,7 @@ func TestHiddenTNodeGenericValueRemainsNotYet(t *testing.T) {
 }
 
 func TestHiddenTNodeConstraintMutationRemainsNotYet(t *testing.T) {
-	source, err := os.ReadFile("../oracle/testdata/hidden_boundary_generic_tnode_mutation.a")
+	source, err := os.ReadFile("../oracle/testdata/notyet/hidden_boundary_generic_tnode_mutation.a")
 	if err != nil {
 		t.Fatal(err)
 	}
