@@ -69,3 +69,10 @@ and D192. All five erase-panic mutants build and exit 0; exact exit/stderr
 assertions catch them. Their hole variants remain refused. Command filter:
 `-run 'TestLedgerWitnesses/(D185|D186|D189|D191|D192)$'`; exit 0, package 13.623s,
 log `/tmp/stricter-indexed-d-group3.log`.
+
+Group 3 commit: ee0a5320, pushed to codex/stricter-indexed-d.
+Group 4 proves D193, D194, D225, D226 and D227, with five more caught
+exit-0 erase-panic mutants and five observed hole-constructor refusals.
+Total: 17 dense reads proven, 3 record rows blocked, 4 remaining.
+Command filter: `-run 'TestLedgerWitnesses/(D193|D194|D225|D226|D227)$'`;
+exit 0, package 13.280s, log `/tmp/stricter-indexed-d-group4.log`.
