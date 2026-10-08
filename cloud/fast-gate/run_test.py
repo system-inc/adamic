@@ -137,7 +137,8 @@ class FailClosed(unittest.TestCase):
             self.assertEqual(set(result["stages_exit"]), set(result["planned_stages"]))
             # Every verdict carries its long-test ledger, empty or not.
             self.assertEqual((result["long_tests"], result["long_test_threshold_seconds"]), (0, run.longTestSeconds))
-            self.assertIn("0 tests over 10 s", status)
+            self.assertIn("0 units over 30 s", status)
+            self.assertEqual(result["budget_over"], [])
 
     def test_every_stage_raising_is_red(self):
         for full, stages in ((False, ["build", "vet", "tests", "smoke", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
@@ -754,13 +755,20 @@ class Stage3Red(unittest.TestCase):
 
 
 class LongTests(unittest.TestCase):
-    def test_the_ledger_holds_top_level_tests_over_the_line_longest_first(self):
+    def test_the_ledger_holds_units_over_the_budget_longest_first(self):
+        # A test with subtests is split: its subtests are units, and so is its own time outside them.
         events = [
-            {"Action": "pass", "Package": "p", "Test": "TestShort", "Elapsed": 9.9},
-            {"Action": "pass", "Package": "p", "Test": "TestAtTheLine", "Elapsed": 10},
-            {"Action": "pass", "Package": "p", "Test": "TestLong", "Elapsed": 12.5},
+            {"Action": "pass", "Package": "p", "Test": "TestShort", "Elapsed": 29.9},
+            {"Action": "pass", "Package": "p", "Test": "TestAtTheLine", "Elapsed": 30},
+            {"Action": "pass", "Package": "p", "Test": "TestLong", "Elapsed": 32.5},
             {"Action": "fail", "Package": "q", "Test": "TestLonger", "Elapsed": 400},
             {"Action": "pass", "Package": "q", "Test": "TestLonger/case", "Elapsed": 390},
+            {"Action": "pass", "Package": "q", "Test": "TestSplit", "Elapsed": 100},
+            {"Action": "pass", "Package": "q", "Test": "TestSplit/a", "Elapsed": 20},
+            {"Action": "pass", "Package": "q", "Test": "TestSplit/b", "Elapsed": 20},
+            {"Action": "pass", "Package": "q", "Test": "TestParallel", "Elapsed": 40},
+            {"Action": "pass", "Package": "q", "Test": "TestParallel/a", "Elapsed": 25},
+            {"Action": "pass", "Package": "q", "Test": "TestParallel/b", "Elapsed": 25},
             {"Action": "skip", "Package": "q", "Test": "TestSkipped", "Elapsed": 50},
             {"Action": "pass", "Package": "q", "Elapsed": 600},
             {"Action": "output", "Package": "p", "Test": "TestLong", "Output": "x"},
@@ -770,8 +778,70 @@ class LongTests(unittest.TestCase):
             with open(path, "w") as handle:
                 handle.write("not json\n[1]\n")
                 handle.writelines(json.dumps(event) + "\n" for event in events)
-            self.assertEqual(run.longTests(path), [("q", "TestLonger", 400, "fail"), ("p", "TestLong", 12.5, "pass")])
-            self.assertEqual(run.longTests(os.path.join(directory, "absent.jsonl")), [])
+            units = run.testUnits(path)
+            self.assertNotIn(("q", "TestSplit"), units)
+            self.assertNotIn(("q", "TestParallel (setup)"), units)
+            self.assertEqual(run.longTests(units), [("q", "TestLonger/case", 390, "pass"), ("q", "TestSplit (setup)", 60, "pass"), ("p", "TestLong", 32.5, "pass")])
+            self.assertEqual(run.testUnits(os.path.join(directory, "absent.jsonl")), {})
+
+
+class Budget(unittest.TestCase):
+    """A new unit over the 30 s budget is red at 'budget'; an existing one is drift, and the burn-down holds the rest."""
+
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, self.directory)
+        self.tree = os.path.join(self.directory, "tree")
+        os.makedirs(os.path.join(self.tree, "p/sub"))
+        os.makedirs(os.path.join(self.tree, "cloud/fast-gate"))
+        self.write("p/old_test.go", "package p\n\nfunc TestOld(t *testing.T) {}\nfunc TestListed(t *testing.T) {}\n")
+        # A same-named test in a subpackage doesn't make p's new test existing.
+        self.write("p/sub/sub_test.go", "package sub\n\nfunc TestNew(t *testing.T) {}\n")
+        self.write("cloud/fast-gate/budget-burndown.tsv", "# header\n%s/p\tTestListed\t300.0\t\n%s/p\tTestShrunk\t90.0\t\n" % (run.module, run.module))
+        self.base = self.commit("base")
+        self.write("p/new_test.go", "package p\n\nfunc TestNew(t *testing.T) {}\n")
+        self.head = self.commit("head")
+
+    def write(self, name, text):
+        with open(os.path.join(self.tree, name), "w") as handle:
+            handle.write(text)
+
+    def commit(self, message):
+        for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", message]):
+            realRun(["git", "-C", self.tree] + command, check=True, capture_output=True)
+        return run.git(self.tree, "rev-parse", "HEAD")
+
+    def budget(self, rows, units=None):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tree=self.tree, tools=self.tree, base=self.base, sha=self.head, full=False, out=self.directory)
+        gate.result, gate.failure, gate.lock, gate.started, gate.complete, gate.processes = {}, None, threading.Lock(), time.monotonic(), True, []
+        ledger = [(run.module + "/p", name, seconds, "pass") for name, seconds in rows]
+        allUnits = {(package, name): (seconds, action) for package, name, seconds, action in ledger}
+        allUnits.update(units or {})
+        with mock.patch("builtins.print"):
+            gate.budget(ledger, allUnits)
+        return gate
+
+    def test_a_new_unit_over_the_budget_is_red_naming_it_and_the_box(self):
+        gate = self.budget([("TestNew/case", 31.5)])
+        self.assertEqual(gate.failure["step"], "budget")
+        self.assertIn("TestNew/case 31.5 s", gate.failure["detail"])
+        self.assertIn(os.uname().nodename, gate.failure["detail"])
+        self.assertEqual(gate.result["budget_over"], [run.module + "/p TestNew/case 31.5 s"])
+
+    def test_an_existing_unit_over_is_drift_and_a_listed_one_is_neither(self):
+        gate = self.budget([("TestOld", 45.0), ("TestListed (setup)", 200.0), ("TestListed", 300.0)],
+                           units={(run.module + "/p", "TestShrunk"): (12.0, "pass")})
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.result["budget_drift"], [run.module + "/p TestOld 45.0 s", run.module + "/p TestListed (setup) 200.0 s"])
+        self.assertEqual(gate.result["budget_burndown_units"], [run.module + "/p TestListed"])
+        self.assertEqual(gate.result["budget_can_leave_burndown"], [run.module + "/p TestShrunk"])
+        self.assertEqual(gate.result["budget_instrument"]["box"], os.uname().nodename)
+
+    def test_a_whole_gate_of_main_never_finds_a_new_unit(self):
+        # Base is the candidate itself: every unit exists there.
+        self.base = self.head
+        self.assertIsNone(self.budget([("TestNew", 500.0)]).failure)
 
 
 @unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")

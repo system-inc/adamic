@@ -42,9 +42,14 @@ module = "github.com/system-inc/adamic"
 gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
 fullPackageTimeout = "3h"
 slowPackageSeconds = 3600
-# Kirk's target for the remote executor (Oct 8): no test runs longer than this, so every unit can go to any
-# worker. Each gate publishes its ledger of tests over it (long-tests.tsv); the count burns down to zero.
-longTestSeconds = 10
+# Kirk's hard constraint (Oct 8): no test unit runs longer than this, so every unit can go to any of a hundred
+# 4-CPU Codex instances. Each gate publishes its ledger of units over it (long-tests.tsv), and a unit over it
+# that isn't on the burn-down (cloud/fast-gate/budget-burndown.tsv, main's units over it when the rule came,
+# shrinking only) is red at 'budget' when it is new, its test absent from the base. An existing unit drifting over
+# on a loaded gate box is named, not red: replayed over Oct 8's last 28 fast gates, red for every unit over would
+# have failed 8, all on box load (TestInspectRequestRefusals took 147 to 265 s in 12-CPU slots). The gate measures
+# on its own box until Loom's Codex tier measures every unit on the reference shape, and the verdict names it.
+longTestSeconds = 30
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
@@ -1387,6 +1392,40 @@ class Gate:
                     pass
             time.sleep(0.01)
 
+    def budget(self, ledger, units):
+        """Red at 'budget' for every new unit over longTestSeconds (its test isn't in the base) that the burn-down
+        doesn't hold, naming each one, its seconds and the box that measured it. Existing units over it are named
+        as drift, and burn-down units this run measured under the line too (budget_can_leave_burndown), so the
+        record shrinks."""
+        burndown = set()
+        try:
+            with open(os.path.join(self.arguments.tools, "cloud/fast-gate/budget-burndown.tsv")) as handle:
+                for line in handle:
+                    fields = line.rstrip("\n").split("\t")
+                    if len(fields) >= 2 and not line.startswith("#"):
+                        burndown.add((fields[0], fields[1]))
+        except OSError:
+            pass
+        over = {(package, name) for package, name, _, _ in ledger}
+        listed = sorted("%s %s" % key for key in over & burndown)
+        offBurndown = [row for row in ledger if (row[0], row[1]) not in burndown]
+        unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, self.arguments.base, row[0], row[1])]
+        drift = [row for row in offBurndown if row not in unlisted]
+        self.result.update({
+            "budget_seconds": longTestSeconds,
+            "budget_instrument": {"box": os.uname().nodename, "cpus": os.cpu_count(), "load": [round(value, 1) for value in os.getloadavg()],
+                                  "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"},
+            "budget_burndown_units": listed,
+            "budget_over": ["%s %s %.1f s" % (package, name, seconds) for package, name, seconds, _ in unlisted],
+            "budget_drift": ["%s %s %.1f s" % (package, name, seconds) for package, name, seconds, _ in drift],
+            "budget_can_leave_burndown": sorted("%s %s" % key for key in (burndown & set(units)) - over),
+        })
+        if unlisted and self.failure is None and not getattr(self, "stopped", None):
+            instrument = self.result["budget_instrument"]
+            self.fail("budget", "%d new test units over the %d s budget (measured on %s, %d CPUs, load %s; split each into units under %d s):\n%s" % (
+                len(unlisted), longTestSeconds, instrument["box"], instrument["cpus"], "/".join(str(value) for value in instrument["load"]), longTestSeconds,
+                "\n".join("  %s %s %.1f s (%s)" % (package, name, seconds, action) for package, name, seconds, action in unlisted)))
+
     def status(self, line):
         with open(os.path.join(self.arguments.out, "status.txt"), "w") as handle:
             handle.write(line + "\n")
@@ -1397,6 +1436,9 @@ class Gate:
         with self.lock:
             self.killSessions()
         wall = round(time.monotonic() - self.started, 1)
+        units = testUnits(os.path.join(self.arguments.out, "test.jsonl"))
+        ledger = longTests(units)
+        self.budget(ledger, units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
         if unfinished and self.failure is None and not getattr(self, "stopped", None):
             self.fail(unfinished[0], "planned stages without a recorded exit 0: %s (exits %s)" % (", ".join(unfinished), self.exits))
@@ -1419,7 +1461,6 @@ class Gate:
         })
         if getattr(self, "stopped", None):
             self.result["stopped"] = self.stopped
-        ledger = longTests(os.path.join(self.arguments.out, "test.jsonl"))
         with open(os.path.join(self.arguments.out, "long-tests.tsv"), "w") as handle:
             for package, name, seconds, action in ledger:
                 handle.write("%s\t%s\t%.2f\t%s\n" % (package, name, seconds, action))
@@ -1434,7 +1475,7 @@ class Gate:
         steps = " ".join("%s=%.1fs" % item for item in self.steps.items())
         if self.result.get("slow_packages"):
             steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
-        steps += "; %d tests over %d s (%.0f s)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"])
+        steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         deferred = self.result.get("deferred_to_full_gate", [])
@@ -1461,10 +1502,12 @@ class Gate:
             print(handle.read(), end="", flush=True)
 
 
-def longTests(path):
-    """Top-level tests in a go test -json log that passed or failed in over longTestSeconds, longest first:
-    (package, test, seconds, action). Subtests are the test's own business; a missing log is an empty ledger."""
-    rows = {}
+def testUnits(path):
+    """The test units in a go test -json log that passed or failed, as {(package, unit): (seconds, action)}. A
+    test without subtests is one unit. A test with subtests is split: each subtest is a unit (recursively), and
+    so is the test's own time outside them, '<test> (setup)', its elapsed less its subtests' (none when they ran
+    in parallel). A missing log has no units."""
+    tests = {}
     try:
         with open(path) as handle:
             for line in handle:
@@ -1474,15 +1517,40 @@ def longTests(path):
                     continue
                 if not isinstance(event, dict):
                     continue
-                name = event.get("Test")
-                if not isinstance(name, str) or not name or "/" in name or event.get("Action") not in ("pass", "fail"):
+                name, seconds = event.get("Test"), event.get("Elapsed")
+                if not isinstance(name, str) or not name or event.get("Action") not in ("pass", "fail") or not isinstance(seconds, (int, float)):
                     continue
-                seconds = event.get("Elapsed")
-                if isinstance(seconds, (int, float)) and seconds > longTestSeconds:
-                    rows[event.get("Package", ""), name] = (seconds, event["Action"])
+                tests[event.get("Package", ""), name] = (seconds, event["Action"])
     except OSError:
-        return []
-    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in rows.items()),
+        return {}
+    children = {}
+    for package, name in tests:
+        if "/" in name:
+            children.setdefault((package, name.rsplit("/", 1)[0]), []).append((package, name))
+    units = {}
+    for key, (seconds, action) in tests.items():
+        if key not in children:
+            units[key] = (seconds, action)
+            continue
+        setup = seconds - sum(tests[child][0] for child in children[key])
+        if setup > 0:
+            units[key[0], key[1] + " (setup)"] = (round(setup, 2), action)
+    return units
+
+
+def testInBase(tree, base, package, unit):
+    """Whether the unit's top-level test function is defined in the package's tests at base. A unit is new
+    when it isn't: added with this change."""
+    test = unit.split("/", 1)[0].split(" ", 1)[0]
+    directory = package[len(module) + 1:] if package.startswith(module + "/") else "."
+    found = subprocess.run(["git", "-C", tree, "grep", "-q", "-E", r"^func %s\(" % re.escape(test), base, "--", ":(glob)" + directory + "/*_test.go"],
+                           capture_output=True)
+    return found.returncode == 0
+
+
+def longTests(units):
+    """The units (testUnits) over longTestSeconds, longest first: (package, unit, seconds, action)."""
+    return sorted(((package, name, seconds, action) for (package, name), (seconds, action) in units.items() if seconds > longTestSeconds),
                   key=lambda row: (-row[2], row[0], row[1]))
 
 
