@@ -1,0 +1,800 @@
+{
+  "worker_tip": "7cd0281388208bd439b5a20d4f4294a55a4ac91e",
+  "rows": [
+    {
+      "type_id": 6066,
+      "type": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "field": "targets",
+      "declared_type": "(() => Type)[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20592,
+          "column": 33,
+          "start": 1202044,
+          "end": 1202058,
+          "text": "mapper.targets"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 6066,
+      "type": "{ kind: TypeMapKind.Deferred; sources: readonly Type[]; targets: (() => Type)[]; }",
+      "field": "sources",
+      "declared_type": "readonly Type[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 1,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 20591,
+          "column": 33,
+          "start": 1201995,
+          "end": 1202009,
+          "text": "mapper.sources"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 97938,
+      "type": "NonIncrementalBuildInfo",
+      "field": "root",
+      "declared_type": "readonly string[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 1193,
+          "column": 47,
+          "start": 51942,
+          "end": 51980,
+          "text": "(info as NonIncrementalBuildInfo).root"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2448,
+          "column": 12,
+          "start": 115057,
+          "end": 115071,
+          "text": "buildInfo.root"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 97937,
+      "type": "IncrementalBuildInfo",
+      "field": "root",
+      "declared_type": "readonly IncrementalBuildInfoRoot[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2411,
+          "column": 25,
+          "start": 113603,
+          "end": 113615,
+          "text": "program.root"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 2412,
+          "column": 29,
+          "start": 113655,
+          "end": 113667,
+          "text": "program.root"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Original root tuple and scalar union retained by tuple lane"
+    },
+    {
+      "type_id": 97245,
+      "type": "BuilderProgramState",
+      "field": "affectedFiles",
+      "declared_type": "readonly SourceFile[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 626,
+          "column": 34,
+          "start": 26747,
+          "end": 26766,
+          "text": "state.affectedFiles"
+        },
+        {
+          "file": "src/compiler/builder.ts",
+          "line": 626,
+          "column": 57,
+          "start": 26770,
+          "end": 26789,
+          "text": "state.affectedFiles"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 93573,
+      "type": "SortedAndCanonicalizedMutableFileSystemEntries",
+      "field": "sortedAndCanonicalizedFiles",
+      "declared_type": "SortedArray<Canonicalized>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 227,
+          "column": 35,
+          "start": 8429,
+          "end": 8463,
+          "text": "result.sortedAndCanonicalizedFiles"
+        },
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 357,
+          "column": 36,
+          "start": 14450,
+          "end": 14490,
+          "text": "parentResult.sortedAndCanonicalizedFiles"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 93573,
+      "type": "SortedAndCanonicalizedMutableFileSystemEntries",
+      "field": "sortedAndCanonicalizedDirectories",
+      "declared_type": "SortedArray<Canonicalized>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 242,
+          "column": 46,
+          "start": 9161,
+          "end": 9201,
+          "text": "result.sortedAndCanonicalizedDirectories"
+        },
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 331,
+          "column": 55,
+          "start": 13277,
+          "end": 13323,
+          "text": "parentResult.sortedAndCanonicalizedDirectories"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 76534,
+      "type": "MethodDeclaration | GetAccessorDeclaration | SetAccessorDeclaration",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52628,
+          "column": 43,
+          "start": 3060061,
+          "end": 3060075,
+          "text": "prop.modifiers"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52629,
+          "column": 35,
+          "start": 3060114,
+          "end": 3060128,
+          "text": "prop.modifiers"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 58668,
+      "type": "Block | ModuleBlock",
+      "field": "statements",
+      "declared_type": "NodeArray<Statement>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1167,
+          "column": 40,
+          "start": 65016,
+          "end": 65031,
+          "text": "node.statements"
+        },
+        {
+          "file": "src/compiler/binder.ts",
+          "line": 3070,
+          "column": 54,
+          "start": 149351,
+          "end": 149391,
+          "text": "(node as Block | ModuleBlock).statements"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 53634,
+      "type": "UnionTypeNode | IntersectionTypeNode",
+      "field": "types",
+      "declared_type": "NodeArray<TypeNode>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/parser.ts",
+          "line": 1147,
+          "column": 40,
+          "start": 63785,
+          "end": 63795,
+          "text": "node.types"
+        },
+        {
+          "file": "src/compiler/expressionToTypeNode.ts",
+          "line": 1265,
+          "column": 20,
+          "start": 66856,
+          "end": 66908,
+          "text": "(node as UnionTypeNode | IntersectionTypeNode).types"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 39171,
+      "type": "PropertyAssignment | ShorthandPropertyAssignment",
+      "field": "modifiers",
+      "declared_type": "NodeArray<ModifierLike> | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52635,
+          "column": 55,
+          "start": 3060491,
+          "end": 3060505,
+          "text": "prop.modifiers"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 52636,
+          "column": 35,
+          "start": 3060544,
+          "end": 3060558,
+          "text": "prop.modifiers"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Conservative union-target handoff retained"
+    },
+    {
+      "type_id": 37515,
+      "type": "PackageJsonInfoContents",
+      "field": "resolvedEntrypoints",
+      "declared_type": "false | string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "object plus primitive union",
+        "scalar contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2235,
+          "column": 23,
+          "start": 110422,
+          "end": 110466,
+          "text": "packageJsonInfo.contents.resolvedEntrypoints"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2238,
+          "column": 16,
+          "start": 110631,
+          "end": 110675,
+          "text": "packageJsonInfo.contents.resolvedEntrypoints"
+        }
+      ],
+      "status": "delegated",
+      "reason": "Mixed scalar false and array member retained by mixed-member lane"
+    },
+    {
+      "type_id": 11590,
+      "type": "UnscopedEmitHelper",
+      "field": "dependencies",
+      "declared_type": "EmitHelper[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/transformer.ts",
+          "line": 630,
+          "column": 13,
+          "start": 27151,
+          "end": 27170,
+          "text": "helper.dependencies"
+        },
+        {
+          "file": "src/compiler/transformer.ts",
+          "line": 631,
+          "column": 29,
+          "start": 27203,
+          "end": 27222,
+          "text": "helper.dependencies"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 11219,
+      "type": "WatchOptions | undefined",
+      "field": "excludeFiles",
+      "declared_type": "string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 934,
+          "column": 44,
+          "start": 38477,
+          "end": 38498,
+          "text": "options?.excludeFiles"
+        },
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 735,
+          "column": 58,
+          "start": 29704,
+          "end": 29725,
+          "text": "options?.excludeFiles"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 11219,
+      "type": "WatchOptions | undefined",
+      "field": "excludeDirectories",
+      "declared_type": "string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/sys.ts",
+          "line": 934,
+          "column": 13,
+          "start": 38446,
+          "end": 38473,
+          "text": "options?.excludeDirectories"
+        },
+        {
+          "file": "src/compiler/watchUtilities.ts",
+          "line": 735,
+          "column": 82,
+          "start": 29728,
+          "end": 29755,
+          "text": "options?.excludeDirectories"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 11106,
+      "type": "DiagnosticWithDetachedLocation",
+      "field": "relatedInformation",
+      "declared_type": "DiagnosticRelatedInformation[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8656,
+          "column": 9,
+          "start": 339681,
+          "end": 339710,
+          "text": "diagnostic.relatedInformation"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8658,
+          "column": 31,
+          "start": 339802,
+          "end": 339831,
+          "text": "diagnostic.relatedInformation"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 10788,
+      "type": "InterfaceTypeWithDeclaredMembers",
+      "field": "declaredIndexInfos",
+      "declared_type": "IndexInfo[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14078,
+          "column": 26,
+          "start": 815137,
+          "end": 815162,
+          "text": "source.declaredIndexInfos"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14085,
+          "column": 48,
+          "start": 815642,
+          "end": 815667,
+          "text": "source.declaredIndexInfos"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 10788,
+      "type": "InterfaceTypeWithDeclaredMembers",
+      "field": "declaredConstructSignatures",
+      "declared_type": "Signature[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14077,
+          "column": 35,
+          "start": 815075,
+          "end": 815109,
+          "text": "source.declaredConstructSignatures"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14084,
+          "column": 57,
+          "start": 815549,
+          "end": 815583,
+          "text": "source.declaredConstructSignatures"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 10788,
+      "type": "InterfaceTypeWithDeclaredMembers",
+      "field": "declaredCallSignatures",
+      "declared_type": "Signature[]",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14076,
+          "column": 30,
+          "start": 815009,
+          "end": 815038,
+          "text": "source.declaredCallSignatures"
+        },
+        {
+          "file": "src/compiler/checker.ts",
+          "line": 14083,
+          "column": 52,
+          "start": 815452,
+          "end": 815481,
+          "text": "source.declaredCallSignatures"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9858,
+      "type": "CompilerOptions",
+      "field": "types",
+      "declared_type": "string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 9026,
+          "column": 17,
+          "start": 353981,
+          "end": 353994,
+          "text": "options.types"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 815,
+          "column": 16,
+          "start": 35960,
+          "end": 35973,
+          "text": "options.types"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9858,
+      "type": "CompilerOptions",
+      "field": "moduleSuffixes",
+      "declared_type": "string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2190,
+          "column": 10,
+          "start": 108461,
+          "end": 108497,
+          "text": "state.compilerOptions.moduleSuffixes"
+        },
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 2196,
+          "column": 20,
+          "start": 108746,
+          "end": 108782,
+          "text": "state.compilerOptions.moduleSuffixes"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9858,
+      "type": "CompilerOptions",
+      "field": "customConditions",
+      "declared_type": "string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/moduleNameResolver.ts",
+          "line": 780,
+          "column": 36,
+          "start": 34329,
+          "end": 34353,
+          "text": "options.customConditions"
+        },
+        {
+          "file": "src/compiler/program.ts",
+          "line": 4365,
+          "column": 13,
+          "start": 225733,
+          "end": 225757,
+          "text": "options.customConditions"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9854,
+      "type": "ConfigFileSpecs | undefined",
+      "field": "validatedIncludeSpecs",
+      "declared_type": "readonly string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2650,
+          "column": 14,
+          "start": 104763,
+          "end": 104839,
+          "text": "configParseResult.options.configFile?.configFileSpecs?.validatedIncludeSpecs"
+        },
+        {
+          "file": "src/compiler/watch.ts",
+          "line": 429,
+          "column": 10,
+          "start": 17225,
+          "end": 17275,
+          "text": "configFile?.configFileSpecs?.validatedIncludeSpecs"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9853,
+      "type": "ConfigFileSpecs",
+      "field": "validatedExcludeSpecs",
+      "declared_type": "readonly string[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2653,
+          "column": 17,
+          "start": 105012,
+          "end": 105086,
+          "text": "configParseResult.options.configFile.configFileSpecs.validatedExcludeSpecs"
+        },
+        {
+          "file": "src/compiler/commandLineParser.ts",
+          "line": 2681,
+          "column": 22,
+          "start": 106706,
+          "end": 106780,
+          "text": "configParseResult.options.configFile.configFileSpecs.validatedExcludeSpecs"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9852,
+      "type": "TsConfigSourceFile",
+      "field": "statements",
+      "declared_type": "NodeArray<JsonObjectExpressionStatement>",
+      "families": [
+        "array contracts"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3107,
+          "column": 31,
+          "start": 112552,
+          "end": 112581,
+          "text": "tsConfigSourceFile.statements"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 3108,
+          "column": 28,
+          "start": 112620,
+          "end": 112649,
+          "text": "tsConfigSourceFile.statements"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    },
+    {
+      "type_id": 9760,
+      "type": "DiagnosticWithLocation",
+      "field": "relatedInformation",
+      "declared_type": "DiagnosticRelatedInformation[] | undefined",
+      "families": [
+        "array contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "read_count": 2,
+      "sites": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8662,
+          "column": 17,
+          "start": 340102,
+          "end": 340143,
+          "text": "diagnosticWithLocation.relatedInformation"
+        },
+        {
+          "file": "src/compiler/utilities.ts",
+          "line": 8665,
+          "column": 17,
+          "start": 340241,
+          "end": 340282,
+          "text": "diagnosticWithLocation.relatedInformation"
+        }
+      ],
+      "status": "certified",
+      "reason": "Pending array-field pair below worker three-read frontier"
+    }
+  ],
+  "certified_pairs": 20,
+  "certified_static_reads": 38,
+  "runtime_reachability": "unmeasured",
+  "code_frontiers": {}
+}
