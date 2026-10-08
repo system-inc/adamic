@@ -165,6 +165,9 @@ func (b *builder) statements(statements []ir.Statement) {
 
 func (b *builder) statement(at *ir.Statement) {
 	switch statement := (*at).(type) {
+	case ir.Debugger:
+		// With no debugger attached, it reads and writes nothing and keeps the path.
+		return
 	case ir.WriteLine:
 		b.emit(at, 0, statement.Value, b.uses(statement.Value), nil)
 	case ir.Evaluate:

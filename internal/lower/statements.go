@@ -25,6 +25,9 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	switch node.Kind {
 	case ast.KindModuleDeclaration:
 		return l.namespaceBody(node)
+	case ast.KindDebuggerStatement:
+		// Preserve it for JavaScript; native builds have no attached debugger.
+		return []ir.Statement{ir.Debugger{}}, nil
 	case ast.KindInterfaceDeclaration, ast.KindTypeAliasDeclaration, ast.KindEmptyStatement:
 		// Types erase to nothing, and so does an empty statement.
 		return nil, nil
