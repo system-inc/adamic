@@ -1,6 +1,10 @@
 package oracle
 
 import (
+	"errors"
+	"strings"
+
+	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
 	"testing"
@@ -54,6 +58,15 @@ func TestOptionalCheckedWrites(t *testing.T) {
 				t.Fatal("Node: " + diff)
 			}
 			program, err := lowered(t, path)
+			if probe.name == "fresh" || probe.name == "fresh-boolean" || probe.name == "fresh-undefined" {
+				// The area refuses creating a field that this literal left out.
+				// Keep the Node observation and pin that earlier boundary.
+				var notYet *lower.NotYet
+				if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "writing a possibly absent optional own field") {
+					t.Fatalf("want the missing-field write refusal, got %v", err)
+				}
+				return
+			}
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -102,6 +115,6 @@ func init() {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{path: "internal/lower/testdata/optional_widening/checked_writes/" + name + ".a", lowers: true})
+		}{path: "internal/lower/testdata/optional_widening/checked_writes/" + name + ".a", lowers: name != "fresh" && name != "fresh-boolean" && name != "fresh-undefined"})
 	}
 }

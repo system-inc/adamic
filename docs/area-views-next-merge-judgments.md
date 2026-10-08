@@ -37,3 +37,9 @@ Lower still fails four phantom metadata equality tests; IR passed in 2.124 secon
 The stage3 path validator now accepts the ruled .ts assertion fixture as well as .a, keeping portable paths and traversal rejection. Node/native agreement refreshed nested-functions/09_checker_constituent_recursion.ts. TestFixturePaths plus the complete nested-functions and objects groups passed in 8.472 seconds. One diagnostic-record edit used a brace-sensitive matcher and landed on objects/22_nested_optional_calls.a rather than objects/19_identifier_multimap.a. Both records were corrected with JSON-aware offsets and passed in that same rerun. No source fixture or Node observation changed.
 
 Tag agreement passed in 0.079 seconds. The isolated Record=20 Go mutant failed with the exact C=14 versus Go=20 difference; all other tags remained unchanged.
+
+## Retained optional-write expectations
+
+fresh.a, fresh-boolean.a and fresh-undefined.a now require the replacement candidate's missing-own-field write NotYet boundary. Their exact Node observations remain checked and they stay registered as negative fixtures. All three passed in 0.584 seconds. Removing only absentOptionalWrite in an isolated overlay caused all three to fail with got <nil> in 0.334 seconds. This updates stale expectations under the explicit candidate refusal, without a production lowering change.
+
+The final full stage3 run passed 618 test frames and failed only five fixture leaves: the three inherited host Checker records and the two held taste witnesses. The run completed in 34.212 seconds; neither taste expectation was weakened.
