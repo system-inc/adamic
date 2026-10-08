@@ -120,6 +120,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 	}
+	literal.ArrayWriteContract = l.viewArrayObjectSourceContract(node, literal)
 	return literal, nil
 }
 
@@ -278,6 +279,7 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 	if !spreads {
 		literal.Spread = nil
 	}
+	literal.ElementContract = l.viewArrayLiteralSourceContract(node)
 	return literal, nil
 }
 
@@ -308,13 +310,13 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
-	if base := l.viewArrayBase(arrayType); base != nil {
-		arrayType = base
+	element := l.viewArrayElementType(arrayType)
+	if element == nil {
+		if !l.checker.IsArrayType(arrayType) {
+			return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
+		}
+		element = l.checker.GetElementTypeOfArrayType(arrayType)
 	}
-	if !l.checker.IsArrayType(arrayType) {
-		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
-	}
-	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	if of, empty := viewNeverArrayElement(element); empty {
 		return of, nil
 	}

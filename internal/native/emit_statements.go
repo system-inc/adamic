@@ -177,7 +177,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		array := e.value(statement.Array)
 		index := e.value(statement.Index)
 		value := e.value(statement.Value)
-		e.viewArrayMutation(array, statement.Element)
+		e.viewArrayMutation(array, statement.Element, value)
 		if statement.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}

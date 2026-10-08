@@ -333,9 +333,10 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
-		RealType        string
-		SpreadReadiness string
-		GraphTypes      []int
+		ArrayWriteContract ViewContractID
+		RealType           string
+		SpreadReadiness    string
+		GraphTypes         []int
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
 		Spread               Expression
@@ -393,10 +394,11 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
-		GraphTypes []int
-		Element    Type
-		Elements   []Expression
-		Spread     []bool
+		ElementContract ViewContractID
+		GraphTypes      []int
+		Element         Type
+		Elements        []Expression
+		Spread          []bool
 	}
 
 	// Length is array.length.
@@ -1161,14 +1163,15 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
-		WriteProven    bool
-		TargetContract ViewContractID
-		WriteContract  ViewContractID
-		WriteWhere     string
-		Uninitialized  bool
-		Object         Expression
-		Name           string
-		Value          Expression
+		ArraySlotWriteContract ViewContractID
+		WriteProven            bool
+		TargetContract         ViewContractID
+		WriteContract          ViewContractID
+		WriteWhere             string
+		Uninitialized          bool
+		Object                 Expression
+		Name                   string
+		Value                  Expression
 		// Class is as Property's.
 		Class int
 		// Site is which write of the program this is, for the cycle finder (lowering keeps the type of

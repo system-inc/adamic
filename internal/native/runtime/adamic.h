@@ -204,6 +204,8 @@ typedef struct adamic_object {
 	const adamic_shape *shape;
 	const adamic_class *class;
 	bool frozen;
+	// Original complete scalar-record declaration for array element writes.
+	unsigned int array_write_contract;
 	const char *real_type;
 	adamic_value slots[];
 } adamic_object;
@@ -354,6 +356,8 @@ typedef struct adamic_array {
 	// Physical storage only: 0 unknown, 1 number, 2 boolean, 7 packed maybe-number,
 	// 10 heap pointers. This never certifies an element shape or initialization.
 	uint8_t element_kind;
+	// Original logical element declaration, independent of the current values.
+	unsigned int element_contract;
 	adamic_value *elements;
 	// Extra fields of RegExp result arrays, owned and released with the array.
 	adamic_object *properties;

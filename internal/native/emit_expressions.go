@@ -593,7 +593,7 @@ func (e *emitter) evaluateWithoutViewArrays(expression ir.Expression) string {
 	case ir.ArrayPush:
 		array := e.value(expression.Array)
 		value := e.value(expression.Value)
-		e.viewArrayMutation(array, expression.Element)
+		e.viewArrayMutation(array, expression.Element, value)
 		if expression.Element.IsReference() {
 			value = e.heldReferenceIn(array, value)
 		}

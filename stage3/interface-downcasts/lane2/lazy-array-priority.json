@@ -41,6 +41,126 @@
       "read_count": 5,
       "test": "TestCheckedViewNodeArrayRecords",
       "scope": "standalone representative NodeArray ancestry and scalar own-field contracts, instantiated with Statement; not production lowering"
+    },
+    {
+      "type_id": 8654,
+      "type": "UnionType",
+      "field": "types",
+      "read_count": 107,
+      "test": "TestCheckedViewRankedArrayContracts",
+      "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 6975,
+      "type": "Signature",
+      "field": "typeParameters",
+      "read_count": 90,
+      "test": "TestCheckedViewRankedArrayContracts",
+      "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 6998,
+      "type": "SourceFile",
+      "field": "statements",
+      "read_count": 72,
+      "test": "TestCheckedViewRankedArrayContracts",
+      "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 6975,
+      "type": "Signature",
+      "field": "parameters",
+      "read_count": 71,
+      "test": "TestCheckedViewRankedArrayContracts",
+      "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 8694,
+      "type": "IntersectionType",
+      "field": "types",
+      "read_count": 70,
+      "test": "TestCheckedViewRankedArrayContracts",
+      "scope": "standalone representative ranked contract; complete TypeScript interfaces and production allocations unmeasured"
+    },
+    {
+      "type_id": 7305,
+      "type": "VariableDeclarationList",
+      "field": "declarations",
+      "read_count": 63,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 6920,
+      "type": "CallExpression",
+      "field": "arguments",
+      "read_count": 62,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 7288,
+      "type": "ObjectLiteralExpression",
+      "field": "properties",
+      "read_count": 49,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 10808,
+      "type": "TupleType",
+      "field": "elementFlags",
+      "read_count": 43,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 8700,
+      "type": "ArrayLiteralExpression",
+      "field": "elements",
+      "read_count": 42,
+      "test": "TestCheckedViewRankedParserArrayContracts",
+      "scope": "standalone representative array contract; NodeArray elements use minimal numeric pos records, ElementFlags uses a numeric enum; not production lowering"
+    },
+    {
+      "type_id": 7317,
+      "type": "BindingPattern",
+      "field": "elements",
+      "read_count": 35,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 8655,
+      "type": "UnionOrIntersectionType",
+      "field": "types",
+      "read_count": 35,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7331,
+      "type": "SignatureDeclaration",
+      "field": "parameters",
+      "read_count": 31,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7287,
+      "type": "ClassLikeDeclaration",
+      "field": "members",
+      "read_count": 29,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
+    },
+    {
+      "type_id": 7721,
+      "type": "TypeReferenceNode",
+      "field": "typeArguments",
+      "read_count": 27,
+      "test": "TestCheckedViewRankedArrayUnionContracts",
+      "scope": "standalone representative array contract; readonly array union retains distinct binding/omitted element tags, others expose minimal pos/id records; not production lowering"
     }
   ],
   "candidate_queue": [

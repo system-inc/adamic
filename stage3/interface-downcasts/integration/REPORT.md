@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-258 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+284 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -878,3 +878,71 @@ are retained in logs but not separately counted. All descriptor mutants are
 confined to each test's IR; production sources are unmutated.
 
 Final intersection required gates: lower 16.587s, native 52.707s, JavaScript 2.807s; full IR 30.949s; go vet ./... exit 0; uncached filtered Node oracle 376.970s, both original-declaration suites enabled, no fixture exclusion. Protected assembly/oracle files unchanged.
+
+
+## Array f201b579 reconciliation
+
+Newest fetched array tip f201b579b587663f707e10612edf91c3a20ee395 carries
+69c398621c76738e9482b087c94375508997b0a3 plus readonly array-union work.
+The single plan append conflict preserves all integration hook sections and the
+incoming reference-write and readonly-union sections. Source metadata and shared
+hooks merge automatically without discarding Map certificates, predicate proof
+reports, callable discard contracts, nullish fields, the intersection presence
+repair, or HasArrayViews' admitted-origin guard. The new native object message
+allocation accounts for both expected-type occurrences; old undersizing is an
+observed ASan overflow mutant, not a diagnostic change.
+
+The initial new-array source selection fails only two optional wrong-array
+stderr pins (23.047s): ranked-signature-wrong-array and
+ranked3-reference-wrong-array. Both still exit 70, name the same field and type,
+and reject the same number; the owner member reader says matches no member.
+Those two pins now use its exact current diagnostic, and both pass .522s.
+All other new ranked, parser, union and reference-write source controls pass.
+Mutable array-union demanded reads retain their precise compile refusal, while
+unread fields remain admitted. Reference writes require original producer and
+incoming scalar-record certificates, reverse mutable-field agreement, readiness,
+finite literals and ownership before changing storage. No complete tsc schema
+or exact reachable-cast count is inferred from reduced ranked witnesses.
+
+Executed four sequential mutant groups: ranked (4), reference-write (8), parser
+(5), readonly union (9), 26 new production mutation witnesses total. Removal of
+native ownership yields ASan use-after-free on a surviving alias; undersized
+native diagnostic allocation yields ASan buffer overflow. Native kind omissions
+also cause sanitizer runtime failures; these are memory-safety witnesses, not
+claims of successful mutant output. Other catches lose named refusals, reach a
+different descendant refusal, or reject untouched later elements under an
+illegal eager scan. Every group compiles and executes; production restores in
+finally. All raw logs are retained. Cumulative explicit mutation witnesses: 284.
+
+A test-harness edit during the reference group caused a transient go-vet build
+failure for viewRankedArrayCounts. That failure is not credited as a kill. The
+entire eight-mutant reference group was rerun after source edits completed and
+all eight were caught. First-attempt summary and failing raw evidence are kept
+separately; later groups and final evidence are also retained. Production is
+restored before every required gate.
+
+Measured 55 new ranked/reference fixture allocation rows in 5.915s. The new
+viewRankedArrayCounts hook is included in interfaceCastCounts and independently
+checked by TestCheckedViewRankedArrayCounts. Its updater inserts only measured
+rows before the untouched predicate direction table. The intentionally refused
+mutable-array read has no runtime artifact and no allocation row. These fixture
+allocation metrics do not imply static candidate execution or full compiler
+read coverage. Original-declaration suites remain enabled in the required oracle.
+The optional-boolean landing hold remains until the user explicitly lifts it.
+
+
+Supplemental full flow/freshness tests remain red: TestEveryFunctionIsInSingleAssignment
+and liveness corpus retain census_overload_contracts.a's more-arguments-than-
+implementation NotYet; census_small_boolean.a retains unsupported interpolation.
+Liveness require_perf_hooks.a and freshness TestEveryWriteIsRecordedAndKnown hit
+Unhandled case in Node.Text: *ast.BindingPattern in viewCallableFieldUses at line
+74. The isolated unmodified prior integration 8afdc710 reproduces freshness's
+same panic (23.583s) and the corrected exact liveness perf_hooks subtest reproduces
+it in .739s. The first baseline liveness filter selected no fixture and reported
+nothing checked; it is not evidence and was corrected before drawing this result.
+The pending dictionary lane already contains the narrow callableDataDeclaration
+AST-kind guard, to reconcile in its own merge. No flow/freshness production files
+were edited, no baseline corpus tests skipped, and these full packages are not
+claimed green. Required checked-view gates remain separate and active.
+
+Required array merge gates: lower 10.608s, native 41.276s, JavaScript 1.935s; full IR 34.312s; filtered oracle 326.925s with both original-declaration suites enabled and no exclusions; go vet ./... exit 0.

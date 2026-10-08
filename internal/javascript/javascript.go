@@ -54,6 +54,7 @@ func JavaScriptWith(program *ir.Program, options Options) string {
 	builder.WriteString(viewArraysRuntime)
 	builder.WriteString(viewArrayElementsRuntime)
 	builder.WriteString(viewArrayOperationsRuntime)
+	builder.WriteString(viewArrayReferenceRuntime(program))
 	builder.WriteString(viewCallablesRuntime)
 	builder.WriteString("import { createHash as adamicNodeCreateHash } from 'node:crypto';\n")
 	builder.WriteString(collectionIteratorRuntime)

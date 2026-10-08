@@ -13,6 +13,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->array_write_contract = 0;
 	object->real_type = "record";
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
@@ -24,6 +25,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
 	adamic_object *object = adamic_object_new(shape);
+	if (source->class == NULL) object->array_write_contract = source->array_write_contract;
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
 		adamic_slot_cache cache = {NULL, 0};
@@ -226,7 +228,7 @@ adamic_value adamic_object_view(const adamic_object *object, const char *name, a
 		const adamic_heap *boxed = slot->reference;
 		found = boxed == NULL ? "nullish" : boxed->kind == adamic_kind_number ? "number" : boxed->kind == adamic_kind_boolean ? "boolean" : boxed->kind == adamic_kind_string ? "string" : boxed->kind == adamic_kind_object ? "object" : boxed->kind == adamic_kind_array ? "array" : boxed->kind == adamic_kind_map ? "Map" : boxed->kind == adamic_kind_null ? "null" : "function";
 	}
-	size_t capacity = strlen(expression) + strlen(type) + strlen(found) + 100;
+	size_t capacity = strlen(expression) + 2 * strlen(type) + strlen(found) + 100;
 	char *message = malloc(capacity);
 	if (message == NULL) {
 		static const char oom[] = "out of memory";

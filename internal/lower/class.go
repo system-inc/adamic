@@ -470,6 +470,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(l.checker.GetSymbolAtLocation(target))))
 		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
 	}
+	write = l.markViewArrayScalarSlotWrite(target, valueNode, write)
 	return []ir.Statement{write}, nil
 }
 
@@ -525,6 +526,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 		write.TargetContract = l.slotContract(target, l.concrete(l.checker.GetTypeOfSymbol(field)))
 		write.WriteWhere = strings.Join(strings.Split(filepath.Base(l.program.Where(target)), ":")[:2], ":")
 	}
+	write = l.markViewArrayScalarSlotWrite(node, node, write)
 	statements = append(statements, write)
 	if len(statements) == 1 {
 		return statements, nil
