@@ -579,6 +579,10 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindQuestionQuestionToken {
 			return l.coalesce(node)
 		}
+		// All arrays are truthy, including []; only undefined takes this fallback.
+		if binary.OperatorToken.Kind == ast.KindBarBarToken && l.arrayOrUndefined(l.checker.GetTypeAtLocation(binary.Left)) {
+			return l.coalesce(node)
+		}
 		if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword {
 			if lowered, isCaught := l.caughtInstanceOfError(node); isCaught {
 				return lowered, nil
