@@ -1,0 +1,61 @@
+=== RUN   TestMutants
+=== PAUSE TestMutants
+=== RUN   TestOwnedWitnesses
+=== PAUSE TestOwnedWitnesses
+=== CONT  TestMutants
+=== CONT  TestOwnedWitnesses
+=== RUN   TestMutants/separate-named-export-ignored
+=== PAUSE TestMutants/separate-named-export-ignored
+=== CONT  TestMutants/separate-named-export-ignored
+    lint_test.go:1000: checker compilation phases: load=236.118843ms lower=7.631900264s C=625.214856ms JavaScript=28.893258ms
+    lint_test.go:1006: separate-named-export-ignored caught on Node: case 88 line 4600: port "fixed\tfunction Button() { return <button />; }\\u000aconst helper = 1;\\u000aexport { helper as Button };\\u000a", Go "/tmp/adamic-gate/TestMutantsseparate-named-export-ignored120316029/019/structure-react-component-no-separate-named-export-0.tsx:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsseparate-named-export-ignored120316029/019/structure-react-component-no-separate-named-export-0.tsx:3:1
+          structure/react-component-no-separate-named-export  This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.
+        
+        range 59 87 noSeparateNamedExport 			59 87
+        fixed	function Button() { return <button />; }\u000aconst helper = 1;\u000aexport { helper as Button };\u000a
+    lint_test.go:1006: separate-named-export-ignored caught on emitted JavaScript: case 88 line 4600: port "fixed\tfunction Button() { return <button />; }\\u000aconst helper = 1;\\u000aexport { helper as Button };\\u000a", Go "/tmp/adamic-gate/TestMutantsseparate-named-export-ignored120316029/019/structure-react-component-no-separate-named-export-0.tsx:3:1"
+        Go context:
+          no-return-assign  This return statement assigns rather than returns a value it already has, so it does two things at once and the assignment is the one the reader is likeliest to miss. It is usually a `==` typed as `=`, and where it is deliberate it reads as a value being returned rather than as a write happening on the way out. Assign on its own line and return the variable, or wrap the assignment in its own parentheses to say the write was meant.
+        
+        range 643 661 returnAssignment 			643 661
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 88
+        /tmp/adamic-gate/TestMutantsseparate-named-export-ignored120316029/019/structure-react-component-no-separate-named-export-0.tsx:3:1
+          structure/react-component-no-separate-named-export  This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.
+        
+        range 59 87 noSeparateNamedExport 			59 87
+        fixed	function Button() { return <button />; }\u000aconst helper = 1;\u000aexport { helper as Button };\u000a
+--- PASS: TestMutants (2.49s)
+    --- PASS: TestMutants/separate-named-export-ignored (9.56s)
+=== NAME  TestOwnedWitnesses
+    registration_test.go:55: checker compilation phases: load=210.794807ms lower=7.496581811s C=698.090635ms JavaScript=34.57269ms
+    registration_test.go:55: checker native build: 4.588404476s
+    registration_test.go:55: typed runtime time: Go program and lint=59.14569ms native program, lint and recording=71.971399ms
+    registration_test.go:55: typed runtime time: native=71.971399ms
+    registration_test.go:55: typed runtime time: Node=301.995054ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=76.768282ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 1887 bytes
+    registration_test.go:55: checker native build: 9.233652ms
+    registration_test.go:55: typed runtime time: Go program and lint=58.709947ms native program, lint and recording=74.088589ms
+    registration_test.go:55: typed runtime time: native=74.088589ms
+    registration_test.go:55: typed runtime time: Node=308.17815ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=81.586426ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:55: checker native build: 16.010838ms
+    registration_test.go:55: typed runtime time: Go program and lint=57.827093ms native program, lint and recording=88.615156ms
+    registration_test.go:55: typed runtime time: native=88.615156ms
+    registration_test.go:55: typed runtime time: Node=315.301452ms
+    registration_test.go:55: typed runtime time: emitted JavaScript=95.368236ms
+    registration_test.go:55: live Go, native, Node and emitted JavaScript replay identical: 5286 bytes
+    registration_test.go:71: checker native build: 6.626242ms
+    registration_test.go:71: Go, Node, emitted JavaScript, native identical: 449850 bytes
+--- PASS: TestOwnedWitnesses (24.92s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	24.958s

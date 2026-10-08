@@ -1,0 +1,104 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { structureFileContext } from '../../helpers/structure_file_context.a';
+import { reactLikelyComponentName } from '../../helpers/react/react_likely_component_name.a';
+import { project } from '../../helpers/react/projection.a';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { isHookCall } from '../../helpers/react/react_is_hook_call.a';
+import { isHookName } from '../../helpers/react/react_is_hook_name.a';
+import { isNamespacedMember } from '../../helpers/react/namespaced_member.a';
+import { hasJsxOrReactHookCalls } from '../../helpers/slot04_wave20/has_jsx_or_react_hook_calls.a';
+import type { SearchNode } from '../../helpers/slot04_wave20/search_for_jsx_or_hook.a';
+import { message } from './messages.a';
+export class Rule {
+ readonly context: RuleContext;
+ nodes: HelperNode[] = [];
+ components: string[] = [];
+ names: string[] = [];
+ statements: number[] = [];
+ constructor(context: RuleContext) { this.context = context; }
+ searchNode(index: number): SearchNode {
+  if(index < 0) { return {present:false,jsx:false,call:false,isSwitchStatement:false,children:[]}; }
+  const node = this.context.node(index);
+  return {present:true,jsx:['JsxElement','JsxSelfClosingElement','JsxFragment'].includes(node.kind),call:node.kind==='CallExpression',isSwitchStatement:node.kind==='SwitchStatement',children:node.children};
+ }
+ hook(index: number): boolean {
+  const n = this.nodes[index] ?? panic('hook node');
+  return isHookCall({expression:n.expression < 0 ? undefined : n.expression},
+   (i: number): boolean => this.context.kind(i)==='Identifier',
+   (i: number): boolean => this.context.kind(i)==='PropertyAccessExpression',
+   (i: number): string => this.context.node(i).text,isHookName,
+   (i: number,predicate: (name: string) => boolean): boolean => isNamespacedMember(this.nodes,i,predicate));
+ }
+ component(index: number): boolean {
+  return hasJsxOrReactHookCalls(index,(i: number): SearchNode => this.searchNode(i),(i: number): boolean => this.hook(i));
+ }
+ record(name: number, statement: number, body: number): void {
+  if(this.context.kind(name)!=='Identifier') { return; }
+  const text=this.context.node(name).text;
+  this.names.push(text); this.statements.push(statement);
+  if(body>=0 && reactLikelyComponentName(text) && this.component(body)) { this.components.push(text); }
+ }
+ prepare(root: number): void {
+  if(!structureFileContext(this.context.parser.path).isReactFile) { return; }
+  this.nodes=project(this.context.parser.nodes);
+  for(const statement of this.context.node(root).children) {
+   if(this.context.kind(statement)==='FunctionDeclaration') { this.record(this.context.name(statement),statement,statement); }
+   if(this.context.kind(statement)==='VariableStatement') {
+    for(const list of this.context.children(statement,'VariableDeclarationList')) {
+     for(const declaration of this.context.children(list,'VariableDeclaration')) {
+      this.record(this.context.name(declaration),statement,this.context.initializer(declaration));
+     }
+    }
+   }
+  }
+ }
+ repair(index: number, elements: readonly number[]): SuggestionEdit[] {
+  if(this.context.node(index).semantic==='1') { return []; }
+  const edits: SuggestionEdit[] = [this.context.edit(index,'')];
+  const seen: number[] = [];
+  for(const element of elements) {
+   const children=this.context.node(element).children;
+   if(this.context.node(element).semantic==='1' || children.length!==1) { return []; }
+   const key=children[0] ?? -1;
+   if(this.context.kind(key)!=='Identifier') { return []; }
+   const name=this.context.node(key).text;
+   if(!this.components.includes(name)) { return []; }
+   let count=0; let statement=-1;
+   for(let i=0;i<this.names.length;i++) { if(this.names[i]===name) { count++; statement=this.statements[i] ?? -1; } }
+   if(count!==1 || seen.includes(statement)) { return []; }
+   seen.push(statement);
+   if(this.context.has(statement,'ExportKeyword') || this.context.has(statement,'DefaultKeyword')) { return []; }
+   if(this.context.kind(statement)==='VariableStatement') {
+    const list=this.context.children(statement,'VariableDeclarationList')[0] ?? -1;
+    if(list<0 || this.context.children(list,'VariableDeclaration').length!==1) { return []; }
+   }
+   const start=this.context.start(statement);
+   edits.push(new SuggestionEdit(start,start,'export '));
+  }
+  let start=edits[0]?.start ?? 0; let end=edits[0]?.end ?? 0;
+  for(const edit of edits) { if(edit.start<start) {start=edit.start;} if(edit.end>end) {end=edit.end;} }
+  edits.sort((a: SuggestionEdit,b: SuggestionEdit): number => b.start-a.start);
+  let text=this.context.source.slice(start,end);
+  for(const edit of edits) { text=text.slice(0,edit.start-start)+edit.text+text.slice(edit.end-start); }
+  return [new SuggestionEdit(start,end,text)];
+ }
+ visit(index: number): void {
+  if(this.components.length===0 || this.context.children(index,'StringLiteral').length>0) { return; }
+  const clause=this.context.children(index,'NamedExports')[0] ?? -1;
+  if(clause<0) { return; }
+  const elements=this.context.children(clause,'ExportSpecifier');
+  for(const element of elements) {
+   const children=this.context.node(element).children;
+   const key=children[children.length-1] ?? -1;
+   if(this.context.kind(key)!=='Identifier') { continue; }
+   const name=this.context.node(key).text;
+   if(this.components.includes(name)) {
+    this.context.reportNode(index,'structure/react-component-no-separate-named-export','noSeparateNamedExport',message,this.repair(index,elements));
+    return;
+   }
+  }
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

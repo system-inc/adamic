@@ -1,0 +1,13 @@
+{
+  "name": "structure/react-component-no-separate-named-export",
+  "kinds": [
+    "ExportDeclaration"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureReactComponentNoSeparateNamedExport",
+  "upstreamPackage": "structure",
+  "upstreamTest": "Test"
+}

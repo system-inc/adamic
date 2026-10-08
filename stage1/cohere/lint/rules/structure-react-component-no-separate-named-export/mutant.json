@@ -1,0 +1,5 @@
+{
+  "name": "separate-named-export-ignored",
+  "from": "if(this.components.includes(name)) {",
+  "to": "if(false) {"
+}

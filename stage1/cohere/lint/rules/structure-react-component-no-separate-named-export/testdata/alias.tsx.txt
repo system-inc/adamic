@@ -1,0 +1,3 @@
+function Button() { return <button />; }
+const helper = 1;
+export { helper as Button };

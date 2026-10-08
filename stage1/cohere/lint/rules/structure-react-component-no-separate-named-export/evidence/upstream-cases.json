@@ -1,0 +1,467 @@
+[
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\ndeclare const identifier: string;\nexport function useThingRequest(variables: { identifier: string }) {\n    return networkService.useGraphQlQuery(Document, { identifier });\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "export function Panel() {\n    let { label };\n    return label;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "export default function ThingPageRoute() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "export function Panel() {\n    declare const value: unknown;\n    return value;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "export function Panel() {\n    let pending;\n    return pending;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "export function Page() { return null; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "export function Page() { return null; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "export function Page() { return null; }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "declare const Field: { displayName: string };\nlet other;\nexport const value = other;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nexport function useThingRequest() { return networkService.useGraphQlQuery(); }\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\ndeclare const Document: unknown;\nexport function useThingRequest(o?: unknown) { return networkService.useGraphQlQuery(Document, { shorthand }, o); }\ndeclare const shorthand: unknown;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "import { networkService } from './NetworkService.ts';\nlet useThingRequest;\nexport const value = useThingRequest;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/ThingRequest.ts",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/ThingRequest.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/app/thing/page.tsx",
+    "source": "declare const memo: unknown;\nexport const value = 1;\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "const Button = () => <button />, value = 1;\nexport { Button };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 2,
+        "column": 1,
+        "endLine": 2,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not."
+      }
+    ]
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "function Button(): JSX.Element;\nfunction Button() {\n    return <button />;\n}\nexport { Button };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 1,
+        "endLine": 5,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not."
+      }
+    ]
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nconst value = 1;\nexport { value, Button };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 1,
+        "endLine": 5,
+        "endColumn": 26,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not."
+      }
+    ]
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "import { other } from './other';\nfunction Button() {\n    return <button />;\n}\nexport { Button, other };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 5,
+        "column": 1,
+        "endLine": 5,
+        "endColumn": 26,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not."
+      }
+    ]
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nexport { Button };\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 4,
+        "column": 1,
+        "endLine": 4,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "export function Button() {\n    return <button />;\n}\n\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "import React from 'react';\nfunction Button() {\n    React.useEffect(() => {}, []);\n    return null;\n}\nexport { Button };\n",
+    "outcome": "Findings",
+    "findings": [
+      {
+        "line": 6,
+        "column": 1,
+        "endLine": 6,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ]
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nfunction Panel() {\n    return <div />;\n}\nexport { Button, Panel };\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 7,
+        "column": 1,
+        "endLine": 7,
+        "endColumn": 26,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "export function Button() {\n    return <button />;\n}\nexport function Panel() {\n    return <div />;\n}\n\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "const Button = () => <button />;\nexport { Button };\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 2,
+        "column": 1,
+        "endLine": 2,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "export const Button = () => <button />;\n\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "async function Button() {\n    return <button />;\n}\nexport { Button };\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 4,
+        "column": 1,
+        "endLine": 4,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "export async function Button() {\n    return <button />;\n}\n\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export { Button };\nfunction Button() {\n    return <button />;\n}\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 1,
+        "column": 1,
+        "endLine": 1,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "\nexport function Button() {\n    return <button />;\n}\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Button() {\n    return <button />;\n}\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport { PaginationButton } from './PaginationButton';\nexport { PaginationItem } from './PaginationItem';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nfunction build() {\n    return <div />;\n}\nexport { build };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst build = () => <div />;\nexport { build };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/api/Thing.ts",
+    "source": "import React from 'react';\nfunction Button() {\n    React.useEffect(() => {}, []);\n    return null;\n}\nexport { Button };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport * from './Other';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nfunction Build() {\n    return 1;\n}\nexport { Build };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nimport { Button } from './Button';\nexport { Button };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst value = 1;\nexport { value };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\ntype ButtonProperties = { label: string };\nexport type { ButtonProperties };\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "function Button() {\n    return <button />;\n}\nexport { Button } from './Other';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "/** The button. */\nfunction Button() {\n    return <button />;\n}\nexport { Button };\n",
+    "outcome": "Fixed",
+    "findings": [
+      {
+        "line": 5,
+        "column": 1,
+        "endLine": 5,
+        "endColumn": 19,
+        "messageId": "noSeparateNamedExport",
+        "message": "This exports a component declared in the same file from a separate statement. Put the export on the declaration instead. A reader opening the file to find what it offers should see that on the function, not have to hold the whole file in mind and check a list at the bottom, and the list is a second place a rename has to reach: renaming the function and forgetting the export is a build error, renaming it in both and forgetting a consumer is not.",
+        "fix": true
+      }
+    ],
+    "fixedSource": "/** The button. */\nexport function Button() {\n    return <button />;\n}\n\n"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nexport { Button } from './Button';\n",
+    "outcome": "Clean"
+  },
+  {
+    "rule": "structure/react-component-no-separate-named-export",
+    "file": "/repository/source/components/Button.tsx",
+    "source": "export function Panel() {\n    return <div />;\n}\nconst Colors = 'red';\nexport { Colors };\n",
+    "outcome": "Clean"
+  }
+]

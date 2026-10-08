@@ -1,0 +1,4 @@
+export { Button, Panel };
+/** Button */
+async function Button() { return <button />; }
+const Panel = () => <div />;
