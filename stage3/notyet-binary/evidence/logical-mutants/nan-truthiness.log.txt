@@ -1,0 +1,11 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/binary_logical_number_number.a (0.42s)
+        oracle_test.go:761: stdout differs
+            node:   exit 0, stdout "and:0:Infinity:0\nor:17:1\nand:0:-Infinity:1\nor:17:2\nand:NaN:NaN:2\nor:17:3\nand:17:0.058823529411764705:4\nor:Infinity:4\nand:17:0.058823529411764705:5\nor:-Infinity:5\nand:17:0.058823529411764705:6\nor:-3:6\nand:17:0.058823529411764705:7\nor:2:7\nmaybe:undefined:0:NaN:17\n", stderr ""
+            native: exit 0, stdout "and:0:Infinity:0\nor:17:1\nand:0:-Infinity:1\nor:17:2\nand:17:0.058823529411764705:3\nor:NaN:3\nand:17:0.058823529411764705:4\nor:Infinity:4\nand:17:0.058823529411764705:5\nor:-Infinity:5\nand:17:0.058823529411764705:6\nor:-3:6\nand:17:0.058823529411764705:7\nor:2:7\nmaybe:undefined:0:NaN:17\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.438s
+FAIL

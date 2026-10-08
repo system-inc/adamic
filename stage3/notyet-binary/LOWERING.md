@@ -38,3 +38,32 @@ Both exact original-signature replay commands from README were run again after l
 | `binder.ts:1698:21` | `core.ts:656:1`: Refused `overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] &#124; undefined` |
 
 These selected units remain measurement-only; no native or JavaScript output is claimed for the complete tsc project.
+
+## Strict equality across reference representations
+
+The second group covers **60 original `!==` sites**. Each has differently represented references, notably `NodeArray<T>` versus `readonly T[]`. Both operands are boxed into the existing union representation and compared using its existing strict equality: strings by value, references by identity, scalar members by both value and type. Undefined retains its distinct missing value. Nothing is coerced to a number for equality.
+
+`binary_equality_references.a` covers the new object/array comparison with each side independently missing, both missing, distinct references with the same length, and controls for shared array identity. It also pins equal runtime-built strings, unequal strings, scalar type distinctions, NaN, negative zero and union/scalar equality. It passes source Node, both backends and sanitizers.
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/binary_equality' -count=1 -timeout 15m > /tmp/notyet-binary-equality-oracle.log 2>&1
+python3 stage3/notyet-binary/run-equality-mutants.py > /tmp/notyet-binary-equality-mutants.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -timeout 15m -args -update-counts > /tmp/notyet-binary-equality-counts.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/binary_(logical|equality)' -count=1 -timeout 15m > /tmp/notyet-binary-final-oracle.log 2>&1
+go test ./internal/lower -run TestMixedLogicalBoxedNullBoundary -count=1 > /tmp/notyet-binary-final-lower.log 2>&1
+go vet ./internal/lower ./internal/native ./internal/javascript ./internal/ir > /tmp/notyet-binary-final-vet.log 2>&1
+```
+
+Equality oracle passes in 0.462s. The wrong-right-operand normalization mutant and boxed-pointer-equality mutant both exit 1 at source-Node/native stdout comparison. Neither fails compilation. Counts refresh passes in 22.097s and adds only the new equality fixture row. The final seven-fixture uncached oracle passes in 0.979s; the boundary test passes in 0.033s; final vet exits 0 with no output. Mutant logs are preserved with `.log.txt` names under `evidence/`, and both runners restore the source.
+
+## Coverage and remaining work
+
+The two implemented operator families cover **1,262 of 1,452 original sites**: 1,202 logical selections and 60 strict reference inequalities. This is a raw-CSV operator-family count, not a measured net decrease at the newer compiler pin or a count of complete tsc bodies that now compile. Both requested example sites show actual lowering progress to their next named stops.
+
+The remaining **190 sites use `=` as an expression**: 87 reference/reference and 103 number/number. They remain compiler lessons. Returning the right operand without performing the store would silently miscompile. Lowering these needs expression-level stores with their evaluation order and mutation effects represented in freshness, flow and ownership analyses. That separate IR capability was not added here; the original NotYet stops remain. There are no arithmetic operators in these five raw rows, so no arithmetic ToNumber rule was added or claimed.
+
+The existing documented October 7 ruling already admits non-boolean conditions; this unit changes no admission rule. Mixed selection requiring a boxed null distinct from undefined remains the explicit NotYet boundary proven by its mutant. A distinct null tag needs representation work or a ruling on the scope of that representation. No existing design refusal was removed.
+
+No protected orchestration/emitter/native/oracle file was edited. No code was copied from cohere. No whole-package tests or full repository gate were run. The required counts refresh was the named TestCountsAreRecorded test. The reports and lowering groups were pushed separately to `codex/notyet-binary`, with no pull request and no push to main or an area branch.
+
+Delivery main is `6f16a1693ff41bc102c4d9bfac83b6330277c479`, verified against the remote. It is already an ancestor of this branch; the final merge reports `Already up to date.`

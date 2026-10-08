@@ -1,0 +1,30 @@
+interface Sized { readonly length: number; }
+function compare(left: Sized | undefined, right: readonly number[] | undefined): void {
+    console.log(`references:${left === right}:${left !== right}`);
+}
+const array: readonly number[] = [];
+const sized = { length: 0 };
+compare(sized, array);
+compare(sized, undefined);
+compare(undefined, array);
+compare(undefined, undefined);
+function same(left: readonly number[], right: readonly number[]): void {
+    console.log(`identity:${left === right}:${left !== right}`);
+}
+same(array, array);
+same(array, []);
+function values(left: string | number | boolean | undefined, right: string | number | boolean | undefined): void {
+    console.log(`values:${left === right}:${left !== right}`);
+}
+values(['same', 'text'].join('/'), ['same', 'text'].join('/'));
+values(['same', 'text'].join('/'), ['other', 'text'].join('/'));
+values(0, -0);
+values(NaN, NaN);
+values(0, false);
+values(1, true);
+values(false, false);
+values(undefined, undefined);
+values(undefined, false);
+function scalar(left: number | boolean, right: number): void { console.log(`scalar:${left === right}:${left !== right}`); }
+scalar(false, 0);
+scalar(0, -0);

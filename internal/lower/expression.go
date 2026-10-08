@@ -787,8 +787,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			right = fit(right, pair)
 		} else if pair := right.Type(); pair.IsMaybe() && left.Type() == pair.Present() {
 			left = fit(left, pair)
-		} else if left.Type() == ir.Union || right.Type() == ir.Union {
-			// A union against anything: both as unions, compared by member and value.
+		} else if left.Type() == ir.Union || right.Type() == ir.Union || (left.Type().IsReference() && right.Type().IsReference()) {
+			// A union against anything, or differently held references: compare by
+			// member and value. Reference members retain identity, including undefined.
 			left, right = fit(left, ir.Union), fit(right, ir.Union)
 		}
 	}
