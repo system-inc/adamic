@@ -1,0 +1,23 @@
+[
+  {
+    "name": "restore-whole-module-guard",
+    "status": "caught",
+    "test": "^TestModuleInitOrder/map-before-enum$",
+    "catcher": "before enum initialization",
+    "log": "/tmp/stage3-front-3-19-mutants/restore-whole-module-guard.log"
+  },
+  {
+    "name": "remove-direct-enum-proof",
+    "status": "caught",
+    "test": "^TestModuleInitOrder/map-before-enum$",
+    "catcher": "proven enum read retained a readiness check",
+    "log": "/tmp/stage3-front-3-19-mutants/remove-direct-enum-proof.log"
+  },
+  {
+    "name": "erase-enum-readiness",
+    "status": "caught",
+    "test": "^TestEnumInitializationUnknownPinned$",
+    "catcher": "exit codes differ (UBSan null-object access instead of readiness panic)",
+    "log": "/tmp/stage3-front-3-19-mutants/erase-enum-readiness.log"
+  }
+]

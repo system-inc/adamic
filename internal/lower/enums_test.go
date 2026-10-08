@@ -160,3 +160,15 @@ func TestEnumIdentityAcrossModules(t *testing.T) {
 		t.Fatalf("got %v, want closed enum identity refusal", err)
 	}
 }
+
+func TestEarlyEnumCallsLowerWithReadinessChecks(t *testing.T) {
+	for _, source := range []string{
+		"const box = { read: (): number => E.A }; box.read(); enum E { A }",
+		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; alias(); enum E { A }",
+		"function read(): number { return E.A; } let alias = (): number => 1; alias = read; [1].map(alias); enum E { A }",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Fatal(err)
+		}
+	}
+}

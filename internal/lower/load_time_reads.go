@@ -99,5 +99,9 @@ func (l *lowering) proveModuleReads(files []*ast.SourceFile) {
 }
 
 func (l *lowering) checkedModuleRead(node *ast.Node, local int) bool {
-	return !l.provenModuleReads[node] && l.checked(local)
+	// A regular enum has runtime storage even in an acyclic module. Check its
+	// actual read, rather than delaying every construction until all enums exist.
+	symbol := l.symbol(node)
+	enum := symbol != nil && symbol.ValueDeclaration != nil && symbol.ValueDeclaration.Kind == ast.KindEnumDeclaration
+	return !l.provenModuleReads[node] && (l.checked(local) || enum)
 }
