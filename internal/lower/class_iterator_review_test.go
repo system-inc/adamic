@@ -22,3 +22,14 @@ new Closing().first();`)
 		t.Fatalf("want a hidden-return refusal with a concrete-type repair, got %v", err)
 	}
 }
+
+func TestClassIteratorKeysKeepExplicitStringKeysDistinct(t *testing.T) {
+	_, err := lowerSource(t, `const source = { value: 1, [Symbol.iterator]() { return { next() { return { value: 0, done: true }; } }; } };
+class Named { readonly value = 2; readonly __adamic_symbol_iterator = 'visible'; }
+function keys(view: { readonly value: number }): string { return Object.keys(view).join(','); }
+console.log(keys(source)); console.log(keys(new Named()));`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "explicit __adamic_symbol_iterator string key") || !strings.Contains(refused.Fix, "rename the explicit") {
+		t.Fatalf("want a reserved string-key ambiguity refusal with a repair, got %v", err)
+	}
+}

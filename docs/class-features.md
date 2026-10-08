@@ -186,3 +186,40 @@ Final results: class-feature Node/release/ASan/UBSan/leak oracles passed in 19.2
 The diagnostic-only repair was verified with:
 
     go test -count=1 -timeout 30m ./internal/lower > /tmp/adamic-static-lower-green.log 2>&1
+
+
+## Integration review, October 7
+
+The review branch starts at area/compiler a6011578. All fifteen supplied probes were run on that unchanged base against source Node, native release, ASan/UBSan and generated JavaScript before changing their implementation. Findings 103, 102, 105, 104, 107, 108 and 109 still reproduced. Both 106 probes already matched Node in all four modes, so their implementation was left alone and their fixtures were added. The private-literal and empty-spread probes were also correct on the base; they close coverage gaps.
+
+The separate urgent branch codex/class-wrong-output starts at main 74fb6490 and ends at 3978ca14. Main still reproduced all four urgent findings. It carries narrow refusals for 103 (d1049941), 107 (4dfbb087, refined by 8b92c148), 108 (81b1d9f2) and 106 (3978ca14). Each test pins Node's observation and the exact refusal reason and repair. Main lower tests passed in 13.751s and the focused fast oracle passed in 4.002s. These guards are deliberately separate from the area implementations below.
+
+| Finding | Area result | Revert mutant caught by |
+|---|---|---|
+| 103 | Trace super calls and getters through the derived override to its future field; refuse with the complete path and a field-order or constructor repair (bad52dc4). | All three initializer fixtures otherwise lower without the required refusal. Node prints score NaN for the numeric/getter cases and caught TypeError for the string case. |
+| 106 | Skip the code change: both static-private probes already match Node. Add regression fixtures (7b8c5edd). | The shared declaring-owner fallback mutant is held by the private-literal fixture below. |
+| 102 | Resolve a method callee separately from a same-name getter, retaining its receiver (a5b30aec). | classfeat_method_view.a again hits native missingfield and invalid JavaScript closure errors. |
+| 105 | Follow the initializing constructor's static override inside inherited methods and getters (1116a3b7). Diagnose the future static label instead of an internal error. | Removing the analysis accepts classfeat_static_virtual.a without the required initialization refusal. |
+| 104 | Initialize an optional-number setter's aggregate input directly, without a C scalar cast (d2acb6be). | Reverting the cast violates C11 aggregate-cast constraints. A separate valid-C mutant drops the number's presence flag; classfeat_maybe_setter.a then prints undefined instead of 3. The clang diagnostic alone is not counted as runtime mutation proof. |
+| Private-literal gap | Add classfeat_private_literal.a (7b8c5edd). The area's declaring-owner keying replaced the old class-index fallback. | Bypassing owner resolution when instance is nil produces native missingfield and JavaScript seen undefined instead of seen s1. |
+| 107 | Preserve virtual iterator protocol slots and the source subtype of a receiver-returning factory (08209c7d, 1313ca45). | Removing virtual dispatch prints 0,1,2 through the base view; removing subtype refinement loses the accepted subclass-only return fixture. Treating polymorphic this as exact accepts a separately pinned hidden-return refusal. |
+| 108 | Filter hidden literal iterator storage from structural Object.keys views (d688149a). Explicit string keys with the reserved spelling are diagnosed when they make that view ambiguous; copy the desired fields into a fresh plain object or rename the member. | Bypassing filtering exposes __adamic_symbol_iterator in both backends. Disabling the ambiguity guard accepts the pinned unsafe view. |
+| 109 | Use memberKey for computed names and resolve the checker symbol for Symbol.iterator. Represent polymorphic class this through its class constraint (1313ca45). | Restoring Name().Text() panics on each derived-symbol fixture. The fixed override-source fixture prints 300 then 3 in every backend. |
+| 110 | Add iterators_fields_empty_spread.a (43760b26); no implementation change was needed. | Deleting SpreadMaybeUndefined's empty-layout branch prints native 0 instead of Node's 5. |
+
+The new successful fixtures run through the shared Node/native release/ASan/UBSan/JavaScript oracle and leak check. Initializer refusals have separate source-Node and lowering tests. The final measured counts add eleven rows; all 532 pre-review rows are unchanged. Every new fixture has equal allocations and frees.
+
+Setup timing on area/compiler: go 0.084s, clang 0.464s, Node 0.069s, submodules 24.798s, build cache 65.376s, total 65.450s. Setup on main: go 0.037s, clang 0.191s, Node 0.030s, submodules 11.192s, build cache 223.768s, total 223.802s. Both reported nproc 5, with cgroup cpu.max 400000 100000. GOPROXY was https://proxy.golang.org|direct; the environment file is /workspace/adamic-tools/env.sh.
+
+Final verification used logs under /tmp/class-features-review. Native package tests passed in 281.502s after the setter fix. Final lower tests passed in 22.140s, the focused oracle in 15.336s, and the complete counts refresh in 31.254s. The final uncached focused oracle passed in 6.235s. Vet, gofmt and git diff checks were clean. The full repository gate was not rerun; this is the unit's touched-package and filtered-oracle fallback.
+
+    source /workspace/adamic-tools/env.sh
+    go test -count=1 ./internal/lower > /tmp/class-features-review/final-lower.log 2>&1
+    go test -count=1 -timeout 30m ./internal/native > /tmp/class-features-review/104-native.log 2>&1
+    ADAMIC_GATE_UNCACHED=1 go test -count=1 ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(classfeat_|iterators_|class_features|class_inheritance|user_iterators)|TestClassFeaturesReview' > /tmp/class-features-review/final-oracle-uncached.log 2>&1
+    go test -count=1 -timeout 30m ./internal/oracle -run TestCountsAreRecorded -args -update-counts > /tmp/class-features-review/counts-update.log 2>&1
+    go vet ./internal/lower ./internal/native ./internal/oracle > /tmp/class-features-review/final-vet.log 2>&1
+
+The first optional-setter presence mutation changed only the Number-conversion arm and survived; the supplied fixture does not exercise that arm. The corrected mutation changed the actual aggregate incoming presence flag and was caught by native stdout (undefined versus Node 3), with successful C compilation and normal process exit.
+
+Raw unchanged-base observations are /tmp/class-features-review/baseline.json, /tmp/class-features-review/area-iterator-baseline.json and /tmp/class-wrong-output/baseline.json. Mutant logs are in the same directories. All mutations were restored before committing.

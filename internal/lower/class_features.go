@@ -82,14 +82,40 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	}
 	// Structural views preserve the object's storage, including a literal's hidden symbol slot.
 	// Only filter when such a literal can inhabit this view; ordinary Object.keys stays unchanged.
-	filterSymbol := false
-	if !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
+	filterSymbol, explicitSlot := false, false
+	argument := ast.SkipParentheses(arguments[0])
+	fresh := argument.Kind == ast.KindObjectLiteralExpression
+	if fresh {
+		for _, property := range argument.AsObjectLiteralExpression().Properties.Nodes {
+			fresh = fresh && property.Kind != ast.KindSpreadAssignment
+		}
+	}
+	if !fresh && !isClassInstance(proven) && !l.isStaticType(proven) && l.iteratorMember(proven) == nil {
 		modules, err := l.moduleOrder(l.program.Files()[0])
 		if err != nil {
 			return nil, true, err
 		}
 		var visit ast.Visitor
 		visit = func(candidate *ast.Node) bool {
+			// An explicit public string key with this spelling must never be mistaken for
+			// synthetic symbol storage. Class and accessor literals can expose such keys.
+			var members []*ast.Node
+			var shape *checker.Type
+			if candidate.Kind == ast.KindClassDeclaration && candidate.Name() != nil {
+				members = classMembersWithParameters(candidate)
+				shape = l.checker.GetTypeAtLocation(candidate.Name())
+			} else if candidate.Kind == ast.KindObjectLiteralExpression {
+				members = candidate.AsObjectLiteralExpression().Properties.Nodes
+				shape = l.checker.GetTypeAtLocation(candidate)
+			}
+			if shape != nil && l.iterationShapeFits(shape, proven) {
+				for _, member := range members {
+					name := member.Name()
+					if name != nil && (ast.IsIdentifier(name) || name.Kind == ast.KindStringLiteral) && name.Text() == iteratorSlot {
+						explicitSlot = true
+					}
+				}
+			}
 			if candidate.Kind == ast.KindObjectLiteralExpression {
 				shape := l.checker.GetTypeAtLocation(candidate)
 				if l.iteratorMember(shape) != nil && l.iterationShapeFits(shape, proven) {
@@ -101,6 +127,11 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 		for _, module := range modules {
 			module.AsNode().ForEachChild(visit)
 		}
+	}
+	if filterSymbol && explicitSlot {
+		return nil, true, &Refused{Where: l.program.Where(node),
+			What: "a structural Object.keys view mixing symbol storage and an explicit __adamic_symbol_iterator string key (adamic/symbol-key-view)",
+			Fix:  "rename the explicit __adamic_symbol_iterator member, or pass a fresh object containing only the desired string-keyed fields to Object.keys"}
 	}
 	if !isClassInstance(proven) && !l.isStaticType(proven) && !l.hasAccessorStorage(proven) {
 		if l.isLibraryType(proven, "RegExp", "Error") || l.includesUndefined(proven) {
