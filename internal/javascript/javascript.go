@@ -569,6 +569,9 @@ func (e *emitter) value(expression ir.Expression) string {
 		if expression.AlwaysFalse {
 			return "(" + e.value(expression.Value) + ", false)"
 		}
+		if expression.IncludeUndefined {
+			return "(" + e.value(expression.Value) + " == null)"
+		}
 		return "(" + e.value(expression.Value) + " === null)"
 	case ir.NumberConstant:
 		return number(expression.Value)

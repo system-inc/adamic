@@ -61,7 +61,11 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 		return ir.Closure, true
 	case flags&checker.TypeFlagsUnion != 0:
 		if l.includesNull(proven) {
-			// A nullable match result uses NULL. A type also holding undefined needs a tag.
+			// Migrated reference kinds share one sentinel for null, even when undefined joins them.
+			if l.nullSentinelType(proven) {
+				return ir.String, true
+			}
+			// Nullable match results still use NULL until their kind migrates.
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
@@ -506,7 +510,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
-		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
+		if null && !operand.Type().UsesNullSentinel() && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
 				// The lookup still has a presence slot, so typeof can distinguish null from undefined.
@@ -717,7 +721,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		// Strings compare in UTF-16 code unit order, as JavaScript's do.
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
-	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken || l.nullishComparison(node) {
 		_, leftNull := left.(ir.Null)
 		_, rightNull := right.(ir.Null)
 		if leftNull != rightNull {
@@ -732,8 +736,8 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftNull {
 				operand = node.AsBinaryExpression().Right
 			}
-			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !l.includesNull(l.checker.GetTypeAtLocation(operand))})
-			if operator == ast.KindExclamationEqualsEqualsToken {
+			test := ir.Expression(ir.IsNull{Value: value, AlwaysFalse: !value.Type().UsesNullSentinel() && !l.includesNull(l.checker.GetTypeAtLocation(operand)), IncludeUndefined: l.nullishComparison(node)})
+			if operator == ast.KindExclamationEqualsEqualsToken || operator == ast.KindExclamationEqualsToken {
 				test = ir.Unary{Operator: ir.Not, Operand: test}
 			}
 			return test, nil
@@ -759,7 +763,7 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 			if leftUndefined {
 				operand = node.AsBinaryExpression().Right
 			}
-			if l.includesNull(l.checker.GetTypeAtLocation(operand)) {
+			if !value.Type().UsesNullSentinel() && l.includesNull(l.checker.GetTypeAtLocation(operand)) {
 				test = ir.IsNull{Value: value, AlwaysFalse: true}
 			}
 			if operator == ast.KindExclamationEqualsEqualsToken {
@@ -799,6 +803,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 // spelled is a string as + and a template write it: one that may be missing (a null reference) is
 // written "undefined", as JavaScript writes it.
 func (l *lowering) spelled(node *ast.Node, value ir.Expression) ir.Expression {
+	if value.Type().UsesNullSentinel() && l.typeOfNull(node) {
+		return ir.UnionToString{Value: fit(value, ir.Union)}
+	}
 	if value.Type() != ir.String || !(l.includesUndefined(l.checker.GetTypeAtLocation(node)) || l.narrowedAway(ast.SkipParentheses(node))) {
 		return value
 	}

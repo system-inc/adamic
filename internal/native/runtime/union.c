@@ -43,6 +43,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 	if (value == NULL) {
 		return &adamic_string_undefined;
 	}
+	if (adamic_reference_is_sentinel(value)) {
+		return adamic_reference_null_text();
+	}
 	switch (value->kind) {
 	case adamic_kind_number:
 		return adamic_string_from_number(((adamic_number_box *)value)->number);
@@ -60,6 +63,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 }
 
 adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
+	if (adamic_reference_is_sentinel(value)) {
+		return &adamic_typeof_object;
+	}
 	if (value == NULL) {
 		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}
