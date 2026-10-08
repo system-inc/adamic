@@ -1,0 +1,13 @@
+import { Buffer } from 'node:buffer';
+const buffer = Buffer.from([0, 65, 0xc2, 0xa2, 0xe2, 0x82, 0xac, 0xf0, 0x9f, 0x8c, 0x8d, 255]);
+for (const start of [-Infinity, -1, -0, NaN, 0.9, 1.9, 2, 7, 11, 12, 13, Infinity, 4294967297]) {
+    for (const end of [-1, NaN, 0, 1.9, 4, 8, 11, 12, Infinity, 4294967297]) {
+        const utf8 = buffer.toString('utf8', start, end);
+        const utf16 = buffer.toString('utf16le', start, end);
+        console.log(`${start},${end}: ${buffer.toString('hex', start, end)}|${buffer.toString('base64', start, end)}|${Buffer.from(utf8).toString('hex')}|${Buffer.from(utf16, 'utf16le').toString('hex')}`);
+    }
+}
+const pairs = Buffer.from([0x3d, 0xd8, 0x0d, 0xdf, 0, 0xd8, 65, 0]);
+console.log(Buffer.from(pairs.toString('utf16le'), 'utf16le').toString('hex'));
+console.log(Buffer.from(pairs.toString('utf16le', 0, 3), 'utf16le').toString('hex'));
+console.log(`paired point ${pairs.toString('utf16le').codePointAt(0) ?? -1}`);

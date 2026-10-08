@@ -1,0 +1,14 @@
+import { mkdtempSync, rmSync, readFileSync, writeFileSync, openSync, closeSync, writeSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    const path = root + '/file';
+    for (const position of [-Infinity, -2, -1, NaN, Infinity, 0.5, 9223372036854775808]) {
+        writeFileSync(path, '12345');
+        const fd = openSync(path, 'r+');
+        try {
+            console.log(`${position}: ${writeSync(fd, 'A')},${writeSync(fd, '\ud800\0B', position)},${writeSync(fd, 'Z')}`);
+        } finally { closeSync(fd); }
+        console.log(readFileSync(path).toString('hex'));
+    }
+} finally { rmSync(root, {recursive:true, force:true}); }

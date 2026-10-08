@@ -1,0 +1,25 @@
+import { Buffer } from 'node:buffer';
+import { mkdtempSync, rmSync, writeFileSync, readFileSync, openSync, closeSync, readSync, writeSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    const path = root + '/file';
+    writeFileSync(path, 'abcdef');
+    const fd = openSync(path, 'r+');
+    try {
+        const buffer = Buffer.from([255,255,255,255,255,255]);
+        const alias = buffer;
+        console.log(`positioned ${readSync(fd, buffer, 1, 4, 4)} ${alias.toString('hex')}`);
+        console.log(`current ${readSync(fd, buffer, 0, 2, null)} ${buffer.toString('hex')}`);
+        console.log(`rest ${readFileSync(fd, 'utf8')}`);
+        console.log(`eof ${readSync(fd, buffer, 2, 3, null)} ${buffer.toString('hex')}`);
+        console.log(`write ${writeSync(fd, '🌍', 1)}`);
+        console.log(`current-write ${writeSync(fd, 'Z', 0.5)}`);
+        console.log(`zero ${readSync(fd, buffer, 6, 0, null)}`);
+    } finally { closeSync(fd); }
+    console.log(readFileSync(path).toString('hex'));
+    writeFileSync(path, Buffer.from('xyz'));
+    const fd2 = openSync(path, 'a+');
+    try { console.log(`append ${writeSync(fd2, '!', 0)}`); } finally { closeSync(fd2); }
+    console.log(readFileSync(path, 'utf8'));
+} finally { rmSync(root, { recursive: true, force: true }); }

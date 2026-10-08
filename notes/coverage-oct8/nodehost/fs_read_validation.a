@@ -1,0 +1,12 @@
+import { Buffer } from 'node:buffer';
+import { readSync } from 'node:fs';
+function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
+function check(fd: number, size: number, offset: number, length: number, position: number): void {
+    const buffer = size === 0 ? Buffer.from('') : Buffer.from([0, 0]);
+    try { console.log(`${fd},${size},${offset},${length},${position}: ok ${readSync(fd, buffer, offset, length, position)}`); }
+    catch (error) { if (error instanceof Error) { console.log(`${fd},${size},${offset},${length},${position}: ${error.name}|${code(error)}|${error.message}`); } }
+}
+for (const offset of [-1, 0.5, NaN, Infinity, 0, 2, 3, 9007199254740991]) { check(-1, 2, offset, 1, -2); }
+for (const length of [-1, -0.5, NaN, Infinity, 0, 0.5, 1, 2, 3, 4294967296, 4294967297]) { check(-1, 2, 0, length, -1); }
+for (const position of [-2, -1, 0.5, NaN, Infinity, 9007199254740992]) { check(-1, 0, 0, 0, position); check(-1, 0, 0, 1, position); }
+for (const fd of [-1, -0.5, NaN, Infinity, 2147483648, 2147483647]) { check(fd, 2, 0, 0, -1); check(fd, 2, 0, 1, -1); }

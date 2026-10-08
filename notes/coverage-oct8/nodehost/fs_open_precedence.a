@@ -1,0 +1,15 @@
+import { openSync, closeSync, existsSync, mkdtempSync, rmSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+function code(error: unknown): string { return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : ''; }
+const root = mkdtempSync(tmpdir() + '/adamic-nodehost-');
+try {
+    for (const path of ['bad\0path', root + '/missing']) {
+        for (const flag of ['bad', 'r\0', 'r']) {
+            for (const mode of [-1, 0.5, NaN, Infinity, 4294967296]) {
+                try { const fd = openSync(path, flag, mode); closeSync(fd); console.log('opened'); }
+                catch(error) { if(error instanceof Error) console.log(`${path === 'bad\0path' ? 'nul' : 'missing'},${flag.replace('\0','<nul>')},${mode}: ${error.name}|${code(error)}|${error.message.replace(root, '<root>')}`); }
+            }
+        }
+    }
+    console.log(`exists ${existsSync('bad\0path')}`);
+} finally { rmSync(root, {recursive:true, force:true}); }

@@ -1,0 +1,16 @@
+import { Buffer } from 'node:buffer';
+function make(seed: number): Buffer { return Buffer.from(`item-${seed}-🌍`); }
+function copy(seed: number): Buffer { return Buffer.from(make(seed)); }
+let total = 0;
+for (let seed = 0; seed < 80; seed++) {
+    let original = make(seed);
+    const alias = original;
+    const independent = Buffer.from(original);
+    const saved = original.toString('utf8');
+    original = copy(seed + 1);
+    alias[0] = seed + 256;
+    const closure = () => independent.toString('utf8');
+    console.log(`${seed}: ${alias.toString('hex')}|${closure()}|${saved}|${original.toString('hex')}`);
+    total += independent.length;
+}
+console.log(`total ${total}`);
