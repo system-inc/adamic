@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/internal/lower/testdata/predicates/parser_assert_defined.a:3:90: Adamic 0.1 refuses a type predicate whose return is not proven (normal return has not narrowed value to NonNullable<T>); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)
+exit status 1

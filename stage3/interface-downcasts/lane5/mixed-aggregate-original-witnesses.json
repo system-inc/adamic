@@ -1,0 +1,78 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "basis": "original declarations and read spans; reduced adjacent helpers and data carriers",
+  "members": [
+    {
+      "rank": 6,
+      "type": "NodeFactory",
+      "field": "createPropertyAccessExpression",
+      "candidateReads": 119,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 270,
+        "column": 13
+      },
+      "read": "factory.createPropertyAccessExpression",
+      "call": "factory.createPropertyAccessExpression(factory.createIdentifier(\"obj\"), elementName.name)",
+      "utf16Start": 10432,
+      "utf16End": 10470,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;",
+      "declarationLine": 8945
+    },
+    {
+      "rank": 26,
+      "type": "NodeFactory",
+      "field": "createPropertyAssignment",
+      "candidateReads": 56,
+      "witness": {
+        "file": "src/compiler/factory/nodeConverters.ts",
+        "line": 126,
+        "column": 53
+      },
+      "read": "factory.createPropertyAssignment",
+      "call": "factory.createPropertyAssignment(element.propertyName, element.initializer ? factory.createAssignment(expression, element.initializer) : expression)",
+      "utf16Start": 4501,
+      "utf16End": 4533,
+      "fileSha256": "3d5979059f70d4c381bbd5998181441dd6aaa7e15f6564a8f97d446ad85b041d",
+      "declaration": "createPropertyAssignment(name: string | PropertyName, initializer: Expression): PropertyAssignment;",
+      "declarationLine": 9270
+    },
+    {
+      "rank": 50,
+      "type": "NodeFactory",
+      "field": "createElementAccessExpression",
+      "candidateReads": 33,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 269,
+        "column": 13
+      },
+      "read": "factory.createElementAccessExpression",
+      "call": "factory.createElementAccessExpression(factory.createIdentifier(\"obj\"), elementName.name)",
+      "utf16Start": 10328,
+      "utf16End": 10365,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "createElementAccessExpression(expression: Expression, index: number | Expression): ElementAccessExpression;",
+      "declarationLine": 8949
+    },
+    {
+      "rank": 53,
+      "type": "NodeFactory",
+      "field": "createNumericLiteral",
+      "candidateReads": 32,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 10949,
+        "column": 89
+      },
+      "read": "factory.createNumericLiteral",
+      "call": "factory.createNumericLiteral(+name)",
+      "utf16Start": 438317,
+      "utf16End": 438345,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declaration": "createNumericLiteral(value: string | number, numericLiteralFlags?: TokenFlags): NumericLiteral;",
+      "declarationLine": 8743
+    }
+  ]
+}

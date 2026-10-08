@@ -1,0 +1,27 @@
+{
+  "before_counts": {
+    "NotYet": 1005,
+    "Refused": 2651,
+    "SkippedDependency": 25,
+    "error": 1,
+    "panic": 3
+  },
+  "after_counts": {
+    "NotYet": 1006,
+    "Refused": 2673,
+    "SkippedDependency": 25,
+    "error": 1,
+    "panic": 0
+  },
+  "before_family_counts": {
+    "predicate_declarations": 518,
+    "predicate_arguments": 451,
+    "checked_view_fields": 246
+  },
+  "after_family_counts": {
+    "predicate_declarations": 519,
+    "predicate_arguments": 454,
+    "checked_view_fields": 246
+  }
+}
+panic delta audit passed: original six baselines unchanged, source and eligibility unchanged, three panics removed, emitter refusal preserved

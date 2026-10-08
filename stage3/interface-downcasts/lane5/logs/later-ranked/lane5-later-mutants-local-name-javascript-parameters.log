@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.43s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/local-name/wrong-members (0.42s)
+        checked_views_callable_later_ranked_test.go:16: gate cache node hit
+        checked_views_callable_later_ranked_test.go:36: gate cache node miss
+        checked_views_callable_later_ranked_test.go:56: backend2 exit 0 stdout "3\n" stderr "" want "getLocalName" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.getLocalName expected (node: Declaration, allowComments?: boolean | undefined, allowSourceMaps?: boolean | undefined, ignoreAssignedName?: boolean | undefined) => Identifier, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.435s
+FAIL

@@ -1,0 +1,8 @@
+function observe(mode: number): void {
+ const cells = new Array<string>(5);
+ if (mode >= 0) { cells[mode] = `word${mode}`; }
+ if (mode === 1) { cells[3] = "second"; }
+ const widened: (string | null | undefined)[] = cells;
+ console.log(`${widened.includes(null)}:${widened.includes(undefined)}:${widened.indexOf(null)}`);
+}
+observe(-1); observe(0); observe(1); observe(2); observe(4);

@@ -53,6 +53,9 @@ func cProgram(program *ir.Program, handler int) string {
 		globals = true
 		fmt.Fprintf(&builder, "static %s %s = %s;\n", cType(local.Type), emitter.localName(index), zero(local.Type))
 		fmt.Fprintf(&builder, "static bool %s = false;\n", readyName(index))
+		if local.Uninitialized {
+			fmt.Fprintf(&builder, "static bool %s_declared = false;\n", readyName(index))
+		}
 	}
 	if globals {
 		builder.WriteString("\n")
@@ -81,7 +84,7 @@ func cProgram(program *ir.Program, handler int) string {
 		emitter.releaseGlobals()
 	}
 	bodies.WriteString(emitter.out.String())
-	bodies.WriteString("\treturn 0;\n}\n")
+	bodies.WriteString("\treturn adamic_process_status();\n}\n")
 	if handler >= 0 {
 		bodies.WriteString(emitter.requestABI(handler))
 	}

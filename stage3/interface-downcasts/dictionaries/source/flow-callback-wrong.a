@@ -1,0 +1,9 @@
+interface Entry { readonly name: string; }
+interface Table { readonly [key: string]: Entry | undefined; }
+interface Base { readonly kind: 'Table'; }
+interface Holder extends Base { readonly symbols: Table; }
+function invoke(table:Table,fn:(table:Table)=>void):void {fn(table);}
+const payload={kind:'Table' as const,symbols:{item:{name:42}}};
+const base:Base=payload;
+const view=base as Holder;
+invoke(view.symbols,table=>{const entry=table['item'];if(entry!==undefined) console.log(`${entry.name}`);});

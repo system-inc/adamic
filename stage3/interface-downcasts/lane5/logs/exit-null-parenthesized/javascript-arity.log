@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.10s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/system-exit/wrong-arity (0.38s)
+        checked_views_callable_later_ranked_test.go:22: gate cache node hit
+        checked_views_callable_later_ranked_test.go:42: gate cache node miss
+        checked_views_callable_later_ranked_test.go:62: backend2 exit 0 stdout "9\n" stderr "" want "exit" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: system.exit expected (exitCode?: number | undefined) => void, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/null/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:22: gate cache node hit
+        checked_views_callable_later_ranked_test.go:42: gate cache node miss
+        checked_views_callable_later_ranked_test.go:62: backend2 exit 0 stdout "9\n" stderr "" want "createNull" and "found function with arity 1"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createNull expected () => NullLiteral, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/parenthesized/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:22: gate cache node hit
+        checked_views_callable_later_ranked_test.go:42: gate cache node miss
+        checked_views_callable_later_ranked_test.go:62: backend2 exit 0 stdout "9\n" stderr "" want "createParenthesizedExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createParenthesizedExpression expected (expression: Expression) => ParenthesizedExpression, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.106s
+FAIL

@@ -1,0 +1,170 @@
+--- FAIL: TestLivenessHoldsOnEveryPath (0.69s)
+    --- FAIL: TestLivenessHoldsOnEveryPath/programs (0.76s)
+        --- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/require_perf_hooks.a (0.61s)
+panic: Unhandled case in Node.Text: *ast.BindingPattern [recovered, repanicked]
+
+goroutine 34 [running]:
+testing.tRunner.func1.2({0x1ab0120, 0x2add73800f50})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1ab0120?, 0x2add73800f50?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x2add70d70188?)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add6fbfa680)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:74 +0x1ca
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2add7062af18?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add70610e80)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0x409dbd?, 0xf9e?)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x7f25405684e8?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add7063e1e0)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x11745c0?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add705ff800)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*TryStatement).ForEachChild(0x2add705d5e00, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1436 +0x34
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x28?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8728 +0x1412
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add705d5e00)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2add70853c28?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add705ff8c0)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*IfStatement).ForEachChild(0x2add705310d8, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:844 +0x63
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8702 +0x1092
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add705310d8)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x0?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add70635508)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*FunctionDeclaration).ForEachChild(0x2add6f60b3f0, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:2028 +0x18a
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2add73814988?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8752 +0x14b2
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses.func1(0x2add6f60b3f0)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:105 +0x4bc
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x2add70648708, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x2add737d6400?, 0x2add72b21128)
+	/tmp/views-integration-predicate-parent/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.(*lowering).viewCallableFieldUses(0x2add737d6400, 0x2add70642000, 0x2add7289cc00, 0x2add70853c28)
+	/tmp/views-integration-predicate-parent/internal/lower/view_callables.go:109 +0x1ee
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract(0x2add737d6400, 0x2add70642000, 0x2add7289cc00)
+	/tmp/views-integration-predicate-parent/internal/lower/view_contracts.go:120 +0x109f
+github.com/system-inc/adamic/internal/lower.(*lowering).viewContract(0x2add737d6400, 0x2add70642000, 0x2add7289cc00)
+	/tmp/views-integration-predicate-parent/internal/lower/view_lazy.go:26 +0x207
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract.func1(...)
+	/tmp/views-integration-predicate-parent/internal/lower/view_contracts.go:37
+github.com/system-inc/adamic/internal/lower.(*lowering).strictViewContract(0x2add737d6400, 0x2add70642000, 0x2add6f9c8480)
+	/tmp/views-integration-predicate-parent/internal/lower/view_contracts.go:113 +0x1032
+github.com/system-inc/adamic/internal/lower.(*lowering).viewContract(0x2add737d6400, 0x2add70642000, 0x2add6f9c8480)
+	/tmp/views-integration-predicate-parent/internal/lower/view_lazy.go:26 +0x207
+github.com/system-inc/adamic/internal/lower.(*lowering).slotContract(0x2add737d6400, 0x2add70642000, 0x2add6f9c8480)
+	/tmp/views-integration-predicate-parent/internal/lower/view_writes.go:34 +0x1ef
+github.com/system-inc/adamic/internal/lower.(*lowering).objectLiteral(0x2add737d6400, 0x2add70642000)
+	/tmp/views-integration-predicate-parent/internal/lower/object.go:119 +0x15ce
+github.com/system-inc/adamic/internal/lower.(*lowering).uncheckedValue(0x2add737d6400, 0x2add70642000?)
+	/tmp/views-integration-predicate-parent/internal/lower/expression.go:617 +0xb3b
+github.com/system-inc/adamic/internal/lower.(*lowering).enumNeverValue(0x2add737d6400, 0x2add70642000)
+	/tmp/views-integration-predicate-parent/internal/lower/expression.go:445 +0x6b
+github.com/system-inc/adamic/internal/lower.(*lowering).value(0x2add737d6400, 0x2add70642000)
+	/tmp/views-integration-predicate-parent/internal/lower/expression.go:434 +0x127
+github.com/system-inc/adamic/internal/lower.(*lowering).expression(0x2add737d6400, 0x2add70642000)
+	/tmp/views-integration-predicate-parent/internal/lower/expression.go:194 +0x8c
+github.com/system-inc/adamic/internal/lower.(*lowering).returnStatement(0x2add737d6400, 0x1c53080?)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:196 +0x167
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add705d9bd8)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:55 +0x2d8
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2add737d6400, {0x2add70610e50, 0x1, 0x2add737d6400?})
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add706327e0)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:61 +0x70
+github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement(0x2add737d6400, 0x48dc46?)
+	/tmp/views-integration-predicate-parent/internal/lower/control.go:15 +0x6f
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add70531080)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:67 +0x157
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2add737d6400, {0x2add70610e58, 0x2, 0x1a40d68?})
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).tryStatement(0x2add737d6400, 0x2add705d5e00)
+	/tmp/views-integration-predicate-parent/internal/lower/exceptions.go:64 +0xaa
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add705d5e00)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:101 +0x31c
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2add737d6400, {0x2add70610e68, 0x1, 0x2add737d6400?})
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add705ff8c0)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:61 +0x70
+github.com/system-inc/adamic/internal/lower.(*lowering).ifStatement(0x2add737d6400, 0x2?)
+	/tmp/views-integration-predicate-parent/internal/lower/control.go:15 +0x6f
+github.com/system-inc/adamic/internal/lower.(*lowering).statement(0x2add737d6400, 0x2add705310d8)
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:67 +0x157
+github.com/system-inc/adamic/internal/lower.(*lowering).statements(0x2add737d6400, {0x2add70613308, 0x3, 0xbc6b89?})
+	/tmp/views-integration-predicate-parent/internal/lower/statements.go:17 +0xd0
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerBody(0x2add737d6400, 0x1, 0x2add6f60b3f0, 0xffffffffffffffff, {0x1c53080, 0x0, 0x2add72b23450?}, {0x1c53080, 0x0, 0x0})
+	/tmp/views-integration-predicate-parent/internal/lower/functions.go:231 +0x1545
+github.com/system-inc/adamic/internal/lower.(*lowering).lowerFunction(0x2add737d6400, 0x1, 0x2add6f60b3f0, 0xffffffffffffffff)
+	/tmp/views-integration-predicate-parent/internal/lower/functions.go:55 +0x17e
+github.com/system-inc/adamic/internal/lower.(*lowering).functionBody(0x2add737d6400, 0x2add6f60b3f0)
+	/tmp/views-integration-predicate-parent/internal/lower/functions.go:12 +0x65
+github.com/system-inc/adamic/internal/lower.(*lowering).declareModule(0x2add737d6400, {0x2add73647440, 0xc, 0x2add70648708?})
+	/tmp/views-integration-predicate-parent/internal/lower/modules.go:174 +0xa68
+github.com/system-inc/adamic/internal/lower.Lower({0x1b69f80?, 0x1c53080?}, 0x2add6f105e90)
+	/tmp/views-integration-predicate-parent/internal/lower/lower.go:52 +0x4c5
+github.com/system-inc/adamic/internal/flow.lowered(0x2add6f2a8008, {0x2add6f37cba0, 0x27})
+	/tmp/views-integration-predicate-parent/internal/flow/flow_test.go:78 +0x114
+github.com/system-inc/adamic/internal/flow.traced(0x2add6f2a8008, {0x2add6f37cba0, 0x27})
+	/tmp/views-integration-predicate-parent/internal/flow/trace_test.go:140 +0xe5
+github.com/system-inc/adamic/internal/flow.TestLivenessHoldsOnEveryPath.func1.1(0x2add6f2a8008)
+	/tmp/views-integration-predicate-parent/internal/flow/trace_test.go:387 +0x71
+testing.tRunner(0x2add6f2a8008, 0x2add6f57e1e0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 22
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/flow	0.739s
+FAIL

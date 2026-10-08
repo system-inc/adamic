@@ -1,0 +1,17 @@
+import type { SymbolTracker } from 'original-tsc-types';
+interface Base { readonly moduleResolverHost?: object | string }
+function unused(): never { throw new Error('unused host method'); }
+const host = {
+ useCaseSensitiveFileNames: unused, fileExists: unused, getCurrentDirectory: unused,
+ redirectTargetsMap: new Map<string, readonly string[]>(),
+ getRedirectFromSourceFile: unused, isSourceOfProjectReferenceRedirect: unused,
+ getFileIncludeReasons: unused, getCommonSourceDirectory: unused,
+ getDefaultResolutionModeForFile: unused, getModeForResolutionAtIndex: unused,
+};
+function read(tracker: SymbolTracker | undefined): boolean {
+ const host = tracker?.moduleResolverHost;
+ return host !== undefined;
+}
+const actual = { moduleResolverHost: host };
+const base: Base = actual;
+console.log(`${read(base as SymbolTracker)}`);

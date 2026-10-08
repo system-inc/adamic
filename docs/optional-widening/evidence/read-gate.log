@@ -1,0 +1,10 @@
+ok  	github.com/system-inc/adamic/internal/lower	29.673s
+--- FAIL: TestFixtures (2.95s)
+    --- FAIL: TestFixtures/assertions (0.00s)
+        --- FAIL: TestFixtures/assertions/14_structural_cache.a (0.51s)
+            --- FAIL: TestFixtures/assertions/14_structural_cache.a/stage0 (0.00s)
+                fixtures_test.go:333: gap changed: update status.json and check the native output; got {Outcome:NotYet What:stage3/fixtures/assertions/14_structural_cache.a:11:16: stage 0 can't lower an ElementAccessExpression yet}; recorded {Outcome:NotYet What:stage3/fixtures/assertions/14_structural_cache.a:11:17: stage 0 can't lower an empty structural object field in a checked view yet}
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/fixtures	21.566s
+ok  	github.com/system-inc/adamic/internal/oracle	291.873s
+FAIL

@@ -1,0 +1,9 @@
+reference-source-contract: caught by native-array-reference-write; /tmp/adamic-lane2-array-search-mutants/reference-source-contract.log
+javascript-reference-source-contract: caught by native-array-reference-write; /tmp/adamic-lane2-array-search-mutants/javascript-reference-source-contract.log
+search-contract: caught by native-array-search-bad; /tmp/adamic-lane2-array-search-mutants/search-contract.log
+search-literal: caught by native-array-search-literal; /tmp/adamic-lane2-array-search-mutants/search-literal.log
+search-lazy-stop: caught by native-array-search-lazy; /tmp/adamic-lane2-array-search-mutants/search-lazy-stop.log
+search-same-value-zero: caught by native-array-search; /tmp/adamic-lane2-array-search-mutants/search-same-value-zero.log
+search-negative-bound: caught by native-array-search; /tmp/adamic-lane2-array-search-mutants/search-negative-bound.log
+search-identity: caught by native-array-search-object; /tmp/adamic-lane2-array-search-mutants/search-identity.log
+javascript-negative-bound: caught by native-array-search; /tmp/adamic-lane2-array-search-mutants/javascript-negative-bound.log

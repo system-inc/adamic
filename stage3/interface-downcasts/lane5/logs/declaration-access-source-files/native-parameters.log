@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.88s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/declaration-name/wrong-members (0.47s)
+        checked_views_callable_later_ranked_test.go:29: gate cache node miss
+        checked_views_callable_later_ranked_test.go:49: gate cache node miss
+        checked_views_callable_later_ranked_test.go:69: backend0 exit 0 stdout "3\n" stderr "" want "getDeclarationName" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/left-access/wrong-members (0.41s)
+        checked_views_callable_later_ranked_test.go:29: gate cache node miss
+        checked_views_callable_later_ranked_test.go:49: gate cache node miss
+        checked_views_callable_later_ranked_test.go:69: backend0 exit 0 stdout "3\n" stderr "" want "parenthesizeLeftSideOfAccess" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.892s
+FAIL

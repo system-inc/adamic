@@ -1,0 +1,31 @@
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -119,7 +119,7 @@
+ 			child := l.result.ViewContracts[field.Contract-1]
+ 			tagged = tagged || !field.Optional && child.Kind == ir.ViewScalar && len(child.Allowed) != 0
+ 		}
+-		if !tagged {
++		if !tagged && !l.supportsUntaggedRead(contract) {
+ 			contract.Unsupported = "untagged object union"
+ 		}
+ 	}
+--- a/internal/native/view_unions.go
++++ b/internal/native/view_unions.go
+@@ -17,6 +17,7 @@
+ 	if contract.Kind != ir.ViewUnion {
+ 		return
+ 	}
++	if untaggedObjectUnion(e.program.ViewContracts, contract) { e.viewUntaggedObjectUnion(property, object); return }
+ 	for _, field := range contract.Fields {
+ 		tag := e.program.ViewContracts[int(field.Contract)-1]
+ 		if tag.Kind != ir.ViewScalar || len(tag.Allowed) == 0 {
+--- a/internal/javascript/view_unions.go
++++ b/internal/javascript/view_unions.go
+@@ -16,6 +16,7 @@
+ 	if contract.Kind != ir.ViewUnion {
+ 		return value
+ 	}
++	if untaggedObjectUnion(e.program.ViewContracts, contract) { return e.viewUntaggedObjectUnion(property, value) }
+ 	for _, field := range contract.Fields {
+ 		tag := e.program.ViewContracts[int(field.Contract)-1]
+ 		if tag.Kind != ir.ViewScalar || len(tag.Allowed) == 0 {

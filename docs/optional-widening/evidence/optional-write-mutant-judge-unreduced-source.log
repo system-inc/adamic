@@ -1,0 +1,5 @@
+--- FAIL: TestOptionalWideningReducedSource (0.03s)
+    optional_widening_test.go:171: reduced inhabited source needs no optional view: map[id:true]
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.046s
+FAIL

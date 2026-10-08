@@ -1,0 +1,38 @@
+interface Base { readonly kind: 'resolved' | 'template' | 'tuple-type' | 'class' | 'class-expression' | 'property' | 'method' | 'jsx-attributes' | 'jsx-attribute' | 'jsx-spread' | 'identifier' | 'named' | 'parameter' | 'jsdoc' | 'tag' | 'function'; }
+interface Range { readonly pos: number; readonly end: number; }
+interface NodeArray<T> extends ReadonlyArray<T>, Range { readonly hasTrailingComma: boolean; }
+interface Identifier extends Base { readonly kind: 'identifier'; readonly text: string; }
+interface Symbol { readonly escapedName: string; }
+interface Signature { declaration?: Base; parameters: readonly Symbol[]; minArgumentCount: number; }
+interface ResolvedType extends Base { readonly kind: 'resolved'; callSignatures: readonly Signature[]; constructSignatures: readonly Signature[]; }
+interface Type { readonly flags: number; }
+interface TemplateLiteralType extends Base { readonly kind: 'template'; texts: readonly string[]; types: readonly Type[]; }
+interface NamedTupleMember extends Base { readonly kind: 'named'; readonly name: Identifier; }
+interface ParameterDeclaration extends Base { readonly kind: 'parameter'; readonly name: Identifier; }
+interface TupleType extends Base { readonly kind: 'tuple-type'; elementFlags: readonly number[]; minLength: number; labeledElementDeclarations?: readonly (NamedTupleMember | ParameterDeclaration | undefined)[]; }
+interface ClassElement extends Base { readonly kind: 'property' | 'method'; readonly name: Identifier; }
+interface JSDocTag extends Base { readonly kind: 'tag'; readonly tagName: Identifier; }
+interface JSDoc extends Base { readonly kind: 'jsdoc'; readonly parent: HasJSDoc; readonly comment?: string; }
+interface JSDocArray extends Array<JSDoc> { jsDocCache?: readonly JSDocTag[]; }
+interface ClassLikeDeclarationBase extends Base { readonly name?: Identifier; readonly members: NodeArray<ClassElement>; jsDoc?: JSDocArray; }
+interface ClassDeclaration extends ClassLikeDeclarationBase { readonly kind: 'class'; }
+interface ClassExpression extends ClassLikeDeclarationBase { readonly kind: 'class-expression'; }
+interface FunctionDeclaration extends Base { readonly kind: 'function'; readonly name?: Identifier; jsDoc?: JSDocArray; }
+type HasJSDoc = ClassDeclaration | ClassExpression | FunctionDeclaration;
+interface JsxAttribute extends Base { readonly kind: 'jsx-attribute'; readonly name: Identifier; }
+interface JsxSpreadAttribute extends Base { readonly kind: 'jsx-spread'; readonly expression: Identifier; }
+type JsxAttributeLike = JsxAttribute | JsxSpreadAttribute;
+interface JsxAttributes extends Base { readonly kind: 'jsx-attributes'; readonly properties: NodeArray<JsxAttributeLike>; }
+function resolved(type: Base): ResolvedType { return type as ResolvedType; }
+function template(type: Base): TemplateLiteralType { return type as TemplateLiteralType; }
+function tupleType(type: Base): TupleType { return type as TupleType; }
+function classDeclaration(node: Base): ClassDeclaration { return node as ClassDeclaration; }
+function classExpression(node: Base): ClassExpression { return node as ClassExpression; }
+function jsxAttributes(node: Base): JsxAttributes { return node as JsxAttributes; }
+function jsDoc(node: Base): JSDoc { return node as JSDoc; }
+function memberNames(node: ClassDeclaration | ClassExpression): string { return node.members.map(member => member.name.text).join(','); }
+const raw = {kind: 'class' as const, members: Object.assign([{kind: 'property' as const, name: {kind: 'identifier' as const, text: 'size'}}, {kind: 'method' as const, name: {kind: 'identifier' as const, text: 'grow'}}], {pos: 0, end: 2, hasTrailingComma: false})};
+const members = classDeclaration(raw).members;
+let methods = 0;
+for (const member of members) { if (member.kind === 'method') methods++; }
+console.log(`${members.length}:${methods}:${members[0]!.name.text}`);

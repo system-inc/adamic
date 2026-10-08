@@ -1,0 +1,6 @@
+interface Base{readonly kind:'Storage'}
+interface Holder extends Base{readonly table:{readonly [key:string]:string|number|boolean}}
+const table:Record<string,{readonly name:string}>={item:{name:'name'}};
+const payload={kind:'Storage' as const,table};
+const base:Base=payload; const view=base as Holder;
+console.log(typeof view.table['item']);

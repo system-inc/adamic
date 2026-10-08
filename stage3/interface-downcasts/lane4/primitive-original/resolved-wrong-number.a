@@ -1,0 +1,8 @@
+import type { Resolved } from 'original-tsc-private';
+interface Base { readonly kind: 'box' | 'other'; }
+interface Carrier extends Base { readonly kind: 'box'; readonly child: Resolved; }
+function helper(value: Resolved): void { console.log(String(value.originalPath)); }
+const raw = {kind: 'box' as const, child: {originalPath: 42}};
+const base: Base = raw;
+const carrier = base as Carrier;
+helper(carrier.child);

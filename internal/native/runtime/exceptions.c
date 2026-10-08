@@ -18,6 +18,9 @@ adamic_object *adamic_error_new(adamic_string *message) {
 	adamic_object *error = adamic_object_new(&error_shape);
 	error->slots[0].reference = adamic_retain(&error_name);
 	error->slots[1].reference = adamic_retain(message);
+	// Producer evidence: Error owns these strings; optional code is absent.
+	adamic_object_field_types(error)[0] = 3;
+	adamic_object_field_types(error)[1] = 3;
 	return error;
 }
 

@@ -1,0 +1,8 @@
+=== RUN   TestSharedArrayContractAdapter
+=== RUN   TestSharedArrayContractAdapter/type_Target_=_unknown[];
+    view_array_adapter_test.go:39: unknown element was certified
+--- FAIL: TestSharedArrayContractAdapter (0.03s)
+    --- FAIL: TestSharedArrayContractAdapter/type_Target_=_unknown[]; (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.032s
+FAIL

@@ -1,0 +1,72 @@
+#ifndef ADAMIC_NODE_FS_WASI_H
+#define ADAMIC_NODE_FS_WASI_H
+
+#ifdef ADAMIC_TARGET_WASI
+#include <fcntl.h>
+#include <time.h>
+// wasi-libc normalizes dot components before looking up a path. Resolve the
+// parent first, so a symlink before '..' is followed in kernel order. Keep the
+// leaf unchanged: unlink/lstat must not follow it, and creation may name a leaf
+// that does not exist. Original spellings stay available for Node error text.
+static inline char *adamic_node_fs_wasi_path(const char *name) {
+    if (name[0] == 0) { errno = ENOENT; return NULL; }
+    const char *slash = strrchr(name, '/');
+    char *parent;
+    const char *leaf = slash == NULL ? name : slash + 1;
+    if (slash == NULL) { parent = realpath(".", NULL); }
+    else {
+        size_t length = (size_t)(slash - name);
+        char *prefix = malloc(length + 2);
+        if (prefix == NULL) { errno = ENOMEM; return NULL; }
+        if (length == 0) { prefix[length++] = '/'; }
+        else { memcpy(prefix, name, length); }
+        prefix[length] = 0;
+        parent = realpath(prefix, NULL);
+        int error = errno; free(prefix); errno = error;
+    }
+    if (parent == NULL) { return NULL; }
+    struct stat information;
+    if (stat(parent, &information) != 0) {
+        int error = errno; free(parent); errno = error; return NULL;
+    }
+    if (!S_ISDIR(information.st_mode)) { free(parent); errno = ENOTDIR; return NULL; }
+    size_t length = strlen(parent), rest = strlen(leaf);
+    char *resolved = malloc(length + rest + 2);
+    if (resolved == NULL) { free(parent); errno = ENOMEM; return NULL; }
+    memcpy(resolved, parent, length); resolved[length] = '/';
+    memcpy(resolved + length + 1, leaf, rest + 1); free(parent);
+    return resolved;
+}
+
+#define ADAMIC_WASI_PATH_OPERATION(name, parameters, arguments) \
+    static inline int adamic_node_wasi_##name parameters { \
+        char *resolved = adamic_node_fs_wasi_path(path); \
+        if (resolved == NULL) { return -1; } \
+        int result = name arguments; \
+        int error = errno; free(resolved); errno = error; return result; \
+    }
+ADAMIC_WASI_PATH_OPERATION(stat, (const char *path, struct stat *info), (resolved, info))
+ADAMIC_WASI_PATH_OPERATION(lstat, (const char *path, struct stat *info), (resolved, info))
+ADAMIC_WASI_PATH_OPERATION(mkdir, (const char *path, mode_t mode), (resolved, mode))
+ADAMIC_WASI_PATH_OPERATION(unlink, (const char *path), (resolved))
+ADAMIC_WASI_PATH_OPERATION(rmdir, (const char *path), (resolved))
+ADAMIC_WASI_PATH_OPERATION(open, (const char *path, int flags, mode_t mode), (resolved, flags, mode))
+ADAMIC_WASI_PATH_OPERATION(utimensat, (int fd, const char *path, const struct timespec times[2], int flags), (fd, resolved, times, flags))
+#undef ADAMIC_WASI_PATH_OPERATION
+
+static inline DIR *adamic_node_wasi_opendir(const char *path) {
+    char *resolved = adamic_node_fs_wasi_path(path);
+    if (resolved == NULL) { return NULL; }
+    DIR *result = opendir(resolved);
+    int error = errno; free(resolved); errno = error; return result;
+}
+#define stat(...) adamic_node_wasi_stat(__VA_ARGS__)
+#define lstat(...) adamic_node_wasi_lstat(__VA_ARGS__)
+#define mkdir(...) adamic_node_wasi_mkdir(__VA_ARGS__)
+#define unlink(...) adamic_node_wasi_unlink(__VA_ARGS__)
+#define rmdir(...) adamic_node_wasi_rmdir(__VA_ARGS__)
+#define open(...) adamic_node_wasi_open(__VA_ARGS__)
+#define utimensat(...) adamic_node_wasi_utimensat(__VA_ARGS__)
+#define opendir(...) adamic_node_wasi_opendir(__VA_ARGS__)
+#endif
+#endif

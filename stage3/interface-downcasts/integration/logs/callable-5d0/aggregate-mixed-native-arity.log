@@ -1,0 +1,20 @@
+--- FAIL: TestCheckedViewCallableElementAccess (0.62s)
+    --- FAIL: TestCheckedViewCallableElementAccess/wrong-arity (0.62s)
+        checked_views_callable_element_test.go:17: gate cache node miss
+        checked_views_callable_element_test.go:26: gate cache node miss
+        checked_views_callable_element_test.go:39: backend0 oracle.run{stdout:[]uint8{0x35, 0x3a, 0x39, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: factory.createElementAccessExpression expected (expression: Expression, index: number | Expression) => ElementAccessExpression, found function with arity 1\n"
+--- FAIL: TestCheckedViewCallablePropertyWitnesses (1.12s)
+    --- FAIL: TestCheckedViewCallablePropertyWitnesses/property-access/wrong-arity (0.53s)
+        checked_views_callable_property_test.go:21: gate cache node miss
+        checked_views_callable_property_test.go:30: gate cache node miss
+        checked_views_callable_property_test.go:44: backend0 oracle.run{stdout:[]uint8{0x39, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: factory.createPropertyAccessExpression expected (expression: Expression, name: string | Expression) => PropertyAccessExpression, found function with arity 1\n"
+    --- FAIL: TestCheckedViewCallablePropertyWitnesses/property-assignment/wrong-arity (0.59s)
+        checked_views_callable_property_test.go:21: gate cache node miss
+        checked_views_callable_property_test.go:30: gate cache node miss
+        checked_views_callable_property_test.go:44: backend0 oracle.run{stdout:[]uint8{0x39, 0xa}, stderr:[]uint8{}, exitCode:0} want "adamic: panic: field read failed: factory.createPropertyAssignment expected (name: string | Expression, initializer: Expression) => PropertyAssignment, found function with arity 1\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.747s
+FAIL

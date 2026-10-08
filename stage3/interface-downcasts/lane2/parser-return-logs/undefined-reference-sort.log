@@ -1,0 +1,5 @@
+--- FAIL: TestViewArrayOptionalComparatorRefusal (0.05s)
+    view_cast_preflight_test.go:51: want undefined-reference comparator stop, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.064s
+FAIL

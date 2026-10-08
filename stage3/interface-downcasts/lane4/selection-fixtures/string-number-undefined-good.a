@@ -1,0 +1,11 @@
+interface Base { readonly kind: 'box' | 'other' }
+interface Box extends Base { readonly kind: 'box'; readonly value: string | number | undefined }
+function read(base: Base): void {
+ const view = base as Box;
+ const value = view.value;
+ console.log(typeof value + ':' + String(value));
+}
+const a = {kind: 'box' as const, value: 'word'};
+const b = {kind: 'box' as const, value: 42};
+const c = {kind: 'box' as const, value: undefined};
+read(a); read(b); read(c);

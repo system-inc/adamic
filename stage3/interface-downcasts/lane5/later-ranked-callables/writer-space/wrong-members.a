@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Base {readonly writeSpace:unknown;}
+interface Target {writeSpace(text: string): void;}
+function probe(value:Base):void {const writer=value as Target;const s="value3";writer.writeSpace(s);}
+probe({writeSpace:(s:number):void=>{console.log("6");}});

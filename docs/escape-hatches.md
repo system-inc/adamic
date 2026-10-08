@@ -4,7 +4,7 @@
 
 Accepted by @system_adamic on October 6, 2026. These are language decisions; the observations below remain measurements of the recorded main commit, not claims that these changes have landed.
 
-1. **Downcasts:** runtime tag checks on tagged members; refuse casts that cannot be checked.
+1. **Downcasts:** runtime tag checks on tagged members plus checked field reads; untagged interface downcasts create transitive checked views. The October 7 ruling below supersedes the construction-or-refusal proposal.
 2. **Non-null !:** a runtime nullish check that panics loudly and includes the expression's text.
 3. **As written:** any, as unknown as, expando additions, Object.defineProperty and Function are refused. Upcasts and satisfies require proof. Type predicates and assertion functions require proof from their bodies or are refused. Bivariant methods require a proven contravariant relation or are refused.
 4. **Definite assignment:** field!: and let x!: are refused for now; another branch lands that refusal. The target is proven initialization where flow establishes it, otherwise a loud read-before-assignment check like Adamic's temporal dead zone. This is a temporary refusal.
@@ -812,6 +812,431 @@ Both commands exited 0. lower passed in 6.838s, load in 0.549s. All four selecte
 
 **Inference / not covered.** The decided non-null check, target initialization checks and body/initialization verifiers have not been implemented, benchmarked or independently mutant-tested. Reported proposed costs are operation counts, not measured timings. The census does not measure dynamic execution, inferred any, aliases of Object APIs, actual unsafe method assignments, all expando additions, or which of the 2,884 downcast candidates have reifiable tags. It uses TypeScript's checker as a classifier, not as a soundness oracle. Future implementation units must run isolated mutants for each accepted proof, every elision condition and every runtime failure, including null inputs, alias invalidation, false-branch guard narrowing and exception paths.
 
+## Checked downcasts implemented
+
+On `codex/checked-downcasts`, based on enum commit `7127080756a1904cc8d65ed766b66bbfaa767771`, object union casts accept single literal discriminants, including numeric and string enum members from ordinary and const enums. Targets may be one member or a sub-union. The proof requires unique runtime tag values, one tag representation, and sound member relations; duplicate enum aliases and payload refinements are refused. Proven upcasts and casts already established by flow erase. Structural hidden optional fields cannot become typed fields merely through a cast.
+
+Nominal class downcasts use the same ancestry and erased generic identity as `instanceof`, through ordinary IR helpers shared by both backends. Generic target arguments must already be fixed by invariant source ancestry: every target parameter must appear directly in the source ancestor's type arguments. A nongeneric base cannot prove an arbitrary `Box<number>`, and incompatible generic views remain refused. Successful casts evaluate their operand once and preserve its identity. Failure flushes stdout, prints `adamic: panic: cast failed: this <source type> is not a <target type>` with a newline, and exits 70. The Node runtime now uses blocking stdio and terminal panic exit, so catch and finally do not execute.
+
+Sixteen new oracle fixtures cover success and failure, both backends, Node source, native release, ASan/UBSan and leaks on successful runs; failing fixtures use the oracle's checked flag. Contract tests independently pin messages, 340,009 bytes of preceding stdout, and absence of catch/finally execution. Sixteen runtime mutants are killed by exit or stdout comparison: skip each of eleven failing checks, use a wrong numeric tag, string tag or class identity, and evaluate each operand form twice. Seven restored compiler/runtime source mutants are killed for duplicate tags, omitted nominal ancestry, omitted generic argument proof, hidden optional fields, unsafe writes through union views, catchable panic and unflushed panic. The duplicate-tag mutant emits valid C and finishes without sanitizer findings, printing native `1` against Node's `wrongwrong1`.
+
+Primitive `number | string | boolean` union assertions remain refused. Their packed union tags are not independently validated for cast extraction and ownership in this unit, so the existing narrowing path remains the repair. Unknown-to-interface, callback signature changes, mutable widening, unrelated assertions and `as unknown as` remain refused with `adamic/no-unchecked-cast` and the admitted forms named. Nested or transformed generic argument recovery is conservatively refused. Validation here is Linux only; no performance claim or macOS execution is made. The accepted design above is copied unchanged from `origin/codex/escape-hatches` because the enum base did not contain this document.
+
+## Cast appendix: base interfaces and construction invariants
+
+Status: historical construction-or-refusal proposal, superseded by the October 7
+checked-view ruling below. The corpus observations and ledgers remain evidence. Branch
+`codex/interface-downcasts` starts at main `ef3d907`; checked-downcasts
+`e816797f07a70952e214be079a1da54db80fbd7c` was read, not merged. Main did
+not contain this document, so its existing text is preserved from that branch.
+
+### Evidence and limits
+
+Observation: the available original compiler corpus is
+`cohere/TypeScript/tsc/testdata/fixtures/compiler`, through the cohere submodule
+`715ba94f3608a6500086b1076ce5cb7e51b836db` and its TypeScript checkout
+`8d550c837c90bd1805b047b7eeccc2baac2d5e7a`. This is the Go port's compiler
+fixture corpus, not a newly cloned `src/compiler` v6.0.3 checkout. No source
+from cohere is copied into Adamic. Locations below refer to that corpus.
+
+Cast counts use the assertions ledger at
+`origin/codex/stage3-fixtures-assertions`, commit
+`5b173f3920ab2c5b7058f0a9fe4b8e4a91f52523`,
+`stage3/fixtures/assertions/ledger-summary.json`. Its TypeScript 6.0.3 source is
+`050880ce59e30b356b686bd3144efe24f875ebc8`, distinct from the local corpus above.
+This unit does not repeat that classification. The ledger partitions 4,101 sites:
+208 upcasts, 16 as const, 136 tagged union downcasts, 1,178 structural interface
+downcasts without a tag, 10 as unknown as nodes, and 2,553 other sites. Of other,
+1,842 are tagged narrowings outside a partitioned union. The original ledger
+alone does not give an exact base-interface count or separately count classes. Its locations and field names supply the census, without claiming
+that a TypeScript assignability result proves an Adamic construction invariant.
+The old counts in this document describe their own historical corpus only.
+
+The follow-up requested by the lead refines only the 2,553 other sites using the
+same pinned stock compiler, source hashes, source offsets and checked types.
+`stage3/interface-downcasts/refine-other.cjs`, `other-summary.json` and
+`other-locations.tsv` retain the procedure, cross-tab and every location. Declared
+ancestry means explicit extends chains, not merely structural assignability.
+
+| Refinement of other | Sites |
+| --- | ---: |
+| Tagged declared base-interface downcast | 1,758 |
+| Tagged interface-union narrowing without a valid partition | 57 |
+| Tagged composite, generic or mapped narrowing | 25 |
+| Tagged tuple narrowing | 2 |
+| Other structural or union narrowing | 255 |
+| Type-parameter narrowing | 3 |
+| Nullish removal to interface | 6 |
+| Non-assignable assertion | 343 |
+| Any involved | 104 |
+| Declared class downcast | 0 |
+
+The 1,758 include 1,497 single-interface targets and 261 unions of declared
+subinterfaces; 1,757 narrow kind and one narrows operator. Node-to-Identifier
+alone occurs 27 times here. The 57 union cases still need a construction invariant
+for open members: a tag cannot partition payload refinements the source does not
+promise. Of the 25 tagged composite/generic/mapped cases, 24 narrow kind and one
+isTypeOnly; they include staged Node-to-Mutable<Identifier> construction,
+BindableObjectDefinePropertyCall intersections, and Node-to-T generic assertions.
+The two tuple cases narrow length to zero. These require their own payload,
+mutability or generic proof and are not additional directly declared subtype
+pairs. The 255 remaining narrowings have source/target forms recorded individually;
+interface targets there can arise from mixed unions or mapped/intersection views,
+not a single declared base-interface pair. The 104 any cases erase information
+needed to certify a subtype relationship. Zero class downcasts applies to this
+other-bucket refinement, not a new classification of the entire census.
+
+Observation from that branch's `logs/kind-soundness.json`: a genuine factory
+PlusToken held as Node has its kind changed through Mutable<Node> to Identifier.
+Stock TypeScript reports zero diagnostics; Node prints `true` then `undefined`
+for the tag comparison and escapedText read. This directly disproves a permanent
+kind-to-payload tie even when initial construction uses a genuine factory.
+
+Observation: `types.ts:942` defines `Node.kind: SyntaxKind`.
+`types.ts:1701` defines `Identifier.kind: SyntaxKind.Identifier` and requires
+`escapedText: __String`. Identifier is not the only interface with that kind:
+TransientIdentifier adds resolvedSymbol, and GeneratedIdentifier refines
+emitNode. A kind cannot prove either refinement.
+
+Observation: `factory/baseNodeFactory.ts:26` obtains replaceable constructors
+from objectAllocator. Its identifier allocator returns Node, with kind already
+Identifier. `utilities.ts:8531` initializes common fields, but not escapedText.
+`factory/nodeFactory.ts:1304` then assigns escapedText in createBaseIdentifier.
+The synthetic factory at the end of nodeFactory wraps the same base allocator.
+The parser installs another BaseNodeFactory (`parser.ts:1460`) and calls the
+shared node factory with it. This is staged construction, not a complete object
+at allocation. `nodeFactory.ts:1209` returns a base allocation asserted as
+Mutable<T>; the kind-to-T relation there is itself an unproven assertion.
+`createNumericLiteral` at 1233 sets text and numericLiteralFlags afterwards.
+`cloneNode` at 6368 allocates by kind and copies properties dynamically before
+returning. `utilities.ts:8577` lets setObjectAllocator replace constructors.
+
+Observation: even wrapper completion is not the full declared shape.
+createBaseIdentifier sets required Declaration.symbol to `undefined!`, for the
+checker to initialize later; base constructors set required Node.parent to
+`undefined!`. Interface brand fields typed any are not assigned by these
+constructors. Consequently the literal claim that every node factory builds
+all required fields with their declared types is false. This unit has not
+certified every wrapper, allocator replacement, parser path or clone path.
+
+Inference: most ordinary visitors rely on a publication convention: a node's
+syntax payload is complete before the visitor sees it. That convention is
+plausible for escapedText, but is not proof of every inherited field. A compiler
+must prove the convention with definite initialization and escape analysis,
+including callbacks and exceptional paths, rather than trust factory names.
+A universal invariant at every allocation is demonstrably too strong for tsc.
+A weaker invariant at publication/use requires a separate builder proof.
+
+### Shared construction certificate for casts and predicates
+
+The companion body-shape ledger at `origin/codex/stage3-fixtures-predicates`,
+commit `e42eaf9854563617734ff13987cc27e4e09f78b1`, records all 651 predicate
+syntax nodes and 11 fixtures in `stage3/fixtures/predicates`. Its mutually exclusive
+categories are 345 kind-equality bodies, 136 predicate-call bodies, 24 flags bodies,
+8 typeof bodies, 16 asserts bodies, 74 other bodies and 48 bodyless contracts.
+These are body descriptions, not proof verdicts. Its 227 direct equalities in
+nodeTests and the larger kind-equality group expose the same open-Node obligation
+as these casts. A predicate's declared return type is not a construction premise.
+
+Both consumers should request the same certificate: for every object observable
+through the source view, the tested tag implies the full requested interface, and
+publication and subsequent writes preserve this implication. A verified positive
+predicate branch can use that certificate after its body establishes the tag.
+A negative branch additionally needs equivalence between the body test and target
+membership; a positive implication alone cannot justify excluding the target.
+Composition must verify each called predicate and every required nested read.
+For example, a void-zero test needs a valid VoidExpression.expression before
+reading its operand's kind, and a numeric-literal certificate before reading text.
+A signed-numeric test additionally needs the prefix-unary operator and operand
+shape. A flags test needs a separate flag-to-payload invariant: a Transient bit
+does not alone prove TransientSymbol.links. These obligations must not be replaced
+by a whitelist of predicate names or circular trust in asserted return types.
+
+The certificate is necessary, not sufficient, for guard verification. An empty
+assertion body proves nothing; a debug assertion that can be disabled proves
+nothing on that path. A bodyless predicate needs an independently justified host
+contract. Generic assertions and nested refinements remain separate obligations.
+This prototype verifies construction for casts only; it does not admit the
+ledger's predicate declarations or certify all 651 bodies.
+
+### Proposed language choice: (b), prove construction or refuse
+
+Permit a base-interface-to-sub-interface assertion only when the compiler proves
+that every possible object reaching that base view with the requested runtime
+discriminant satisfies the entire target, and every later write preserves that
+fact. Then emit the existing discriminant check. If that proof is unavailable,
+refuse with the unproven construction or write site. The assertion and the target
+annotation are never premises of their own proof. This is a closed-program fact,
+not a claim attached to the spelling Node, Identifier or SyntaxKind.
+
+The proof includes literals, spreads, classes, constructors, allocator overrides,
+clones, module imports, host boundaries and alias writes. Matching uses runtime
+literal values, so enum aliases cannot establish uniqueness. Two interfaces with
+one kind are allowed only if the relevant constructions prove the requested
+shape; a stricter payload refinement needs its own proof. An incomplete object
+may exist privately inside a verified builder only when no read, publication,
+callback or exceptional escape can expose it before completion. Later writes
+must preserve field types and presence, through all structural views. Mutable
+containers and callable fields need the existing invariant/variance proofs;
+checking field presence alone cannot establish them.
+
+Refused programs include a Node literal with Identifier's kind and no name field;
+a matching kind with a number in a string payload; a broad/dynamic kind whose
+possible Identifier case lacks its payload; an opaque constructor or host source;
+a clone whose copied fields are unproven; a payload refinement unsupported by
+construction; and a later kind/payload write that can invalidate the implication.
+A program may repair this by constructing the full target and preserving its
+fields, or by using an actual discriminated union. Adding an unrelated malformed
+allocation can invalidate the conservative global proof even if unreachable.
+This is intentional in the first prototype, not required of a future reachability
+proof. Unknown-to-interface and unrelated assertions remain refused.
+
+Runtime cost after proof: one existing tag read, one comparison, and one failure
+branch for a single numeric/boolean tag; a string tag additionally uses the
+existing string equality operation (pointer fast path, otherwise byte comparison
+linear in tag length). Current native field access can require a layout-cache
+miss scan over S field names, O(S plus compared name bytes); a cache hit loads
+the cached slot. There is no new allocation, copy, retain or release for proof
+itself. Operand evaluation and ordinary result ownership still cost what they
+normally do. No whole-program check runs at runtime. The prototype scans the
+program per cast, so compile-time work is O(C times N plus C times A times F)
+checker queries for C casts, N AST nodes, A literals and F target fields; checker
+relation cost is additional. A production implementation should cache summaries.
+No runtime timings are claimed.
+
+### Why not choose (a) or (c) yet
+
+A correct layout check is a useful future fallback. The current adamic_shape
+contains names and reference flags, not complete field types: number and boolean
+layouts can share those flags, as can string and object layouts. Layout membership
+alone does not prove initialization, literal refinements, nested structural types,
+callable signatures or safe writes through aliases. It cannot silently be treated
+as a validator for arbitrary T.
+
+With richer immutable typed-layout certificates, a fallback could compare a
+layout ID with a precomputed compatible-layout set, then check value refinements
+and initialization. A bitset costs a layout ID load, indexed word load, bit test
+and branch, with ceil(L/word-bits) words per target for L layouts. Without such a
+certificate, an F-field name/type scan over S slots costs O(F times S plus name
+bytes), plus literal tests; recursive contents require traversal proportional
+to reachable values, cycle handling and alias guarantees. Neither is the advertised
+single discriminant comparison. Typed certificates and publication-state tracking
+need their own representation design and mutants. Option (c) is not a license to
+fall back to unsafe presence tests when the proof fails.
+
+### Prototype boundary
+
+The proposed flag is `ADAMIC_INTERFACE_DOWNCASTS=1`, default off. It admits
+complete object literals, readonly required scalar target fields, and a single
+literal discriminant. Factories return complete shapes; visitors hold them through
+the Node base. It checks every imported module's allocations, including unused
+functions, and rejects staged builders, spreads, new/opaque construction,
+optional/nested/callable fields, generic construction and writes to the checked
+fields. String/number/boolean literal tags are covered; enum syntax support stays
+on the separately reviewed checked-downcasts branch. No protected compiler file
+needs editing. Both backends reuse CheckedCast and the existing failure message,
+exit 70, single operand evaluation and identity preservation.
+
+Required evidence: positive factories/visitor compared to original source on Node,
+both generated backends and native sanitizers/leaks; wrong-kind runtime failure;
+missing-payload and wrong-payload refusal; imported malformed construction; writes
+through aliases; and a compiler mutant dropping only the construction obligation.
+The missing-payload mutant must get past the discriminant test and be killed by
+the construction assertion in the test harness, not clang or a sanitizer. The
+prototype does not claim to compile unchanged tsc or verify its staged factories.
+
+
+## Cast ruling: checked views, decided October 7, 2026
+
+Accepted by @system_adamic: choice (c). The construction proof is an eraser,
+not an admission gate. The earlier choice (b) and its default-off prototype are
+historical; the implementation steps below replace them. This records the ruling,
+not a claim that all implementation steps have finished.
+
+First land tagged interface downcasts, the 1,758 cases identified above. Check
+the requested discriminant at the cast, evaluating the operand once and preserving
+identity. Every subsequent field read through the narrowed view that lacks a
+valid proof checks presence, initialized state and the declared runtime type tag
+before loading the payload in its target representation. Initialization alone
+never proves type, and a matching kind never proves another field's initialization.
+Literal and enum refinements need value checks in addition to a primitive tag.
+A safe read must also convert between stored and target representations where
+necessary, rather than reinterpret a boxed union as a raw scalar.
+
+Failing reads flush preceding stdout, print one newline-terminated message to
+stderr and terminate with exit 70, without running catch or finally:
+
+```
+adamic: panic: field read failed: <expression text>.<field> is not initialized; expected <type>, found missing|uninitialized
+adamic: panic: field read failed: <expression text>.<field> is not a <type>; expected <type>, found <runtime category>
+```
+
+Capture the receiver expression text at compile time. Evaluate the receiver and
+load the field once; diagnostics must not invoke user conversion code. The existing
+cast-failure contract applies when the tag test fails at the cast.
+
+Staged construction is legal. A Node may carry Identifier's kind before escapedText
+is filled; createBaseIdentifier may fill it later; undefined! and null! initializers
+record uninitialized state; cloneNode may copy staged fields. Presence, current
+initialization and actual type metadata must survive copies, assignments, aliases,
+reuse and region allocation. The non-null worker on `codex/non-null-check` owns
+field initialization state and will push that representation separately. This unit
+merges and uses that helper instead of adding a second bitmap or state convention.
+Removing the old admission gate before all three read checks exist is unsafe.
+`ADAMIC_INTERFACE_DOWNCASTS` has been removed. The supported scalar subset is default; broader contracts remain NotYet during implementation.
+
+A compatible dominating store or a construction certificate valid at this read
+can erase the checks. A failed proof leaves a check, rather than refusing the
+program. Neither an asserted type nor the ! syntax is a proof. A tag test proves
+only the tested tag unless an independent construction invariant proves more.
+Calls, alias writes, uncertain exceptional paths and dynamic copies invalidate
+facts unless their effects are independently proved. An unused malformed factory
+must no longer make an otherwise checked program a compile-time refusal.
+
+Second land the 1,178 untagged interface downcasts. They create checked views
+without testing a discriminant at the cast. A field read uses the same three
+checks. An object-valued result is another checked view, including through locals,
+parameters, returns, aliases and containers, until an independent proof or a valid
+tagged narrowing establishes the needed facts. Erasing the view marker at one
+of those boundaries is an unsound implementation, not an optimization.
+
+Refuse an unproven operation whose target contract cannot be certified at runtime,
+such as a newly asserted callable member's parameter/result signature. A typeof
+function check cannot prove that signature. Retain the existing refusals of any,
+unrelated double assertions and unsafe function variance. Missing payloads, staged
+fields and a wrong payload type are no longer admission refusals: their unproven
+reads terminate according to the field-read contract. Unsupported runtime contracts
+must be reported by target/member and counted against the original ledger; existing
+backend capability gaps must be distinguished from those language refusals.
+
+Both backends emit the same checks. A passing checked program matches the original
+source on Node byte for byte. Node's source execution is unchecked, so a failing
+check is validated by an independent assertion of its complete failure contract.
+Required mutants drop a field check, drop initialization tracking, erase without
+proof, skip a transitive view, and evaluate an operand twice. Each must emit valid
+code and be killed by a semantic assertion, not clang or a sanitizer.
+
+Third measure actual remaining checks after erasure on named tsc slices and release
+runtime against an explicitly named unchecked benchmark control. Report read-site
+and dynamic-read denominators separately, compiler/release flags, repetitions,
+outputs and timing spread. Source occurrences alone are not execution heat. The
+unchecked control is an experimental artifact, not a production option. If checks
+are costly, improve proofs; never reduce the required checks. No benchmark or
+checked-read share is claimed by this decision entry.
+
+Tagged (c) lands first. The updated delivery targets are tagged admission by 16:00 UTC October 7 and
+untagged checked views by 02:00 UTC October 8. Both were reported at risk before
+this partial checkpoint because complete tsc field contracts remain unsupported. If that step cannot finish, report it early with the highest-exposure
+untagged locations, clearly distinguishing static counts from measured hot paths.
+
+### Implementation progress, October 7
+
+The flag and construction admission gate have been removed from production.
+Tagged casts with required number, boolean or string fields now use the tag check
+and checked reads by default. Finite literal and enum contracts additionally compare
+values. Missing or malformed scalar payloads lower and fail at their first read;
+unused malformed factories no longer prevent admission. Staged fields, destructuring,
+boxed scalar reads and supported boxed stores have source fixtures on both backends.
+The non-null tip `e2ea9ab2`, including `c680ecf4`, supplies the shared readiness helper
+and state; no second initialization representation was added.
+
+The lane 1 objects checkpoint adds anonymous structural object fields, with nested
+reads checked through aliases/parameters/returns, plus untagged object-source
+admission without a tag test. The interface checkpoint adds named and recursive
+interface descendants, including inherited fields. Optional/mixed/nullish fields
+remain the next family. The six source fixtures match Node on success and
+pin failure on both backends. Contract metadata and hook signatures are documented
+in [checked-views-plan.md](checked-views-plan.md). Actual source-slot type certificates
+are required before writes of checked object fields; current unsupported writes are
+NotYet. The renewed complete-target audit is still 0/1,758 tagged and 0/1,178 untagged.
+
+The reusable lowering entry point is `(*lowering).view(node, value, target)` in
+`internal/lower/interface_cast.go`. It returns the original operand, preserving
+identity, and registers fields for conservative program-wide checks across aliases.
+This checkpoint is incomplete: optional/nullish and mixed scalar contracts remain
+NotYet, as do unsupported accessor/conversion aliases. Required object/interface
+fields have transitive checks, including untagged object-source admission. Proof
+erasure is not implemented.
+The machinery is not ready for the optional-property widening worker to consume.
+Direct callable contracts and callable fields are Refused because a runtime function
+tag cannot certify a parameter/result contract. Backend gaps are NotYet, not new
+permanent language refusals. Generated helper reads and opaque runtime object
+producers still need a complete propagation/metadata audit before integration.
+
+The pinned assertions ledger target audit yields zero eligible complete contracts:
+19 of 1,758 tagged targets have callable members, and 1,739 need broader field
+contracts; 71 of 1,178 untagged targets have callable members, 1,106 need broader
+contracts, and one otherwise scalar target still needs untagged admission. Exact
+locations, fields and types are in `stage3/interface-downcasts/default-contracts.json`.
+This is an outside-checker rejection upper bound, not an observation of compiling
+all tsc source files. It establishes 0/1,758 and 0/1,178 supported complete contracts;
+positive lowering coverage would require actual lowerer probes. No checked-read
+share or release benchmark is claimed at this checkpoint.
+
+The additional native representation storage is exactly one byte per physical field,
+following the worker's existing one-byte initialization state. Heap storage is
+`sizeof(adamic_object) + field_count * (sizeof(adamic_value) + 2)` before allocator
+rounding; region storage rounds that size up to a multiple of 16. A checked required
+read makes one runtime helper call, performs cached own-name lookup, reads initialization
+and representation bytes, and validates a referenced value's heap kind before using
+it. A cache miss compares field names linearly; a hit does not scan. A successful
+native scalar read check allocates nothing. JavaScript finite-literal checks currently
+construct the allowed-values array at each read; object construction also records
+representation metadata in a WeakMap. Reference reads currently retain and later release
+the value. Failure formatting allocates a message before the exit-70 panic. JavaScript
+checks own presence, the shared readiness WeakMap, and the value's built-in runtime
+kind; diagnostic type names are allocated once for the program. These are primitive
+costs, not the requested post-erasure counts or release timings for tsc slices.
+
+The exact 69 cumulative latent refusals from `70456b7` are audited separately in
+`stage3/interface-downcasts/latent-targets.json`: 44 object targets without direct
+callable members, 18 unions, 3 objects with direct callable members, 2 type parameters,
+1 array and 1 scalar/other target. Inherited array/string methods are separated from
+callable object contracts. This is the baseline on a checker-rejected program, not
+the final list of refused shapes after checked views. The latter remains pending.
+
+## Non-null assertion implementation
+
+`e!` now lowers through the existing nullish coalescing panic path. It evaluates
+its operand once, checks the stored maybe pair or null reference (including mixed
+unions), and returns the non-null representation. The diagnostic captures the
+assertion's original source text, including `!`. Panic flushes stdout, prints
+`adamic: panic: non-null assertion failed: <expression text> is null or undefined`
+to stderr and exits 70 without running catch or finally.
+
+Numbers and booleans in maybe pairs, optional references, mixed unions containing
+undefined, and nullable match results are covered. Present zero, false, empty
+string and NaN pass. Assertions on already present types emit no additional check;
+reads narrowed from nullable storage keep a check, including after calls or
+capture writes. No new flow elision or reference representation was introduced.
+
+The nine non_null oracle fixtures pass uncached, with successes held to source
+Node and failures held to the checked JavaScript backend. Mutants removing the
+native check, rejecting zero, false or empty string, and evaluating twice fail
+those comparisons. A changed message fails the exact-text lowering test; ignoring
+nullable storage after a capture write fails the oracle under UBSan.
+
+### Shared field readiness representation
+
+Each native object carries one initialized byte per field after its `adamic_value` slots, indexed by its actual shape. `adamic_object_initialized(const adamic_object *object)` exposes those bytes; `adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized)` updates a named slot. Fresh ordinary fields are initialized; an `ir.Field.Uninitialized` starts clear. Writes set the bit. The bytes share the object's allocation, including region allocations.
+
+Checked reads use `adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression)` in native code and `adamicReadField(object, name, expression, optional = false)` in JavaScript. `ir.Property.Readiness` supplies the source expression. Missing or uninitialized fields panic with `read before assignment: field '<name>' in <expression>`. The state is independent of the value, so zero, false, empty strings, and assigned undefined do not mean uninitialized. JavaScript keeps state in a WeakMap, preserving own keys.
+
+### Uninitialized assertions and definite assignment
+
+`undefined!` and `null!` in a let, const, class field or parameter-default initializer now reserve an uninitialized slot. `let x!: T` and `field!: T` use the same state. An ordinary assignment marks the slot ready independently of its value. Reads before assignment use the existing temporal-dead-zone readiness path and panic with exit 70, naming the variable or field and the source expression. Panic runs no catch or finally. Literal assertions used as direct assignments also clear readiness, as recorded below. Other non-initializer assertions retain the loud nullish check. A shadowed `undefined` is an ordinary operand.
+
+Captured locals keep readiness in their existing cell; iteration clones copy that state. The existing control-flow graph proves dominating assignments across joins, loops and exception edges, including reads in closures after their own writes. An assignment that throws does not initialize its destination. Field facts are per binding and invalidated by calls and binding writes. Cross-function assignment proofs remain conservative. Field reads and spreads share `adamic_object_read` and `adamicReadField`; the JavaScript helper also accepts `allowAbsent = false` after `optional`. Optional absence retains its ordinary undefined behavior. Static inherited reads check their actual owning slot.
+
+Weak assertions use the same expression-bearing diagnostic, including after explicit clear or native lifetime release. Source Node agrees byte for byte on the successful fixtures. Inserted read checks and explicit Weak clearing use the oracle's checked JavaScript reference; native lifetime release has a separate pinned runtime assertion because Node retains the target.
+
+Readiness mutants dropping a check, erasing across a zero-iteration loop, initializing to zero, missing captured and exceptional reads, and treating marker initializers as ordinary nullish checks are caught by runtime output assertions. Weak generic-message and native lifetime-message mutants are caught by exact stderr assertions. The latent rerun in `non-null-readiness-census.json` verifies all 78 recorded source hashes: the original 180 non-null Refused and 25 NonNullExpression NotYet findings are now zero for both reasons. Twelve original locations still encounter other recorded refusals or NotYet reasons. This checker-rejected, per-unit measurement does not establish that tsc compiles.
+
+### Lazy computed assertion initializers
+
+The later scanner ruling extends the initializer rule to `let x = e!`, `const x = e!`, `var x = e!`, fields and defaults. The operand is evaluated once in its stored representation. A present value initializes the slot; a nullish value leaves the shared readiness state clear. The eventual read diagnostic names the slot and the original initializer expression. Assignment still makes it ready, and the same dominance proof erases subsequent reads' checks. Arguments, returns, member receivers and other operands keep eager assertions.
+
+The scanner fixture uses `var text = textInitial!` and a captured `setText`, with both missing and provided initial text. Local, instance-field, static-field and default fixtures cover assignment before reading and checked failure before assignment. Zero, false and empty strings remain present. The eager-initializer mutant exits 70 before the scanner can assign, while source Node prints its result. Other var forms remain refused; repeated var assertion declarations are refused explicitly. Function-local var reads before their declaration remain outside supported hoisting, rather than being guessed.
 ## Predicate bodies proven in stage 0
 
 **Built, October 7, 2026.** Written `x is T`, `asserts x is T` and boolean
@@ -977,6 +1402,51 @@ work was still running, using the unit's permitted scoped fallback. Its Go proce
 exited 143 on termination, and all ten remaining child processes were stopped.
 The full gate is not claimed to have passed. The completed scoped commands above
 are the regression evidence for this unit.
+
+
+The scanner controls now include the exact `let text: string = undefined!` probe from stage3-scanner-proof 71f9953. Its dominating assignment erases the read check. `var tokenValue!: string` is also admitted through the same readiness path as let definite declarations. Sibling closure reads retain the captured-cell check, including after a setter call; the successful frame matches Node and the unassigned frame panics with the variable and read expression. Removing that captured check produces exit 0 and different stdout, caught by the pinned runtime assertion. These controls use sibling arrow functions because named nested declarations belong to the nested-functions unit. Count regeneration adds fixture rows without changing existing rows.
+
+### Literal assertion assignments deinitialize
+
+A direct assignment of builtin `undefined!` or `null!` to a variable or stored field now clears its existing readiness state. An ordinary subsequent write restores readiness. Other assertion operands in assignments remain eager. Reads before the next write panic with exit 70 and name the variable or field and expression. No second readiness mechanism is introduced.
+
+The control-flow proof clears its fact at deinitialization, intersects loop and exception paths, and invalidates potentially deinitialized captured or global slots at calls. Deinitializing a field invalidates alias facts for that field name. A dominating later write still erases the check. Object values, entries, assignment sources and spreads also use the shared field read helper; Object.assign writes restore target readiness. Accessor properties are explicitly NotYet for deinitialization because they do not expose a stored field slot.
+
+Fixtures cover reassignment before reading, checked reads, method calls, aliases, captured writes, exception paths and loops. The ordinary-store mutant prints undefined through the JavaScript backend and is caught by the pinned panic assertion. Keeping a slot proven after deinitialization prints zero natively and is caught by the pinned assertion, without relying on a crash.
+
+Validation: `go test ./internal/lower ./internal/ir ./internal/fresh ./internal/javascript` passed (lower 26.116s, ir 23.088s, fresh 38.609s). The flow package also passed in 51.679s. `go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(non_null|object_)' -count=1 -v` passed all 71 selected fixtures in 9.273s, including 17 new deinitialization fixtures. The scanner controls remain green. `go test ./internal/oracle -run 'TestReadinessMutants|TestDeinitializationIsNotOrdinaryStoreMutant' -count=1 -v` passed in 2.025s; dropping values, entries or assignment-source checks is also caught by pinned output. Count regeneration passed in 17.557s and adds 17 rows with no existing row changes. Focused native field, ownership, receiver and iterator tests passed in 1.649s. Vet passed for lower, ir, flow, fresh, native, javascript and oracle. Logs are `/tmp/deinit-packages-final.log`, `/tmp/deinit-fixtures-final.log`, `/tmp/deinit-mutants-final.log`, `/tmp/deinit-counts.log`, `/tmp/deinit-native.log` and `/tmp/deinit-vet.log`. The full repository gate was not rerun for this priority amendment.
+
+An initial package command named nonexistent borrow and reuse packages and exposed a changed refusal diagnostic. The command was corrected and the original diagnostic restored before the passing package run. The shared field representation remains the initialized byte per shape slot, with `adamic_object_read` and `adamicReadField` as its read helpers; this amendment changes state transitions and proof invalidation, not representation selection.
+### Lane 1 interface checkpoint
+
+Named interfaces now use the same transitive read checks as structural object
+fields, including inherited fields and recursive contracts. An unread staged
+recursive link remains legal; reading it checks the shared readiness state. Four
+source fixtures pin both backend failures or match source Node byte for byte.
+The inherited-field transitivity mutant emits valid C and is caught by the failure
+assertion. No shape or initialization fact is inferred from an interface assertion.
+
+The complete-target rejection audit still proves zero complete eligible sites:
+0/1,758 tagged and 0/1,178 untagged. Recursing through named interfaces exposes
+25 tagged and 438 untagged callable blockers; these are first blockers, not a new
+partition of the original direct-contract lane shares. Remaining first blockers
+are recorded per site in interfaces-contract-sites.json. This is a contract audit,
+not a successful whole-file lowering measurement.
+
+### Tagged object-union field subset
+
+A read of an object-union field checks its required finite common discriminant
+before returning the child. A subsequent tag comparison can narrow that checked
+child, but all payload reads remain checked. The contract graph retains member ids,
+not just common fields. Both backends evaluate the receiver once and preserve
+identity. Contract links on earlier function reads resolve after cast registration.
+
+This is a subset checkpoint, not completion of the union family. Null and undefined
+are still conflated by existing reference representations; checked views that need
+them remain NotYet until a distinct representation is implemented. Mixed scalar
+unions, optional fields, union cast targets and unsupported aliases remain gaps.
+No complete tsc target becomes eligible in the renewed object-unions audit.
+
 
 ## Checked downcasts implemented
 

@@ -1,0 +1,18 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface Identifier {readonly kind:80;readonly value:number;}
+interface ObjectBindingPattern {readonly kind:207;readonly value:number;}
+interface ArrayBindingPattern {readonly kind:208;readonly value:number;}
+type BindingPattern=ObjectBindingPattern|ArrayBindingPattern;
+type BindingName=Identifier|BindingPattern;
+
+interface ParameterDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface DotDotDotToken {readonly kind:26;readonly value:number;}
+interface QuestionToken {readonly kind:58;readonly value:number;}
+interface ExclamationToken {readonly kind:54;readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Expression {readonly value:number;}
+interface Base {readonly updateParameterDeclaration:unknown;}
+interface Target {updateParameterDeclaration(node: ParameterDeclaration, modifiers: readonly ModifierLike[] | undefined, dotDotDotToken: DotDotDotToken | undefined, name: string | BindingName, questionToken: QuestionToken | undefined, type: TypeNode | undefined, initializer: Expression | undefined): ParameterDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.updateParameterDeclaration({value:1},[{value:2}],{kind:26,value:3},{kind:80,value:4},{kind:58,value:5},{value:6},{value:7}).value}`);}
+probe({updateParameterDeclaration:3});

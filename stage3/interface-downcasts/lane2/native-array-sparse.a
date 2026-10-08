@@ -1,0 +1,15 @@
+interface Base { readonly kind: 'items' | 'other'; }
+interface Items extends Base { readonly kind: 'items'; readonly values: readonly number[]; }
+function items(node: Base): Items { return node as Items; }
+const raw = {kind: 'items' as const, values: new Array<number>(4)};
+raw.values[1] = 7;
+raw.values[3] = 9;
+const values = items(raw).values;
+console.log(`${values.join(':')}`);
+const mapped = values.map((value: number): number => value + 1);
+console.log(`${mapped.join(':')}`);
+console.log(`${values.reduce((sum: number, value: number): number => sum + value, 0)}`);
+const copy = values.slice(1);
+console.log(`${copy.pop() ?? -1}`);
+console.log(`${copy.push(10)}`);
+console.log(`${copy.join(':')}`);

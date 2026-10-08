@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (4.94s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/source-file-path/wrong-result (0.10s)
+        checked_views_callable_later_ranked_test.go:60: Node oracle.run{stdout:[]uint8{0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0} want "0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=25
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.232s
+FAIL

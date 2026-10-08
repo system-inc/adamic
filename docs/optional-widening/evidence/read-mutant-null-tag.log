@@ -1,0 +1,11 @@
+--- FAIL: TestOptionalNullAndLiteralReads (0.82s)
+    --- FAIL: TestOptionalNullAndLiteralReads/null (0.82s)
+        optional_checked_test.go:145: gate cache node miss
+        optional_checked_test.go:154: gate cache node miss
+        optional_checked_test.go:156: exit codes differ; got oracle.run{stdout:[]uint8{0x75, 0x6e, 0x64, 0x65, 0x66, 0x69, 0x6e, 0x65, 0x64, 0xa}, stderr:[]uint8{}, exitCode:0}
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.826s
+FAIL
