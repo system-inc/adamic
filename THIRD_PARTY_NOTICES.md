@@ -78,6 +78,8 @@ IN THE SOFTWARE.
     src/builtins/string-substr.tq);
   - variadic Array push (`internal/lower/library_array_push.go`, after
     GenericArrayPush in src/builtins/builtins-array.cc, Node.js v24.19.0);
+  - catchable String repeat (`internal/lower/library_string_repeat.go`, after
+    src/builtins/string-repeat.tq, V8 13.6.233.17);
   - positioned String affixes (`internal/lower/library_string.go`, after
     src/builtins/string-startswith.tq and src/builtins/string-endswith.tq);
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
