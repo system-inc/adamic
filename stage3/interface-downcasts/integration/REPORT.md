@@ -1,7 +1,7 @@
 Integrated every requested pushed lane into codex/views-integration from ab4d6f902.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-27 explicit implementation/component mutants were caught and restored, alongside the fixture payload mutants.
+54 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -230,3 +230,72 @@ carried lane evidence, not reruns in this integration session.
 Setup cache ready 1177.301s and done 1177.419s; nproc 5, quota 4.
 The compiler census and complete repository gate remain outside this run.
 The branch is ready to receive subsequent lane tips through this integrator.
+
+## Lazy owner presence evidence follow-up
+
+Priority tip a0cc0afd merges cleanly before dictionary e9a06829. It adds
+optional-presence source probes and measured refusals only, without compiler
+changes or replacement of prior reconciliation. Presence operators and broader
+nullish source dispatch remain explicitly incomplete. No new production check
+is added, and no additional mutant claim is made for this evidence-only merge.
+The usual focused package, full IR, filtered Node oracle and vet gates follow.
+
+## Dictionary read components follow-up, October 8
+
+Tip e9a06829 merges cleanly on the priority owner merge 566c1ec03. There are no
+conflicted hunks and no bulk/whole-file choices. The plan records the user's
+new permission for lanes to add their named minimal shared hooks. This tip
+declares viewDictionaryContractHook, but shared source classification/indexed
+dispatch and record producers remain unwired. Its descriptor stays Unsupported
+dictionary source dispatch; no scalar table is reinterpreted from a target cast.
+
+Native reads only source-certified boxed records and retains child contracts;
+JavaScript uses own data descriptors and refuses accessors without invoking them.
+Five options/nested/array component source controls compare with Node, including
+sanitized native. Eleven executable component mutants run in the oracle gate:
+skip-check, accept-wrong-shape and drop-transitive-contract each in native/JS;
+native uncertified storage; JavaScript container, accessor, missing-child and
+required-missing guards. Mutations are in-process harness copies, never changes
+to production files. Nested mutants prove the adapter seam, not compiler flow.
+The candidate ranking reproduces exactly: 29 pairs / 228 reads still pending,
+with exact runtime reachability unmeasured. Formatting and source diff checks
+pass. Focused compiler packages (including records against Node), full IR,
+uncached filtered Node oracle and vet are the integration gates. The previously
+reproduced array-callback predicate fixture is still the sole oracle exclusion.
+
+Dictionary component gates pass: lower 10.935s, native 44.416s, JavaScript
+1.303s, full IR 24.167s, uncached filtered oracle 78.664s, vet exit 0.
+All eleven new component mutations execute valid code and lose the expected
+refusal, as pinned by the passing mutant tests. No source pair is completed.
+
+## Lane 4b production hook follow-up, October 8
+
+Tip dc5e5f26 merges cleanly after dictionary 422e80502. Four minimal shared
+hooks in lower/interface_cast.go, lower/object.go, native/view_fields.go and
+javascript/javascript.go preserve existing guards while selecting the lane's
+one-object-plus-scalar adapter. No conflict hunk required resolution.
+
+Additional integration controls found a real optional regression: the new reader
+dropped Property.Absent and Property.Optional. Native exited 70 for valid absent
+optional fields and missing optional-chain receivers, against Node exit 0.
+The lane helper now passes both existing flags to its native runtime and shared
+JavaScript read helper. Optional receiver short-circuiting evaluates the receiver
+once; required missing fields and reserved uninitialized slots still refuse.
+This repairs metadata plumbing without another presence/readiness state.
+
+Permanent .a controls optional-absent and optional-receiver match Node in both
+backends; required-missing pins the original named refusal. Four valid-code IR
+rollback mutants clear the optional flags independently in native/JavaScript and
+are caught by the positive Node pins. The incoming twelve backend IR mutants
+pin outer selection/literal and nested type/read checks. An initial test-control
+excess-property annotation was fixed; the new required-missing control was
+excluded from the incoming mutation selector which has no applicable nested
+read. Both initial failures are logged; neither is counted as a passing gate.
+All 42 original candidate pairs / 181 reads remain pending original witnesses;
+reduced shapes do not establish full tsc declarations or exact reachability.
+
+Lane 4b gates pass: lower 13.612s, native 34.968s, JavaScript 1.896s,
+full IR 27.981s, uncached filtered oracle 82.549s, vet exit 0. All sixteen
+backend mutants are verified in the final log (12 incoming, 4 optional-policy
+rollbacks); all eleven source controls pass. The same sole parent predicate
+fixture exclusion remains. Full repository/census reruns are not claimed.
