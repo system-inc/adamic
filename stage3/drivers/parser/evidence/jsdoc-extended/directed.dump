@@ -1,0 +1,75 @@
+file	comments.js
+SourceFile 0 131 524288	
+FunctionDeclaration 0 131 524288	
+JSDoc 0 103 17301504		comment parts 3	JSDocText:Intro 	JSDocLink:label	JSDocText:.
+JSDocText 0 10 17301504	Intro 
+JSDocLink 10 30 17301504	label
+Identifier 17 23 17301504	Target
+JSDocText 30 35 17301504	.
+JSDocParameterTag 35 70 17301504		tagName param	comment text argument text
+Identifier 36 41 17301504	param
+JSDocTypeExpression 42 50 17301504	
+StringKeyword 43 49 17301504	
+Identifier 51 52 17301504	x
+JSDocReturnTag 70 101 17301504		tagName returns	comment text result text
+Identifier 71 78 17301504	returns
+JSDocTypeExpression 79 87 17301504	
+NumberKeyword 80 86 17301504	
+Identifier 112 114 524288	f
+Parameter 115 116 524288	
+Identifier 115 116 524288	x
+Block 117 131 524288	
+ReturnStatement 119 129 524288	
+NumericLiteral 126 128 524288	1
+EndOfFileToken 131 131 524288	
+diagnostics 0
+jsDocDiagnostics 0
+file	doc.js
+SourceFile 0 36 524288	
+FunctionDeclaration 0 36 524288	
+JSDoc 0 19 17301504		comment absent
+JSDocParameterTag 4 17 17301504		tagName param	comment absent
+Identifier 5 10 17301504	param
+JSDocTypeExpression 11 14 17301504	
+TypeReference 12 12 17301504	
+Identifier 12 12 17563648	
+Identifier 15 16 17301504	x
+Identifier 28 30 524288	f
+Parameter 31 32 524288	
+Identifier 31 32 524288	x
+Block 33 36 524288	
+EndOfFileToken 36 36 524288	
+diagnostics 0
+jsDocDiagnostics 1
+jsDocDiagnostic 1 1110 13 1	Type expected.
+file	empty.js
+SourceFile 0 0 524288	
+EndOfFileToken 0 0 524288	
+diagnostics 0
+jsDocDiagnostics 0
+file	tags.js
+SourceFile 0 75 524288	
+FunctionDeclaration 0 75 524288	
+JSDoc 0 34 17301504		comment absent
+JSDocTypedefTag 4 31 17301504		tagName typedef	comment absent
+Identifier 5 12 17301504	typedef
+JSDocTypeExpression 13 25 17301504	
+TypeLiteral 14 24 17301504	
+PropertySignature 15 23 17301504	
+Identifier 15 16 17301504	x
+NumberKeyword 17 23 17301504	
+Identifier 26 31 17301504	Shape
+JSDoc 35 58 17301504		comment absent
+JSDocParameterTag 39 56 17301504		tagName param	comment absent
+Identifier 40 45 17301504	param
+JSDocTypeExpression 46 53 17301504	
+TypeReference 47 52 17301504	
+Identifier 47 52 17301504	Shape
+Identifier 54 55 17301504	x
+Identifier 67 69 524288	f
+Parameter 70 71 524288	
+Identifier 70 71 524288	x
+Block 72 75 524288	
+EndOfFileToken 75 75 524288	
+diagnostics 0
+jsDocDiagnostics 0

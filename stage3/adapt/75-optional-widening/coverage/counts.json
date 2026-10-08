@@ -1,0 +1,387 @@
+{
+  "processes": {
+    "driver": 301,
+    "upstream": 5,
+    "self": 1
+  },
+  "ran": 42,
+  "unobserved": 5,
+  "rows": [
+    {
+      "id": "utilities.ts:4416:20",
+      "driver": 0,
+      "upstream": 38,
+      "self": 0,
+      "total": 38,
+      "bucket": "rest"
+    },
+    {
+      "id": "utilities.ts:4416:52",
+      "driver": 0,
+      "upstream": 38,
+      "self": 0,
+      "total": 38,
+      "bucket": "rest"
+    },
+    {
+      "id": "factory/nodeFactory.ts:7105:63",
+      "driver": 0,
+      "upstream": 0,
+      "self": 0,
+      "total": 0,
+      "bucket": "b"
+    },
+    {
+      "id": "factory/utilities.ts:363:96",
+      "driver": 0,
+      "upstream": 0,
+      "self": 0,
+      "total": 0,
+      "bucket": "b"
+    },
+    {
+      "id": "checker.ts:13970:83",
+      "driver": 352,
+      "upstream": 55119,
+      "self": 423,
+      "total": 55894,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:20007:71",
+      "driver": 0,
+      "upstream": 2750,
+      "self": 12,
+      "total": 2762,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:32496:51",
+      "driver": 0,
+      "upstream": 1674,
+      "self": 2,
+      "total": 1676,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:33480:121",
+      "driver": 11,
+      "upstream": 2960,
+      "self": 0,
+      "total": 2971,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:33486:62",
+      "driver": 4,
+      "upstream": 2855,
+      "self": 1,
+      "total": 2860,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:44963:183",
+      "driver": 0,
+      "upstream": 368,
+      "self": 0,
+      "total": 368,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:47283:40",
+      "driver": 212,
+      "upstream": 73307,
+      "self": 51,
+      "total": 73570,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:47284:36",
+      "driver": 51,
+      "upstream": 13717,
+      "self": 6,
+      "total": 13774,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:47301:13",
+      "driver": 212,
+      "upstream": 73247,
+      "self": 51,
+      "total": 73510,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48433:60",
+      "driver": 0,
+      "upstream": 18,
+      "self": 0,
+      "total": 18,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48454:23",
+      "driver": 1,
+      "upstream": 60,
+      "self": 0,
+      "total": 61,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48459:100",
+      "driver": 0,
+      "upstream": 228,
+      "self": 0,
+      "total": 228,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48462:25",
+      "driver": 0,
+      "upstream": 6,
+      "self": 0,
+      "total": 6,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48521:72",
+      "driver": 0,
+      "upstream": 108,
+      "self": 0,
+      "total": 108,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48523:27",
+      "driver": 0,
+      "upstream": 30,
+      "self": 0,
+      "total": 30,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48523:69",
+      "driver": 0,
+      "upstream": 30,
+      "self": 0,
+      "total": 30,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48529:72",
+      "driver": 0,
+      "upstream": 48,
+      "self": 0,
+      "total": 48,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48535:27",
+      "driver": 0,
+      "upstream": 14,
+      "self": 0,
+      "total": 14,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:48547:31",
+      "driver": 0,
+      "upstream": 8,
+      "self": 0,
+      "total": 8,
+      "bucket": "rest"
+    },
+    {
+      "id": "checker.ts:50318:76",
+      "driver": 0,
+      "upstream": 0,
+      "self": 0,
+      "total": 0,
+      "bucket": "b"
+    },
+    {
+      "id": "checker.ts:52739:39",
+      "driver": 0,
+      "upstream": 0,
+      "self": 0,
+      "total": 0,
+      "bucket": "b"
+    },
+    {
+      "id": "transformers/ts.ts:1069:52",
+      "driver": 0,
+      "upstream": 2530,
+      "self": 0,
+      "total": 2530,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/ts.ts:1453:41",
+      "driver": 0,
+      "upstream": 2530,
+      "self": 0,
+      "total": 2530,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/ts.ts:1460:25",
+      "driver": 0,
+      "upstream": 2530,
+      "self": 0,
+      "total": 2530,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/classFields.ts:694:20",
+      "driver": 0,
+      "upstream": 4,
+      "self": 0,
+      "total": 4,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/classFields.ts:729:20",
+      "driver": 0,
+      "upstream": 516,
+      "self": 0,
+      "total": 516,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/classFields.ts:753:20",
+      "driver": 0,
+      "upstream": 14,
+      "self": 0,
+      "total": 14,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/classFields.ts:777:20",
+      "driver": 0,
+      "upstream": 12,
+      "self": 0,
+      "total": 12,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:1412:99",
+      "driver": 0,
+      "upstream": 416,
+      "self": 0,
+      "total": 416,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:1427:99",
+      "driver": 0,
+      "upstream": 212,
+      "self": 0,
+      "total": 212,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:1442:99",
+      "driver": 0,
+      "upstream": 284,
+      "self": 0,
+      "total": 284,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:1974:20",
+      "driver": 0,
+      "upstream": 60,
+      "self": 0,
+      "total": 60,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:1996:20",
+      "driver": 0,
+      "upstream": 34,
+      "self": 0,
+      "total": 34,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/esDecorators.ts:2020:20",
+      "driver": 0,
+      "upstream": 24,
+      "self": 0,
+      "total": 24,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/module/module.ts:1566:55",
+      "driver": 0,
+      "upstream": 48,
+      "self": 0,
+      "total": 48,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/module/module.ts:1588:63",
+      "driver": 0,
+      "upstream": 1626,
+      "self": 0,
+      "total": 1626,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/module/system.ts:775:73",
+      "driver": 0,
+      "upstream": 16,
+      "self": 0,
+      "total": 16,
+      "bucket": "rest"
+    },
+    {
+      "id": "transformers/module/esnextAnd2015.ts:277:55",
+      "driver": 0,
+      "upstream": 940,
+      "self": 0,
+      "total": 940,
+      "bucket": "rest"
+    },
+    {
+      "id": "binder.ts:738:67",
+      "driver": 5,
+      "upstream": 2110,
+      "self": 0,
+      "total": 2115,
+      "bucket": "rest"
+    },
+    {
+      "id": "binder.ts:3293:68",
+      "driver": 0,
+      "upstream": 0,
+      "self": 0,
+      "total": 0,
+      "bucket": "b"
+    },
+    {
+      "id": "binder.ts:3313:64",
+      "driver": 0,
+      "upstream": 32,
+      "self": 0,
+      "total": 32,
+      "bucket": "rest"
+    },
+    {
+      "id": "binder.ts:3427:55",
+      "driver": 2,
+      "upstream": 403,
+      "self": 0,
+      "total": 405,
+      "bucket": "rest"
+    },
+    {
+      "id": "binder.ts:3705:86",
+      "driver": 6,
+      "upstream": 2682,
+      "self": 6,
+      "total": 2694,
+      "bucket": "rest"
+    }
+  ]
+}

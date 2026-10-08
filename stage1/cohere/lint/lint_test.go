@@ -11,6 +11,7 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
 	"testing"
@@ -60,6 +61,19 @@ type execution struct {
 	duration time.Duration
 }
 
+// moduleDownload is the one line the go command writes to stderr on a clean build: fetching a module the
+// cache doesn't hold yet, as on a fresh box when cohere's pin adds one. Any other stderr still fails.
+var moduleDownload = regexp.MustCompile(`(?m)^go: downloading \S+ \S+\n`)
+
+// commandDiagnostics is the stderr that fails a command: all of it, less the go command's module
+// downloads.
+func commandDiagnostics(name string, stderr []byte) []byte {
+	if name == "go" {
+		return moduleDownload.ReplaceAll(stderr, nil)
+	}
+	return stderr
+}
+
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
 func executeUncached(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
@@ -78,7 +92,7 @@ func executeUncached(t *testing.T, directory, name string, args ...string) execu
 	started := time.Now()
 	err = command.Run()
 	duration := time.Since(started)
-	if err != nil || stderr.Len() != 0 {
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
 	}
 	data, err := os.ReadFile(output.Name())
@@ -739,6 +753,12 @@ func TestThroughput(t *testing.T) {
 	t.Logf("load after %s", strings.TrimSpace(string(loadAfter)))
 }
 
+// mutantBuilds bounds how many of TestMutants' sanitized native builds run at once. The subtests run in
+// parallel, since each works in its own copy of the port and the cost is one build per rule, which grows
+// with every port batch. A sanitized clang build of the whole port is the memory-heavy step, so only a few
+// run together, whatever the machine's core count.
+var mutantBuilds = make(chan struct{}, min(runtime.NumCPU(), 4))
+
 func TestMutants(t *testing.T) {
 	oracle := goOracle(t)
 	for _, descriptor := range prepareRegistry(t, ".") {
@@ -751,7 +771,21 @@ func TestMutants(t *testing.T) {
 			t.Fatal(err)
 		}
 		t.Run(change.Name, func(t *testing.T) {
-			rows := generated(t)
+			t.Parallel()
+			// A mutant can change only its own rule's output, so it runs on the rows that select that rule:
+			// its witnesses, and the generated rows selecting it or all rules. Rows naming another rule
+			// cannot show it. An "all" row stays as it is, since its options are every rule's bag.
+			var rows []string
+			for _, row := range generated(t) {
+				// A bare path selects all rules, as main.ts reads it.
+				selected := "all"
+				if fields := strings.Split(row, "\t"); len(fields) > 1 && fields[1] != "" {
+					selected = fields[1]
+				}
+				if selected == "all" || selected == descriptor.Name {
+					rows = append(rows, row)
+				}
+			}
 			var witnesses []string
 			for _, source := range ownedWitnesses(t, ".", descriptor.Slug) {
 				witnesses = append(witnesses, source+"\t"+descriptor.Name)
@@ -763,10 +797,17 @@ func TestMutants(t *testing.T) {
 				change.File = descriptor.Module
 			}
 			directory := mutant(t, change.From, change.To, filepath.Join("rules", descriptor.Slug, change.File))
+			// The slot is released by defer: buildPort fails with t.Fatal, which ends this goroutine, and a
+			// slot held by a failed build would leave every other subtest waiting until the package timed out.
+			binary := func() string {
+				mutantBuilds <- struct{}{}
+				defer func() { <-mutantBuilds }()
+				return buildPort(t, directory, true)
+			}()
 			for _, side := range []struct {
 				name string
 				run  execution
-			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", path)}} {
+			}{{"Node", node(t, directory, path, false)}, {"emitted JavaScript", emittedNode(t, directory, path, false)}, {"native", execute(t, "", binary, "--manifest", path)}} {
 				if bytes.Equal(side.run.output, want) {
 					t.Fatalf("%s mutant survived on %s", change.Name, side.name)
 				}

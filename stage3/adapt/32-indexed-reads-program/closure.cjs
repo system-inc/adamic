@@ -1,10 +1,29 @@
 "use strict";
 const sites = [...require("./closure-sites.json"), ...require("./public-host-sites.json")];
+const restored = sites.filter(s => s.kind === "restored-public-method");
+const restoredKeys = ["CompilerHost.getDefaultLibLocation", "CompilerHost.createHash", "CompilerHost.readDirectory", "ModuleResolutionHost.trace", "ModuleResolutionHost.directoryExists", "ModuleResolutionHost.getDirectories", "ModuleResolutionHost.realpath", "ProgramHost.createHash", "ProgramHost.realpath", "ProgramHost.getEnvironmentVariable"];
+if (JSON.stringify(restored.map(s => s.interface + "." + s.name).sort()) !== JSON.stringify(restoredKeys.sort())) throw new Error("ten restored public owner census drift");
 function plan(ts, file, text, check) {
     const sf = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
     if (sf.parseDiagnostics.length) throw new Error(`closure parse failure: ${file}`);
     const edits = [];
     for (const site of sites.filter(s => s.file === file)) {
+        if (site.kind === "restored-public-method") {
+            const found = [];
+            function visit(n) {
+                if ((ts.isMethodSignature(n) || ts.isPropertySignature(n)) && n.name.getText(sf) === site.name && ts.isInterfaceDeclaration(n.parent) && n.parent.name.text === site.interface) found.push(n);
+                ts.forEachChild(n, visit);
+            }
+            visit(sf);
+            if (found.length !== 1 || !found[0].questionToken) throw new Error("restored method owner drift");
+            const n = found[0], actual = n.getText(sf);
+            if (actual === site.after && ts.isPropertySignature(n)) {
+                if (check) throw new Error("public method restoration missing");
+                edits.push({at:n.getStart(sf), end:n.end, text:site.before});
+            }
+            else if (actual !== site.before || !ts.isMethodSignature(n)) throw new Error("restored method signature drift");
+            continue;
+        }
         if (site.kind === "optional-helper-call") {
             const found=[];
             function visit(n) {

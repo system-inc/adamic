@@ -36,7 +36,7 @@ registerHooks({
 				const sources = JSON.parse(execFileSync(binary, [fileURLToPath(url)], { encoding: 'utf8' }));
 				source = sources[fileURLToPath(url)];
 			}
-			return { format: 'module', source: stripTypeScriptTypes(source), shortCircuit: true };
+			return { format: 'module', source: stripTypeScriptTypes(source, { mode: 'transform' }), shortCircuit: true };
 		}
 		return nextLoad(url, context);
 	},
