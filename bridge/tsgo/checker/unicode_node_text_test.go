@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -50,7 +51,7 @@ func TestUnicodeNodeText(t *testing.T) {
 		}
 		n.ForEachChild(func(c *ast.Node) bool { walk(c); return false })
 	}
-	walk(p.Compiler.GetSourceFile(file).AsNode())
+	walk(p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file)).AsNode())
 	if checked != 5 {
 		t.Fatal("missing case controls", checked)
 	}

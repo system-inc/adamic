@@ -1,0 +1,3 @@
+import { programArguments } from 'adamic';
+import { optionPattern } from '../no-unstable-nested-components/options.a';
+console.log(`${optionPattern(programArguments()[0] ?? 'render*').test('renderChild')}`);

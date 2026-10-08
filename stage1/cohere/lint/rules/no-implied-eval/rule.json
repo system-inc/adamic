@@ -1,0 +1,14 @@
+{
+  "name": "no-implied-eval",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoImpliedEval",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestNoImpliedEval"
+}

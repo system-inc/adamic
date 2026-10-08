@@ -1,3 +1,4 @@
+import { edgeWhitespace } from './patterns.a';
 import { Kind } from '../common/kinds.a';
 import type { Node } from '../common/node.a';
 import type { Context } from '../common/context.a';
@@ -30,9 +31,6 @@ export class Rule {
         }
         return callee.kind===Kind.Identifier&&callee.text==='createElement'&&context.declarations(callee).some((id)=>this.declaration(context.node(id)));
     }
-    space(code: number): boolean {
-        return (code>=9&&code<=13)||code===32||code===133||code===160||code===5760||(code>=8192&&code<=8202)||code===8232||code===8233||code===8239||code===8287||code===12288;
-    }
     jsxInline(node: Node): boolean {
         if(node.kind!==Kind.JsxElement&&node.kind!==Kind.JsxSelfClosingElement){return false;}
         const tag=this.context.first(this.context.opening(node));return tag.kind===Kind.Identifier&&this.inlineNames.includes(tag.text);
@@ -40,7 +38,7 @@ export class Rule {
     arrayInline(node: Node): boolean {
         if([Kind.StringLiteral,Kind.NumericLiteral,Kind.BigIntLiteral,Kind.TrueKeyword,Kind.FalseKeyword,Kind.NullKeyword,Kind.RegularExpressionLiteral].includes(node.kind)) {
             if(node.kind!==Kind.StringLiteral){return true;}
-            return !this.space(node.text.charCodeAt(0))&&!this.space(node.text.charCodeAt(node.text.length-1));
+            return !edgeWhitespace.test(node.text);
         }
         if(node.kind!==Kind.CallExpression||node.list<=0){return false;}
         const first=this.context.node(this.context.args(node)[0]??-1);return first.kind===Kind.StringLiteral&&this.inlineNames.includes(first.text);

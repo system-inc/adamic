@@ -1,0 +1,17 @@
+{
+  "name": "prefer-object-has-own",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22PreferObjectHasOwn",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestPreferObjectHasOwn",
+  "programReads": [
+    "ReadsCompilerOptions"
+  ]
+}

@@ -1,0 +1,56 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly exceptions: readonly string[];
+    constructor(context: RuleContext) {
+        this.context = context;
+        this.exceptions = context.settings.list('exceptions', []);
+    }
+    assignment(operator: string): boolean {
+        return ['EqualsToken', 'PlusEqualsToken', 'MinusEqualsToken', 'AsteriskEqualsToken', 'AsteriskAsteriskEqualsToken',
+            'SlashEqualsToken', 'PercentEqualsToken', 'LessThanLessThanEqualsToken', 'GreaterThanGreaterThanEqualsToken',
+            'GreaterThanGreaterThanGreaterThanEqualsToken', 'AmpersandEqualsToken', 'BarEqualsToken', 'CaretEqualsToken',
+            'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+    }
+    writes(index: number): boolean {
+        const context = this.context; let current = index;
+        while(this.context.parent(current) >= 0) {
+            const parentIndex = this.context.parent(current); const parent = context.node(parentIndex);
+            if(parent.kind === 'PropertyAccessExpression') { return false; }
+            if(['SpreadElement', 'SpreadAssignment', 'ArrayLiteralExpression', 'ObjectLiteralExpression', 'ParenthesizedExpression'].includes(parent.kind)) { current = parentIndex; continue; }
+            if(parent.kind === 'PropertyAssignment') { if(parent.children[parent.children.length - 1] !== current) { return false; } current = parentIndex; continue; }
+            if(parent.kind === 'ShorthandPropertyAssignment') { if(parent.children[0] !== current) { return false; } current = parentIndex; continue; }
+            if(parent.kind === 'BinaryExpression') { return parent.children[0] === current && this.assignment(context.node(parent.children[1] ?? -1).kind); }
+            if(parent.kind === 'PrefixUnaryExpression' || parent.kind === 'PostfixUnaryExpression') { return ['PlusPlusToken', 'MinusMinusToken'].includes(parent.operator); }
+            return ['ForInStatement', 'ForOfStatement'].includes(parent.kind) &&
+                parent.children[context.node(parent.children[0] ?? -1).kind === 'AwaitKeyword' ? 1 : 0] === current;
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        if(this.exceptions.includes(node.text) || !this.writes(index)) { return; }
+        const answer = this.context.checker?.ask(index, 'global-binding\nvalue');
+        if(answer === undefined || answer.value === undefined) { return; }
+        const frames = new Frames(answer.value);
+        header(frames, 'global-binding');
+        const present = frames.yes();
+        const count = frames.natural();
+        let global = false;
+        for(let at = 0; at < count; at++) {
+            const library = frames.yes(); const declaration = frames.yes();
+            if(at === 0) { global = library && declaration; }
+        }
+        frames.yes();
+        const local = frames.natural();
+        for(let at = 0; at < local; at++) { frames.yes(); frames.yes(); }
+        frames.end();
+        if(present && global) {
+            this.context.report(index, 'no-global-assign', 'noGlobalAssign', message(node.text), '', '', '');
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

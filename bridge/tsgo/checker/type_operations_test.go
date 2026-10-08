@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -26,7 +27,7 @@ func TestTypeOperations(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	pick := func(kind ast.Kind, text string) *ast.Node {

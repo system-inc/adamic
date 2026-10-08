@@ -69,7 +69,7 @@ export class Context extends Base {
     parameters(node: Node): Node[] { return node.children.map((i)=>this.node(i)).filter((n)=>n.kind===Kind.Parameter); }
     cases(node: Node): number[] {
         const cached=this.caseCache.get(node.index);if(cached!==undefined){return cached;}
-        const values=unicodeNodeText(this.bindings.rules.program,node);this.caseCache.set(node.index,values);return values;
+        const values=unicodeNodeText(this.bindings.rules,node);this.caseCache.set(node.index,values);return values;
     }
     wordCompare(a: string,b: string): number {
         // Go string ordering compares UTF-8 scalar order, including supplementary names.

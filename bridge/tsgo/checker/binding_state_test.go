@@ -3,6 +3,7 @@ package checker
 import (
 	"context"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -23,7 +24,7 @@ func TestBindingState(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), sf)
 	defer release()
 	checked, shorthand, missing := 0, false, false

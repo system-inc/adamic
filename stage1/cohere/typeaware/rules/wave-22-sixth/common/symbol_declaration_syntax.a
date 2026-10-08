@@ -1,12 +1,15 @@
-import { tsgoInspect } from 'adamic';
+import { panic } from 'adamic';
+import type { Rules } from '../../../rules.ts';
+import { kindNumbers } from './kinds.a';
 import { Frames, header } from '../../../frames.ts';
 import { Node } from './node.a';
-export function declarationSyntax(program: number, reference: Node, nodes: Node[]): number[] {
-    const frames=new Frames(tsgoInspect(program,reference.file,reference.pos,reference.end,reference.kindName,'symbol-declaration-syntax'));
+export function declarationSyntax(checker: Rules, reference: Node, nodes: Node[]): number[] {
+    const frames=new Frames(checker.askAt(reference.file,reference.pos,reference.end,reference.kindName,'symbol-declaration-syntax'));
     header(frames,'symbol-declaration-syntax');frames.yes();
+    const kinds=kindNumbers();
     const roots=frames.ids();const count=frames.natural();const base=nodes.length;
     for(let at=0;at<count;at++) {
-        const file=frames.field();const kind=frames.natural();const name=frames.field();const pos=frames.natural();const end=frames.natural();
+        const file=frames.field();frames.natural();const name=frames.field();const kind=kinds.get(name)??-1;const pos=frames.natural();const end=frames.natural();
         const text=frames.field();const parent=frames.natural();const list=frames.natural();const initializer=frames.natural();const children=frames.ids().map((id)=>base+id);
         const node=new Node(base+at,kind,name,file,pos,end,pos,text,children,list,parent===0?-1:base+parent-1);
         node.initializer=initializer===0?-1:base+initializer-1;nodes.push(node);

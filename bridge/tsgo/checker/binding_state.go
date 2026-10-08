@@ -45,7 +45,7 @@ func (p *Program) bindingState(out *fields, c *checker.Checker, node *ast.Node, 
 		if source == nil {
 			return fmt.Errorf("binding declaration lacks source")
 		}
-		out.text(source.FileName())
+		out.text(source.FileName().AsString())
 		out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 		out.number(uint64(declaration.Pos()))
 		out.number(uint64(declaration.End()))

@@ -1,0 +1,31 @@
+import { panic } from 'adamic';
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Context } from '../../../typeaware/rules/wave-22-sixth/common/context.a';
+import { Rule as Judgment } from './judgment.a';
+export class Rule {
+    readonly context: RuleContext;
+    facts: Context | undefined = undefined;
+    judgment: Judgment | undefined = undefined;
+    reported = 0;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    visit(node: ParseNode, index: number): void {
+        const context = this.context;
+        if(this.facts === undefined) {
+        this.facts = new Context(context.waveBindings(), false, context.settings.read('allowglobals', 'false') === 'true');
+        this.judgment = new Judgment(this.facts);
+        }
+        const facts = this.facts ?? panic('missing typed React facts');
+        const judgment = this.judgment ?? panic('missing typed React judgment');
+        judgment.visit(facts.node(index));
+        const findings = facts.bindings.rules.findings;
+        while(this.reported < findings.length) {
+            const finding = findings[this.reported];
+            if(finding !== undefined) { this.context.waveFinding(finding); }
+            this.reported++;
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

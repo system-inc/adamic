@@ -1,0 +1,14 @@
+{
+  "name": "@typescript-eslint/no-non-null-asserted-nullish-coalescing",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoNonNullAssertedNullishCoalescing",
+  "upstreamPackage": "typescript",
+  "upstreamTest": "TestNoNonNullAssertedNullishCoalescing"
+}

@@ -1,0 +1,17 @@
+{
+  "name": "react/no-object-type-as-default-prop",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "SourceFile"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22NoObjectTypeAsDefaultProp",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestNoObjectTypeAsDefaultProp",
+  "programReads": [
+    "ReadsOtherFiles"
+  ]
+}

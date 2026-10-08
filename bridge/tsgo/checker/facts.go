@@ -204,13 +204,20 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 	mode := strings.Split(question, "\n")[0]
 	out.text(mode)
 	switch mode {
-	case "unicode-node-text": return p.unicodeNodeText(out, node, question)
-	case "symbol-declaration-syntax": return p.symbolDeclarationSyntax(out, c, node, question)
-	case "global-binding": return p.globalBinding(out, c, node, question)
-	case "global-source": return p.globalSource(out, c, node, question)
-	case "binding-state": return p.bindingState(out, c, node, question)
-	case "type-operations": return p.typeOperations(out, c, node, question)
-	case "scope-export-symbols": return p.scopeExportSymbols(out, c, node, question)
+	case "unicode-node-text":
+		return p.unicodeNodeText(out, node, question)
+	case "symbol-declaration-syntax":
+		return p.symbolDeclarationSyntax(out, c, node, question)
+	case "global-binding":
+		return p.globalBinding(out, c, node, question)
+	case "global-source":
+		return p.globalSource(out, c, node, question)
+	case "binding-state":
+		return p.bindingState(out, c, node, question)
+	case "type-operations":
+		return p.typeOperations(out, c, node, question)
+	case "scope-export-symbols":
+		return p.scopeExportSymbols(out, c, node, question)
 	case "node-symbol-details", "declaration-details", "type-symbol-details", "property-declarations":
 		if err := p.declarationFacts(out, c, node, mode, question); err != nil {
 			return "", err
@@ -291,7 +298,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 				if f == nil {
 					return "", fmt.Errorf("binding declaration has no source")
 				}
-				out.text(f.FileName())
+				out.text(f.FileName().AsString())
 				out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 				out.number(uint64(declaration.Pos()))
 				out.number(uint64(declaration.End()))

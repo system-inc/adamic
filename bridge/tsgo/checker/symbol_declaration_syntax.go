@@ -53,7 +53,7 @@ func (p *Program) symbolDeclarationSyntax(out *fields, c *checker.Checker, node 
 		source := ast.GetSourceFileOfNode(n)
 		file := ""
 		if source != nil {
-			file = source.FileName()
+			file = source.FileName().AsString()
 		}
 		out.text(file)
 		out.number(uint64(n.Kind))

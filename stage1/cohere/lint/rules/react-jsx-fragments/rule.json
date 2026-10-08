@@ -1,0 +1,19 @@
+{
+  "name": "react/jsx-fragments",
+  "typed": true,
+  "node": true,
+  "kinds": [
+    "JsxFragment",
+    "JsxElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleWave22JsxFragments",
+  "upstreamPackage": "react",
+  "upstreamTest": "TestJsxFragments",
+  "programReads": [
+    "ReadsOtherFiles"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "name": "wave22-nullish-suggestion",
+  "file": "judgment.a",
+  "from": "rules.byte(rules.scanner.pos), ''",
+  "to": "rules.byte(rules.scanner.pos) + 1, ''"
+}

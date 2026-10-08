@@ -1,0 +1,5 @@
+{
+  "name": "wave22-global-provenance",
+  "from": "global = library && declaration;",
+  "to": "global = false;"
+}

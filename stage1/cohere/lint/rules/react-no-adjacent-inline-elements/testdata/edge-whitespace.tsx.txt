@@ -1,0 +1,2 @@
+React.createElement("div", null, [foo("a"), "\u0085", bar("span")]);
+React.createElement("div", null, [foo("a"), "\ufeff", bar("span")]);

@@ -1,0 +1,6 @@
+{
+  "name": "wave22-has-own-fix-span",
+  "file": "judgment.a",
+  "from": "'Object.hasOwn'",
+  "to": "'Object.hasOwnMutant'"
+}

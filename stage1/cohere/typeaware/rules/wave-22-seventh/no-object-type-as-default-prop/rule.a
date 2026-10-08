@@ -18,13 +18,7 @@ export class Rule {
         if(initial.kind===Kind.CallExpression){const callee=c.skip(c.first(initial));if(callee.kind===Kind.Identifier&&callee.text==='Symbol'){return 'Symbol literal';}}
         return '';
     }
-    trim(text: string): string {
-        // Go TrimSpace uses Unicode White_Space, which includes U+0085 but excludes BOM.
-        let start=0;let end=text.length;
-        while(start<end&&this.components.elements.space(text.charCodeAt(start))){start++;}
-        while(start<end&&this.components.elements.space(text.charCodeAt(end-1))){end--;}
-        return text.slice(start,end);
-    }
+    trim(text: string): string { return text.trim(); }
     defaults(component: Node): void {
         if(![Kind.FunctionDeclaration,Kind.FunctionExpression,Kind.ArrowFunction,Kind.MethodDeclaration].includes(component.kind)){return;}
         const c=this.context;const parameter=c.parameters(component)[0];if(parameter===undefined){return;}

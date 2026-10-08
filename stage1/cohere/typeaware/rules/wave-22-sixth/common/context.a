@@ -1,4 +1,4 @@
-import { panic, tsgoInspect } from 'adamic';
+import { panic } from 'adamic';
 import type { Bindings } from '../../../bindings.ts';
 import { Diagnostic } from '../../../diagnostic.ts';
 import { Frames, header } from '../../../frames.ts';
@@ -39,11 +39,11 @@ export class Context {
     }
     declarations(reference: Node): number[] {
         const cached=this.declarationsByReference.get(reference.index);if(cached!==undefined){return cached;}
-        const result=declarationSyntax(this.bindings.rules.program,reference,this.nodes);
+        const result=declarationSyntax(this.bindings.rules,reference,this.nodes);
         this.declarationsByReference.set(reference.index,result);return result;
     }
     symbol(reference: Node): SymbolSummary {
-        const frames=new Frames(tsgoInspect(this.bindings.rules.program,reference.file,reference.pos,reference.end,reference.kindName,'node-symbol-details'));
+        const frames=new Frames(this.bindings.rules.askAt(reference.file,reference.pos,reference.end,reference.kindName,'node-symbol-details'));
         header(frames,'node-symbol-details');const present=frames.yes();const files:string[]=[];
         if(present) {
             frames.natural();frames.natural();frames.field();const count=frames.natural();

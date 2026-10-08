@@ -218,3 +218,5 @@ parked. No available ranked rule remains and no new claim is made. Fresh evidenc
 is in rules/wave-22-seventh/LANDING_REGISTRY_B46914832.md.
 
 Landing refresh: rebased onto area d3a37422c including main b6b1538b0. All eighteen existing ports re-green; full evidence in rules/wave-22-seventh/LANDING_TYPEOF_B6B1538B0.md. No new reservation: all 197 ranked rules accounted for across 653 origin refs. Existing dynamic RegExp, shared checker/JavaScript and parked React analysis gaps remain.
+
+Unparked onto the area checker by merge. Fifteen owned unified descriptors added; original defaults and supported React options rechecked. Shared gate and configured checker/RegExp blockers remain, with exact reproducers and evidence in stage1/cohere/typeaware/rules/wave-22-seventh/UNPARK_REPORT.md. Prior HIR/SSA/capture React claims remain parked. No additional claims.

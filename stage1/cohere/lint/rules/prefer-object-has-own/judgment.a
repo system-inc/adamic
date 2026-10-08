@@ -1,0 +1,25 @@
+import type { Bindings } from '../../../typeaware/bindings.ts';
+import { PreferenceSupport } from '../../../typeaware/wave_22_preference_support.a';
+export class PreferObjectHasOwn {
+    readonly support: PreferenceSupport;
+    constructor(bindings: Bindings) { this.support = new PreferenceSupport(bindings); }
+    receiver(index: number): boolean {
+        const support = this.support; const rules = support.bindings.rules; index = rules.skip(index); if(index < 0) { return false; }
+        let node = rules.parser.node(index);
+        if(node.kind === 'ObjectLiteralExpression') { return node.children.length === 0 && support.resolved(index, 'Object'); }
+        if(support.property(index) === 'prototype') { index = rules.skip(node.children[0] ?? -1); if(index < 0) { return false; } node = rules.parser.node(index); }
+        return node.kind === 'Identifier' && node.text === 'Object' && support.global(index);
+    }
+    run(): void {
+        const support = this.support; const rules = support.bindings.rules;
+        for(let index = 0; index < rules.parser.nodes.length; index++) {
+            const node = rules.parser.node(index); if(!support.call(index)) { continue; }
+            const callee = rules.skip(node.children[0] ?? -1); if(callee < 0 || support.property(callee) !== 'call') { continue; }
+            const member = rules.skip(rules.parser.node(callee).children[0] ?? -1);
+            if(member < 0 || support.property(member) !== 'hasOwnProperty' || !this.receiver(rules.parser.node(member).children[0] ?? -1)) { continue; }
+            const finding = support.report(index, 'prefer-object-has-own', 'useHasOwn', "Use 'Object.hasOwn()' instead of 'Object.prototype.hasOwnProperty.call()'. The long form exists because an object can define its own `hasOwnProperty`, or have a null prototype and none at all, so calling it through `Object.prototype` was the only safe spelling. `Object.hasOwn` is that spelling with a name, and it cannot be shadowed by the object being asked about.");
+            const target = rules.parser.node(callee); const start = rules.start(target);
+            if(!support.comment(start, target.end)) { finding.repairs.push(support.repair(start, target.end, support.identifier(start - 1, true) ? ' Object.hasOwn' : 'Object.hasOwn')); }
+        }
+    }
+}

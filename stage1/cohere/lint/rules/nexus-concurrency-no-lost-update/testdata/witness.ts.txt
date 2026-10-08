@@ -1,0 +1,1 @@
+let state = 0; async function f() { state += await Promise.resolve(1); }

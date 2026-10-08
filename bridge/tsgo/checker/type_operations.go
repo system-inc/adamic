@@ -161,9 +161,9 @@ func (p *Program) typeOperations(out *fields, c *checker.Checker, node *ast.Node
 						return "", fmt.Errorf("declaration lacks source")
 					}
 					out.text(strings.TrimPrefix(decl.Kind.String(), "Kind"))
-					out.text(source.FileName())
+					out.text(source.FileName().AsString())
 					out.yes(source.IsDeclarationFile)
-					out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.Path()))
+					out.yes(p.Compiler.IsSourceFileDefaultLibrary(source.PathKey()))
 					out.number(uint64(decl.Flags))
 					out.number(uint64(len(c.GetSignaturesOfType(c.GetTypeOfSymbolAtLocation(symbol, decl), checker.SignatureKindConstruct))))
 					var members []*ast.Node
@@ -222,7 +222,7 @@ func (p *Program) typeOperations(out *fields, c *checker.Checker, node *ast.Node
 								if file == nil {
 									return "", fmt.Errorf("decorator declaration lacks source")
 								}
-								out.text(file.FileName())
+								out.text(file.FileName().AsString())
 								out.yes(file.IsDeclarationFile)
 								out.number(uint64(origin.Flags))
 							}

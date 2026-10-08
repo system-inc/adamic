@@ -19,10 +19,11 @@ import (
 	"github.com/microsoft/TypeScript/tsc/shim/compiler"
 	"github.com/microsoft/TypeScript/tsc/shim/core"
 	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
 	"github.com/system-inc/cohere/internal/lint/registry"
-"github.com/system-inc/cohere/internal/lint/rules/react"
 	"github.com/system-inc/cohere/internal/lint/rule"
+	"github.com/system-inc/cohere/internal/lint/rules/react"
 )
 
 func written(text string) string {
@@ -62,21 +63,21 @@ func main() {
 		panic(err)
 	}
 	started := time.Now()
-	host := compiler.NewCachedFSCompilerHost(filepath.ToSlash(filepath.Dir(configPath)), bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
-	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(filepath.ToSlash(configPath), nil, nil, host, nil)
+	host := compiler.NewCachedFSCompilerHost(bundled.WrapFS(osvfs.FS()), bundled.LibPath(), nil, nil, nil)
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(configPath), nil, nil, bundled.WrapFS(osvfs.FS()), nil)
 	if config == nil || len(diagnostics) > 0 || len(config.Errors) > 0 {
 		panic("invalid tsconfig")
 	}
-	roots := make([]string, len(paths))
+	roots := make([]tspath.RootedFilePath, len(paths))
 	for i, path := range paths {
 		if !filepath.IsAbs(path) {
 			path = filepath.Join(filepath.Dir(configPath), path)
 		}
-		roots[i] = filepath.ToSlash(path)
+		roots[i] = tspath.RootedFilePathFromAbsolute(filepath.ToSlash(path))
 	}
 	config.CompilerOptions().AllowNonTsExtensions = core.TSTrue
 	for _, path := range config.FileNames() {
-		if strings.HasSuffix(path, ".d.ts") && !slices.Contains(roots, path) {
+		if strings.HasSuffix(path.AsString(), ".d.ts") && !slices.Contains(roots, path) {
 			roots = append(roots, path)
 		}
 	}
@@ -123,9 +124,13 @@ func main() {
 		cache := rule.NewFileCache()
 		for _, subject := range subjects {
 			var options any
-            if subject.Name == "react/jsx-fragments" && slices.Contains(args, "--element") { options = react.JsxFragmentsOptions{Mode: react.JsxFragmentsElement} }
-            if subject.Name == "react/jsx-no-undef" && slices.Contains(args, "--allow-globals") { options = react.JsxNoUndefOptions{AllowGlobals:true} }
-            listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
+			if subject.Name == "react/jsx-fragments" && slices.Contains(args, "--element") {
+				options = react.JsxFragmentsOptions{Mode: react.JsxFragmentsElement}
+			}
+			if subject.Name == "react/jsx-no-undef" && slices.Contains(args, "--allow-globals") {
+				options = react.JsxNoUndefOptions{AllowGlobals: true}
+			}
+			listeners := subject.Run(rule.Context{SourceFile: file, TypeChecker: typeChecker, Program: rule.ViewProgram(program, file, subject), FileCache: cache, Report: func(d rule.Diagnostic) { d.RuleName = subject.Name; collected = append(collected, d) }}, options)
 			for kind, callback := range listeners {
 				callbacks[kind] = append(callbacks[kind], callback)
 			}

@@ -1,0 +1,13 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { ConcurrencyNoLostUpdate } from './judgment.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(node: ParseNode, index: number): void {
+        const bindings = this.context.waveBindings();
+        new ConcurrencyNoLostUpdate(bindings).run();
+        for(const finding of bindings.rules.findings) { this.context.waveFinding(finding); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

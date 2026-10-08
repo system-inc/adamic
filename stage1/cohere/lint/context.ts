@@ -1,3 +1,7 @@
+import { Bindings as WaveBindings } from '../typeaware/bindings.ts';
+import { Rules as WaveRules } from '../typeaware/rules.ts';
+import { UnaryMinus, byteOffsets } from '../typeaware/unary_minus.ts';
+import type { Diagnostic as WaveDiagnostic } from '../typeaware/diagnostic.ts';
 import type { Checker } from './checker.a';
 import { panic } from 'adamic';
 import type { Parser } from '../../typescript/parser/parser.ts';
@@ -7,7 +11,7 @@ import type { Scanner } from '../../typescript/scanner/scanner.ts';
 import { Finding } from './finding.ts';
 import type { Settings } from './settings.ts';
 import { SuggestionEdit } from './suggestions.a';
-import type { Suggestion } from './suggestions.a';
+import { Suggestion } from './suggestions.a';
 
 export const noEdits: readonly SuggestionEdit[] = [];
 export const noSuggestions: readonly Suggestion[] = [];
@@ -109,6 +113,30 @@ export class RuleContext {
         this.allowCatch = allowCatch;
         this.parents = parents;
         this.root = root;
+    }
+    // Reuse the area's single checker when replaying the existing wave-22 judgments.
+    waveBindings(): WaveBindings {
+        const checker = this.checker ?? panic('typed wave without checker');
+        const offsets = byteOffsets(this.source);
+        const unary = new UnaryMinus(checker.program, checker.path, this.parser, this.scanner, offsets);
+        const rules = new WaveRules(checker.program, checker.path, this.parser, this.scanner, offsets, unary,
+            (index: number, question: string): string => { const answer = checker.ask(index, question); return answer.value ?? panic(answer.reason); },
+            (path: string, start: number, end: number, kind: string, question: string): string => { const answer = checker.askAt(path, start, end, kind, question); return answer.value ?? panic(answer.reason); });
+        for(const parent of this.parents) { rules.parents.push(parent); }
+        return new WaveBindings(rules);
+    }
+    waveFinding(finding: WaveDiagnostic): void {
+        const offsets = this.checker?.offsets ?? panic('typed wave without checker');
+        const edits: SuggestionEdit[] = [];
+        if(finding.fixStart >= 0) { edits.push(new SuggestionEdit(offsets.indexOf(finding.fixStart), offsets.indexOf(finding.fixEnd), finding.replacement)); }
+        for(const edit of finding.repairs) { edits.push(new SuggestionEdit(offsets.indexOf(edit.start), offsets.indexOf(edit.end), edit.text)); }
+        const suggestions: Suggestion[] = [];
+        for(const suggestion of finding.suggestions) {
+            const repairs: SuggestionEdit[] = [];
+            for(const edit of suggestion.repairs) { repairs.push(new SuggestionEdit(offsets.indexOf(edit.start), offsets.indexOf(edit.end), edit.text)); }
+            suggestions.push(new Suggestion(suggestion.id, suggestion.message, repairs));
+        }
+        this.reportRange(offsets.indexOf(finding.start), offsets.indexOf(finding.end), finding.rule, finding.id, finding.message, edits, suggestions);
     }
     node(index: number): ParseNode {
         return this.parser.node(index);

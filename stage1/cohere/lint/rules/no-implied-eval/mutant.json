@@ -1,0 +1,5 @@
+{
+  "name": "wave22-timer-string",
+  "from": "if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(node.kind)) { return true; }",
+  "to": "if(['StringLiteral', 'NoSubstitutionTemplateLiteral', 'TemplateExpression'].includes(node.kind)) { return false; }"
+}

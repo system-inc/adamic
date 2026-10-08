@@ -1,6 +1,7 @@
 package checker
 
 import (
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -25,7 +26,7 @@ func TestSymbolDeclarationSyntax(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	sf := p.Compiler.GetSourceFile(file)
+	sf := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	byRange := map[[3]int]*ast.Node{}
 	var visit func(*ast.Node)
 	visit = func(n *ast.Node) {

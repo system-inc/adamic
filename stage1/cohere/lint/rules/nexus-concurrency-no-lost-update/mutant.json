@@ -1,0 +1,6 @@
+{
+  "name": "wave22-lost-write-span",
+  "file": "judgment.a",
+  "from": "rules.byte(node.end), 'nexus/'",
+  "to": "rules.byte(node.end) + 1, 'nexus/'"
+}
