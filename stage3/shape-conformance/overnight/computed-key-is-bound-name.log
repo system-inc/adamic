@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-binding-mutants-8r0g977q/computed-key-is-bound-name/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 17, in <module>
+    else:assert row['outcome']=='unknown' and any(causes[owner] in d for d in row['detail']),(owner,row)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('computedRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 1553, 'end': 1566, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 1553, 'end': 1566, 'owner': 'computedRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['projected field absent or allocation not modeled: node'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

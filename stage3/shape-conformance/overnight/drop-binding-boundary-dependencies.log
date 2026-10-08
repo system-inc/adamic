@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-binding-mutants-8r0g977q/drop-binding-boundary-dependencies/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 26, in <module>
+    else:assert host_row['outcome']=='unknown' and host_row['reason']=='host metadata',(host_row['adapted']['owner'],host_row)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('defaultHostRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 475, 'end': 488, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 475, 'end': 488, 'owner': 'defaultHostRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['default binding selection and readiness not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:6:71'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

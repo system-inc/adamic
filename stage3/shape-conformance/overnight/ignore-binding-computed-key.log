@@ -1,0 +1,58 @@
+/tmp/adamic-gate/shape-binding-mutants-hgsvdb62/ignore-binding-computed-key/overlay.json
+panic: Unhandled case in Node.Text: *ast.ComputedPropertyName
+
+goroutine 1 [running]:
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x3591f3bd5c28?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c
+github.com/system-inc/adamic/internal/lower.(*latentShapeMeter).allocationBindingDeclaration(0x3591f3bd5c28, 0x3591f37b5100, {0x182c598, 0x3591f3acee70})
+	/workspace/adamic/internal/lower/latent_shape_hook.go:1125 +0x237
+github.com/system-inc/adamic/internal/lower.(*latentShapeMeter).body.func1(0x3591f36bbc18)
+	/workspace/adamic/internal/lower/latent_shape_hook.go:392 +0xa2f
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableDeclarationList).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1774
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3591f39be708?, 0x3591f3bd49f0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8742 +0x3084
+github.com/system-inc/adamic/internal/lower.(*latentShapeMeter).body.func1(0x3591f39be708)
+	/workspace/adamic/internal/lower/latent_shape_hook.go:406 +0xa88
+github.com/microsoft/TypeScript/tsc/internal/ast.visit(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:33
+github.com/microsoft/TypeScript/tsc/internal/ast.(*VariableStatement).ForEachChild(0x5df364?, 0x3591f34f8680?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1679 +0x62
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3591f36f94a8?, 0x3591f3bd49f0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8738 +0x1032
+github.com/system-inc/adamic/internal/lower.(*latentShapeMeter).body.func1(0x3591f36f94a8)
+	/workspace/adamic/internal/lower/latent_shape_hook.go:406 +0xa88
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Block).ForEachChild(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:1634
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x3591f3bd4bc0?, 0x3591f3bd49f0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:8736 +0x3262
+github.com/system-inc/adamic/internal/lower.(*latentShapeMeter).body(0x17305b8?, 0x3591f373a030?)
+	/workspace/adamic/internal/lower/latent_shape_hook.go:409 +0x45
+github.com/system-inc/adamic/internal/lower.MeasureLatentShapes.func3(0x3591f39b2818)
+	/workspace/adamic/internal/lower/latent_shape_hook.go:600 +0x5c9
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40
+github.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3591f39bce08, 0x3591f3bd5bc8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).ForEachChild(0x1837b70?, 0x3591f3bd5bc8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast_generated.go:9002 +0x1ec5
+github.com/system-inc/adamic/internal/lower.MeasureLatentShapes({0x182db10?, 0x18be060?}, 0x3591f37b2c60, {0x7ffff772a25d, 0x23}, {0x3591f3b69508, 0xa, 0x12})
+	/workspace/adamic/internal/lower/latent_shape_hook.go:610 +0x393
+main.main()
+	/workspace/adamic/stage3/shape-conformance/latent/tool/main.go:50 +0x285
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 9, in <module>
+    subprocess.run([sys.argv[1],str(scratch),str(mapped),str(output)],check=True)
+  File "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/lib/python3.12/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/tmp/adamic-gate/shape-binding-mutants-hgsvdb62/ignore-binding-computed-key-binary', '/tmp/shape-object-bindings-controls', '/tmp/shape-object-bindings-controls/map.json', '/tmp/shape-object-bindings-controls/result.json']' returned non-zero exit status 2.

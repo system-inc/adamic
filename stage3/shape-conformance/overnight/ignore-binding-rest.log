@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-binding-mutants-8r0g977q/ignore-binding-rest/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 17, in <module>
+    else:assert row['outcome']=='unknown' and any(causes[owner] in d for d in row['detail']),(owner,row)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('restRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 1150, 'end': 1163, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 1150, 'end': 1163, 'owner': 'restRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['no reaching allocation established', 'untracked source lower.latentShapeUnknown', 'spread, method or accessor allocation at /tmp/shape-object-bindings-controls/src/compiler/main.a:11:94'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

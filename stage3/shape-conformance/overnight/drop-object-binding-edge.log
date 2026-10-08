@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-binding-mutants-8r0g977q/drop-object-binding-edge/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 14, in <module>
+    if owner in ['shorthandRead','renamedRead','stringRead','numericRead']:assert row['outcome']=='conforms and ready (free)',(owner,row)
+                                                                                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('shorthandRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 313, 'end': 326, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 313, 'end': 326, 'owner': 'shorthandRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['no tracked producer'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

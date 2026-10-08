@@ -1,0 +1,10 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';readonly ready?:unknown;}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function hostRead():Ready {const {node}=JSON.parse('{"node":{"kind":"ok","ready":true}}') as {node:Base};return node as Ready;}
+function defaultHostRead():Ready {const source:{node?:Base}={};const {node=JSON.parse('{"kind":"ok","ready":true}') as Base}=source;return node as Ready;}
+function restHostRead():Ready {const {...node}=JSON.parse('{"kind":"ok","ready":true}') as Base;return node as Ready;}
+function arrayHostRead():Ready {const [node]=JSON.parse('[{"kind":"ok","ready":true}]') as Base[];return node as Ready;}
+function nestedHostRead():Ready {const {outer:{node}}=JSON.parse('{"outer":{"node":{"kind":"ok","ready":true}}}') as {outer:{node:Base}};return node as Ready;}
+function opaqueRead():Ready {const raw={kind:'ok' as const,ready:true};const {node}={node:raw};return node as Ready;}

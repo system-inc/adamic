@@ -1,0 +1,466 @@
+{
+  "status": "PASS",
+  "node": [
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "number",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean"
+  ],
+  "controls": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 313,
+      "end": 326,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 313,
+        "end": 326,
+        "owner": "shorthandRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 489,
+      "end": 502,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 489,
+        "end": 502,
+        "owner": "renamedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -3
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 628,
+      "end": 641,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 628,
+        "end": 641,
+        "owner": "stringRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -6
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 746,
+      "end": 759,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 746,
+        "end": 759,
+        "owner": "numericRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -8
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 867,
+      "end": 880,
+      "kind": "tagged",
+      "text": "base as Ready",
+      "adapted": {
+        "start": 867,
+        "end": 880,
+        "owner": "wrongRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -10
+      ],
+      "fields": [
+        {
+          "name": "ready",
+          "reason": "declared field type requires a value guard",
+          "declared": "number",
+          "expected": "boolean"
+        }
+      ],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1015,
+      "end": 1028,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1015,
+        "end": 1028,
+        "owner": "defaultRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "default binding selection and readiness not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:10:109"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1150,
+      "end": 1163,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1150,
+        "end": 1163,
+        "owner": "restRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "rest binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:11:85",
+        "spread, method or accessor allocation at /tmp/shape-object-bindings-controls/src/compiler/main.a:11:94"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1262,
+      "end": 1275,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1262,
+        "end": 1275,
+        "owner": "arrayRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "array binding iteration allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:12:78"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1396,
+      "end": 1409,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1396,
+        "end": 1409,
+        "owner": "nestedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "nested binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:13:79"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1553,
+      "end": 1566,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1553,
+        "end": 1566,
+        "owner": "computedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "computed binding key not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:14:119"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 320,
+      "end": 333,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 320,
+        "end": 333,
+        "owner": "hostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque call may mutate projected fields",
+        "no reaching allocation established",
+        "untracked source lower.latentShapeUnknown",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:5:41"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 475,
+      "end": 488,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 475,
+        "end": 488,
+        "owner": "defaultHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "default binding selection and readiness not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:6:71",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:6:76"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 594,
+      "end": 607,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 594,
+        "end": 607,
+        "owner": "restHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "rest binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:7:39",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:7:48"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 715,
+      "end": 728,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 715,
+        "end": 728,
+        "owner": "arrayHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "array binding iteration allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:8:40",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:8:46"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 875,
+      "end": 888,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 875,
+        "end": 888,
+        "owner": "nestedHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "nested binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:9:41",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:9:55"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 993,
+      "end": 1006,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 993,
+        "end": 1006,
+        "owner": "opaqueRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "opaque call may mutate projected fields"
+      ],
+      "allocation_sites": [
+        -2
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ]
+}

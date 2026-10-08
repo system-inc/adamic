@@ -1,0 +1,1172 @@
+dynamic-keys
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "finiteString",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "finiteNumber",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongString",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongNumber",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "openKey",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "dynamic key membership not proven",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "absentKey",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "dynamic projected slot absent or allocation not modeled: absent"
+      ]
+    },
+    {
+      "owner": "hostKey",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "dynamic key membership not proven",
+        "opaque call may mutate projected fields",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-dynamic-controls/host/src/compiler/main.a:6:92"
+      ]
+    },
+    {
+      "owner": "indexedStore",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "indexed store effects not certified"
+      ]
+    },
+    {
+      "owner": "directStore",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "mutation effects on field certificate unavailable: kind",
+        "mutation effects on field certificate unavailable: ready"
+      ]
+    },
+    {
+      "owner": "diagnosedKey",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "dynamic key membership not proven",
+        "opaque call may mutate projected fields",
+        "callee body skipped at /tmp/shape-dynamic-controls/diagnosed/src/compiler/main.a:7:90"
+      ]
+    }
+  ]
+}
+callback-joins
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "conditionalOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "conditionalTwo",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "genericOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "assertedOne",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongOne",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "wrongTwo",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "opaqueOne",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:7:12",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:8:49"
+      ]
+    },
+    {
+      "owner": "opaqueTwo",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:7:12",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/opaque/src/compiler/main.a:8:59"
+      ]
+    },
+    {
+      "owner": "spreadOne",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/spread/src/compiler/main.a:10:50"
+      ]
+    },
+    {
+      "owner": "spreadTwo",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "untracked or omitted parameter arguments",
+        "function value may receive untracked callback arguments at /tmp/shape-callback-join-controls/spread/src/compiler/main.a:10:60"
+      ]
+    }
+  ]
+}
+generic-callables
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "declarationRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "arrowRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "joinedRead",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "restRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "callback rest arguments require an array allocation at /tmp/shape-generic-callable-controls/clean/src/compiler/main.a:13:1"
+      ]
+    },
+    {
+      "owner": "spreadRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "unmodeled expression KindSpreadElement at /tmp/shape-generic-callable-controls/clean/src/compiler/main.a:18:128"
+      ]
+    },
+    {
+      "owner": "hostRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque host result requires runtime semantic metadata at /tmp/shape-generic-callable-controls/host/src/compiler/main.a:7:103"
+      ]
+    }
+  ]
+}
+constructor-frontiers
+{
+  "status": "PASS",
+  "controls": [
+    {
+      "owner": "plainRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/clean/src/compiler/main.a:6:45",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "argumentRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/clean/src/compiler/main.a:7:90",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "hostConstructorRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/host/src/compiler/main.a:7:55",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-constructor-controls/host/src/compiler/main.a:5:23"
+      ]
+    },
+    {
+      "owner": "hostArgumentRead",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/host/src/compiler/main.a:8:52",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-constructor-controls/host/src/compiler/main.a:8:68",
+        "no tracked producer"
+      ]
+    },
+    {
+      "owner": "diagnosedConstructorRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:8:60",
+        "callee body skipped at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:8:65"
+      ]
+    },
+    {
+      "owner": "diagnosedArgumentRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "constructor allocation and initialization body not modeled at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:9:57",
+        "callee body skipped at /tmp/shape-constructor-controls/diagnosed/src/compiler/main.a:9:73",
+        "no tracked producer"
+      ]
+    }
+  ]
+}
+suspended-callables
+{
+  "status": "PASS",
+  "node": {
+    "synchronousAsyncNameRead": {
+      "tag": "[object Object]",
+      "readyMissing": false
+    },
+    "asyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "asyncArrowRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "asyncExpressionRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "ordinaryAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "generatorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "generatorExpressionRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "ordinaryGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "directAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "directGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    },
+    "diagnosedAsyncRead": {
+      "tag": "[object Promise]",
+      "readyMissing": true
+    },
+    "diagnosedGeneratorRead": {
+      "tag": "[object Generator]",
+      "readyMissing": true
+    }
+  },
+  "controls": [
+    {
+      "owner": "asyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "asyncArrowRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:8:18"
+      ]
+    },
+    {
+      "owner": "asyncExpressionRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:10:23"
+      ]
+    },
+    {
+      "owner": "ordinaryAsyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:12:1"
+      ]
+    },
+    {
+      "owner": "generatorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:15:1"
+      ]
+    },
+    {
+      "owner": "generatorExpressionRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:18:27"
+      ]
+    },
+    {
+      "owner": "ordinaryGeneratorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "callback target identity is unknown",
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:20:1"
+      ]
+    },
+    {
+      "owner": "directAsyncRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "async function result requires a Promise allocation at /tmp/shape-suspended-controls/src/compiler/main.a:24:88"
+      ]
+    },
+    {
+      "owner": "directGeneratorRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "generator function result requires an iterator allocation at /tmp/shape-suspended-controls/src/compiler/main.a:26:92"
+      ]
+    },
+    {
+      "owner": "diagnosedAsyncRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:27:1"
+      ]
+    },
+    {
+      "owner": "diagnosedGeneratorRead",
+      "outcome": "unknown",
+      "reason": "diagnosed body",
+      "detail": [
+        "callback target identity is unknown",
+        "callback implementation skipped at /tmp/shape-suspended-controls/src/compiler/main.a:30:1"
+      ]
+    },
+    {
+      "owner": "synchronousAsyncNameRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    }
+  ]
+}
+missing-results
+{
+  "status": "PASS",
+  "node": {
+    "partialDirectRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "partialAliasRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "partialArrowRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "labeledRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "loopRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "explicitVoidRead": {
+      "missing": true,
+      "ready": "absent"
+    },
+    "completeIfRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "completeFinalRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "nestedReturnRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "completeThrowRead": {
+      "missing": false,
+      "ready": "boolean"
+    },
+    "emptyRead": {
+      "missing": true,
+      "ready": "absent"
+    }
+  },
+  "controls": [
+    {
+      "owner": "partialDirectRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "partialAliasRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:5:1"
+      ]
+    },
+    {
+      "owner": "partialArrowRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:9:20"
+      ]
+    },
+    {
+      "owner": "labeledRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:11:1"
+      ]
+    },
+    {
+      "owner": "loopRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:13:1"
+      ]
+    },
+    {
+      "owner": "explicitVoidRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "explicit return without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:15:85"
+      ]
+    },
+    {
+      "owner": "completeIfRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "completeFinalRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "nestedReturnRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "completeThrowRead",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": []
+    },
+    {
+      "owner": "emptyRead",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "function may complete without a result at /tmp/shape-missing-results-controls/src/compiler/main.a:25:1"
+      ]
+    }
+  ]
+}
+missing-initializers
+{
+  "status": "PASS",
+  "node": [
+    "missing",
+    "missing",
+    "boolean",
+    "boolean"
+  ],
+  "controls": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 268,
+      "end": 281,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 268,
+        "end": 281,
+        "owner": "absentRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "variable declaration without an initializer at /tmp/shape-missing-initializers-controls/src/compiler/main.a:5:34"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 395,
+      "end": 408,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 395,
+        "end": 408,
+        "owner": "conditionalRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "variable declaration without an initializer at /tmp/shape-missing-initializers-controls/src/compiler/main.a:6:39"
+      ],
+      "allocation_sites": [
+        -2
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 510,
+      "end": 523,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 510,
+        "end": 523,
+        "owner": "assignedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "variable declaration without an initializer at /tmp/shape-missing-initializers-controls/src/compiler/main.a:7:36"
+      ],
+      "allocation_sites": [
+        -3
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 629,
+      "end": 642,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 629,
+        "end": 642,
+        "owner": "initializedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -4
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ]
+}
+object-bindings
+{
+  "status": "PASS",
+  "node": [
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "number",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean"
+  ],
+  "controls": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 313,
+      "end": 326,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 313,
+        "end": 326,
+        "owner": "shorthandRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -1
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 489,
+      "end": 502,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 489,
+        "end": 502,
+        "owner": "renamedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -3
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 628,
+      "end": 641,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 628,
+        "end": 641,
+        "owner": "stringRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -6
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 746,
+      "end": 759,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 746,
+        "end": 759,
+        "owner": "numericRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -8
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 867,
+      "end": 880,
+      "kind": "tagged",
+      "text": "base as Ready",
+      "adapted": {
+        "start": 867,
+        "end": 880,
+        "owner": "wrongRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms-if",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -10
+      ],
+      "fields": [
+        {
+          "name": "ready",
+          "reason": "declared field type requires a value guard",
+          "declared": "number",
+          "expected": "boolean"
+        }
+      ],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1015,
+      "end": 1028,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1015,
+        "end": 1028,
+        "owner": "defaultRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "default binding selection and readiness not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:10:109"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1150,
+      "end": 1163,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1150,
+        "end": 1163,
+        "owner": "restRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "rest binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:11:85",
+        "spread, method or accessor allocation at /tmp/shape-object-bindings-controls/src/compiler/main.a:11:94"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1262,
+      "end": 1275,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1262,
+        "end": 1275,
+        "owner": "arrayRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "array binding iteration allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:12:78"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1396,
+      "end": 1409,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1396,
+        "end": 1409,
+        "owner": "nestedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "nested binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:13:79"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1553,
+      "end": 1566,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1553,
+        "end": 1566,
+        "owner": "computedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "computed binding key not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:14:119"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 320,
+      "end": 333,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 320,
+        "end": 333,
+        "owner": "hostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque call may mutate projected fields",
+        "no reaching allocation established",
+        "untracked source lower.latentShapeUnknown",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:5:41"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 475,
+      "end": 488,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 475,
+        "end": 488,
+        "owner": "defaultHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "default binding selection and readiness not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:6:71",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:6:76"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 594,
+      "end": 607,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 594,
+        "end": 607,
+        "owner": "restHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "rest binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:7:39",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:7:48"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 715,
+      "end": 728,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 715,
+        "end": 728,
+        "owner": "arrayHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "array binding iteration allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:8:40",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:8:46"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 875,
+      "end": 888,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 875,
+        "end": 888,
+        "owner": "nestedHostRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "nested binding allocation not certified at /tmp/shape-object-bindings-controls/src/compiler/main.a:9:41",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-object-bindings-controls/src/compiler/main.a:9:55"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 993,
+      "end": 1006,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 993,
+        "end": 1006,
+        "owner": "opaqueRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "opaque call may mutate projected fields"
+      ],
+      "allocation_sites": [
+        -2
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ]
+}
+{
+  "measurement": "measured on a checker-rejected program",
+  "status": "PASS",
+  "counts": {
+    "tagged": {
+      "conforms and ready (free)": 5,
+      "conforms but not proven ready (readiness checks only)": 2,
+      "conforms-if": 3,
+      "unknown": 25
+    },
+    "untagged": {
+      "conforms and ready (free)": 0,
+      "conforms but not proven ready (readiness checks only)": 0,
+      "conforms-if": 0,
+      "unknown": 0
+    }
+  }
+}
+PASS 110 independent controls

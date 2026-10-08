@@ -388,6 +388,10 @@ func (m *latentShapeMeter) body(root *ast.Node) {
                 m.append(ir.Declare{Local: m.local(declaration.Name()), Value: value})
 				return false
 			}
+            if declaration.Name().Kind == ast.KindObjectBindingPattern || declaration.Name().Kind == ast.KindArrayBindingPattern {
+                m.allocationBindingDeclaration(declaration.Name(), m.expression(declaration.Initializer))
+                return false
+            }
 		case ast.KindReturnStatement:
             returned := node.AsReturnStatement().Expression
             if returned == nil {
@@ -1093,4 +1097,47 @@ func allocationBodyCannotFallThrough(node *ast.Node) bool {
         }
     }
     return false
+}
+
+// A plain object binding reads the represented receiver's named field. Defaults,
+// rest objects, array iteration and nested patterns need separate certificates.
+func (m *latentShapeMeter) allocationBindingDeclaration(pattern *ast.Node, receiver ir.Expression) {
+    for _, element := range pattern.AsBindingPattern().Elements.Nodes {
+        if element.Kind == ast.KindOmittedExpression || element.Name() == nil { continue }
+        binding := element.AsBindingElement()
+        name := binding.Name()
+        key := binding.PropertyName
+        if key == nil { key = name }
+        reason := ""
+        switch {
+        case pattern.Kind == ast.KindArrayBindingPattern:
+            reason = "array binding iteration allocation not certified"
+        case binding.DotDotDotToken != nil:
+            reason = "rest binding allocation not certified"
+        case binding.Initializer != nil:
+            reason = "default binding selection and readiness not certified"
+        case !ast.IsIdentifier(name):
+            reason = "nested binding allocation not certified"
+        case key.Kind != ast.KindIdentifier && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral:
+            reason = "computed binding key not certified"
+        }
+        if reason == "" {
+            m.append(ir.Declare{Local:m.local(name), Value:ir.Property{Object:receiver, Name:key.Text(), Of:ir.Object}})
+            continue
+        }
+        dependencies := []ir.Expression{receiver}
+        if binding.Initializer != nil { dependencies = append(dependencies, m.expression(binding.Initializer)) }
+        boundary := latentShapeUnknown{Category:"flow the graph can't see", Reason:reason+" at "+m.Loaded.Where(element), Dependencies:dependencies}
+        var declare ast.Visitor
+        declare = func(node *ast.Node) bool {
+            if ast.IsIdentifier(node) { m.append(ir.Declare{Local:m.local(node), Value:boundary}); return false }
+            if node.Kind == ast.KindObjectBindingPattern || node.Kind == ast.KindArrayBindingPattern {
+                for _, child := range node.AsBindingPattern().Elements.Nodes {
+                    if child.Kind != ast.KindOmittedExpression && child.Name() != nil { declare(child.Name()) }
+                }
+            }
+            return false
+        }
+        declare(name)
+    }
 }

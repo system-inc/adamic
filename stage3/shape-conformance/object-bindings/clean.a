@@ -1,0 +1,14 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';readonly ready?:unknown;}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function shorthandRead():Ready {const raw={kind:'ok' as const,ready:true};const {node}={node:raw};return node as Ready;}
+function renamedRead():Ready {const raw={kind:'ok' as const,ready:true};const bag={source:raw,node:{kind:'ok' as const,ready:0}};const {source:node}=bag;return node as Ready;}
+function stringRead():Ready {const raw={kind:'ok' as const,ready:true};const {'source-key':node}={'source-key':raw};return node as Ready;}
+function numericRead():Ready {const raw={kind:'ok' as const,ready:true};const {1:node}={1:raw};return node as Ready;}
+function wrongRead():Ready {const {node}={node:{kind:'ok' as const,ready:0}};const base:Base=node;return base as Ready;}
+function defaultRead():Ready {const raw={kind:'ok' as const,ready:true};const source:{node?:Base}={};const {node=raw}=source;return node as Ready;}
+function restRead():Ready {const raw={kind:'ok' as const,ready:true};const {ignored,...node}={ignored:0,...raw};return node as Ready;}
+function arrayRead():Ready {const raw={kind:'ok' as const,ready:true};const [node]=[raw];return node as Ready;}
+function nestedRead():Ready {const raw={kind:'ok' as const,ready:true};const {outer:{node}}={outer:{node:raw}};return node as Ready;}
+function computedRead():Ready {const raw={kind:'ok' as const,ready:true};const key='slot';const bag={slot:raw};const {[key]:node}=bag;return node as Ready;}

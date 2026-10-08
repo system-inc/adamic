@@ -1,0 +1,2640 @@
+{
+  "observation": "syntax inventory only; checker status and reachability not inferred",
+  "inventoried_files": 79,
+  "counts": {
+    "object with initializer": 251,
+    "array without initializer": 14,
+    "array with initializer": 20,
+    "object without initializer": 7
+  },
+  "rows": [
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2364,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ text }",
+      "initializer": "node.name",
+      "owner": "bindModuleDeclaration"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 2378,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ symbol }",
+      "initializer": "node",
+      "owner": "bindModuleDeclaration"
+    },
+    {
+      "file": "src/compiler/binder.ts",
+      "line": 3619,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ symbol }",
+      "initializer": "node",
+      "owner": "bindClassLikeDeclaration"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 580,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ relatedInformation }",
+      "initializer": "diagnostic",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 601,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ file }",
+      "initializer": "diagnostic",
+      "owner": "convertToDiagnosticRelatedInformation"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 641,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ affectedFiles }",
+      "initializer": "state",
+      "owner": "getNextAffectedFile"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1443,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ optionsNameMap }",
+      "initializer": "getOptionsNameMap()",
+      "owner": "toIncrementalBuildInfoCompilerOptions"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1510,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ relatedInformation }",
+      "initializer": "diagnostic",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/builder.ts",
+      "line": 1521,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ file }",
+      "initializer": "diagnostic",
+      "owner": "toReusableDiagnosticRelatedInformation"
+    },
+    {
+      "file": "src/compiler/builderPublic.ts",
+      "line": 261,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ newProgram, configFileParsingDiagnostics: newConfigFileParsingDiagnostics }",
+      "initializer": "getBuilderCreationParameters(\r\n        newProgramOrRootNames,\r\n        hostOrOptions,\r\n        oldProgramOrHost,\r\n        configFileParsingDiagnosticsOrOldProgram,\r\n        configFileParsingDiagnostics,\r\n        projectReferences,\r\n    )",
+      "owner": "createAbstractBuilder"
+    },
+    {
+      "file": "src/compiler/builderState.ts",
+      "line": 48,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ emitSkipped, diagnostics }",
+      "initializer": "program.emit(sourceFile, writeFile, cancellationToken, emitOnlyDtsFiles, customTransformers, forceDtsEmit)",
+      "owner": "getFileEmitOutput"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2003,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[nodeLinks, resolvedSignature]",
+      "initializer": null,
+      "owner": "runWithoutResolvedSignatureCaching"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2006,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[symbolLinks, type]",
+      "initializer": null,
+      "owner": "runWithoutResolvedSignatureCaching"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 2900,
+      "column": 36,
+      "kind": "array",
+      "pattern": "[key, value]",
+      "initializer": null,
+      "owner": "mergeModuleAugmentation"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5185,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ exports, typeOnlyExportStarMap }",
+      "initializer": "getExportsOfModuleWorker(moduleSymbol)",
+      "owner": "getExportsOfModule"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 5412,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[bestMatch, ...rest]",
+      "initializer": "getWithAlternativeContainers(container)",
+      "owner": "getContainersOfSymbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7437,
+      "column": 35,
+      "kind": "object",
+      "pattern": "{ labeledElementDeclarations }",
+      "initializer": "type.target as TupleType",
+      "owner": "typeReferenceToTypeNode"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 7959,
+      "column": 40,
+      "kind": "array",
+      "pattern": "[type, resultIndex]",
+      "initializer": null,
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 8636,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ moduleResolverHost }",
+      "initializer": "context.tracker",
+      "owner": "getSpecifierForModuleSymbol"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 10419,
+      "column": 35,
+      "kind": "object",
+      "pattern": "{ propertyName }",
+      "initializer": "node as BindingElement",
+      "owner": "serializeAsAlias"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 11491,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ length }",
+      "initializer": "resolutionTargets",
+      "owner": "pushTypeResolution"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 15137,
+      "column": 24,
+      "kind": "object",
+      "pattern": "{ escapedName }",
+      "initializer": null,
+      "owner": "getAllPossiblePropertiesOfTypes"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16448,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ declaration }",
+      "initializer": "signature",
+      "owner": "getTypePredicateOfSignature"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 16773,
+      "column": 27,
+      "kind": "array",
+      "pattern": "[childTypeParameter = declaration.parent, grandParent]",
+      "initializer": "walkUpParenthesizedTypesAndGetParentAndChild(declaration.parent.parent)",
+      "owner": "getInferredTypeParameterConstraint"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21206,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ initializer }",
+      "initializer": "node as JsxAttribute",
+      "owner": "isContextSensitive"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21212,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ expression }",
+      "initializer": "node as JsxExpression | YieldExpression",
+      "owner": "isContextSensitive"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21551,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ errorNode: prop, innerExpression: next, nameType, errorMessage }",
+      "initializer": "value",
+      "owner": "elaborateElementwise"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 21637,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ errorNode: prop, innerExpression: next, nameType, errorMessage }",
+      "initializer": "status.value",
+      "owner": "elaborateIterableOrArrayLikeTargetElementwise"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22510,
+      "column": 23,
+      "kind": "array",
+      "pattern": "[msg, ...args]",
+      "initializer": "stack.pop()!",
+      "owner": "reportIncompatibleStack"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22589,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[msg, ...args]",
+      "initializer": null,
+      "owner": "reportIncompatibleStack"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 22630,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[sourceType, targetType]",
+      "initializer": "getTypeNamesForErrorDisplay(source, target)",
+      "owner": "reportRelationError"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 24949,
+      "column": 20,
+      "kind": "array",
+      "pattern": "[getDiscriminatingType, propertyName]",
+      "initializer": null,
+      "owner": "discriminateTypeByDiscriminableItems"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26333,
+      "column": 24,
+      "kind": "object",
+      "pattern": "{ node, type }",
+      "initializer": null,
+      "owner": "inferFromIntraExpressionSites"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26822,
+      "column": 23,
+      "kind": "array",
+      "pattern": "[tempSources, tempTargets]",
+      "initializer": "inferFromMatchingTypes(source.flags & TypeFlags.Union ? (source as UnionType).types : [source], (target as UnionType).types, isTypeOrBaseIdenticalTo)",
+      "owner": "inferFromTypes"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26826,
+      "column": 23,
+      "kind": "array",
+      "pattern": "[sources, targets]",
+      "initializer": "inferFromMatchingTypes(tempSources, tempTargets, isTypeCloselyMatchedBy)",
+      "owner": "inferFromTypes"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 26849,
+      "column": 27,
+      "kind": "array",
+      "pattern": "[sources, targets]",
+      "initializer": "inferFromMatchingTypes(source.flags & TypeFlags.Intersection ? (source as IntersectionType).types : [source], (target as IntersectionType).types, isTypeIdenticalTo)",
+      "owner": "inferFromTypes"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28362,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getAssignedType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 28448,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getReferenceRoot"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 31920,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ expression }",
+      "initializer": "target",
+      "owner": "getContextualThisParameterType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32201,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ left, operatorToken, right }",
+      "initializer": "binaryExpression",
+      "owner": "getContextualTypeForBinaryOperand"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 32792,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getContextualType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 34766,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ symbol }",
+      "initializer": "containingClass",
+      "owner": "lookupSymbolForPrivateIdentifierDeclaration"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35084,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ valueDeclaration }",
+      "initializer": "prop",
+      "owner": "checkPropertyNotUsedBeforeDeclaration"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 35236,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[libTarget, featuresOfType]",
+      "initializer": null,
+      "owner": "getSuggestedLibForNonExistentProperty"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36361,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ start, length }",
+      "initializer": "getErrorSpanForNode(sourceFile, isPropertyAccessExpression(node.expression) ? node.expression.name : node.expression)",
+      "owner": "getDiagnosticSpanForCallNode"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36367,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ sourceFile, start, length }",
+      "initializer": "getDiagnosticSpanForCallNode(node)",
+      "owner": "getDiagnosticForCallNode"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36741,
+      "column": 31,
+      "kind": "object",
+      "pattern": "{ file, start, length }",
+      "initializer": "diags[0]!",
+      "owner": "resolveCall"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36900,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ min: minArgumentCount, max: maxNonRestParam }",
+      "initializer": "minAndMax(candidates, getNumNonRestParameters)",
+      "owner": "createUnionOfSignaturesForOverloadFailure"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 36955,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ typeParameters }",
+      "initializer": "candidate",
+      "owner": "pickLongestCandidateSignature"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37356,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ resolvedSymbol }",
+      "initializer": "getNodeLinks(errorTarget)",
+      "owner": "invocationErrorDetails"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37368,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ messageChain, relatedMessage: relatedInfo }",
+      "initializer": "invocationErrorDetails(errorTarget, apparentType, kind)",
+      "owner": "invocationError"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 37374,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ start, length }",
+      "initializer": "getDiagnosticSpanForCallNode(errorTarget.parent)",
+      "owner": "invocationError"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38111,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ type, expression }",
+      "initializer": "getAssertionTypeAndExpression(node)",
+      "owner": "checkAssertionWorker"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38145,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ type }",
+      "initializer": "getAssertionTypeAndExpression(node)",
+      "owner": "checkAssertionDeferred"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 38924,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "decorator",
+      "owner": "getESDecoratorCallSignature"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 39023,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "decorator",
+      "owner": "getLegacyDecoratorCallSignature"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 39229,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ yieldTypes, nextTypes }",
+      "initializer": "checkAndAggregateYieldOperandTypes(func, checkMode)",
+      "owner": "getReturnTypeFromBody"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 40619,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ left, operatorToken }",
+      "initializer": "node.parent",
+      "owner": "checkNullishCoalesceOperands"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 40625,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ operatorToken }",
+      "initializer": "node.left",
+      "owner": "checkNullishCoalesceOperands"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 40631,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ operatorToken }",
+      "initializer": "node.right",
+      "owner": "checkNullishCoalesceOperands"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 41127,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[leftStr, rightStr]",
+      "initializer": "getTypeNamesForErrorDisplay(effectiveLeft, effectiveRight)",
+      "owner": "reportOperatorError"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42052,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parameterName }",
+      "initializer": "node",
+      "owner": "checkTypePredicate"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 42067,
+      "column": 28,
+      "kind": "object",
+      "pattern": "{ name }",
+      "initializer": null,
+      "owner": "checkTypePredicate"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44535,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ typeParameter }",
+      "initializer": "node",
+      "owner": "checkUnusedInferTypeParameter"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 44554,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "typeParameter",
+      "owner": "checkUnusedTypeParameters"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45767,
+      "column": 23,
+      "kind": "array",
+      "pattern": "[defaultDiagnostic, maybeMissingAwait]",
+      "initializer": "getIterationDiagnosticDetails(allowsStrings, downlevelIteration)",
+      "owner": "getIteratedTypeOrElementType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 45989,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ yieldType, returnType, nextType }",
+      "initializer": "iterationTypes",
+      "owner": "getAsyncFromSyncIterationTypes"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46113,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[yieldType, returnType, nextType]",
+      "initializer": "getTypeArguments(type as GenericType)",
+      "owner": "getIterationTypesOfIterableFast"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46125,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[yieldType]",
+      "initializer": "getTypeArguments(type as GenericType)",
+      "owner": "getIterationTypesOfIterableFast"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46259,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[yieldType, returnType, nextType]",
+      "initializer": "getTypeArguments(type as GenericType)",
+      "owner": "getIterationTypesOfIteratorFast"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46271,
+      "column": 19,
+      "kind": "array",
+      "pattern": "[yieldType]",
+      "initializer": "getTypeArguments(type as GenericType)",
+      "owner": "getIterationTypesOfIteratorFast"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 46396,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ mapper }",
+      "initializer": "methodType as AnonymousType",
+      "owner": "getIterationTypesOfMethod"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 47659,
+      "column": 20,
+      "kind": "array",
+      "pattern": "[errorNode, memberInfo]",
+      "initializer": null,
+      "owner": "checkKindsOfPropertyMemberOverrides"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49398,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "checkJSDocVariadicType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 49430,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getTypeFromJSDocVariadicType"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50194,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getSymbolAtLocation"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 50576,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ links: { leftSpread, rightSpread, syntheticOrigin } }",
+      "initializer": "symbol as TransientSymbol",
+      "owner": "getImmediateRootSymbols"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 52409,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ equalsGreaterThanToken }",
+      "initializer": "node",
+      "owner": "checkGrammarArrowFunction"
+    },
+    {
+      "file": "src/compiler/checker.ts",
+      "line": 52722,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ name, initializer }",
+      "initializer": "attr",
+      "owner": "checkGrammarJsxElement"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2138,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ optionsNameMap, shortOptionNames }",
+      "initializer": "getOptionNameMap()",
+      "owner": "getOptionDeclarationFromName"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 2177,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ options, watchOptions, fileNames: projects, errors }",
+      "initializer": "parseCommandLineWorker(\r\n        buildOptionsDidYouMeanDiagnostics,\r\n        commandLine,\r\n    )",
+      "owner": "parseBuildCommand"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3075,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ raw }",
+      "initializer": "parsedConfig",
+      "owner": "parseJsonConfigFileContentWorker"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 3953,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ validatedFilesSpec, validatedIncludeSpecs, validatedExcludeSpecs }",
+      "initializer": "configFileSpecs",
+      "owner": "getFileNamesFromConfigSpecs"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4025,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ validatedFilesSpec, validatedIncludeSpecs, validatedExcludeSpecs }",
+      "initializer": "spec",
+      "owner": "isExcludedFile"
+    },
+    {
+      "file": "src/compiler/commandLineParser.ts",
+      "line": 4140,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ key, path, flags }",
+      "initializer": "match",
+      "owner": "getWildcardDirectories"
+    },
+    {
+      "file": "src/compiler/core.ts",
+      "line": 607,
+      "column": 15,
+      "kind": "array",
+      "pattern": "[newKey, newValue]",
+      "initializer": "f(key, value)",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 397,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[enumValue, enumName]",
+      "initializer": null,
+      "owner": "formatEnum"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 411,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[enumValue, enumName]",
+      "initializer": null,
+      "owner": "formatEnum"
+    },
+    {
+      "file": "src/compiler/debug.ts",
+      "line": 1108,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ switchStatement, clauseStart, clauseEnd }",
+      "initializer": "flowNode.node",
+      "owner": "renderFlowNode"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 611,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ jsFilePath, sourceMapFilePath, declarationFilePath, declarationMapPath }",
+      "initializer": "getOutputPathsForBundle(configFile.options, /*forceDtsPaths*/ false)",
+      "owner": "getSingleOutputFileNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 696,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ addOutput, getOutputs }",
+      "initializer": "createAddOutput()",
+      "owner": "getAllProjectOutputs"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 713,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ addOutput, getOutputs }",
+      "initializer": "createAddOutput()",
+      "owner": "getOutputFileNames"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 726,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ jsFilePath, declarationFilePath }",
+      "initializer": "getOutputPathsForBundle(configFile.options, /*forceDtsPaths*/ false)",
+      "owner": "getFirstProjectOutput"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 771,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{ enter, exit }",
+      "initializer": "performance.createTimer(\"printTime\", \"beforePrint\", \"afterPrint\")",
+      "owner": "emitFiles"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1215,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{\r\n        hasGlobalName,\r\n        onEmitNode = noEmitNotification,\r\n        isEmitNotificationEnabled,\r\n        substituteNode = noEmitSubstitution,\r\n        onBeforeEmitNode,\r\n        onAfterEmitNode,\r\n        onBeforeEmitNodeArray,\r\n        onAfterEmitNodeArray,\r\n        onBeforeEmitToken,\r\n        onAfterEmitToken,\r\n    }",
+      "initializer": "handlers",
+      "owner": "createPrinter"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 1275,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{ enter: enterComment, exit: exitComment }",
+      "initializer": "performance.createTimerIf(extendedDiagnostics, \"commentTime\", \"beforeComment\", \"afterComment\")",
+      "owner": "createPrinter"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 5924,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ pos, end }",
+      "initializer": "detachedRange",
+      "owner": "emitBodyWithDetachedComments"
+    },
+    {
+      "file": "src/compiler/emitter.ts",
+      "line": 6233,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ line: sourceLine, character: sourceCharacter }",
+      "initializer": "getLineAndCharacterOfPosition(sourceMapSource, pos)",
+      "owner": "emitPos"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 762,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ buildOptions, watchOptions, projects, errors }",
+      "initializer": "parseBuildCommand(commandLineArgs)",
+      "owner": "executeCommandLine"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 914,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ fileNames, options, projectReferences }",
+      "initializer": "config",
+      "owner": "performCompilation"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 947,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ options, fileNames, projectReferences }",
+      "initializer": "config",
+      "owner": "performIncrementalCompilation"
+    },
+    {
+      "file": "src/compiler/executeCommandLine.ts",
+      "line": 1175,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[key, value]",
+      "initializer": null,
+      "owner": "reportStatistics"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 199,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ finalizeBoundary, startRecoveryScope, hadError, markError }",
+      "initializer": "resolver.createRecoveryBoundary(context)",
+      "owner": "tryReuseExistingTypeNode"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 269,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ introducesError, node: exprName }",
+      "initializer": "resolver.trackExistingEntityName(context, node.exprName)",
+      "owner": "tryVisitTypeQuery"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 286,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ introducesError, node: newName }",
+      "initializer": "resolver.trackExistingEntityName(context, node.typeName)",
+      "owner": "tryVisitTypeReference"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 401,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ node: newName }",
+      "initializer": "resolver.trackExistingEntityName(context, node.name)",
+      "owner": "visitExistingNodeTreeSymbolsWorker"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 482,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ node: result, introducesError }",
+      "initializer": "resolver.trackExistingEntityName(context, node.expression)",
+      "owner": "visitExistingNodeTreeSymbolsWorker"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 517,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ node: result, introducesError }",
+      "initializer": "resolver.trackExistingEntityName(context, node.parameterName)",
+      "owner": "visitExistingNodeTreeSymbolsWorker"
+    },
+    {
+      "file": "src/compiler/expressionToTypeNode.ts",
+      "line": 1126,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ node: tpName }",
+      "initializer": "resolver.trackExistingEntityName(context, tp.name)",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/factory/nodeFactory.ts",
+      "line": 7432,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        flags,\r\n        internalFlags,\r\n        leadingComments,\r\n        trailingComments,\r\n        commentRange,\r\n        sourceMapRange,\r\n        tokenSourceMapRanges,\r\n        constantValue,\r\n        helpers,\r\n        startsOnNewLine,\r\n        snippetElement,\r\n        classThis,\r\n        assignedName,\r\n    }",
+      "initializer": "sourceEmitNode",
+      "owner": "mergeEmitNode"
+    },
+    {
+      "file": "src/compiler/factory/utilities.ts",
+      "line": 363,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ firstAccessor, getAccessor, setAccessor }",
+      "initializer": "getAllAccessorDeclarations(properties, property)",
+      "owner": "createExpressionForAccessorDeclaration"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 244,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ resolvedFileName, originalPath }",
+      "initializer": "getOriginalAndResolvedFileName(resolved.path, state.host, state.traceEnabled)",
+      "owner": "createResolvedModuleWithFailedLookupLocationsHandlingSymlink"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 447,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ version: bestVersionKey, paths: bestVersionPaths }",
+      "initializer": "result",
+      "owner": "readPackageJsonTypesVersionPaths"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 624,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ fileName, packageId }",
+      "initializer": "resolved",
+      "owner": "resolveTypeReferenceDirective"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 709,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ path: candidate }",
+      "initializer": "normalizePathForCJSResolution(initialLocationForSecondaryLookup, typeReferenceDirectiveName)",
+      "owner": "secondaryLookup"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1140,
+      "column": 23,
+      "kind": "array",
+      "pattern": "[specifier, mode]",
+      "initializer": "memoizedReverseKeys.get(key)!",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1568,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ baseUrl, paths }",
+      "initializer": "state.compilerOptions",
+      "owner": "tryLoadModuleUsingPathsIfEligible"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1657,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ baseUrl }",
+      "initializer": "state.compilerOptions",
+      "owner": "tryLoadModuleUsingBaseUrl"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1679,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ resolvedModule, failedLookupLocations }",
+      "initializer": "tryResolveJSModuleWorker(moduleName, initialDir, host)",
+      "owner": "resolveJSModule"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 1953,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ path: candidate, parts }",
+      "initializer": "normalizePathForCJSResolution(containingDirectory, moduleName)",
+      "owner": "tryResolve"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 2446,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ host, traceEnabled }",
+      "initializer": "state",
+      "owner": "getPackageJsonInfo"
+    },
+    {
+      "file": "src/compiler/moduleNameResolver.ts",
+      "line": 3093,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ packageName, rest }",
+      "initializer": "parsePackageName(moduleName)",
+      "owner": "loadModuleFromSpecificNodeModulesDirectory"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 407,
+      "column": 9,
+      "kind": "array",
+      "pattern": "[kind, specifiers, moduleSourceFile, modulePaths, cache]",
+      "initializer": "tryGetModuleSpecifiersFromCacheWorker(\r\n        moduleSymbol,\r\n        importingSourceFile,\r\n        host,\r\n        userPreferences,\r\n        options,\r\n    )",
+      "owner": "getModuleSpecifiersWithCacheInfo"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 584,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ baseUrl, paths, rootDirs }",
+      "initializer": "compilerOptions",
+      "owner": "getLocalModuleSpecifier"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 589,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ sourceDirectory, canonicalSourceDirectory, getCanonicalFileName }",
+      "initializer": "info",
+      "owner": "getLocalModuleSpecifier"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 979,
+      "column": 28,
+      "kind": "object",
+      "pattern": "{ ending, value }",
+      "initializer": null,
+      "owner": "tryGetModuleNameFromPaths"
+    },
+    {
+      "file": "src/compiler/moduleSpecifiers.ts",
+      "line": 1206,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ moduleFileToTry, packageRootPath, blockedByExports, verbatimFromExports }",
+      "initializer": "tryDirectoryWithPackageJson(packageRootIndex)",
+      "owner": "tryGetModuleNameAsNodeModule"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1349,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        languageVersion,\r\n        setExternalModuleIndicator: overrideSetExternalModuleIndicator,\r\n        impliedNodeFormat: format,\r\n        jsDocParsingMode,\r\n    }",
+      "initializer": "typeof languageVersionOrOptions === \"object\" ? languageVersionOrOptions : ({ languageVersion: languageVersionOrOptions } as CreateSourceFileOptions)",
+      "owner": "createSourceFile"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 1472,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{\r\n        createNodeArray: factoryCreateNodeArray,\r\n        createNumericLiteral: factoryCreateNumericLiteral,\r\n        createStringLiteral: factoryCreateStringLiteral,\r\n        createLiteralLikeNode: factoryCreateLiteralLikeNode,\r\n        createIdentifier: factoryCreateIdentifier,\r\n        createPrivateIdentifier: factoryCreatePrivateIdentifier,\r\n        createToken: factoryCreateToken,\r\n        createArrayLiteralExpression: factoryCreateArrayLiteralExpression,\r\n        createObjectLiteralExpression: factoryCreateObjectLiteralExpression,\r\n        createPropertyAccessExpression: factoryCreatePropertyAccessExpression,\r\n        createPropertyAccessChain: factoryCreatePropertyAccessChain,\r\n        createElementAccessExpression: factoryCreateElementAccessExpression,\r\n        createElementAccessChain: factoryCreateElementAccessChain,\r\n        createCallExpression: factoryCreateCallExpression,\r\n        createCallChain: factoryCreateCallChain,\r\n        createNewExpression: factoryCreateNewExpression,\r\n        createParenthesizedExpression: factoryCreateParenthesizedExpression,\r\n        createBlock: factoryCreateBlock,\r\n        createVariableStatement: factoryCreateVariableStatement,\r\n        createExpressionStatement: factoryCreateExpressionStatement,\r\n        createIfStatement: factoryCreateIfStatement,\r\n        createWhileStatement: factoryCreateWhileStatement,\r\n        createForStatement: factoryCreateForStatement,\r\n        createForOfStatement: factoryCreateForOfStatement,\r\n        createVariableDeclaration: factoryCreateVariableDeclaration,\r\n        createVariableDeclarationList: factoryCreateVariableDeclarationList,\r\n    }",
+      "initializer": "factory",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 3815,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ parameters, type }",
+      "initializer": "node as FunctionOrConstructorTypeNode",
+      "owner": "typeHasArrowFunctionBlockingParseError"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 5770,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ end }",
+      "initializer": "simpleUnaryExpression",
+      "owner": "parseUnaryExpressionOrHigher"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 9426,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ name, isBracketed }",
+      "initializer": "parseBracketNameInPropertyAndParamTag()",
+      "owner": "parseParameterOrPropertyTag"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10050,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ range, type }",
+      "initializer": "directive",
+      "owner": "getNewCommentDirectives"
+    },
+    {
+      "file": "src/compiler/parser.ts",
+      "line": 10634,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ types, lib, path, [\"resolution-mode\"]: res, preserve: _preserve }",
+      "initializer": "arg.arguments",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "line": 35,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ performance }",
+      "initializer": "require(\"perf_hooks\") as Partial<typeof import(\"perf_hooks\")>",
+      "owner": "tryGetPerformance"
+    },
+    {
+      "file": "src/compiler/performanceCore.ts",
+      "line": 64,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ shouldWriteNativeEvents, performance }",
+      "initializer": "p",
+      "owner": "tryGetPerformanceHooks"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 670,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ line, character }",
+      "initializer": "getLineAndCharacterOfPosition(diagnostic.file, diagnostic.start!)",
+      "owner": "formatDiagnostic"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 712,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ line: firstLine, character: firstLineChar }",
+      "initializer": "getLineAndCharacterOfPosition(file, start)",
+      "owner": "formatCodeSpan"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 713,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ line: lastLine, character: lastLineChar }",
+      "initializer": "getLineAndCharacterOfPosition(file, start + length)",
+      "owner": "formatCodeSpan"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 767,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ line: firstLine, character: firstLineChar }",
+      "initializer": "getLineAndCharacterOfPosition(file, start)",
+      "owner": "formatLocation"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 783,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ file, start }",
+      "initializer": "diagnostic",
+      "owner": "formatDiagnosticsWithColorAndContext"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 798,
+      "column": 24,
+      "kind": "object",
+      "pattern": "{ file, start, length, messageText }",
+      "initializer": null,
+      "owner": "formatDiagnosticsWithColorAndContext"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1197,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ kind, index }",
+      "initializer": "ref",
+      "owner": "getReferencedFileLocation"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1517,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ rootNames, options, configFileParsingDiagnostics, projectReferences, typeScriptVersion, host: createProgramOptionsHost }",
+      "initializer": "_createProgramOptions",
+      "owner": "createProgram"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1518,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{ oldProgram }",
+      "initializer": "_createProgramOptions",
+      "owner": "createProgram"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 1725,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ onProgramCreateComplete, fileExists, directoryExists }",
+      "initializer": "updateHostForUseSourceOfProjectReferenceRedirect({\r\n        compilerHost: host,\r\n        getSymlinkCache,\r\n        useSourceOfProjectReferenceRedirect,\r\n        toPath,\r\n        getResolvedProjectReferences,\r\n        getRedirectFromOutput,\r\n        forEachResolvedProjectReference,\r\n    })",
+      "owner": "createProgram"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2929,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ diagnostics, directives }",
+      "initializer": "getDiagnosticsWithPrecedingDirectives(sourceFile, sourceFile.commentDirectives, flatDiagnostics)",
+      "owner": "getMergedBindAndCheckDiagnostics"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 2966,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ file, start }",
+      "initializer": "diagnostic",
+      "owner": "markPrecedingCommentDirectiveLine"
+    },
+    {
+      "file": "src/compiler/program.ts",
+      "line": 3812,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ resolvedTypeReferenceDirective }",
+      "initializer": "resolution",
+      "owner": "processTypeReferenceDirectiveWorker"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 191,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ file, pos, end }",
+      "initializer": "getReferencedFileLocation(program, reason) as ReferenceFileLocation",
+      "owner": "filePreprocessingLibreferenceDiagnostic"
+    },
+    {
+      "file": "src/compiler/programDiagnostics.ts",
+      "line": 392,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ sourceFile, index }",
+      "initializer": "referenceInfo",
+      "owner": "fileIncludeReasonToRelatedInformation"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 553,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ resolvedModule, failedLookupLocations, affectingLocations, resolutionDiagnostics }",
+      "initializer": "loadModuleFromGlobalCache(\r\n            Debug.checkDefined(resolutionHost.globalCacheResolutionModuleName)(moduleName),\r\n            resolutionHost.projectName,\r\n            compilerOptions,\r\n            host,\r\n            globalCache,\r\n            moduleResolutionCache,\r\n        )",
+      "owner": "resolveModuleNameUsingGlobalCache"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1139,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ dir, dirPath, nonRecursive, packageDir, packageDirPath }",
+      "initializer": "toWatch",
+      "owner": "watchFailedLookupLocation"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1155,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ failedLookupLocations, affectingLocations, alternateResult }",
+      "initializer": "resolution",
+      "owner": "watchFailedLookupLocationOfResolution"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1175,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ affectingLocations }",
+      "initializer": "resolution",
+      "owner": "watchAffectingLocationsOfResolution"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1350,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ dirPath, packageDirPath }",
+      "initializer": "toWatch",
+      "owner": "stopWatchFailedLookupLocation"
+    },
+    {
+      "file": "src/compiler/resolutionCache.ts",
+      "line": 1394,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ failedLookupLocations, affectingLocations, alternateResult }",
+      "initializer": "resolution",
+      "owner": "stopWatchFailedLookupLocationOfResolution"
+    },
+    {
+      "file": "src/compiler/scanner.ts",
+      "line": 1333,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ length }",
+      "initializer": "scanIdentifierParts()",
+      "owner": "checkForIdentifierStartAfterNumericLiteral"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "line": 84,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ major, minor, patch, prerelease, build }",
+      "initializer": "result",
+      "owner": "tryParse"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "line": 123,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{\r\n            major = this.major,\r\n            minor = this.minor,\r\n            patch = this.patch,\r\n            prerelease = this.prerelease,\r\n            build = this.build,\r\n        }",
+      "initializer": "fields",
+      "owner": "with"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "line": 146,
+      "column": 11,
+      "kind": "array",
+      "pattern": "[, , minor = \"0\", patch = \"0\", prerelease = \"\", build = \"\"]",
+      "initializer": "match",
+      "owner": "tryParseComponents"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "line": 302,
+      "column": 11,
+      "kind": "array",
+      "pattern": "[, , minor = \"*\", patch = \"*\", prerelease, build]",
+      "initializer": "match",
+      "owner": "parsePartial"
+    },
+    {
+      "file": "src/compiler/semver.ts",
+      "line": 340,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ version, major, minor, patch }",
+      "initializer": "result",
+      "owner": "parseComparator"
+    },
+    {
+      "file": "src/compiler/sourcemap.ts",
+      "line": 40,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{ enter, exit }",
+      "initializer": "generatorOptions.extendedDiagnostics\r\n        ? performance.createTimer(\"Source Map\", \"beforeSourcemap\", \"afterSourcemap\")\r\n        : performance.nullTimer",
+      "owner": "createSourceMapGenerator"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 783,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ value: [dirPath, { dirName, options, fileNames }] }",
+      "initializer": "result",
+      "owner": "onTimerToUpdateChildWatches"
+    },
+    {
+      "file": "src/compiler/sys.ts",
+      "line": 1503,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ watchFile, watchDirectory }",
+      "initializer": "createSystemWatchFunctions({\r\n            pollingWatchFileWorker: fsWatchFileWorker,\r\n            getModifiedTime,\r\n            setTimeout,\r\n            clearTimeout,\r\n            fsWatchWorker,\r\n            useCaseSensitiveFileNames,\r\n            getCurrentDirectory,\r\n            fileSystemEntryExists,\r\n            // Node 4.0 `fs.watch` function supports the \"recursive\" option on both OSX and Windows\r\n            // (ref: https://github.com/nodejs/node/pull/2649 and https://github.com/Microsoft/TypeScript/issues/4643)\r\n            fsSupportsRecursiveFsWatch,\r\n            getAccessibleSortedChildDirectories: path => getAccessibleFileSystemEntries(path).directories,\r\n            realpath,\r\n            tscWatchFile: process.env.TSC_WATCHFILE,\r\n            useNonPollingWatchers: !!process.env.TSC_NONPOLLING_WATCHER,\r\n            tscWatchDirectory: process.env.TSC_WATCHDIRECTORY,\r\n            inodeWatching: isLinuxOrMacOs,\r\n            fsWatchWithTimestamp: isMacOs,\r\n            sysLog,\r\n        })",
+      "owner": "getNodeSystem"
+    },
+    {
+      "file": "src/compiler/tracing.ts",
+      "line": 176,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ phase, name, args, time, separateBeginAndEnd }",
+      "initializer": "eventStack[index]!",
+      "owner": "writeStackEvent"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 355,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n        endLexicalEnvironment,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        addBlockScopedVariable,\r\n    }",
+      "initializer": "context",
+      "owner": "transformClassFields"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1169,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ classConstructor, superClassReference, facts }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitPropertyAccessExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1196,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ classConstructor, superClassReference, facts }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitElementAccessExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1228,
+      "column": 27,
+      "kind": "object",
+      "pattern": "{ readExpression, initializeExpression }",
+      "initializer": "createCopiableReceiverExpr(receiver)",
+      "owner": "visitPreOrPostfixUnaryExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1263,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ classConstructor, superClassReference, facts }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitPreOrPostfixUnaryExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1346,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ thisArg, target }",
+      "initializer": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion)",
+      "owner": "visitCallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1394,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ thisArg, target }",
+      "initializer": "factory.createCallBinding(node.tag, hoistVariableDeclaration, languageVersion)",
+      "owner": "visitTaggedTemplateExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1565,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ classConstructor, superClassReference, facts }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitBinaryExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1663,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ readExpression, initializeExpression }",
+      "initializer": "createCopiableReceiverExpr(receiver)",
+      "owner": "createPrivateIdentifierAssignment"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1895,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ members, prologue }",
+      "initializer": "transformClassMembers(node)",
+      "owner": "visitClassDeclarationInNewClassLexicalEnvironment"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 1999,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ members, prologue }",
+      "initializer": "transformClassMembers(node)",
+      "owner": "visitClassExpressionInNewClassLexicalEnvironment"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2091,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ classThis, classConstructor }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitThisExpression"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2200,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ weakSetName }",
+      "initializer": "getPrivateIdentifierEnvironment().data",
+      "owner": "createBrandCheckWeakSetForPrivateMethods"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2675,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ weakSetName }",
+      "initializer": "getPrivateIdentifierEnvironment().data",
+      "owner": "addInstanceMethodStatements"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 2954,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ className }",
+      "initializer": "getPrivateIdentifierEnvironment().data",
+      "owner": "createHoistedVariableForClass"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3024,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ classConstructor, superClassReference, facts }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "visitDestructuringAssignmentTarget"
+    },
+    {
+      "file": "src/compiler/transformers/classFields.ts",
+      "line": 3271,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ facts, classConstructor, classThis }",
+      "initializer": "lexicalEnvironment.data",
+      "owner": "substituteThisExpression"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 272,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformDeclarations"
+    },
+    {
+      "file": "src/compiler/transformers/declarations.ts",
+      "line": 310,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ stripInternal, isolatedDeclarations }",
+      "initializer": "options",
+      "owner": "transformDeclarations"
+    },
+    {
+      "file": "src/compiler/transformers/declarations/diagnostics.ts",
+      "line": 720,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ getAccessor, setAccessor }",
+      "initializer": "getAllAccessorDeclarations(node.symbol.declarations, node)",
+      "owner": "createAccessorTypeError"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 301,
+      "column": 16,
+      "kind": "object",
+      "pattern": "{ pendingExpressions, name, value, location, original }",
+      "initializer": null,
+      "owner": "flattenDestructuringBinding"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 516,
+      "column": 20,
+      "kind": "array",
+      "pattern": "[id, element]",
+      "initializer": null,
+      "owner": "flattenArrayBindingOrAssignmentPattern"
+    },
+    {
+      "file": "src/compiler/transformers/destructuring.ts",
+      "line": 557,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "flattenContext.context",
+      "owner": "createDestructuringPropertyAccess"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 489,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2015"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 1910,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ name, initializer, dotDotDotToken }",
+      "initializer": "parameter",
+      "owner": "addDefaultValueAssignmentsIfNeeded"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4530,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ target, thisArg }",
+      "initializer": "factory.createCallBinding(node.expression, hoistVariableDeclaration)",
+      "owner": "visitCallExpressionWithPotentialCapturedThisAssignment"
+    },
+    {
+      "file": "src/compiler/transformers/es2015.ts",
+      "line": 4610,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ target, thisArg }",
+      "initializer": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)",
+      "owner": "visitNewExpression"
+    },
+    {
+      "file": "src/compiler/transformers/es2016.ts",
+      "line": 22,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2016"
+    },
+    {
+      "file": "src/compiler/transformers/es2017.ts",
+      "line": 120,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2017"
+    },
+    {
+      "file": "src/compiler/transformers/es2018.ts",
+      "line": 155,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2018"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 43,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2020"
+    },
+    {
+      "file": "src/compiler/transformers/es2020.ts",
+      "line": 167,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ expression, chain }",
+      "initializer": "flattenChain(node)",
+      "owner": "visitOptionalExpression"
+    },
+    {
+      "file": "src/compiler/transformers/es2021.ts",
+      "line": 26,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        hoistVariableDeclaration,\r\n        factory,\r\n    }",
+      "initializer": "context",
+      "owner": "transformES2021"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 296,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformESDecorators"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1412,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ modifiers, name, descriptorName }",
+      "initializer": "partialTransformClassElement(node, classInfo, createMethodDescriptorObject)",
+      "owner": "visitMethodDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1427,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ modifiers, name, descriptorName }",
+      "initializer": "partialTransformClassElement(node, classInfo, createGetAccessorDescriptorObject)",
+      "owner": "visitGetAccessorDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1442,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ modifiers, name, descriptorName }",
+      "initializer": "partialTransformClassElement(node, classInfo, createSetAccessorDescriptorObject)",
+      "owner": "visitSetAccessorDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 1514,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ modifiers, name, initializersName, extraInitializersName, descriptorName, thisArg }",
+      "initializer": "partialTransformClassElement(node, classInfo, hasAccessorModifier(node) ? createAccessorPropertyDescriptorObject : undefined)",
+      "owner": "visitPropertyDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/esDecorators.ts",
+      "line": 2267,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ target, thisArg }",
+      "initializer": "factory.createCallBinding(expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)",
+      "owner": "transformDecorator"
+    },
+    {
+      "file": "src/compiler/transformers/esnext.ts",
+      "line": 77,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n    }",
+      "initializer": "context",
+      "owner": "transformESNext"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 337,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistFunctionDeclaration,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformGenerators"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 783,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ left, right }",
+      "initializer": "node",
+      "owner": "visitRightAssociativeBinaryExpression"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 1227,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ target, thisArg }",
+      "initializer": "factory.createCallBinding(node.expression, hoistVariableDeclaration, languageVersion, /*cacheIdentifiers*/ true)",
+      "owner": "visitCallExpression"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 1257,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ target, thisArg }",
+      "initializer": "factory.createCallBinding(factory.createPropertyAccessExpression(node.expression, \"bind\"), hoistVariableDeclaration)",
+      "owner": "visitNewExpression"
+    },
+    {
+      "file": "src/compiler/transformers/generators.ts",
+      "line": 2888,
+      "column": 23,
+      "kind": "object",
+      "pattern": "{ startLabel, catchLabel, finallyLabel, endLabel }",
+      "initializer": "currentExceptionBlock",
+      "owner": "appendLabel"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 99,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n    }",
+      "initializer": "context",
+      "owner": "transformJsx"
+    },
+    {
+      "file": "src/compiler/transformers/jsx.ts",
+      "line": 174,
+      "column": 24,
+      "kind": "array",
+      "pattern": "[importSource, importSpecifiersMap]",
+      "initializer": null,
+      "owner": "transformSourceFile"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 89,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformLegacyDecorators"
+    },
+    {
+      "file": "src/compiler/transformers/legacyDecorators.ts",
+      "line": 538,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ false: decorators, true: metadata }",
+      "initializer": "groupBy(allDecorators.decorators, isSyntheticMetadataDecorator)",
+      "owner": "transformAllDecoratorsOfDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/module/esnextAnd2015.ts",
+      "line": 68,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n    }",
+      "initializer": "context",
+      "owner": "transformECMAScriptModule"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 192,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformModule"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 349,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ aliasedModuleNames, unaliasedModuleNames, importAliasNames }",
+      "initializer": "collectAsynchronousDependencies(node, /*includeNonAmdDependencies*/ true)",
+      "owner": "transformAMDModule"
+    },
+    {
+      "file": "src/compiler/transformers/module/module.ts",
+      "line": 414,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ aliasedModuleNames, unaliasedModuleNames, importAliasNames }",
+      "initializer": "collectAsynchronousDependencies(node, /*includeNonAmdDependencies*/ false)",
+      "owner": "transformUMDModule"
+    },
+    {
+      "file": "src/compiler/transformers/module/system.ts",
+      "line": 143,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        startLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformSystemModule"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 68,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "getAssignedNameOfPropertyName"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 107,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "createClassNamedEvaluationHelperBlock"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 202,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "injectClassNamedEvaluationHelperBlockIfMissing"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 246,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "finishTransformNamedEvaluation"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 264,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfPropertyAssignment"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 265,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ assignedName, name }",
+      "initializer": "getAssignedNameOfPropertyName(context, node.name, assignedNameText)",
+      "owner": "transformNamedEvaluationOfPropertyAssignment"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 283,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfShorthandAssignmentProperty"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 309,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfVariableDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 339,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfParameterDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 371,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfBindingElement"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 392,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfPropertyDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 393,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ assignedName, name }",
+      "initializer": "getAssignedNameOfPropertyName(context, node.name, assignedNameText)",
+      "owner": "transformNamedEvaluationOfPropertyDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 432,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfAssignmentExpression"
+    },
+    {
+      "file": "src/compiler/transformers/namedEvaluation.ts",
+      "line": 454,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "transformNamedEvaluationOfExportAssignment"
+    },
+    {
+      "file": "src/compiler/transformers/taggedTemplate.ts",
+      "line": 59,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "processTaggedTemplateExpression"
+    },
+    {
+      "file": "src/compiler/transformers/ts.ts",
+      "line": 236,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        getEmitHelperFactory: emitHelpers,\r\n        startLexicalEnvironment,\r\n        resumeLexicalEnvironment,\r\n        endLexicalEnvironment,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "transformTypeScript"
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 133,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        factory,\r\n        hoistVariableDeclaration,\r\n    }",
+      "initializer": "context",
+      "owner": "createRuntimeTypeSerializer"
+    },
+    {
+      "file": "src/compiler/transformers/typeSerializer.ts",
+      "line": 230,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ setAccessor }",
+      "initializer": "getAllAccessorDeclarations(container.members, node as AccessorDeclaration)",
+      "owner": "getParametersOfDecoratedDeclaration"
+    },
+    {
+      "file": "src/compiler/transformers/utilities.ts",
+      "line": 734,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ firstAccessor, secondAccessor, getAccessor, setAccessor }",
+      "initializer": "getAllAccessorDeclarations(parent.members, accessor)",
+      "owner": "getAllDecoratorsOfAccessors"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 494,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ watchFile, watchDirectory, writeLog }",
+      "initializer": "createWatchFactory<ResolvedConfigFileName>(hostWithWatch, options)",
+      "owner": "createSolutionBuilderState"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 560,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ resolvedConfigFilePaths }",
+      "initializer": "state",
+      "owner": "toResolvedConfigFilePath"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 579,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ configFileCache }",
+      "initializer": "state",
+      "owner": "parseConfigFile"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 587,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ parseConfigFileHost, baseCompilerOptions, baseWatchOptions, extendedConfigCache, host }",
+      "initializer": "state",
+      "owner": "parseConfigFile"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 746,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ compilerHost, host }",
+      "initializer": "state",
+      "owner": "enableCache"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 751,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{\r\n        originalReadFile,\r\n        originalFileExists,\r\n        originalDirectoryExists,\r\n        originalCreateDirectory,\r\n        originalWriteFile,\r\n        getSourceFileWithCache,\r\n        readFileWithCache,\r\n    }",
+      "initializer": "changeCompilerHostLikeToUseCache(\r\n        host,\r\n        fileName => toPath(state, fileName),\r\n        (...args) => originalGetSourceFile.call(compilerHost, ...args),\r\n    )",
+      "owner": "enableCache"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 781,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ cache, host, compilerHost, extendedConfigCache, moduleResolutionCache, typeReferenceDirectiveResolutionCache, libraryResolutionCache }",
+      "initializer": "state",
+      "owner": "disableCache"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1042,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ host, compilerHost }",
+      "initializer": "state",
+      "owner": "createProgram"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1083,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ host, compilerHost }",
+      "initializer": "state",
+      "owner": "emit"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1089,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ emitResult, diagnostics }",
+      "initializer": "emitFilesAndReportErrors(\r\n            program,\r\n            d => host.reportDiagnostic(d),\r\n            state.write,\r\n            /*reportSummary*/ undefined,\r\n            (name, text, writeByteOrderMark, onError, sourceFiles, data) => {\r\n                const path = toPath(state, name);\r\n                emittedOutputs.set(toPath(state, name), name);\r\n                if (data?.buildInfo) {\r\n                    // Update buildInfo cache\r\n                    now ||= getCurrentTime(state.host);\r\n                    const isChangedSignature = program!.hasChangedEmitSignature?.();\r\n                    const existing = getBuildInfoCacheEntry(state, name, projectPath);\r\n                    if (existing) {\r\n                        existing.buildInfo = data.buildInfo;\r\n                        existing.modifiedTime = now;\r\n                        if (isChangedSignature) existing.latestChangedDtsTime = now;\r\n                    }\r\n                    else {\r\n                        state.buildInfoCache.set(projectPath, {\r\n                            path: toPath(state, name),\r\n                            buildInfo: data.buildInfo,\r\n                            modifiedTime: now,\r\n                            latestChangedDtsTime: isChangedSignature ? now : undefined,\r\n                        });\r\n                    }\r\n                }\r\n                const modifiedTime = data?.differsOnlyInMap ? ts_getModifiedTime(state.host, name) : undefined;\r\n                (writeFileCallback || compilerHost.writeFile)(\r\n                    name,\r\n                    text,\r\n                    writeByteOrderMark,\r\n                    onError,\r\n                    sourceFiles,\r\n                    data,\r\n                );\r\n                // Revert the timestamp for the d.ts that is same but differs only in d.ts map URL\r\n                if (data?.differsOnlyInMap) state.host.setModifiedTime(name, modifiedTime!);\r\n                else if (!isIncremental && state.watch) {\r\n                    (outputTimeStampMap ||= getOutputTimeStampMap(state, projectPath)!).set(path, now ||= getCurrentTime(state.host));\r\n                }\r\n            },\r\n            cancellationToken,\r\n            /*emitOnlyDtsFiles*/ undefined,\r\n            customTransformers || state.host.getCustomTransformers?.(project),\r\n        )",
+      "owner": "emit"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1211,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ options, projectPendingBuild }",
+      "initializer": "state",
+      "owner": "getNextInvalidatedProjectCreateInfo"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1512,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ host }",
+      "initializer": "state",
+      "owner": "getUpToDateStatusWorker"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1730,
+      "column": 20,
+      "kind": "object",
+      "pattern": "{ ref, refStatus, resolvedConfig, resolvedRefPath }",
+      "initializer": null,
+      "owner": "getUpToDateStatusWorker"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 1839,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ host }",
+      "initializer": "state",
+      "owner": "updateOutputTimestampsWorker"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2004,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ options, host }",
+      "initializer": "state",
+      "owner": "cleanWorker"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2061,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ hostWithWatch }",
+      "initializer": "state",
+      "owner": "scheduleBuildInvalidatedProject"
+    },
+    {
+      "file": "src/compiler/tsbuildPublic.ts",
+      "line": 2315,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ diagnostics }",
+      "initializer": "state",
+      "owner": "reportErrorSummary"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 748,
+      "column": 16,
+      "kind": "array",
+      "pattern": "[key, value]",
+      "initializer": null,
+      "owner": "forEachEntry"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2528,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ line: startLine }",
+      "initializer": "getLineAndCharacterOfPosition(sourceFile, node.body.pos)",
+      "owner": "getErrorSpanForArrowFunction"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2529,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ line: endLine }",
+      "initializer": "getLineAndCharacterOfPosition(sourceFile, node.body.end)",
+      "owner": "getErrorSpanForArrowFunction"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 2830,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "isPartOfTypeNode"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3579,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ firstAccessor, secondAccessor, setAccessor }",
+      "initializer": "getAllAccessorDeclarations(parent.members, node)",
+      "owner": "classElementOrClassElementParameterIsDecorated"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3619,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "isJSXTagName"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3705,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "isInExpressionContext"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 3847,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ expression, arguments: args }",
+      "initializer": "callExpression as CallExpression",
+      "owner": "isRequireCall"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 4308,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ valueDeclaration }",
+      "initializer": "symbol",
+      "owner": "setValueDeclaration"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 4832,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ typeParameters }",
+      "initializer": "node.parent.parent.parent as SignatureDeclaration | InterfaceDeclaration | ClassDeclaration",
+      "owner": "getTypeParameterFromJsDoc"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8100,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "accessKind"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8107,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ operator }",
+      "initializer": "parent as PrefixUnaryExpression | PostfixUnaryExpression",
+      "owner": "accessKind"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8110,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ left, operatorToken }",
+      "initializer": "parent as BinaryExpression",
+      "owner": "accessKind"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8215,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ onDeleteValue, onExistingValue }",
+      "initializer": "options",
+      "owner": "mutateMapSkippingNewValues"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 8255,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ createNewValue }",
+      "initializer": "options",
+      "owner": "mutateMap"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9543,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ resolvedFileName, originalPath }",
+      "initializer": "resolution",
+      "owner": "processResolution"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9545,
+      "column": 15,
+      "kind": "array",
+      "pattern": "[commonResolved, commonOriginal]",
+      "initializer": "guessDirectorySymlink(resolvedFileName, originalPath, cwd, getCanonicalFileName) || emptyArray",
+      "owner": "processResolution"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 9851,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ files, directories }",
+      "initializer": "getFileSystemEntries(path)",
+      "owner": "visitDirectory"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10325,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ matchableStringSet, patterns }",
+      "initializer": "parsedPatterns",
+      "owner": "matchPatternOrExact"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10813,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node as TypeParameterDeclaration",
+      "owner": "getContainingNodeArray"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10822,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node as Decorator",
+      "owner": "getContainingNodeArray"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 10830,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ parent }",
+      "initializer": "node",
+      "owner": "getContainingNodeArray"
+    },
+    {
+      "file": "src/compiler/utilities.ts",
+      "line": 11058,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ isBracketed, typeExpression }",
+      "initializer": "node",
+      "owner": "isOptionalJSDocPropertyLikeTag"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 957,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ name }",
+      "initializer": "declaration as JSDocPropertyLikeTag",
+      "owner": "getNonAssignedNameOfDeclaration"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 985,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ expression }",
+      "initializer": "declaration as ExportAssignment",
+      "owner": "getNonAssignedNameOfDeclaration"
+    },
+    {
+      "file": "src/compiler/utilitiesPublic.ts",
+      "line": 2555,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ jsDoc }",
+      "initializer": "node as JSDocContainer",
+      "owner": "hasJSDocNodes"
+    },
+    {
+      "file": "src/compiler/visitorPublic.ts",
+      "line": 446,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ factory }",
+      "initializer": "context",
+      "owner": "addDefaultValueAssignmentForBindingPattern"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 250,
+      "column": 19,
+      "kind": "object",
+      "pattern": "{ line }",
+      "initializer": "getLineAndCharacterOfPosition(diagnosticForFileName.file!, diagnosticForFileName.start!)",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 320,
+      "column": 15,
+      "kind": "array",
+      "pattern": "[file, errorCount]",
+      "initializer": "row",
+      "owner": "<anonymous or module>"
+    },
+    {
+      "file": "src/compiler/watch.ts",
+      "line": 644,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ emitResult, diagnostics }",
+      "initializer": "emitFilesAndReportErrors(\r\n        program,\r\n        reportDiagnostic,\r\n        write,\r\n        reportSummary,\r\n        writeFile,\r\n        cancellationToken,\r\n        emitOnlyDtsFiles,\r\n        customTransformers,\r\n    )",
+      "owner": "emitFilesAndReportErrorsAndGetExitStatus"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 456,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ configFileName, optionsToExtend: optionsToExtendForConfigFile = {}, watchOptionsToExtend, extraFileExtensions, createProgram }",
+      "initializer": "host",
+      "owner": "createWatchProgram"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 457,
+      "column": 9,
+      "kind": "object",
+      "pattern": "{ rootFiles: rootFileNames, options: compilerOptions, watchOptions, projectReferences }",
+      "initializer": "host",
+      "owner": "createWatchProgram"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 484,
+      "column": 11,
+      "kind": "object",
+      "pattern": "{ watchFile, watchDirectory, writeLog }",
+      "initializer": "createWatchFactory(host, compilerOptions)",
+      "owner": "createWatchProgram"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 629,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{ hasInvalidatedResolutions, hasInvalidatedLibResolutions }",
+      "initializer": "resolutionCache.createHasInvalidatedResolutions(customHasInvalidatedResolutions, customHasInvalidLibResolutions)",
+      "owner": "synchronizeProgram"
+    },
+    {
+      "file": "src/compiler/watchPublic.ts",
+      "line": 630,
+      "column": 15,
+      "kind": "object",
+      "pattern": "{\r\n            originalReadFile,\r\n            originalFileExists,\r\n            originalDirectoryExists,\r\n            originalCreateDirectory,\r\n            originalWriteFile,\r\n            readFileWithCache,\r\n        }",
+      "initializer": "changeCompilerHostLikeToUseCache(compilerHost, toPath)",
+      "owner": "synchronizeProgram"
+    }
+  ]
+}
