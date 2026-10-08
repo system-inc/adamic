@@ -50,11 +50,23 @@ recordWait() {
     fi
   fi
   mkdir -p "$(dirname "${records}/${file}")"
-  [ -f "${records}/${file}" ] || echo "sha,branch,class,queued_utc,started_utc,waited_seconds" > "${records}/${file}"
+  [ -f "${records}/${file}" ] || echo "sha,branch,class,queued_utc,started_utc,waited_seconds,outcome" > "${records}/${file}"
+  # outcome: "started" when a gate begins, and a second row "void:<cause>" when it ended with no real
+  # verdict, so the chart never counts a void gate as served. Older rows (no column) were starts.
+  head -1 "${records}/${file}" | grep -q ',outcome$' || sed -i '' '1s/$/,outcome/' "${records}/${file}"
   echo "${row}" >> "${records}/${file}"
   git -C "${records}" add "${file}"
   git -C "${records}" -c user.name=kirkouimet -c user.email=kirk@kirkouimet.com commit -q -m "Slot wait: ${row}" -m "Co-Authored-By: Ahra <ahra@ahra.ai>"
   git -C "${records}" push -q origin "HEAD:refs/heads/records/fast-gate-waits" || true
+}
+
+# Why a finished gate has no real verdict, or nothing when it has one: no green/red line at all, or a
+# red whose log shows the box failed (a missing work dir, a dropped ssh, a stale git lock, a full disk).
+voidCause() {
+  local log=$1
+  grep -qE '^(green|red):' "${log}" 2>/dev/null || { echo "no verdict"; return; }
+  grep -qE '^red:' "${log}" || return 0
+  grep -oE 'creating work dir|Connection reset by|kex_exchange_identification|ssh: connect to host|Connection refused|index\.lock.: File exists|No space left on device' "${log}" | head -1
 }
 
 tips() {
@@ -81,9 +93,26 @@ while true; do
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
     kill -0 "$(basename "${file}")" 2>/dev/null && continue
-    read -r branch sha _ < "${file}"
-    echo "$(date -u +%H:%M:%S) done ${branch}: $(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)"
+    read -r branch sha class < "${file}"
     rm "${file}"
+    cause=$(voidCause "${state}/logs/${sha:0:12}.log")
+    if [ -z "${cause}" ]; then
+      echo "$(date -u +%H:%M:%S) done ${branch}: $(grep -E '^(green|red):' "${state}/logs/${sha:0:12}.log" | tail -1)"
+      continue
+    fi
+    # A void gate (it died before a real verdict, like the 33 a WSL restart killed at 08:23Z on Oct 8)
+    # isn't served: un-mark it, queue it again, at most three tries, then tell integration it's the box.
+    echo "${sha}" >> "${state}/void-tries"
+    tries=$(grep -cx "${sha}" "${state}/void-tries")
+    (recordWait "${sha},${branch},${class},,$(date -u +%FT%TZ),,void:${cause// /_}" > /dev/null 2>&1 &)
+    if [ "${tries}" -le 3 ]; then
+      grep -vx "${sha}" "${state}/gated" > "${state}/gated.tmp"; mv "${state}/gated.tmp" "${state}/gated"
+      echo "${class} $(date -u +%s) ${branch} ${sha}" >> "${state}/queue"
+      echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause} (try ${tries} of 3), queued again"
+    else
+      echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause}, three tries, given up"
+      (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
+    fi
   done
   while [ "$(ls "${state}/running" | wc -l)" -lt "${slots}" ] && [ -s "${state}/queue" ]; do
     touch "${state}/priority"
@@ -111,7 +140,7 @@ while true; do
     echo "${branch} ${sha} ${class}" > "${state}/running/$!"
     now=$(date -u +%s)
     echo "$(date -u +%H:%M:%S) gating ${branch} ${sha} (${class}, waited $(( now - queued )) s, log ${log})"
-    (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued ))" > /dev/null 2>&1 &)
+    (recordWait "${sha},${branch},${class},$(date -u -r "${queued}" +%FT%TZ),$(date -u -r "${now}" +%FT%TZ),$(( now - queued )),started" > /dev/null 2>&1 &)
   done
   sleep 15
 done
