@@ -1,0 +1,21 @@
+import { panic, programArguments, readTextFile } from 'adamic';
+import { OptionsJson } from '../../../options_json.ts';
+import type { HelperNode } from '../../../slot02_ast.a';
+import { NameTagged } from '../../name_tagged.a';
+function field(input: OptionsJson, row: number, name: string): number {
+    const node = input.node(row);
+    return node.children[node.keys.indexOf(name)] ?? panic('missing field');
+}
+const file = readTextFile(programArguments()[0] ?? panic('input'));
+if(file.kind === 'Error') { panic(file.message); }
+const input = new OptionsJson(file.text);
+const root = input.parse();
+if(root < 0) { panic(input.error); }
+for(const row of input.node(root).children) {
+    const nodes: HelperNode[] = [];
+    for(const index of input.node(field(input, row, 'nodes')).children) {
+        nodes.push({kind:input.node(field(input,index,'kind')).text, text:input.node(field(input,index,'text')).text, expression:Number(input.node(field(input,index,'expression')).text), name:-1});
+    }
+    const answer = NameTagged(nodes, Number(input.node(field(input,row,'key')).text), Number(input.node(field(input,row,'accept')).text));
+    console.log(`${answer.named}|${answer.name}`);
+}
