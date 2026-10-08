@@ -48,3 +48,41 @@
         
 --- FAIL: TestSingleFileStdoutDriver (5.33s)
 
+== github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/missing_final_newline
+=== RUN   TestThreePortMutantsAreCaught/missing_final_newline
+=== PAUSE TestThreePortMutantsAreCaught/missing_final_newline
+=== CONT  TestThreePortMutantsAreCaught/missing_final_newline
+    port_test.go:291: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestThreePortMutantsAreCaught/missing_final_newline (2.16s)
+
+== github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/wrong_filename_parser
+=== RUN   TestThreePortMutantsAreCaught/wrong_filename_parser
+=== PAUSE TestThreePortMutantsAreCaught/wrong_filename_parser
+=== CONT  TestThreePortMutantsAreCaught/wrong_filename_parser
+    port_test.go:291: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestThreePortMutantsAreCaught/wrong_filename_parser (1.82s)
+
+== github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught/missing_colon_space
+=== RUN   TestThreePortMutantsAreCaught/missing_colon_space
+=== PAUSE TestThreePortMutantsAreCaught/missing_colon_space
+=== CONT  TestThreePortMutantsAreCaught/missing_colon_space
+    port_test.go:291: native: compiling runtime adamic.c: exit status 1
+        clang: error: unsupported option '-fsanitize=address' for target 'wasm32-unknown-wasi'
+        
+--- FAIL: TestThreePortMutantsAreCaught/missing_colon_space (1.74s)
+
+== github.com/system-inc/adamic/stage1/cohere/json TestThreePortMutantsAreCaught
+=== RUN   TestThreePortMutantsAreCaught
+=== PAUSE TestThreePortMutantsAreCaught
+=== CONT  TestThreePortMutantsAreCaught
+    port_test.go:270: Go cohere: === RUN   TestAdamicJSONAudit
+            adamic_json_audit_test.go:43: 4 texts in 0.001s
+        --- PASS: TestAdamicJSONAudit (0.00s)
+        PASS
+        ok  	github.com/system-inc/cohere/internal/format/javascript	0.097s
+--- FAIL: TestThreePortMutantsAreCaught (3.87s)
+
