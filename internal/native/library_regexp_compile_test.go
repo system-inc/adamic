@@ -53,3 +53,34 @@ func TestRegExpRuntimeOwnershipOptInMutant(t *testing.T) {
 	}
 	t.Log("caught always-on ownership variant at the symbol assertion")
 }
+
+func TestRegExpReplacementOptInMutant(t *testing.T) {
+	source, err := os.ReadFile("library_regexp_compile.go")
+	if err != nil {
+		t.Fatal(err)
+	}
+	old := `strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n")`
+	if strings.Count(string(source), old) != 1 {
+		t.Fatal("callback opt-in site moved")
+	}
+	dir := t.TempDir()
+	replacement := filepath.Join(dir, "library_regexp_compile.go")
+	if err := os.WriteFile(replacement, []byte(strings.Replace(string(source), old, "true", 1)), 0600); err != nil {
+		t.Fatal(err)
+	}
+	original, _ := filepath.Abs("library_regexp_compile.go")
+	data, _ := json.Marshal(map[string]map[string]string{"Replace": {original: replacement}})
+	path := filepath.Join(dir, "overlay.json")
+	if err := os.WriteFile(path, data, 0600); err != nil {
+		t.Fatal(err)
+	}
+	command := exec.Command("go", "test", "-overlay", path, ".", "-run", "^TestRegExpRuntimeCompilerNotLinked$", "-count=1", "-v")
+	output, err := command.CombinedOutput()
+	if err == nil {
+		t.Fatal("always-on replacement runtime mutant survived")
+	}
+	if !bytes.Contains(output, []byte("replacement callback linked")) || bytes.Contains(output, []byte("build failed")) {
+		t.Fatalf("mutant did not reach symbol assertion: %v %s", err, output)
+	}
+	t.Log("caught always-on replacement runtime at the symbol assertion")
+}

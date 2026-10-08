@@ -55,6 +55,21 @@ IN THE SOFTWARE.
   - String well-formed Unicode (`runtime/string_wellformed.c`, after
     src/builtins/string-iswellformed.tq and src/builtins/string-towellformed.tq,
     adapted to canonical WTF-8 storage);
+  - Date string formatting (`internal/native/runtime/date_string.c`, after
+    `ToDateString` in Node.js v24.19.0's `deps/v8/src/date/date.cc`; supported
+    timezone names and calendar boundaries are checked against Node, and unavailable
+    timezone rules are explicitly refused);
+  - functional RegExp replacement (`internal/native/runtime/regexp_replace.c`, after
+    Node.js v24.19.0's `deps/v8/src/builtins/regexp-replace.tq` and
+    `deps/v8/src/runtime/runtime-regexp.cc`; match collection precedes callbacks,
+    whose arguments preserve captures, offset, input and named-group order);
+  - sparse Array callback and join semantics (`internal/native/runtime/array_holes.c`,
+    `internal/native/library_array_holes.go` and `internal/native/emit_arrays.go`,
+    after Node.js v24.19.0's `deps/v8/src/builtins/array-join.tq`,
+    `array-map.tq` and `array-foreach.tq`; sparse storage itself uses Adamic's maps);
+  - default string Array sorting (`internal/native/runtime/array_sort_strings.c`,
+    after Node.js v24.19.0's `deps/v8/third_party/v8/builtins/array-sort.tq`;
+    the existing stable sorter orders strings by UTF-16 units, then undefined, then holes);
   - number parsing (`runtime/parse.c`, after src/numbers/conversions.cc);
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /

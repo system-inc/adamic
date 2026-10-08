@@ -100,6 +100,10 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
+	if binary.OperatorToken.Kind == ast.KindInstanceOfKeyword && ast.IsIdentifier(left) && l.caught[l.symbol(left)] && l.isLibraryGlobal(binary.Right, "RangeError") {
+		local, _ := l.local(left)
+		return ir.ArrayRangeErrorIs{Value: ir.Read{Local: local, Of: ir.Object}}, true
+	}
 	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
@@ -141,7 +145,7 @@ func (l *lowering) exceptions() error {
 			return l.notYet(record.node, "a try around "+failing+", whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md)")
 		}
 	}
-	return nil
+	return l.checkArrayHoles()
 }
 
 // throwsOut reports whether a throw can leave statements: a throw, or a call to a function that can
@@ -165,7 +169,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.CodePoints
 		case ir.NodeFSFile:
 			found = found || node.MayThrow()
-		case ir.Throw:
+		case ir.Throw, ir.ArrayHoles, ir.ArraySetLength:
 			found = true
 		case ir.NodeHostCall:
 			found = found || node.Throws
@@ -173,6 +177,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
+				found = true
+			}
+		case ir.RegExpCall:
+			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
 		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
@@ -230,6 +238,9 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 				failing = "Object.assign into a potentially frozen object"
 			}
 		case ir.RegExpCall:
+			if node.Replacement != nil {
+				callsClosures = true
+			}
 			if node.Method == "replaceAll" || node.Method == "matchAll" {
 				failing = "RegExp global-flag validation"
 			}

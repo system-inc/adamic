@@ -51,7 +51,14 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("\tcontinue;")
 	}
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if e.hasArrayHoles() {
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
+		e.line("if (%s == NULL) continue;", slot)
+		e.line("adamic_value %s = *%s;", element, slot)
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}
@@ -143,7 +150,14 @@ func (e *emitter) arrayReduce(reduce ir.ArrayReduce) string {
 	e.line("if (%s >= %s->length) {", index, source)
 	e.line("\tcontinue;")
 	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	if e.hasArrayHoles() {
+		slot := e.temporary()
+		e.line("adamic_value *%s = adamic_array_holes_at(%s, (double)%s);", slot, source, index)
+		e.line("if (%s == NULL) continue;", slot)
+		e.line("adamic_value %s = *%s;", element, slot)
+	} else {
+		e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	}
 	if reduce.Element.IsReference() {
 		e.line("adamic_retain(%s.reference);", element)
 	}

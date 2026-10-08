@@ -1,0 +1,26 @@
+const values = new Array<string | undefined>(8);
+values[6] = "b" + String(values.length);
+values[3] = undefined;
+values[4] = "a" + String(values.length);
+values[1] = "b" + String(values.length);
+values[7] = undefined;
+values[-1] = "property";
+values[1.5] = "fraction";
+values[4294967295] = "maximum";
+const alias = values;
+console.log(String(values.sort() === alias) + ":" + String(values.length));
+for (let index = 0; index < values.length; index++) {
+    // indexOf skips holes but finds an explicitly present undefined.
+    const present = values[index] !== undefined || values.indexOf(undefined, index) === index;
+    console.log(String(index) + ":" + String(present) + ":" + (values[index] ?? "undefined"));
+}
+console.log((values[-1] ?? "missing") + ":" + (values[1.5] ?? "missing") + ":" + (values[4294967295] ?? "missing"));
+values.sort();
+console.log(values.join("|"));
+const huge = new Array<string>(1000);
+huge[999] = "last";
+huge[8] = "first";
+huge.sort();
+console.log(String(huge.length) + ":" + (huge[0] ?? "missing") + ":" + (huge[1] ?? "missing") + ":" + String(huge[2] === undefined));
+const empty = new Array<string>(0);
+console.log(String(empty.sort().length));
