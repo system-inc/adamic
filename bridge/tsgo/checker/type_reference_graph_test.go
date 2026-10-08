@@ -2,6 +2,7 @@ package checker
 
 import (
 	"context"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -31,7 +32,7 @@ func TestTypeReferenceGraphFacts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := p.Compiler.GetSourceFile(file)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	var root *ast.Node
@@ -47,7 +48,7 @@ func TestTypeReferenceGraphFacts(t *testing.T) {
 			}
 			node.ForEachChild(func(child *ast.Node) bool { walk(child); return false })
 		}
-		walk(p.Compiler.GetSourceFile(path).AsNode())
+		walk(p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(path)).AsNode())
 	}
 	if root == nil {
 		t.Fatal("missing root")

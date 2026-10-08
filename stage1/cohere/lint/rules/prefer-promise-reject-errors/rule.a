@@ -1,0 +1,144 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Bindings } from './bindings.a';
+import { Helpers } from './helpers.a';
+export class Rule {
+    readonly helpers: Helpers;
+    constructor(context: RuleContext) { this.helpers=new Helpers(new Bindings(context)); }
+    could(index: number): boolean {
+        const node = this.helpers.node(this.helpers.skip(index));
+        if(
+            [
+                'Identifier',
+                'CallExpression',
+                'NewExpression',
+                'PropertyAccessExpression',
+                'ElementAccessExpression',
+                'TaggedTemplateExpression',
+                'YieldExpression',
+                'AwaitExpression',
+            ].includes(node.kind)
+        ) {
+            return true;
+        }
+        if(node.kind === 'ConditionalExpression') {
+            return this.could(node.children[2] ?? -1) || this.could(node.children[4] ?? -1);
+        }
+        if(node.kind === 'BinaryExpression') {
+            const operator = this.helpers.node(node.children[1] ?? -1).kind;
+            if(
+                ['EqualsToken', 'AmpersandAmpersandEqualsToken', 'AmpersandAmpersandToken', 'CommaToken'].includes(
+                    operator,
+                )
+            ) {
+                return this.could(node.children[2] ?? -1);
+            }
+            if(
+                ['BarBarEqualsToken', 'QuestionQuestionEqualsToken', 'BarBarToken', 'QuestionQuestionToken'].includes(
+                    operator,
+                )
+            ) {
+                return this.could(node.children[0] ?? -1) || this.could(node.children[2] ?? -1);
+            }
+        }
+        return false;
+    }
+    check(index: number): void {
+        const reason = this.helpers.args(index)[0] ?? -1;
+        if(reason < 0 && this.helpers.bindings.rules.settings.read('allowemptyreject','false') === 'true') { return; }
+        const node = this.helpers.node(reason);
+        const undefinedGlobal =
+            node.kind === 'Identifier' &&
+            node.text === 'undefined' &&
+            this.helpers.symbol(reason).declarations.length === 0;
+        if(reason < 0 || !this.could(reason) || undefinedGlobal) {
+            this.helpers.report(
+                index,
+                'prefer-promise-reject-errors',
+                'rejectAnError',
+                'Expected the Promise rejection reason to be an Error. A rejection carrying a string or a plain object arrives at the catch with no stack, so the line that failed is lost and the handler cannot tell one failure from another.',
+            );
+        }
+    }
+    staticCall(index: number): boolean {
+        const callee = this.helpers.skip(this.helpers.node(index).children[0] ?? -1);
+        const node = this.helpers.node(callee);
+        if(!['PropertyAccessExpression', 'ElementAccessExpression'].includes(node.kind)) {
+            return false;
+        }
+        const name = this.helpers.node(node.children[node.children.length - 1] ?? -1);
+        if(
+            node.kind === 'ElementAccessExpression' &&
+            !['StringLiteral', 'NoSubstitutionTemplateLiteral'].includes(name.kind)
+        ) {
+            return false;
+        }
+        const receiver = this.helpers.skip(node.children[0] ?? -1);
+        const value = this.helpers.node(receiver);
+        return (
+            name.text === 'reject' &&
+            value.kind === 'Identifier' &&
+            value.text === 'Promise' &&
+            this.helpers.global(receiver)
+        );
+    }
+    walk(index: number, targets: readonly number[]): void {
+        const node = this.helpers.node(index);
+        if(node.kind === 'CallExpression') {
+            const callee = this.helpers.skip(node.children[0] ?? -1);
+            if(
+                this.helpers.node(callee).kind === 'Identifier' &&
+                targets.includes(this.helpers.symbol(callee).identity)
+            ) {
+                this.check(index);
+            }
+        }
+        for(const child of node.children) {
+            this.walk(child, targets);
+        }
+    }
+    executor(index: number): void {
+        const callee = this.helpers.node(index).children[0] ?? -1;
+        const value = this.helpers.node(callee);
+        if(value.kind !== 'Identifier' || value.text !== 'Promise' || !this.helpers.global(callee)) {
+            return;
+        }
+        const executor = this.helpers.args(index)[0] ?? -1;
+        const node = this.helpers.node(executor);
+        if(!['ArrowFunction', 'FunctionExpression', 'FunctionDeclaration'].includes(node.kind)) {
+            return;
+        }
+        const params = node.children.filter((child) => this.helpers.node(child).kind === 'Parameter');
+        if(params.length < 2) {
+            return;
+        }
+        const name = this.helpers.bindings.name(params[1] ?? -1);
+        if(this.helpers.node(name).kind !== 'Identifier') {
+            return;
+        }
+        const targets: number[] = [];
+        for(const param of params) {
+            const declared = this.helpers.bindings.name(param);
+            if(
+                this.helpers.node(declared).kind === 'Identifier' &&
+                this.helpers.node(declared).text === this.helpers.node(name).text
+            ) {
+                const identity = this.helpers.symbol(declared).identity;
+                if(identity !== 0) {
+                    targets.push(identity);
+                }
+            }
+        }
+        if(targets.length === 0) {
+            return;
+        }
+        for(const child of node.children) {
+            this.walk(child, targets);
+        }
+    }
+    visit(node: ParseNode,index: number): void {
+        if(node.kind === 'CallExpression') { if(this.staticCall(index)) { this.check(index); } }
+        else { this.executor(index); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

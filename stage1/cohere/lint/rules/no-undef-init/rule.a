@@ -1,0 +1,33 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+import { WaveSymbol } from './symbol.a';
+import { Bindings, waveNode } from './bindings.a';
+export class Rule {
+    readonly context: RuleContext;
+    readonly bindings: Bindings;
+    constructor(context: RuleContext) { this.context=context; this.bindings=new Bindings(context); }
+    visit(node: ParseNode,index: number): void {
+        const list=waveNode(this.context,this.bindings.parent(index));
+        if(list.kind !== 'VariableDeclarationList' || ['2','4','6'].includes(list.semantic)) { return; }
+        const initializer=this.bindings.initializer(index);
+        const value=waveNode(this.context,initializer);
+        if(value.kind !== 'Identifier' || value.text !== 'undefined') { return; }
+        if(new WaveSymbol(this.context,initializer).sourceDeclarations) { return; }
+        const nameIndex=this.bindings.name(index);
+        if(nameIndex < 0) { return; }
+        const name=this.context.node(nameIndex);
+        const edits: SuggestionEdit[]=[];
+        if(list.semantic === '1' && name.kind === 'Identifier') {
+            let removal=name.end;
+            for(const child of node.children.slice(node.children.indexOf(nameIndex)+1)) {
+                if(child === initializer) { break; }
+                removal=this.context.node(child).end;
+            }
+            const text=this.context.source.slice(removal,node.end);
+            if(!text.includes('/*') && !text.includes('//')) { edits.push(new SuggestionEdit(removal,node.end,'')); }
+        }
+        this.context.reportNode(index,'no-undef-init','unnecessaryUndefinedInit',`\`${this.context.raw(nameIndex)}\` is initialized to \`undefined\`, which is the value it would already have. The initializer adds a token and no behaviour, and it costs the reader a moment deciding whether the author meant something by it. Drop it.`,edits);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

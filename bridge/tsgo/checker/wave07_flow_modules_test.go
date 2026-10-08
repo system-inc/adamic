@@ -2,6 +2,7 @@ package checker
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -28,7 +29,7 @@ func TestWave07FlowAndModuleFacts(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := p.Compiler.GetSourceFile(file)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	wire, err := p.wave07ControlFlow(source.AsNode(), "wave07-control-flow")
 	if err != nil {
 		t.Fatal(err)

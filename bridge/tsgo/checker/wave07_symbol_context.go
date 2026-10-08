@@ -65,12 +65,12 @@ func (p *Program) wave07SymbolContext(c *checker.Checker, node *ast.Node, questi
 
 func (p *Program) wave07ContextDeclaration(out *fields, node *ast.Node) {
 	file := ast.GetSourceFileOfNode(node)
-	out.text(file.FileName())
+	out.text(file.FileName().AsString())
 	out.text(strings.TrimPrefix(node.Kind.String(), "Kind"))
 	out.number(uint64(node.Pos()))
 	out.number(uint64(node.End()))
 	out.yes(file.IsDeclarationFile)
-	out.yes(p.Compiler.IsSourceFileDefaultLibrary(file.Path()))
+	out.yes(p.Compiler.IsSourceFileDefaultLibrary(file.PathKey()))
 	out.yes(ast.IsExternalModule(file))
 	name := ""
 	if wave07TextName(node.Name()) {

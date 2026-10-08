@@ -18,7 +18,7 @@ func (p *Program) wave07ProgramModules(root *ast.Node, question string) (string,
 	files := p.Compiler.GetSourceFiles()
 	out.number(uint64(len(files)))
 	for _, file := range files {
-		out.text(file.FileName())
+		out.text(file.FileName().AsString())
 		out.yes(file.IsDeclarationFile)
 		text := ""
 		if !file.IsDeclarationFile {
@@ -79,8 +79,8 @@ func (p *Program) wave07ProgramModules(root *ast.Node, question string) (string,
 			if literal {
 				resolved := p.Compiler.GetResolvedModuleFromModuleSpecifier(file, specifier)
 				if resolved != nil && resolved.IsResolved() {
-					if next := p.Compiler.GetSourceFileForResolvedModule(resolved.ResolvedFileName); next != nil {
-						target = next.FileName()
+					if next := p.Compiler.GetSourceFileForResolvedModule(resolved); next != nil {
+						target = next.FileName().AsString()
 					}
 				}
 			}

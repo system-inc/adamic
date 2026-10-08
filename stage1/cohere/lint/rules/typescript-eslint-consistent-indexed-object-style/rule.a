@@ -1,0 +1,253 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { Bindings } from './bindings.a';
+import { waveNode } from './node.a';
+import { WaveSymbol } from './symbol.a';
+import { TypeReferenceGraph } from './type_reference_graph.a';
+import { Suggestion, SuggestionEdit } from '../../suggestions.a';
+import { isSpace,isLineBreak } from '../../../../typescript/scanner/characters.ts';
+export class Rule {
+    readonly bindings: Bindings;
+    constructor(context: RuleContext) { this.bindings=new Bindings(context); }
+    type(index: number): number {
+        const node = waveNode(this.bindings.rules.parser, index);
+        if(['IndexSignature', 'Parameter', 'TypeAliasDeclaration'].includes(node.kind)) {
+            const last = node.children[node.children.length - 1] ?? -1;
+            return last !== this.bindings.name(index) &&
+                waveNode(this.bindings.rules.parser, last).kind !== 'Parameter'
+                ? last
+                : -1;
+        }
+        if(node.kind === 'MappedType') {
+            const last = node.children[node.children.length - 1] ?? -1;
+            return !['QuestionToken', 'PlusToken', 'MinusToken', 'TypeParameter'].includes(
+                waveNode(this.bindings.rules.parser, last).kind,
+            )
+                ? last
+                : -1;
+        }
+        return -1;
+    }
+    alias(index: number): number {
+        let child = index;
+        let current = this.bindings.parent(index);
+        while(current >= 0) {
+            const node = waveNode(this.bindings.rules.parser, current);
+            if(node.kind === 'TypeAliasDeclaration') {
+                return this.bindings.name(current);
+            }
+            if(
+                (['IndexSignature', 'PropertySignature'].includes(node.kind) &&
+                    node.children[node.children.length - 1] === child) ||
+                ['Parameter', 'PropertyDeclaration', 'VariableDeclaration'].includes(node.kind)
+            ) {
+                return -1;
+            }
+            child = current;
+            current = this.bindings.parent(current);
+        }
+        return -1;
+    }
+    circular(index: number, name: number): boolean {
+        if(name < 0) {
+            return false;
+        }
+        const anchor = new WaveSymbol(this.bindings.rules.context, name).identity;
+        if(anchor === 0) {
+            return false;
+        }
+        const graph = new TypeReferenceGraph(this.bindings.rules, index);
+        return graph.reaches(graph.root, anchor);
+    }
+    trivia(start: number): number {
+        let at = start;
+        while(at < this.bindings.rules.scanner.text.length) {
+            const code = this.bindings.rules.scanner.text.charCodeAt(at);
+            if(isSpace(code) || isLineBreak(code)) {
+                at++;
+            }
+            else if(this.bindings.rules.scanner.text.slice(at, at + 2) === '//') {
+                at += 2;
+                while(
+                    at < this.bindings.rules.scanner.text.length &&
+                    !isLineBreak(this.bindings.rules.scanner.text.charCodeAt(at))
+                ) {
+                    at++;
+                }
+            }
+            else if(this.bindings.rules.scanner.text.slice(at, at + 2) === '/*') {
+                const end = this.bindings.rules.scanner.text.indexOf('*/', at + 2);
+                at = end < 0 ? this.bindings.rules.scanner.text.length : end + 2;
+            }
+            else {
+                break;
+            }
+        }
+        return at;
+    }
+    comments(start: number, end: number, kept: readonly number[]): boolean {
+        for(let at = start; at < end;) {
+            const after = this.trivia(at);
+            if(after > at) {
+                for(
+                    let position = at;
+                    position < after && position + 1 < this.bindings.rules.scanner.text.length;
+                    position++
+                ) {
+                    if(['//', '/*'].includes(this.bindings.rules.scanner.text.slice(position, position + 2))) {
+                        const last = Math.min(after, end);
+                        if(
+                            !kept.some(
+                                (index) =>
+                                    index >= 0 &&
+                                    position >=
+                                        this.bindings.rules.start(waveNode(this.bindings.rules.parser, index)) &&
+                                    last <= waveNode(this.bindings.rules.parser, index).end,
+                            )
+                        ) {
+                            return true;
+                        }
+                        break;
+                    }
+                }
+                at = after;
+            }
+            else {
+                at++;
+            }
+        }
+        return false;
+    }
+    report(index: number, start: number, replacement: string, safe: boolean, kept: readonly number[]): void {
+        const end = waveNode(this.bindings.rules.parser, index).end;
+        const edits: SuggestionEdit[]=[];
+        const suggestions: Suggestion[]=[];
+        if(safe) {
+            const edit=new SuggestionEdit(start,end,replacement);
+            if(this.comments(start,end,kept)) { suggestions.push(new Suggestion('preferRecordSuggestion','Change into a record instead of an index signature.',[edit])); }
+            else { edits.push(edit); }
+        }
+        this.bindings.rules.context.reportRange(start,end,'@typescript-eslint/consistent-indexed-object-style','preferRecord','A record is preferred over an index signature.',edits,suggestions);
+    }
+    signature(index: number,node: ParseNode): void {
+        const interface_ = node.kind === 'InterfaceDeclaration';
+        const members = node.children.filter((child) =>
+            [
+                'IndexSignature',
+                'PropertySignature',
+                'MethodSignature',
+                'CallSignature',
+                'ConstructSignature',
+                'GetAccessor',
+                'SetAccessor',
+            ].includes(waveNode(this.bindings.rules.parser, child).kind),
+        );
+        if(members.length !== 1 || waveNode(this.bindings.rules.parser, members[0] ?? -1).kind !== 'IndexSignature') {
+            return;
+        }
+        const signatureIndex = members[0] ?? -1;
+        const signature = waveNode(this.bindings.rules.parser, signatureIndex);
+        const parameters = signature.children.filter(
+            (child) => waveNode(this.bindings.rules.parser, child).kind === 'Parameter',
+        );
+        const key = this.type(parameters[0] ?? -1);
+        const value = this.type(signatureIndex);
+        if(
+            parameters.length !== 1 ||
+            key < 0 ||
+            value < 0 ||
+            this.circular(index, interface_ ? this.bindings.name(index) : this.alias(index))
+        ) {
+            return;
+        }
+        let record = `Record<${this.bindings.rules.text(waveNode(this.bindings.rules.parser, key))}, ${this.bindings.rules.text(waveNode(this.bindings.rules.parser, value))}>`;
+        if(signature.children.some((child) => waveNode(this.bindings.rules.parser, child).kind === 'ReadonlyKeyword')) {
+            record = `Readonly<${record}>`;
+        }
+        let start = this.bindings.rules.start(node);
+        let safe = true;
+        if(interface_) {
+            const generics = node.children
+                .filter((child) => waveNode(this.bindings.rules.parser, child).kind === 'TypeParameter')
+                .map((child) => this.bindings.rules.text(waveNode(this.bindings.rules.parser, child)));
+            const modifiers = node.children.filter((child) =>
+                ['ExportKeyword', 'DefaultKeyword', 'DeclareKeyword'].includes(
+                    waveNode(this.bindings.rules.parser, child).kind,
+                ),
+            );
+            if(modifiers.length > 0) {
+                start = this.trivia(waveNode(this.bindings.rules.parser, modifiers[modifiers.length - 1] ?? -1).end);
+            }
+            const name = waveNode(this.bindings.rules.parser, this.bindings.name(index)).text;
+            record = `type ${name}${generics.length > 0 ? `<${generics.join(', ')}>` : ''} = ${record};`;
+            safe =
+                !node.children.some((child) => waveNode(this.bindings.rules.parser, child).kind === 'HeritageClause') &&
+                !(
+                    modifiers.some((child) => waveNode(this.bindings.rules.parser, child).kind === 'ExportKeyword') &&
+                    modifiers.some((child) => waveNode(this.bindings.rules.parser, child).kind === 'DefaultKeyword')
+                );
+        }
+        this.report(index, start, record, safe, [key, value]);
+    }
+    uses(index: number, name: string): boolean {
+        const node = waveNode(this.bindings.rules.parser, index);
+        return (
+            (node.kind === 'Identifier' && node.text === name) || node.children.some((child) => this.uses(child, name))
+        );
+    }
+    mapped(index: number,node: ParseNode): void {
+        const parameterIndex =
+            node.children.find((child) => waveNode(this.bindings.rules.parser, child).kind === 'TypeParameter') ?? -1;
+        const parameter = waveNode(this.bindings.rules.parser, parameterIndex);
+        const constraint = parameter.children[1] ?? -1;
+        const key = waveNode(this.bindings.rules.parser, constraint);
+        const value = this.type(index);
+        if(
+            constraint < 0 ||
+            (key.kind === 'TypeOperator' && key.operator === 'KeyOfKeyword') ||
+            (value >= 0 && this.uses(value, waveNode(this.bindings.rules.parser, parameter.children[0] ?? -1).text)) ||
+            this.circular(index, this.alias(index))
+        ) {
+            return;
+        }
+        const unwrapped = this.bindings.rules.skip(constraint, 'ParenthesizedType');
+        let record = `Record<${this.bindings.rules.text(waveNode(this.bindings.rules.parser, unwrapped))}, ${value >= 0 ? this.bindings.rules.text(waveNode(this.bindings.rules.parser, value)) : 'any'}>`;
+        const before = node.children.slice(0, node.children.indexOf(parameterIndex));
+        const after = node.children.slice(node.children.indexOf(parameterIndex) + 1);
+        const optional =
+            after.find((child) =>
+                ['QuestionToken', 'PlusToken', 'MinusToken'].includes(waveNode(this.bindings.rules.parser, child).kind),
+            ) ?? -1;
+        if(optional >= 0) {
+            record = `${waveNode(this.bindings.rules.parser, optional).kind === 'MinusToken' ? 'Required' : 'Partial'}<${record}>`;
+        }
+        let safe = true;
+        if(before.length > 0) {
+            if(waveNode(this.bindings.rules.parser, before[0] ?? -1).kind === 'MinusToken') {
+                safe = false;
+            }
+            else {
+                record = `Readonly<${record}>`;
+            }
+        }
+        this.report(index, this.bindings.rules.start(node), record, safe, [constraint, value]);
+    }
+    visit(node: ParseNode,index: number): void {
+        const context=this.bindings.rules.context;
+        const mode=context.settings.read('mode',context.settings.read('option','record'));
+        if(mode === 'index-signature') {
+            if(node.kind !== 'TypeReference') { return; }
+            const name=node.children[0] ?? -1;
+            if(context.kind(name) !== 'Identifier' || context.node(name).text !== 'Record' || node.children.length !== 3) { return; }
+            const key=node.children[1] ?? -1;const value=node.children[2] ?? -1;
+            const edit=context.edit(index,`{ [key: ${context.raw(key)}]: ${context.raw(value)} }`);
+            const safe=['StringKeyword','NumberKeyword','SymbolKeyword'].includes(context.kind(key)) && !this.comments(context.start(index),node.end,[key,value]);
+            const edits: SuggestionEdit[]=[];const suggestions: Suggestion[]=[];
+            if(safe) { edits.push(edit); } else { suggestions.push(new Suggestion('preferIndexSignatureSuggestion','Change into an index signature instead of a record.',[edit])); }
+            context.reportNode(index,'@typescript-eslint/consistent-indexed-object-style','preferIndexSignature','An index signature is preferred over a record.',edits,suggestions);
+        }
+        else if(node.kind === 'MappedType') { this.mapped(index,node); }
+        else if(node.kind !== 'TypeReference') { this.signature(index,node); }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

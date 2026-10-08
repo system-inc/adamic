@@ -1,0 +1,19 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { WaveSymbol } from './symbol.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context=context; }
+    visit(node: ParseNode,index: number): void {
+        if(node.text !== 'arguments') { return; }
+        const symbol=new WaveSymbol(this.context,index);
+        if(symbol.identity === 0 || symbol.declarations.length !== 0) { return; }
+        const parentIndex=this.context.parent(index);
+        if(parentIndex >= 0) {
+            const parent=this.context.node(parentIndex);
+            if(parent.kind === 'PropertyAccessExpression' && parent.children[0] === index) { return; }
+        }
+        this.context.reportNode(index,'prefer-rest-params','preferRestParams','This reads the implicit `arguments` object, which is array-like rather than an array and carries none of `Array.prototype`, so iterating or slicing it needs a conversion first. Declare a rest parameter (`...args`) and use that instead.');
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,51 @@
+import type { RuleContext } from '../../context.ts';
+import { Frames, header } from '../../../typeaware/frames.ts';
+
+// Read existing declaration metadata without importing another rule's judgments.
+export class WaveSymbol {
+    readonly declarations: string[] = [];
+    identity = 0;
+    sourceDeclarations = false;
+    constructor(rules: RuleContext, index: number) {
+        const answer = rules.checker?.ask(index, 'node-symbol-details');
+        if(answer !== undefined && answer.value !== undefined) {
+        const frames = new Frames(answer.value);
+        header(frames, 'node-symbol-details');
+        if(frames.yes()) {
+            this.identity = frames.natural();
+            frames.natural();
+            frames.field();
+            const count = frames.natural();
+            for(let at = 0; at < count; at++) {
+                const file = frames.field();
+                const kind = frames.field();
+                const start = frames.natural();
+                const end = frames.natural();
+                this.declarations.push(`${file}:${kind}:${start}:${end}`);
+                const declarationFile = frames.yes();
+                if(!declarationFile) {
+                    this.sourceDeclarations = true;
+                }
+                frames.yes();
+                frames.field();
+                frames.field();
+                frames.natural();
+                frames.natural();
+                const tags = frames.natural();
+                for(let tag = 0; tag < tags; tag++) {
+                    frames.field();
+                    frames.field();
+                    frames.natural();
+                    frames.natural();
+                    frames.field();
+                }
+                const parameters = frames.natural();
+                for(let parameter = 0; parameter < parameters; parameter++) {
+                    frames.field();
+                }
+            }
+        }
+        frames.end();
+        }
+    }
+}

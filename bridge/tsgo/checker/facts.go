@@ -286,7 +286,7 @@ func (p *Program) Inspect(file string, start, end uint64, kind, question string)
 				if f == nil {
 					return "", fmt.Errorf("binding declaration has no source")
 				}
-				out.text(f.FileName())
+				out.text(f.FileName().AsString())
 				out.text(strings.TrimPrefix(declaration.Kind.String(), "Kind"))
 				out.number(uint64(declaration.Pos()))
 				out.number(uint64(declaration.End()))

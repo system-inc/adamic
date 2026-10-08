@@ -3,6 +3,7 @@ package checker
 import (
 	"context"
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
 	"os"
 	"path/filepath"
 	"strconv"
@@ -27,7 +28,7 @@ func TestWave07SymbolContext(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	source := p.Compiler.GetSourceFile(file)
+	source := p.Compiler.GetSourceFile(tspath.RootedFilePathFromAbsolute(file))
 	c, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
 	defer release()
 	identifiers, calls := 0, 0

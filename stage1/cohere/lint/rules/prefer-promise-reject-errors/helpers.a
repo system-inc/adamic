@@ -1,0 +1,50 @@
+import type { Bindings } from './bindings.a';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import { waveNode } from './bindings.a';
+import { WaveSymbol as SymbolFacts } from './symbol.a';
+export class Helpers {
+    readonly bindings: Bindings;
+    readonly symbols = new Map<number, SymbolFacts>();
+    constructor(bindings: Bindings) {
+        this.bindings = bindings;
+    }
+    node(index: number): ParseNode {
+        return waveNode(this.bindings.rules, index);
+    }
+    symbol(index: number): SymbolFacts {
+        const old = this.symbols.get(index);
+        if(old !== undefined) {
+            return old;
+        }
+        const value = new SymbolFacts(this.bindings.rules, index);
+        this.symbols.set(index, value);
+        return value;
+    }
+    skip(index: number): number {
+        let current = index;
+        while(
+            [
+                'ParenthesizedExpression',
+                'AsExpression',
+                'SatisfiesExpression',
+                'TypeAssertionExpression',
+                'NonNullExpression',
+            ].includes(this.node(current).kind)
+        ) {
+            const node = this.node(current);
+            current = node.children[node.kind === 'TypeAssertionExpression' ? 1 : 0] ?? -1;
+        }
+        return current;
+    }
+    args(index: number): number[] {
+        const node = this.node(index);
+        return node.list > 0 ? node.children.slice(node.children.length - node.list) : [];
+    }
+    global(index: number): boolean {
+        const symbol = this.symbol(index);
+        return symbol.identity !== 0 && symbol.declarations.length > 0 && !symbol.sourceDeclarations;
+    }
+    report(index: number, rule: string, id: string, message: string): void {
+        this.bindings.rules.reportNode(index,rule,id,message);
+    }
+}
