@@ -1,0 +1,5 @@
+type Point = { value: number };
+const points: [Point, ...Point[]] = [{ value: 1 }];
+points.pop();
+console.log(String(points[0] === undefined));
+console.log(String(points[0].value));
