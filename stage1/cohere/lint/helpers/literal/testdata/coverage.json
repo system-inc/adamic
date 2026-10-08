@@ -1,0 +1,20 @@
+{
+  "no-regex-spaces": {
+    "calls": 460,
+    "produced": 459,
+    "tail": 1,
+    "passed_tests": 163
+  },
+  "no-misleading-character-class": {
+    "calls": 1186,
+    "produced": 1182,
+    "tail": 4,
+    "passed_tests": 270
+  },
+  "controls": {
+    "calls": 82,
+    "produced": 72,
+    "tail": 10,
+    "passed_tests": 1
+  }
+}

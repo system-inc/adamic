@@ -1,0 +1,494 @@
+[
+  {
+    "a": "",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\\n",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\\r",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\\r\n",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\\n\\\r\n",
+    "b": "",
+    "kind": "tail",
+    "want": "true"
+  },
+  {
+    "a": "\\\r\nX",
+    "b": "",
+    "kind": "tail",
+    "want": "false"
+  },
+  {
+    "a": "\\x",
+    "b": "",
+    "kind": "tail",
+    "want": "false"
+  },
+  {
+    "a": "\u00e9",
+    "b": "",
+    "kind": "tail",
+    "want": "false"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "",
+    "kind": "tail",
+    "want": "false"
+  },
+  {
+    "a": "",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "a",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "a",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "a",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "a",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "a",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "ab",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "ab",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "a",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\u00e9",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\u00e9",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "a",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "4"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\ud83d\udc4d",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\\n",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\\n",
+    "b": "a",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\n",
+    "b": "b",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\n",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\n",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "4"
+  },
+  {
+    "a": "\\n",
+    "b": "\n",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\n",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\n",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\x41",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\\x41",
+    "b": "a",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\x41",
+    "b": "b",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\x41",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\x41",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "4"
+  },
+  {
+    "a": "\\x41",
+    "b": "\n",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\x41",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\x41",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "a",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "b",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "4"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "\n",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "2"
+  },
+  {
+    "a": "\\uD83D",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "1"
+  },
+  {
+    "a": "x",
+    "b": "",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "a",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "b",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "\u00e9",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "\ud83d\udc4d",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "\n",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "\u00e4",
+    "kind": "produced",
+    "want": "0"
+  },
+  {
+    "a": "x",
+    "b": "e\u0301",
+    "kind": "produced",
+    "want": "0"
+  }
+]

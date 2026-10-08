@@ -1,0 +1,3 @@
+package literal
+func AdamicProduced(a,b string)int{return cookedBytesProducedBy(a,b)}
+func AdamicTail(a string)bool{return producesNoCookedBytes(a)}
