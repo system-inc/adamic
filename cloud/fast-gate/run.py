@@ -97,11 +97,10 @@ class Gate:
             "smoke_list_blob": git(smokeSource["root"], "hash-object", os.path.join(smokeSource["root"], "cloud/fast-gate/smoke.txt")),
             "smoke_fixtures": smoke,
         })
-        if not self.step("build", ["go", "build", "./..."]):
-            return
-        self.result["build_ok"] = True
+        # Everything starts at once: the tests compile what they need through the same build cache,
+        # and the first failure of any step still stops all of them.
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
-        threads = [threading.Thread(target=self.vet)]
+        threads = [threading.Thread(target=self.build), threading.Thread(target=self.vet)]
         if packages:
             threads.append(threading.Thread(target=self.testSplit, args=(packages, log)))
         if smoke and module + "/internal/oracle" not in packages:
@@ -189,6 +188,9 @@ class Gate:
             with open(os.path.join(self.arguments.out, name + ".log")) as handle:
                 self.fail(name, handle.read()[-4000:])
         return code == 0
+
+    def build(self):
+        self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
 
     def vet(self):
         self.result["vet_ok"] = self.step("vet", ["go", "vet", "./..."])
