@@ -10,7 +10,7 @@ import (
 
 func TestLibraryArrayHeterogeneousSlotsAreTagged(t *testing.T) {
 	t.Parallel()
-	source, err := os.ReadFile("../oracle/testdata/library_array_refused/library_array_heterogeneous.a")
+	source, err := os.ReadFile("../oracle/testdata/library_array_heterogeneous.a")
 	if err != nil {
 		t.Fatal(err)
 	}

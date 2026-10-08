@@ -136,6 +136,7 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/call_targets_reuse.a", true, false},
 	{"internal/oracle/testdata/call_targets_closure.a", true, false},
 	{"internal/oracle/testdata/call_targets_sort.a", true, false},
+	{"internal/oracle/testdata/library_array_heterogeneous.a", true, false},
 	{"internal/oracle/testdata/library_date_json.a", true, false},
 	{"internal/oracle/testdata/library_date_construct.a", true, false},
 	{"internal/oracle/testdata/library_date_get.a", true, false},

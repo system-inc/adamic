@@ -174,7 +174,7 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 				found = true
 			}
 		case ir.RegExpCall:
-			found = found || node.MayThrow()
+			found = found || node.MayThrow() || (node.Replacement != nil && l.result.ClosuresMayThrow)
 		case ir.StringFromCodes:
 			found = found || node.CodePoints
 		case ir.NodeFSFile:
@@ -187,10 +187,6 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.Operation == "exit" || node.Operation == "setExitCode" || node.Operation == "cwd" || node.Operation == "chdir" || node.Operation == "measure"
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
-				found = true
-			}
-		case ir.RegExpCall:
-			if node.Replacement != nil && l.result.ClosuresMayThrow {
 				found = true
 			}
 		case ir.CallClosure, ir.ParallelMap, ir.ArrayMap, ir.ArrayVisit, ir.ArrayReduce, ir.ArrayFrom, ir.MapForEach:
@@ -250,27 +246,7 @@ func (l *lowering) libraryFailure(statements []ir.Statement, visited map[int]boo
 
 			}
 		case ir.RegExpCall:
-			if node.Replacement != nil {
-				callsClosures = true
-			}
-			if node.Method == "replaceAll" || node.Method == "matchAll" {
-				failing = "RegExp global-flag validation"
-			}
-		case ir.StringCall:
-			switch {
-			case node.Method == "repeat" && !constantWithin(node.Arguments[0], 0, math.MaxFloat64):
-				failing = "repeat"
-			case node.Method == "normalize" && len(node.Arguments) > 0 && !isNormalizationForm(node.Arguments[0], l.result.Strings):
-				failing = "normalize"
-			}
-		case ir.ToFixed:
-			if !constantWithin(node.Digits, 0, 100) {
-				failing = "toFixed"
-			}
-		case ir.NumberFormat:
-			if bounds := formatArguments[node.Method]; node.Argument != nil && !constantWithin(node.Argument, bounds[0], bounds[1]) {
-				failing = node.Method
-			}
+			callsClosures = callsClosures || node.Replacement != nil
 		case ir.TypedArrayNew:
 			if !node.FromArray && !constantWithin(node.Source, 0, 9007199254740991) {
 				failing = "typed array length conversion"

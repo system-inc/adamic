@@ -31,10 +31,11 @@ adamic_object *adamic_object_copy_checked(const adamic_object *source, const cha
 		if (source->has_captured_stack && strcmp(shape->names[index], "stack") == 0) { continue; }
 		adamic_slot_cache cache = {0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
-		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
+		adamic_value *source_slot = accessor == NULL ? (expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : NULL;
+		object->slots[index] = accessor == NULL ? *source_slot : adamic_accessor_get((adamic_object *)source, shape->names[index]);
 		if (accessor == NULL) {
-			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[cache.index];
-			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[cache.index];
+			adamic_object_initialized(object)[index] = adamic_object_initialized(source)[(size_t)(source_slot - source->slots)];
+			adamic_object_field_types(object)[index] = adamic_object_field_types(source)[(size_t)(source_slot - source->slots)];
 		}
 		if (shape->references[index] && accessor == NULL) {
 			adamic_retain(object->slots[index].reference);
@@ -165,13 +166,17 @@ adamic_string *adamic_error_read_stack(const adamic_object *target) {
 // Both public reads use the worker's readiness check; only their diagnostics differ.
 static adamic_value *adamic_object_read_mode(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression, const char *expected, const adamic_object **owner) {
 	adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
+	if (object != NULL && object->has_captured_stack && slot == &object->captured_stack) {
+		if (owner != NULL) { *owner = object; }
+		return slot;
+	}
 	if (slot != NULL && object->class != NULL && object->class->is_static) {
-		size_t flag = object->class->static_flags[cache->index];
+		size_t flag = object->class->static_flags[(size_t)(slot - object->slots)];
 		if (flag != 0 && object->slots[flag - 1].number == 0 && object->class->static_parent != 0) {
 			return adamic_object_read_mode(object->slots[object->class->static_parent - 1].reference, name, cache, expression, expected, owner);
 		}
 	}
-	if (slot == NULL || !adamic_object_initialized(object)[cache->index]) {
+	if (slot == NULL || !adamic_object_initialized(object)[(size_t)(slot - object->slots)]) {
 		size_t capacity = strlen(name) + strlen(expression) + (expected == NULL ? 0 : strlen(expected)) + 100;
 		char *message = malloc(capacity);
 		if (message == NULL) {
@@ -190,9 +195,9 @@ adamic_value *adamic_object_read(const adamic_object *object, const char *name, 
 }
 
 void adamic_object_set_initialized(adamic_object *object, const char *name, bool initialized) {
-	adamic_slot_cache cache = {NULL, 0};
-	(void)adamic_object_field(object, name, &cache);
-	adamic_object_initialized(object)[cache.index] = initialized;
+	adamic_slot_cache cache = {0};
+	adamic_value *slot = adamic_object_field(object, name, &cache);
+	adamic_object_set_slot_initialized(object, slot, initialized);
 }
 
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
@@ -200,7 +205,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
-	unsigned char actual = adamic_object_field_types(owner)[cache->index];
+	unsigned char actual = slot == &owner->captured_stack ? 3 : adamic_object_field_types(owner)[(size_t)(slot - owner->slots)];
 	// Boxed unions and packed maybe-numbers have a real runtime tag. Convert only
 	// after that tag proves which payload is live; never interpret a pointer as a number.
 	if (actual == 10 && slot->reference != NULL) {
@@ -254,7 +259,7 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
-		unsigned char actual = adamic_object_field_types(object)[cache->index];
+		unsigned char actual = adamic_object_slot_type(object, slot);
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
@@ -262,7 +267,7 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 adamic_maybe_boolean adamic_object_maybe_boolean(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
 	adamic_value *slot = adamic_object_field(object, name, cache);
-	if (object->shape->references[cache->index]) {
+	if (object->shape->references[(size_t)(slot - object->slots)]) {
 		if (slot->reference != NULL) {
 			static const char message[] = "compiler bug: a boolean field holds a reference";
 			adamic_panic(message, sizeof message - 1);

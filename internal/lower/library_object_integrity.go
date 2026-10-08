@@ -9,12 +9,15 @@ import (
 // Integrity queries do not read fields. Mutations require a complete plain shape or a
 // constructor proof distinguishing actual own descriptors from native internal slots.
 func (l *lowering) objectIntegrityCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	return l.objectIntegrityCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
+}
+
+func (l *lowering) objectIntegrityCallArguments(node *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
 	switch name {
 	case "freeze", "seal", "preventExtensions", "isSealed", "isExtensible", "isFrozen":
 	default:
 		return nil, false, nil
 	}
-	written := node.AsCallExpression().Arguments.Nodes
 	if len(written) != 1 || hasSpread(node) {
 		return nil, true, l.notYet(node, "Object."+name+" with these arguments")
 	}
