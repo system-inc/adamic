@@ -22,6 +22,7 @@ import (
 type witness struct {
 	IDs        []string `json:"ids"`
 	Read       string   `json:"read"`
+	Reads      []string `json:"reads"`
 	Receiver   string   `json:"receiver"`
 	Source     string   `json:"source"`
 	BlockStage string   `json:"block_stage"`
@@ -67,6 +68,7 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	paths = append(paths, "gaps/destructuring-third.json")
 	for _, manifest := range paths {
 		t.Run(strings.TrimSuffix(manifest, ".json"), func(t *testing.T) {
 			data, err := os.ReadFile(manifest)
@@ -109,20 +111,41 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 						t.Fatal(err)
 					}
 					checks := ir.InsertedChecks(program)
-					position := strings.Index(source, fixture.Read)
-					if position < 0 {
-						t.Fatal("read missing")
+					reads := fixture.Reads
+					if len(reads) == 0 {
+						reads = []string{fixture.Read}
 					}
-					prefix := source[:position]
-					line := strings.Count(prefix, "\n") + 1
-					column := position - strings.LastIndex(prefix, "\n")
-					where := fmt.Sprintf("%s:%d:%d", path, line, column)
-					if len(checks) != 1 || checks[0].Kind != "indexed-presence" || checks[0].Where != where {
-						t.Fatalf("explain must list exactly this read %s: %+v", where, checks)
+					locations := make([]string, len(reads))
+					where := ""
+					for index, read := range reads {
+						position := strings.Index(source, read)
+						if position < 0 {
+							t.Fatal("read missing")
+						}
+						prefix := source[:position]
+						line := strings.Count(prefix, "\n") + 1
+						column := position - strings.LastIndex(prefix, "\n")
+						locations[index] = fmt.Sprintf("%s:%d:%d", path, line, column)
+						if read == fixture.Read {
+							where = locations[index]
+						}
+					}
+					if where == "" || len(checks) != len(reads) {
+						t.Fatalf("expected binding checks %v: %+v", locations, checks)
+					}
+					for index, location := range locations {
+						if checks[index].Kind != "indexed-presence" || checks[index].Where != location {
+							t.Fatalf("read %s: %+v", location, checks)
+						}
 					}
 					explain := run(cli, "--explain-checks", path)
-					if explain.code != 0 || explain.stderr != "" || !strings.Contains(explain.stdout, where+": checked indexed-presence\n") || !strings.Contains(explain.stdout, "checked: indexed-presence=1") || !strings.Contains(explain.stdout, "trusted: 0\n") {
+					if explain.code != 0 || explain.stderr != "" || !strings.Contains(explain.stdout, fmt.Sprintf("checked: indexed-presence=%d", len(reads))) || !strings.Contains(explain.stdout, "trusted: 0\n") {
 						t.Fatalf("CLI explain: %+v", explain)
+					}
+					for _, location := range locations {
+						if !strings.Contains(explain.stdout, location+": checked indexed-presence\n") {
+							t.Fatalf("CLI missed %s: %+v", location, explain)
+						}
 					}
 					if absent {
 						want = observation{"", "adamic: panic: indexed read is absent: " + where + "\n", 70}
@@ -150,11 +173,11 @@ func TestCheckerIndexedWitnesses(t *testing.T) {
 					}
 					if absent {
 						panicCall := regexp.MustCompile(`adamic_panic\([^;\n]*->bytes[^;\n]*\);`)
-						if len(panicCall.FindAllString(c, -1)) != 1 {
+						if len(panicCall.FindAllString(c, -1)) != len(reads) {
 							t.Fatal("mutant must erase exactly one guard")
 						}
 						binary := filepath.Join(directory, "mutant")
-						if err := native.Build(panicCall.ReplaceAllString(c, "(void)0;"), binary, native.Options{Sanitize: true}); err != nil {
+						if err := native.Build(eraseSitePanic(t, c, panicCall, locations, where), binary, native.Options{Sanitize: true}); err != nil {
 							t.Fatalf("mutant must build: %v", err)
 						}
 						got := run(binary)
@@ -181,4 +204,18 @@ func assertRefusal(t *testing.T, cli, path string, fixture witness, err error) {
 		t.Fatalf("refused witness must not count as checked: %+v", explain)
 	}
 	t.Logf("BLOCKED %v receiver=%s: %v; source Node observations passed; CLI refuses and does not count a check", fixture.IDs, fixture.Receiver, err)
+}
+
+// Erase only the selected binding's panic, retaining every other binding guard.
+func eraseSitePanic(t *testing.T, c string, pattern *regexp.Regexp, locations []string, where string) string {
+	t.Helper()
+	matches := pattern.FindAllStringIndex(c, -1)
+	for index, location := range locations {
+		if location == where {
+			match := matches[index]
+			return c[:match[0]] + "(void)0;" + c[match[1]:]
+		}
+	}
+	t.Fatal("mutant site missing")
+	return c
 }
