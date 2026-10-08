@@ -20,6 +20,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		choices = append(choices, fmt.Sprintf("code === %s ? %s : ", functionName(e.program, index), viewCallableSignature(parameters, function.Returns, function.Name)))
 	}
 	recorded := "((code) => " + strings.Join(choices, "") + "undefined)(value instanceof AdamicClosure ? value.code : undefined)"
+	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	return "((value) => " + emitViewCallableShape("value", recorded, expected, property.View, property.Absent) + ")(" + value + ")"
 }
 

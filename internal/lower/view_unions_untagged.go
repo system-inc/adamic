@@ -3,6 +3,7 @@ package lower
 import (
 	"fmt"
 
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
 	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -164,4 +165,36 @@ func (l *lowering) untaggedArrayElement(target *checker.Type) *checker.Type {
 		return nil
 	}
 	return l.checker.GetUnionType(elements)
+}
+
+func (l *lowering) completeUntaggedRecursiveContracts() {
+	for index, contract := range l.result.ViewContracts {
+		if contract.Unsupported == "untagged object union" && l.supportsUntaggedRead(contract) {
+			l.result.ViewContracts[index].Unsupported = ""
+		}
+	}
+}
+
+// Callable union membership uses each producer-certified member signature;
+// the checker's synthesized union signature is not an implementation contract.
+func (l *lowering) prepareUntaggedCallableUnionRead(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+	id := l.result.ViewContractTypes[int(target.Id())]
+	if id == 0 {
+		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
+		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{})
+		l.result.ViewContractTypes[int(target.Id())] = id
+	}
+	contract := ir.ViewContract{Kind: ir.ViewUnion, Of: ir.Closure, Name: l.checker.TypeToString(target)}
+	for _, member := range target.Types() {
+		if !l.callableViewContract(member) {
+			return 0, l.notYet(node, "a callable union member without a producer signature")
+		}
+		child, err := l.prepareViewCallableRead(node, member)
+		if err != nil {
+			return 0, err
+		}
+		contract.Members = append(contract.Members, child)
+	}
+	l.result.ViewContracts[id-1] = contract
+	return id, nil
 }

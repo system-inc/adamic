@@ -31,5 +31,12 @@ func (e *emitter) emitViewCallableProperty(property ir.Property) string {
 	if property.Method {
 		return "((object) => { const value = " + emitViewCallableRead("object", property.Name, property.View, true) + "; return value instanceof AdamicClosure ? value : {code: (self, values) => value(object, ...values)}; })(" + e.value(property.Object) + ")"
 	}
-	return emitViewCallableRead(e.value(property.Object), property.Name, property.View, false)
+	value := emitViewCallableRead(e.value(property.Object), property.Name, property.View, false)
+	if property.ViewContract > 0 {
+		contract := e.program.ViewContracts[property.ViewContract-1]
+		if contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
+			return e.emitViewCallableCertificate(property, value)
+		}
+	}
+	return value
 }

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 )
 
 // UntaggedUnionRuntime consumes shared non-panicking probes and membership
@@ -54,7 +55,13 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   if(field===undefined || !Object.hasOwn(field,'value') || adamicFieldReadiness.get(object)?.has(name)) return undefined;
   return field;
  };
+ const active=new Map();
  const matches=(value,id,depth=0)=>{
+  const reference=value!==null && typeof value==='object';
+  let seen=reference ? active.get(value) : undefined;
+  if(seen?.has(id)) return true;
+  if(reference){if(seen===undefined){seen=new Set();active.set(value,seen);}seen.add(id);}
+  try {
   if(depth>128) return false;
   const contract=contracts[id-1];
   if(contract===undefined || (contract.Unsupported && contract.Unsupported!=='untagged object union') || contract.Nominal) return false;
@@ -81,6 +88,7 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   const tags=fields.filter(field=>!field.Optional && contracts[field.Contract-1]?.Kind===1 && contracts[field.Contract-1]?.Allowed?.length);
   if(tags.length) return tags.every(field=>{const actual=slot(value,field.Name);return actual!==undefined && matches(actual.value,field.Contract,depth+1);});
   return fields.every(field=>{const actual=slot(value,field.Name);return actual===undefined ? field.Optional && !Object.hasOwn(value,field.Name) : matches(actual.value,field.Contract,depth+1);});
+  } finally {if(reference){seen.delete(id);if(seen.size===0) active.delete(value);}}
  };
  for(const member of contracts[id-1].Members){if(matches(value,member)) return member;}
  panic('field read failed: '+expression+' matches no member of '+declared+'; expected '+declared+', found '+(Array.isArray(value)?'array':'object'));
@@ -90,4 +98,34 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
 // Preserve the existing shared-discriminant dispatch.
 func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
+}
+
+func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, fallback string) string {
+	id := property.ViewContract
+	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+		return fallback
+	}
+	root := e.program.ViewContracts[id-1]
+	if root.Kind != ir.ViewUnion || root.Of != ir.Closure || len(root.Members) == 0 {
+		return fallback
+	}
+	choices := []string{}
+	for _, child := range root.Members {
+		contract := e.program.ViewContracts[child-1]
+		if contract.Kind != ir.ViewCallable || contract.Result == 0 {
+			continue
+		}
+		parameters := make([]ir.Type, len(contract.Parameters))
+		known := true
+		for i, parameter := range contract.Parameters {
+			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			known = known && parameters[i] != 0
+		}
+		result := e.program.ViewContracts[contract.Result-1].Of
+		if !known || result == 0 {
+			continue
+		}
+		choices = append(choices, viewCallableSignature(parameters, result, root.Name))
+	}
+	return "((recorded)=>{const choices=[" + strings.Join(choices, ",") + "];return choices.find(expected=>recorded!==undefined && recorded.result===expected.result && recorded.parameters.length===expected.parameters.length && recorded.parameters.every((value,index)=>value!==0 && value===expected.parameters[index])) || choices[0];})(" + recorded + ")"
 }

@@ -387,7 +387,7 @@ func dropUntaggedIndexedSourceReads(program *ir.Program) {
 // Recursive field-only selection must inspect complete descendants rather than
 // treating a cycle in the schema as a certificate for the input.
 func TestCheckedViewUntaggedRecursive(t *testing.T) {
-	for _, variant := range []string{"good", "absent", "wrong", "nested"} {
+	for _, variant := range []string{"good", "absent", "wrong", "nested", "cycle", "cycle-wrong"} {
 		t.Run(variant, func(t *testing.T) {
 			program, path := interfaceFixture(t, "untagged/fixtures/recursive-"+variant)
 			node := onNode(t, path)
@@ -395,7 +395,7 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 				t.Fatal(difference)
 			}
 			want := node
-			if variant == "wrong" || variant == "nested" {
+			if variant == "wrong" || variant == "nested" || variant == "cycle-wrong" {
 				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
 			}
 			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
@@ -433,6 +433,64 @@ func TestCheckedViewUntaggedArrayUnion(t *testing.T) {
 						t.Errorf("%s: %s", backend, difference)
 					}
 				}
+			}
+		})
+	}
+}
+
+func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
+	for _, variant := range []string{"good-number", "good-string", "wrong", "nested"} {
+		t.Run(variant, func(t *testing.T) {
+			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
+			node := onNode(t, path)
+			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+				t.Fatal(difference)
+			}
+			for backend, got := range map[string]run{"native": releasedUncached(t, program), "javascript": onJavaScriptBackend(t, program)} {
+				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
+				if variant != "wrong" && variant != "nested" {
+					if difference := disagreement(node, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				} else {
+					field := "view.value"
+					if variant == "nested" {
+						field = "view.holder.value"
+					}
+					want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: " + field + " expected Target, found function with incompatible parameter representations\n")}
+					if difference := disagreement(want, got); difference != "" {
+						t.Errorf("%s: %s", backend, difference)
+					}
+				}
+			}
+		})
+	}
+}
+
+// These receipts keep remaining adapter boundaries distinct from completed
+// candidates. Their valid Node controls do not certify Adamic support.
+func TestCheckedViewUntaggedRemainingBoundaries(t *testing.T) {
+	for _, fixture := range []string{"type-contract-boundary", "base-type-boundary", "callable-union-optional-boundary"} {
+		t.Run(fixture, func(t *testing.T) {
+			path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + fixture + ".a")
+			if err != nil {
+				t.Fatal(err)
+			}
+			node := onNode(t, path)
+			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
+				t.Fatal(difference)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			if err == nil {
+				t.Fatal("boundary changed: replace this refusal receipt with both-backend positive coverage")
+			}
+			t.Logf("lowering refusal: %s", err)
+			if !strings.Contains(err.Error(), "refuses checked view read") || !strings.Contains(err.Error(), "unsupported") {
+				t.Fatal(err)
 			}
 		})
 	}

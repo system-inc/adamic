@@ -72,3 +72,43 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 func untaggedObjectUnion(contracts []ir.ViewContract, contract ir.ViewContract) bool {
 	return len(contract.Members) != 0 && !ir.ViewUnionHasDiscriminant(contracts, contract)
 }
+
+func (e *emitter) untaggedCallableUnionExpected(property ir.Property, recorded, fallback string) string {
+	id := property.ViewContract
+	if id <= 0 || int(id) > len(e.program.ViewContracts) {
+		return fallback
+	}
+	root := e.program.ViewContracts[id-1]
+	if root.Kind != ir.ViewUnion || root.Of != ir.Closure || len(root.Members) == 0 {
+		return fallback
+	}
+	choices := []string{}
+	first := "NULL"
+	for _, child := range root.Members {
+		contract := e.program.ViewContracts[child-1]
+		if contract.Kind != ir.ViewCallable || contract.Result == 0 {
+			continue
+		}
+		parameters := make([]ir.Type, len(contract.Parameters))
+		result := e.program.ViewContracts[contract.Result-1].Of
+		if result == 0 {
+			continue
+		}
+		tests := []string{recorded + " != NULL", fmt.Sprintf("%s->arity == %d", recorded, len(parameters)), fmt.Sprintf("%s->result == %d", recorded, result)}
+		known := true
+		for i, parameter := range contract.Parameters {
+			parameters[i] = e.program.ViewContracts[parameter-1].Of
+			known = known && parameters[i] != 0
+			tests = append(tests, fmt.Sprintf("%s->parameters != NULL && %s->parameters[%d] == %d", recorded, recorded, i, parameters[i]))
+		}
+		if !known {
+			continue
+		}
+		expected := e.viewCallableSignature(parameters, result, root.Name)
+		if first == "NULL" {
+			first = expected
+		}
+		choices = append(choices, "("+strings.Join(tests, " && ")+") ? "+expected+" : ")
+	}
+	return "(" + strings.Join(choices, "") + first + ")"
+}

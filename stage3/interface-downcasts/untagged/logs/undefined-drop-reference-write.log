@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewUntaggedOwnClassData
+=== RUN   TestCheckedViewUntaggedOwnClassData/good
+    checked_views_untagged_unions_test.go:357: gate cache node miss
+    checked_views_untagged_unions_test.go:365: gate cache node miss
+    checked_views_untagged_unions_test.go:366: native: exit=70 stdout="" stderr="adamic: panic: field read failed: <write>.payload is not a ; expected , found nullish\n"
+    checked_views_untagged_unions_test.go:368: native: exit codes differ
+    checked_views_untagged_unions_test.go:366: javascript: exit=0 stdout="true\n" stderr=""
+--- FAIL: TestCheckedViewUntaggedOwnClassData (14.30s)
+    --- FAIL: TestCheckedViewUntaggedOwnClassData/good (14.30s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.311s
+FAIL

@@ -551,6 +551,15 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewAllowed = l.viewLiterals(declared)
 		property.ViewTypeID = int(declared.Id())
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
+		// Untagged callable union read hook: prepare member signatures at a
+		// syntactic read, retaining unsupported metadata for lazy demand.
+		present := l.checker.GetNonNullableType(declared)
+		if present.Flags()&checker.TypeFlagsUnion != 0 && l.callableViewContract(present) {
+			if id, err := l.prepareUntaggedCallableUnionRead(node, present); err == nil {
+				property.ViewContract = id
+				l.result.ViewContractTypes[property.ViewTypeID] = id
+			}
+		}
 	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {

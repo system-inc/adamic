@@ -208,6 +208,18 @@
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\n"
   },
   {
+    "rank": 92,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 6,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
     "rank": 105,
     "source_alias": "ArrayTarget",
     "good_stdout": "true\ntrue\n",
@@ -219,6 +231,30 @@
       "empty"
     ],
     "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
+    "rank": 108,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 4,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 109,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 4,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
   },
   {
     "rank": 114,
@@ -267,6 +303,31 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n"
+  },
+  {
+    "rank": 124,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 3,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 126,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 3,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
   },
   {
     "rank": 130,
@@ -350,6 +411,69 @@
     "good_stdout": "true\ntrue\ntrue\n"
   },
   {
+    "rank": 142,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 2,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 143,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 2,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 145,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 2,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 147,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 2,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 155,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 2,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
     "rank": 164,
     "type_id": 76428,
     "receiver": "Node | ClassLikeDeclaration | ObjectLiteralExpression | TypeLiteralNode | InterfaceDeclaration | SignatureDeclaration",
@@ -366,6 +490,31 @@
     "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\n"
   },
   {
+    "rank": 166,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 170,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
     "rank": 175,
     "source_alias": "ArrayTarget",
     "good_stdout": "true\ntrue\n",
@@ -377,6 +526,19 @@
       "empty"
     ],
     "scope": "independent homogeneous array-member projection and consumed nested reads; compiler NodeArray properties unverified"
+  },
+  {
+    "rank": 178,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested",
+      "absent"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
   },
   {
     "rank": 179,
@@ -582,6 +744,30 @@
     ],
     "scope": "measured own-kind selectors and transitive payload checks; independently written projection, not full compiler interfaces",
     "good_stdout": "true\ntrue\n"
+  },
+  {
+    "rank": 219,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
+  },
+  {
+    "rank": 220,
+    "source_alias": "FlowNode",
+    "good_stdout": "true\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\n",
+    "candidate_reads": 1,
+    "variants": [
+      "good",
+      "wrong",
+      "nested"
+    ],
+    "scope": "independent recursive flags/id/node/antecedent FlowNode projection with narrowed node selectors; full compiler node interfaces unverified"
   },
   {
     "rank": 221,

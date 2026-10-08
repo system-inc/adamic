@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_untagged_unions_test.go:445: gate cache node hit
+    checked_views_untagged_unions_test.go:449: gate cache node miss
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:462: javascript: exit codes differ
+--- FAIL: TestCheckedViewUntaggedCallableUnion (0.19s)
+    --- FAIL: TestCheckedViewUntaggedCallableUnion/wrong (0.19s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.203s
+FAIL

@@ -220,7 +220,10 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 	adamic_value *slot = adamic_object_optional_field(object, name, cache);
 	if (slot != NULL) {
 		unsigned char actual = adamic_object_field_types(object)[cache->index];
-		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
+		// Untagged explicit-undefined producer hook: semantic undefined still
+        // occupies a reference slot; replacing it with a reference is safe.
+        bool reference_write = (wanted >= 3 && wanted <= 6) || wanted == 8 || wanted == 10;
+        if (actual == wanted || (actual == 13 && reference_write && object->shape->references[cache->index]) || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }
 	}
 	(void)adamic_object_view(object, name, cache, wanted, type, expression);
 }

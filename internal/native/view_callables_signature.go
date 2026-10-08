@@ -25,6 +25,7 @@ func (e *emitter) emitViewCallableCertificate(property ir.Property, value string
 		signature := e.viewCallableSignature(parameters, function.Returns, function.Name)
 		e.line("if (%s != NULL && %s->heap.kind == adamic_kind_closure && %s->code == %s) %s = %s;", value, value, value, e.functionName(index), recorded, signature)
 	}
+	expected = e.untaggedCallableUnionExpected(property, recorded, expected)
 	return emitViewCallableShape(value, recorded, expected, property.View, property.Absent)
 }
 

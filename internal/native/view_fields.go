@@ -73,6 +73,15 @@ func (e *emitter) viewField(property ir.Property) string {
 			e.viewObjectUnion(property, value)
 		}
 	}
+	if of == ir.Closure && property.ViewContract > 0 {
+		contract := e.program.ViewContracts[property.ViewContract-1]
+		if contract.Kind == ir.ViewUnion && contract.Of == ir.Closure {
+			producer := e.temporary()
+			e.line("adamic_closure *%s = %s;", producer, value)
+			checked := e.emitViewCallableCertificate(property, producer)
+			value = "(adamic_closure *)" + checked
+		}
+	}
 	if of.IsReference() {
 		return e.own(of, fmt.Sprintf("adamic_retain((%s)%s)", cType(of), value))
 	}

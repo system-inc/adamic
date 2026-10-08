@@ -347,6 +347,12 @@ func fieldRepresentation(value ir.Expression) int {
 	switch value.(type) {
 	case ir.Null:
 		return 12
+	case ir.Undefined:
+		// Untagged recursive producer hook: explicit reference undefined is
+		// initialized semantic undefined, distinct from null and absent slots.
+		if value.Type().IsReference() {
+			return 13
+		}
 	}
 	return int(value.Type())
 }

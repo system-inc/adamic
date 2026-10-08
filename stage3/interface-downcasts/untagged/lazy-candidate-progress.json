@@ -21908,9 +21908,9 @@
   },
   "family_candidate_pairs": 61,
   "family_candidate_reads": 434,
-  "covered_candidate_selector_pairs": 43,
-  "covered_candidate_selector_reads": 355,
-  "remaining_candidate_selector_pairs": 18,
-  "remaining_candidate_selector_reads": 79,
-  "coverage_scope": "independent own-kind and array-union contract projections; no unchanged compiler interface completion"
+  "covered_candidate_selector_pairs": 58,
+  "covered_candidate_selector_reads": 390,
+  "remaining_candidate_selector_pairs": 3,
+  "remaining_candidate_selector_reads": 44,
+  "coverage_scope": "58 independent own-kind, array, and narrowed recursive FlowNode projections; fixed-signature callable union controls are additional, not completion of candidate 227"
 }

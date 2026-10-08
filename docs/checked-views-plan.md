@@ -1098,3 +1098,32 @@ joined element contracts. No callable producer signature is inferred from heap k
 Seven independently written array candidate projections represent 45 reads;
 43 projections/355 reads now have receipts, 18 candidates/79 reads remain.
 Compiler NodeArray properties and full original interfaces are not certified.
+
+Untagged recursive FlowNode and callable controls, October 8: explicit reference
+undefined uses semantic byte 13 in native/emit_objects.go fieldRepresentation.
+The read-demand entry in lower/view_lazy.go calls the owned
+completeUntaggedRecursiveContracts after all recursive array descriptors exist.
+Callable union hooks in lower/object.go and view_callables_read.go prepare each
+member signature at a read via prepareUntaggedCallableUnionRead. Fixed signatures
+use the owning lane's producer metadata; native/view_callables_signature.go and
+javascript/view_callables_signature.go select the expected member via the owned
+untaggedCallableUnionExpected. Minimal actual-dispatch hooks are native/view_fields.go
+and javascript/view_callables.go. Ordinary single callable contracts are unchanged.
+Fifteen narrowed flags/id/node/antecedent FlowNode projections add 35 candidate
+reads: 58/390 represented, 3/44 remain. The fixed-signature callable controls do
+not complete candidate 227's optional callback and thisArg signatures. Candidates
+24 (33 reads) and 72 (10 reads) require a nested TypeChecker callable adapter during
+field-only structural matching; the direct callable-field hook does not provide it.
+All three remaining boundaries have Node-valid source refusal receipts, separate
+from positive completion counts. This is adapter work, not a checker-diagnostic
+or handoff wait. Full original compiler interface completion remains unclaimed.
+
+Recursive active-pair matching tracks (contract ID, object/array identity) on the
+current path in both owned runtimes. This permits valid cycles while still checking
+all other member fields; failed alternatives do not persist a success cache. A
+valid cyclic source control and a cyclic wrong-field control accompany both backend
+checks. Non-cyclic matching remains bounded to 128 edges and refuses deeper input.
+The explicit undefined producer tag also needs a minimal shared runtime/object.c
+view-write hook: replacing semantic undefined is accepted only for a physically
+reference-holding slot and a reference write. Class initializer and cycle source
+controls prove the write succeeds; omission is caught by a semantic mutant.

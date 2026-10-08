@@ -1,0 +1,18 @@
+=== RUN   TestCheckedViewUntaggedCandidatePairs
+=== RUN   TestCheckedViewUntaggedCandidatePairs/92/good
+    checked_views_untagged_unions_test.go:321: view0.items[0]: Adamic 0.1 refuses checked view read of field [element] with unsupported untagged object union contract; prove or implement the untagged object union contract before reading this field
+=== RUN   TestCheckedViewUntaggedCandidatePairs/192/good
+    checked_views_untagged_unions_test.go:322: gate cache node hit
+    checked_views_untagged_unions_test.go:330: Node: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:332: gate cache node hit
+    checked_views_untagged_unions_test.go:333: native: exit=0 stdout="true\ntrue\n" stderr=""
+    checked_views_untagged_unions_test.go:333: javascript: exit=0 stdout="true\ntrue\n" stderr=""
+--- FAIL: TestCheckedViewUntaggedCandidatePairs (0.21s)
+    --- FAIL: TestCheckedViewUntaggedCandidatePairs/92/good (0.05s)
+    --- PASS: TestCheckedViewUntaggedCandidatePairs/192/good (0.15s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.222s
+FAIL

@@ -1,3 +1,31 @@
+Built: fifteen recursive FlowNode projections plus fixed-signature callable union selection with direct and nested source controls.
+Commits: previous group e3be8faf; this group's commit follows in Git history.
+Commands: FlowNode/callable Node/native/JS controls passed 16.002s; remaining-boundary receipts passed 0.367s; final view packages passed (IR 0.012s, lower 4.581s, native 11.512s, JS 0.973s); oracle passed 72.813s with 548 Node executions.
+Mutants: producer undefined tag, recursive completion, skipped callable checks native/JS, wrong member native/JS, dropped nested callable checks native/JS; all eight caught semantically and restored; active-pair native/JS and undefined reference-write omission add three more mutants.
+Uncovered: 3 candidate projections/44 reads remain (24:33, 72:10, 227:1); unchanged compiler interfaces and exact reachability remain uncertified.
+
+Planning target remains October 12, 2026, 23:00 UTC. Counts are candidate
+projections: 58/390 represented, 3/44 pending; full unchanged compiler-interface
+completions remain zero. FlowNode fixtures narrow node selectors and retain the
+recursive flags/id/node/antecedent structure. They are independently authored,
+not copied compiler definitions. Valid cycles use active contract/value pairs in both runtimes; non-cyclic input deeper than 128 edges still refuses conservatively. The first source probe exposed and fixed explicit
+undefined producer tags and provisional recursive array admission. Each FlowNode
+candidate has valid member samples, wrong and nested-wrong exact pins, and an
+absent control wherever its declared field permits absence.
+
+The three remaining obligations have concrete source boundary receipts. Structural
+Type membership still cannot certify its nested TypeChecker callable fields; a
+valid fixed checker producer reaches a named unsupported object-union refusal.
+Direct fixed callable unions now choose a member using immutable producer code
+signatures, but optional callback/thisArg signatures in candidate 227 remain
+unsupported. These are implementation limits, not whole-tsc checker diagnostics
+or a waiting handoff. No positive completion is credited for refusal receipts.
+
+The mutant harness initially rejected a build-breaking skipped-check mutation
+because it left a Go variable unused. The mutation was corrected to preserve the
+variable reference; all eight receipts now demonstrate semantic failures rather
+than compiler failures. All source mutations were restored.
+
 Built: recursive field-only matching plus seven array-union projections, including homogeneous selection and lazy tagged payloads.
 Commits: follows pushed 70d33dfd; this group is recorded in Git history.
 Commands: recursive Node/native/JS oracle passed 1.063s; array candidate oracle passed 8.439s; shipping IR/lower/native/JS/oracle gate passed, oracle 42.204s (390 Node executions).
@@ -376,3 +404,15 @@ source admission tests once the shared integration implements the hooks.
 After every push: 84 pairs and 186 reads remain. No pair is reduced based on
 these components. All files and mutation sources are restored. Branch publication
 uses only codex/views-untagged-object-unions and opens no pull request.
+
+Group 4 shipping commands:
+```
+go test ./internal/ir ./internal/lower ./internal/native ./internal/javascript -run 'View|Untagged' -count=1 -v
+go test ./internal/oracle -run 'TestCheckedViewUntagged|TestCheckedViewLazy|TestCheckedViewObjects|TestCheckedViewInterfaces|TestCheckedViewObjectUnions|TestCheckedViewCallableContractControl' -count=1 -v
+```
+Outputs were written directly to log files. The initial broad run found missing
+locked @types/node dependencies and a class initializer regression from semantic
+undefined tagging. `npm ci --ignore-scripts` in stage3/api installed the locked
+dependencies. The reference-write hook fixed the initializer regression, proven
+by the omission mutant and the final green gate. Full repository tests were not
+run. Existing generic/rest/optional callable limits are preserved and recorded.

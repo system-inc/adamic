@@ -70,7 +70,21 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
     return true;
 }
 
-static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value, size_t depth) {
+typedef struct plain_match_path {
+    size_t contract;
+    const void *reference;
+    const struct plain_match_path *previous;
+} plain_match_path;
+
+static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value, size_t depth, const plain_match_path *path) {
+    bool reference = value->kind == adamic_view_union_object || value->kind == adamic_view_union_array;
+    if (reference && value->payload.reference != NULL) {
+        for (const plain_match_path *seen = path; seen != NULL; seen = seen->previous) {
+            if (seen->contract == id && seen->reference == value->payload.reference) { return true; }
+        }
+    }
+    plain_match_path current = {id, reference ? value->payload.reference : NULL, path};
+    path = &current;
     if (depth > 128) { return false; }
     if (id == 0 || id > count) { return false; }
     const adamic_view_untagged_contract *contract = &contracts[id - 1];
@@ -109,13 +123,13 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
                     if (heap->kind == adamic_kind_boolean) {item.kind = adamic_view_union_boolean;item.payload.boolean = ((const adamic_boolean_box *)heap)->boolean;}
                 }
             }
-            if (!plain_matches_depth(contracts, count, contract->element, &item, depth + 1)) { return false; }
+            if (!plain_matches_depth(contracts, count, contract->element, &item, depth + 1, path)) { return false; }
         }
         return true;
     }
     if (contract->kind == 4) {
         for (size_t i = 0; i < contract->member_count; i++) {
-            if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1)) { return true; }
+            if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1, path)) { return true; }
         }
         return false;
     }
@@ -131,7 +145,7 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
         if (child->kind != 1 || (child->of != 1 && child->of != 2 && child->of != 3)) { continue; }
         adamic_view_union_value slot;
-        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1);
+        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path);
     }
     /* A member's own finite tags select it without inspecting unread payloads.
      * Subsequent reads still use the existing per-field checks. */
@@ -143,7 +157,7 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         if (child->kind != 1 || child->allowed_count == 0) { continue; }
         tagged = true;
         adamic_view_union_value slot;
-        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1)) { return false; }
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
     }
     if (tagged) { return true; }
     for (size_t i = 0; i < contract->field_count; i++) {
@@ -152,13 +166,13 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         adamic_value *present = adamic_object_optional_field(object, field->name, &cache);
         if (present == NULL && field->optional) { continue; }
         adamic_view_union_value slot;
-        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1)) { return false; }
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
     }
     return true;
 }
 
 bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value) {
-    return plain_matches_depth(contracts, count, id, value, 0);
+    return plain_matches_depth(contracts, count, id, value, 0, NULL);
 }
 
 size_t adamic_view_untagged_plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared) {
