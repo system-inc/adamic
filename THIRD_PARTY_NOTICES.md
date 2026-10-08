@@ -68,6 +68,11 @@ IN THE SOFTWARE.
   - generic Array indexOf and lastIndexOf lowering (`internal/lower/library_array_generic.go`,
     after Runtime_ArrayIndexOf in src/runtime/runtime-array.cc and GetFromIndex /
     GenericArrayLastIndexOf in src/builtins/array-lastindexof.tq, V8 13.6.233.17);
+  - Array filter, every and some callback truthiness lowering
+    (`internal/lower/library_array_predicate.go`, after ArrayFilterLoopContinuation,
+    ArrayEveryLoopContinuation and ArraySomeLoopContinuation in Node.js v24.19.0's
+    `deps/v8/src/builtins/array-filter.tq`, `array-every.tq` and `array-some.tq`;
+    dense arrays only, using represented values for ToBoolean);
   - exponentiation (`runtime/number.c`, after math::pow);
   - V8's changes to fdlibm's Math functions (`runtime/ieee754.c`, after src/base/ieee754.cc; fdlibm's own
     notice is below);

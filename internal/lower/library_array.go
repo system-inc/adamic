@@ -11,6 +11,7 @@ import (
 
 var libraryArrayMethods = map[string]bool{
 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"filter": true, "some": true, "every": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
 }
@@ -35,6 +36,8 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 	}
 	written := node.AsCallExpression().Arguments.Nodes
 	switch name {
+	case "filter", "some", "every":
+		return l.libraryArrayPredicate(node, array, element, name)
 	case "join":
 		return l.libraryArrayJoin(node, receiver, array)
 	case "with":

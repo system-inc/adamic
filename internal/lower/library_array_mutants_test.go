@@ -93,6 +93,68 @@ func TestLibraryArrayNewFamilyMutants(t *testing.T) {
 			return strings.ReplaceAll(source, "HUGE_VAL", "0.0")
 		}},
 	}
+	for _, method := range []string{"filter", "some", "every"} {
+		cases = append(cases, struct {
+			name, fixture string
+			mutate        func(*ir.Program) bool
+			mutateC       func(string) string
+		}{name: method + " callback truth inversion", fixture: "library_array_predicate.a", mutate: func(program *ir.Program) bool {
+			changed := false
+			for i := range program.Functions {
+				function := &program.Functions[i]
+				if function.Name != "array_predicate_"+method {
+					continue
+				}
+				for j, statement := range function.Body {
+					loop, ok := statement.(ir.Loop)
+					if !ok {
+						continue
+					}
+					present := loop.Body[0].(ir.If)
+					last := len(present.Then) - 1
+					selected := present.Then[last].(ir.If)
+					selected.Condition = ir.Unary{Operator: ir.Not, Operand: selected.Condition}
+					present.Then[last] = selected
+					loop.Body[0] = present
+					function.Body[j] = loop
+					changed = true
+				}
+			}
+			return changed
+		}})
+	}
+	cases = append(cases, struct {
+		name, fixture string
+		mutate        func(*ir.Program) bool
+		mutateC       func(string) string
+	}{name: "number NaN truthiness", fixture: "library_array_predicate.a", mutate: func(program *ir.Program) bool {
+		changed := false
+		for i := range program.Functions {
+			function := &program.Functions[i]
+			if function.Name != "array_predicate_filter" {
+				continue
+			}
+			for j, statement := range function.Body {
+				loop, ok := statement.(ir.Loop)
+				if !ok {
+					continue
+				}
+				present := loop.Body[0].(ir.If)
+				last := len(present.Then) - 1
+				selected := present.Then[last].(ir.If)
+				condition, ok := selected.Condition.(ir.Binary)
+				if !ok || condition.Operator != ir.And {
+					continue
+				}
+				selected.Condition = condition.Left // Treat NaN as truthy: NaN != 0.
+				present.Then[last] = selected
+				loop.Body[0] = present
+				function.Body[j] = loop
+				changed = true
+			}
+		}
+		return changed
+	}})
 	for _, test := range cases {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
