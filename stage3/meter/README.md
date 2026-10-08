@@ -43,6 +43,32 @@ indented elaborations are not treated as locations. Global and external findings
 are counted separately and do not belong to a src/compiler file. Input errors
 fail both measures. Non-source files are listed but excluded from denominators.
 
+The next line reports the deadline entry, independently of the compiler-file
+counts: `tsc entry: main: pass; area: fail`, followed by
+`tsc entry diagnostics: main: 0; area: N`. This is the whole-program stage 0
+check rooted only at the adapted `src/tsc/tsc.ts`, including diagnostics anywhere
+in its resolved imports and global diagnostics. Its observations never enter
+the existing per-file numerators, denominators, or own-file attribution.
+
+For each checker-clean entry, a separate guarded measurement binary enumerates
+the checker's resolved implementation source files and applies the existing
+lowering census to that reach. It excludes declaration files and unrelated
+source files. Its top ten NotYet/Refused reasons include owners and are labeled
+**measured on a checker-clean entry-root program**. A checker failure blocks this
+lowering census. Errors and panics remain separate totals; this is an observation
+ledger and does not establish successful lowering or native output.
+
+The entry measurement extends the selected compiler's existing scratch overlay;
+production compiler sources remain untouched. `LATENT_ASSERT_NO_OUTPUT=1` is
+required and ordinary Load and Lower remain disabled. The worker supplies the
+entry driver in both compiler modes, while compiler code and dependencies still
+come from the selected ref. `trees.main.tsc_entry` and `trees.area.tsc_entry`
+record checker status, full diagnostics/count, and the optional `lowering_census`.
+Each `main/tsc/` and `area/tsc/` retains census and measurement JSONL (compressed
+and ignored by Git), logs, and the resolved reach in the measurement header.
+Missing entry roots, missing reachable records, inconsistent diagnostics, or a
+lowering stream on a checker-rejected entry fail loudly.
+
 Each run creates `runs/<UTC timestamp>.<unique suffix>/` with report.json and
 report.md, fetch/build logs, and main/area subdirectories containing census.jsonl.gz,
 apply/census logs and individual reports. The adapted trees and snapshot sources
@@ -134,3 +160,11 @@ the larger per-tree count. A final line summarizes the number of omitted reasons
 and their total sites summed across both trees.
 Each row compares both trees; JSON retains the complete unowned_reasons list,
 and each tree's reason_rows carries its owner and counts by kind.
+
+The entry reach probe runs with `ENTRY_CENSUS_BINARY` and `CENSUS_BINARY` set.
+It imports an eligible dependency outside src/compiler, leaves an unrelated
+checker-failing file unloaded, and requires the dependency's lowering finding.
+Planting an imported type error must change the entry to fail and block lowering.
+A scratch overlay mutant that leaves Program.Files restricted to the entry root
+must fail this test's reach count (one source instead of two). Compiler-selection
+probes exercise the entry command wiring in both default and per-ref modes.
