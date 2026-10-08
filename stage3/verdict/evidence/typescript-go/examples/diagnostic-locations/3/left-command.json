@@ -1,0 +1,16 @@
+[
+  "/workspace/adamic/stage3/verdict/standins/node.sh",
+  "--typeRoots",
+  "node_modules/@types",
+  "--skipDefaultLibCheck",
+  "true",
+  "--noErrorTruncation",
+  "true",
+  "--target",
+  "es2015",
+  "--traceResolution",
+  "false",
+  "--pretty",
+  "false",
+  "bitwiseCompoundAssignmentOperators.ts"
+]

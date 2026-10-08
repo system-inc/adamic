@@ -1,0 +1,22 @@
+{
+  "suite": "acceptance",
+  "case": "061_constEnumErrors",
+  "configuration": "",
+  "cause": "exit status",
+  "streams": [
+    "exit"
+  ],
+  "differences": {
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/061_constEnumErrors",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/061_constEnumErrors"
+}

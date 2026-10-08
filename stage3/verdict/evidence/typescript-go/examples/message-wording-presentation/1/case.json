@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "064_recursiveFunctionTypes",
+  "configuration": "",
+  "cause": "message wording/presentation",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 1546,
+      "expected_size": 2519,
+      "actual_size": 1772,
+      "expected_context": "b\"S2769: No overload matches this call.\\n  Overload 1 of 4, '(a: { (): typeof f7; (a: typeof f7): () => number; (a: number)\"",
+      "actual_context": "b\"S2769: No overload matches this call.\\n  The last overload gave the following error.\\n    Argument of type 'string' is not\""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/064_recursiveFunctionTypes",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/064_recursiveFunctionTypes"
+}

@@ -24,6 +24,51 @@ Otherwise the command clones v6.0.3 into the output directory, from the existing
 `050880ce59e30b356b686bd3144efe24f875ebc8`. Source and reference hashes are checked
 against the committed census before each selected baseline case is run.
 
+## Comparing compilers
+
+```sh
+stage3/verdict/run.sh --compare /absolute/first-tsc /absolute/second-tsc \
+  /tmp/new-comparison > /tmp/comparison.log 2>&1
+```
+
+Both binaries run all three suites independently against the unchanged Node
+expectations. `left/` and `right/` retain their ordinary verdicts and captures;
+`comparison.json` and `comparison.md` add agreement counts, every disagreement,
+observed cause groups and up to three examples per group. The command prints
+the agreement table. Exit 0 requires agreement and oracle passes for both
+compilers; two identical wrong outputs still exit 1. Infrastructure errors exit
+2. `--baseline-limit` remains explicit smoke mode for both sides. Baseline
+agreement uses the existing diagnostic projection; driver agreement uses raw
+stdout, stderr and exit. Classification never changes the byte comparison.
+
+To analyze two completed verdict directories without running the compilers again:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python3 stage3/verdict/comparison.py \
+  /absolute/first-results /absolute/second-results /tmp/new-agreement \
+  > /tmp/agreement.log 2>&1
+```
+
+The Go measurement uses the exact Linux x64 binary recorded by performance
+commit `afb0651c`. Its original lockfile and binary pin are in
+`toolchains/typescript-go/`. Install outside the repository, since package
+metadata must not contaminate isolated compiler cases:
+
+```sh
+mkdir /tmp/new-tsgo-install
+cp stage3/verdict/toolchains/typescript-go/package*.json /tmp/new-tsgo-install/
+npm ci --prefix /tmp/new-tsgo-install --ignore-scripts --no-audit --no-fund \
+  > /tmp/tsgo-install.log 2>&1
+stage3/verdict/run.sh --compare /absolute/node-tsc-wrapper \
+  /tmp/new-tsgo-install/node_modules/@typescript/native-preview-linux-x64/lib/tsgo \
+  /tmp/new-node-go-comparison > /tmp/node-go.log 2>&1
+```
+
+No Go wrapper is needed. The measurement preserves its bundled libraries,
+removed-option diagnostics and native exit statuses. The expected TypeScript
+6.0.3 outputs stay unchanged. See [TYPESCRIPT_GO.md](TYPESCRIPT_GO.md) for the
+measured pass counts, classified disagreements, examples and capture provenance.
+
 ## Suites
 
 | Suite | Comparison |

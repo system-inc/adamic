@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "080_builtinIterator",
+  "configuration": "",
+  "cause": "message wording/presentation",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 2759,
+      "expected_size": 4390,
+      "actual_size": 4390,
+      "expected_context": "b\"t assignable to parameter of type 'Iterator<string, unknown, undefined> | Iterable<string, unknown, undefined>'.\\n  Type \"",
+      "actual_context": "b\"t assignable to parameter of type 'Iterable<string, unknown, undefined> | Iterator<string, unknown, undefined>'.\\n  Type \""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/080_builtinIterator",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/080_builtinIterator"
+}

@@ -1,0 +1,13 @@
+{
+  "performance_commit": "afb0651c578bcfc4571cfe510b6f3c6c99011c5d",
+  "verdict_base": "6f744d6d437de28e3fb406340367bc2362f7bd98",
+  "go_sha256": "138b9ab195ae0ad372dae2f952090e07d4c504bbccf63240172ae843116009ce",
+  "node_cli_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+  "selection_sha256": "e4811ac7d8b191f4fbdeb4530e5d326910d9a3fb7754de74c8ac289b69503b53",
+  "library_files_shared": 108,
+  "library_files_different": 6,
+  "Go": "all suites freshly run, no wrapper, no rewritten flags/status/output/libraries",
+  "Node": "acceptance/tiny fresh; 13453 upstream captures reused after artifact/input/reference/options/expected hashes and all judged streams were revalidated",
+  "setup_seconds": 36.523,
+  "nproc": 5
+}

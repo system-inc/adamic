@@ -232,18 +232,30 @@ def baseline_suite(binary, tree, output, limit, manifest=None):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--tsc', required=True, type=Path, help='one executable, not a shell command')
+    mode = parser.add_mutually_exclusive_group(required=True)
+    mode.add_argument('--tsc', type=Path, help='one executable, not a shell command')
+    mode.add_argument('--compare', nargs=2, type=Path, metavar=('LEFT', 'RIGHT'), help='run two binaries against unchanged expectations and compare their captures')
     parser.add_argument('--baseline-limit', type=int, help='explicit smoke subset; deferred cases remain counted')
     parser.add_argument('output', type=Path)
     args = parser.parse_args()
-    binary, output = args.tsc.resolve(), args.output.resolve()
-    if not binary.is_file() or not os.access(binary, os.X_OK):
-        parser.error('tsc must be an executable file')
+    output = args.output.resolve()
+    binaries = [binary.resolve() for binary in (args.compare or [args.tsc])]
+    if any(not binary.is_file() or not os.access(binary, os.X_OK) for binary in binaries):
+        parser.error('each compiler must be an executable file')
     if args.baseline_limit is not None and args.baseline_limit < 1:
         parser.error('baseline limit must be positive')
     if output.exists():
         parser.error('output directory must be new')
     output.mkdir(parents=True)
+    if args.compare:
+        from comparison import compare_compilers
+        try:
+            return compare_compilers(*binaries, output, args.baseline_limit)
+        except Exception as error:
+            write_json(output / 'comparison-error.json', {'harness_error': str(error)})
+            print(f'Comparison harness error: {error}', file=sys.stderr)
+            return 2
+    binary = binaries[0]
     suites = {}
     errors = []
     for name, task in [('acceptance', lambda: driver_suite(binary, output / 'acceptance', False)),

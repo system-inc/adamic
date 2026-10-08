@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "178_bitwiseCompoundAssignmentOperators",
+  "configuration": "",
+  "cause": "diagnostic locations",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 40,
+      "expected_size": 1240,
+      "actual_size": 1240,
+      "expected_context": "b\"bitwiseCompoundAssignmentOperators.ts(3,1): error TS2447: The '^=' operator is not allowed for boolean types. Consider u\"",
+      "actual_context": "b\"bitwiseCompoundAssignmentOperators.ts(3,3): error TS2447: The '^=' operator is not allowed for boolean types. Consider u\""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/178_bitwiseCompoundAssignmentOperators",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/178_bitwiseCompoundAssignmentOperators"
+}
