@@ -372,8 +372,25 @@ class Gate:
         log.close()
         try:
             self.checkCensus()
+            self.deferredRanWhole()
         except BaseException:
             self.fail("census", traceback.format_exc())
+
+    def deferredRanWhole(self):
+        """The whole gate is where deferred tests run, so each must reach pass or fail here: a deferred test the
+        whole gate skips or never runs is a void (@system_adamic, Oct 8, after TestProfileSnapshotsAgree, a
+        measurement on the list, skipped in both gates). A row the census classes measurement or opt-in-lane is
+        refused outright, since no gate gives it its input."""
+        deferred = self.deferredList()
+        outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
+        results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
+                   for importPath, names in deferred.items() for name in sorted(names)}
+        self.result["deferred_whole_results"] = results
+        refused = deferredClassedOut(self.arguments.tools, deferred)
+        unrun = ["%s: %s" % (test, outcome) for test, outcome in sorted(results.items()) if outcome not in ("pass", "fail")]
+        if refused or unrun:
+            self.fail("census", "cloud/fast-gate/deferred.txt names tests the whole gate doesn't run to a verdict; take each off the list or give the gate its input:\n" +
+                      "\n".join(["%s: census class %s, refused" % row for row in refused] + unrun))
 
     def cover(self, unowned, changed=(), pathSetChanged=None):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
@@ -811,18 +828,7 @@ class Gate:
         requested = getattr(self, "requested", {})
         if not requested:
             return
-        outcomes = {}
-        try:
-            with open(os.path.join(self.arguments.out, "test.jsonl")) as handle:
-                for line in handle:
-                    try:
-                        event = json.loads(line)
-                    except ValueError:
-                        continue
-                    if isinstance(event, dict) and event.get("Test") and "/" not in event["Test"] and event.get("Action") in ("pass", "fail", "skip"):
-                        outcomes[event.get("Package", "") + " " + event["Test"]] = event["Action"]
-        except OSError:
-            pass
+        outcomes = topLevelOutcomes(os.path.join(self.arguments.out, "test.jsonl"))
         results = {importPath + " " + name: outcomes.get(importPath + " " + name, "missing")
                    for importPath, names in requested.items() for name in sorted(names)}
         self.result["deferred_run_results"] = results
@@ -1536,6 +1542,45 @@ def testUnits(path):
         if setup > 0:
             units[key[0], key[1] + " (setup)"] = (round(setup, 2), action)
     return units
+
+
+def topLevelOutcomes(path):
+    """Each top-level test's last pass, fail or skip in a go test -json log, by "<package> <test>"."""
+    outcomes = {}
+    try:
+        with open(path) as handle:
+            for line in handle:
+                try:
+                    event = json.loads(line)
+                except ValueError:
+                    continue
+                if isinstance(event, dict) and event.get("Test") and "/" not in event["Test"] and event.get("Action") in ("pass", "fail", "skip"):
+                    outcomes[event.get("Package", "") + " " + event["Test"]] = event["Action"]
+    except OSError:
+        pass
+    return outcomes
+
+
+def deferredClassedOut(tools, deferred):
+    """Deferred tests the skip census classes measurement or opt-in-lane (internal/skipcensus/testdata/skips.json
+    and cloud/fast-gate/census-extra.json), as ("<package> <test>", class): no gate gives them their input."""
+    rows = []
+    for name in ("internal/skipcensus/testdata/skips.json", "cloud/fast-gate/census-extra.json"):
+        try:
+            with open(os.path.join(tools, name)) as handle:
+                rows += json.load(handle)
+        except (OSError, ValueError):
+            continue
+    classed = {}
+    for row in rows:
+        if row.get("class") not in ("measurement", "opt-in-lane"):
+            continue
+        if not row.get("file"):
+            continue
+        for test in [row.get("test", "")] + list(row.get("callers") or []):
+            classed[module + "/" + os.path.dirname(row["file"]), test] = row["class"]
+    return sorted(("%s %s" % (importPath, name), classed[importPath, name])
+                  for importPath, names in deferred.items() for name in names if (importPath, name) in classed)
 
 
 def testInBase(tree, base, package, unit):

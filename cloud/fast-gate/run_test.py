@@ -157,6 +157,32 @@ class FailClosed(unittest.TestCase):
                 self.assertIn(stageName, status)
 
 
+class DeferredInTheWholeGate(FailClosed):
+    def test_a_deferred_test_the_whole_gate_never_runs_is_red_at_census(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/deferred.txt"), "w") as handle:
+            handle.write("# package test seconds kind\ninternal/gone    TestGone    40.0    mutant\n")
+        for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "deferred"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        gate, status, result = self.gate(full=True)
+        self.assertIn("first failure at census", status)
+        self.assertIn(run.module + "/internal/gone TestGone: missing", gate.failure["detail"])
+        self.assertEqual(result["deferred_whole_results"], {run.module + "/internal/gone TestGone": "missing"})
+
+    def test_the_tools_deferred_list_holds_no_measurement_or_opt_in_test(self):
+        tools = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(run.__file__))))
+        deferred = {}
+        with open(os.path.join(tools, "cloud/fast-gate/deferred.txt")) as handle:
+            for line in handle:
+                fields = line.split()
+                if fields and not fields[0].startswith("#"):
+                    deferred.setdefault(run.module + "/" + fields[0], set()).add(fields[1])
+        self.assertEqual(run.deferredClassedOut(tools, deferred), [])
+        # The row that turned the star red on Oct 8 is refused.
+        deferred[run.module + "/stage1/cohere/lint"] = {"TestProfileSnapshotsAgree"}
+        self.assertEqual(run.deferredClassedOut(tools, deferred), [(run.module + "/stage1/cohere/lint TestProfileSnapshotsAgree", "measurement")])
+
+
 class Coverage(FailClosed):
     def test_reads_add_package_for_matching_changed_paths(self):
         with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
