@@ -1,0 +1,5 @@
+replay load/register/lower: 8.03369622s
+replay signature did not reproduce: Refused an unproven predicate argument for parameter test (argument "isExpression") at /tmp/notyet-predicates-adapted/src/compiler/factory/nodeConverters.ts:115:30 (selected /tmp/notyet-predicates-adapted/src/compiler/factory/nodeConverters.ts:98:5)
+exit status 1
+replay total (including overlay and Go build): 45.667309127s
+exit status 1
