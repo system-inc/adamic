@@ -1,0 +1,3 @@
+measurement	github.com/system-inc/adamic/cmd/adamic-test262	TestCompilerStartupMeasurement	TestCompilerStartupMeasurement:c4a4cc95e992b9399ab2a21ae7e3a1caca9c71a5d9b0b7f5d48200073d19ce03	Opt-in timing or profile artifact comparison; does not replace correctness verification.
+not-applicable	github.com/system-inc/adamic/stage3/fixtures	TestTransformedNodeRunnerGuardHook	TestTransformedNodeRunnerGuardHook:365ddb0b6660a8b806fdffbcf304774accc4879f412d115bfd7d912a4f669ab2	Dormant subprocess entry point, not an independent verification check. TestTransformedNodeRunnerGuard supplies ADAMIC_RUNNER_GUARD_REPOSITORY for each positive and negative runner-shape probe; without a request this hook is not applicable.
+skips=2 required-input=0 unknown=0
