@@ -1,0 +1,23 @@
+function observe(value?: number): string {
+	return `${arguments.length}:${value ?? -1}`;
+}
+console.log(observe());
+console.log(observe(undefined));
+console.log(observe(7));
+function extra(first: number, ...rest: number[]): string {
+	return `${arguments.length}:${first}:${rest.join(',')}`;
+}
+console.log(extra(1));
+console.log(extra(1, 2, 3, 4));
+function defaulted(value: number = 9): string {
+	return `${arguments.length}:${value}`;
+}
+console.log(defaulted());
+console.log(defaulted(undefined));
+console.log(defaulted(5));
+const expression = function (value?: number): string {
+	return `${arguments.length}:${value ?? -1}`;
+};
+console.log(expression());
+console.log(expression(undefined));
+console.log(expression(8));

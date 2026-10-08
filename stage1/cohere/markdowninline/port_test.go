@@ -17,6 +17,7 @@ import (
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
+	"github.com/system-inc/adamic/internal/gatesample"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
@@ -25,6 +26,9 @@ import (
 )
 
 const repository = "../../.."
+
+// The cited Cloud sweep took 936s; ceil(936/30)=32. Generated probes stay full.
+const markdownInlineCorpusStride = 32
 
 // run is one execution's observable behavior.
 type run struct {
@@ -160,6 +164,25 @@ func TestMarkdownInline(t *testing.T) {
 	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"CHANGELOG.md", "CONTRIBUTING.md", "README.md", "THIRD_PARTY_NOTICES.md", "TypeScript-shim", "editors", "internal", "schema", "swift"}, patterns)...)
 	paths = append(paths, corpusfiles.Upstream(t, filepath.Join(root, "cohere/TypeScript"), corpusfiles.TypeScriptGoCommit, []string{".github", "CODE_OF_CONDUCT.md", "CONTRIBUTING.md", "README.md", "SECURITY.md", "SUPPORT.md", "packages", "tsc"}, patterns)...)
 	sort.Strings(paths)
+	names := make([]string, len(paths))
+	for i, path := range paths {
+		name, err := filepath.Rel(root, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		names[i] = filepath.ToSlash(name)
+	}
+	selection, err := gatesample.Select(root, names, markdownInlineCorpusStride)
+	if err != nil {
+		t.Fatalf("%s: %v", t.Name(), err)
+	}
+	if selection.Sample {
+		t.Log(selection.Log(t.Name()))
+		paths = make([]string, len(selection.Paths))
+		for i, name := range selection.Paths {
+			paths[i] = filepath.Join(root, filepath.FromSlash(name))
+		}
+	}
 	for _, path := range paths {
 		data, err := os.ReadFile(path)
 		if err != nil {
@@ -238,7 +261,7 @@ func TestMarkdownInline(t *testing.T) {
 		result run
 	}{{"native", got}, {"Node", onNode(t, main, "--batch", cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, "--batch", cases)}} {
 		clean(t, side.name, side.result)
-		equal(t, side.name, side.result.stdout, want.stdout)
+		equalInlineBatch(t, side.name, side.result.stdout, want.stdout, paths, len(modes))
 	}
 	if report := leaks(t, program, binary, "--batch", cases); report != "" {
 		t.Fatal(report)
@@ -248,7 +271,7 @@ func TestMarkdownInline(t *testing.T) {
 	if library != "" {
 		answer := execute(t, nil, "node", script, library, cases)
 		clean(t, "Prettier", answer)
-		equal(t, "Prettier", answer.stdout, want.stdout)
+		equalInlineBatch(t, "Prettier", answer.stdout, want.stdout, paths, len(modes))
 	} else {
 		t.Log("external library not checked: set ADAMIC_MARKDOWNINLINE_LIBRARY")
 	}
@@ -348,7 +371,7 @@ func TestMarkdownInline(t *testing.T) {
 			answer := execute(t, nil, side.command, side.args...)
 			elapsed += time.Since(start)
 			clean(t, side.name, answer)
-			equal(t, side.name, answer.stdout, want.stdout)
+			equalInlineBatch(t, side.name, answer.stdout, want.stdout, paths, len(modes))
 		}
 		t.Logf("throughput %s %.1f texts/s, 3 process runs %.6fs (startup, input, escaping, output included; build excluded)", side.name, float64(len(texts)*len(modes)*3)/elapsed.Seconds(), elapsed.Seconds())
 	}
@@ -375,4 +398,24 @@ func equal(t *testing.T, name string, a, b []byte) {
 		}
 		t.Fatalf("%s first byte difference at %d (lengths %d/%d)", name, i, len(a), len(b))
 	}
+}
+
+// A batch row is one mode of one text. Name its physical file or generated probe
+// even when the throughput pass finds that Go disagrees with its own baseline.
+func equalInlineBatch(t *testing.T, name string, got, want []byte, paths []string, modes int) {
+	t.Helper()
+	if bytes.Equal(got, want) {
+		return
+	}
+	offset := 0
+	for offset < len(got) && offset < len(want) && got[offset] == want[offset] {
+		offset++
+	}
+	row := bytes.Count(want[:min(offset, len(want))], []byte("\n"))
+	text := row / modes
+	input := fmt.Sprintf("generated text %d", text-len(paths))
+	if text < len(paths) {
+		input = paths[text]
+	}
+	t.Fatalf("%s first byte difference at %d (lengths %d/%d), case %d, file %s", name, offset, len(got), len(want), row, input)
 }

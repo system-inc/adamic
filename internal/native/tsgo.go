@@ -113,7 +113,7 @@ func BuildTSGo(source, output, archive string, options Options) error {
 	if err := os.WriteFile(filepath.Join(directory, "tsgo.h"), bridge.Header, 0o644); err != nil {
 		return err
 	}
-	arguments := append(Flags(options), "-DADAMIC_TSGO", "-o", output)
+	arguments := append(tsgoFlags(source, options), "-o", output)
 	arguments = append(arguments, units...)
 	arguments = append(arguments, archive, "-lm", "-lpthread", "-ldl")
 	combined, err := exec.Command("clang", arguments...).CombinedOutput()
@@ -121,4 +121,11 @@ func BuildTSGo(source, output, archive string, options Options) error {
 		return fmt.Errorf("native: clang with checker archive failed: %w\n%s", err, combined)
 	}
 	return nil
+}
+
+// tsgoFlags compiles the checker-archive build. tsgo_runtime.h, included first, brings adamic.h in
+// before main.c's own #defines, so the program's features come as flags, as they do for the runtime
+// library.
+func tsgoFlags(source string, options Options) []string {
+	return append(append(Flags(options), featureFlags(source)...), "-DADAMIC_TSGO")
 }

@@ -3,10 +3,13 @@ package fresh
 import "github.com/system-inc/adamic/internal/ir"
 
 // regexCall knows only the native regex operations, not arbitrary calls on an
-// object named RegExp. Lowering excludes replacement callbacks and overriding
-// regex properties. These methods can update lastIndex or an iterator's done
+// object named RegExp. Typed replacement callbacks are conservative calls;
+// lowering excludes overriding regex properties. These methods can update lastIndex or an iterator's done
 // flag, but cannot store a reference to a user object. Their operands still run.
 func (a *analysis) regexCall(expression ir.RegExpCall) value {
+	if expression.Replacement != nil {
+		return a.call(a.operands(expression), expression.Type())
+	}
 	switch expression.Method {
 	case "test", "exec", "match", "matchAll", "next", "iteratorDone",
 		"replace", "replaceAll", "split", "search":
