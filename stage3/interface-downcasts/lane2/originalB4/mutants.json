@@ -1,0 +1,119 @@
+[
+  {
+    "fixture": "privateidentifierpropertydeclaration-modifiers-bad",
+    "pair": "PrivateIdentifierPropertyDeclaration.modifiers",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "unionorintersectiontype-resolvedproperties-bad",
+    "pair": "UnionOrIntersectionType.resolvedProperties",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a SymbolFlags; expected SymbolFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "uniontype-arrayfallbacksignatures-bad",
+    "pair": "UnionType.arrayFallbackSignatures",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a SignatureFlags; expected SignatureFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-bad",
+    "pair": "InterfaceType.outerTypeParameters",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a TypeFlags; expected TypeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "interfacetype-outertypeparameters-absent",
+    "pair": "InterfaceType.outerTypeParameters",
+    "operation": "Allow absent required member",
+    "catcher": "field read failed: viewed.outerTypeParameters is not initialized; expected TypeParameter[] | undefined, found missing",
+    "stdout": "absent\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "signaturedeclaration-typearguments-bad",
+    "pair": "SignatureDeclaration.typeArguments",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "signaturedeclaration-jsdoc-bad",
+    "pair": "SignatureDeclaration.jsDoc",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "jsdocfunctiontype-typeparameters-bad",
+    "pair": "JSDocFunctionType.typeParameters",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.flags is not a NodeFlags; expected NodeFlags, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  },
+  {
+    "fixture": "sourcefile-additionalsyntacticdiagnostics-bad",
+    "pair": "SourceFile.additionalSyntacticDiagnostics",
+    "operation": "Replace the reached original numeric member read with a string read",
+    "catcher": "field read failed: items[0]!.code is not a number; expected number, found string",
+    "stdout": "bad\n",
+    "backends": [
+      "sanitized native",
+      "release native",
+      "JavaScript"
+    ],
+    "leaks": "clean"
+  }
+]
