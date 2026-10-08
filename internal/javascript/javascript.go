@@ -664,6 +664,12 @@ func (e *emitter) value(expression ir.Expression) string {
 		return "(" + operator + e.value(expression.Operand) + ")"
 	case ir.Binary:
 		return "(" + e.value(expression.Left) + " " + operators[expression.Operator] + " " + e.value(expression.Right) + ")"
+	case ir.MethodPresence:
+		operator := "["
+		if expression.Optional {
+			operator = "?.["
+		}
+		return "!!(" + e.value(expression.Object) + operator + quote(expression.Name) + "])"
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:

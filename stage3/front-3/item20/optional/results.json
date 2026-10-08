@@ -1,0 +1,44 @@
+[
+  {
+    "name": "present-undefined-false",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence",
+    "catcher": "stdout differs",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/present-undefined-false.log"
+  },
+  {
+    "name": "present-null-false",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence",
+    "catcher": "stdout differs",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/present-null-false.log"
+  },
+  {
+    "name": "required-allowed",
+    "status": "caught",
+    "test": "TestOptionalFunctionKeepsRequiredRefusal",
+    "catcher": "got <nil>",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/required-allowed.log"
+  },
+  {
+    "name": "nullable-refused",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/optional_function_presence",
+    "catcher": "Lower:",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/nullable-refused.log"
+  },
+  {
+    "name": "nullable-object-allowed",
+    "status": "caught",
+    "test": "TestOptionalFunctionNullableObjectIsNotYet",
+    "catcher": "got <nil>",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/nullable-object-allowed.log"
+  },
+  {
+    "name": "mixed-absence-allowed",
+    "status": "caught",
+    "test": "TestOptionalFunctionMixedAbsenceIsNotYet",
+    "catcher": "got <nil>",
+    "log": "/tmp/stage3-front-3-20-optional-mutants/mixed-absence-allowed.log"
+  }
+]

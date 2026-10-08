@@ -969,3 +969,26 @@ The original fake-error control's stale diagnostic also failed on the unmodified
 | fake-control | fake-error-nominal-guard-removed | SURVIVED | TestErrorBoundariesAreExplicit/fake_error$ | want refusal | item18/mutants/fake-control/fake-error-nominal-guard-removed.log |
 
 The later inherited-method adapted invocation did not use the configured Go environment and printed Go: Unknown option: test; it is excluded. A corrected invocation was queued after the new freshness controls but did not complete before the stop. The flow fixture-classification control was also queued but not completed. Freshness controls that erased receiver effects, returned the receiver as the phantom member, and removed PhantomMember recognition were caught by the targeted fresh tests; no final full write-site baseline is claimed. Existing permanent reader/error mutants were part of the interrupted gate, so no new passing permanent-mutant claim is made for item18.
+
+## Continued items 19 and 20
+
+These controls run against the continued front-3 compiler through test-only Go overlays. No control is an unmodified compiler finding. Every listed control compiled and failed its intended assertion; raw logs are committed under item19 and item20.
+
+| Item | Mutant | Catcher | Evidence |
+| --- | --- | --- | --- |
+| 19 | restore-whole-module-guard | before enum initialization | item19/restore-whole-module-guard.log |
+| 19 | remove-direct-enum-proof | proven enum read retained a readiness check | item19/remove-direct-enum-proof.log |
+| 19 | erase-enum-readiness | exit codes differ (UBSan null-object access instead of readiness panic) | item19/erase-enum-readiness.log |
+| 20 optional | present-undefined-false | stdout differs | item20/optional/present-undefined-false.log |
+| 20 optional | present-null-false | stdout differs | item20/optional/present-null-false.log |
+| 20 optional | required-allowed | got <nil> | item20/optional/required-allowed.log |
+| 20 optional | nullable-refused | Lower: | item20/optional/nullable-refused.log |
+| 20 optional | nullable-object-allowed | got <nil> | item20/optional/nullable-object-allowed.log |
+| 20 optional | mixed-absence-allowed | got <nil> | item20/optional/mixed-absence-allowed.log |
+| 20 method | shadowed-undefined | got <nil>, want unbound-method | item20/method/shadowed-undefined.log |
+| 20 method | stored | got <nil>, want unbound-method | item20/method/stored.log |
+| 20 method | prototype-absent | stdout | item20/method/prototype-absent.log |
+| 20 method | absent-present | stdout | item20/method/absent-present.log |
+| 20 method | wide-name-omitted | stdout | item20/method/wide-name-omitted.log |
+
+The added method_presence_wide_union.a probe makes wide-name-omitted fail on the current unsupported union ABI: Node prints wide union true, the mutant native build prints wide union false, both exit0. The original optional-boolean Wide method now has a supported slot, so it alone would not exercise this descriptor branch. The unmodified added probe passes Node/native/JavaScript/release/leak checks. The two memoize probes retain their original source Node output and cycle-capable refusal boundary.

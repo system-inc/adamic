@@ -1,0 +1,37 @@
+[
+  {
+    "name": "shadowed-undefined",
+    "status": "caught",
+    "test": "TestMethodPresenceRefusesEscapes",
+    "catcher": "got <nil>, want unbound-method",
+    "log": "/tmp/stage3-front-3-20-method-mutants/shadowed-undefined.log"
+  },
+  {
+    "name": "stored",
+    "status": "caught",
+    "test": "TestMethodPresenceRefusesEscapes",
+    "catcher": "got <nil>, want unbound-method",
+    "log": "/tmp/stage3-front-3-20-method-mutants/stored.log"
+  },
+  {
+    "name": "prototype-absent",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/method_presence",
+    "catcher": "stdout",
+    "log": "/tmp/stage3-front-3-20-method-mutants/prototype-absent.log"
+  },
+  {
+    "name": "absent-present",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/method_presence",
+    "catcher": "stdout",
+    "log": "/tmp/stage3-front-3-20-method-mutants/absent-present.log"
+  },
+  {
+    "name": "wide-name-omitted",
+    "status": "caught",
+    "test": "TestNativeAgreesWithNode/internal/oracle/testdata/method_presence",
+    "catcher": "stdout",
+    "log": "/tmp/stage3-front-3-20-method-mutants/wide-name-omitted.log"
+  }
+]

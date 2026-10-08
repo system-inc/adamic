@@ -1,0 +1,7 @@
+// Presence needs a method descriptor even when its union signature has no closure slot.
+class WideUnion {
+    method(value: number | string): number | string { return value; }
+}
+interface Methods { method(value: number | string): number | string; }
+function observe(value: Methods): void { console.log(`wide union ${!!value.method}`); }
+observe(new WideUnion());

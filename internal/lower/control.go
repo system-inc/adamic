@@ -94,11 +94,23 @@ func (l *lowering) whileStatement(node *ast.Node) ([]ir.Statement, error) {
 
 // condition applies JavaScript ToBoolean to one evaluation of its operand.
 func (l *lowering) condition(node *ast.Node) (ir.Expression, error) {
-	value, err := l.expression(node)
+	condition, err := l.expression(node)
 	if err != nil {
 		return nil, err
 	}
-	return censusCondition(value), nil
+	proven := l.checker.GetTypeAtLocation(node)
+	if (condition.Type() == ir.Object || condition.Type() == ir.Closure) && l.includesUndefined(proven) {
+		return ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: condition}}, nil
+	}
+	if condition.Type() == ir.Closure && l.includesNull(proven) {
+		return ir.Unary{Operator: ir.Not, Operand: ir.IsNull{Value: condition}}, nil
+	}
+	if condition.Type() == ir.Closure {
+		// Keep the incoming ordinary required-callable condition refusal. Census
+		// primitive/boolean ToBoolean and unary observations retain their proofs.
+		return nil, &Refused{Where: l.program.Where(node), What: "a " + typeName(condition.Type()) + " as a condition", Fix: "compare it explicitly, like name.length > 0 or count !== 0"}
+	}
+	return censusCondition(condition), nil
 }
 
 // initializerIsLet reports whether a for loop declares its variables with let, which JavaScript gives

@@ -286,6 +286,10 @@ func refusedNonNullFixture(path string) bool {
 		return true
 	}
 	switch name {
+	// These original generic memoize probes intentionally have no IR. Their Node
+	// output and cycle-capable refusal stay pinned by the dedicated oracle test.
+	case "optional_function_memoize_a.a", "optional_function_memoize_b.a":
+		return true
 	case "non_null_initialized.a", "non_null_literal_statement.a", "non_null_literal_return.a", "non_null_uninitialized_default.a":
 		return true
 	}

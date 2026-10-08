@@ -118,6 +118,9 @@ func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 			if l.includesUndefined(proven) {
 				return 0, false
 			}
+			if l.nullableCallable(proven) {
+				return ir.Closure, true
+			}
 			for _, member := range proven.Types() {
 				if member.Flags()&checker.TypeFlagsNull == 0 && !l.isLibraryType(member, "RegExpExecArray", "RegExpMatchArray") {
 					return 0, false
@@ -210,6 +213,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	assertion := ast.SkipParentheses(node)
 	if assertion.Kind == ast.KindAsExpression && l.genericSignature(l.checker.GetTypeAtLocation(assertion.AsAsExpression().Expression)) != nil && l.genericSignature(l.checker.GetTypeAtLocation(assertion)) == nil {
 		return nil, l.notYet(node, "a cast erasing a generic function value's representation")
+	}
+	if value, handled, err := l.methodObservation(node); handled {
+		return value, err
 	}
 	if err := l.libraryIteratorUnsupportedUse(node); err != nil {
 		return nil, err
