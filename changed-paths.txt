@@ -1,0 +1,15 @@
+internal/lower/class_features.go
+internal/lower/class_inheritance.go
+internal/lower/class_static.go
+internal/lower/class_wrong_output_test.go
+internal/lower/iteration.go
+internal/lower/iteration_origin.go
+internal/oracle/class_wrong_output_test.go
+internal/oracle/testdata/classfeat_init_super.a
+internal/oracle/testdata/classfeat_init_super_getter.a
+internal/oracle/testdata/classfeat_init_super_number.a
+internal/oracle/testdata/classfeat_static_private_instance.a
+internal/oracle/testdata/classfeat_static_private_method.a
+internal/oracle/testdata/iterators_hidden_return.a
+internal/oracle/testdata/iterators_override_this.a
+internal/oracle/testdata/iterators_sym_keys_view.a
