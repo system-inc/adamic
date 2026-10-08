@@ -30,8 +30,11 @@ done
 box=${ADAMIC_FAST_GATE_BOX:-threadripper}
 here=$(cd "$(dirname "$0")/.." && pwd)
 tools=$(git -C "${here}" rev-parse HEAD)
-git -C "${here}" fetch -q origin
-git -C "${here}" branch -r --contains "${tools}" | grep -q . || { echo "the gate's own commit ${tools} is not on origin; push it first" >&2; exit 2; }
+# The watcher checks this once for all its gates, so two gates at once don't race one fetch.
+if [ -z "${ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN:-}" ]; then
+  git -C "${here}" fetch -q origin
+  git -C "${here}" branch -r --contains "${tools}" | grep -q . || { echo "the gate's own commit ${tools} is not on origin; push it first" >&2; exit 2; }
+fi
 base=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
 if [ -z "${branch}" ]; then
   branch=$(git -C "${here}" ls-remote origin 'refs/heads/*' | awk -v sha="${sha}" '$1 == sha && $2 !~ /^refs\/heads\/gate-logs\// && !found {sub("refs/heads/", "", $2); print $2; found = 1}')
