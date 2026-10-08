@@ -111,11 +111,17 @@ For checked casts and non-null unwraps, choose **panic**, not a catchable TypeEr
 
 A catchable TypeError would require a deliberately different contract: unwind ownership and let callers recover before producing a narrowed value. This unit does not propose that change. Refused or proven cases have no runtime failure message or failure exit code because no check is inserted.
 
-### any: refused
+### any: checked unknown in .ts; explicit any refused in .a
 
-Refuse explicit and flowing inferred any at the gate, including unsafe calls and member access. An unused any annotation must not become an authorization to erase proof later. There is no finite runtime check that certifies arbitrary future operations on any; dynamic tagging alone would not prove callable signatures or mutable alias invariants.
+Built on codex/checked-unknown-any: a `.ts` any uses the same tagged representation as unknown. Unchanged parameters, returns, local transport and `.ts` assertions to any preserve the tag. An assertion to any boxes the proven source representation; it grants no typed view. Public declarations retain their source text. Explicit any annotations and assertions in `.a` are refused, including unused annotations; evolving unannotated `.a` bindings still need a proven storage type or an explicit unknown annotation.
 
-Stage 1 needs unknown plus typeof/discriminant narrowing at dynamic boundaries, concrete type arguments in generic code, and constructors/builders for the known compiler-node variants. The 207 keyword sites are an audit list, not 207 necessarily unsafe value operations.
+A dynamic value used as a plain number, string or boolean checks its tag before entering that representation. The shared lowering helper checks contextual typed arguments, results and initializers, and checks own-property results where the caller needs a scalar. Arithmetic checks dynamic operands against the operation's scalar requirement. A known scalar operand selects number or string for + and ordering; two dynamic operands for those overloaded operations remain NotYet. A precisely lowered intrinsic result already has its independently established representation. Each checked operand is evaluated once, and both backends use the same ordinary IR guard before extraction.
+
+Failure is terminal, with exit 70 and exactly `adamic: panic: checked any: <expression> needs <type>, found <tag>\n`. Expression and type text are captured at compile time; formatting never calls a user conversion. Null is reported as null rather than object. The inserted check is not a diagnostic and never enters catch/finally or config recovery.
+
+Existing source validation runs in its original order. The config fixture checks typeof and null before reading an own property, then checks that property's typeof before returning it. Its valid and invalid objects, arrays, primitives, null and undefined match source Node, including diagnostics. No object-only assumption is attached to the public any boundary: values stay tagged until the actual use. Config domains that need recursive JSON-plus-recovery validation remain outside the scalar subset.
+
+Still refused or NotYet: dynamic calls without a verified signature; callable/structural/literal/enum contracts from any; assertions from any to typed contracts; opaque host/collection views; getters and prototype-member reads; unsupported nullable slot metadata; dynamic element operations; erased any arrays, tuples, maps and sets; any fields in typed objects; and staged class fields without readiness metadata. A function tag does not establish its parameter/result contract. A scalar tag does not prove an interface or mutable alias invariant. These limits do not establish coverage of the original 271-site inventory. See the checked-any report for the hash-pinned stock project's first stop and the measured coverage limit.
 
 ### Casts: proven upcasts, checked tagged downcasts, refused unrelated assertions
 

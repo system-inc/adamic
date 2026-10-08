@@ -83,6 +83,23 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 		if found != nil {
 			return true
 		}
+		if node.Kind == ast.KindVariableDeclaration && l.program.FileName(module) != module.FileName().AsString() {
+			declaration := node.AsVariableDeclaration()
+			if declaration.Type == nil && declaration.Initializer == nil && l.evolvingObject(node.Name()) == nil && l.checker.GetTypeAtLocation(node.Name()).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node.Name(), "a value of type any (an evolving unannotated .a binding; declare unknown)")
+				return true
+			}
+		}
+		if node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
+			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+			return true
+		}
+		if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny == 0 {
+			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsAny != 0 {
+				found = l.notYet(node, "an any field in a typed object (dynamic slot adaptation is not established)")
+				return true
+			}
+		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil

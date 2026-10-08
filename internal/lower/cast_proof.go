@@ -102,6 +102,13 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
 	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
 	target := l.concrete(l.checker.GetTypeAtLocation(node))
 	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: castRepair}
+	if target.Flags()&checker.TypeFlagsAny != 0 {
+		file := ast.GetSourceFileOfNode(node)
+		if l.program.FileName(file) != file.FileName().AsString() {
+			return castProof{}, &Refused{Where: l.program.Where(as.Type), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+		}
+		return castProof{}, l.unknownView(as.Expression, source, target)
+	}
 	inner := ast.SkipParentheses(as.Expression)
 	if inner.Kind == ast.KindAsExpression && l.checker.GetTypeAtLocation(inner).Flags()&checker.TypeFlagsUnknown != 0 {
 		return castProof{}, refused

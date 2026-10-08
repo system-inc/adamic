@@ -1,0 +1,11 @@
+--- internal/lower/refusals.go
++++ internal/lower/refusals.go
+@@ -94,7 +94,7 @@
+ 			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+ 			return true
+ 		}
+-		if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny == 0 {
++		if false && node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Flags()&checker.TypeFlagsAny == 0 {
+ 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.checker.GetTypeOfSymbol(field).Flags()&checker.TypeFlagsAny != 0 {
+ 				found = l.notYet(node, "an any field in a typed object (dynamic slot adaptation is not established)")
+ 				return true
