@@ -230,8 +230,9 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 // absent slot or undefined payload must never be interpreted as numeric bits.
 adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
  adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
- bool missing = slot == NULL && (absent || optional);
- if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+ // Optional chaining permits a missing receiver, not a missing required field.
+ bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
+ if (slot != NULL && (absent || wanted == 7 || wanted == 9) && adamic_object_initialized(object)[cache->index]) {
   unsigned char actual = adamic_object_field_types(object)[cache->index];
   missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
  }

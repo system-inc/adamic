@@ -1158,3 +1158,13 @@ User accepted lane 4's primitive/nullish and lane 4b's object/array/TsConfigSour
 element selection handoffs. Storage, lookup, absence and enumeration remain
 with dictionaries. Candidate string and Path dynamic rows are string indexing
 according to their census sites; counts stay pending until disposition evidence.
+
+### Dictionary group 6: optional receiver presence
+
+New lane files: `internal/oracle/checked_view_dictionary_optional_test.go` and
+`dictionaries/source/optional-{watch,options,wildcard}-{good,wrong,missing,receiver-missing}.a`.
+Minimal shared hooks: `native/runtime/object.c:adamic_object_optional_view`
+distinguishes an absent receiver from a missing required field on a present
+receiver; `javascript/readiness.go:adamicViewField` permits undefined because
+of optional chaining only when the receiver is absent. The compiling C/JS
+optional-absence mutant deliberately restores that conflation.

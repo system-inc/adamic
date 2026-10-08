@@ -180,5 +180,77 @@
       "source/compiler-paths-key-missing.a"
     ],
     "scope": "Mixed named fields and string index signature: optional MapLike<string[]> container, absent key and transitive array-element checks. No rich dynamic element union reads credited."
+  },
+  {
+    "type_id": 11560,
+    "field": "watchOptions",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-watch-good.a",
+      "source/optional-watch-wrong.a",
+      "source/optional-watch-missing.a",
+      "source/optional-watch-receiver-missing.a",
+      "source/optional-watch-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 94919,
+    "field": "options",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-options-good.a",
+      "source/optional-options-wrong.a",
+      "source/optional-options-missing.a",
+      "source/optional-options-receiver-missing.a",
+      "source/optional-options-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 11560,
+    "field": "options",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-options-good.a",
+      "source/optional-options-wrong.a",
+      "source/optional-options-missing.a",
+      "source/optional-options-receiver-missing.a",
+      "source/optional-options-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
+  },
+  {
+    "type_id": 11560,
+    "field": "wildcardDirectories",
+    "type": "ParsedCommandLine | undefined",
+    "status": "checked source reads",
+    "tests": [
+      "TestCheckedViewDictionaryOptionalContainers",
+      "TestCheckedViewDictionaryOptionalAbsenceMutant"
+    ],
+    "fixtures": [
+      "source/optional-wildcard-good.a",
+      "source/optional-wildcard-wrong.a",
+      "source/optional-wildcard-missing.a",
+      "source/optional-wildcard-receiver-missing.a",
+      "source/optional-wildcard-undefined.a"
+    ],
+    "scope": "Guarded checked downcast feeds an optional receiver read: absent receiver short-circuits, present receiver checks required-field presence and runtime kind, optional property permits absence/undefined. Does not certify direct optional-base downcast admission."
   }
 ]
