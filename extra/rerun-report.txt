@@ -1,0 +1,21 @@
+Log: /workspace/reruns.jsonl
+Test events: pass=535 fail=2 skip=1
+
+Gate cache lines:
+
+Skipped tests:
+github.com/system-inc/adamic/internal/oracle::TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+
+Failed tests:
+github.com/system-inc/adamic/internal/oracle::TestWASIEmission/internal/oracle/testdata/json_encode_objects.a
+    wasi_test.go:135: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+
+github.com/system-inc/adamic/internal/oracle::TestWASIEmission
+Failed parent; see child failure.
+
+Package results:
+github.com/system-inc/adamic/internal/lower: pass (4.113s)
+github.com/system-inc/adamic/stage1/cohere/gitignore: pass (83.433s)
+github.com/system-inc/adamic/internal/native: pass (83.459s)
+github.com/system-inc/adamic/internal/oracle: fail (108.487s)

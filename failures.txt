@@ -1,0 +1,599 @@
+== github.com/system-inc/adamic/internal/oracle TestJSONEncode/json_encode_objects.a
+=== RUN   TestJSONEncode/json_encode_objects.a
+    library_json_encode_test.go:36: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestJSONEncode/json_encode_objects.a (0.11s)
+
+== github.com/system-inc/adamic/internal/oracle TestJSONEncode
+=== RUN   TestJSONEncode
+--- FAIL: TestJSONEncode (5.79s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a
+=== RUN   TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a
+    wasi_input_test.go:169: KNOWN RUNTIME BUG walk.a: empty directory/status paths resolve to cwd; pending codex/wasi-empty-path
+    wasi_input_test.go:169: internal/oracle/testdata/walk.a: stdout differs
+        expected exit=0 stdout="walking: 11 names, .hidden 10 9 B.txt _x a.txt dangling inner link-to-file link-to-inner é.txt\n  .hidden: file, 0 bytes\n  10: file, 2 bytes\n  9: file, 1 bytes\n  B.txt: file, 4 bytes\n  _x: file, 5 bytes\n  a.txt: file, 5 bytes\n  cannot read status of walking/dangling: no such file\n  inner: directory, true\n    walking/inner: 1 names, deep.txt\n      deep.txt: file, 10 bytes\n  link-to-file: file, 4 bytes, a symbolic link\n  link-to-inner: directory, true, a symbolic link\n  é.txt: file, 7 bytes\n<dir>: 4 names, bad� name closed locked unlisted\n  bad� name: not looked up\n  closed: directory, true\n    cannot read directory <dir>/closed: permission denied\n  locked: directory, true\n    <dir>/locked: 0 names, \n  unlisted: directory, true\n    cannot read directory <dir>/unlisted: permission denied\ncannot read directory walking/a.txt: not a directory\ncannot read directory walking/missing: no such directory\ncannot read directory walking/dangling: no such directory\nlisted 047cb0d_n_arrayindex.a,047cb0d_n_coalesce.a,047cb0d_n_conditional.a,047cb0d_n_element.a,047cb0d_n_element_method.a,047cb0d_n_element_plain.a,047cb0d_n_numparam.a,047cb0d_n_optional.a,047cb0d_n_param.a,047cb0d_n_paren.a,047cb0d_n_template.a,047cb0d_n_typeof.a,93122fa_s1.a,93122fa_s2.a,adversarial_exits.a,adversarial_iteration.a,adversarial_order.a,arguments.a,array_from.a,array_from_length.a,array_from_undefined.a,ascii_scan.a,bitwise.a,bitwise_sweep.a,booleans.a,borrow_chain_argument.a,borrow_chain_capture.a,borrow_chain_coverage_bounded.a,borrow_chain_coverage_callbacks.a,borrow_chain_coverage_depths.a,borrow_chain_coverage_exclusions.a,borrow_chain_coverage_finally.a,borrow_chain_coverage_guards.a,borrow_chain_coverage_method.a,borrow_chain_coverage_parents.a,borrow_chain_coverage_return.a,borrow_chain_coverage_scope.a,borrow_chain_coverage_spread.a,borrow_chain_coverage_values.a,borrow_chain_listener.a,borrow_chain_override.a,borrow_chain_reassigned.a,borrow_chain_store.a,borrow_chain_unknown.a,borrow_chain_walk.a,borrow_chain_write.a,borrow_defined_lent.a,borrow_defined_lent_field.a,borrow_element.a,borrow_element_super_move.a,borrow_element_throw.a,borrow_element_virtual_move.a,borrow_element_virtual_store.a,borrow_global_call.a,borrow_loop.a,borrow_loop_calls.a,borrow_map_overwrite.a,borrow_reassigned.a,call_targets_closure.a,call_targets_element.a,call_targets_region.a,call_targets_reuse.a,call_targets_sort.a,case_mapping.a,cast_class.a,cast_class_fails.a,cast_class_generic_fails.a,cast_class_union_fails.a,cast_enum_const.a,cast_enum_const_numeric_fails.a,cast_enum_const_string_fails.a,cast_enum_numeric.a,cast_enum_numeric_fails.a,cast_enum_string.a,cast_enum_string_fails.a,cast_fails.a,cast_operand_once.a,cast_subunion_const_numeric_fails.a,cast_subunion_const_string_fails.a,cast_subunion_fails.a,cast_subunion_string_fails.a,casts.a,class_as_interface.a,class_features_accessors.a,class_features_distinct.a,class_features_private.a,class_features_retained.a,class_features_static.a,class_features_static_private.a,class_features_twice.a,class_identity.a,class_inheritance.a,class_inheritance_conditional.a,class_inheritance_exceptions.a,class_inheritance_generic.a,class_inheritance_interface.a,class_inheritance_memory.a,class_inheritance_order.a,class_instance_key_consume.a,class_instance_key_region.a,class_instance_key_region_alias.a,class_instance_key_throw.a,class_layouts.a,class_oct6_deep.a,class_oct6_parameters.a,class_oct6_release.a,class_oct6_subclass_holder.a,classes.a,closures.a,closures_throw.a,closures_throw_uncaught.a,collections.a,concat_too_long.a,dead_zone.a,declared_later.a,defaults.a,devirtualize.a,devirtualize_abstract.a,devirtualize_accessors.a,devirtualize_factory.a,devirtualize_function_field.a,devirtualize_generic.a,devirtualize_interfaces.a,devirtualize_modules,devirtualize_receivers.a,doubly_linked.a,e4eec87_f1_alias_narrowed.a,e4eec87_f1_class_narrowed.a,e4eec87_f1_field_narrowed.a,e4eec87_f1_field_present.a,e4eec87_f2_union_narrow_call.a,e4eec87_f2b_union_narrow_number.a,e4eec87_u01_undefined_field_widened.a,e4eec87_u02_optional_absent.a,e4eec87_u03_discriminated_undefined.a,effects.a,empty-path.a,enums.a,enums_const.a,enums_flags.a,enums_flags_modules,enums_flags_never_default.a,enums_modules,enums_names.a,enums_open.a,enums_open_members.a,enums_open_never.a,enums_open_never_field.a,enums_open_never_if.a,enums_open_never_implicit.a,enums_open_never_index.a,enums_open_never_return.a,enums_open_never_update.a,exceptions.a,exceptions_empty.a,exceptions_uncaught.a,fallthrough_exceptions.a,fallthrough_labels.a,fallthrough_nested.a,fallthrough_ownership.a,fallthrough_probe.a,field_access_paths.a,field_write_paths.a,fill_length.a,fills.a,finally_leaves.a,find_index_shrinks.a,find_shrinks.a,fresh_calls.a,fresh_parser.a,fresh_refused,fresh_writes.a,from_code_point_fails.a,from_codes.a,functions.a,gaps.a,generic_functions.a,generic_instance_key_typeof.a,generic_method_return.a,generic_values.a,has_own.a,implicit_returns.a,import_cycles,indexing.a,inherited_static_field_read.a,integer_format.a,interleaved.a,invariance_readonly.a,json_decode_coverage_arrays.a,json_decode_coverage_calls.a,json_decode_coverage_depth_extra.a,json_decode_coverage_empty.a,json_decode_coverage_grammar.a,json_decode_coverage_layouts.a,json_decode_coverage_nested.a,json_decode_coverage_object_scalar.a,json_decode_coverage_shapes.a,json_decode_coverage_tags.a,json_decode_coverage_unicode_tag.a,json_decode_coverage_unions.a,json_decode_depth.a,json_decode_empty_object.a,json_decode_empty_tuple.a,json_decode_grammar.a,json_decode_objects.a,json_decode_scalars.a,json_decode_supplement.a,json_encode_depth.a,json_encode_differences.a,json_encode_objects.a,json_encode_refused,json_encode_scalars.a,json_encode_unions.a,json_schema_names.a,json_stringify_escapes.a,json_stringify_indent.a,json_stringify_keys.a,json_stringify_numbers.a,json_stringify_options.a,json_stringify_replacer.a,json_stringify_scalars.a,json_stringify_undefined.a,json_stringify_values.a,killed_after_output.a,large_output.a,lent_reads.a,library_array_copy.a,library_array_copy_within.a,library_array_find_last.a,library_array_flat.a,library_array_flat_map.a,library_array_iterators.a,library_array_join.a,library_array_metadata.a,library_array_search.a,library_array_spliced.a,library_array_with.a,library_fnexpr_loops.a,library_fnexpr_recurse.a,library_fnexpr_store.a,library_for_in.a,library_for_in_keys.a,library_for_in_live.a,library_function_expressions.a,library_globals.a,library_globals_typeof.a,library_map_set.a,library_map_set_construct.a,library_map_set_group_by.a,library_map_set_groupby_keys.a,library_map_set_iterator_exhausted.a,library_map_set_iterator_number_hash.a,library_map_set_iterator_refuse,library_map_set_iterators.a,library_map_set_keys.a,library_map_set_next.a,library_map_set_setops.a,library_map_set_visit.a,library_map_set_zeros.a,library_math_number_convert.a,library_math_number_math.a,library_math_number_prototype.a,library_object_assign.a,library_object_assign_fields.a,library_object_freeze.a,library_object_freeze_alias.a,library_object_freeze_assign.a,library_object_freeze_write.a,library_object_has_own.a,library_object_is.a,library_object_keys.a,library_object_order.a,library_object_own.a,library_object_same.a,library_string_conversion.a,library_string_existing.a,library_string_indices.a,library_string_prototype.a,library_string_raw.a,lint_runtime_equal_headers.a,lint_runtime_release_chain.a,lint_runtime_release_shared.a,lint_runtime_search_boundaries.a,lint_runtime_search_calls.a,literal_optional_shapes.a,local_console.a,lone_surrogates.a,long_chain.a,long_literals.a,loops.a,map_foreach_arrays.a,map_foreach_closures.a,map_foreach_fnexpr.a,map_foreach_keep.a,map_foreach_keys.a,map_foreach_named_closures.a,map_foreach_named_keys.a,map_foreach_named_more.a,map_foreach_named_numbers.a,map_foreach_named_objects.a,map_foreach_numbers.a,map_foreach_objects.a,map_iteration.a,map_shrinks.a,map_zero_keys.a,maps_and_text.a,maybe_boolean_panic.a,maybe_booleans.a,maybe_collections.a,maybe_number_slots.a,maybe_numbers.a,method_closures.a,modules,move_throw.a,named_function_values.a,narrowed_compared.a,narrowed_fields.a,narrowed_methods.a,narrowed_numbers.a,narrowed_reads.a,narrowed_union_valid.a,narrowed_writes.a,navigation.a,nbody_base_writes.a,nbody_collection_fields.a,nbody_field_values.a,nbody_narrowed_receiver.a,nbody_optional_references.a,nbody_runtime_fields.a,nbody_slot_kinds.a,nbody_spread_fields.a,nbody_static_collision.a,nbody_write_read_order.a,normalize.a,normalize_coverage_cache.a,normalize_coverage_limit.a,normalize_coverage_long.a,normalize_coverage_quick.a,normalize_coverage_repeat.a,normalize_coverage_stream.a,normalize_form.a,normalize_long_marks.a,number_edges.a,number_formats.a,number_parsing.a,numbers.a,object_prototype.a,objects.a,optional_class_method.a,optional_numbers.a,optional_strings.a,optional_widening_class.a,optional_widening_declared.a,optional_widening_fresh.a,output_then_panic.a,override_same_representation.a,pad_too_long.a,panic.a,panic_in_try.a,param_assigned_in_try.a,power_of_two_string.a,precision_range.a,prompt_then_read.a,proven_assertions.a,proven_class_guards.a,proven_guards.a,proven_satisfies.a,proven_upcasts.a,radix_range.a,radixes.a,read_arguments.a,read_files.a,read_order.a,reading,regexp.a,regexp_cycle_closures.a,regexp_cycle_collections.a,regexp_cycle_fields.a,regexp_cycle_weak.a,regexp_exec.a,regexp_match.a,regexp_matchall_nonglobal.a,regexp_null_narrowed.a,regexp_replace.a,regexp_replaceall_nonglobal.a,regexp_search.a,regexp_split.a,regexp_split_pair_pattern.a,regexp_unicode.a,regions.a,regions_constructor_capture.a,regions_throw.a,reland_refused,replace_all_large.a,return_panic.a,return_panic_fires.a,reuse.a,reuse_arrays.a,reuse_foreach_global.a,reuse_forward.a,reuse_global_sibling.a,reuse_lent_global.a,reuse_narrowed.a,reuse_spread_method.a,reuse_spread_method_alias.a,reuse_throw.a,reuse_weak_after_reuse.a,reuse_weak_during_spread.a,route_targets_accessor.a,route_targets_bound_method.a,route_targets_callbacks.a,route_targets_recursive.a,route_targets_sort_values.a,route_targets_try_loop.a,route_targets_unknown.a,route_targets_virtual_fresh.a,runtime_last_index_of.a,search_from.a,search_from_sweep.a,search_halves.a,searches.a,self_assignments.a,set_foreach_arrays.a,set_foreach_closures.a,set_foreach_fnexpr.a,set_foreach_keep.a,set_foreach_keys.a,set_foreach_named_closures.a,set_foreach_named_keys.a,set_foreach_named_more.a,set_foreach_named_objects.a,set_foreach_numbers.a,set_foreach_objects.a,set_maybe_numbers.a,set_undefined.a,sets.a,shadowing.a,shared_slice_append.a,shared_slices.a,size_class_churn.a,sort_releases.a,sort_top_level.a,sorting.a,sorts.a,splice_empty.a,splices.a,spread_calls.a,spread_snapshot.a,spread_undefined.a,spreads.a,stack_forever.a,stack_over.a,stack_overflow.a,stack_tail_call.a,status_of_stdout.a,string_append.a,string_build_boundaries.a,string_build_cached_reads.a,string_build_caches.a,string_build_calls.a,string_build_join.a,string_build_padding.a,string_build_repeat.a,string_index.a,string_limits.a,string_positions.a,string_too_long.a,strings.a,strings_more.a,sweeps,switch_empty_neighbors.a,throw_global_move.a,throw_in_writes.a,throw_keeps_old_value.a,throw_keeps_old_value_variants.a,timsort.a,trig_reduction.a,try_assignments.a,tuple_values.a,tuples_kept.a,typeof_dispatch.a,typeof_null.a,typeof_null_compare.a,typeof_null_roll.a,typeof_null_slots.a,typeof_null_switch.a,typeof_string_literal.a,undefined_elements.a,undefined_keys.a,undefined_references.a,undefined_strings.a,unions.a,unused_parameters.a,updates.a,user_iterators.a,user_iterators_rest_tdz.a,utf8_sweep.a,utf8_view.a,utf8_view_fails.a,visits.a,walk.a,walking,weak,weak_narrowed.a,weak_parent.a,write_after_shrink.a,write_files.a,write_stderr_order.a,write_stdout_order.a,writes.a,writes_in_try.a,writes_past_end.a\ncannot read directory walking\x00: failed\ncannot read directory <dir>/unlisted: permission denied\ncannot read directory <dir>/closed: permission denied\ncannot read status of walking/missing/inside: no such file\ncannot read status of walking/a.txt/inside: no such file\ndirectory false\ncannot read status of walking/\x00: failed\ncannot read status of <dir>/closed/inside: permission denied\ncannot read status of <dir>/unlisted/inside: no such file\nother false\ndirectory true\ncannot read status of walking/�: no such file\n" stderr=""
+        actual exit=0 stdout="walking: 11 names, .hidden 10 9 B.txt _x a.txt dangling inner link-to-file link-to-inner é.txt\n  .hidden: file, 0 bytes\n  10: file, 2 bytes\n  9: file, 1 bytes\n  B.txt: file, 4 bytes\n  _x: file, 5 bytes\n  a.txt: file, 5 bytes\n  cannot read status of walking/dangling: no such file\n  inner: directory, true\n    walking/inner: 1 names, deep.txt\n      deep.txt: file, 10 bytes\n  link-to-file: file, 4 bytes, a symbolic link\n  link-to-inner: directory, true, a symbolic link\n  é.txt: file, 7 bytes\n<dir>: 4 names, bad� name closed locked unlisted\n  bad� name: not looked up\n  closed: directory, true\n    cannot read directory <dir>/closed: permission denied\n  locked: directory, true\n    <dir>/locked: 0 names, \n  unlisted: directory, true\n    cannot read directory <dir>/unlisted: permission denied\ncannot read directory walking/a.txt: not a directory\ncannot read directory walking/missing: no such directory\ncannot read directory walking/dangling: no such directory\ncannot read directory : no such directory\ncannot read directory walking\x00: failed\ncannot read directory <dir>/unlisted: permission denied\ncannot read directory <dir>/closed: permission denied\ncannot read status of walking/missing/inside: no such file\ncannot read status of walking/a.txt/inside: no such file\ncannot read status of : no such file\ncannot read status of walking/\x00: failed\ncannot read status of <dir>/closed/inside: permission denied\ncannot read status of <dir>/unlisted/inside: no such file\nother false\ndirectory true\ncannot read status of walking/�: no such file\n" stderr=""
+    wasi_input_test.go:157: FAIL internal/oracle/testdata/walk.a
+--- FAIL: TestWASIInputAgreesWithNode/internal/oracle/testdata/walk.a (1.01s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIInputAgreesWithNode
+=== RUN   TestWASIInputAgreesWithNode
+    wasi_input_test.go:149: V8 input fixtures=7 pass=6 limitations=0 fail=1 skip=0
+--- FAIL: TestWASIInputAgreesWithNode (10.36s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+    wasi_shim_test.go:35: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIShimAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (0.12s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode
+=== RUN   TestWASIShimAgreesWithNode
+    wasi_shim_test.go:77: SHIM COUNTS run=517 agreed=517 skipped=4
+--- FAIL: TestWASIShimAgreesWithNode (454.81s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestWASIAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+    wasi_test.go:38: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (0.12s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIAgreesWithNode
+=== RUN   TestWASIAgreesWithNode
+--- FAIL: TestWASIAgreesWithNode (475.49s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestWASIEmission/internal/oracle/testdata/json_encode_objects.a
+    wasi_test.go:135: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestWASIEmission/internal/oracle/testdata/json_encode_objects.a (0.11s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission
+=== RUN   TestWASIEmission
+--- FAIL: TestWASIEmission (93.18s)
+
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a
+    counts_test.go:143: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/json_encode_objects.a (0.15s)
+
+== github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a
+    oracle_test.go:727: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/json_encode_objects.a (0.17s)
+
+== github.com/system-inc/adamic/stage1/cohere/markdowninline TestMarkdownInline
+        Require stack:
+        - /workspace/adamic/stage1/cohere/markdowninline/testdata/library.mjs
+            at Module._resolveFilename (node:internal/modules/cjs/loader:1517:15)
+            at wrapResolveFilename (node:internal/modules/cjs/loader:1071:27)
+            at defaultResolveImplForCJSLoading (node:internal/modules/cjs/loader:1095:10)
+            at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1122:12)
+            at Module._load (node:internal/modules/cjs/loader:1294:5)
+            at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)
+            at Module.require (node:internal/modules/cjs/loader:1617:12)
+            at require (node:internal/modules/helpers:153:16)
+            at file:///workspace/adamic/stage1/cohere/markdowninline/testdata/library.mjs:6:18
+            at ModuleJob.run (node:internal/modules/esm/module_job:439:25) {
+          code: 'MODULE_NOT_FOUND',
+          requireStack: [
+            '/workspace/adamic/stage1/cohere/markdowninline/testdata/library.mjs'
+          ]
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestMarkdownInline (289.88s)
+
+== github.com/system-inc/adamic/internal/oracle TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures
+--- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+
+== github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+--- FAIL: TestCountsAreRecorded (275.98s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryFunctionIsInSingleAssignment
+=== RUN   TestEveryFunctionIsInSingleAssignment
+=== PAUSE TestEveryFunctionIsInSingleAssignment
+=== CONT  TestEveryFunctionIsInSingleAssignment
+    flow_test.go:85: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryFunctionIsInSingleAssignment (26.17s)
+
+== github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/json_encode_objects.a
+=== RUN   TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/json_encode_objects.a
+=== PAUSE TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/json_encode_objects.a
+=== CONT  TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/json_encode_objects.a
+    trace_test.go:387: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/json_encode_objects.a (0.05s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/json_encode_objects.a
+=== RUN   TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/json_encode_objects.a
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/json_encode_objects.a
+=== CONT  TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/json_encode_objects.a
+    trace_test.go:36: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/json_encode_objects.a (0.14s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs/../oracle/testdata/json_encode_objects.a
+=== RUN   TestEveryMutationIsInItsRange/programs/../oracle/testdata/json_encode_objects.a
+=== PAUSE TestEveryMutationIsInItsRange/programs/../oracle/testdata/json_encode_objects.a
+=== CONT  TestEveryMutationIsInItsRange/programs/../oracle/testdata/json_encode_objects.a
+    ranges_test.go:28: Lower: /workspace/adamic/internal/oracle/testdata/json_encode_objects.a:54:23: Adamic 0.1 refuses optional property note in Optional absent from structural source { name: string; count: number; }, which can hide fields; declare note on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- FAIL: TestEveryMutationIsInItsRange/programs/../oracle/testdata/json_encode_objects.a (0.07s)
+
+== github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath/programs
+=== RUN   TestLivenessHoldsOnEveryPath/programs
+--- FAIL: TestLivenessHoldsOnEveryPath/programs (0.12s)
+
+== github.com/system-inc/adamic/internal/flow TestLivenessHoldsOnEveryPath
+=== RUN   TestLivenessHoldsOnEveryPath
+=== PAUSE TestLivenessHoldsOnEveryPath
+=== CONT  TestLivenessHoldsOnEveryPath
+    trace_test.go:426: 56729678 variable-and-point pairs checked
+--- FAIL: TestLivenessHoldsOnEveryPath (127.77s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryPathNodeTakesIsInTheGraph
+=== RUN   TestEveryPathNodeTakesIsInTheGraph
+=== PAUSE TestEveryPathNodeTakesIsInTheGraph
+=== CONT  TestEveryPathNodeTakesIsInTheGraph
+--- FAIL: TestEveryPathNodeTakesIsInTheGraph (0.17s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange/programs
+=== RUN   TestEveryMutationIsInItsRange/programs
+--- FAIL: TestEveryMutationIsInItsRange/programs (0.11s)
+
+== github.com/system-inc/adamic/internal/flow TestEveryMutationIsInItsRange
+=== RUN   TestEveryMutationIsInItsRange
+=== PAUSE TestEveryMutationIsInItsRange
+=== CONT  TestEveryMutationIsInItsRange
+    ranges_test.go:78: 96994 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+--- FAIL: TestEveryMutationIsInItsRange (159.87s)
+
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequest/request_alias.a
+=== RUN   TestWASIRequest/request_alias.a
+    request_test.go:94: request host: exit status 1
+        node:internal/modules/run_main:107
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: missing _initialize export
+            at file:///workspace/adamic/cmd/adamic/testdata/wasi/request-host.mjs:32:10 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: undefined,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestWASIRequest/request_alias.a (0.36s)
+
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequest
+=== RUN   TestWASIRequest
+--- FAIL: TestWASIRequest (0.86s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/panic
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/panic (1.02s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/compute
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/compute (1.09s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/echo
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/echo (1.09s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/routing
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/routing (1.01s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers/decode_json
+    worker_test.go:127: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWorkers/decode_json (1.93s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkers
+=== RUN   TestWorkers
+--- FAIL: TestWorkers (13.01s)
+
+== github.com/system-inc/adamic/internal/split TestFixtures/shapes.a
+        
+        want:
+        Box_new javascript signature: constructor not crossable
+        data wasm entry
+        tooDeep javascript signature: parameter 1 not crossable
+        classParameter javascript signature: parameter 1 not crossable
+        returnsClosure javascript signature: return not crossable
+        closure javascript too small to cross
+        unionParameter javascript signature: parameter 1 not crossable
+        tupleParameter javascript signature: parameter 1 not crossable
+        throughAlias wasm
+        closure wasm
+        mutationInCallee javascript writes parameter 1
+        writeItems javascript writes parameter 1
+        copiedArray wasm
+        passthrough javascript too small to cross
+        mutationThroughReturn javascript writes parameter 1
+        glue javascript impure: console
+        Box_new_initialize javascript signature: return not crossable
+--- FAIL: TestFixtures/shapes.a (0.29s)
+
+== github.com/system-inc/adamic/internal/split TestFixtures
+=== RUN   TestFixtures
+--- FAIL: TestFixtures (14.62s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmMultipleFunctions
+    wasm_test.go:207: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmMultipleFunctions (9.71s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/stats
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/stats (1.55s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/sieve
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/sieve (1.55s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/panic
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/panic (1.77s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/words
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/words (1.79s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers/transform
+    wasm_test.go:94: Node: exit status 1
+        stdout: 
+        stderr: file:///workspace/adamic/internal/worker/run.mjs:26
+        				if (begin < 0 || end < 0) throw new Error('oracle panic policy boundaries changed');
+        				                                ^
+        
+        Error: oracle panic policy boundaries changed
+            at load (file:///workspace/adamic/internal/worker/run.mjs:26:37)
+            at nextStep (node:internal/modules/customization_hooks:189:26)
+            at loadWithHooks (node:internal/modules/customization_hooks:374:18)
+            at #loadSync (node:internal/modules/esm/loader:825:16)
+            at ModuleLoader.load (node:internal/modules/esm/loader:783:26)
+            at ModuleLoader.loadAndTranslate (node:internal/modules/esm/loader:494:31)
+            at #getOrCreateModuleJobAfterResolve (node:internal/modules/esm/loader:560:36)
+            at afterResolve (node:internal/modules/esm/loader:607:52)
+            at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:613:12)
+            at ModuleJob.syncLink (node:internal/modules/esm/module_job:163:33)
+        
+        Node.js v24.19.0
+--- FAIL: TestWasmWorkers/transform (1.33s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkers
+=== RUN   TestWasmWorkers
+=== PAUSE TestWasmWorkers
+=== CONT  TestWasmWorkers
+--- FAIL: TestWasmWorkers (10.33s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_test.go:132: fixture does not lower
+--- SKIP: TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.06s)
+
+== github.com/system-inc/adamic/internal/native TestSplitTSGoAgrees (skipped; the census table classes it required-input)
+census: ADAMIC_CLANG_TSGO_ARCHIVE: bridge/tsgo built c-archive for the pinned cohere TypeScript checker, using go build -buildmode=c-archive -o /path/tsgo.a ./bridge/tsgo/archive; see docs/gate-inputs.md.
+=== RUN   TestSplitTSGoAgrees
+    units_tsgo_test.go:19: set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive
+--- SKIP: TestSplitTSGoAgrees (0.00s)
+
+== github.com/system-inc/adamic/internal/native TestWASI (skipped; the census table classes it required-input)
+census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
+=== RUN   TestWASI
+    wasm_test.go:41: WASI toolchain missing or unusable (sysroot, linker, builtins): exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestWASI (0.40s)
+
+== github.com/system-inc/adamic/internal/lower TestOriginalCycleLedger (skipped; the census table classes it required-input)
+census: ADAMIC_CYCLE_LEDGER_ROOT must name pristine TypeScript v6.0.3 at 050880ce59e30b356b686bd3144efe24f875ebc8, including generated diagnostics needed by src/tsc/tsc.ts. ADAMIC_CYCLE_LEDGER_OUTPUT must name a writable JSON output. The gate must run the binding-initialization ledger verification on that source.
+=== RUN   TestOriginalCycleLedger
+    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestOriginalCycleLedger (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/gitignore TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (skipped; the census table classes it required-input)
+census: Set ADAMIC_GITIGNORE_LARGEST=1; test generates an ignore file of exactly 100 MiB itself.
+=== RUN   TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== PAUSE TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+=== CONT  TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower
+    gitignore_test.go:158: only an ignore file of exactly 100 MiB shows this one, asked about when ADAMIC_GITIGNORE_LARGEST is set
+--- SKIP: TestThePortAnswersAsGoCohereAndGitDo/catches_R2_the_size_limit_one_byte_lower (0.00s)
+
+== github.com/system-inc/adamic/internal/oracle TestWasmtimeAgreesWithNode (skipped; no census row matches its name)
+=== RUN   TestWasmtimeAgreesWithNode
+    wasi_engines_test.go:66: set ADAMIC_ORACLE_WASMTIME=1
+--- SKIP: TestWasmtimeAgreesWithNode (0.00s)
+
+== github.com/system-inc/adamic/internal/oracle TestWasmtimeOracleCatchesMutants (skipped; no census row matches its name)
+=== RUN   TestWasmtimeOracleCatchesMutants
+    wasi_engines_test.go:145: set ADAMIC_ORACLE_WASMTIME=1
+--- SKIP: TestWasmtimeOracleCatchesMutants (0.00s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/write_stdout_order.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stdout_order.a (0.51s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/write_stderr_order.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/write_stderr_order.a (0.49s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a
+    wasi_shim_test.go:49: IMPORTS internal/oracle/testdata/prompt_then_read.a | args_get, args_sizes_get, fd_close, fd_fdstat_get, fd_filestat_get, fd_prestat_dir_name, fd_prestat_get, fd_read, fd_seek, fd_write, path_open, proc_exit
+    wasi_shim_test.go:53: file access import fd_filestat_get
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/prompt_then_read.a (0.67s)
+
+== github.com/system-inc/adamic/internal/oracle TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; no census row matches its name)
+=== RUN   TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
+    wasi_shim_test.go:27: fixture does not lower
+--- SKIP: TestWASIShimAgreesWithNode/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (0.00s)
+
+== github.com/system-inc/adamic/internal/oracle TestWasmtimeCheckedWitness (skipped; no census row matches its name)
+=== RUN   TestWasmtimeCheckedWitness
+=== PAUSE TestWasmtimeCheckedWitness
+=== CONT  TestWasmtimeCheckedWitness
+    wasi_input_test.go:176: set ADAMIC_ORACLE_WASMTIME=1
+--- SKIP: TestWasmtimeCheckedWitness (0.00s)
+
+== github.com/system-inc/adamic/internal/lower TestOptionalWideningCensus (skipped; no census row matches its name)
+=== RUN   TestOptionalWideningCensus
+    optional_widening_census_test.go:28: set OPTIONAL_WIDENING_CONFIG and OPTIONAL_WIDENING_OUTPUT to inventory a project
+--- SKIP: TestOptionalWideningCensus (0.00s)
+
+== github.com/system-inc/adamic/internal/split TestCodegenSnapshot (skipped; no census row matches its name)
+=== RUN   TestCodegenSnapshot
+    codegen_test.go:21: set ADAMIC_SPLIT_SNAPSHOT to record every oracle fixture
+--- SKIP: TestCodegenSnapshot (0.00s)
+
+== github.com/system-inc/adamic/internal/split TestAnalyzeOracleFixtures (skipped; no census row matches its name)
+=== RUN   TestAnalyzeOracleFixtures
+    codegen_test.go:83: set ADAMIC_SPLIT_SWEEP for the complete oracle IR sweep
+--- SKIP: TestAnalyzeOracleFixtures (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerDecodeJSON (skipped; no census row matches its name)
+=== RUN   TestWorkerDecodeJSON
+    json_decode_test.go:17: set ADAMIC_TEST_WORKER_JSON=1 for native/Node/Worker JSON decoding comparisons
+--- SKIP: TestWorkerDecodeJSON (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerEncodeJSON (skipped; no census row matches its name)
+=== RUN   TestWorkerEncodeJSON
+    json_encode_test.go:17: set ADAMIC_TEST_WORKER_JSON=1 for native/Node/Worker JSON encoding comparisons
+--- SKIP: TestWorkerEncodeJSON (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWorkerMutants (skipped; no census row matches its name)
+=== RUN   TestWorkerMutants
+    mutants_test.go:19: set ADAMIC_WORKER_MUTANTS=1 to run Worker mutants
+--- SKIP: TestWorkerMutants (0.00s)
+
+== github.com/system-inc/adamic/internal/worker TestWasmWorkerMutants (skipped; no census row matches its name)
+=== RUN   TestWasmWorkerMutants
+    wasm_mutants_test.go:12: set ADAMIC_WORKER_MUTANTS=1 to run Wasm Worker mutants
+--- SKIP: TestWasmWorkerMutants (0.00s)
+
+== github.com/system-inc/adamic/internal/worker/wasm TestGeneratedCrossing (skipped; no census row matches its name)
+=== RUN   TestGeneratedCrossing
+    crossing_test.go:44: missing usable WASI clang, linker, sysroot or builtins: exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestGeneratedCrossing (0.37s)
+
+== github.com/system-inc/adamic/internal/worker/wasm TestWorkersWASM (skipped; no census row matches its name)
+=== RUN   TestWorkersWASM
+    wasm_test.go:45: missing usable WASI clang, linker, sysroot or builtins: exit status 1
+        wasm-ld: error: cannot open /workspace/adamic-tools/llvm/lib/clang/20/lib/wasm32-unknown-wasi/libclang_rt.builtins.a: No such file or directory
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- SKIP: TestWorkersWASM (0.50s)
+
+== github.com/system-inc/adamic/stage1/cohere/graphql/printer TestPrinterThroughput (skipped; no census row matches its name)
+=== RUN   TestPrinterThroughput
+    performance_test.go:17: set ADAMIC_GRAPHQL_PRINTER_BENCH=1 to measure verified throughput
+--- SKIP: TestPrinterThroughput (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestRepositoryAgreement (skipped; no census row matches its name)
+=== RUN   TestRepositoryAgreement
+    corpus_test.go:18: set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory
+--- SKIP: TestRepositoryAgreement (0.00s)
+
+== github.com/system-inc/adamic/stage1/cohere/estree TestCorpusNativeRefusals (skipped; no census row matches its name)
+=== RUN   TestCorpusNativeRefusals
+    corpus_test.go:84: completed frozen corpus required
+--- SKIP: TestCorpusNativeRefusals (0.00s)
+
