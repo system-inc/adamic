@@ -31,26 +31,23 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 }
 
 func RuntimeLibraryForSource(directory string, source string, options Options) (string, error) {
+	return runtimeLibrary(directory, options, featureFlags(source))
+}
+
+// featureFlags are the runtime features emitted C turns on with its leading #defines, as -D flags,
+// so every unit compiled with that C (the runtime's own .c files, and a header included before
+// those #defines) sees the same layouts.
+func featureFlags(source string) []string {
 	var flags []string
-	if strings.Contains(source, "#define ADAMIC_CLOSURE_CONVENTION 1\n") {
-		flags = append(flags, "-DADAMIC_CLOSURE_CONVENTION=1")
-	}
-	if strings.Contains(source, "#define ADAMIC_CANONICAL_CLOSURES 1\n") {
-		flags = append(flags, "-DADAMIC_CANONICAL_CLOSURES=1")
-	}
-	if strings.Contains(source, "#define ADAMIC_CLOSURE_RECEIVERS 1\n") {
-		flags = append(flags, "-DADAMIC_CLOSURE_RECEIVERS=1")
-	}
-	if strings.Contains(source, "#define ADAMIC_REGEXP_REPLACE_CALLBACK 1\n") {
-		flags = append(flags, "-DADAMIC_REGEXP_REPLACE_CALLBACK=1")
-	}
-	if strings.Contains(source, "#define ADAMIC_NODE_HOST 1\n") {
-		flags = append(flags, "-DADAMIC_NODE_HOST=1")
+	for _, feature := range []string{"ADAMIC_CLOSURE_CONVENTION", "ADAMIC_CANONICAL_CLOSURES", "ADAMIC_CLOSURE_RECEIVERS", "ADAMIC_REGEXP_REPLACE_CALLBACK", "ADAMIC_NODE_HOST"} {
+		if strings.Contains(source, "#define "+feature+" 1\n") {
+			flags = append(flags, "-D"+feature+"=1")
+		}
 	}
 	if strings.Contains(source, "\n#define ADAMIC_REGEXP_RUNTIME_COMPILER 1\n") {
 		flags = append(flags, "-DADAMIC_REGEXP_RUNTIME_OWNER=1")
 	}
-	return runtimeLibrary(directory, options, flags)
+	return flags
 }
 
 func runtimeLibrary(directory string, options Options, extraFlags []string) (string, error) {
