@@ -13,3 +13,9 @@ let receiverCalls = 0;
 function receiver(): { left: number; right: number } { receiverCalls += 1; console.log('receiver'); return current; }
 function key(): Key { console.log('key'); current = { left: 100, right: 200 }; return 'right'; }
 console.log(`${receiver()[key()]} ${receiverCalls} ${current.right}`);
+
+// A getter elsewhere does not make these required data fields into accessors.
+class Carrier { get yieldType(): number { return 123; } }
+function dispatch(value: { readonly yieldType: number; readonly returnType: number }, key: 'yieldType' | 'returnType'): number { return value[key]; }
+function inheritedGetter(value: { readonly yieldType: number }, key: 'yieldType'): number { return value[key]; }
+console.log(`${dispatch({ yieldType: 1, returnType: 2 }, 'yieldType')} ${dispatch({ yieldType: 1, returnType: 2 }, 'returnType')} ${inheritedGetter(new Carrier(), 'yieldType')}`);
