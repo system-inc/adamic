@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewRanked19OriginalArrays
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:121: gate cache node hit
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node hit
+    checked_views_original_ranked_arrays_test.go:121: gate cache node hit
+--- PASS: TestCheckedViewRanked19OriginalArrays (2.01s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos (1.04s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos (0.96s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.020s

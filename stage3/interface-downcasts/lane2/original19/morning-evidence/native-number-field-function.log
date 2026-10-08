@@ -1,0 +1,12 @@
+=== RUN   TestCheckedViewRanked19OriginalArrays
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos
+    checked_views_original_ranked_arrays_test.go:123: exit codes differ; stderr ""; stdout "4.6687763715727e-310\n"; exit 0
+    checked_views_original_ranked_arrays_test.go:123: exit codes differ; stderr ""; stdout "4.6751619420746e-310\n"; exit 0
+--- FAIL: TestCheckedViewRanked19OriginalArrays (14.80s)
+    --- FAIL: TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos (14.79s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.808s
+FAIL

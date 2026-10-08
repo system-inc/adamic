@@ -1,0 +1,27 @@
+=== RUN   TestCheckedViewRanked19OriginalArrays
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-good
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+=== RUN   TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos
+    checked_views_original_ranked_arrays_test.go:92: gate cache node miss
+    checked_views_original_ranked_arrays_test.go:121: gate cache node miss
+--- PASS: TestCheckedViewRanked19OriginalArrays (18.97s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-good (15.78s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/function-263-wrong-pos (1.04s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-good (1.11s)
+    --- PASS: TestCheckedViewRanked19OriginalArrays/class-264-wrong-pos (1.03s)
+=== RUN   TestCheckedViewRanked19NextFrontier
+    checked_views_ranked19_arrays_test.go:35: gate cache node miss
+    checked_views_ranked19_arrays_test.go:43: /tmp/adamic-gate/TestCheckedViewRanked19NextFrontier3961957041/001/frontier.a:5:16: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- PASS: TestCheckedViewRanked19NextFrontier (0.28s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	19.298s

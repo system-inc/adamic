@@ -2676,3 +2676,15 @@ constructor and complete source descriptor proof while preserving integration's
 physical storage veto and unrelated callable/phantom refusals. Final commands,
 green logs and 12 real mutant-mode kills are recorded in
 [the tuple merge report](../stage3/interface-downcasts/tuples/INTEGRATION-MERGE.md).
+
+## Lane 2 integration recheck at 432d4913
+
+Integration 432d4913 is merged into lane 2 as cd68da47. Independent plan additions
+and disjoint measured-count rows were retained; there was no code conflict.
+All 81 original union-array probes, 36 finishing leak checks, 81 recorded count
+comparisons and four executed descendant-check mutants pass at this merge.
+IncrementalBuildInfo.fileNames still stops at direct untagged-union admission,
+which the plan assigns to lane 4c. Per the lead's stop instruction, ranked work
+pauses on that dependency. No new pair credit: held 171 / 2840; remainder
+163 / 349. Evidence and exact commands are in
+stage3/interface-downcasts/lane2/MORNING_RECHECK_REPORT.md.
