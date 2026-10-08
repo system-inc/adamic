@@ -47,6 +47,8 @@ codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
 # Stage 3
 codex/stage3-	stage3
 codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
+codex/host29-	stage3	step 29, the Node host surface tsc touches; cut from area/stage3
+codex/hidden-	hold	@system_adamic_typescript: step 05, the hidden share; overload fits that touch lowering, so typescript decides where each lands
 codex/views-	hold	@system_adamic_compiler: the views are compiler's area-views, integrated by hand (typescript asked to come off, Oct 8)
 codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
 codex/scout-19-	hold	@system_adamic_library: library's scouts for step 19 (Maps and Sets), cut from area/library
