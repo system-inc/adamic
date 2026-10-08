@@ -308,6 +308,19 @@ func sharedUpstream() *sharedValue {
 	})
 }
 
+// strictAloneTypedCases are the typed upstream cases replayed under strict alone, by rule and source, because
+// upstream ran them without a program. A typed case lands here only when the capture carried no program for
+// it, so a capture that stopped carrying options would move every typed case here, which is #0jkpds7's bug;
+// TestRulesAgree fails on any case here that isn't listed, and on a listed one that's gone.
+var strictAloneTypedCases = map[string]bool{
+	"@typescript-eslint/no-unnecessary-boolean-literal-compare\tdeclare const b: boolean;\nconst z = b === true;": true,
+	"@typescript-eslint/prefer-find\tdeclare const arr: string[];\narr.filter(item => item === 'a')[0];":          true,
+}
+
+// capturedTypedCases is how many typed upstream cases replay under their captured programs. A new typed rule
+// changes it on purpose; a drop means the capture lost programs.
+const capturedTypedCases = 261
+
 // typedReplayConfig is the tsconfig a typed upstream case is replayed under: upstream's own compiler options
 // when the capture carried them, and strict alone for a typed rule's case upstream ran without a program.
 // TestTypedReplayKeepsUpstreamCompilerOptions holds it to the options.
@@ -411,6 +424,7 @@ func TestRulesAgree(t *testing.T) {
 	// program keeps strict alone, and the counts are logged so a capture that stopped carrying options shows.
 	programs := upstreamPrograms(t)
 	captured, assumed, uncounted := 0, 0, 0
+	strictAlone := map[string]bool{}
 	for _, row := range upstream(t) {
 		fields := strings.Split(row, "\t")
 		if len(fields) > 1 && typed[fields[1]] {
@@ -420,6 +434,15 @@ func TestRulesAgree(t *testing.T) {
 				captured++
 			} else {
 				assumed++
+				source, err := os.ReadFile(fields[0])
+				if err != nil {
+					t.Fatal(err)
+				}
+				key := fields[1] + "\t" + string(source)
+				strictAlone[key] = true
+				if !strictAloneTypedCases[key] {
+					t.Errorf("%s %q: a typed case replays under strict alone, so the capture carried no program for it. If upstream really runs it without one, add it to strictAloneTypedCases on purpose", fields[1], source)
+				}
 			}
 			options := typedReplayConfig(program, found, fields[0])
 			if err := os.WriteFile(config, []byte(options), 0644); err != nil {
@@ -444,6 +467,17 @@ func TestRulesAgree(t *testing.T) {
 		}
 	}
 	t.Logf("typed upstream cases: %d under their captured compiler options, %d under strict alone; %d held to upstream's count, %d not, their programs holding other fixture files", captured, assumed, captured-uncounted, uncounted)
+	for key := range strictAloneTypedCases {
+		if !strictAlone[key] {
+			t.Errorf("%q is listed in strictAloneTypedCases and no longer replays under strict alone; remove it", key)
+		}
+	}
+	if captured != capturedTypedCases {
+		t.Errorf("%d typed cases replay under their captured programs, want %d. A new typed rule's cases change this on purpose; fewer means the capture lost programs", captured, capturedTypedCases)
+	}
+	if uncounted != 0 {
+		t.Errorf("%d typed cases come from programs with other fixture files, so they aren't held to upstream's count; the replay lints one file, so decide each one before accepting it", uncounted)
+	}
 	compare(t, oracle, binary, directory, manifest(t, recoveryRows(t, oracle, rows)))
 }
 
