@@ -1,0 +1,1 @@
+function paths(a = 1, {b = 2} = {}) { if (a) {} while (a) { break; } do {} while (a); for (;;) { break; } for (const x in a) {} for (const y of a) {} try {} catch (e) {} return a ? b && a || b ?? a : a?.x?.(); }

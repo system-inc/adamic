@@ -1,0 +1,1 @@
+function /* ( */ commented() { if (a) {} } const o = { "(": function named() { if (a) {} }, [dynamic]: function fallback() { if (a) {} } };

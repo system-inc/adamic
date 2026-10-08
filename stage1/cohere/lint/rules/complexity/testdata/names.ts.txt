@@ -1,0 +1,1 @@
+async function* named() { if (a) {} } class C { static #p() { if (a) {} } async *m() { if (a) {} } get g() { return a || b; } set s(v) { if (v) {} } constructor() { if (a) {} } } const o = { p: function own() { if (a) {} }, q: (a) => a || b, ["key"]() { if (a) {} } };

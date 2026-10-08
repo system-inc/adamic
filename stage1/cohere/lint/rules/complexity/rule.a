@@ -1,0 +1,158 @@
+import type { RuleContext } from '../../context.ts';
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { HelperNode } from '../../helpers/slot02_ast.a';
+import { propertyName, Static } from '../../helpers/property_name.a';
+import { messageComplex } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    readonly nodes: HelperNode[] = [];
+    readonly counts: number[] = [];
+    maximum = 20;
+    modified = false;
+    constructor(context: RuleContext) {
+        this.context = context;
+        const maximum = context.settings.read('maximum', '');
+        const max = context.settings.read('max', '');
+        const option = context.settings.read('option', '');
+        const decoded = context.settings.text.includes('"Maximum"') || context.settings.text.includes('"Variant"');
+        if(decoded && maximum !== '') { this.maximum = Number(maximum); }
+        else if(option !== '') { this.maximum = Number(option); }
+        else if(maximum !== '' && Number(maximum) !== 0) { this.maximum = Number(maximum); }
+        else if(max !== '') { this.maximum = Number(max); }
+        else if(maximum !== '') { this.maximum = 9223372036854775807; }
+        const variant = context.settings.read('variant', 'Classic');
+        this.modified = decoded ? variant === 'Modified' : variant === 'modified';
+    }
+    visit(node: ParseNode, index: number): void {
+        for(const parsed of this.context.parser.nodes) {
+            this.nodes.push({ kind: parsed.kind, text: parsed.text, expression: parsed.children[0] ?? -1, name: -1 });
+        }
+        this.walk(index);
+    }
+    pushFrame(): void { this.counts.push(1); }
+    walk(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'PropertyDeclaration') {
+            const initializer = this.context.initializer(index);
+            if(initializer >= 0) {
+                for(const child of node.children) { if(child !== initializer) { this.walk(child); } }
+                this.pushFrame();
+                this.walk(initializer);
+                this.finish(index);
+                return;
+            }
+        }
+        const pushed = this.context.functionLike(index) || node.kind === 'ClassStaticBlockDeclaration';
+        if(pushed) { this.pushFrame(); }
+        else { this.decision(index); }
+        for(const child of node.children) { this.walk(child); }
+        if(pushed) { this.finish(index); }
+    }
+    decision(index: number): void {
+        if(this.counts.length === 0) { return; }
+        const node = this.context.node(index);
+        let counts = false;
+        switch(node.kind) {
+            case 'CatchClause': case 'ConditionalExpression': case 'ForStatement':
+            case 'ForInStatement': case 'ForOfStatement': case 'IfStatement':
+            case 'WhileStatement': case 'DoStatement': counts = true; break;
+            case 'BinaryExpression': {
+                const operator = this.context.kind(node.children[1] ?? -1);
+                counts = ['AmpersandAmpersandToken', 'BarBarToken', 'QuestionQuestionToken',
+                    'AmpersandAmpersandEqualsToken', 'BarBarEqualsToken', 'QuestionQuestionEqualsToken'].includes(operator);
+                break;
+            }
+            case 'Parameter': case 'BindingElement': counts = this.context.initializer(index) >= 0; break;
+            case 'PropertyAccessExpression': case 'ElementAccessExpression': case 'CallExpression':
+                counts = this.context.questionDot(index); break;
+            case 'CaseClause': counts = !this.modified; break;
+            case 'SwitchStatement': counts = this.modified; break;
+        }
+        if(counts) { const last = this.counts.length - 1; this.counts[last] = (this.counts[last] ?? 0) + 1; }
+    }
+    owner(index: number): number {
+        const kind = this.context.kind(index);
+        if(kind !== 'ArrowFunction' && kind !== 'FunctionExpression') { return -1; }
+        const parent = this.context.parent(index);
+        const parentKind = this.context.kind(parent);
+        if(parentKind === 'PropertyAssignment') {
+            const children = this.context.node(parent).children;
+            if(children[children.length - 1] === index) { return parent; }
+        }
+        if(parentKind === 'PropertyDeclaration' && this.context.initializer(parent) === index) { return parent; }
+        return -1;
+    }
+    readableName(index: number): string {
+        const owner = this.owner(index);
+        if(owner >= 0) {
+            const key = this.context.name(owner);
+            const value = propertyName(this.nodes, key, Static);
+            if(value.named) { return value.name; }
+        }
+        const key = this.context.name(index);
+        const value = propertyName(this.nodes, key, Static);
+        if(value.named) { return value.name; }
+        return '';
+    }
+    name(index: number): string {
+        const kind = this.context.kind(index);
+        if(kind === 'ClassStaticBlockDeclaration') { return 'Class static block'; }
+        if(kind === 'PropertyDeclaration') { return 'Class field initializer'; }
+        if(kind === 'Constructor') { return 'Constructor'; }
+        const tokens: string[] = [];
+        if(this.context.has(index, 'StaticKeyword')) { tokens.push('static'); }
+        const key = this.context.name(index);
+        const privateName = this.context.kind(key) === 'PrivateIdentifier';
+        if(privateName) { tokens.push('private'); }
+        if(this.context.has(index, 'AsyncKeyword')) { tokens.push('async'); }
+        if(['FunctionDeclaration', 'FunctionExpression', 'MethodDeclaration'].includes(kind) && this.context.has(index, 'AsteriskToken')) { tokens.push('generator'); }
+        if(this.owner(index) >= 0) { tokens.push('method'); }
+        else if(kind === 'GetAccessor') { tokens.push('getter'); }
+        else if(kind === 'SetAccessor') { tokens.push('setter'); }
+        else if(kind === 'MethodDeclaration') { tokens.push('method'); }
+        else if(kind === 'ArrowFunction') { tokens.push('arrow'); tokens.push('function'); }
+        else { tokens.push('function'); }
+        if(privateName) { tokens.push(this.context.node(key).text); }
+        else { const name = this.readableName(index); if(name !== '') { tokens.push(`'${name}'`); } }
+        const result = tokens.join(' ');
+        return result.slice(0, 1).toUpperCase() + result.slice(1);
+    }
+    finish(index: number): void {
+        const count = this.counts.pop() ?? 0;
+        if(count <= this.maximum) { return; }
+        const node = this.context.node(index);
+        let start = this.context.start(index);
+        let end = node.end;
+        const owner = this.owner(index);
+        if(node.kind === 'PropertyDeclaration') {
+            const initializer = this.context.initializer(index);
+            if(initializer >= 0) { start = this.context.start(initializer); end = this.context.node(initializer).end; }
+        } else if(node.kind === 'ClassStaticBlockDeclaration') {
+            this.context.scanAt(node.pos); end = this.context.scanEnd();
+        } else if(node.kind === 'ArrowFunction' && owner < 0) {
+            for(const child of node.children) {
+                if(this.context.kind(child) === 'EqualsGreaterThanToken') { start = this.context.start(child); end = this.context.node(child).end; }
+            }
+        } else {
+            if(owner >= 0) { start = this.context.start(owner); }
+            let limit = node.end;
+            const last = node.children[node.children.length - 1] ?? -1;
+            if(last >= 0 && this.context.kind(last) === 'Block') { limit = this.context.node(last).pos; }
+            if(node.kind === 'ArrowFunction' && last >= 0) { limit = this.context.node(last).pos; }
+            let depth = 0;
+            let opening = -1;
+            // Go scans raw source, including comments and quoted keys. Preserve that behavior.
+            for(let position = node.pos; position < limit; position++) {
+                const character = this.context.source.slice(position, position + 1);
+                if(character === '<') { depth++; }
+                else if(character === '>' && depth > 0) { depth--; }
+                else if(character === '(' && depth === 0) { opening = position; break; }
+            }
+            if(opening > start) { end = opening; }
+            else { start = this.context.start(index); }
+        }
+        this.context.reportRange(start, end, 'complexity', 'complex', `${this.name(index)} has a complexity of ${count}. Maximum allowed is ${this.maximum}. ${messageComplex}`);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

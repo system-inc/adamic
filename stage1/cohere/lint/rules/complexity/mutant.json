@@ -1,0 +1,5 @@
+{
+  "name": "complexity-zero-entry-paths",
+  "from": "this.counts.push(1);",
+  "to": "this.counts.push(0);"
+}

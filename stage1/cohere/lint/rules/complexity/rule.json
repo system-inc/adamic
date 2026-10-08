@@ -1,0 +1,11 @@
+{
+  "name": "complexity",
+  "kinds": ["SourceFile"],
+  "node": true,
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleComplexity",
+  "upstreamPackage": "core",
+  "upstreamTest": "TestComplexity"
+}
