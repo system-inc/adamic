@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly readFile:unknown;}
+interface Target {readFile(fileName: string): string | undefined;}
+function probe(value:Base):void {const sys=value as Target;console.log(`${sys.readFile("ok")}`);}
+probe({readFile:(fileName: string):string=>("ok")});

@@ -1,0 +1,16 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+type PathLike=string; interface WatchFileOptions {readonly value:number;} interface StatWatcher {readonly value:number;} type StatsListener=()=>void; type BigIntStatsListener=()=>void;
+interface Base {readonly watchFile:unknown;}
+interface Target {watchFile:{(filename: PathLike, options:
+            | (WatchFileOptions & {
+                bigint?: false | undefined;
+            })
+            | undefined, listener: StatsListener): StatWatcher;
+(filename: PathLike, options:
+            | (WatchFileOptions & {
+                bigint: true;
+            })
+            | undefined, listener: BigIntStatsListener): StatWatcher;
+(filename: PathLike, listener: StatsListener): StatWatcher;};}
+function probe(value:Base):void {const _fs=value as Target;_fs.watchFile("ok",undefined,():void=>{});console.log("done");}
+probe({watchFile:(filename:PathLike):StatWatcher=>({value:7})});

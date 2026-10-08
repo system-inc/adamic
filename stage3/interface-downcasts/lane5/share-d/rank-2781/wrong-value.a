@@ -1,0 +1,14 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface CompilerOptions {allowSyntheticDefaultImports?:boolean;}
+type CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;
+type OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={
+        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {
+            dependencies: T[K];
+            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;
+        };
+    };
+interface Base {readonly computeValue:unknown;}
+type Target=OriginalOptions<{allowSyntheticDefaultImports:[]}>["allowSyntheticDefaultImports"];
+function probe(value:Base):void {const _computedOptions={allowSyntheticDefaultImports:value as Target};console.log(`${_computedOptions.allowSyntheticDefaultImports.computeValue({})}`);}
+probe({computeValue:7});

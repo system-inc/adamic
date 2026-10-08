@@ -1,0 +1,497 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "baseShareA": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+  "basis": "original declarations and reads; adjacent carriers and producer bodies reduced; candidate reads, not original application executions",
+  "members": [
+    {
+      "receiver_type_id": 67899,
+      "type": "{ syntacticBuilderResolver: SyntacticTypeNodeBuilderResolver; typeToTypeNode: (type: Type, enclosingDeclaration?: Node | undefined, flags?: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderFlags | undefined, tracker?: SymbolTracker | undefined, maximumLength?: number | undefined, verbosityLevel?: num...",
+      "field": "symbolToTypeParameterDeclarations",
+      "declared_types": [
+        "(symbol: Symbol, enclosingDeclaration?: Node | undefined, flags?: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderFlags | undefined, tracker?: SymbolTracker | undefined) => NodeArray<...> | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 1687,
+        "column": 44
+      },
+      "rank": 2814,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2814",
+      "read": "nodeBuilder.symbolToTypeParameterDeclarations",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 55263,
+      "utf16End": 55308,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/checker.ts",
+          "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "start": 339990,
+          "end": 340326,
+          "text": "(symbol: Symbol, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => withContext(enclosingDeclaration, flags, internalFlags, tracker, /*maximumLength*/ undefined, /*verbosityLevel*/ undefined, context => typeParametersToTypeParameterDeclarations(symbol, context))"
+        }
+      ],
+      "originalSignature": "(symbol: Symbol, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => NodeArray<TypeParameterDeclaration> | undefined",
+      "targetDeclaration": "interface Target {symbolToTypeParameterDeclarations:(symbol: Symbol, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => NodeArray<TypeParameterDeclaration> | undefined;}",
+      "carriers": "\ninterface Symbol {readonly value:number;}\ninterface Node {readonly value:number;}\ntype NodeBuilderFlags=number;\ntype InternalNodeBuilderFlags=number;\ninterface SymbolTracker {readonly value:number;}\ntype NodeArray<T>=readonly T[];\ninterface TypeParameterDeclaration {readonly value:number;}",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "(symbol: Symbol, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => NodeArray<TypeParameterDeclaration> | undefined",
+      "expected": "(symbol: Symbol, enclosingDeclaration?: Node | undefined, flags?: number | undefined, internalFlags?: number | undefined, tracker?: SymbolTracker | undefined) => NodeArray<...> | undefined",
+      "arity": 5,
+      "mutantArity": 0,
+      "stdout": "1\n"
+    },
+    {
+      "receiver_type_id": 67899,
+      "type": "{ syntacticBuilderResolver: SyntacticTypeNodeBuilderResolver; typeToTypeNode: (type: Type, enclosingDeclaration?: Node | undefined, flags?: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderFlags | undefined, tracker?: SymbolTracker | undefined, maximumLength?: number | undefined, verbosityLevel?: num...",
+      "field": "serializeTypeForExpression",
+      "declared_types": [
+        "(expr: Expression, enclosingDeclaration?: Node | undefined, flags?: NodeBuilderFlags | undefined, internalFlags?: InternalNodeBuilderFlags | undefined, tracker?: SymbolTracker | undefined) => TypeNode | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 51218,
+        "column": 16
+      },
+      "rank": 2811,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2811",
+      "read": "nodeBuilder.serializeTypeForExpression",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 2975544,
+      "utf16End": 2975582,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/checker.ts",
+          "sha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/checker.ts",
+          "start": 337914,
+          "end": 338255,
+          "text": "(expr: Expression, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => withContext(enclosingDeclaration, flags, internalFlags, tracker, /*maximumLength*/ undefined, /*verbosityLevel*/ undefined, context => syntacticNodeBuilder.serializeTypeOfExpression(expr, context))"
+        }
+      ],
+      "originalSignature": "(expr: Expression, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => TypeNode | undefined",
+      "targetDeclaration": "interface Target {serializeTypeForExpression:(expr: Expression, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => TypeNode | undefined;}",
+      "carriers": "\ninterface Expression {readonly value:number;}\ninterface Node {readonly value:number;}\ntype NodeBuilderFlags=number;\ntype InternalNodeBuilderFlags=number;\ninterface SymbolTracker {readonly value:number;}\ninterface TypeNode {readonly value:number;}",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "(expr: Expression, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => TypeNode | undefined",
+      "expected": "(expr: Expression, enclosingDeclaration?: Node | undefined, flags?: number | undefined, internalFlags?: number | undefined, tracker?: SymbolTracker | undefined) => TypeNode | undefined",
+      "arity": 5,
+      "mutantArity": 0,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 34423,
+      "type": "{ getExecutingFilePath(): string; resolvePath(path: string): string; fileExists(fileName: string): boolean; readFile(fileName: string): string | undefined; }",
+      "field": "readFile",
+      "declared_types": [
+        "(fileName: string) => string | undefined"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilitiesPublic.ts",
+        "line": 739,
+        "column": 28
+      },
+      "rank": 2790,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2790",
+      "read": "sys.readFile",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 27816,
+      "utf16End": 27828,
+      "fileSha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "sha256": "4b5b5726bc08d7d4f08645ee66b7322c6d2019fa239e7158e2f642ae2bd964e2"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilitiesPublic.ts",
+          "start": 26035,
+          "end": 26082,
+          "text": "readFile(fileName: string): string | undefined;"
+        }
+      ],
+      "originalSignature": "(fileName: string) => string | undefined",
+      "targetDeclaration": "interface Target {readFile(fileName: string): string | undefined;}",
+      "carriers": "",
+      "mode": "unchanged original method member",
+      "stockExpected": "(fileName: string) => string | undefined",
+      "expected": "(fileName: string) => string | undefined",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "ok\n"
+    },
+    {
+      "receiver_type_id": 44759,
+      "type": "{ dependencies: never[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean; }",
+      "field": "computeValue",
+      "declared_types": [
+        "(compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9303,
+        "column": 95
+      },
+      "rank": 2781,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2781",
+      "read": "_computedOptions.allowSyntheticDefaultImports.computeValue",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 365724,
+      "utf16End": 365782,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "start": 354355,
+          "end": 354455,
+          "text": "(compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>"
+        }
+      ],
+      "originalSignature": "(compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean",
+      "targetDeclaration": "type Target=OriginalOptions<{allowSyntheticDefaultImports:[]}>[\"allowSyntheticDefaultImports\"];",
+      "carriers": "\ninterface CompilerOptions {allowSyntheticDefaultImports?:boolean;}\ntype CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;\ntype OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={\r\n        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {\r\n            dependencies: T[K];\r\n            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;\r\n        };\r\n    };",
+      "mode": "original mapped member and instantiated receiver",
+      "stockExpected": "(compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 44762,
+      "type": "{ dependencies: (\"target\" | \"module\" | \"moduleResolution\")[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"target\" | \"module\" | \"moduleResolution\" | \"resolvePackageJsonExports\">) => boolean; }",
+      "field": "computeValue",
+      "declared_types": [
+        "(compilerOptions: Pick<CompilerOptions, \"target\" | \"module\" | \"moduleResolution\" | \"resolvePackageJsonExports\">) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9305,
+        "column": 92
+      },
+      "rank": 2778,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2778",
+      "read": "_computedOptions.resolvePackageJsonExports.computeValue",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 365894,
+      "utf16End": 365949,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "start": 354355,
+          "end": 354455,
+          "text": "(compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>"
+        }
+      ],
+      "originalSignature": "(compilerOptions: Pick<CompilerOptions, \"module\" | \"moduleResolution\" | \"resolvePackageJsonExports\" | \"target\">) => boolean",
+      "targetDeclaration": "type Target=OriginalOptions<{resolvePackageJsonExports:[\"target\",\"module\",\"moduleResolution\"]}>[\"resolvePackageJsonExports\"];",
+      "carriers": "\ninterface CompilerOptions {resolvePackageJsonExports?:boolean;target?:boolean;module?:boolean;moduleResolution?:boolean;}\ntype CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;\ntype OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={\r\n        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {\r\n            dependencies: T[K];\r\n            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;\r\n        };\r\n    };",
+      "mode": "original mapped member and instantiated receiver",
+      "stockExpected": "(compilerOptions: Pick<CompilerOptions, \"resolvePackageJsonExports\" | \"target\" | \"module\" | \"moduleResolution\">) => boolean",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"module\" | \"moduleResolution\" | \"resolvePackageJsonExports\" | \"target\">) => boolean",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 44774,
+      "type": "{ dependencies: (\"isolatedModules\" | \"verbatimModuleSyntax\")[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"isolatedModules\" | \"preserveConstEnums\" | \"verbatimModuleSyntax\">) => boolean; }",
+      "field": "computeValue",
+      "declared_types": [
+        "(compilerOptions: Pick<CompilerOptions, \"isolatedModules\" | \"preserveConstEnums\" | \"verbatimModuleSyntax\">) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9313,
+        "column": 88
+      },
+      "rank": 2775,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2775",
+      "read": "_computedOptions.preserveConstEnums.computeValue",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 366519,
+      "utf16End": 366567,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "start": 354355,
+          "end": 354455,
+          "text": "(compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>"
+        }
+      ],
+      "originalSignature": "(compilerOptions: Pick<CompilerOptions, \"isolatedModules\" | \"preserveConstEnums\" | \"verbatimModuleSyntax\">) => boolean",
+      "targetDeclaration": "type Target=OriginalOptions<{preserveConstEnums:[\"isolatedModules\",\"verbatimModuleSyntax\"]}>[\"preserveConstEnums\"];",
+      "carriers": "\ninterface CompilerOptions {preserveConstEnums?:boolean;isolatedModules?:boolean;verbatimModuleSyntax?:boolean;}\ntype CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;\ntype OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={\r\n        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {\r\n            dependencies: T[K];\r\n            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;\r\n        };\r\n    };",
+      "mode": "original mapped member and instantiated receiver",
+      "stockExpected": "(compilerOptions: Pick<CompilerOptions, \"preserveConstEnums\" | \"isolatedModules\" | \"verbatimModuleSyntax\">) => boolean",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"isolatedModules\" | \"preserveConstEnums\" | \"verbatimModuleSyntax\">) => boolean",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 44777,
+      "type": "{ dependencies: \"composite\"[]; computeValue: (compilerOptions: Pick<CompilerOptions, \"composite\" | \"incremental\">) => boolean; }",
+      "field": "computeValue",
+      "declared_types": [
+        "(compilerOptions: Pick<CompilerOptions, \"composite\" | \"incremental\">) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 9315,
+        "column": 88
+      },
+      "rank": 2772,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2772",
+      "read": "_computedOptions.incremental.computeValue",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 366675,
+      "utf16End": 366716,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "start": 354355,
+          "end": 354455,
+          "text": "(compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>"
+        }
+      ],
+      "originalSignature": "(compilerOptions: Pick<CompilerOptions, \"composite\" | \"incremental\">) => boolean",
+      "targetDeclaration": "type Target=OriginalOptions<{incremental:[\"composite\"]}>[\"incremental\"];",
+      "carriers": "\ninterface CompilerOptions {incremental?:boolean;composite?:boolean;}\ntype CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;\ntype OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={\r\n        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {\r\n            dependencies: T[K];\r\n            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;\r\n        };\r\n    };",
+      "mode": "original mapped member and instantiated receiver",
+      "stockExpected": "(compilerOptions: Pick<CompilerOptions, \"incremental\" | \"composite\">) => boolean",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"composite\" | \"incremental\">) => boolean",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 102774,
+      "type": "{ bold: (str: string) => string; blue: (str: string) => string; blueBackground: (str: string) => string; brightWhite: (str: string) => string; }",
+      "field": "brightWhite",
+      "declared_types": [
+        "(str: string) => string"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 538,
+        "column": 52
+      },
+      "rank": 2769,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2769",
+      "read": "colors.brightWhite",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 22123,
+      "utf16End": 22141,
+      "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "sha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/executeCommandLine.ts",
+          "start": 5425,
+          "end": 5445,
+          "text": "(str: string) => str"
+        }
+      ],
+      "originalSignature": "(str: string) => string",
+      "targetDeclaration": "interface Target {brightWhite:(str: string) => string;}",
+      "carriers": "",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "(str: string) => string",
+      "expected": "(str: string) => string",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "ok\n"
+    },
+    {
+      "receiver_type_id": 8234,
+      "type": "typeof tracingEnabled | undefined",
+      "field": "stopTracing",
+      "declared_types": [
+        "() => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/executeCommandLine.ts",
+        "line": 1164,
+        "column": 9
+      },
+      "rank": 2766,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2766",
+      "read": "tracing?.stopTracing",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 47475,
+      "utf16End": 47495,
+      "fileSha256": "1bb233b3cac80fcf8572358b07e59988e59d6fb40445c16728a4a7c7ece43cbf",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/tracing.ts",
+          "sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/tracing.ts",
+          "start": 3541,
+          "end": 4165,
+          "text": "export function stopTracing(): void {\r\n        Debug.assert(tracing, \"Tracing is not in progress\");\r\n        Debug.assert(!!typeCatalog.length === (mode !== \"server\")); // Have a type catalog iff not in server mode\r\n\r\n        fs.writeSync(traceFd, `\\n]\\n`);\r\n        fs.closeSync(traceFd);\r\n        tracing = undefined;\r\n\r\n        if (typeCatalog.length) {\r\n            dumpTypes(typeCatalog);\r\n        }\r\n        else {\r\n            // We pre-computed this path for convenience, but clear it\r\n            // now that the file won't be created.\r\n            legend[legend.length - 1].typesPath = undefined;\r\n        }\r\n    }"
+        }
+      ],
+      "originalSignature": "(() => void) | undefined",
+      "targetDeclaration": "interface Target {stopTracing:()=>void;}",
+      "carriers": "",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "() => void",
+      "expected": "() => void",
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 8233,
+      "type": "typeof tracingEnabled",
+      "field": "instant",
+      "declared_types": [
+        "(phase: Phase, name: string, args?: Args | undefined) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 22958,
+        "column": 21
+      },
+      "rank": 2763,
+      "certified": true,
+      "status": "pending",
+      "directory": "rank-2763",
+      "read": "tracing.instant",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 1350111,
+      "utf16End": 1350126,
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/tracing.ts",
+          "sha256": "c47b9a7aa59c84205a27249628c671cba4f4f7e60efda89ddaf48d4aedee6f7a"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/tracing.ts",
+          "start": 4612,
+          "end": 4747,
+          "text": "export function instant(phase: Phase, name: string, args?: Args): void {\r\n        writeEvent(\"I\", phase, name, args, `\"s\":\"g\"`);\r\n    }"
+        }
+      ],
+      "originalSignature": "(phase: import(\"./tracing.js\").tracingEnabled.Phase, name: string, args?: Args) => void",
+      "targetDeclaration": "interface Target {instant:(phase: Phase,name: string,args?: Args)=>void;}",
+      "carriers": "type Phase=number; interface Args {readonly value:number;}",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "(phase: Phase, name: string, args?: Args) => void",
+      "expected": "(phase: number, name: string, args?: Args | undefined) => void",
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    }
+  ]
+}

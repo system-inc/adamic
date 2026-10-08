@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly directoryExists:unknown;}
+interface Target {directoryExists:(path: string) => boolean;}
+function probe(value:Base):void {const {directoryExists}=value as Target;console.log(`${directoryExists("ok")}`);}
+probe({directoryExists:(path:string):boolean=>(true)});

@@ -1,0 +1,14 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface CompilerOptions {preserveConstEnums?:boolean;isolatedModules?:boolean;verbatimModuleSyntax?:boolean;}
+type CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;
+type OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={
+        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {
+            dependencies: T[K];
+            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;
+        };
+    };
+interface Base {readonly computeValue:unknown;}
+type Target=OriginalOptions<{preserveConstEnums:["isolatedModules","verbatimModuleSyntax"]}>["preserveConstEnums"];
+function probe(value:Base):void {const _computedOptions={preserveConstEnums:value as Target};console.log(`${_computedOptions.preserveConstEnums.computeValue({})}`);}
+probe({computeValue:7});

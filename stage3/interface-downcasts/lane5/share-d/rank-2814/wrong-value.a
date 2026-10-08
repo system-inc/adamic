@@ -1,0 +1,13 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Symbol {readonly value:number;}
+interface Node {readonly value:number;}
+type NodeBuilderFlags=number;
+type InternalNodeBuilderFlags=number;
+interface SymbolTracker {readonly value:number;}
+type NodeArray<T>=readonly T[];
+interface TypeParameterDeclaration {readonly value:number;}
+interface Base {readonly symbolToTypeParameterDeclarations:unknown;}
+interface Target {symbolToTypeParameterDeclarations:(symbol: Symbol, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => NodeArray<TypeParameterDeclaration> | undefined;}
+function probe(value:Base):void {const nodeBuilder=value as Target;const result=nodeBuilder.symbolToTypeParameterDeclarations({value:3});console.log(`${result===undefined?"missing":result.length}`);}
+probe({symbolToTypeParameterDeclarations:7});

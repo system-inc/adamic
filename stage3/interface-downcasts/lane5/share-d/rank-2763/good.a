@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+type Phase=number; interface Args {readonly value:number;}
+interface Base {readonly instant:unknown;}
+interface Target {instant:(phase: Phase,name: string,args?: Args)=>void;}
+function probe(value:Base):void {const tracing=value as Target;tracing.instant(0,"ok");console.log("done");}
+probe({instant:(phase: Phase,name: string,args?: Args):void=>{}});

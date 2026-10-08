@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly finalizeBoundary:unknown;}
+interface Target {finalizeBoundary(): boolean;}
+function probe(value:Base):void {const {finalizeBoundary}=value as Target;console.log(`${finalizeBoundary()}`);}
+probe({finalizeBoundary:():boolean=>(true)});

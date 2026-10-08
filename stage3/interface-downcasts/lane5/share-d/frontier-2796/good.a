@@ -1,0 +1,7 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+type AnyFunction=(...args: never[]) => void;
+interface Base {readonly assertion:unknown;}
+interface Target {assertion:AnyFunction;}
+function probe(value:Base):void {const cachedFunc=value as Target;cachedFunc.assertion();console.log("done");}
+probe({assertion:(...args: never[]):void=>{}});

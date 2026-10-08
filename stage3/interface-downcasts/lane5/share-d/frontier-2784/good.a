@@ -1,0 +1,8 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+type ModuleSpecifierEnding=number; type Item={ending:ModuleSpecifierEnding|undefined;value:string;};
+interface T {readonly value:number;}
+interface Base {readonly push:unknown;}
+interface Carrier<T> {push(...items: T[]): number;}
+type Target=Carrier<Item>;
+function probe(value:Base):void {const candidates=value as Target;candidates.push();console.log("done");}
+probe([]);

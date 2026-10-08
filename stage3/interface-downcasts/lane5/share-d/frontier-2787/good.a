@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly getCurrentDirectory:unknown;}
+interface Target {getCurrentDirectory?(): string;}
+function probe(value:Base):void {const host=value as Target;console.log(`${host.getCurrentDirectory?.()}`);}
+probe({getCurrentDirectory:():string=>("ok")});

@@ -1,0 +1,7 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+type FileWatcherEventKind=number; type PollingInterval=number; interface WatchOptions {readonly value:number;} interface FileWatcher {close():void;} type FileWatcherCallback=(fileName:string,eventKind:FileWatcherEventKind,modifiedTime?:Date)=>void;
+type HostWatchFile=(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher;
+interface Base {readonly watchFile:unknown;}
+interface Target {watchFile:HostWatchFile;}
+function probe(value:Base):void {const {watchFile}=value as Target;watchFile("ok",(name:string,eventKind:FileWatcherEventKind):void=>{},250,undefined);console.log("done");}
+probe({watchFile:(fileName: string,callback: FileWatcherCallback,pollingInterval: PollingInterval,options: WatchOptions | undefined):FileWatcher=>({close:():void=>{}})});

@@ -1,0 +1,12 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Expression {readonly value:number;}
+interface Node {readonly value:number;}
+type NodeBuilderFlags=number;
+type InternalNodeBuilderFlags=number;
+interface SymbolTracker {readonly value:number;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly serializeTypeForExpression:unknown;}
+interface Target {serializeTypeForExpression:(expr: Expression, enclosingDeclaration?: Node, flags?: NodeBuilderFlags, internalFlags?: InternalNodeBuilderFlags, tracker?: SymbolTracker) => TypeNode | undefined;}
+function probe(value:Base):void {const nodeBuilder=value as Target;const result=nodeBuilder.serializeTypeForExpression({value:3});console.log(`${result===undefined?"missing":result.value}`);}
+probe({serializeTypeForExpression:():TypeNode=>({value:7})});

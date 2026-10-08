@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly startRecoveryScope:unknown;}
+interface Target {startRecoveryScope(): () => void;}
+function probe(value:Base):void {const {startRecoveryScope}=value as Target;startRecoveryScope()();}
+probe({startRecoveryScope:():()=>void=>(():void=>{console.log("done");})});

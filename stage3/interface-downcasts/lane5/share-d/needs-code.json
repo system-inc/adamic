@@ -1,0 +1,543 @@
+{
+  "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "baseShareA": "18d1c9da9e1889fa3f042cb6997a6734b404ccf2",
+  "basis": "original declarations and reads; adjacent carriers and producer bodies reduced; candidate reads, not original application executions",
+  "members": [
+    {
+      "receiver_type_id": 13992,
+      "type": "{ watchFile: HostWatchFile; watchDirectory: HostWatchDirectory; }",
+      "field": "watchFile",
+      "declared_types": [
+        "HostWatchFile"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1502,
+        "column": 17
+      },
+      "rank": 2817,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2817",
+      "read": "watchFile",
+      "readKind": "BindingElement",
+      "utf16Start": 66466,
+      "utf16End": 66475,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/sys.ts",
+          "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "start": 2471,
+          "end": 2604,
+          "text": "(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher"
+        }
+      ],
+      "originalSignature": "HostWatchFile",
+      "targetDeclaration": "interface Target {watchFile:HostWatchFile;}",
+      "carriers": "type FileWatcherEventKind=number; type PollingInterval=number; interface WatchOptions {readonly value:number;} interface FileWatcher {close():void;} type FileWatcherCallback=(fileName:string,eventKind:FileWatcherEventKind,modifiedTime?:Date)=>void;\ntype HostWatchFile=(fileName: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined) => FileWatcher;",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "HostWatchFile",
+      "expected": "HostWatchFile",
+      "stop": "Adamic 0.1 refuses checked view read of field watchFile with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "stopPosition": "6:41",
+      "neededChange": "Demand-time callable representation conversion for an original destructured HostWatchFile binding, preserving higher-order parameter and result contracts.",
+      "arity": 4,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 13388,
+      "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+      "field": "startRecoveryScope",
+      "declared_types": [
+        "() => () => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "line": 199,
+        "column": 35
+      },
+      "rank": 2808,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2808",
+      "read": "startRecoveryScope",
+      "readKind": "BindingElement",
+      "utf16Start": 6085,
+      "utf16End": 6103,
+      "fileSha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/types.ts",
+          "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "start": 486772,
+          "end": 486805,
+          "text": "startRecoveryScope(): () => void;"
+        }
+      ],
+      "originalSignature": "() => () => void",
+      "targetDeclaration": "interface Target {startRecoveryScope(): () => void;}",
+      "carriers": "",
+      "mode": "unchanged original method member",
+      "stockExpected": "() => () => void",
+      "expected": "() => () => void",
+      "stop": "Adamic 0.1 refuses checked view read of field startRecoveryScope with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "stopPosition": "5:41",
+      "neededChange": "Demand-time callable representation conversion for destructuring a method whose result is another callable.",
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 13388,
+      "type": "{ startRecoveryScope(): () => void; finalizeBoundary(): boolean; markError(): void; hadError(): boolean; }",
+      "field": "finalizeBoundary",
+      "declared_types": [
+        "() => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/expressionToTypeNode.ts",
+        "line": 199,
+        "column": 17
+      },
+      "rank": 2805,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2805",
+      "read": "finalizeBoundary",
+      "readKind": "BindingElement",
+      "utf16Start": 6067,
+      "utf16End": 6083,
+      "fileSha256": "43c6b56dfabaf84c3591fc363763aecbd5b4adfa420879b283aeebca2d405462",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/types.ts",
+          "sha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/types.ts",
+          "start": 486815,
+          "end": 486843,
+          "text": "finalizeBoundary(): boolean;"
+        }
+      ],
+      "originalSignature": "() => boolean",
+      "targetDeclaration": "interface Target {finalizeBoundary(): boolean;}",
+      "carriers": "",
+      "mode": "unchanged original method member",
+      "stockExpected": "() => boolean",
+      "expected": "() => boolean",
+      "stop": "Adamic 0.1 refuses checked view read of field finalizeBoundary with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "stopPosition": "5:41",
+      "neededChange": "Demand-time callable representation conversion for the original destructured boolean-returning method.",
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 83855,
+      "type": "{ pendingExpressions?: Expression[] | undefined; name: BindingName; value: Expression; location?: TextRange | undefined; original?: Node | undefined; }[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: { pendingExpressions?: Expression[] | undefined; name: BindingName; value: Expression; location?: TextRange | undefined; original?: Node | undefined; }[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/transformers/destructuring.ts",
+        "line": 324,
+        "column": 9
+      },
+      "rank": 2802,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2802",
+      "read": "pendingDeclarations.push",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 13964,
+      "utf16End": 13988,
+      "fileSha256": "d38490b41ddbc56be090ddebcec8de5cd11ec88104cc4b859a19cdf132e7c640",
+      "declarationFiles": [
+        {
+          "file": "api:typescript/lib/lib.es5.d.ts",
+          "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "api:typescript/lib/lib.es5.d.ts",
+          "start": 58429,
+          "end": 58457,
+          "text": "push(...items: T[]): number;"
+        }
+      ],
+      "originalSignature": "(...items: { pendingExpressions?: Expression[]; name: BindingName; value: Expression; location?: TextRange; original?: Node; }[]) => number",
+      "targetDeclaration": "interface Carrier<T> {push(...items: T[]): number;}\ntype Target=Carrier<Item>;",
+      "carriers": "interface Expression {readonly value:number;} interface BindingName {readonly value:number;} interface TextRange {readonly value:number;} type Item={pendingExpressions?:Expression[];name:BindingName;value:Expression;location?:TextRange;original?:Node;}; interface Node {readonly value:number;}\ninterface T {readonly value:number;}",
+      "mode": "original lib member and real array receiver",
+      "stockExpected": "(...items: Item[]) => number",
+      "expected": "(...items: Item[]) => number",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "stopPosition": "7:76",
+      "neededChange": "Rest callable descriptor and real Array receiver transport for the original push signature; preserve its original object item fields.",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 95259,
+      "type": "{ onProgramCreateComplete: (_?: unknown) => void; fileExists: (file: string) => boolean; directoryExists?: undefined; } | { onProgramCreateComplete: () => void; fileExists: (file: string) => boolean; directoryExists: ((path: string) => boolean) | undefined; }",
+      "field": "directoryExists",
+      "declared_types": [
+        "((path: string) => boolean) | undefined"
+      ],
+      "families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1725,
+        "column": 50
+      },
+      "rank": 2799,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2799",
+      "read": "directoryExists",
+      "readKind": "BindingElement",
+      "utf16Start": 80656,
+      "utf16End": 80671,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/program.ts",
+          "sha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/program.ts",
+          "start": 256700,
+          "end": 257945,
+          "text": "path => {\r\n            if (originalDirectoryExists.call(host.compilerHost, path)) {\r\n                handleDirectoryCouldBeSymlink(path);\r\n                return true;\r\n            }\r\n\r\n            if (!host.getResolvedProjectReferences()) return false;\r\n\r\n            if (!setOfDeclarationDirectories) {\r\n                setOfDeclarationDirectories = new Set();\r\n                host.forEachResolvedProjectReference(ref => {\r\n                    const out = ref.commandLine.options.outFile;\r\n                    if (out) {\r\n                        setOfDeclarationDirectories!.add(getDirectoryPath(host.toPath(out)));\r\n                    }\r\n                    else {\r\n                        // Set declaration's in different locations only, if they are next to source the directory present doesnt change\r\n                        const declarationDir = ref.commandLine.options.declarationDir || ref.commandLine.options.outDir;\r\n                        if (declarationDir) {\r\n                            setOfDeclarationDirectories!.add(host.toPath(declarationDir));\r\n                        }\r\n                    }\r\n                });\r\n            }\r\n\r\n            return fileOrDirectoryExistsUsingSource(path, /*isFile*/ false);\r\n        }"
+        }
+      ],
+      "originalSignature": "((path: string) => boolean) | undefined",
+      "targetDeclaration": "interface Target {directoryExists:(path: string) => boolean;}",
+      "carriers": "",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "(path: string) => boolean",
+      "expected": "(path: string) => boolean",
+      "stop": "Adamic 0.1 refuses checked view read of field directoryExists with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "stopPosition": "5:41",
+      "neededChange": "Demand-time callable representation conversion for the original destructured optional directoryExists result.",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n"
+    },
+    {
+      "receiver_type_id": 6078,
+      "type": "{ level: AssertionLevel; assertion: AnyFunction; }",
+      "field": "assertion",
+      "declared_types": [
+        "AnyFunction"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/debug.ts",
+        "line": 169,
+        "column": 64
+      },
+      "rank": 2796,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2796",
+      "read": "cachedFunc.assertion",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 4295,
+      "utf16End": 4315,
+      "fileSha256": "38dfd2cdfd58fb8a03a6c815444aa8d6876c69f7e37d96702ece4e3da836bc8b",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/core.ts",
+          "sha256": "c35b2cfa5216d4979aff3f963071c979d0b57d2242649df3dc6cb7c9f4a10b1b"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/core.ts",
+          "start": 67703,
+          "end": 67729,
+          "text": "(...args: never[]) => void"
+        }
+      ],
+      "originalSignature": "ts.AnyFunction",
+      "targetDeclaration": "interface Target {assertion:AnyFunction;}",
+      "carriers": "\ntype AnyFunction=(...args: never[]) => void;",
+      "mode": "original function signature reified as a field",
+      "stockExpected": "AnyFunction",
+      "expected": "AnyFunction",
+      "stop": "stage 0 can't lower a rest parameter outside a nongeneric named function yet",
+      "stopPosition": "7:19",
+      "neededChange": "Sound never-rest function value lowering and descriptor coverage for the exact AnyFunction alias, without inventing admissible arguments.",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 13760,
+      "type": "{ getModifiedTime: (path: string) => Date | undefined; setTimeout: (callback: (...args: any[]) => void, ms: number, ...args: any[]) => any; }",
+      "field": "setTimeout",
+      "declared_types": [
+        "(callback: (...args: any[]) => void, ms: number, ...args: any[]) => any"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 490,
+        "column": 25
+      },
+      "rank": 2793,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2793",
+      "read": "host.setTimeout",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 19265,
+      "utf16End": 19280,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/sys.ts",
+          "sha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/sys.ts",
+          "start": 63646,
+          "end": 63727,
+          "text": "setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;"
+        }
+      ],
+      "originalSignature": "(callback: (...args: any[]) => void, ms: number, ...args: any[]) => any",
+      "targetDeclaration": "interface OriginalHost {setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;}\ntype Target=Required<Pick<OriginalHost,\"setTimeout\">>;",
+      "carriers": "",
+      "mode": "unchanged original method member",
+      "stockExpected": "(callback: (...args: any[]) => void, ms: number, ...args: any[]) => any",
+      "expected": "(callback: (...args: any[]) => void, ms: number, ...args: any[]) => any",
+      "stop": "stage 0 can't lower a call returning any yet",
+      "stopPosition": "6:76",
+      "neededChange": "Original signature has an any result and a rest callback; lowering stops at a call returning any. Certification needs a ruled sound boundary without erasing or narrowing the advertised original contract.",
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 42623,
+      "type": "{ getCurrentDirectory?(): string; }",
+      "field": "getCurrentDirectory",
+      "declared_types": [
+        "(() => string) | undefined"
+      ],
+      "families": [
+        "callable contracts",
+        "nullish members",
+        "optional properties"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/utilities.ts",
+        "line": 6611,
+        "column": 75
+      },
+      "rank": 2787,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2787",
+      "read": "host.getCurrentDirectory",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 258203,
+      "utf16End": 258227,
+      "fileSha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81",
+      "declarationFiles": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "sha256": "9ad3da097b0b7dca95b6866c9f07216bf562e1706fe2fe05553f966709a0ea81"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "src/compiler/utilities.ts",
+          "start": 258028,
+          "end": 258059,
+          "text": "getCurrentDirectory?(): string;"
+        }
+      ],
+      "originalSignature": "(() => string) | undefined",
+      "targetDeclaration": "interface Target {getCurrentDirectory?(): string;}",
+      "carriers": "",
+      "mode": "unchanged original method member",
+      "stockExpected": "() => string",
+      "expected": "() => string",
+      "stop": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "stopPosition": "5:45",
+      "neededChange": "Check optional callable fields at demand time while retaining the original optional host member; the whole structural view is currently uncheckable.",
+      "arity": 0,
+      "mutantArity": 1,
+      "stdout": "ok\n"
+    },
+    {
+      "receiver_type_id": 67325,
+      "type": "{ ending: ModuleSpecifierEnding | undefined; value: string; }[]",
+      "field": "push",
+      "declared_types": [
+        "(...items: { ending: ModuleSpecifierEnding | undefined; value: string; }[]) => number"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/moduleSpecifiers.ts",
+        "line": 973,
+        "column": 17
+      },
+      "rank": 2784,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2784",
+      "read": "candidates.push",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 48883,
+      "utf16End": 48898,
+      "fileSha256": "9a7623ef273cfe670f11132590583b7628dec59c2d85e36e897ca5deed8f168a",
+      "declarationFiles": [
+        {
+          "file": "api:typescript/lib/lib.es5.d.ts",
+          "sha256": "bcd24271a113971ba9eb71ff8cb01bc6b0f872a85c23fdbe5d93065b375933cd"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "api:typescript/lib/lib.es5.d.ts",
+          "start": 58429,
+          "end": 58457,
+          "text": "push(...items: T[]): number;"
+        }
+      ],
+      "originalSignature": "(...items: { ending: ModuleSpecifierEnding | undefined; value: string; }[]) => number",
+      "targetDeclaration": "interface Carrier<T> {push(...items: T[]): number;}\ntype Target=Carrier<Item>;",
+      "carriers": "type ModuleSpecifierEnding=number; type Item={ending:ModuleSpecifierEnding|undefined;value:string;};\ninterface T {readonly value:number;}",
+      "mode": "original lib member and real array receiver",
+      "stockExpected": "(...items: Item[]) => number",
+      "expected": "(...items: Item[]) => number",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "stopPosition": "7:67",
+      "neededChange": "Rest callable descriptor and real Array receiver transport for the original push signature; preserve the original item shape.",
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    },
+    {
+      "receiver_type_id": 8241,
+      "type": "typeof import(\"fs\")",
+      "field": "watchFile",
+      "declared_types": [
+        "{ (filename: PathLike, options: (WatchFileOptions & { bigint?: false | undefined; }) | undefined, listener: StatsListener): StatWatcher; (filename: PathLike, options: (WatchFileOptions & { ...; }) | undefined, listener: BigIntStatsListener): StatWatcher; (filename: PathLike, listener: StatsListener): StatWatcher; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 1,
+      "witness": {
+        "file": "src/compiler/sys.ts",
+        "line": 1740,
+        "column": 13
+      },
+      "rank": 2760,
+      "certified": false,
+      "status": "pending",
+      "directory": "frontier-2760",
+      "read": "_fs.watchFile",
+      "readKind": "PropertyAccessExpression",
+      "utf16Start": 77004,
+      "utf16End": 77017,
+      "fileSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationFiles": [
+        {
+          "file": "api:@types/node/fs.d.ts",
+          "sha256": "f96a48183254c00d24575401f1a761b4ce4927d927407e7862a83e06ce5d6964"
+        }
+      ],
+      "declarations": [
+        {
+          "file": "api:@types/node/fs.d.ts",
+          "start": 148397,
+          "end": 148634,
+          "text": "function watchFile(\n        filename: PathLike,\n        options:\n            | (WatchFileOptions & {\n                bigint?: false | undefined;\n            })\n            | undefined,\n        listener: StatsListener,\n    ): StatWatcher;"
+        },
+        {
+          "file": "api:@types/node/fs.d.ts",
+          "start": 148639,
+          "end": 148868,
+          "text": "function watchFile(\n        filename: PathLike,\n        options:\n            | (WatchFileOptions & {\n                bigint: true;\n            })\n            | undefined,\n        listener: BigIntStatsListener,\n    ): StatWatcher;"
+        },
+        {
+          "file": "api:@types/node/fs.d.ts",
+          "start": 149110,
+          "end": 149187,
+          "text": "function watchFile(filename: PathLike, listener: StatsListener): StatWatcher;"
+        }
+      ],
+      "originalSignature": "{ (filename: import(\"node:fs\").PathLike, options: (import(\"node:fs\").WatchFileOptions & { bigint?: false | undefined; }) | undefined, listener: import(\"node:fs\").StatsListener): import(\"node:fs\").StatWatcher; (filename: import(\"node:fs\").PathLike, options: (import(\"node:fs\").WatchFileOptions & { bigint: true; }) | undefined, listener: import(\"node:fs\").BigIntStatsListener): import(\"node:fs\").StatWatcher; (filename: import(\"node:fs\").PathLike, listener: import(\"node:fs\").StatsListener): import(\"node:fs\").StatWatcher; }",
+      "targetDeclaration": "interface Target {watchFile:{(filename: PathLike, options:\n            | (WatchFileOptions & {\n                bigint?: false | undefined;\n            })\n            | undefined, listener: StatsListener): StatWatcher;\n(filename: PathLike, options:\n            | (WatchFileOptions & {\n                bigint: true;\n            })\n            | undefined, listener: BigIntStatsListener): StatWatcher;\n(filename: PathLike, listener: StatsListener): StatWatcher;};}",
+      "carriers": "type PathLike=string; interface WatchFileOptions {readonly value:number;} interface StatWatcher {readonly value:number;} type StatsListener=()=>void; type BigIntStatsListener=()=>void;",
+      "mode": "original external overload declarations; reduced adjacent domains",
+      "stockExpected": "{ (filename: PathLike, options: (WatchFileOptions & { bigint?: false | undefined; }) | undefined, listener: StatsListener): StatWatcher; (filename: PathLike, options: (WatchFileOptions & { bigint: true; }) | undefined, listener: BigIntStatsListener): StatWatcher; (filename: PathLike, listener: StatsListener): StatWatcher; }",
+      "expected": "{ (filename: PathLike, options: (WatchFileOptions & { bigint?: false | undefined; }) | undefined, listener: StatsListener): StatWatcher; (filename: PathLike, options: (WatchFileOptions & { bigint: true; }) | undefined, listener: BigIntStatsListener): StatWatcher; (filename: PathLike, listener: StatsListener): StatWatcher; }",
+      "stop": "Adamic 0.1 refuses checked view read of field watchFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "stopPosition": "15:60",
+      "neededChange": "Demand-time selection and producer coverage for all original watchFile overloads, preserving callback/optional domains.",
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "done\n"
+    }
+  ]
+}

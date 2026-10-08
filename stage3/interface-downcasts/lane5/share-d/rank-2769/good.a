@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly brightWhite:unknown;}
+interface Target {brightWhite:(str: string) => string;}
+function probe(value:Base):void {const colors=value as Target;console.log(`${colors.brightWhite("ok")}`);}
+probe({brightWhite:(str: string):string=>("ok")});

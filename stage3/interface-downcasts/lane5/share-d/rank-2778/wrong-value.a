@@ -1,0 +1,14 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface CompilerOptions {resolvePackageJsonExports?:boolean;target?:boolean;module?:boolean;moduleResolution?:boolean;}
+type CompilerOptionKeys=keyof CompilerOptions;type StrictOptionName=never;
+type OriginalOptions<T extends Record<string,CompilerOptionKeys[]>>={
+        [K in keyof T & CompilerOptionKeys | StrictOptionName]: {
+            dependencies: T[K];
+            computeValue: (compilerOptions: Pick<CompilerOptions, K | T[K][number]>) => Exclude<CompilerOptions[K], undefined>;
+        };
+    };
+interface Base {readonly computeValue:unknown;}
+type Target=OriginalOptions<{resolvePackageJsonExports:["target","module","moduleResolution"]}>["resolvePackageJsonExports"];
+function probe(value:Base):void {const _computedOptions={resolvePackageJsonExports:value as Target};console.log(`${_computedOptions.resolvePackageJsonExports.computeValue({})}`);}
+probe({computeValue:7});

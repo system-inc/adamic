@@ -1,0 +1,6 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly stopTracing:unknown;}
+interface Target {stopTracing:()=>void;}
+function probe(value:Base):void {const tracing=value as Target;tracing?.stopTracing();console.log("done");}
+probe({stopTracing:(ignored:number):void=>{}});

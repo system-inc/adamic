@@ -1,0 +1,8 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;} interface BindingName {readonly value:number;} interface TextRange {readonly value:number;} type Item={pendingExpressions?:Expression[];name:BindingName;value:Expression;location?:TextRange;original?:Node;}; interface Node {readonly value:number;}
+interface T {readonly value:number;}
+interface Base {readonly push:unknown;}
+interface Carrier<T> {push(...items: T[]): number;}
+type Target=Carrier<Item>;
+function probe(value:Base):void {const pendingDeclarations=value as Target;pendingDeclarations.push();console.log("done");}
+probe([]);

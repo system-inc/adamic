@@ -1,0 +1,7 @@
+// Original callable declaration and read; adjacent carriers and producer bodies reduced.
+
+interface Base {readonly setTimeout:unknown;}
+interface OriginalHost {setTimeout?(callback: (...args: any[]) => void, ms: number, ...args: any[]): any;}
+type Target=Required<Pick<OriginalHost,"setTimeout">>;
+function probe(value:Base):void {const host=value as Target;console.log(`${host.setTimeout(():void=>{},0)}`);}
+probe({setTimeout:(callback: (...args: any[]) => void,ms: number,...args: any[]):number=>(7)});

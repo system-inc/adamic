@@ -1,0 +1,124 @@
+{
+  "members": [
+    {
+      "rank": 2817,
+      "status": "needs-code",
+      "stopPosition": "6:41",
+      "stop": "Adamic 0.1 refuses checked view read of field watchFile with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "neededChange": "Demand-time callable representation conversion for an original destructured HostWatchFile binding, preserving higher-order parameter and result contracts."
+    },
+    {
+      "rank": 2814,
+      "status": "certified",
+      "expected": "(symbol: Symbol, enclosingDeclaration?: Node | undefined, flags?: number | undefined, internalFlags?: number | undefined, tracker?: SymbolTracker | undefined) => NodeArray<...> | undefined"
+    },
+    {
+      "rank": 2811,
+      "status": "certified",
+      "expected": "(expr: Expression, enclosingDeclaration?: Node | undefined, flags?: number | undefined, internalFlags?: number | undefined, tracker?: SymbolTracker | undefined) => TypeNode | undefined"
+    },
+    {
+      "rank": 2808,
+      "status": "needs-code",
+      "stopPosition": "5:41",
+      "stop": "Adamic 0.1 refuses checked view read of field startRecoveryScope with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "neededChange": "Demand-time callable representation conversion for destructuring a method whose result is another callable."
+    },
+    {
+      "rank": 2805,
+      "status": "needs-code",
+      "stopPosition": "5:41",
+      "stop": "Adamic 0.1 refuses checked view read of field finalizeBoundary with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "neededChange": "Demand-time callable representation conversion for the original destructured boolean-returning method."
+    },
+    {
+      "rank": 2802,
+      "status": "needs-code",
+      "stopPosition": "7:76",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Rest callable descriptor and real Array receiver transport for the original push signature; preserve its original object item fields."
+    },
+    {
+      "rank": 2799,
+      "status": "needs-code",
+      "stopPosition": "5:41",
+      "stop": "Adamic 0.1 refuses checked view read of field directoryExists with unsupported destructuring representation conversion contract; prove or implement the destructuring representation conversion contract before reading this field",
+      "neededChange": "Demand-time callable representation conversion for the original destructured optional directoryExists result."
+    },
+    {
+      "rank": 2796,
+      "status": "needs-code",
+      "stopPosition": "7:19",
+      "stop": "stage 0 can't lower a rest parameter outside a nongeneric named function yet",
+      "neededChange": "Sound never-rest function value lowering and descriptor coverage for the exact AnyFunction alias, without inventing admissible arguments."
+    },
+    {
+      "rank": 2793,
+      "status": "needs-code",
+      "stopPosition": "6:76",
+      "stop": "stage 0 can't lower a call returning any yet",
+      "neededChange": "Original signature has an any result and a rest callback; lowering stops at a call returning any. Certification needs a ruled sound boundary without erasing or narrowing the advertised original contract."
+    },
+    {
+      "rank": 2790,
+      "status": "certified",
+      "expected": "(fileName: string) => string | undefined"
+    },
+    {
+      "rank": 2787,
+      "status": "needs-code",
+      "stopPosition": "5:45",
+      "stop": "Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+      "neededChange": "Check optional callable fields at demand time while retaining the original optional host member; the whole structural view is currently uncheckable."
+    },
+    {
+      "rank": 2784,
+      "status": "needs-code",
+      "stopPosition": "7:67",
+      "stop": "Adamic 0.1 refuses checked view read of field push with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Rest callable descriptor and real Array receiver transport for the original push signature; preserve the original item shape."
+    },
+    {
+      "rank": 2781,
+      "status": "certified",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"allowSyntheticDefaultImports\">) => boolean"
+    },
+    {
+      "rank": 2778,
+      "status": "certified",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"module\" | \"moduleResolution\" | \"resolvePackageJsonExports\" | \"target\">) => boolean"
+    },
+    {
+      "rank": 2775,
+      "status": "certified",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"isolatedModules\" | \"preserveConstEnums\" | \"verbatimModuleSyntax\">) => boolean"
+    },
+    {
+      "rank": 2772,
+      "status": "certified",
+      "expected": "(compilerOptions: Pick<CompilerOptions, \"composite\" | \"incremental\">) => boolean"
+    },
+    {
+      "rank": 2769,
+      "status": "certified",
+      "expected": "(str: string) => string"
+    },
+    {
+      "rank": 2766,
+      "status": "certified",
+      "expected": "() => void"
+    },
+    {
+      "rank": 2763,
+      "status": "certified",
+      "expected": "(phase: number, name: string, args?: Args | undefined) => void"
+    },
+    {
+      "rank": 2760,
+      "status": "needs-code",
+      "stopPosition": "15:60",
+      "stop": "Adamic 0.1 refuses checked view read of field watchFile with unsupported callable contract; prove or implement the callable contract before reading this field",
+      "neededChange": "Demand-time selection and producer coverage for all original watchFile overloads, preserving callback/optional domains."
+    }
+  ]
+}
