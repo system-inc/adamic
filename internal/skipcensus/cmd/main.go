@@ -14,6 +14,7 @@ func main() {
 	root := flag.String("root", ".", "repository root")
 	audit := flag.Bool("audit", false, "audit source declarations without checking a log")
 	scan := flag.Bool("scan", false, "print AST census instead of checking a log")
+	table := flag.Bool("table", false, "print the annotated census as a JSON array for integration")
 	flag.Parse()
 	rows, err := skipcensus.Scan(*root)
 	if err != nil {
@@ -23,7 +24,7 @@ func main() {
 		fmt.Printf("census: %d annotated sites\n", len(rows))
 		return
 	}
-	if *scan {
+	if *scan || *table {
 		encoder := json.NewEncoder(os.Stdout)
 		encoder.SetIndent("", "  ")
 		if err := encoder.Encode(rows); err != nil {

@@ -47,7 +47,13 @@ Integration continues to run from the repository root:
 go run ./internal/skipcensus/cmd <log.jsonl>
 go run ./internal/skipcensus/cmd -audit
 go run ./internal/skipcensus/cmd -scan
+go run ./internal/skipcensus/cmd -table
 ```
+
+`-table` exports the same JSON array as `-scan`, ordered by file and line.
+Each row includes test, callers, class, provides, file and line. It audits the
+annotations before exporting; integration can replace its copied skips.json
+with this command.
 
 Scan returns an error for missing or invalid declarations, naming file, line and
 function. CheckLog consumes its rows; missing required inputs and unknown runtime
@@ -101,3 +107,11 @@ RootedFilePath is required, SourceFileParseOptions has no Path field, and
 tspath.Path is undefined). This unit does not change that unrelated package.
 The full live gate was not run. Existing installed tools built the census and
 gate consumer; setup's log is preserved with its own timing lines.
+
+The integration export proof is `python3 internal/skipcensus/testdata/table_proof.py`.
+It invokes `go run ./internal/skipcensus/cmd -table` twice and compares all 75
+rows with the historical table at f8dc89f2, matching by file, lexical function,
+condition and message. Class and provides are byte-for-byte equal; output order
+and required integration fields are checked. Disabling the table export makes
+this proof fail. This is a historical migration proof, not a permanent census
+row-count constraint on future work.
