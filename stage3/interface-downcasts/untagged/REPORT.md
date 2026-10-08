@@ -1,3 +1,40 @@
+Built: installed three minimal named production hooks; all 12 representative source cases pass without overlays.
+Commits: component/source handoff 55b3fdef, evidence 2bb00f0f, integration base ba59427c; production hook commit follows in Git history.
+Commands: production oracle 5.751s; scoped lower/JS/native 1.247s/0.975s/4.064s; setup 214.165s, nproc 5.
+Mutants: skip native/JS selection, accept native/JS wrong tags, remove nested IR guards; all five caught on production source and restored.
+Uncovered: unchanged compiler-pair fixtures and overlapping member adapters; candidate pool remains 228 pairs/2,468 reads pending classification.
+
+Revised whole-family target: October 12, 2026, 23:00 UTC. The user now authorizes
+minimal shared hooks directly. No owner handoff is blocking this lane. Only the
+three listed shared hunks changed: supportsUntaggedRead in lower/view_contracts.go
+and viewUntaggedObjectUnion in each backend's view_unions.go. The integrator can
+merge this own-branch tip and reconcile those named hooks hunk by hunk.
+
+The 12-member, five-member and field-only fixtures now compile through production
+source loading/lowering and both backends. They include every representative member,
+wrong shapes, nested wrong scalars and viewed optional absence. Exact refusal pins
+are unchanged; positive results match Node. They are reduced shape fixtures, not
+unchanged tsc pair receipts. Candidate completed pairs/reads remain zero, pending
+classification and actual per-pair fixtures. Exact runtime reachability is still
+unmeasured, but no longer treated as a prerequisite for candidate progress.
+
+Production reproduction:
+
+```
+source /workspace/adamic-tools/env.sh
+VIEW_UNTAGGED_SOURCE_REQUIRED=1 go test ./internal/oracle -run '^TestCheckedViewUntagged(Selection|SourceDispatch)$' -count=1 -v > /tmp/untagged-wired-source.log 2>&1
+go test ./internal/lower ./internal/javascript ./internal/native -run 'TestUntaggedView|TestView|TestLazyView|TestSharedArrayContractAdapter' -count=1 > /tmp/untagged-wired-packages.log 2>&1
+python3 stage3/interface-downcasts/untagged/run-source-mutants.py > /tmp/untagged-wired-mutants.log 2>&1
+```
+
+All five source mutations were run without GOFLAGS overlays. Individual source
+mutation logs and wired summary logs are checked in. Full repository gate was not run.
+The source test's no-hook skip is now unreachable on this branch; its required mode
+fails if admission is removed. The old frontier test skips the obsolete refusal and
+the source-dispatch test supplies executable evidence. No individual lane was merged.
+
+Earlier overlay checkpoint, historical:
+
 Built: merged ba59427c; source selectors and three owner-hook handoffs; 12 source cases pass with an overlay.
 Commits: integration base ba59427ccc7afecae29a305c41e6e9c7867e5610; source checkpoint 55b3fdef; evidence checkpoint follows in this branch's Git history.
 Commands: overlay source/component oracle 4.509s; scoped lower/JS/native 1.058s/0.858s/3.875s; production frontier 1.436s, source dispatch explicitly skipped.

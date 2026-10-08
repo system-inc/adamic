@@ -119,7 +119,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			child := l.result.ViewContracts[field.Contract-1]
 			tagged = tagged || !field.Optional && child.Kind == ir.ViewScalar && len(child.Allowed) != 0
 		}
-		if !tagged {
+		if !tagged && !l.supportsUntaggedRead(contract) {
 			contract.Unsupported = "untagged object union"
 		}
 	}

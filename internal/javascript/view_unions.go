@@ -16,6 +16,9 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 	if contract.Kind != ir.ViewUnion {
 		return value
 	}
+	if untaggedObjectUnion(e.program.ViewContracts, contract) {
+		return e.viewUntaggedObjectUnion(property, value)
+	}
 	for _, field := range contract.Fields {
 		tag := e.program.ViewContracts[int(field.Contract)-1]
 		if tag.Kind != ir.ViewScalar || len(tag.Allowed) == 0 {

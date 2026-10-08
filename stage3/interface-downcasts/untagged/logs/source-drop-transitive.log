@@ -5,11 +5,11 @@
     checked_views_untagged_unions_test.go:246: native: exit codes differ; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{}, exitCode:-1}
     checked_views_untagged_unions_test.go:235: javascript: exit=0 stdout="true\n" stderr=""
     checked_views_untagged_unions_test.go:246: javascript: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
---- FAIL: TestCheckedViewUntaggedSourceDispatch (0.39s)
+--- FAIL: TestCheckedViewUntaggedSourceDispatch (0.41s)
     --- FAIL: TestCheckedViewUntaggedSourceDispatch/binding-name/nested (0.27s)
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.404s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.414s
 FAIL

@@ -1044,3 +1044,14 @@ field reads retain shared checks, not a new readiness table or a tag certificate
 The returned member id is currently selection evidence, not stored dynamic provenance.
 No source pair completion is claimed until shared hook integration and its measured
 per-pair fixture evidence are both present.
+
+### Untagged object unions, production hook authorization, October 8
+
+The user's rule change authorizes minimal shared hooks directly. Installed exactly
+supportsUntaggedRead in lower/view_contracts.go and viewUntaggedObjectUnion in the
+native and JavaScript view_unions.go dispatchers, as listed above. Actual source
+fixtures and semantic mutants now run without any overlay. The former owner-wait
+block is removed. Revised whole-family target: October 12, 2026, 23:00 UTC.
+Continue against the supplied candidate inventory, explicitly labeled candidate
+pairs and reads; checker-clean allocation reachability is a later audit. Common
+finite-tag unions remain with shared dispatch, never charged as untagged completions.

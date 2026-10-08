@@ -7,6 +7,15 @@ import sys
 
 root=Path(__file__).resolve().parents[3]
 out=Path(sys.argv[1]);out.mkdir(parents=True,exist_ok=True)
+# After the authorized production handoff, an overlay is unnecessary.
+if all(token in (root/name).read_text() for name,token in [
+ ('internal/lower/view_contracts.go','supportsUntaggedRead(contract)'),
+ ('internal/native/view_unions.go','e.viewUntaggedObjectUnion(property, object)'),
+ ('internal/javascript/view_unions.go','e.viewUntaggedObjectUnion(property, value)'),
+]):
+ (out/'overlay.json').write_text(json.dumps({'Replace':{}})+'\n')
+ print('named hooks installed; no source overlay required')
+ sys.exit(0)
 changes={
  'internal/lower/view_contracts.go':('\t\tif !tagged {','\t\tif !tagged && !l.supportsUntaggedRead(contract) {'),
  'internal/native/view_unions.go':('\tfor _, field := range contract.Fields {','\tif untaggedObjectUnion(e.program.ViewContracts, contract) { e.viewUntaggedObjectUnion(property, object); return }\n\tfor _, field := range contract.Fields {'),
