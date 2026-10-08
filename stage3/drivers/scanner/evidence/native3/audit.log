@@ -1,0 +1,25 @@
+{
+  "main": "efe9f4042049234e5a52639fe77b47c311fd530c",
+  "library": "b05a9306dd9c49ea1697f9aea4e87fdc3a9d2795",
+  "front3": "a36d1c0472649ef2ee549cc2505b93a84e893b59",
+  "scratch_head": "b05a9306dd9c49ea1697f9aea4e87fdc3a9d2795",
+  "front3_merge": "conflicted; aborted and skipped",
+  "nproc": 5,
+  "pass_tokens": {
+    "true": 509014,
+    "false": 860418
+  },
+  "six_field_skipped_trivia": {
+    "bytes": 27879197,
+    "sha256": "c1a9f239790e158cc4471aa6c9273ff678cb32e5890b3d4c95e077ee90c61b0f"
+  },
+  "native_scanner": "build refused in both modes; no scanner binary, native timing, size, or native-output mutant",
+  "capture_control": {
+    "node_exit": 0,
+    "native_exit": 0,
+    "diff_exit": 0,
+    "one_byte_native_mutant_diff_exit": 1
+  },
+  "october8_list": "absent in origin/main, origin/area/library, and origin/compiler/stage3-front-3; no fifteen-item retirement mapping claimed"
+}
+PASS: 15 Node witnesses exit 0 and builds exit 1 with exact matching stop messages.

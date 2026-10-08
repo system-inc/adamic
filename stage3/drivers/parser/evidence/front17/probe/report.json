@@ -1,0 +1,58 @@
+{
+  "source": "/workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a",
+  "signature": "isArray(value: unknown): value is readonly unknown[]",
+  "full_slice": "held for lane 2; no full rerun",
+  "node_original": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/scratch/parser-front17-original-array-predicate.a"
+    ],
+    "exit": 0,
+    "stdout": "true\nfalse\n",
+    "stderr": ""
+  },
+  "node": {
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a"
+    ],
+    "exit": 0,
+    "stdout": "true\nfalse\n",
+    "stderr": ""
+  },
+  "signature_node_cmp": {
+    "stdout": 0,
+    "stderr": 0
+  },
+  "build": {
+    "command": [
+      "/workspace/scratch/parser-front17-adamic",
+      "build",
+      "/workspace/adamic/stage3/drivers/parser/native-array-is-array-predicate.a",
+      "-o",
+      "/workspace/scratch/parser-front17-probe/is-array"
+    ],
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "pass": true,
+  "native": {
+    "command": [
+      "/workspace/scratch/parser-front17-probe/is-array"
+    ],
+    "exit": 0,
+    "stdout": "true\nfalse\n",
+    "stderr": ""
+  },
+  "binary_bytes": 436368,
+  "comparison": {
+    "stdout": 0,
+    "stderr": 0
+  },
+  "native_byte_mutant_cmp": 1
+}
