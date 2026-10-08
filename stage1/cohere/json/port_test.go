@@ -288,7 +288,7 @@ func TestPortMatchesGoCohere(t *testing.T) {
 	t.Logf("initial Node %.3fs; %d texts identical on Go, Node, native and JS backend", nodeTime.Seconds(), len(cases))
 }
 
-func TestThreePortMutantsAreCaught(t *testing.T) {
+func TestPortMutantsAreCaught(t *testing.T) {
 	t.Parallel()
 	cases := []textCase{
 		{"probe.json", `{"a":1,"b":[2,3]}`},
@@ -303,6 +303,7 @@ func TestThreePortMutantsAreCaught(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, mutation := range []printerMutation{
+		{"malformed separators accepted", "parser.ts", "!separatorsBetweenDigits(this.text, base === 10 ? start : start + 2, position, base)", "false"},
 		{"missing final newline", "formatter.ts", "printer.docs.concat([document, printer.docs.line(false, true)])", "document"},
 		{"missing colon space", "formatter.ts", "documents.text(': ')", "documents.text(':')"},
 		{"wrong filename parser", "formatter.ts", "base === 'package.json'", "base === 'other-package.json'"},
@@ -346,6 +347,10 @@ func TestAdditionalJSONBoundaries(t *testing.T) {
 	texts := []string{
 		"[\n// dangling\n]",
 		`[1.0,1.000,.000,1e0_0,1_0e+001,1.0_0,1.e0,1.000e10]`,
+		`[1__0]`, `[1_]`, `[0x_1]`, `[1_.5]`, `[1._5]`, `[1_e5]`, `[1e_5]`,
+		`[1e5_]`, `[.5_]`, `[0x1_]`, `[0x1__f]`, `[0b_1]`, `[0o_7]`, `[0_1]`, `[1_0n]`,
+		`[1_0]`, `[1_000_000]`, `[1_0.5_5]`, `[1e1_0]`, `[1e+1_0]`, `[1e+_10]`,
+		`[0x1_f]`, `[0xa_b]`, `[0b1_0]`, `[0o7_1]`, `[.5_5]`, `{"a": 1_0}`, `{1_0: 1}`,
 		`[1e]`, `[1e+]`, `[0x]`, `[0o8]`, `[.]`, `[01]`, `[1n]`,
 		`[,]`, `[1,,]`, `[,,2]`, `{1:2,1.50:3,0x10:4}`, `{'a':'can\'t',b:'"hi"'}`,
 		"`raw`", "`\\u0041\\n\\x42`", "`line\nline`", "{é:1,𐌘:2}",
