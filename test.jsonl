@@ -1,0 +1,18 @@
+{"Time":"2026-10-07T20:58:34.332223999-06:00","Action":"start","Package":"github.com/system-inc/adamic/internal/nodepin"}
+{"Time":"2026-10-07T20:58:34.343468993-06:00","Action":"run","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion"}
+{"Time":"2026-10-07T20:58:34.343835599-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion","Output":"=== RUN   TestSetupVersion\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:34.344116562-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion","Output":"=== PAUSE TestSetupVersion\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:34.344122546-06:00","Action":"pause","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion"}
+{"Time":"2026-10-07T20:58:34.344125783-06:00","Action":"cont","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion"}
+{"Time":"2026-10-07T20:58:34.34412853-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion","Output":"=== CONT  TestSetupVersion\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:34.344153448-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion","Output":"--- PASS: TestSetupVersion (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:34.344156783-06:00","Action":"pass","Package":"github.com/system-inc/adamic/internal/nodepin","Test":"TestSetupVersion","Elapsed":0}
+{"Time":"2026-10-07T20:58:34.344164926-06:00","Action":"output","Package":"github.com/system-inc/adamic/internal/nodepin","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:34.349504596-06:00","Action":"pass","Package":"github.com/system-inc/adamic/internal/nodepin","Elapsed":0.017}
+{"Time":"2026-10-07T20:58:36.69689906-06:00","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic-gate"}
+{"Time":"2026-10-07T20:58:36.71392334-06:00","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole"}
+{"Time":"2026-10-07T20:58:36.714117668-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Output":"=== RUN   TestKnownAffinitiesStayWhole\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:36.721178283-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Output":"--- PASS: TestKnownAffinitiesStayWhole (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:36.721285713-06:00","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Test":"TestKnownAffinitiesStayWhole","Elapsed":0}
+{"Time":"2026-10-07T20:58:36.721316463-06:00","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-07T20:58:36.725007917-06:00","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic-gate","Elapsed":0.028}
