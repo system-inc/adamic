@@ -1,0 +1,23 @@
+=== RUN   TestFreshWriteProbesUseRegions
+=== PAUSE TestFreshWriteProbesUseRegions
+=== CONT  TestFreshWriteProbesUseRegions
+=== RUN   TestFreshWriteProbesUseRegions/map_set.a
+=== PAUSE TestFreshWriteProbesUseRegions/map_set.a
+=== CONT  TestFreshWriteProbesUseRegions/map_set.a
+    fresh_test.go:36: gate cache node miss
+    fresh_test.go:36: gate cache node miss
+    oracle_test.go:646: gate cache native miss
+    oracle_test.go:639: gate cache native miss
+    fresh_test.go:43: sanitized: exit codes differ; Node "1\n", actual ""; stderr "=================================================================\n==38065==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c8e6c9e00a0 at pc 0x560fa8ca9140 bp 0x7ffe507935f0 sp 0x7ffe507935e8\nWRITE of size 8 at 0x7c8e6c9e00a0 thread T0\n    #0 0x560fa8ca913f in adamic_map_set /home/agent/.cache/adamic/runtime/.build-1456696027/map.c:241:15\n    #1 0x560fa8c7ef36 in adamic_function_0_run /tmp/adamic-gate/adamic-build-1845478681/main.c:40:2\n    #2 0x560fa8c7ef36 in main /tmp/adamic-gate/adamic-build-1845478681/main.c:54:31\n    #3 0x7f8e6d6a0ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f8e6d6a0d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x560fa8b98510 in _start (/tmp/adamic-gate/TestFreshWriteProbesUseRegionsmap_set.a820079473/002/program+0x65510)\n\n0x7c8e6c9e00a0 is located 96 bytes inside of 192-byte region [0x7c8e6c9e0040,0x7c8e6c9e0100)\nfreed by thread T0 here:\n    #0 0x560fa8c3b086 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\n    #1 0x560fa8c982ce in deallocate /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:218:3\n    #2 0x560fa8c982ce in adamic_heap_graph_storage /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:235:2\n\npreviously allocated by thread T0 here:\n    #0 0x560fa8c3b324 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x560fa8c980bf in allocate_storage /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:198:10\n    #2 0x560fa8c980bf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-1456696027/heap.c:212:9\n\nSUMMARY: AddressSanitizer: heap-use-after-free /home/agent/.cache/adamic/runtime/.build-1456696027/map.c:241:15 in adamic_map_set\nShadow bytes around the buggy address:\n  0x7c8e6c9dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c8e6c9dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c8e6c9dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c8e6c9dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c8e6c9e0000: fa fa fa fa fa fa fa fa fd fd fd fd fd fd fd fd\n=>0x7c8e6c9e0080: fd fd fd fd[fd]fd fd fd fd fd fd fd fd fd fd fd\n  0x7c8e6c9e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c8e6c9e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c8e6c9e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c8e6c9e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c8e6c9e0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==38065==ABORTING\n"
+    fresh_test.go:43: release: exit codes differ; Node "1\n", actual ""; stderr "free(): invalid pointer\n"
+    oracle_test.go:653: gate cache native hit
+    fresh_test.go:57: counted run failed: -1 adamic: graph region: live 2 bytes 356 reachable 2 bytes 356 unreachable 0 bytes 0 metadata 96
+        free(): invalid pointer
+--- FAIL: TestFreshWriteProbesUseRegions (0.00s)
+    --- FAIL: TestFreshWriteProbesUseRegions/map_set.a (0.74s)
+FAIL
+gate cache: native hits=1 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.757s
+FAIL

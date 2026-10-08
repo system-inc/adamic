@@ -1,0 +1,123 @@
+file,line,column,reason,verified_covered
+checker.ts,9409,17,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,13779,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,13784,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,13811,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,17305,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,35570,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+checker.ts,44757,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+emitter.ts,2926,65,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+factory/nodeFactory.ts,6929,72,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,674,61,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,816,64,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,927,107,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,933,72,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1012,50,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1058,50,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1110,49,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1205,65,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1226,77,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1284,126,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1312,48,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1313,64,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1321,63,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1350,82,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1353,50,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1353,104,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1358,83,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1360,46,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1360,100,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1376,53,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1378,53,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1398,87,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1400,50,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1415,46,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1438,87,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1451,79,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1457,63,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,1498,63,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1500,48,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1571,56,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1575,126,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1584,73,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1653,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1658,49,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1659,43,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,1788,57,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2252,67,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,2278,71,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,2308,67,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,2384,87,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/classFields.ts,2559,70,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2567,70,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2588,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2694,61,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2706,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,2996,143,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,3029,108,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,3063,58,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/classFields.ts,3159,72,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,787,67,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,841,90,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,1076,95,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,1290,79,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,1349,9,a type predicate whose return is not proven (return expression is not a trusted check on node),"/tmp/notyet-predicates-adapted/src/compiler/transformers/es2015.ts:1349:9: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+transformers/es2015.ts,1354,9,a type predicate whose return is not proven (return expression is not a trusted check on node),"/tmp/notyet-predicates-adapted/src/compiler/transformers/es2015.ts:1354:9: Adamic 0.1 refuses a type predicate whose return is not proven (return expression is not a trusted check on node); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)"
+transformers/es2015.ts,1360,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1366,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1371,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1376,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1387,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1394,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1404,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1411,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1416,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1420,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,1697,100,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,1767,102,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,1969,80,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,1989,74,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2030,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,2576,71,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,2602,57,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2697,92,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2699,130,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2716,124,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2752,160,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2950,75,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,2996,48,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2997,76,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,2998,67,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,3091,130,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3099,66,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,3143,64,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3193,64,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3380,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,3384,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,3388,9,a type predicate whose return is not proven (return expression is not a trusted check on node),yes
+transformers/es2015.ts,3479,138,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,3510,85,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3511,115,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3521,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3530,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3539,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3546,68,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3780,62,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,3827,111,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3840,140,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,3841,91,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,4140,73,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4224,77,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,4337,82,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4339,49,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4386,90,"an unproven predicate argument for parameter test (argument ""isStatement"")",yes
+transformers/es2015.ts,4552,81,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4553,129,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4569,85,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4570,133,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4571,61,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4613,67,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4718,62,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4737,83,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4747,52,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes
+transformers/es2015.ts,4807,82,"an unproven predicate argument for parameter test (argument ""isExpression"")",yes

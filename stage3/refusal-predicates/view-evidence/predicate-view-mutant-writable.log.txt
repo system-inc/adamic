@@ -1,0 +1,10 @@
+=== RUN   TestPredicateWritableViewStaysRefused
+    predicate_views_test.go:84: gate cache node miss
+    predicate_views_test.go:100: .ts must preserve writable-view refusal: <nil>
+--- FAIL: TestPredicateWritableViewStaysRefused (0.25s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.264s
+FAIL

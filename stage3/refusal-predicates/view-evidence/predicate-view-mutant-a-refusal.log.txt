@@ -1,0 +1,35 @@
+=== RUN   TestPredicateStructuralViews
+=== RUN   TestPredicateStructuralViews/valid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/invalid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/direct_valid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/direct_invalid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/statement_valid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/statement_invalid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/intersection_valid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/intersection_invalid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/union_valid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+=== RUN   TestPredicateStructuralViews/union_invalid
+    predicate_views_test.go:30: .a must refuse unproven predicate: <nil>
+--- FAIL: TestPredicateStructuralViews (0.36s)
+    --- FAIL: TestPredicateStructuralViews/valid (0.04s)
+    --- FAIL: TestPredicateStructuralViews/invalid (0.04s)
+    --- FAIL: TestPredicateStructuralViews/direct_valid (0.04s)
+    --- FAIL: TestPredicateStructuralViews/direct_invalid (0.03s)
+    --- FAIL: TestPredicateStructuralViews/statement_valid (0.03s)
+    --- FAIL: TestPredicateStructuralViews/statement_invalid (0.03s)
+    --- FAIL: TestPredicateStructuralViews/intersection_valid (0.03s)
+    --- FAIL: TestPredicateStructuralViews/intersection_invalid (0.04s)
+    --- FAIL: TestPredicateStructuralViews/union_valid (0.04s)
+    --- FAIL: TestPredicateStructuralViews/union_invalid (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.374s
+FAIL
