@@ -2,6 +2,37 @@
 
 Roadmap step 11, task #1p9ste9, under #a03mesg. This is preparation, not a landed slice.
 
+## Current rehearsal protocol
+
+The shared rehearsal ruling supersedes the V3-green waiting and branch protocol
+in the historical sections below. Preparation targets compiler/views-rehearsal,
+observed at 9f16421c7910607cd06c006b719ff126bd15a7f7. Start applying V4 when
+its log contains a subject beginning exactly "views-v3: ". No green V3 gate is
+required. Check origin every few minutes while preparing or waiting.
+
+Prepared candidate net patches and provenance messages live at
+/tmp/views-v4-net. Their pinned endpoints, scope paths and hashes are recorded in
+views-v4-evidence/rehearsal-net.json so they can be regenerated from source Git
+objects. Only own-commit paths are candidates; shared-file hunks still require
+V4 admission/exclusion review. Preparing a patch is not applying or certifying it.
+
+Each applied lane is one net-change commit with subject starting "views-v4: ",
+listing original SHAs and subjects. Resolve each file once per lane and retain the
+final ruled judgments. Before pushing, fetch the latest rehearsal and put V4's
+commits on that tip; run go build ./... and go vet ./internal/... with output in
+logs. Push fast-forward only. On rejection, fetch, rebase, rebuild and retry.
+Also push compiler/views-v4 cut from the rehearsal at V4's last commit, using the
+same commit objects. Never force-push either branch.
+
+Push immediately when the applied compiler builds and vets, even with red tests.
+Then run the full previously specified comparison/sweep on that immutable commit:
+a-check, locally lifted Linux records, named stage1 gaps, V4-only counts, lower,
+IR, JavaScript, flow and the full oracle, plus every new-check mutant. Repairs go
+on the current rehearsal tip with subjects starting "views-v4 fix: "; retain
+history and report every pushed SHA and all red checks. No whole rehearsal is a
+landing candidate. Keep the V4-before snapshot for per-result comparison even
+when later slices advance the rehearsal.
+
 ## Current integration method
 
 The compiler's net-change ruling supersedes the historical cherry-pick method
