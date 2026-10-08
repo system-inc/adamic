@@ -61,3 +61,11 @@ constructor refusal natively. Total: 7 dense reads proven, 3 record rows blocked
 14 remaining. Filtered group command uses
 `-run 'TestLedgerWitnesses/(D172|D173|D174|D175|D184)$'`; exit 0, package 13.101s,
 log `/tmp/stricter-indexed-d-group2.log`.
+
+Group 2 commit: e4ebd182, pushed to codex/stricter-indexed-d.
+Halfway report, after group 3: 15 rows assessed, 12 dense reads proven,
+3 record rows blocked, 9 rows remaining. New proofs are D185, D186, D189, D191
+and D192. All five erase-panic mutants build and exit 0; exact exit/stderr
+assertions catch them. Their hole variants remain refused. Command filter:
+`-run 'TestLedgerWitnesses/(D185|D186|D189|D191|D192)$'`; exit 0, package 13.623s,
+log `/tmp/stricter-indexed-d-group3.log`.

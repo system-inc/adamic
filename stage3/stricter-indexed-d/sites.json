@@ -128,5 +128,70 @@
     "present": "[7]",
     "absent": "[]",
     "blocked": false
+  },
+  {
+    "id": "D185",
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "line": 1165,
+    "expression": "visitNodes(statementsIn, visitor, isStatement, statementOffset, superStatementIndex - statementOffset)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "superPath[superPathDepth]",
+    "receiver": "readonly array of number",
+    "source": "const superPath: readonly number[] = @VALUES@; const superPathDepth = 0;\nconst value: number = superPath[superPathDepth];\nconsole.log(`${value}`);\n",
+    "present": "[7]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D186",
+    "file": "src/compiler/transformers/esDecorators.ts",
+    "line": 1192,
+    "expression": "visitNodes(statementsIn, visitor, isStatement, superStatementIndex + 1)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "superPath[superPathDepth]",
+    "receiver": "readonly array of number",
+    "source": "const superPath: readonly number[] = @VALUES@; const superPathDepth = 0;\nconst value: number = superPath[superPathDepth];\nconsole.log(`${value}`);\n",
+    "present": "[7]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D189",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 183,
+    "expression": "getUsingKind(statement)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "node.statements[pos]",
+    "receiver": "NodeArray of object",
+    "source": "interface Item { readonly kind: number }\nconst node: { readonly statements: readonly Item[] } = { statements: @VALUES@ }; const pos = 0;\nconst value: Item = node.statements[pos];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D191",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 344,
+    "expression": "getUsingKind(statement)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "statementsIn[i]",
+    "receiver": "readonly array of object",
+    "source": "interface Item { readonly kind: number }\nconst statementsIn: readonly Item[] = @VALUES@; const i = 0;\nconst value: Item = statementsIn[i];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
+  },
+  {
+    "id": "D192",
+    "file": "src/compiler/transformers/esnext.ts",
+    "line": 384,
+    "expression": "visitor(statement)",
+    "cause": "Unchecked element/index-signature read contributes undefined, directly or through a local/result.",
+    "read": "statementsIn[i]",
+    "receiver": "readonly array of object",
+    "source": "interface Item { readonly kind: number }\nconst statementsIn: readonly Item[] = @VALUES@; const i = 0;\nconst value: Item = statementsIn[i];\nconsole.log(value === undefined ? 'undefined' : `${value.kind}`);\n",
+    "present": "[{ kind: 7 }]",
+    "absent": "[]",
+    "blocked": false
   }
 ]
