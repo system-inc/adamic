@@ -1,0 +1,2 @@
+export interface MapLike<T> { [index: string]: T; }
+console.log("ok");
