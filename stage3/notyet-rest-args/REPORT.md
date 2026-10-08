@@ -101,3 +101,24 @@ a fixed-overload packing regression; implementation-signature fallback corrected
 No IR, backend or runtime C changes were needed for array rest callable support.
 
 Callable restored validation: oracle ok 1.685s; lower ok 1.717s; counts ok 37.390s.
+
+## Named closure step
+
+Fixture commit ba766d51 reduces enqueue and reportIncompatibleError to existing
+counted named function expressions. Removing the named-rest guard preserves the
+same packed-array convention. Focused oracle ok 0.601s; named guard restoration
+mutant fails at rest_named.a:4:45; counts refresh ok 26.456s, new row
+20/20/22/41/12/0. Commands: ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle
+-run TestNativeAgreesWithNode/internal/oracle/testdata/rest_named.a -count=1
+-timeout 10m; counts command as above.
+
+The table has four unique named-closure roots and four observations. Both exact
+examples already did not reproduce on the selected area/compiler base before this
+step: checker.ts:22486:70 reaches 'an array of never' at 22489:36; core.ts:1577:22
+reaches 'a rest array of T[]' at that parameter. After replays give the same stops.
+No table unlock is claimed for those two examples. Full nested declarations still
+stop at 'a function inside a function (a closure)' on this base. Their counted frame
+environment prerequisite b15216da is on the table branch, outside this small rest
+unit; the existing function-expression backend needs no change.
+Logs /tmp/rest-named-{before,after,counts}.log and
+/tmp/rest-mutant-named-closure.log; replay /tmp/rest-closure-{core,checker}-{before,after}.{json,log}.

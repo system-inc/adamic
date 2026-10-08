@@ -14,9 +14,6 @@ func (l *lowering) censusRestParameter(declaration, parameter *ast.Node) error {
 	if declaration.Kind != ast.KindFunctionDeclaration && declaration.Kind != ast.KindArrowFunction && declaration.Kind != ast.KindFunctionExpression {
 		return l.notYet(parameter, "a rest parameter outside a nongeneric named function")
 	}
-	if declaration.Name() != nil && l.result.Functions[l.functionIndex].Closure {
-		return l.notYet(parameter, "a rest parameter in a named closure")
-	}
 	parameters := declaration.Parameters()
 	if contextual := l.checker.GetContextualType(declaration, checker.ContextFlagsNone); contextual != nil {
 		for _, signature := range l.checker.GetSignaturesOfType(contextual, checker.SignatureKindCall) {
