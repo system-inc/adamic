@@ -25,29 +25,42 @@ func projectFixture(t *testing.T, files map[string]string) string {
 
 const fixtureOptions = `"strict":true,"module":"esnext","moduleResolution":"bundler","target":"es2020","types":[],"skipLibCheck":true`
 
-func TestProjectLoaderReferenceNeedsOutput(t *testing.T) {
+func TestProjectLoaderReferenceSources(t *testing.T) {
+	t.Parallel()
 	dir := projectFixture(t, map[string]string{
 		"app/main.ts":              "import { value } from \"../dependency/value.js\";\nconsole.log(value);\n",
 		"dependency/value.ts":      "export const value: number = 7;\n",
 		"app/tsconfig.json":        `{ "compilerOptions": {` + fixtureOptions + `,"composite":true,"rootDir":".","outDir":"../out/app"},"files":["main.ts"],"references":[{"path":"../dependency"}] }`,
 		"dependency/tsconfig.json": `{ "compilerOptions": {` + fixtureOptions + `,"composite":true,"rootDir":".","outDir":"../out/dependency"},"files":["value.ts"] }`,
 	})
-	_, err := Load([]string{filepath.Join(dir, "app/main.ts")})
-	if err == nil || !strings.Contains(err.Error(), "app/main.ts:1:23: error TS6305:") {
-		t.Fatalf("want missing declaration TS6305 at 1:23, got %v", err)
-	}
-	if err := os.MkdirAll(filepath.Join(dir, "out/dependency"), 0755); err != nil {
-		t.Fatal(err)
-	}
-	if err := os.WriteFile(filepath.Join(dir, "out/dependency/value.d.ts"), []byte("export declare const value: number;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
 	program, err := Load([]string{filepath.Join(dir, "app/main.ts")})
 	if err != nil {
 		t.Fatal(err)
 	}
 	if len(program.Files()) != 1 {
-		t.Fatalf("project roots became entries: %d", len(program.Files()))
+		t.Fatalf("project checking roots became execution entries: %d", len(program.Files()))
+	}
+	found := 0
+	for _, file := range program.CompilerProgram().GetSourceFiles() {
+		if program.FileName(file) == filepath.Join(dir, "dependency/value.ts") {
+			if file.IsDeclarationFile {
+				t.Fatal("reference loaded as a declaration")
+			}
+			found++
+		}
+	}
+	if found != 1 {
+		t.Fatalf("want dependency implementation once, got %d", found)
+	}
+	// Built outputs must not replace source implementations on later loads.
+	if err := os.MkdirAll(filepath.Join(dir, "out/dependency"), 0755); err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "out/dependency/value.d.ts"), []byte("export declare const value: string;\n"), 0644); err != nil {
+		t.Fatal(err)
+	}
+	if _, err := Load([]string{filepath.Join(dir, "app/main.ts")}); err != nil {
+		t.Fatal(err)
 	}
 }
 

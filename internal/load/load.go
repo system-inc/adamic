@@ -108,6 +108,7 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 	}
 	fs := &sourceFS{FS: osvfs.FS(), overlay: normalizedOverlay}
 	var projectConfig *tsoptions.ParsedCommandLine
+	projectOwners := map[string]bool{}
 	roots := make([]tspath.RootedFilePath, 0, len(paths)+1)
 	seenRoots := map[tspath.PathKey]bool{}
 	for _, path := range paths {
@@ -147,10 +148,20 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 			}
 		}
 	}
+	if projectConfig != nil && len(projectConfig.ProjectReferences()) != 0 {
+		projectRoots, owners, referenceError := projectSourceRoots(fs, projectConfig)
+		if referenceError != nil {
+			return nil, referenceError
+		}
+		projectOwners = owners
+		checkRoots = append(projectRoots, roots...)
+		options = sourceProgramOptions(options, checkRoots)
+	}
+	checkRoots = uniqueSourceRoots(fs, checkRoots)
 	checkRoots = append(checkRoots, preludePath)
 	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
 	if projectConfig != nil {
-		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), currentDirectory.ResolveDirectory(filepath.Dir(projectConfig.ConfigFileName().AsString())), fileSystem.CaseSensitivity())
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory.ResolveDirectory(filepath.Dir(projectConfig.ConfigFileName().AsString())), fileSystem.CaseSensitivity())
 		config.ConfigFile = projectConfig.ConfigFile
 	}
 	// A fresh cache preserves the prelude rebuild used by project console discovery.
@@ -192,7 +203,7 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 	if project != "" {
 		report := &ProjectOptionReport{}
 		if !alreadyStricter(options) {
-			report, err = auditProjectOptions(context.Background(), project, fs, ownedRoots)
+			report, err = auditProjectOptions(context.Background(), project, fs, checkRoots)
 			if err != nil {
 				return nil, err
 			}
@@ -226,7 +237,7 @@ func loadInput(paths []string, overlay map[string]string) (*Program, error) {
 			if _, isAdamic := fs.adamicFile(file.FileName()); isAdamic {
 				return nil, fmt.Errorf("load: mixed .a and project .ts checking is not implemented: %s", loaded.FileName(file))
 			}
-			if owner := nearestProject(file.FileName().AsString()); owner != project {
+			if owner := nearestProject(file.FileName().AsString()); owner != project && !projectOwners[owner] {
 				return nil, fmt.Errorf("load: separate checker ownership is not implemented for %s (project %s)", loaded.FileName(file), owner)
 			}
 		}
