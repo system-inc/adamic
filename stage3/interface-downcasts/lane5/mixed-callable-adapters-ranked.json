@@ -1,0 +1,338 @@
+{
+  "method": "Explicit scalar/boxed unions in callable slots, including nested callback slots; aliases and producer-side variance unresolved; candidate counts only",
+  "inventories": {
+    "static": {
+      "candidate_pairs": 5,
+      "candidate_reads": 10,
+      "rows": [
+        {
+          "rank": 69,
+          "type": "Map<Path, string | false>",
+          "field": "get",
+          "reads": 4,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | false | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 537,
+            "column": 23,
+            "start": 17648,
+            "end": 17665,
+            "text": "readFileCache.get"
+          }
+        },
+        {
+          "rank": 94,
+          "type": "Map<Path, string | false> | undefined",
+          "field": "get",
+          "reads": 3,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | false | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/builderState.ts",
+            "line": 320,
+            "column": 59,
+            "start": 12334,
+            "end": 12362,
+            "text": "oldState!.oldSignatures?.get"
+          }
+        },
+        {
+          "rank": 265,
+          "type": "Map<string, string | number>",
+          "field": "forEach",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | number"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/executeCommandLine.ts",
+            "line": 406,
+            "column": 21,
+            "start": 14202,
+            "end": 14221,
+            "text": "option.type.forEach"
+          }
+        },
+        {
+          "rank": 266,
+          "type": "Map<string, string | number>",
+          "field": "get",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | number | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 3869,
+            "column": 17,
+            "start": 162398,
+            "end": 162410,
+            "text": "opt.type.get"
+          }
+        },
+        {
+          "rank": 294,
+          "type": "Map<Path, string | false>",
+          "field": "set",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | false"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 543,
+            "column": 9,
+            "start": 17946,
+            "end": 17963,
+            "text": "readFileCache.set"
+          }
+        }
+      ]
+    },
+    "unknown_fallback": {
+      "candidate_pairs": 13,
+      "candidate_reads": 69,
+      "rows": [
+        {
+          "rank": 53,
+          "type": "NodeFactory",
+          "field": "createNumericLiteral",
+          "reads": 32,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | number"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/utilities.ts",
+            "line": 10949,
+            "column": 89
+          }
+        },
+        {
+          "rank": 87,
+          "type": "JSON",
+          "field": "stringify",
+          "reads": 19,
+          "slots": [
+            {
+              "position": "parameter space",
+              "union": "string | number | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/debug.ts",
+            "line": 274,
+            "column": 173
+          }
+        },
+        {
+          "rank": 417,
+          "type": "Map<Path, string | false>",
+          "field": "get",
+          "reads": 4,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | false | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 537,
+            "column": 23
+          }
+        },
+        {
+          "rank": 558,
+          "type": "Map<Path, string | false> | undefined",
+          "field": "get",
+          "reads": 3,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | false | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/builderState.ts",
+            "line": 320,
+            "column": 59
+          }
+        },
+        {
+          "rank": 795,
+          "type": "InvokeMap",
+          "field": "get",
+          "reads": 2,
+          "slots": [
+            {
+              "position": "result",
+              "union": "true | string[] | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/sys.ts",
+            "line": 711,
+            "column": 30
+          }
+        },
+        {
+          "rank": 796,
+          "type": "InvokeMap",
+          "field": "set",
+          "reads": 2,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "true | string[]"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/sys.ts",
+            "line": 720,
+            "column": 29
+          }
+        },
+        {
+          "rank": 1268,
+          "type": "(string | number | boolean)[]",
+          "field": "map",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | number | boolean"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 2949,
+            "column": 24
+          }
+        },
+        {
+          "rank": 1403,
+          "type": "EmitResolver",
+          "field": "getConstantValue",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | number | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 2744,
+            "column": 86
+          }
+        },
+        {
+          "rank": 1624,
+          "type": "Map<Path, string | false>",
+          "field": "set",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | false"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/program.ts",
+            "line": 543,
+            "column": 9
+          }
+        },
+        {
+          "rank": 1829,
+          "type": "Map<string, string | number>",
+          "field": "forEach",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | number"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/executeCommandLine.ts",
+            "line": 406,
+            "column": 21
+          }
+        },
+        {
+          "rank": 1830,
+          "type": "Map<string, string | number>",
+          "field": "get",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "result",
+              "union": "string | number | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 3869,
+            "column": 17
+          }
+        },
+        {
+          "rank": 2134,
+          "type": "Process",
+          "field": "exit",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter code",
+              "union": "string | number | null | undefined"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/sys.ts",
+            "line": 1588,
+            "column": 42
+          }
+        },
+        {
+          "rank": 2646,
+          "type": "readonly (string | number)[]",
+          "field": "map",
+          "reads": 1,
+          "slots": [
+            {
+              "position": "parameter value",
+              "union": "string | number"
+            }
+          ],
+          "witness": {
+            "file": "src/compiler/commandLineParser.ts",
+            "line": 2815,
+            "column": 42
+          }
+        }
+      ]
+    }
+  }
+}
