@@ -1,0 +1,10 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10514
+// Step 12: adaptation 52 checked read with remainder
+import { fail } from "./fail.a";
+
+const segments = new Uint16Array(1);
+segments[0] = 65535;
+const segment = 0;
+const mod10 = 9;
+const newSegment = mod10 << 16 | (segments[segment] ?? fail("stage3: missing dense element"));
+console.log(`${newSegment}`);

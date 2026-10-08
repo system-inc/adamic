@@ -1,0 +1,12 @@
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10515
+// From TypeScript 6.0.3, src/compiler/utilities.ts:10516
+// Step 12: quotient store and Uint16 wrap
+const segments = new Uint16Array(1);
+const segment = 0;
+const newSegment = 655359;
+const segmentValue = (newSegment / 10) | 0;
+segments[segment] = segmentValue;
+console.log(`${segments[0]}`);
+// Supplemental conversion edge: same store operation, outside scanner digits.
+segments[segment] = 65536;
+console.log(`${segments[0]}`);

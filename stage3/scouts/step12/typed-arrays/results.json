@@ -1,0 +1,518 @@
+[
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/typed-arrays/witnesses/01_constructor.a:5:60: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+    },
+    "file": "witnesses/01_constructor.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n2\n0\n0\n3\n0\n0\n",
+      "stderr": ""
+    },
+    "outcome": "Refused",
+    "mutant": {
+      "change": {
+        "before": "(bitsNeeded & 15 ? 1 : 0)",
+        "after": "(bitsNeeded & 15 ? 0 : 0)"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\nundefined\nundefined\n0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n3\n0\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /tmp/adamic-gate/step12-mutants-9esfchbd/01_constructor.a:5:60: Adamic 0.1 refuses a number as a condition; compare it explicitly, like name.length > 0 or count !== 0\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "stage3/scouts/step12/typed-arrays/witnesses/02_or_store.a:6:1: error TS2532: Object is possibly 'undefined'.\n"
+    },
+    "file": "witnesses/02_or_store.a",
+    "node": {
+      "exit": 0,
+      "stdout": "61440\n0\n",
+      "stderr": ""
+    },
+    "outcome": "Checker",
+    "mutant": {
+      "change": {
+        "before": "segments[segment] |= shiftedDigit;",
+        "after": "segments[segment] |= 0;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "/tmp/adamic-gate/step12-mutants-9esfchbd/02_or_store.a:6:1: error TS2532: Object is possibly 'undefined'.\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "stage3/scouts/step12/typed-arrays/witnesses/03_residual_store.a:8:15: error TS2532: Object is possibly 'undefined'.\n"
+    },
+    "file": "witnesses/03_residual_store.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0\n3\n",
+      "stderr": ""
+    },
+    "outcome": "Checker",
+    "mutant": {
+      "change": {
+        "before": "segments[segment + 1] |= residual;",
+        "after": "segments[segment] |= residual;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "3\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "/tmp/adamic-gate/step12-mutants-9esfchbd/03_residual_store.a:8:15: error TS2532: Object is possibly 'undefined'.\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "2\n3\n2\n",
+      "stderr": ""
+    },
+    "file": "witnesses/04_length.a",
+    "node": {
+      "exit": 0,
+      "stdout": "2\n3\n2\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "segments.length - 1",
+        "after": "segments.length"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "3\n3\n3\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "3\n3\n3\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "2\n3\n2\n",
+      "stderr": "adamic: counts: allocations 7 frees 7 retains 1 releases 9 peak 3 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "2\n3\n2\n",
+      "stderr": ""
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "655359\n",
+      "stderr": ""
+    },
+    "file": "witnesses/05_read.a",
+    "node": {
+      "exit": 0,
+      "stdout": "655359\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "mod10 << 16",
+        "after": "mod10 << 15"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "327679\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "327679\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "655359\n",
+      "stderr": "adamic: counts: allocations 3 frees 3 retains 1 releases 5 peak 3 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "655359\n",
+      "stderr": ""
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "65535\n0\n",
+      "stderr": ""
+    },
+    "file": "witnesses/06_write.a",
+    "node": {
+      "exit": 0,
+      "stdout": "65535\n0\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "segments[segment] = segmentValue;",
+        "after": "segments[segment] = segmentValue + 1;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "0\n0\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "65535\n0\n",
+      "stderr": "adamic: counts: allocations 5 frees 5 retains 2 releases 8 peak 3 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "65535\n0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/typed-arrays/witnesses/07_checked_or_store.a:9:43: stage 0 can't lower a void call used as a value yet\n"
+    },
+    "file": "witnesses/07_checked_or_store.a",
+    "node": {
+      "exit": 0,
+      "stdout": "32768\n3\n",
+      "stderr": ""
+    },
+    "outcome": "NotYet",
+    "mutant": {
+      "change": {
+        "before": "| shiftedDigit;",
+        "after": "| 0;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\n3\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /tmp/adamic-gate/step12-mutants-9esfchbd/07_checked_or_store.a:9:43: stage 0 can't lower a void call used as a value yet\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/typed-arrays/witnesses/08_checked_read.a:9:56: stage 0 can't lower a void call used as a value yet\n"
+    },
+    "file": "witnesses/08_checked_read.a",
+    "node": {
+      "exit": 0,
+      "stdout": "655359\n",
+      "stderr": ""
+    },
+    "outcome": "NotYet",
+    "mutant": {
+      "change": {
+        "before": "mod10 << 16",
+        "after": "mod10 << 15"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "327679\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /tmp/adamic-gate/step12-mutants-9esfchbd/08_checked_read.a:9:56: stage 0 can't lower a void call used as a value yet\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/stage3/scouts/step12/typed-arrays/witnesses/09_parse_pseudo_bigint.a:41:67: Adamic 0.1 refuses the comma operator; write each expression as its own statement\n"
+    },
+    "file": "witnesses/09_parse_pseudo_bigint.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0b0n\n0\n0x1234n\n4660\n0XFFFFn\n65535\n0xffffffffffffffffn\n18446744073709551615\n0o777777n\n262143\n0o777777777777777777777777n\n4722366482869645213695\n0b10000000000000000n\n65536\n000123n\n123\n000n\n0\n",
+      "stderr": ""
+    },
+    "outcome": "Refused",
+    "mutant": {
+      "change": {
+        "before": "const residual = shiftedDigit >>> 16;",
+        "after": "const residual = 0;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0b0n\n0\n0x1234n\n4660\n0XFFFFn\n65535\n0xffffffffffffffffn\n18446744073709551615\n0o777777n\n65535\n0o777777777777777777777777n\n4667026250644221394943\n0b10000000000000000n\n65536\n000123n\n123\n000n\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 1,
+          "stdout": "",
+          "stderr": "adamic: /tmp/adamic-gate/step12-mutants-9esfchbd/09_parse_pseudo_bigint.a:41:67: Adamic 0.1 refuses the comma operator; write each expression as its own statement\n"
+        }
+      },
+      "caughtBy": "Node stdout comparison; native blocked, no native mutation proof"
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "66\n2\n66\n67\n",
+      "stderr": ""
+    },
+    "file": "witnesses/10_subarray_control.a",
+    "node": {
+      "exit": 0,
+      "stdout": "66\n2\n66\n67\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "view[0] = 66;",
+        "after": "view[0] = 65;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "65\n2\n65\n67\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "65\n2\n65\n67\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "66\n2\n66\n67\n",
+      "stderr": "adamic: counts: allocations 10 frees 10 retains 5 releases 16 peak 4 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "66\n2\n66\n67\n",
+      "stderr": ""
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n2\n0\n0\n3\n0\n0\n",
+      "stderr": ""
+    },
+    "file": "witnesses/11_constructor_boolean_control.a",
+    "node": {
+      "exit": 0,
+      "stdout": "0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n2\n0\n0\n3\n0\n0\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "((bitsNeeded & 15) !== 0 ? 1 : 0)",
+        "after": "((bitsNeeded & 15) !== 0 ? 0 : 0)"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\nundefined\nundefined\n0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n3\n0\n0\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "0\nundefined\nundefined\n0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n3\n0\n0\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n2\n0\n0\n3\n0\n0\n",
+      "stderr": "adamic: counts: allocations 33 frees 33 retains 0 releases 35 peak 3 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "0\nundefined\nundefined\n1\n0\n0\n1\n0\n0\n2\n0\n0\n3\n0\n0\n",
+      "stderr": ""
+    }
+  },
+  {
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "run": {
+      "exit": 0,
+      "stdout": "32768\n3\n",
+      "stderr": ""
+    },
+    "file": "witnesses/12_dense_or_control.a",
+    "node": {
+      "exit": 0,
+      "stdout": "32768\n3\n",
+      "stderr": ""
+    },
+    "outcome": "Matches",
+    "mutant": {
+      "change": {
+        "before": "| shiftedDigit;",
+        "after": "| 0;"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\n3\n",
+        "stderr": ""
+      },
+      "native": {
+        "build": {
+          "exit": 0,
+          "stdout": "",
+          "stderr": ""
+        },
+        "run": {
+          "exit": 0,
+          "stdout": "0\n3\n",
+          "stderr": ""
+        }
+      },
+      "caughtBy": "Node stdout comparison and native stdout comparison"
+    },
+    "count": {
+      "exit": 0,
+      "stdout": "32768\n3\n",
+      "stderr": "adamic: counts: allocations 5 frees 5 retains 2 releases 8 peak 3 regions 0\n"
+    },
+    "sanitize": {
+      "exit": 0,
+      "stdout": "32768\n3\n",
+      "stderr": ""
+    }
+  }
+]

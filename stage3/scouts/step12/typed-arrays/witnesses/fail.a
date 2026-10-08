@@ -1,0 +1,2 @@
+// Minimal dependency for adaptation 52: same throwing never result.
+export function fail(message: string): never { throw new Error(message); }
