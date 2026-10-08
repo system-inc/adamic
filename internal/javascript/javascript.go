@@ -463,7 +463,7 @@ func (e *emitter) statement(at *ir.Statement) {
 	case ir.Break:
 		e.line("break %s;", e.breakables[len(e.breakables)-1-statement.Depth])
 	case ir.Continue:
-		e.line("break %s;", e.continues[len(e.continues)-1])
+		e.line("break %s;", e.continues[len(e.continues)-1-statement.Depth])
 	case ir.Throw:
 		e.line("throw %s;", e.value(statement.Value))
 	case ir.Try:

@@ -653,3 +653,38 @@ func TestAsyncFinallyPendingValueMutant(t *testing.T) {
 	}
 	t.Log("dropped pending return payload caught by Node stdout; sanitizer and leak checks clean")
 }
+
+func TestAsyncLabelInnerTargetMutant(t *testing.T) {
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/async_labels.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	changed := 0
+	mutateFallthroughStatements(reflect.ValueOf(&program.Functions).Elem(), func(statement ir.Statement) ir.Statement {
+		jump, ok := statement.(ir.Continue)
+		if ok && jump.Depth > 0 {
+			jump.Depth = 0
+			changed++
+			return jump
+		}
+		return statement
+	})
+	if changed == 0 {
+		t.Fatal("no outer continue mutated")
+	}
+	observed, sanitized := natively(t, program)
+	if observed.exitCode != 0 || len(observed.stderr) != 0 {
+		t.Fatalf("mutant must run cleanly: %+v", observed)
+	}
+	if difference := disagreement(onNode(t, path), observed); difference != "stdout differs" {
+		t.Fatalf("inner-label mutant survived: %s", difference)
+	}
+	if report := leaks(t, program, sanitized); report != "" {
+		t.Fatalf("mutant leaks: %s", report)
+	}
+	t.Log("inner continue target caught by Node stdout; sanitizer and leak checks clean")
+}

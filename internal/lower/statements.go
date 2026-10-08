@@ -83,6 +83,13 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 		for statement.Kind == ast.KindLabeledStatement {
 			statement = statement.AsLabeledStatement().Statement
 		}
+		if statement.Kind == ast.KindBlock {
+			body, err := l.statement(statement)
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Switch{Value: ir.BooleanConstant{Value: true}, Default: body}}, nil
+		}
 		if statement.Kind != ast.KindSwitchStatement && !ast.IsIterationStatement(statement, false) {
 			return nil, l.notYet(node, "a label on a statement other than a loop or switch")
 		}
@@ -90,12 +97,12 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 	case ast.KindBreakStatement, ast.KindContinueStatement:
 		if node.Label() != nil {
 			if node.Kind == ast.KindContinueStatement {
-				return nil, l.notYet(node, "a labeled continue")
+				return l.labeledContinue(node)
 			}
 			return l.labeledBreak(node)
 		}
 		if node.Kind == ast.KindBreakStatement {
-			return []ir.Statement{ir.Break{}}, nil
+			return l.labeledBreak(node)
 		}
 		return []ir.Statement{ir.Continue{}}, nil
 	case ast.KindThrowStatement:

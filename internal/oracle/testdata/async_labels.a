@@ -1,0 +1,48 @@
+async function loops(): Promise<void> {
+    outer: for (let i = 0; i < 3; i++) {
+        inner: for (let j = 0; j < 2; j++) {
+            await Promise.resolve();
+            console.log(`loop${i}:${j}`);
+            continue outer;
+        }
+        console.log('missed continue');
+    }
+    outerArray: for (const item of [1, 2]) {
+        for (const next of [3, 4]) {
+            await Promise.resolve();
+            switch (next) {
+                case 3: console.log(`array${item}:${next}`); continue outerArray;
+                default: console.log('inner continue');
+            }
+        }
+    }
+}
+async function blocks(): Promise<void> {
+    box: alias: {
+        await Promise.resolve();
+        console.log('block');
+        break box;
+        console.log('missed block break');
+    }
+    console.log('after block');
+    for (let i = 0; i < 2; i++) {
+        box: {
+            await Promise.resolve();
+            console.log(`unlabeled${i}`);
+            break;
+        }
+        console.log('missed loop break');
+    }
+    outer: for (let i = 0; i < 2; i++) {
+        block: {
+            switch (i) {
+                case 0: await Promise.resolve(); continue outer;
+                default: console.log(`switch${i}`); break block;
+            }
+            console.log('missed switch break');
+        }
+        console.log(`tail${i}`);
+    }
+}
+await loops();
+await blocks();

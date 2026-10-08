@@ -33,7 +33,6 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 	t.Parallel()
 	for _, probe := range []struct{ source, want string }{
 		{"async function f(): Promise<void> { outer: while (true) { for (const item of [1, 2]) { await Promise.resolve(); break outer; } } }\nawait f();", "async for-of labeled outer break"},
-		{"async function f(): Promise<void> { outer: for (const item of [1, 2]) { await Promise.resolve(); continue outer; } }\nawait f();", "a labeled continue"},
 		{"import { parallelMap } from 'adamic'; async function f(): Promise<string> { const extra = 3; await Promise.resolve(); const items: readonly number[] = [1,2]; return parallelMap(items, item => item + extra).join(','); } console.log(await f());", "pool tasks capturing an async environment"},
 		{"async function f(): Promise<void> { await new Promise<void>(() => {}); }\nawait f();", "Promise executors"},
 		{"async function f(): Promise<void> { await Promise.all([Promise.resolve(1)]); }\nawait f();", "Promise.all"},

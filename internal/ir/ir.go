@@ -1167,8 +1167,9 @@ type (
 
 	// Depth counts the enclosing loops and switches skipped by a labeled break.
 	// Zero is the innermost breakable, as for an unlabeled break.
-	Break    struct{ Depth int }
-	Continue struct{}
+	Break struct{ Depth int }
+	// Continue depth counts enclosing loops skipped, excluding switches and labeled blocks.
+	Continue struct{ Depth int }
 
 	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).

@@ -64,6 +64,18 @@ func (c *asyncCompletion) abrupt(statement ir.Statement, target int) []ir.Statem
 	if _, ok := statement.(ir.Break); ok {
 		statement = ir.Break{Depth: c.depth(target)}
 	}
+	if _, ok := statement.(ir.Continue); ok {
+		skipped := 0
+		for i := len(c.emitted) - 1; i >= 0; i-- {
+			if c.emitted[i] == target {
+				statement = ir.Continue{Depth: skipped}
+				break
+			}
+			if c.loops[c.emitted[i]] {
+				skipped++
+			}
+		}
+	}
 	return []ir.Statement{statement}
 }
 func (c *asyncCompletion) statements(body []ir.Statement) []ir.Statement {
@@ -78,8 +90,13 @@ func (c *asyncCompletion) statements(body []ir.Statement) []ir.Statement {
 			continue
 		case ir.Continue:
 			target := 0
+			skipped := value.Depth
 			for i := len(c.source) - 1; i >= 0; i-- {
 				if c.loops[c.source[i]] {
+					if skipped > 0 {
+						skipped--
+						continue
+					}
 					target = c.source[i]
 					break
 				}
