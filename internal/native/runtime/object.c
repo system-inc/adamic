@@ -3,6 +3,7 @@
 #include "adamic.h"
 #include "view_nullish.h"
 #include "view_unions_mixed.h"
+#include "view_set_intrinsics.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -202,6 +203,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
 // checked before reading any union member, including before following a possible reference.
 adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
+	if (object != NULL && object->heap.kind == adamic_kind_map) { return adamic_view_set_field((const adamic_map *)object, name, wanted, type, expression, false); }
 	const adamic_object *owner = NULL;
 	adamic_value *slot = adamic_object_read_mode(object, name, cache, expression, type, &owner);
 	if (wanted == 14) wanted = 4;
@@ -277,6 +279,9 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 // Optional views share the required-field validator after proving presence. An
 // absent slot or undefined payload must never be interpreted as numeric bits.
 static adamic_value object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
+ if (object != NULL && object->heap.kind == adamic_kind_map) {
+  return adamic_view_set_field((const adamic_map *)object, name, wanted, type, expression, absent);
+ }
  adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
  // Optional chaining permits a missing receiver, not a missing required field.
  bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
