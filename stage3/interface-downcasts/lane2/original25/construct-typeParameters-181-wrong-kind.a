@@ -1,0 +1,10 @@
+import type { ConstructSignatureDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as ConstructSignatureDeclaration;
+ const items = viewed.typeParameters;
+ if (items === undefined) return;
+ console.log(typeof items[0]);
+}
+const raw = { kind: 181, typeParameters: [42] };
+read(raw);

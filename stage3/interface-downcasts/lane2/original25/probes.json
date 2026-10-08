@@ -1,0 +1,438 @@
+[
+  {
+    "name": "accessor-parameters-178-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-lazy",
+    "source": "178\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "GetAccessorDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-178-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "GetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "accessor-parameters-179-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "SetAccessorDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-lazy",
+    "source": "180\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-parameters-180-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-lazy",
+    "source": "180\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found number",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected TypeParameterDeclaration, found number",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "CallSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "call-typeParameters-180-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "CallSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-lazy",
+    "source": "181\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.parameters is not a NodeArray<ParameterDeclaration>; expected NodeArray<ParameterDeclaration>, found number",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected ParameterDeclaration, found number",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-parameters-181-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "ParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-good",
+    "source": "1:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-lazy",
+    "source": "181\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-wrong-array",
+    "source": "number\n",
+    "diagnostic": "field read failed: viewed.typeParameters matches no member of NodeArray<TypeParameterDeclaration> | undefined; expected NodeArray<TypeParameterDeclaration> | undefined, found number",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-wrong-pos",
+    "source": "bad\n",
+    "diagnostic": "field read failed: items[0]!.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-missing-pos",
+    "source": "undefined\n",
+    "diagnostic": "field read failed: items[0]!.pos is not initialized; expected number, found missing",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-lazy-element",
+    "source": "2:7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-wrong-kind",
+    "source": "number\n",
+    "diagnostic": "element read failed: items[0] expected TypeParameterDeclaration, found number",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-map",
+    "source": "7\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-map-bad",
+    "source": "bad\n",
+    "diagnostic": "field read failed: item.pos is not a number; expected number, found string",
+    "contracts": [
+      "ConstructSignatureDeclaration",
+      "TypeParameterDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-absent",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  },
+  {
+    "name": "construct-typeParameters-181-undefined",
+    "source": "absent\n",
+    "diagnostic": "",
+    "contracts": [
+      "ConstructSignatureDeclaration"
+    ]
+  }
+]

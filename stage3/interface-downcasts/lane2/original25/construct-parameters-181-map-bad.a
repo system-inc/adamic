@@ -1,0 +1,9 @@
+import type { ConstructSignatureDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as ConstructSignatureDeclaration;
+ const items = viewed.parameters;
+ console.log(items.map(item => `${item.pos}`).join(';'));
+}
+const raw = { kind: 181, parameters: [{kind: 170, pos: 'bad'}] };
+read(raw);

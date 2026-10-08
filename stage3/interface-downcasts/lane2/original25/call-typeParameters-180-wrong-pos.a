@@ -1,0 +1,10 @@
+import type { CallSignatureDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as CallSignatureDeclaration;
+ const items = viewed.typeParameters;
+ if (items === undefined) return;
+ console.log(`${items[0]!.pos}`);
+}
+const raw = { kind: 180, typeParameters: [{kind: 169, pos: 'bad'}] };
+read(raw);

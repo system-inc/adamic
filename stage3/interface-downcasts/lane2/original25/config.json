@@ -1,0 +1,37 @@
+{
+  "targets": [
+    [
+      "AccessorDeclaration",
+      "parameters",
+      3
+    ],
+    [
+      "CallSignatureDeclaration",
+      "parameters",
+      3
+    ],
+    [
+      "CallSignatureDeclaration",
+      "typeParameters",
+      3
+    ],
+    [
+      "ConstructSignatureDeclaration",
+      "parameters",
+      3
+    ],
+    [
+      "ConstructSignatureDeclaration",
+      "typeParameters",
+      3
+    ]
+  ],
+  "fields": [
+    "CallSignatureDeclaration",
+    "ConstructSignatureDeclaration",
+    "GetAccessorDeclaration",
+    "ParameterDeclaration",
+    "SetAccessorDeclaration",
+    "TypeParameterDeclaration"
+  ]
+}

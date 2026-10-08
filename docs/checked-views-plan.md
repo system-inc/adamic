@@ -2761,3 +2761,7 @@ All three requested array joints and ranked group 23 are pushed. The next Source
 ### Lane 2 ranked group 24 mapper and flow arrays
 
 Original mapper sources/targets and FlowReduceLabelData antecedents are certified with complete declarations, 28 fixtures and ten executed mutants. Finishing controls and mutants pass leak checks. Lane 2 totals are 187 pairs / 2912 reads, remaining 147 / 277. SourceFile.amdDependencies is listed for lane 7 in stage3/interface-downcasts/lane2/INTERSECTION-HANDOFFS.md; independent ranked work continues. See stage3/interface-downcasts/lane2/RANKED24-ARRAYS-REPORT.md.
+
+### Lane 2 ranked group 25 signature arrays
+
+Five original accessor and signature array pairs / fifteen reads are certified with fifty fixtures and five executed element mutants. Finishing controls and mutants pass leak checks; complete original declarations are retained. Lane 2 totals are 192 pairs / 2927 reads, remaining 142 / 262. See stage3/interface-downcasts/lane2/RANKED25-ARRAYS-REPORT.md.

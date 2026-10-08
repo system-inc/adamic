@@ -1,0 +1,8 @@
+import type { AccessorDeclaration } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(base: Base): void {
+ const viewed = base as AccessorDeclaration;
+ console.log(typeof viewed.parameters);
+}
+const raw = { kind: 178, parameters: 7 };
+read(raw);
