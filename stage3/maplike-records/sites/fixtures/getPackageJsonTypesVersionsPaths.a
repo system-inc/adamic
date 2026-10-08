@@ -6,6 +6,10 @@ typesVersions['>=1'] = paths;
 for (const key in typesVersions) {
     if (key === '>=1') {
         const result = {version: key, paths: typesVersions[key]};
-        console.log(result.version, result.paths['*'].join(','));
+        const resultPaths = result.paths;
+        if (resultPaths !== undefined) {
+            const starPaths = resultPaths['*'];
+            if (starPaths !== undefined) console.log(result.version + ' ' + starPaths.join(','));
+        }
     }
 }

@@ -1,0 +1,10 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleNameResolver.ts:2712:24, moduleNameResolver.ts:2718:28, moduleNameResolver.ts:2724:28, moduleNameResolver.ts:2729:28
+interface MapLike<T> { [key: string]: T; }
+const lookupTable: unknown = {'./exact': './one' + String(1), './pattern/*': './two' + String(1), './directory/': './three' + String(1)};
+const moduleName = './exact';
+const target = (lookupTable as MapLike<unknown>)[moduleName];
+console.log(String(target));
+for (const potentialTarget of ['./pattern/*', './directory/', './missing']) {
+    const target = (lookupTable as MapLike<unknown>)[potentialTarget];
+    console.log(String(target));
+}

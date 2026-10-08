@@ -1,0 +1,8 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: moduleSpecifiers.ts:927:5, moduleSpecifiers.ts:928:35
+interface MapLike<T> { [key: string]: T; }
+const paths: MapLike<readonly string[]> = {};
+const name = '@name' + String(1); paths[name] = ['src/' + String(1), 'types/' + String(1)];
+paths['2'] = ['second'];
+for (const key in paths) {
+    for (const patternText of paths[key]) console.log(key + ':' + patternText);
+}

@@ -7,4 +7,4 @@ function hasProperty(map: MapLike<any>, key: string): boolean {
 const key = 'item' + String(1);
 const map: MapLike<string> = {'10': 'ten', '2': 'two', b: 'bee'};
 map[key] = 'made' + String(1);
-console.log(String(hasProperty(map, key)), String(hasProperty(map, 'missing')));
+console.log(String(hasProperty(map, key)) + ' ' + String(hasProperty(map, 'missing')));

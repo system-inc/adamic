@@ -6,14 +6,14 @@
     "function": "hasProperty",
     "static_calls": 36,
     "fixture": "stage3/maplike-records/sites/fixtures/hasProperty.a",
-    "adaptation": "Original any parameter and cached intrinsic retained; inputs specialize to a string dictionary.",
+    "adaptation": "Original any parameter and cached intrinsic retained; inputs specialize to a string dictionary. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
     "node": {
       "stdout": "true false\n",
       "stderr": "",
       "exit": 0
     },
-    "outcome": "Checker",
-    "diagnostic": "stage3/maplike-records/sites/fixtures/hasProperty.a:10:44: error TS2554: Expected 1 arguments, but got 2."
+    "outcome": "Compiles",
+    "diagnostic": ""
   },
   {
     "rank": 2,
@@ -310,13 +310,173 @@
     "function": "getPackageJsonTypesVersionsPaths",
     "static_calls": 2,
     "fixture": "stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a",
-    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
     "node": {
       "stdout": "\u003e=1 ts/1\n",
       "stderr": "",
       "exit": 0
     },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 21,
+    "batch": 3,
+    "source": "moduleNameResolver.ts:474:43",
+    "function": "getPackageJsonTypesVersionsPaths",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
+    "node": {
+      "stdout": "\u003e=1 ts/1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 22,
+    "batch": 3,
+    "source": "moduleNameResolver.ts:2712:24",
+    "function": "loadModuleFromExportsOrImports",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one1\n./two1\n./three1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 23,
+    "batch": 3,
+    "source": "moduleNameResolver.ts:2718:28",
+    "function": "loadModuleFromExportsOrImports",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one1\n./two1\n./three1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 24,
+    "batch": 3,
+    "source": "moduleNameResolver.ts:2724:28",
+    "function": "loadModuleFromExportsOrImports",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one1\n./two1\n./three1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 25,
+    "batch": 3,
+    "source": "moduleNameResolver.ts:2729:28",
+    "function": "loadModuleFromExportsOrImports",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "./one1\n./two1\n./three1\nundefined\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Refused",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+  },
+  {
+    "rank": 26,
+    "batch": 3,
+    "source": "moduleSpecifiers.ts:927:5",
+    "function": "tryGetModuleNameFromPaths",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "2:second\n@name1:src/1\n@name1:types/1\n",
+      "stderr": "",
+      "exit": 0
+    },
     "outcome": "Checker",
-    "diagnostic": "stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS18048: 'result.paths' is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS2532: Object is possibly 'undefined'.\nstage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS2554: Expected 1 arguments, but got 2."
+    "diagnostic": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a:7:31: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 27,
+    "batch": 3,
+    "source": "moduleSpecifiers.ts:928:35",
+    "function": "tryGetModuleNameFromPaths",
+    "static_calls": 2,
+    "fixture": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a",
+    "adaptation": "Indexed expression and receiver type retained; host/path/trace helpers removed and lookup results consumed directly. getOwnKeys reduced to Object.keys where used, so this does not prove the removed helper.",
+    "node": {
+      "stdout": "2:second\n@name1:src/1\n@name1:types/1\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a:7:31: error TS2532: Object is possibly 'undefined'."
+  },
+  {
+    "rank": 28,
+    "batch": 3,
+    "source": "commandLineParser.ts:3322:22",
+    "function": "getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate.a",
+    "adaptation": "Same array check/read and lazy copied-record write; assign replaced with object spread and host template substitution with string replace. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
+    "node": {
+      "stdout": "root/src,other ${configDir}/src,other\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 29,
+    "batch": 3,
+    "source": "commandLineParser.ts:3323:77",
+    "function": "getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate.a",
+    "adaptation": "Same array check/read and lazy copied-record write; assign replaced with object spread and host template substitution with string replace. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
+    "node": {
+      "stdout": "root/src,other ${configDir}/src,other\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 30,
+    "batch": 3,
+    "source": "commandLineParser.ts:3325:9",
+    "function": "getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getSubstitutedMapLikeOfStringArrayWithConfigDirTemplate.a",
+    "adaptation": "Same array check/read and lazy copied-record write; assign replaced with object spread and host template substitution with string replace. Observation prints combine arguments into one string and guard optional values; recorded Node bytes stay unchanged.",
+    "node": {
+      "stdout": "root/src,other ${configDir}/src,other\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
   }
 ]

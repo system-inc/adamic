@@ -1,0 +1,15 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: commandLineParser.ts:3322:22, commandLineParser.ts:3323:77, commandLineParser.ts:3325:9
+interface MapLike<T> { [key: string]: T; }
+const mapLike: MapLike<string[]> = {};
+const name = 'path' + String(1); mapLike[name] = ['${configDir}/src', 'other'];
+let result: MapLike<string[]> | undefined;
+for (const key in mapLike) {
+    if (!Array.isArray(mapLike[key])) continue;
+    const subStitution = mapLike[key].map(value => value.replace('${configDir}', 'root'));
+    (result ??= {...mapLike})[key] = subStitution;
+}
+if (result !== undefined) {
+    const after = result[name];
+    const before = mapLike[name];
+    if (after !== undefined && before !== undefined) console.log(after.join(',') + ' ' + before.join(','));
+}

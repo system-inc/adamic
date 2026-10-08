@@ -1,6 +1,6 @@
-Built: Step 22 (#p9v82wa), source reductions for 20 of 56 MapLike and Record operation sites, in static-use order.
+Built: Step 22 (#p9v82wa), source reductions for 30 of 56 MapLike and Record operation sites, in static-use order.
 Commits: continued from e379d2321c081e0e3b02a0dad326eb1a7b3d9a8a on codex/maplike-records; delivery tips are reported after each batch push.
-Commands and outputs: 4 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 10 stop in the checker, 3 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
+Commands and outputs: 10 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 10 stop in the checker, 7 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
 Mutants: removing an integer dictionary input is caught only by Node stdout in both backends, with valid builds, exit 0 and clean leaks; the earlier step 22 ordering and entries omission mutants remain available.
 Not covered: complete tsc functions, host filesystem/package resolution, runtime frequency, or backends for reductions that stop before emission; the full gate was not run.
 
@@ -24,7 +24,7 @@ The evidence log for each batch names every outcome. Compiles means its Node std
 
 | Rank | Static calls | Source | Result | First stop |
 | --- | --- | --- | --- | --- |
-| 1 | 36 | core.ts:1267:12 | Checker | stage3/maplike-records/sites/fixtures/hasProperty.a:10:44: error TS2554: Expected 1 arguments, but got 2. |
+| 1 | 36 | core.ts:1267:12 | Compiles |  |
 | 2 | 13 | core.ts:1289:5 | Compiles |  |
 | 3 | 13 | core.ts:1290:13 | Compiles |  |
 | 4 | 7 | moduleNameResolver.ts:2820:43 | Refused | stage3/maplike-records/sites/fixtures/loadModuleFromTargetExportOrImport.a:7:28: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
@@ -43,6 +43,18 @@ The evidence log for each batch names every outcome. Compiles means its Node std
 | 17 | 2 | commandLineParser.ts:2693:17 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
 | 18 | 2 | commandLineParser.ts:2693:50 | Checker | stage3/maplike-records/sites/fixtures/convertToTSConfig.a:12:21: error TS2532: Object is possibly 'undefined'. |
 | 19 | 2 | commandLineParser.ts:2707:25 | NotYet | stage3/maplike-records/sites/fixtures/optionDependsOnRecursive.a:13:16: stage 0 can't lower a call through ?. (an optional call) yet |
-| 20 | 2 | moduleNameResolver.ts:464:5 | Checker | stage3/maplike-records/sites/fixtures/getPackageJsonTypesVersionsPaths.a:9:37: error TS18048: 'result.paths' is possibly 'undefined'. |
+| 20 | 2 | moduleNameResolver.ts:464:5 | Compiles |  |
+| 21 | 2 | moduleNameResolver.ts:474:43 | Compiles |  |
+| 22 | 2 | moduleNameResolver.ts:2712:24 | Refused | stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 23 | 2 | moduleNameResolver.ts:2718:28 | Refused | stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 24 | 2 | moduleNameResolver.ts:2724:28 | Refused | stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 25 | 2 | moduleNameResolver.ts:2729:28 | Refused | stage3/maplike-records/sites/fixtures/loadModuleFromExportsOrImports.a:5:17: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast) |
+| 26 | 2 | moduleSpecifiers.ts:927:5 | Checker | stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a:7:31: error TS2532: Object is possibly 'undefined'. |
+| 27 | 2 | moduleSpecifiers.ts:928:35 | Checker | stage3/maplike-records/sites/fixtures/tryGetModuleNameFromPaths.a:7:31: error TS2532: Object is possibly 'undefined'. |
+| 28 | 1 | commandLineParser.ts:3322:22 | Compiles |  |
+| 29 | 1 | commandLineParser.ts:3323:77 | Compiles |  |
+| 30 | 1 | commandLineParser.ts:3325:9 | Compiles |  |
 
 The concrete Node observations and each reduction adaptation are in results.json.
+
+Observation corrections in batch 3: ranks 1, 20, 21, 28, 29 and 30 now compile after prints were combined into single arguments and optional output reads were guarded. The source operations were retained and all recorded Node bytes stayed unchanged. Their prior checker stops were artifacts of the reductions, not compiler failures on those source operations. See evidence/observer-corrections.log.
