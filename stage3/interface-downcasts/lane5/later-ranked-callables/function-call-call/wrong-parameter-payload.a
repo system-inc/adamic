@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface CallExpression {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ImportClause {readonly value:number;}
+interface Expression {readonly value:number;}
+interface ImportAttributes {readonly value:number;}
+interface Node {readonly value:number;}
+interface Base {readonly createFunctionCallCall:unknown;}
+interface Target {createFunctionCallCall(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]): CallExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createFunctionCallCall({value:1},{value:2},[{value:3}]).value}`);}
+probe({createFunctionCallCall:(target:{readonly value:string},thisArg:Expression,argumentsList:readonly Expression[])=>({value:target.value})});

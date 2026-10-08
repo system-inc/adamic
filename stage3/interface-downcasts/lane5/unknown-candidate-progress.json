@@ -1945,6 +1945,93 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "import-call-partial-inequality",
+      "pairs": 4,
+      "candidateReads": 37,
+      "members": [
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createImportDeclaration",
+          "declared_types": [
+            "(modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes?: ImportAttributes | undefined) => ImportDeclaration"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 10,
+          "witness": {
+            "file": "src/compiler/factory/utilities.ts",
+            "line": 732,
+            "column": 62
+          },
+          "rank": 173,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createFunctionCallCall",
+          "declared_types": [
+            "(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]) => CallExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/transformers/classFields.ts",
+            "line": 1375,
+            "column": 32
+          },
+          "rank": 185,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createPartiallyEmittedExpression",
+          "declared_types": [
+            "(expression: Expression, original?: Node | undefined) => PartiallyEmittedExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/transformers/ts.ts",
+            "line": 966,
+            "column": 27
+          },
+          "rank": 187,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createStrictInequality",
+          "declared_types": [
+            "(left: Expression, right: Expression) => BinaryExpression"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 9,
+          "witness": {
+            "file": "src/compiler/factory/nodeFactory.ts",
+            "line": 6479,
+            "column": 33
+          },
+          "rank": 188,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; leaks and executable callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

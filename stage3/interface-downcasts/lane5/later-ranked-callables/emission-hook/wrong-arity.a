@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type EmitHint=number;
+interface Node {readonly value:number;}
+interface Base {readonly onEmitNode:unknown;}
+interface Target {onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;}
+function probe(value:Base):void {const context=value as Target;const previousOnEmitNode=context.onEmitNode;previousOnEmitNode(1,{value:3},(hint:EmitHint,node:Node):void=>{console.log(`${hint+node.value}`);});}
+probe({onEmitNode:():void=>{console.log("9");}});

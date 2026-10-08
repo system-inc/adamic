@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface ImportDeclaration {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ImportClause {readonly value:number;}
+interface Expression {readonly value:number;}
+interface ImportAttributes {readonly value:number;}
+interface Node {readonly value:number;}
+interface Base {readonly createImportDeclaration:unknown;}
+interface Target {createImportDeclaration(modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes?: ImportAttributes): ImportDeclaration;}
+function probe(value:Base):void {const nodeFactory=value as Target;console.log(`${nodeFactory.createImportDeclaration([{value:1}],{value:2},{value:3},{value:4}).value}`);}
+probe({createImportDeclaration:3});

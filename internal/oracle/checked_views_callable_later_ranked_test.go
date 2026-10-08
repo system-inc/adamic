@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"import-declaration", "createImportDeclaration", "10\n", "3\n3\n10\n", "0", "moduleSpecifier.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"function-call-call", "createFunctionCallCall", "6\n", "3\n6\n", "0", "target.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"partial-expression", "createPartiallyEmittedExpression", "7\n", "3\n3\n7\n", "0", "expression.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"strict-inequality", "createStrictInequality", "7\n", "", "0", "left.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"parameter-update", "updateParameterDeclaration", "28\n", "5\n5\n5\n4\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"property-update", "updatePropertyDeclaration", "25\n", "5\n5\n5\n5\n5\n5\n5\n4\n9\n", "0", "node.value", "1\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"resolution-settings", "getCompilationSettings", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},

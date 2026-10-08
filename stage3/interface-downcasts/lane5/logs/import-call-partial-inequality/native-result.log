@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.87s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-declaration/wrong-result (0.55s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node miss
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: nodeFactory.createImportDeclaration([{value:1}],{value:2},{value:3},{value:4}).value is not initialized; expected number, found missing\n" want "createImportDeclaration" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: nodeFactory.createImportDeclaration([{value:1}],{value:2},{value:3},{value:4}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-call-call/wrong-result (0.47s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node miss
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createFunctionCallCall({value:1},{value:2},[{value:3}]).value is not initialized; expected number, found missing\n" want "createFunctionCallCall" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionCallCall({value:1},{value:2},[{value:3}]).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/partial-expression/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node miss
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createPartiallyEmittedExpression({value:3},{value:4}).value is not initialized; expected number, found missing\n" want "createPartiallyEmittedExpression" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPartiallyEmittedExpression({value:3},{value:4}).value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/strict-inequality/wrong-result (0.42s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node miss
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: factory.createStrictInequality(left,right).value is not initialized; expected number, found missing\n" want "createStrictInequality" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createStrictInequality(left,right).value is not initialized; expected number, found missing\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.883s
+FAIL

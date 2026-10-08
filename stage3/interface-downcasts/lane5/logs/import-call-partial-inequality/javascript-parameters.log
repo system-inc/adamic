@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.86s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/import-declaration/wrong-members (0.51s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node hit
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend2 exit 0 stdout "10\n" stderr "" want "createImportDeclaration" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: nodeFactory.createImportDeclaration expected (modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes?: ImportAttributes | undefined) => ImportDeclaration, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/function-call-call/wrong-members (0.45s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node hit
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend2 exit 0 stdout "6\n" stderr "" want "createFunctionCallCall" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createFunctionCallCall expected (target: Expression, thisArg: Expression, argumentsList: readonly Expression[]) => CallExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/partial-expression/wrong-members (0.46s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node hit
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend2 exit 0 stdout "7\n" stderr "" want "createPartiallyEmittedExpression" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createPartiallyEmittedExpression expected (expression: Expression, original?: Node | undefined) => PartiallyEmittedExpression, found function with incompatible parameter representations\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/strict-inequality/wrong-members (0.42s)
+        checked_views_callable_later_ranked_test.go:82: gate cache node hit
+        checked_views_callable_later_ranked_test.go:102: gate cache node miss
+        checked_views_callable_later_ranked_test.go:122: backend2 exit 0 stdout "7\n" stderr "" want "createStrictInequality" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createStrictInequality expected (left: Expression, right: Expression) => BinaryExpression, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=4 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.871s
+FAIL

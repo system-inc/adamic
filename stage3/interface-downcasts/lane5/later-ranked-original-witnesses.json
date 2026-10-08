@@ -1487,6 +1487,28 @@
       "declarationLine": 100
     },
     {
+      "rank": 165,
+      "type": "TransformationContext",
+      "field": "onEmitNode",
+      "candidateReads": 11,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "column": 32
+      },
+      "read": "context.onEmitNode",
+      "readKind": "property",
+      "call": "previousOnEmitNode = context.onEmitNode",
+      "utf16Start": 6663,
+      "utf16End": 6681,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9644,
+      "declarationKind": "property-function"
+    },
+    {
       "rank": 166,
       "type": "TransformationContext",
       "field": "startLexicalEnvironment",
@@ -1537,6 +1559,90 @@
         "EmitTextWriter",
         "SymbolWriter"
       ]
+    },
+    {
+      "rank": 173,
+      "type": "NodeFactory",
+      "field": "createImportDeclaration",
+      "candidateReads": 10,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 732,
+        "column": 62
+      },
+      "read": "nodeFactory.createImportDeclaration",
+      "readKind": "property",
+      "call": "nodeFactory.createImportDeclaration(\r\n                        /*modifiers*/ undefined,\r\n                        nodeFactory.createImportClause(/*phaseModifier*/ undefined, /*name*/ undefined, namedBindings),\r\n                        nodeFactory.createStringLiteral(externalHelpersModuleNameText),\r\n                        /*attributes*/ undefined,\r\n                    )",
+      "utf16Start": 28328,
+      "utf16End": 28363,
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declaration": "createImportDeclaration(modifiers: readonly ModifierLike[] | undefined, importClause: ImportClause | undefined, moduleSpecifier: Expression, attributes?: ImportAttributes): ImportDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9091
+    },
+    {
+      "rank": 185,
+      "type": "NodeFactory",
+      "field": "createFunctionCallCall",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/transformers/classFields.ts",
+        "line": 1375,
+        "column": 32
+      },
+      "read": "factory.createFunctionCallCall",
+      "readKind": "property",
+      "call": "factory.createFunctionCallCall(\r\n                visitNode(node.expression, visitor, isExpression),\r\n                lexicalEnvironment.data.classConstructor,\r\n                visitNodes(node.arguments, visitor, isExpression),\r\n            )",
+      "utf16Start": 58398,
+      "utf16End": 58428,
+      "fileSha256": "d3a0359fad8430943ca68282cc32b12bc61a6631fa93901f6c480f411c4542f4",
+      "declaration": "createFunctionCallCall(target: Expression, thisArg: Expression, argumentsList: readonly Expression[]): CallExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9370
+    },
+    {
+      "rank": 187,
+      "type": "NodeFactory",
+      "field": "createPartiallyEmittedExpression",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 966,
+        "column": 27
+      },
+      "read": "factory.createPartiallyEmittedExpression",
+      "readKind": "property",
+      "call": "factory.createPartiallyEmittedExpression(localName)",
+      "utf16Start": 37959,
+      "utf16End": 37999,
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "declaration": "createPartiallyEmittedExpression(expression: Expression, original?: Node): PartiallyEmittedExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9305
+    },
+    {
+      "rank": 188,
+      "type": "NodeFactory",
+      "field": "createStrictInequality",
+      "candidateReads": 9,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 6479,
+        "column": 33
+      },
+      "read": "factory.createStrictInequality",
+      "readKind": "property",
+      "call": "factory.createStrictInequality(value, createNull())",
+      "utf16Start": 281048,
+      "utf16End": 281078,
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "declaration": "createStrictInequality(left: Expression, right: Expression): BinaryExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9327
     }
   ]
 }

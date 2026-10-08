@@ -1,0 +1,11 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+interface PartiallyEmittedExpression {readonly value:number;}
+interface ModifierLike {readonly value:number;}
+interface ImportClause {readonly value:number;}
+interface Expression {readonly value:number;}
+interface ImportAttributes {readonly value:number;}
+interface Node {readonly value:number;}
+interface Base {readonly createPartiallyEmittedExpression:unknown;}
+interface Target {createPartiallyEmittedExpression(expression: Expression, original?: Node): PartiallyEmittedExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createPartiallyEmittedExpression({value:3},{value:4}).value}`);}
+probe({createPartiallyEmittedExpression:(expression:Expression,original?:Node):number=>0});
