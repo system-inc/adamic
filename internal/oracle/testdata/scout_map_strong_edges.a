@@ -1,0 +1,12 @@
+// Program-region ruling's strong-edge contract, reduced from compiler-node Maps/Sets.
+// This base uses the counted heap; this fixture makes no Program-region claim.
+interface Key {readonly id:number;}
+interface Payload {readonly text:string;}
+function makeMap():Map<Key,Payload>{
+ const key:Key={id:7};const value:Payload={text:`value-${7}`};
+ const map=new Map<Key,Payload>();map.set(key,value);return map;
+}
+const map=makeMap();
+for(const [key,value] of map)console.log(`${key.id}:${value.text}:${map.has(key)}`);
+function makeSet():Set<Key>{const key:Key={id:9};return new Set<Key>([key]);}
+const set=makeSet();for(const key of set)console.log(`${key.id}:${set.has(key)}`);

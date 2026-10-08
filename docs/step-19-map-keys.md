@@ -355,3 +355,20 @@ go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -
 ```
 
 All unmutated checks pass, with no full package test or full gate. The uncached regression records 27 native misses, 20 Node misses and no hits. Compiler and adapter mutant logs are preserved under ruling-multimap alongside Node output and source hashes. The new stage 3 adaptation has Node/protocol/type evidence; no complete upstream test suite was run.
+
+### Piece 5: collection-owned keys and values
+
+The new lifetime fixture makes compiler-node-shaped keys and payloads inside a producer, returns only the Map or Set and then reads the held objects. Both backends agree with source Node. Sanitizers and leak accounting pass: 14 allocations, 14 frees, 12 retains, 21 releases, peak 9, zero regions. No weak edges are introduced. The two native ownership mutants drop the Map's owned key edge or owned value edge after insertion. Each builds and is caught by ASAN heap-use-after-free when the producer's locals have been released. These are lifetime failures, not compiler-warning kills.
+
+Observed on this base: collection construction uses the counted heap; native/region.go plans statement regions for fresh objects, not a Program lifetime for Map/Set storage. These fixtures report zero regions. The ruling's plain pointers inside step 06's Program region cannot be claimed here. Its implementation is a dependency on the Program-region owner. Inferring region-safe cycles from counted-heap fixtures would be unsound, so the existing cycle refusals are preserved. Frozen census roots credited: zero.
+
+Exact scoped commands, after sourcing the environment and redirecting output:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^scout_map_strong_edges[.]a$' -count=1 -timeout 30m -v > /tmp/scout19-strong-oracle.log 2>&1
+go test ./internal/oracle -run '^TestScoutCollectionStrongEdgeMutants$' -count=1 -v > /tmp/scout19-strong-mutants.log 2>&1
+go vet ./internal/lower ./internal/oracle > /tmp/scout19-strong-vet.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 30m -args -update-counts > /tmp/scout19-strong-counts.log 2>&1
+```
+
+All pass. The lifetime oracle records three native misses and two Node misses, zero hits. Evidence is preserved under ruling-strong. This piece holds the existing strong ownership contract; it does not implement Program-region allocation.

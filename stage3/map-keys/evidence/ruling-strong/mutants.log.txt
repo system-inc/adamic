@@ -1,0 +1,10 @@
+=== RUN   TestScoutCollectionStrongEdgeMutants
+=== RUN   TestScoutCollectionStrongEdgeMutants/key
+    map_keys_scout_test.go:263: lost strong key edge caught by ASAN heap-use-after-free after producer returns
+=== RUN   TestScoutCollectionStrongEdgeMutants/value
+    map_keys_scout_test.go:263: lost strong value edge caught by ASAN heap-use-after-free after producer returns
+--- PASS: TestScoutCollectionStrongEdgeMutants (0.44s)
+    --- PASS: TestScoutCollectionStrongEdgeMutants/key (0.22s)
+    --- PASS: TestScoutCollectionStrongEdgeMutants/value (0.22s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.449s

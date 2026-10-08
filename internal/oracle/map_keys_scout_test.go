@@ -13,6 +13,7 @@ func init() {
 		path    string
 		checked bool
 	}{
+		{"scout_map_strong_edges.a", false},
 		{"scout_multimap_composition.a", false},
 		{"scout_array_to_map.a", false}, {"scout_array_to_map_invalidated.a", true},
 		{"scout_map_presence.a", false}, {"scout_map_presence_invalidated.a", true},
@@ -232,4 +233,34 @@ func TestScoutMultiMapEmptyBucketMutant(t *testing.T) {
 		t.Fatalf("want original Node to catch retained empty bucket, got %q", difference)
 	}
 	t.Log("retained empty bucket: clean native exit 0, ASAN/UBSAN/leaks clean; source Node catches wrong size")
+}
+
+func TestScoutCollectionStrongEdgeMutants(t *testing.T) {
+	for _, edge := range []string{"key", "value"} {
+		t.Run(edge, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/scout_map_strong_edges.a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			original := native.C(program)
+			code := strings.ReplaceAll(original, "adamic_map_set(", "scout_drop_owned_edge(")
+			if original == code {
+				t.Fatal("no map insertion mutated")
+			}
+			code = insertCollectionMutant(code, `static void scout_drop_owned_edge(adamic_map *map, adamic_value key, adamic_value value) {adamic_map_set(map,key,value);adamic_release(`+edge+`.reference);}`)
+			binary := filepath.Join(t.TempDir(), "mutant")
+			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+				t.Fatal(err)
+			}
+			actual := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1", "UBSAN_OPTIONS=halt_on_error=1"}, binary)
+			if actual.exitCode == 0 || !strings.Contains(string(actual.stderr), "heap-use-after-free") {
+				t.Fatalf("want ASAN to catch lost strong %s edge, got %d %s", edge, actual.exitCode, actual.stderr)
+			}
+			t.Log("lost strong " + edge + " edge caught by ASAN heap-use-after-free after producer returns")
+		})
+	}
 }
