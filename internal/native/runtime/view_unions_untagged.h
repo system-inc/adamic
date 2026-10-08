@@ -56,4 +56,6 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
 bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value);
 size_t adamic_view_untagged_plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared);
 
+size_t adamic_view_untagged_plain_array_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared);
+
 #endif

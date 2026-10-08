@@ -98,7 +98,11 @@ func (e *emitter) viewUntaggedObjectUnion(property ir.Property, object string) {
 	}
 	fmt.Fprintf(&declarations, "static const adamic_view_untagged_contract %s[] = {%s};\n", name, strings.Join(rows, ","))
 	e.declarations = append(e.declarations, declarations.String())
-	e.line("(void)adamic_view_untagged_plain_select((const adamic_object *)%s, %s, %d, %d, %s, %s);", object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
+	selector := "adamic_view_untagged_plain_select"
+	if ir.MixedArrayContract(e.program, property.ViewContract) {
+		selector = "adamic_view_untagged_plain_array_select"
+	}
+	e.line("(void)%s((const adamic_object *)%s, %s, %d, %d, %s, %s);", selector, object, name, len(rows), property.ViewContract, cString(property.View), cString(property.ViewType))
 }
 
 // Preserve the existing shared-discriminant dispatch.

@@ -26,6 +26,11 @@ func (e *emitter) viewObjectUnion(property ir.Property, value string) string {
 	if contract.IntersectionTag != "" {
 		return e.viewIntersectionUnion(property, value)
 	}
+	// The owning field adapter has checked array storage. Readonly mixed
+	// alternatives defer their joined element contract to reached consumers.
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Array && ir.MixedArrayContract(e.program, contract.Element) {
+		return value
+	}
 	if contract.Kind != ir.ViewUnion || (contract.Of != ir.Object && contract.Of != ir.Array) {
 		return value
 	}

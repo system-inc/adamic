@@ -57,6 +57,12 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
         result->payload.number = number.number;
         return true;
     }
+    if (actual == 9) {
+        adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+        result->kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
+        result->payload.boolean = boolean.boolean;
+        return true;
+    }
     if ((actual >= 3 && actual <= 6) || actual == 8 || actual == 10) {
         const adamic_heap *heap = slot->reference;
         if (heap == NULL) { return true; } /* Ambiguous nullish storage is Unknown. */
@@ -77,7 +83,7 @@ typedef struct plain_match_path {
     const struct plain_match_path *previous;
 } plain_match_path;
 
-static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value, size_t depth, const plain_match_path *path) {
+static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value, size_t depth, const plain_match_path *path, bool complete_objects) {
     bool reference = value->kind == adamic_view_union_object || value->kind == adamic_view_union_array;
     if (reference && value->payload.reference != NULL) {
         for (const plain_match_path *seen = path; seen != NULL; seen = seen->previous) {
@@ -133,13 +139,13 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
                     if (heap->kind == adamic_kind_boolean) {item.kind = adamic_view_union_boolean;item.payload.boolean = ((const adamic_boolean_box *)heap)->boolean;}
                 }
             }
-            if (!plain_matches_depth(contracts, count, contract->element, &item, depth + 1, path)) { return false; }
+            if (!plain_matches_depth(contracts, count, contract->element, &item, depth + 1, path, complete_objects)) { return false; }
         }
         return true;
     }
     if (contract->kind == 4) {
         for (size_t i = 0; i < contract->member_count; i++) {
-            if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1, path)) { return true; }
+            if (plain_matches_depth(contracts, count, contract->members[i], value, depth + 1, path, complete_objects)) { return true; }
         }
         return false;
     }
@@ -151,23 +157,23 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
      * certificate. Numeric enums intentionally admit unnamed numbers. */
     for (size_t i = 0; i < contract->field_count; i++) {
         const adamic_view_untagged_field *field = &contract->fields[i];
-        if (field->optional || strcmp(field->name, "kind") != 0 || field->contract == 0 || field->contract > count) { continue; }
+        if (complete_objects || field->optional || strcmp(field->name, "kind") != 0 || field->contract == 0 || field->contract > count) { continue; }
         const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
         if (child->kind != 1 || (child->of != 1 && child->of != 2 && child->of != 3)) { continue; }
         adamic_view_union_value slot;
-        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path);
+        return adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) && plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path, complete_objects);
     }
     /* A member's own finite tags select it without inspecting unread payloads.
      * Subsequent reads still use the existing per-field checks. */
     bool tagged = false;
     for (size_t i = 0; i < contract->field_count; i++) {
         const adamic_view_untagged_field *field = &contract->fields[i];
-        if (field->optional || field->contract == 0 || field->contract > count) { continue; }
+        if (complete_objects || field->optional || field->contract == 0 || field->contract > count) { continue; }
         const adamic_view_untagged_contract *child = &contracts[field->contract - 1];
         if (child->kind != 1 || child->allowed_count == 0) { continue; }
         tagged = true;
         adamic_view_union_value slot;
-        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path, complete_objects)) { return false; }
     }
     if (tagged) { return true; }
     for (size_t i = 0; i < contract->field_count; i++) {
@@ -176,23 +182,31 @@ static bool plain_matches_depth(const adamic_view_untagged_contract *contracts, 
         adamic_value *present = adamic_object_optional_field(object, field->name, &cache);
         if (present == NULL && field->optional) { continue; }
         adamic_view_union_value slot;
-        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path)) { return false; }
+        if (!adamic_view_untagged_plain_slot(NULL, value, field->name, &slot) || !plain_matches_depth(contracts, count, field->contract, &slot, depth + 1, path, complete_objects)) { return false; }
     }
     return true;
 }
 
 bool adamic_view_untagged_plain_matches(const adamic_view_untagged_contract *contracts, size_t count, size_t id, const adamic_view_union_value *value) {
-    return plain_matches_depth(contracts, count, id, value, 0, NULL);
+    return plain_matches_depth(contracts, count, id, value, 0, NULL, false);
 }
 
-size_t adamic_view_untagged_plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared) {
-    adamic_view_union_value value = {adamic_view_union_object, {.reference = (void *)object}};
-    if (object != NULL && object->heap.kind == adamic_kind_array) { value.kind = adamic_view_union_array; }
+static size_t plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared, bool complete_objects) {
+    adamic_view_union_value value = adamic_view_union_heap((const adamic_heap *)object);
     if (id != 0 && id <= count) {
         const adamic_view_untagged_contract *root = &contracts[id - 1];
         for (size_t i = 0; i < root->member_count; i++) {
-            if (adamic_view_untagged_plain_matches(contracts, count, root->members[i], &value)) { return root->members[i]; }
+            if (plain_matches_depth(contracts, count, root->members[i], &value, 0, NULL, complete_objects)) { return root->members[i]; }
         }
     }
     return adamic_view_mixed_union_select(&value, NULL, 0, NULL, NULL, expression, declared);
+}
+
+size_t adamic_view_untagged_plain_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared) {
+    return plain_select(object, contracts, count, id, expression, declared, false);
+}
+
+/* An array element's structural alternatives require all represented fields. */
+size_t adamic_view_untagged_plain_array_select(const adamic_object *object, const adamic_view_untagged_contract *contracts, size_t count, size_t id, const char *expression, const char *declared) {
+    return plain_select(object, contracts, count, id, expression, declared, true);
 }
