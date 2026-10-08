@@ -1,0 +1,49 @@
+// Only adapters to existing ports. No formatter or language gap is implemented here.
+import { panic, programArguments, readTextFile } from 'adamic';
+import { format as json } from '../json/formatter.ts';
+import { format as yaml } from '../yaml/format.ts';
+import { format as graphql } from '../graphql/printer/printer.ts';
+import { format as css } from '../css/print.ts';
+import { formatProgram } from '../tsprinter/expressions.ts';
+import { Parser } from '../../typescript/parser/parser.ts';
+function escaped(text: string): string {
+    return text.split('\\').join('\\\\').split('\n').join('\\n').split('\r').join('\\r').split('\t').join('\\t');
+}
+const args = programArguments();
+const path = args[0] ?? panic('missing path');
+const input = readTextFile(path);
+if(input.kind === 'Error') panic(input.message);
+const family = args[1] ?? '';
+let text = '';
+let error = '';
+let finished = true;
+if(family === 'json') {
+    // The existing JSON port exposes errors as exceptions, as its own driver does.
+    try { text = json(path, input.text); }
+    catch(value) { error = value instanceof Error ? value.message : 'unknown JSON error'; }
+}
+else if(family === 'yaml') {
+    const result = yaml(input.text);
+    if(result.kind === 'Ok') text = result.text;
+    else error = result.message;
+}
+else if(family === 'graphql') {
+    const result = graphql(input.text);
+    if(result.kind === 'Ok') text = result.text;
+    else error = result.message;
+}
+else if(family === 'css') {
+    const result = css(input.text, path.endsWith('.scss'), { width: 120, tabWidth: 4, tabs: false, single: true, trailingComma: 'all' });
+    if(result.kind === 'Formatted') text = result.text;
+    else error = result.message;
+}
+else if(family === 'typescript') {
+    const result = formatProgram(new Parser(input.text, path), input.text, { printWidth: 120, tabWidth: 4, useTabs: false });
+    if(result.kind === 'Ok') text = result.text;
+    else { finished = false; console.log(`refused format/typescript ${escaped(result.reason)}`); }
+}
+else {
+    finished = false;
+    console.log(`refused format/${family} no whole-file port adapter`);
+}
+if(finished) console.log(`${error === '' ? 'ok' : 'error'}\t${escaped(error === '' ? text : error)}`);

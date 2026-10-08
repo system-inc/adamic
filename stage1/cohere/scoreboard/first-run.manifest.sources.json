@@ -1,0 +1,301 @@
+[
+  {
+    "repo": "actualbudget/actual",
+    "sha": "9732a4463aac2909ac2aad1627085e0eb7a207b5",
+    "tracked_supported_files": 2497,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/loot-core/typings/pegjs.ts",
+        "bytes": 26,
+        "sha256": "b262cd07d32c1e08d04baad6834ce68e9354b587870b68077856f75a857811d8"
+      }
+    ]
+  },
+  {
+    "repo": "angular/angular",
+    "sha": "c0dc8c4bbeea70879aef54e9fcc7888359dfd1a5",
+    "tracked_supported_files": 8770,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "vscode-ng-language-service/integration/project/libs/post/src/index.ts",
+        "bytes": 38,
+        "sha256": "9552dc9b7591d3555a2dfd6ec0f1380c642b259588665804dfd5768a46d402bd"
+      }
+    ]
+  },
+  {
+    "repo": "babel/babel",
+    "sha": "f67453d563918a1ea4a1dcb1d7af01d4a528d99b",
+    "tracked_supported_files": 25735,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/babel-parser/test/fixtures/typescript/cast/null-assertion/input.ts",
+        "bytes": 4,
+        "sha256": "3518a244220dd8f12d0a7dab34b25eba7616345bceebe65976c20a3bab1d2ce9"
+      }
+    ]
+  },
+  {
+    "repo": "backstage/backstage",
+    "sha": "532931240eec03b318efaadb39e24d9ee6d7076c",
+    "tracked_supported_files": 11244,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/cli-module-new/templates/backend-plugin/src/setupTests.ts",
+        "bytes": 11,
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      }
+    ]
+  },
+  {
+    "repo": "calcom/cal.diy",
+    "sha": "54343aa685ae8f33159d2f485ec4a57bad5c574a",
+    "tracked_supported_files": 6079,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/trpc/server/routers/loggedInViewer/stripeCustomer.schema.ts",
+        "bytes": 11,
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      }
+    ]
+  },
+  {
+    "repo": "date-fns/date-fns",
+    "sha": "717ce0a807ea4c6b540d015b5c408723175b2838",
+    "tracked_supported_files": 1976,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "pkgs/tz/test/engines/src/javascriptcore.ts",
+        "bytes": 20,
+        "sha256": "9d1f45194138ca646662f1bf4ad6e145ba0eec10413bbd94ad4410ee3767c98a"
+      }
+    ]
+  },
+  {
+    "repo": "excalidraw/excalidraw",
+    "sha": "ed10ac7dca7e40f3f4a31269b4bfba980d0db41e",
+    "tracked_supported_files": 946,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/excalidraw/components/CommandPalette/defaultCommandPaletteItems.ts",
+        "bytes": 11,
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      }
+    ]
+  },
+  {
+    "repo": "grafana/grafana",
+    "sha": "c7a7b797c1980a886efdd01b433a8d92b7ae7166",
+    "tracked_supported_files": 12598,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/grafana-e2e-selectors/src/types/index.ts",
+        "bytes": 29,
+        "sha256": "752690fd89ac76fa54d6e5a87ad02aa869a044b8ecf6ede2a499c0b9c939b8ae"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/playwright",
+    "sha": "2a8ba77a33a5a39a52372c42f12d254506296c76",
+    "tracked_supported_files": 2065,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": ".github/workflows/merge.config.ts",
+        "bytes": 128,
+        "sha256": "2486bc1c21795c9c439188189d16dbefba022914b84cef9eb7121827d92e9f11"
+      }
+    ]
+  },
+  {
+    "repo": "n8n-io/n8n",
+    "sha": "e77e30c7d92f4fbc34337f7bcc80ce3f52e5d073",
+    "tracked_supported_files": 27028,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/cli/src/index.ts",
+        "bytes": 11,
+        "sha256": "8e609bb71c20b858c77f0e9f90bb1319db8477b13f9f965f1a1e18524bf50881"
+      }
+    ]
+  },
+  {
+    "repo": "nestjs/nest",
+    "sha": "35142c3eca8edaaf6abc5984d915da2fbd458aa2",
+    "tracked_supported_files": 2290,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "integration/inspector/src/dogs/entities/dog.entity.ts",
+        "bytes": 20,
+        "sha256": "9f079c2a2e5c4caec130fce53ec26cc6cbe7f8564135220fb2e9f422c5b8fec7"
+      }
+    ]
+  },
+  {
+    "repo": "outline/outline",
+    "sha": "478e8121cbe517b9d7773e9d68d20bfe26056c59",
+    "tracked_supported_files": 2643,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "server/routes/api/auth/index.ts",
+        "bytes": 34,
+        "sha256": "dac4e88ffe396f8ee22e25615f6e0e22b4f91f032b6c2ebc831a89604b13b9f1"
+      }
+    ]
+  },
+  {
+    "repo": "prisma/prisma",
+    "sha": "c882b03377e70c090d7bbe05cf85bf04fe9e33b2",
+    "tracked_supported_files": 7634,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/1-framework/3-tooling/cli/test/fixtures/empty-module.ts",
+        "bytes": 15,
+        "sha256": "793676912ebda56fc67c6ef9f9044c1674b70dddafce6d811d0b6123b51ded13"
+      }
+    ]
+  },
+  {
+    "repo": "shadcn-ui/ui",
+    "sha": "a2e305c2e15b6affdb760e65058be69e8212713f",
+    "tracked_supported_files": 5452,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/registry/test/fixtures/frameworks/next-app-imports/tailwind.config.ts",
+        "bytes": 18,
+        "sha256": "fc00d19bc94e10c24f07bd9be1c2bb24d4978856963c5a68745338ecbf131dfc"
+      }
+    ]
+  },
+  {
+    "repo": "supabase/supabase",
+    "sha": "87681812a0b4aef538d18ea78a78e5ab6257952e",
+    "tracked_supported_files": 11071,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "apps/docs/types/index.ts",
+        "bytes": 23,
+        "sha256": "855afda0b2c0fb5cde4f7fd5f57b522deebfb2d5a1223416c236aaca49840b3c"
+      }
+    ]
+  },
+  {
+    "repo": "TanStack/query",
+    "sha": "eaa75f4f8f819237febca9f7e887455367b7ab97",
+    "tracked_supported_files": 3226,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/angular-query-experimental/src/devtools-panel/production/index.ts",
+        "bytes": 19,
+        "sha256": "5aa8f571dc9d9a63477b8c0abd1d63ad720f6bf5703c23b5e5d9292f74ea7a50"
+      }
+    ]
+  },
+  {
+    "repo": "tldraw/tldraw",
+    "sha": "db1c86ea7857483c47aa333cf4e92abf455a67cf",
+    "tracked_supported_files": 3967,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/tldraw/src/test/commands/blur.test.ts",
+        "bytes": 34,
+        "sha256": "d716429e64f493570c350b922aab297684c6164b68def2d7f732f81206329e98"
+      }
+    ]
+  },
+  {
+    "repo": "trpc/trpc",
+    "sha": "d756e591a5e37ef20b8d75ecd4d736c195497289",
+    "tracked_supported_files": 1537,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "examples/.test/monotest-trpc/src/index.ts",
+        "bytes": 24,
+        "sha256": "dc099d2750ad07001ba12f9816401a8474edc3a1cb71d07400a5a152536c04d5"
+      }
+    ]
+  },
+  {
+    "repo": "twentyhq/twenty",
+    "sha": "ddd166250b03e4cb262766034e8ef3e444b516c0",
+    "tracked_supported_files": 33949,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/twenty-front/src/modules/ui/layout/tab-list/constants/TabListGap.ts",
+        "bytes": 31,
+        "sha256": "01538db8a3b012cf14c341c3b8678dfaa8d48cd4eefc7257890e34b802af72f3"
+      }
+    ]
+  },
+  {
+    "repo": "typeorm/typeorm",
+    "sha": "c64a1f052fc39f6688b6b73b83d065d7147ba8bb",
+    "tracked_supported_files": 3766,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages/typeorm/src/driver/types/ReplicationMode.ts",
+        "bytes": 49,
+        "sha256": "c840aad341f68d20cbfa9c596dc99b506d27306d17bfa8a60e81951045d08221"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "sha": "50d70a3f5f453a79a4323b263165da51f656a4e3",
+    "tracked_supported_files": 26762,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "tsc/testdata/tests/cases/conformance/simpleTest.ts",
+        "bytes": 6,
+        "sha256": "e0f2b4c5a6218d4630160809754dbc06f2a37da3a879b520551063d830ab2191"
+      }
+    ]
+  },
+  {
+    "repo": "microsoft/TypeScript",
+    "sha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "tracked_supported_files": 41049,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "tests/cases/projects/NestedLocalModule-SimpleCase/test2.ts",
+        "bytes": 13,
+        "sha256": "adb437db431a1973edd5c19f180d38f1e25c84edfeeaf2f7a3fe79230585c0cd"
+      }
+    ]
+  },
+  {
+    "repo": "vuejs/core",
+    "sha": "4ab865a848a1da3d10fb674f857e5fff13094644",
+    "tracked_supported_files": 599,
+    "selected_files": 1,
+    "sources": [
+      {
+        "path": "packages-private/sfc-playground/src/vue-dev-proxy.ts",
+        "bytes": 67,
+        "sha256": "707e1f675c3d168ecea615e73da35054d65b9a7263bdb12efb4c18fc5d715b23"
+      }
+    ]
+  }
+]

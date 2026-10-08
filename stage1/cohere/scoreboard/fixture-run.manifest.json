@@ -1,0 +1,11 @@
+{
+  "name": "Go cohere own debugger case and pinned TypeScript compiler case",
+  "files": [
+    "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+    "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt"
+  ],
+  "rules": [
+    "no-debugger",
+    "eqeqeq"
+  ]
+}

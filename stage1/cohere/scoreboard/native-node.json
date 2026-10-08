@@ -1,0 +1,35 @@
+[
+  {
+    "file": "stage1/cohere/scoreboard/testdata/debugger.ts.txt",
+    "family": "typescript",
+    "native_exit": 0,
+    "node_exit": 0,
+    "native_stdout": "ok\tdebugger;\\n\n",
+    "node_stdout": "ok\tdebugger;\\n\n",
+    "native_stderr": "",
+    "node_stderr": "",
+    "agree": true
+  },
+  {
+    "file": "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+    "family": "typescript",
+    "native_exit": 0,
+    "node_exit": 0,
+    "native_stdout": "ok\tvar x = 10;\\n\n",
+    "node_stdout": "ok\tvar x = 10;\\n\n",
+    "native_stderr": "",
+    "node_stderr": "",
+    "agree": true
+  },
+  {
+    "file": "CohereSettings.json",
+    "family": "json",
+    "native_exit": 0,
+    "node_exit": 0,
+    "native_stdout": "ok\t{\\n  \"extends\": [\"cohere:typescript\"],\\n  \"ignorePatterns\": [\\n    \"internal/load/testdata/0.1/refuse/**\",\\n    \"stage1/**/gaps/**\",\\n    \"review/**\"\\n  ],\\n  \"overrides\": [\\n    {\\n      \"files\": [\"**/*.ts\", \"**/*.a\"],\\n      \"rules\": { \"logical-assignment-operators\": [\"error\", \"never\"] },\\n      \"reason\": \"Adamic stage 0 still refuses logical assignment operators (internal/lower/refusals.go:44) until codex/taste-not-soundness lands; ruling 6 on #bw3xg7c makes them legal Adamic with JavaScript semantics, and this entry is removed when it does.\"\\n    }\\n  ]\\n}\\n\n",
+    "node_stdout": "ok\t{\\n  \"extends\": [\"cohere:typescript\"],\\n  \"ignorePatterns\": [\\n    \"internal/load/testdata/0.1/refuse/**\",\\n    \"stage1/**/gaps/**\",\\n    \"review/**\"\\n  ],\\n  \"overrides\": [\\n    {\\n      \"files\": [\"**/*.ts\", \"**/*.a\"],\\n      \"rules\": { \"logical-assignment-operators\": [\"error\", \"never\"] },\\n      \"reason\": \"Adamic stage 0 still refuses logical assignment operators (internal/lower/refusals.go:44) until codex/taste-not-soundness lands; ruling 6 on #bw3xg7c makes them legal Adamic with JavaScript semantics, and this entry is removed when it does.\"\\n    }\\n  ]\\n}\\n\n",
+    "native_stderr": "",
+    "node_stderr": "",
+    "agree": true
+  }
+]

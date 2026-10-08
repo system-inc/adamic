@@ -1,0 +1,65 @@
+{
+  "first-run": {
+    "files": 23,
+    "registered_port_rules": 93,
+    "cells": 2185,
+    "statuses": {
+      "agree": 2072,
+      "blocked": 112,
+      "diverge": 1
+    },
+    "lint_findings": 2,
+    "unported_rules": 399,
+    "unported_statuses": {
+      "complete": 178,
+      "no program": 194,
+      "option decode: no options were configured": 24,
+      "requires options": 3
+    },
+    "divergences": [
+      {
+        "file": "/workspace/scratch/scoreboard-public/prisma__prisma-c882b033/packages/1-framework/3-tooling/cli/test/fixtures/empty-module.ts",
+        "rule": "format/typescript",
+        "input": "// No exports\n\n",
+        "minimal_input": "//",
+        "reduced_go": {
+          "stdout": "ok\t//\\n\n"
+        },
+        "reduced_node": {
+          "stdout": "ok\t\n"
+        }
+      }
+    ]
+  },
+  "fixture-run": {
+    "files": 2,
+    "registered_port_rules": 93,
+    "cells": 6,
+    "statuses": {
+      "agree": 5,
+      "diverge": 1
+    },
+    "lint_findings": 1,
+    "unported_rules": 399,
+    "unported_statuses": {
+      "complete": 178,
+      "no program": 194,
+      "option decode: no options were configured": 24,
+      "requires options": 3
+    },
+    "divergences": [
+      {
+        "file": "stage1/cohere/scoreboard/testdata/typescript-compiler.ts.txt",
+        "rule": "format/typescript",
+        "input": "\ufeffvar x=10;\r\n",
+        "minimal_input": "\ufeff",
+        "reduced_go": {
+          "stdout": "ok\t\ufeff\n"
+        },
+        "reduced_node": {
+          "stdout": "ok\t\n"
+        }
+      }
+    ]
+  }
+}

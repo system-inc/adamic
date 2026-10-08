@@ -1,0 +1,14 @@
+[
+  {
+    "path": "testdata/debugger.ts.txt",
+    "upstream": "cohere/internal/lint/rules/core/no_debugger_test.go:18",
+    "sha": "7945d102a6c18dd36adf9114a758ce646e8b2359",
+    "sha256": "2242ca78ff9aff3dab9c00c6dfa5dafb0b61daa31a9ea7845fd0dcfb6a9f76f8"
+  },
+  {
+    "path": "testdata/typescript-compiler.ts.txt",
+    "upstream": "cohere/TypeScript/tsc/testdata/tests/cases/compiler/bom-utf8.ts",
+    "sha": "d92d9bfee114c80be2c375d72edae966176e3a4f",
+    "sha256": "253faefb450879bceb7a14ab0fe6ce55d9d83858af44ecef09cd6c28d828143d"
+  }
+]
