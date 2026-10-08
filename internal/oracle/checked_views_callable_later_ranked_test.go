@@ -8,6 +8,9 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"helper-factory", "getEmitHelperFactory", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"hoist-variable", "hoistVariableDeclaration", "3\n", "", "0", "node.value", "3\n", "", "good,wrong-value,wrong-arity,wrong-members,wrong-parameter-payload"},
+		{"modifier-flags", "createModifiersFromModifierFlags", "3\n", "", "0", "modifier.value", "3\n", "", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
 		{"resolution-path", "toPath", "root/3\n", "", "0", "", "", "9\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members"},
 		{"performance-measure", "measure", "29\n", "7\n7\n19\n29\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
 		{"binary", "createBinaryExpression", "8\n", "8\n9\n", "0", "left.value", "3\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},

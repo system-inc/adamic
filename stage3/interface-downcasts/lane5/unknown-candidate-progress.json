@@ -927,6 +927,73 @@
           "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node, release/sanitized native and JavaScript; callable contract and deferred payload mutants; production reachability unmeasured"
         }
       ]
+    },
+    {
+      "name": "helper-hoist-modifiers",
+      "pairs": 3,
+      "candidateReads": 56,
+      "members": [
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "getEmitHelperFactory",
+          "declared_types": [
+            "() => EmitHelperFactory"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 19,
+          "witness": {
+            "file": "src/compiler/transformers/utilities.ts",
+            "line": 296,
+            "column": 110
+          },
+          "rank": 91,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node and both backends, release/sanitized native, leaks and callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 10108,
+          "type": "TransformationContext",
+          "field": "hoistVariableDeclaration",
+          "declared_types": [
+            "(node: Identifier) => void"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 19,
+          "witness": {
+            "file": "src/compiler/transformers/destructuring.ts",
+            "line": 291,
+            "column": 13
+          },
+          "rank": 92,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node and both backends, release/sanitized native, leaks and callable/payload mutants; production reachability unmeasured"
+        },
+        {
+          "receiver_type_id": 11739,
+          "type": "NodeFactory",
+          "field": "createModifiersFromModifierFlags",
+          "declared_types": [
+            "(flags: ModifierFlags) => Modifier[] | undefined"
+          ],
+          "families": [
+            "callable contracts"
+          ],
+          "reads": 18,
+          "witness": {
+            "file": "src/compiler/checker.ts",
+            "line": 8039,
+            "column": 29
+          },
+          "rank": 94,
+          "certified": true,
+          "certification_basis": "complete original declaration/read spans; reduced adjacent carriers/helpers; Node and both backends, release/sanitized native, leaks and callable/payload mutants; production reachability unmeasured"
+        }
+      ]
     }
   ]
 }

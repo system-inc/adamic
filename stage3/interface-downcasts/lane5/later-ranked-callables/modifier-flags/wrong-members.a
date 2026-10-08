@@ -1,0 +1,8 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type ModifierFlags=number;
+interface Modifier {readonly value:number;}
+const ModifierFlags={Abstract:2};
+interface Base {readonly createModifiersFromModifierFlags:unknown;}
+interface Target {createModifiersFromModifierFlags(flags: ModifierFlags): Modifier[] | undefined;}
+function probe(value:Base):void {const factory=value as Target;const flags=1;const modifiers=factory.createModifiersFromModifierFlags(flags | ModifierFlags.Abstract);if(modifiers!==undefined){const modifier=modifiers[0];if(modifier!==undefined)console.log(`${modifier.value}`);}}
+probe({createModifiersFromModifierFlags:(flags:string):Modifier[]|undefined=>[{value:3}]});
