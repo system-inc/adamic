@@ -1,0 +1,3 @@
+interface Base{readonly kind:string}
+interface Target extends Base{readonly kind:'box';readonly values:readonly (boolean|undefined)[]}
+const values:boolean[]=new Array<boolean>(2);values.push(false);const raw={kind:'box',values:values};const base:Base=raw;function read(node:Target):void{console.log(JSON.stringify(node.values)??'missing');}read(base as Target);

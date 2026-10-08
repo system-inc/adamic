@@ -196,6 +196,12 @@ func (l *lowering) clearOrVisit(node *ast.Node, receiver *ast.Node, name string,
 	if err != nil {
 		return nil, true, err
 	}
+	if name == "forEach" && !set && !keyable(key) {
+		return nil, true, l.notYet(node, "a Map forEach callback with an unsupported key representation")
+	}
+	if name == "forEach" && !set && slotless(value) {
+		return nil, true, l.notYet(node, "a Map forEach callback with a slotless value representation")
+	}
 	collection, err := l.expression(receiver)
 	if err != nil {
 		return nil, true, err
@@ -308,6 +314,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 				return nil, l.notYet(binding, "destructuring past a tuple's end")
 			}
 			field, fieldType = strconv.Itoa(index), elementTypes[index]
+			absent = destructured.TargetTupleType().ElementFlags()[index] == checker.ElementFlagsOptional
 		} else {
 			// { x } reads x, and { x: other } reads x into other.
 			field = binding.Name().Text()
@@ -390,7 +397,7 @@ func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, in
 	if !isKnown || (held != ir.Number && !held.IsReference()) || held == ir.Weak {
 		return nil, l.notYet(node, "?.[] to a tuple element of type "+l.checker.TypeToString(elements[position]))
 	}
-	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true}, nil
+	return ir.Property{Object: object, Name: strconv.Itoa(position), Of: held, Optional: true, Absent: tuple.TargetTupleType().ElementFlags()[position] == checker.ElementFlagsOptional}, nil
 }
 
 // everyKnown reports whether every type has a representation.

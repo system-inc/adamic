@@ -1,0 +1,4 @@
+import type {FileWatcherCallback,DirectoryWatcherCallback} from 'original-tsc-sys';
+type Args=Parameters<FileWatcherCallback>|Parameters<DirectoryWatcherCallback>;
+interface Base {readonly kind:string;} interface Target extends Base {readonly args:Args;}
+const pair:[string,number]=['file',1]; const raw={kind:'probe',args:pair};const base:Base=raw;const viewed=base as Target;const args=viewed.args; console.log(args[1]!==undefined ? String(args[1]) : 'absent');

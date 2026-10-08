@@ -9,6 +9,13 @@ func HasArrayViews(program *Program) bool {
 	// Constructor schemas can intern arrays without introducing a checked view.
 	// Only admitted view origins enable the conservative program-wide policy.
 	if len(program.ViewOrigins) == 0 {
+		// Boxed primitive array consumers require the same adapters even without an
+		// assertion: raw scalar slots and boxed references must never be confused.
+		for _, contract := range program.ViewContracts {
+			if contract.Kind == ViewArray && contract.Element != 0 && (program.ViewContracts[contract.Element-1].Of == Union || program.ViewContracts[contract.Element-1].Of == MaybeBoolean) && PrimitiveArrayContract(program, contract.Element) {
+				return true
+			}
+		}
 		return false
 	}
 	for _, contract := range program.ViewContracts {
@@ -22,6 +29,7 @@ func HasArrayViews(program *Program) bool {
 // Metadata has no executable operands. It must not masquerade as an index
 // expression in CFG, borrowing, reuse, or ownership traversals.
 type ArrayViewRead struct {
+	TupleUnion       bool
 	View, ViewType   string
 	ViewAllowed      []ViewLiteral
 	ViewContract     ViewContractID
@@ -32,5 +40,5 @@ type ArrayViewRead struct {
 }
 
 func (read ArrayViewRead) Index() ArrayIndex {
-	return ArrayIndex{View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
+	return ArrayIndex{TupleUnion: read.TupleUnion, View: read.View, ViewType: read.ViewType, ViewAllowed: read.ViewAllowed, ViewContract: read.ViewContract, ViewTypeID: read.ViewTypeID, Element: read.Element, Required: read.Required, UndefinedAllowed: read.UndefinedAllowed}
 }

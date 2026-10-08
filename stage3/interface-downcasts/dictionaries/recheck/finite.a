@@ -1,0 +1,3 @@
+interface Base {readonly kind:'Recheck';}
+interface View extends Base {readonly table:{readonly [key:string]:"a"|"b"|undefined;};}
+const payload={kind:'Recheck' as const,table:{item:'a'}};const base:Base=payload;const view=base as View;console.log(typeof view.table['item']);

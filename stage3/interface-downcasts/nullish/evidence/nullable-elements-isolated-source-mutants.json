@@ -1,0 +1,16 @@
+[
+  {
+    "name": "nullable-elements-native-write",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-native-write.log"
+  },
+  {
+    "name": "nullable-elements-js-write",
+    "test": "^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "/tmp/map-storage-mutants/nullable-elements-js-write.log"
+  }
+]

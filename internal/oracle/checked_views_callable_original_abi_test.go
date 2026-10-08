@@ -11,7 +11,7 @@ import (
 func TestCheckedViewCallableOriginalMixedCallbackABI(t *testing.T) {
 	for _, fixture := range []struct{ name, out string }{{"mixed_union_callback", "WORD\n7\nmissing\n9\nRETURNED\n10\nARROW\n0,1\n"}, {"mixed_union_callback_variance", "5\n"}} {
 		t.Run(fixture.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository+"/internal/lower/testdata/predicates", fixture.name+".a"))
+			path, err := filepath.Abs(checkedViewFixturePath(filepath.Join(repository+"/internal/lower/testdata/predicates", fixture.name+".a")))
 			if err != nil {
 				t.Fatal(err)
 			}

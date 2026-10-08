@@ -1,0 +1,37 @@
+[
+  {
+    "name": "json-array-native-representation",
+    "test": "^TestCheckedViewJSONArrayDomainMutants$/^(maps|functions)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "json-array-native-representation.log.gz"
+  },
+  {
+    "name": "json-array-generic-concrete",
+    "test": "^TestCheckedViewArrayJSONStorage$/^generic$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "json-array-generic-concrete.log.gz"
+  },
+  {
+    "name": "json-array-native-snapshot-owner",
+    "test": "^TestCheckedViewArrayJSONStorage$/^(finite|nested|arguments)$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "json-array-native-snapshot-owner.log.gz"
+  },
+  {
+    "name": "json-array-native-domain",
+    "test": "^TestCheckedViewJSONArrayDomainMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "json-array-native-domain.log.gz"
+  },
+  {
+    "name": "json-array-javascript-domain",
+    "test": "^TestCheckedViewJSONArrayDomainMutants$",
+    "exit": 1,
+    "caught_by_behavior": true,
+    "log": "json-array-javascript-domain.log.gz"
+  }
+]

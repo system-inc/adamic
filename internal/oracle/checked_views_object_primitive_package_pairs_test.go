@@ -21,7 +21,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 	if declarations == "" {
 		t.Skip("set ADAMIC_OBJECT_PRIMITIVE_ORIGINAL_DECLS to prepare.cjs output")
 	}
-	data, err := os.ReadFile(filepath.Join(declarations, "original-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, "original-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -42,7 +42,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 		t.Fatal("upstream drift")
 	}
 	for name, hash := range manifest.Declarations {
-		data, err := os.ReadFile(filepath.Join(declarations, name))
+		data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(declarations, name)))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -63,7 +63,7 @@ func TestCheckedViewObjectPrimitivePackagePairs(t *testing.T) {
 		for _, mode := range []string{"good", "wrong", "nested"} {
 			t.Run(pair.Field+"-"+mode, func(t *testing.T) {
 				name := "package-" + pair.Field + "-" + mode + ".a"
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4b/original/" + name)
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4b/original/" + name))
 				if err != nil {
 					t.Fatal(err)
 				}

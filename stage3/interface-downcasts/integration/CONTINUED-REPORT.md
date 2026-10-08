@@ -312,3 +312,176 @@ state remains 03aea1cbede84da46e84c78d599f287bc8585c1b with its completed green
 939.959s filtered oracle. No test repeat is needed for this documentation-only
 checkpoint. After another fetch, dictionary deec3c933543c7b5e7ba0d9db0964265d03c494c
 is still the newest tip and an ancestor, so no dictionary merge is necessary.
+
+
+## October 8 non-null fixture ruling
+
+Moved 436 assertion-bearing fixtures from .a to .ts, preserving every source byte and expected output.
+Commit inventory: internal/oracle/views_non_null_fixtures.json names all 54 readiness/non-null and 382 checked-view fixtures; the commit message names every old and new path.
+Validation: scoped backends, registered non-null source oracles, readiness mutants and declaration-bound count/copy checks pass; broader views runtime results below.
+Mutants: all sixteen readiness-output mutants and four additional readiness/weak/lazy/store mutants execute and are caught by their existing independent pins.
+Limits: global counts retain exactly 41 baseline failures; four additional original-pair frontier assertions reproduce at exact ffe428ab; the checked non-null area remains an unmerged dependency.
+
+The October 8 00:27 ruling keeps non-null assertions refused in Adamic .a and
+inserts checks in TypeScript .ts. The contradictory readiness registrations in
+new-expression evidence aae366090e25128bd8d152b87f5fd569a40dd58f, at
+stage3/notyet-new-expression/VIEWS-PROBE.md, motivated this fixture migration.
+The area tip c41c0e062e99da37820f822968d4df1b48cdaee7 is read for context, not
+merged. No compiler file changes in this unit. Only nine static fixture path
+strings change in oracle_test.go; its harness remains intact.
+
+The explicit fixture inventory resolves dynamic view/readiness paths. The
+ordinary loader is unchanged, so independent .a refusal fixtures in the area
+retain their own source contract. Bound original copies inherit the extension
+of their actual source fixture; non-migrated original frontiers retain .a.
+Callable and ranked-array count discovery includes both extensions and retains
+all existing compile-refusal exclusions. Provenance verifiers include both
+extensions. Live Node-control paths and the optional witness mutant runner
+follow the relocated fixtures. Historical reports remain historical.
+
+A byte comparison against ffe428ab passes for every relocated fixture. A fresh
+TypeScript AST scan finds zero non-null expression nodes in remaining .a files
+under stage3/interface-downcasts and the non_null oracle family. No fixture
+body, stdout, exit, diagnostic or mutant pin is rewritten. counts.md differs
+only in extension keys; every recorded numeric observation is identical.
+
+Setup: GOPROXY=https://proxy.golang.org|direct; bash cloud/setup.sh;
+source /workspace/adamic-tools/env.sh. Timing lines: Node 0.027s, Go 0.027s,
+submodules 0.071s, markdown dependencies 0.093s, clang 0.186s, build 43.149s,
+cache 43.297s, total 43.326s. nproc=5; cpu.max=400000 100000.
+
+Commands, with output redirected to the corresponding views-nonnull log:
+
+```sh
+go test ./internal/lower ./internal/native ./internal/javascript -run 'Test.*View|TestLazyView|TestPrepareViewCallableRead|TestSharedArrayContractAdapter|TestDefaultTaggedInterface|TestOptional|TestMixedUnion|TestPhantomOverload|TestPrimitive' -count=1 -timeout 30m
+go test ./internal/oracle -run '^TestReadinessMutants$|^TestUninitializedIsNotNullishMutant$|^TestNonNullWeakFreedNamesExpression$|^TestLazyInitializerIsNotEagerMutant$|^TestDeinitializationIsNotOrdinaryStoreMutant$|TestNativeAgreesWithNode/.*/non_null' -count=1 -v -timeout 10m
+go test ./internal/oracle -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/non_null' -count=1 -v -timeout 10m
+go test ./internal/oracle -run 'Test.*View|^TestPrimitiveOrdinaryProperty$|TestNativeAgreesWithNode/.*(view|union|tuple|dictionary|callable|optional|array)' -count=1 -v -timeout 30m
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -v -timeout 10m -args -update-counts
+source /tmp/checked-views-test-env.sh
+go test ./internal/oracle -run '^TestCheckedViewRanked(15|16|17|18)(OriginalArrays|ArrayCounts)$|^TestCheckedViewObjectPrimitiveOriginal' -count=1 -v -timeout 30m
+go test ./internal/oracle -run '^TestCheckedViewRanked(15|16|17|18)ArrayCounts$|^TestCheckedViewObjectPrimitiveOriginalPairs$/source-file-uninitialized$' -count=1 -v -timeout 10m
+# In the isolated exact ffe428ab checkout:
+go test ./internal/oracle -run '^TestCheckedViewObjectPrimitiveOriginalPairs$/(bindable-expression-frontier|jsdoc-parent-probe|bindable-static-left-probe|bindable-left-probe)$' -count=1 -v -timeout 10m
+node stage3/interface-downcasts/lane5/verify-ranked-callable-fixtures.cjs /tmp/checked-views-upstream 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49
+node stage3/interface-downcasts/lane5/verify-optional-aggregate-fixtures.cjs /tmp/checked-views-upstream
+```
+
+Backend checks pass: lower 19.914s, native 18.944s, JavaScript 3.400s.
+Readiness mutants pass in 7.237s. The initial selector did not execute the nested
+source-fixture subtests; the explicit slash-aware source selector then passes
+all registered non-null controls in 10.290s. This records actual coverage rather
+than crediting the earlier empty source selection. Sixteen readiness mutants
+are scanner-var-capture, deinitialization-values, deinitialization-entries,
+deinitialization-assign-source, deinitialization-field-alias,
+deinitialization-field-method, keep-slot-proven-after-deinitialization,
+deinitialization-through-capture, deinitialization-exception-path, drop-check,
+erase-without-proof, initialize-to-zero, miss-captured-read,
+miss-exception-path, lazy-read and weak-generic-message. Each is caught by the
+existing independent stdout/exit/diagnostic pin on native execution. Additional
+ordinary-nullish initializer and eager-lazy-initializer mutants fail Node
+comparisons; freed-Weak diagnostic mutation fails its expression-specific native
+pin; ordinary undefined-store mutation agrees with source Node at exit 0 and
+fails the retained readiness pin. These tests mutate IR, not fixture source.
+
+The declaration-bound run finishes in 607.499s. All 152 original array controls
+pass: original15 15, original16 42, original17 59, original18 36. Its only four
+failures are unchanged, non-migrated bindable-expression-frontier,
+jsdoc-parent-probe, bindable-static-left-probe and bindable-left-probe: each expects
+a compile refusal for union intersection that the integrated compiler now admits.
+An isolated checkout at exact ffe428ab reproduces all four in 14.945s. No unrelated
+frontier pin is changed. Final source-specific copy/count checks pass in 278.261s,
+including source-file-uninitialized and all four original array count groups.
+Provenance verification passes for 28 ranked and 14 optional aggregate fixtures,
+with complete original declarations and source read spans intact.
+
+The final count refresh finishes in 83.266s with exactly the recorded 41 baseline
+failures, no additions or removals and no failures on migrated .ts fixtures.
+It writes no complete replacement table because those failures remain. Migrated
+keys were updated directly without changing numeric values and independently
+remeasured by the focused controls and count groups. An earlier refresh on the
+partial count-discovery plumbing finishes in 65.466s with the same baseline set;
+only the final run is credited for complete renamed-fixture discovery.
+
+Two early path-helper mistakes were caught locally: recursive absolute-path
+resolution caused stack overflow, then a relative repository base missed dynamic
+paths. Both were corrected before the passing readiness run. An early broader
+oracle run was cancelled when superseded; its incomplete result is not credited.
+The source-specific temporary-copy adjustment and final count discovery were
+verified separately on the final test plumbing. Exact compressed logs are in
+logs/continued. No full package, full repository gate or unlanded worker merge
+was run. This completed unit receives one push under the standing rule.
+
+Broader views oracle: passes in 1056.031s, with 1001 native observations and 3961 Node observations missed from cache. The final source-specific copy and complete count-discovery plumbing are independently covered by the 278.261s and 83.266s runs above.
+
+
+## October 8 dictionary groups 9 through 11
+
+Merged 48d166cf7ba1954de46ca2a4b30d72f6872153a9 without conflicts. Actual-key enumeration does not demand values; values and entries check selected values, preserve transitive obligations, and keep reached array-entry tuple consumers refused. Private unpublished enumeration arrays alone use DictionaryProduction. Sixty-eight executable controls are registered with measured allocation rows; six demanded tuple refusals and eighteen uncredited frontier probes are excluded from those rows.
+
+Setup passed in 40.219s; nproc is 5. Scoped IR/lower/native/JavaScript checks passed in 0.012/7.671/69.682/0.953s. Dictionary oracle, array writes, wider-helper callable refusal, readiness and record mutants passed in 138.530s. Nine new dictionary mutants cover eager key demands, omitted element checks, wrong entry shape, omitted transitive checks on both backends, and omitted derived-origin IR roots. All were killed. The 68 regular Node, sanitized native, release and JavaScript controls and focused counts passed in 18.525s. An initial registration mistakenly marked every positive control as an expected runtime refusal; the harness caught it, and metadata now marks only demanded bad-payload controls checked. No compiler guard was changed to repair it.
+
+The required global counts refresh reproduces exactly the inherited 41 failures, with no additions; focused measurement adds 68 rows without changing old rows. Historical incoming GROUP11-broad-gate.log retains three trailing-whitespace lines as raw evidence. No full package or full gate was run. Logs are archived under logs/continued/views-dictionaries-*.log.gz. Lane 1 0f55d664 is next; the updated tuple tip has not been supplied. This merge will share one push with the completed current integration unit.
+
+
+## October 8 owner merge 0f55d664
+
+Merged 0f55d66409d9f06e65d628f3c4d02b26a327bc99. One conflict hunk in checked_views_map_certificates_test.go combines the approved void-brand Node control with integration's fixture resolution through interfaceFixture. The former phantom-refused.a certificate frontier is now certified by the owner's descriptors; required non-void primitive brands still refuse, proved by entry-nominal-gap-required-brand-read.a and -unread.a. No compiler code conflicted. Dictionary derived-origin roots and private production append flags survive the automatic merges.
+
+Boxed callable dispatch remains intact. All 47 callback refusal sites are pinned; entry-live-mutation.a refuses at 5:69 while Node prints number, 7, 0. Owner key and value snapshots are owned across normal and throwing calls. Removing key snapshot retention in an isolated checkout causes real AddressSanitizer heap-use-after-free in map_foreach_keys.a and map_foreach_named_keys.a; restored controls pass. Initial isolated submodule setup failure is not mutant evidence.
+
+The new entry-nominal-array.a had two non-null assertions. Both are rewritten using an explicit undefined guard on the first element, preserving stdout. Its own count row is measured. Scoped IR/lower/native/JavaScript checks pass in 0.019/7.741/79.260/1.155s; filtered owner, dictionary and readiness oracle controls and mutants pass in 456.330s. The rewritten fixture and restored callback controls pass in 3.710s.
+
+The global counts refresh initially reports 41 failures: 40 inherited failures, the inherited nominal-subclass-slot failure is resolved, and user_iterators.a gains a clang distinct-pointer comparison failure. Casting the optional nominal receiver to const void * preserves exactly the null sentinel comparison and fixes that compilation failure. The source Node agreement control passes after the fix. Final count refresh and compiler verification will run on the tuple combination. No full package or full gate was run; evidence is under logs/continued/views-owner-*.log.gz.
+
+
+## October 8 priority owner, tuple and dictionary integration
+
+Dictionary 48d166cf7ba1954de46ca2a4b30d72f6872153a9 was re-fetched and is already merged at 5ab46e9fc7281824b10136995dc6e10819793177. Owner 0f55d66409d9f06e65d628f3c4d02b26a327bc99 is merged at 2f7429ed199ddfa82d19ce6da34d2effc2b55078. Tuple 0804dec54050b5ac5a360b1f16cee66aa28eb352 is the second parent of this final merge. This batch receives one push, only to codex/views-integration.
+
+The tuple merge has 27 individually resolved hunks in 13 files. No bulk strategy or whole-file selection was used. Decisions and proving fixtures follow.
+
+| Path and hunk | Functional decision and evidence |
+| --- | --- |
+| plan 1 | Keep dictionary groups 9 through 11 and the tuple handoff appendices. |
+| ir.go 1 | Keep Narrow.Tuple plus Undefined and its diagnostic; root-index-tuple.a and entry-convert-nan-undefined.a. |
+| view_maps.go 1 | Keep optional-source presence containment; optional nominal producer/schema controls. |
+| view_maps.go 2 | Use FixedTuple arity/rest domains while retaining recursive physical storage checks; optional-map-present.a and rest-map-wrong-contract.a. |
+| javascript.go 1 | Combine nominal receiver checks with tuple field representation; emit-tuple-good.a and nominal widening read mutants. |
+| javascript.go 2 | Keep undefined-only storage proof ahead of tuple narrowing; Map undefined storage mutants. |
+| JS view_arrays.go 1 | Keep owner Map, packed-boolean and primitive union cases; permit arrays as objects only under a tuple witness. |
+| JS view_arrays.go 2 | Gate primitive extraction on both primitive membership and absence of TupleUnion; keep nominal reads and add tuple selection. root-index-tuple.a and root-index-scalar.a. |
+| JS view_arrays.go 3 | Keep tuple and nominal consumer guards as separate branches; signature-foreach-tuple.a and nominal array read mutants. |
+| lower object.go 1 | Keep owner primitive/nominal array certificates and add only supported tuple-scalar union admission. |
+| lower object.go 2 | Propagate checked tuple read errors; watch-event-narrowed-missing.a. |
+| lower view_arrays.go 1 | Keep nominal contract override and validate TupleUnion separately. |
+| lower view_arrays.go 2 | Keep concrete type identity and add TupleUnion metadata. |
+| lower view_maps.go 1 | Keep owner phantom, nominal, nullable tuple and callable descriptor dispatch; do not discard source descriptor proofs. |
+| view_maps_tuples.go 1 | Generalize the single constructor with recursive child builders, retaining Map descriptor and callable-descendant vetoes. |
+| view_maps_tuples.go 2 | Accept only required-prefix, optional and terminal-rest arity plans; module-specifiers-wrong-arity.a. |
+| view_maps_tuples.go 3 | Recognize explicit tuple identity, including empty tuples; tuple layout probes. |
+| view_maps_tuples.go 4 | Keep checked child fields and encode optional/rest domains; rest-view-wrong-tail.a and optional absent mutant. |
+| view_maps_tuples.go 5 | Keep per-position witnesses and add safe missing numeric/reference reads; watch-event-narrowed-missing.a and rest-view-zero.a. |
+| native emit_slots.go 1 | Exclude tuple plans while retaining primitive membership gating, including typeof; root-index-tuple.a. |
+| native view_arrays.go 1 | Exclude tuple plans while retaining primitive membership gating at evaluation. |
+| native view_arrays.go 2 | Keep private read owners and producer scans; route tuple plans through owned normalization first. |
+| native view_arrays.go 3 | Keep owner argument and tuple callback transfer/release; transfer-store.a and transfer-throw.a, leak and double-release mutants. |
+| Map oracle 1 | Keep owner approved-brand controls; retain the tuple-entry incompatible-storage refusal in its own test. tuple-entry-read.a refuses at node.value; tuple-entry-unread.a agrees with Node. |
+| Map oracle 2 | Keep owner union storage and all six Map conversion controls. Four formerly unsupported owner-storage forms now agree with Node through complete certificates; optional-object, optional-array, nested-array and key gap fixtures. |
+| Map oracle 3 | Require Node agreement and leak checks for certified optional/rest tuple storage; both legacy gap fixtures. |
+| Map oracle 4 | Keep nominal method/recursive gaps, required brand refusals and JSON array controls. |
+| counts 1 | Keep both measured dictionary/owner rows and tuple rows; refresh only owned measurements. |
+
+The automatic tuple admission exposed the dictionary lane's six array-entry consumers. General tuple certificates do not discharge their producer-specific ownership boundary. Keep a scoped tuple-demand refusal using the existing allocation flow and DictionaryEntryOrigins. Its mutant now uses an otherwise supported tuple descriptor: removing derived roots admits the demand, so the actual boundary is proven able to fail. An independent tuple allocation stays admitted. Scalar enumeration keys remain unaffected. All six entries-{fixed,producer}-array-{good,wrong,empty}.a controls retain their named [element] unsupported tuple refusals.
+
+Tuple normalization uses the owner's array reader signature with a NULL private owner because normalization itself owns its output. A new private tuple extraction selector admits primitive or object storage solely for the subsequent tuple union witness. The existing primitive selector is unchanged; ordinary records still fail tuple shape selection. The explicit shape-removal mutant admits an ordinary record and fails the native oracle.
+
+Three incoming assertion-bearing fixtures are rewritten without !: rest-map-zero.a, rest-map-one.a and rest-map-many.a. Each checks undefined explicitly and throws an Error before using a missing tuple; expected stdout is unchanged. Together with entry-nominal-array.a in the owner merge, these are the four named rewrites in this batch. TypeScript AST audit reports zero assertion-bearing .a files under interface-downcasts. The preceding 436-file TypeScript migration is retained.
+
+Final scoped compiler checks pass: IR 0.011s, lower 5.215s, native 37.571s, JavaScript 1.452s. Final dictionary boundary checks pass in 0.008s; eager-key mutants pass in 0.268s. The complete original-declaration tuple corpus, 47 exact callback refusal pins, nominal guard mutants, dictionary values/entries, array reference writes and wider-helper never refusal pass in 177.293s. Array/union regression functions and dictionary enumeration mutants pass in 54.775s. All 68 registered dictionary controls agree across Node/native/release/JavaScript in 16.443s. Owned 153 count rows pass and refresh in 130.498s. Full original declarations remain pinned to upstream 050880ce59e30b356b686bd3144efe24f875ebc8, including the unreduced private module worker declaration.
+
+All twelve incoming tuple mutation modes were rerun and killed by their recorded actual oracle. Presence and scalar selection, optional/rest absence, erased rest schemas, callback/module arity, narrowing and source certificate mutations fail semantic pins. Skipped transfer release leaks 24 bytes; double release triggers AddressSanitizer use-after-free. The additional tuple shape mutation fails by admitting an ordinary record. Exact environments and results are in logs/continued/views-tuples-current-mutants.json. Nine dictionary mutants, the derived-origin mutant and the owner's key snapshot ownership mutant are recorded above; none is credited for a compiler failure.
+
+Final required global counts refresh finishes in 81.795s with 39 inherited failures and no additions relative to the 41-failure starting set. nominal-subclass-slot.a and graph_regions_entries.a no longer fail. The optional nominal pointer cast also resolves the transient user_iterators.a clang failure. The global table cannot be fully regenerated while those unrelated failures remain; owned rows are independently measured and committed. An intentionally filtered count comparison also failed its whole-table comparison after its user_iterators fixture passed; it is not credited as a counts gate pass.
+
+Earlier tuple attempts caught a runtime reader argument mismatch, primitive interception of a valid tuple, stale owner-storage expectations, dictionary boundary bypass and unsupported literal throws. They were corrected before final green checks. An accidentally broad ordinary-oracle selector was promptly cancelled; its incomplete log is not credited. No whole package or complete repository gate passed or was claimed. Incoming review/*.patch files preserve their historical patch-context whitespace; owned edits pass diff checking. Broader validation remains with the shared fast gate.

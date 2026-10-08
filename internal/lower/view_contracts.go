@@ -81,7 +81,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 	if !known {
 		return 0, l.notYet(node, "checked-view representation for "+l.checker.TypeToString(target))
 	}
-	contract := ir.ViewContract{Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
+	contract := ir.ViewContract{TupleUnion: tupleAlternativesType(target), Undefined: l.includesUndefined(target), Name: l.checker.TypeToString(target), Of: of}
 	if isClassInstance(target) {
 		if declaration := l.classNodeFor(target); declaration != nil {
 			contract.Nominal = l.program.Where(declaration) + ":" + contract.Name
@@ -129,7 +129,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Element = child
 		}
 	}
-	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object) {
+	if contract.Kind == ir.ViewObject || (contract.Kind == ir.ViewUnion && of == ir.Object && !contract.TupleUnion) {
 		for _, property := range l.checker.GetPropertiesOfType(target) {
 			child, err := build(l.checker.GetTypeOfSymbol(property))
 			if err != nil {
@@ -145,7 +145,7 @@ func (l *lowering) strictViewContract(node *ast.Node, target *checker.Type) (ir.
 			contract.Fields = append(contract.Fields, ir.ViewFieldContract{Name: property.Name, Contract: child, Optional: property.Flags&ast.SymbolFlagsOptional != 0, Readonly: l.checker.IsReadonlySymbol(property)})
 		}
 	}
-	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object {
+	if contract.Kind == ir.ViewUnion && contract.Of == ir.Object && !contract.TupleUnion {
 		// Publish recursive descendants before the untagged support query.
 		l.result.ViewContracts[id-1] = contract
 		tagged := ir.ViewUnionHasDiscriminant(l.result.ViewContracts, contract)

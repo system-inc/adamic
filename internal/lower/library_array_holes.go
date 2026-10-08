@@ -59,7 +59,11 @@ func (l *lowering) arrayLengthConstructor(node *ast.Node) (ir.Expression, bool, 
 			return nil, true, l.notYet(node, "an untyped length Array escaping without a proven element representation")
 		}
 	}
-	return ir.ArrayHoles{Length: length, Element: element}, true, nil
+	contract := ir.ViewContractID(0)
+	if proven != nil && element == ir.Object && isClassInstance(l.checker.GetNonNullableType(l.concrete(proven))) {
+		contract = l.mapNominalEntrySlot(node, l.concrete(proven))
+	}
+	return ir.ArrayHoles{Length: length, Element: element, ElementContract: contract}, true, nil
 }
 
 // Until each consumer has a hole contract, admitting a constructor makes every

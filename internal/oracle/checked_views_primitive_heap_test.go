@@ -9,7 +9,7 @@ import (
 // This tests actual source storage normalization before enabling read dispatch.
 // Reference callbacks remain mandatory; a heap category is not conformance.
 func TestCheckedViewPrimitiveHeap(t *testing.T) {
-	path, err := filepath.Abs("../../stage3/interface-downcasts/lane4/selection-fixtures/heap-primitives-good.a")
+	path, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/selection-fixtures/heap-primitives-good.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

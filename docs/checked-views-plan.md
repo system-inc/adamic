@@ -1933,6 +1933,156 @@ again. Owned resume/dictionary-member-handoff.json records this split and counts
 Full dynamic lookup validation awaits lane 6's hooks in views-integration,
 currently ba59427c locally; no dictionary branch was merged.
 
+## Tuple lane, October 7 reassignment
+
+Branch `codex/views-tuples` starts from integration `4e67894a`. Own new
+`internal/lower/view_tuples.go`, `internal/native/view_tuples.go`,
+`internal/javascript/view_tuples.go`, runtime `view_tuples.h/.c`, oracle
+`checked_views_tuples_original_test.go`, and `stage3/interface-downcasts/tuples/`.
+The lane 2 ranked census supplies six candidate pairs and nine candidate reads.
+These are candidate counts, not exact reachability or certified coverage.
+
+Lane 1 tip `65d8a138` is merged at the user's explicit direction. Its
+`view_maps_tuples.go` constructor and tuple read lowering are the single tuple
+path. The array contract adapter supplies the lazy child builder to that same
+constructor; Map producers retain their complete-schema child builder. No second
+fixed-tuple constructor is added.
+
+Minimal shared hooks: `FixedTuple` distinguishes empty tuples from objects in
+IR and Map schema comparison; the array adapter delegates to `tupleViewSlot`;
+lazy admission uses exact tuple position descriptors before numeric-field
+fallback; producer metadata retains tuple identity in native object/region
+allocations; existing array and object-union dispatch validates tuple identity
+and arity. JavaScript uses array identity at those dispatch sites. Tuple read
+metadata retains the original receiver id in lane 1's existing read helper.
+
+The combined candidate queue has ten pairs and fifteen reads: lane 2's six/nine
+plus four/six optional-position receiver pairs in lane 1's nullish inventory.
+No rest receiver pair is identifiable in that inventory. Lane 1 additionally
+hands off two executable Map gap forms (optional and rest tuples); those fixture
+forms are not counted as production pairs or reads. Exact reachability remains
+unmeasured. Original numeric brands retain their current refusal unless their
+real contracts can be certified without rewriting tsc's declarations.
+
+Tuple lane, TrackedSymbol consumer checkpoint (October 8):
+`tupleOptionalForEach` in lower/view_tuples_optional_call.go is called by
+expressionStatement in shared lower/statements.go. It handles only a discarded
+receiver?.forEach(callback) on an array of required-position tuples, without a
+nullable receiver or an optional call on the method itself. It saves the receiver
+once and places the existing ArrayVisit inside its undefined guard; callback
+construction stays in the present branch. The existing tupleViewSlot and lazy
+array element extraction remain the only contract path. Other optional calls
+retain their existing refusal.
+
+The eight tracked-*.a witnesses import the unchanged original TrackedSymbol;
+the oracle checks the complete original Symbol field set. The added counts hook
+is tupleOriginalCounts in checked_views_tuples_counts_test.go, called from
+interfaceCastCounts. With prepared upstream declarations it binds and measures
+all tuple sources, including the previous outSignature witnesses. Without those
+opt-in inputs it preserves their recorded rows; this does not claim revalidation
+of original declarations. TestCheckedViewTupleOriginalCounts can update/check
+only these rows when the repository-wide counts refresh is blocked by unrelated
+fixtures. The required TestCountsAreRecorded command was also run and failed;
+three lowering failures reproduce with the starting production source. No full
+gate or successful complete counts refresh is claimed.
+
+Tuple numeric carrier hook: phantomBase consults tupleNumericCarrierField for
+required any-valued fields of imported numeric intersection declarations only.
+The existing primitive-name inventory proves the brand name absent from number
+own/prototype properties; that read yields undefined, an inhabitant of any.
+Numeric kind and literal constraints remain checked by the existing scalar
+contract, and demanded any-valued reads still refuse. Written Adamic brands
+retain the void-only refusal rule. Mixed-union classification recognizes the
+same proven scalar carrier; no numeric alias replaces an original declaration.
+TestPhantomPrimitiveNames checks the inventory against Node, and the original
+brand-read control pins Node's undefined and Adamic's any-read refusal.
+
+Tuple continuation staged hooks: adamic_tuple_matches extracts the existing
+fixed tuple identity/length predicate; adamic_tuple_array_union_at is an
+uncalled owned normalizer built over adamic_view_array_at. TupleViewMembers
+plans only scalar/undefined/fixed-tuple alternatives. Disconnected native
+viewTupleHeapUnion and JavaScript tupleArrayUnionCheck reuse mixed-union
+selection. Their probes pass, including shape mutants; production array-union
+dispatch is not admitted. The review patch and approval-review blocker are in
+stage3/interface-downcasts/tuples/REPORT.md. Optional/rest metadata observations
+remain separate from runtime certification. Lane 4b frontier checks are queued
+after this unit and overlap its existing production census.
+
+Approved tuple array index hook: ArrayIndex.TupleUnion records the lowering
+predicate and the finalized tuple/scalar contract plan. Both backends dispatch
+only on this flag. Native normalization owns its snapshot through the existing
+statement cleanup. Callback/loop transfer remains refused. Four original Root
+index fixtures, two semantic mutants, and lane 4/lane 2 array regressions certify
+this boundary. The previous unapplied review patch is archival.
+
+Tuple positional union hook: elementAccess admits boxed union positions only
+when tupleScalarUnionType proves scalar/fixed-tuple alternatives. Shared
+objectPrimitiveViewType recognizes that plan. When a field has multiple fixed
+tuple alternatives, both backends select one with the existing mixed-union
+selector and tuple predicate. Single-tuple field diagnostics are preserved.
+Original signature positions and regressions certify this shared extension.
+
+Optional producer hook: tupleLiteral leaves missing optional positions absent,
+so the existing shape count retains actual arity. readTupleViewElement,
+optionalTupleElement and tuple destructuring set the existing Absent policy for
+optional positions. Node/both-backend/leak probes certify these producer reads.
+Shared optional/rest view ranges and forEach ownership transfer remain blocked
+by automatic approval review; the concrete formatted review patches and exact
+remaining pair ledger are under stage3/interface-downcasts/tuples/. No runtime
+object layout was changed.
+
+Approved tuple forEach transfer: ArrayViewRead.TupleUnion preserves the same
+finalized tuple/scalar plan as indexed reads. emitTupleArrayUnionSlot transfers
+its normalized count directly to the existing forEach callback cleanup, while
+indices still register statement cleanup. Existing non-tuple consumers retain
+and release as before. Required tuple/scalar, caught-throw and captured-store
+fixtures pass both backends and leaks; skip-release and double-release mutants
+are caught by the shared leak checker and AddressSanitizer respectively.
+
+Tuple arity foundation: FixedTuple plans may carry TupleVariable, TupleMinimum
+and TupleRest. Native and JavaScript predicates consume these only through
+the tuple contract path; Map schema matching preserves the complete domain.
+The producer ABI stays unchanged. Runtime and IR probes certify optional
+intervals and unbounded rest intervals; source admission is a separate patch.
+
+Optional arity admission: supportedTupleArity gates the existing tuple adapter,
+which marks the single tupleViewSlot plan variable with its required prefix.
+Optional fields retain Absent read policy and complete Map schemas preserve
+that same arity domain. Array tuple-union dispatch remains fixed-only.
+Six object/Map forms and the absent-as-present mutant certify this boundary.
+
+Trailing rest tuple admission: the existing constructor stores TupleRest as its
+child contract and keeps only the finite prefix in Tuple. tupleLiteral maps
+written tails to the declared rest element, retaining actual shape arity.
+readTupleViewElement maps each constant tail position to that same child and
+registers its checked read. MapCertificatePairs checks rest storage and semantic
+subtyping as well as the prefix. Zero/one/many object and Map forms, late wrong
+elements and wrong Map schemas certify this extension; spread and variadic
+rest forms remain refused. No array consumer predicate was widened.
+
+Disjoint tuple alternative hook: tupleAlternativesType proves nonoverlapping
+finite arity domains and carries TupleUnion on the IR contract. Only that flag
+lets object-union field validators reuse tuple selection; ordinary object
+unions keep their discriminants. JavaScript tuple field representation recognizes
+only the same flag. The single readTupleViewElement constructs every positional
+read, including alternative absence and narrowed maybe-number guards; descriptor
+errors propagate. Existing array dispatch predicates stay unchanged. Original
+watcher tuple alternatives retain both full parameter lists and the Date slot.
+
+Original private optional tuple oracle: prepare_optional_tuple.cjs extracts
+the complete written return declaration of tryGetModuleSpecifiersFromCacheWorker
+from the pinned upstream AST, with source/declaration hashes. It does not reduce
+fields or alter upstream code. Oracle binding validates those hashes separately
+from the 78 emitted declarations and pins the complete SourceFile field set.
+No new production hook is needed for module tuple positions.
+
+Lane 4b direct tuple cast remains a separate boundary: the handed-off mutable
+(number|string)[] source casts directly to the original fixed emit tuple. Its
+exact input still receives adamic/no-unchecked-cast before reading a position.
+The existing tuple-object certificate cannot establish that homogeneous array
+storage is tuple storage. An alias-preserving source/read bridge would be needed;
+no copying adapter or broader mixed-array admission is added by this unit.
+
 
 ### Dictionary source hooks, October 8 rule change
 
@@ -2465,3 +2615,64 @@ in existing fixtures. Cumulative obligations are 171 pairs / 2840 reads; remaind
 163 / 349. Production execution is unmeasured. IncrementalBuildInfo.fileNames is
 pinned at an original untagged-union admission refusal, with no credit. Tuples stay
 with their worker. See stage3/interface-downcasts/lane2/RANKED19-ARRAYS-REPORT.md.
+### Dictionary group 9: string-index census rows on integration ffe428ab
+
+New lane file `internal/oracle/checked_view_dictionary_recheck_test.go` and original
+`dictionaries/source/{string-index,path-index}-*.a` controls certify numeric string
+indexing after checked field extraction. No shared production hook is needed.
+The cancelled non-null area port is excluded entirely.
+
+### Dictionary group 10: actual-source key enumeration
+
+New lane files `lower/view_dictionary_enumeration.go` and
+`oracle/checked_view_dictionary_enumeration_test.go`, with keys source witnesses.
+Named shared hooks: `dictionaryKeysCall` before recordObjectCall;
+`ir.RecordCall.DictionaryKeys`; `native.recordCall` routes key-only reads to
+`adamic_view_dictionary_source_keys` in existing view_dictionaries.c/.h.
+That helper uses record_keys for actual record producers and object_keys for
+fixed/class objects, validating heap kind without reading values or certifying
+element representation. JS retains Object.keys. Values/entries remain demanded
+refusals until their per-element adapters are certified.
+
+### Dictionary group 11: values and entries read every selected element
+
+Named `dictionaryValuesCall` in the lane enumeration file snapshots actual source
+keys and builds ordinary ForOf/ArrayPush IR, with every element routed through
+dictionaryReadContract. Entries use the existing tuple-object representation.
+Minimal library_object dispatch precedes unchecked record enumeration. No new
+record storage or generic trust rule is introduced. New values/entries source
+witnesses and enumeration mutants belong to the dictionary lane.
+
+Group 11 minimal shared production hook: `ir.ArrayPush.DictionaryProduction`
+marks only appends of already checked dictionary snapshots to the private result
+array of the generated enumeration helper. Native/JS ArrayPush dispatch skips
+the existing alias-write certificate guard for this construction; it retains
+normal ownership and gives no logical element certificate to the result. Every
+selected value has dictionaryReadContract, and nested reads keep their checks.
+The array is private until return, with no callbacks between appends. Later
+mutations and casts still require normal source certificates.
+
+Nested array-entry tuple consumption remains unsupported by the tuple lane.
+`Program.DictionaryEntryOrigins` and `dictionaryEnumerationOrigins` seed those
+derived result containers into the existing lazy demand graph, keeping the
+actual ViewOrigins cast ledger unchanged. `checkLazyViewReads` uses the combined
+roots only after actual casts activate it. Construction remains lazy; a reached
+unsupported tuple read now compile-refuses consistently, rather than JS alone
+rejecting its valid array representation. No second flow solver is introduced.
+
+Lane-owned `lower/view_dictionary_enumeration_test.go` proves the derived-origin
+refusal with a mutant removing only DictionaryEntryOrigins. The same fresh
+container then escapes the demanded tuple refusal, so the mutant is caught.
+
+### Tuple merge with integration ffe428ab
+
+The tuple worker merged ffe428ab26eefb73154adbf570ad99e9c1b4f872 into
+codex/views-tuples. The additional minimal hook is the TupleUnion exclusion
+in native arrayIndexSlot, alongside native evaluate and JavaScript
+emitViewArrayRead: integration's primitive-array reader must not intercept
+an IR-carried tuple plan, including typeof reads. Narrow.Tuple also retains
+JavaScript tuple array identity. Tuple Map admission uses the existing single
+constructor and complete source descriptor proof while preserving integration's
+physical storage veto and unrelated callable/phantom refusals. Final commands,
+green logs and 12 real mutant-mode kills are recorded in
+[the tuple merge report](../stage3/interface-downcasts/tuples/INTEGRATION-MERGE.md).

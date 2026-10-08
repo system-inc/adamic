@@ -25,7 +25,7 @@ func TestCheckedViewOriginalEvaluatorPrimitivePairs(t *testing.T) {
 		}
 		for _, variant := range variants {
 			t.Run(group+"/"+variant, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/" + group + "-" + variant + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/" + group + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -128,7 +128,7 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 	} {
 		for _, variant := range group.variants {
 			t.Run(group.name+"/"+variant, func(t *testing.T) {
-				input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/" + group.name + "-" + variant + ".a")
+				input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/" + group.name + "-" + variant + ".a"))
 				if err != nil {
 					t.Fatal(err)
 				}
@@ -253,7 +253,7 @@ func TestCheckedViewOriginalFinitePrimitiveFields(t *testing.T) {
 
 func assertOriginalPrimitiveFields(t *testing.T, directory string, program *ir.Program, name, sourceName string) {
 	t.Helper()
-	data, err := os.ReadFile(filepath.Join(directory, "primitive-manifest.json"))
+	data, err := os.ReadFile(checkedViewFixturePath(filepath.Join(directory, "primitive-manifest.json")))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -266,7 +266,7 @@ func assertOriginalPrimitiveFields(t *testing.T, directory string, program *ir.P
 		t.Fatal(err)
 	}
 	if manifest.PrivateSHA != "" {
-		private, err := os.ReadFile(filepath.Join(directory, "primitive-private.d.ts"))
+		private, err := os.ReadFile(checkedViewFixturePath(filepath.Join(directory, "primitive-private.d.ts")))
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -295,7 +295,7 @@ func assertOriginalPrimitiveFields(t *testing.T, directory string, program *ir.P
 }
 
 func TestPrimitiveOrdinaryBinding(t *testing.T) {
-	file, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-binding.a")
+	file, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-binding.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -348,7 +348,7 @@ func assertPrimitiveFirstMemberMutant(t *testing.T, program *ir.Program, field s
 }
 
 func TestPrimitiveOrdinaryProperty(t *testing.T) {
-	file, err := filepath.Abs("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-property.a")
+	file, err := filepath.Abs(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/ordinary-property.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -419,7 +419,7 @@ func TestCheckedViewOriginalBuilderSignatureReceiverGap(t *testing.T) {
 	verifyUnionTargetDeclarations(t, directory)
 	for _, variant := range []string{"string", "false", "undefined", "wrong", "wrong-number", "null", "missing"} {
 		t.Run(variant, func(t *testing.T) {
-			input, err := os.ReadFile("../../stage3/interface-downcasts/lane4/primitive-original/builder-signature-" + variant + ".a")
+			input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane4/primitive-original/builder-signature-" + variant + ".a"))
 			if err != nil {
 				t.Fatal(err)
 			}

@@ -8,7 +8,7 @@ const normalized=text=>text.replace(/\s+/g,'');
 let count=0;
 for(const member of evidence.members.filter(m=>ranks.has(m.rank))) {
  const directory=path.join(__dirname,'ranked-callables',directories.get(member.rank));
- for(const file of fs.readdirSync(directory).filter(f=>f.endsWith('.a'))) {
+ for(const file of fs.readdirSync(directory).filter(f=>(f.endsWith('.a') || f.endsWith('.ts')))) {
   const source=ts.createSourceFile(file,fs.readFileSync(path.join(directory,file),'utf8'),ts.ScriptTarget.Latest,true);
   let declaration,read;
   function visit(node) {

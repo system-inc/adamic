@@ -1,0 +1,98 @@
+[
+  {
+    "env": "ADAMIC_TUPLE_INDEX_MUTANT=presence",
+    "test": "TestCheckedViewTupleOriginalRootIndex",
+    "exit": 1,
+    "caught": true,
+    "evidence": "FAIL: TestCheckedViewTupleOriginalRootIndex/root-index-required-missing",
+    "log": "integration-ffe428ab/mutant-1.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_INDEX_MUTANT=scalar",
+    "test": "TestCheckedViewTupleOriginalRootIndex",
+    "exit": 1,
+    "caught": true,
+    "evidence": "FAIL: TestCheckedViewTupleOriginalRootIndex/root-index-scalar",
+    "log": "integration-ffe428ab/mutant-2.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_TRANSFER_MUTANT=skip",
+    "test": "TestCheckedViewTupleForEachTransferMutants",
+    "exit": 1,
+    "caught": true,
+    "evidence": "transfer mutant caught by leak check",
+    "log": "integration-ffe428ab/mutant-3.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_TRANSFER_MUTANT=double",
+    "test": "TestCheckedViewTupleForEachTransferMutants",
+    "exit": 1,
+    "caught": true,
+    "evidence": "double-release mutant caught by sanitizer",
+    "log": "integration-ffe428ab/mutant-4.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_OPTIONAL_CONTRACT_MUTANT=present",
+    "test": "TestCheckedViewTupleOptionalAbsentMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "absent-as-present mutant caught",
+    "log": "integration-ffe428ab/mutant-5.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_REST_CONTRACT_MUTANT=present",
+    "test": "TestCheckedViewTupleRestAbsentMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "zero-rest-as-present mutant caught",
+    "log": "integration-ffe428ab/mutant-6.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_REST_CONTRACT_MUTANT=schema",
+    "test": "TestCheckedViewTupleRestSchemaMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "erased rest schema mutant caught",
+    "log": "integration-ffe428ab/mutant-7.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_SIGNATURE_FOREACH_MUTANT=skip",
+    "test": "TestCheckedViewTupleOriginalSignatureForEachMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "mutant caught",
+    "log": "integration-ffe428ab/mutant-8.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_WATCH_MUTANT=arity",
+    "test": "TestCheckedViewTupleOriginalWatchArityMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "mutant caught",
+    "log": "integration-ffe428ab/mutant-9.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_WATCH_MUTANT=narrow",
+    "test": "TestCheckedViewTupleWatchNarrowingMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "mutant caught",
+    "log": "integration-ffe428ab/mutant-10.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_MODULE_MUTANT=arity",
+    "test": "TestCheckedViewTupleOriginalModuleArityMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "mutant caught",
+    "log": "integration-ffe428ab/mutant-11.log"
+  },
+  {
+    "env": "ADAMIC_TUPLE_LEGACY_MAP_MUTANT=certificate",
+    "test": "TestCheckedViewTupleLegacyMapAdmissionMutant",
+    "exit": 1,
+    "caught": true,
+    "evidence": "source certificate mutant caught",
+    "log": "integration-ffe428ab/mutant-12.log"
+  }
+]

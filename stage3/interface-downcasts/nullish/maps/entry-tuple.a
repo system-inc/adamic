@@ -1,0 +1,8 @@
+interface Base {readonly kind:string}
+interface Target extends Base {readonly kind:'box';readonly value:ReadonlyMap<string,readonly [number,string]>|null}
+const pair:readonly [number,string]=[7,'seven'];
+const map=new Map<string,readonly [number,string]>([['key',pair]]);
+const raw={kind:'box',value:map};const base:Base=raw;
+function readPair(pair:readonly [number,string]):void{console.log(String(pair[0]));console.log(pair[1]);console.log(String(pair.length));}
+function read(node:Target):void{const map=node.value;if(map!==null){const pair=map.get('key');if(pair!==undefined){readPair(pair);}}}
+read(base as Target);
