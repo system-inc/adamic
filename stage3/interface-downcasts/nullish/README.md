@@ -1252,3 +1252,25 @@ optional/rest tuples retain their lane ownership; required primitive brands
 retain their language refusal. The inventory remains 2,018 pairs / 9,101 reads,
 with exact production reaching-view discharge unmeasured. Evidence is in
 recursive-mutable.json and its compressed logs.
+
+
+October 8: recursive class storage prerequisites
+
+Four recursive readonly-array class probes match stock Node but remain refused
+at node.value: 6:33 for control/read/write, 6:52 for the producer probe. The
+refusal gate passes in 0.632s. A candidate interned class descriptors before
+lowering back edges, but the readonly array field initializer stopped at
+<write>.children because its original array element certificate was unavailable.
+A candidate nullable class-field layout also exposed ASan heap-use-after-free
+in adamic_map_set after graph adoption and producer traversal. Those candidate
+changes were restored, with patches kept under /tmp for diagnosis; neither
+class admission nor a nullable class layout is enabled by this unit.
+
+The prerequisites are certified class array initialization and nullable class
+layout/graph-region ownership. Recursive class reads remain named Map key/value
+certificate refusals until those source-storage proofs are available. No other
+worker branch was merged. This unit records the blockers and pins four valid
+Node controls to the existing read refusal; it adds no new runtime check.
+Evidence is recursive-class-blocker.json, raw candidate red logs, decoded ASan
+stderr, and the green refusal log. Inventory remains 2,018 pairs / 9,101 reads,
+with exact production discharge unmeasured.

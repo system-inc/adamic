@@ -720,3 +720,23 @@ func TestCheckedViewRecursiveMutableLinkWriteRefusal(t *testing.T) {
 	}
 	t.Logf("Node=%q; named storage refusal=%v", truth.stdout, err)
 }
+
+func TestCheckedViewRecursiveClassStorageRefusals(t *testing.T) {
+	for _, site := range []string{"control", "producer", "read", "write"} {
+		t.Run(site, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/nullish/maps/entry-nominal-gap-recursive-class-"+site+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 {
+				t.Fatalf("Node=%#v", truth)
+			}
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), "field value") || !strings.Contains(err.Error(), "Map key/value certificate") {
+				t.Fatalf("recursive class storage escaped its refusal: %v", err)
+			}
+			t.Logf("Node=%q; named read refusal=%v", truth.stdout, err)
+		})
+	}
+}

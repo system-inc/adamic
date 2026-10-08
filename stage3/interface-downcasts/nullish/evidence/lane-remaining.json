@@ -34,7 +34,8 @@
       "family": "mutable recursive arrays and recursive class declarations",
       "read": "node.value",
       "outcome": "producer witness coverage not implemented; existing named refusals retained",
-      "production_reaching_view_counts": "unmeasured"
+      "production_reaching_view_counts": "unmeasured",
+      "class_evidence": "recursive-class-blocker.json: four Node controls remain refused at node.value (6:33 or 6:52); array initialization and null-layout ownership prerequisites"
     },
     {
       "family": "nullable aggregate source-link write",

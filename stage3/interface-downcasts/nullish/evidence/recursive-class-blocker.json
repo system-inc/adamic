@@ -1,0 +1,27 @@
+{
+  "base": "e56102dcf",
+  "status": "recursive class admission remains refused; candidate changes restored",
+  "Node_outputs": {
+    "control": "7\n7\n",
+    "producer": "object\n",
+    "read": "7\n7\n",
+    "write": "7\n7\n7\n7\n7\n"
+  },
+  "read_sites": {
+    "control": "6:33",
+    "producer": "6:52",
+    "read": "6:33",
+    "write": "6:33"
+  },
+  "required_dependencies": [
+    "class readonly-array initializer retains original element certificate before physical write",
+    "nullable class field layout and graph-region ownership retain Map through producer traversal"
+  ],
+  "candidate_logs": "red evidence from uncommitted candidate, not the pushed implementation",
+  "refusal_gate_seconds": 0.632,
+  "logs": [
+    "refusals",
+    "null-layout-red",
+    "array-initializer-red"
+  ]
+}
