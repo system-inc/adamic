@@ -8,11 +8,16 @@ The sanitized and Linux LeakSanitizer runs each split the cases into `min(runtim
 
 # Corpus identity
 
-`testdata/corpus.pin` now pins only 1,094 upstream, generated and provisioned identities, before any gate selection. Each identity is the repository-relative path and SHA256 of the text bytes. The aggregate digest is SHA256 of the sorted `path<TAB>text-hash<LF>` list, with the same digest and a count per pinned group. Every corpus run rejects a missing, extra or changed pinned input by test name, group and path. No gate switch rewrites the pin.
+At cohere `f5d1934a`, the pinned total is 1,108: cohere has 853 identities,
+TypeScript 203, generated 34 and provisioned 18. The pin was regenerated through
+the test's corpus helpers; non-cohere groups are unchanged. The table and aggregate
+digest below record the earlier pin-design unit, rather than the current checkout.
+
+In the original pin-design unit, `testdata/corpus.pin` pinned only 1,094 upstream, generated and provisioned identities, before any gate selection. Each identity is the repository-relative path and SHA256 of the text bytes. The aggregate digest is SHA256 of the sorted `path<TAB>text-hash<LF>` list, with the same digest and a count per pinned group. Every corpus run rejects a missing, extra or changed pinned input by test name, group and path. No gate switch rewrites the pin.
 
 Tracked repository JSON inputs follow Git HEAD instead of a stored identity pin. The walker must include every path returned by `git ls-files --cached -z -- '*.json'`, excluding cohere and `.git` trees. It must contain no duplicate path. The index must match HEAD and the worktree must match the index for those paths. Both comparisons are necessary: comparing worktree directly with HEAD can hide a staged change whose working file was restored. Missing, dirty and unexpected untracked inputs fail with their paths named. Git must be usable and its root must match the walk root; exports without Git metadata fail rather than fall back to walking.
 
-| Group | Count at this checkout | How checked |
+| Group | Count at the pin-design checkout | How checked |
 | --- | ---: | --- |
 | repository | 1516 | Current Git paths and clean checkout, no stored count or identity pin |
 | provisioned | 18 | Identity pin |
@@ -22,7 +27,7 @@ Tracked repository JSON inputs follow Git HEAD instead of a stored identity pin.
 | Pinned total | 1094 | Count and aggregate identity pin |
 | Full corpus | 2610 | Repository plus pinned groups, before sampling |
 
-Current pinned aggregate SHA256: `3d987e9a388d0e354db2ee0dc5b6ce8a780f39a3e30d41e52bedc9973fc1e000`.
+Pin-design aggregate SHA256 (historical): `3d987e9a388d0e354db2ee0dc5b6ce8a780f39a3e30d41e52bedc9973fc1e000`.
 
 The branch starts at integration tip `ddaef2cb`, with main `74fb6490`, cohere `7945d102` and its pinned TypeScript checkout. Step 1 was pushed separately as `27472be539b5bb2f2455138a71edc0db496742a7`: it refreshed the old whole-corpus pin to 2,610 inputs (Adamic 1,534, TypeScript 203, cohere 839, generated 34). Its three requested tests passed in 72.672s, with the full upstream comparison and exact nine discrepancies. The second commit removes 1,516 repository identities from the pin without removing those files from the formatter comparisons.
 

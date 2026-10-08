@@ -1,13 +1,14 @@
 # Go regexp to stage 1 RegExp
 
-`table.json` is the single site table: source file and line, source-unit slug,
+`table.json` is the original 107-site translation table: source file and line, source-unit slug,
 compile operation, Go expression, fixed pattern when statically evaluable, feature
 class, JS pattern and flags, and the runtime option constructor contract.
-`sites.json` is its unmodified Go AST provenance. `patterns.a` contains the 83 fixed
+`sites.json` is the live Go AST census at the current pin; its delta from that
+translation baseline is recorded below. `patterns.a` contains the original 83 fixed
 patterns as JS RegExp literals. The two fixed comment expressions are also exported
 by name. `options.a` holds the required constructor and its native gap.
 
-The pinned cohere revision is 7945d102a6c18dd36adf9114a758ce646e8b2359. It has 39
+The original translation baseline used cohere 7945d102a6c18dd36adf9114a758ce646e8b2359. It had 39
 non-test files importing regexp, 38 containing compile calls, 89 MustCompile sites
 and 18 Compile sites. Six MustCompile sites are constructed expressions, so 83
 sites have statically evaluated sources and 24 are dynamic. The stated 92-site
@@ -15,7 +16,7 @@ census does not match this pin. No sites were invented or dropped to reach 92.
 Helpers and tooling retain their source-unit slug instead of inventing a rule owner.
 
 An arbitrary accepted option-pattern language is infinite. The table inventories
-all compile sites and source expressions, including each runtime option family;
+all original compile sites and source expressions, including each runtime option family;
 it cannot enumerate every possible user string. See [gaps.md](gaps.md) for the
 measured constructor and dialect blockers and the incomplete rule migrations.
 
@@ -41,9 +42,17 @@ The comparison checks every whole match and its UTF-16 start/end, including empt
 matches with Go's adjacent-empty enumeration rule. The oracle alone maps Go's byte
 spans through a single UTF-16 helper. Rule finding positions are not involved yet.
 Captures, named-group objects, replacement APIs and invalid UTF-8 are not covered.
-No universally faithful translation of arbitrary Go options is claimed. All fixed
+No universally faithful translation of arbitrary Go options is claimed. All original fixed
 sites agree on the recorded corpus; that is bounded evidence, not a proof over all
 Unicode versions or all input strings.
+
+The current cohere pin is f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7.
+Its live `sites.json` has 89 RE2 compile sites (88 MustCompile, one Compile),
+82 fixed and seven dynamic. Commit c2e39b75 moved the user-option sites to
+JavaScript regexp; 0b892cc9 added the fixed class-matcher identifier pattern.
+The 107-row translation table, 83 fixed port literals and shape fixtures above
+remain the original port baseline in this pin-only unit; port behavior is not
+changed. They do not claim complete coverage of the new live inventory.
 
 The requested quiet-hundred manifest is absent on this base. The explicit alternate
 100-file corpus uses 77 TypeScript compiler sources and 23 stage1 sources, taking up

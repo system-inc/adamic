@@ -1,0 +1,226 @@
+Cohere pin f5d1934a with the matching dominance fix
+
+Branch: cohere-pin/f5d1934a-with-dominance.
+Base: origin/lint-fix/static-single-assignment-dominance, 023e47f.
+Merged origin/area/stage1-lint at c4bdc23f in db59407a. origin/main at ef3141e9 already
+contains internal/corpusfiles and is an ancestor through that lint merge;
+git merge origin/main reported Already up to date. The format area was not merged separately.
+Cohere: f5d1934a2d7bebe706210cb1cfd01aebff4f8ca7.
+Cohere/TypeScript: d92d9bfee114c80be2c375d72edae966176e3a4f, unchanged in its gitlink and checkout.
+internal/load/pin_test.go: TestTypeScriptIsThePinnedCommit passed.
+
+Pin references and baselines refreshed
+
+- cohere: gitlink.
+- internal/corpusfiles/files.go: CohereCommit, in the same final pin commit.
+- stage1/cohere/json/testdata/corpus.pin: cohere 839 -> 853 identities; 14 added,
+  none removed, one changed (cohere/internal/lint/rules/tailwind/collapse/testdata/wave3_fixtures.json).
+  The added identities are recorded in pin-changes.log.gz.
+  Cohere digest f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47 ->
+  6766506bf693bc01b24bb622b83957e4dfd17ccb2a9d3494a4a9a2082ffe6c88.
+  Pinned total 1094 -> 1108; aggregate digest
+  3d987e9a388d0e354db2ee0dc5b6ce8a780f39a3e30d41e52bedc9973fc1e000 ->
+  32575a4e9e2c8be8928a43632a93c8761b4bdb7152bae4a4f045db86299f20f1.
+  TypeScript 203, generated 34 and provisioned 18 retain their identities and digests.
+  Repository JSON remains Git-checked: 1537 tracked paths in this validation, 2645 total texts.
+  Regeneration calls corpusCases, repositoryJSONAtHEAD and pinForCases in a scratch Go overlay,
+  bypassing only verification of the obsolete pin while generating its replacement. Gate checks
+  are unchanged and run against the replacement; missing/dirty/unexpected input mutants remain.
+- stage1/cohere/lint/regex/sites.json: regenerated live Go AST census, 107 -> 89 sites,
+  88 MustCompile / one Compile, 82 fixed / seven dynamic. c2e39b75 removes the old user-option
+  RE2 sites; 0b892cc9 adds the fixed class-matcher identifier expression.
+- stage1/cohere/lint/regex/README.md and gaps.md: current census and the upstream dialect
+  gap closed by c2e39b75. The 107-row table, 83 port literals and shape fixtures remain the
+  original translation baseline: no port rewrite or claim of complete new-inventory coverage.
+- stage1/cohere/lint/helpers/testdata/descriptors.json: refreshed by its existing Go oracle.
+  Sixteen descriptors changed: twelve Tailwind rules (0b892cc9 / f5d1934a selector shapes),
+  id-length, id-match, object-shorthand and @typescript-eslint/no-require-imports (c2e39b75).
+  Its regenerated catalog.json is byte-identical, and the 23539-case frozen corpus is unchanged.
+- stage1/cohere/lint/helpers/README.md: refreshed descriptor provenance; original evidence retained.
+- stage1/cohere/json/known-upstream-differences.txt and audit_test.go: the seven numeric-separator
+  exceptions closed by 1ee5f944 are removed from the upstream report. The six dedicated probes
+  now require Go and Prettier both to refuse. Exactly two empty-input exceptions remain because
+  this slice calls javascript.FormatJSON directly; native.Formatter.FormatParsed is the outer
+  empty-text dispatch changed by that Go commit. Added differences still fail the exact report.
+- stage1/cohere/json/GAPS.md and DEADLINES.md: current behavior/digests distinguished from
+  historical slice observations; no historical measurement was presented as current.
+- stage1/cohere/tsprinter/README.md: current pin and unchanged formatter-bundle provenance.
+
+The old-SHA and old-digest search is saved in old-pin-references.log. Remaining matches in
+internal/corpusfiles/REPORT.txt and validation logs, docs/verification/stage3-front2-audit.json,
+documentation/velocity/landings.csv, lint/claims/wave1-07-profile-tests-48c-report.md,
+lint/regex/REPORT.md and shapes/{CENSUS.md,census-review.json,README.md},
+lint/helpers/testdata/pin-audit.json, and tsprinter/results/tsc-corpus-before.json are historical
+reports or frozen baseline provenance. They were not rewritten to falsify their original pins.
+
+Validation method and machine
+
+AMD EPYC 7763; nproc 5; cpu.max 400000 100000 (four-core quota); memory limit 16 GiB.
+Go 1.27.1, clang 20.1.8, Node 24.19.0.
+Setup: GOPROXY='https://proxy.golang.org|direct' ADAMIC_TOOLS=/workspace/adamic-tools bash cloud/setup.sh.
+Timing lines: Go 0.026s; Node 0.026s; Markdown dependencies 0.083s (validated installed lock);
+submodules 0.085s; clang 0.183s; Go build 39.607s; test binaries deferred 39.913s;
+build cache warm 39.915s; total 39.945s.
+Setup load: 0.04 0.01 0.00 before; 7.49 2.00 0.68 after. Per-package before/after load is in
+package-results.log. Every input, profile and benchmark switch is recorded in inputs.log.gz.
+ADAMIC_GATE_SAMPLE and ADAMIC_GATE_CHANGED are unset. No corpus sweep is sampled.
+
+Command per package: go test -json -count=1 -timeout=90m -parallel=2 ./<package>.
+Initially GOMAXPROCS=4, serial packages; after GraphQL printer, GOMAXPROCS=2 and two packages
+at a time. Markdown blocks runs alone. Wall times include Go test startup/build overhead and
+contention, and are not an isolated performance comparison. Pass/fail/skip counts include subtests;
+three generator commands have no test files (0/0/0), rather than missing-input skips.
+The execution service disconnected once during the first CSS run and a JSON rerun. Incomplete
+logs were discarded and those packages rerun. Scheduling changed at a completed package boundary, but the attempted recursive stop missed
+a duplicate serial lint run. It consumed capacity for 47 minutes before being discovered and
+stopped. Only the designated matrix run counts; the extra serial log is discarded.
+The initial Markdown run was OOM-killed while AstPath and mdast overlapped: memory.events
+recorded oom=2, oom_kill=1, peak 17180024832 bytes. Unfinished tests were retried with
+-parallel=1; both logs and their separate outcomes are retained. Old derived Go cache entries were pruned three times to recover disk space,
+2.00 GB, 5.02 GB and 3.00 GB, with paths and bytes in cache-prune*.log.gz. No source or provisioned input was removed.
+
+Package results
+
+| Package | Pass | Fail | Skip | Wall s |
+|---|---:|---:|---:|---:|
+| internal/corpusfiles | 16 | 0 | 0 | 1.081 |
+| stage1/cohere/css | 39 | 0 | 0 | 1685.255 |
+| stage1/cohere/cssnumbers | 4 | 0 | 0 | 92.269 |
+| stage1/cohere/cssstrings | 5 | 0 | 0 | 65.919 |
+| stage1/cohere/estree | 60 | 1 | 0 | 1878.495 |
+| stage1/cohere/formatfiles | 14 | 0 | 0 | 37.137 |
+| stage1/cohere/gitignore | 32 | 0 | 0 | 107.204 |
+| stage1/cohere/graphql | 22 | 0 | 0 | 36.531 |
+| stage1/cohere/graphql/printer | 26 | 0 | 0 | 179.562 |
+| stage1/cohere/json | 41 | 2 | 0 | 173.145 |
+| stage1/cohere/lint | 111 | 2 | 1 | 3159.013 |
+| stage1/cohere/lint/helpers | 8 | 0 | 0 | 60.553 |
+| stage1/cohere/lint/helpers/comments | 10 | 0 | 0 | 160.966 |
+| stage1/cohere/lint/inventory | 1 | 0 | 0 | 21.355 |
+| stage1/cohere/lint/regex | 7 | 0 | 0 | 46.479 |
+| stage1/cohere/lint/registry | 17 | 0 | 0 | 1.697 |
+| stage1/cohere/lint/rules/no-underscore-dangle | 1 | 0 | 0 | 26.464 |
+| stage1/cohere/lint/rules/no-unsafe-negation | 1 | 0 | 0 | 25.963 |
+| stage1/cohere/lint/rules/no-unsafe-optional-chaining | 1 | 0 | 0 | 29.122 |
+| stage1/cohere/lint/rules/typescript-no-this-alias | 1 | 0 | 0 | 30.478 |
+| stage1/cohere/lint/shards | 3 | 0 | 0 | 0.728 |
+| stage1/cohere/markdownblocks | 106 | 1 | 0 | 3947.579 |
+| stage1/cohere/markdownblocks/tools/generate_classes | 0 | 0 | 0 | 0.226 |
+| stage1/cohere/markdownblocks/tools/generate_entities | 0 | 0 | 0 | 0.249 |
+| stage1/cohere/markdownblocks/tools/generate_width | 0 | 0 | 0 | 0.282 |
+| stage1/cohere/markdowninline | 5 | 0 | 0 | 632.568 |
+| stage1/cohere/mediaquery | 20 | 0 | 0 | 19.171 |
+| stage1/cohere/selector | 20 | 0 | 0 | 58.712 |
+| stage1/cohere/static_single_assignment | 20 | 0 | 0 | 48.998 |
+| stage1/cohere/suppression | 17 | 0 | 0 | 45.087 |
+| stage1/cohere/tsprinter | 45 | 0 | 0 | 1982.758 |
+| stage1/cohere/typeaware | 25 | 0 | 0 | 1284.609 |
+| stage1/cohere/values | 27 | 0 | 0 | 52.917 |
+| stage1/cohere/yaml | 68 | 0 | 0 | 343.544 |
+| stage1/typescript/parser | 41 | 0 | 0 | 426.226 |
+| stage1/typescript/scanner | 10 | 0 | 0 | 64.236 |
+
+Reds and witnesses
+
+JSON: TestPortMatchesGoCohere and TestProfileSnapshotsAgree. Go 1ee5f944 rejects malformed
+numeric separators that all five port runtimes still accept. Cases: gaps/numeric-separators.json
+and generated/12, generated/13, generated/14, each probe.json and package.json. Values include
+[1__0], [1_], [0x_1]. Source Node, release native, ASan/UBSan native, LSan native and emitted JS
+all show exactly these seven discrepancies over 2645 texts, and agree with each other.
+The three existing port mutants still catch their planted differences on valid controls.
+Evidence: json-all-runtime-diagnosis.log.gz; checked-in port comparisons remain unchanged.
+
+Lint: TestRulesAgree and TestProfileSnapshotsAgree, generated-10.ts, case 108, no-warning-comments, decoration [z,-,a].
+Go c2e39b75 changes user-option regex compilation/escaping and JavaScript whitespace.
+Minimal witnesses and all outputs are warning-*.log.gz: descending-decoration.ts (// TODO)
+with [z,-,a] now reports; ascending-decoration.ts (// bTODO) with [a,-,z] now does not report;
+javascript-whitespace.ts (NBSP before TODO) now reports. Old Go and source Node have identical
+answers on all three; sanitized native agrees byte-for-byte with source Node. New Go differs
+on all three. Port is unchanged. This is a behavioral port red, not an obsolete pin.
+
+ESTree: TestCorpusNativeRefusals, cohere/TypeScript/tsc/testdata/tests/cases/conformance/
+importSource/importSource5.ts. Go refuses; native exits 0 and emits 9552 bytes. This is pre-existing:
+old Go 7945d102 and f5d1934a have byte-identical answers/status on all 28 source-Node exceptions.
+The census contains 29307 sources: 17521 identical, 11758 both refuse, 27 port refuses a Go
+answer, one port accepts a Go refusal, zero accepted-answer byte differences. The 27 refusals
+are nine UTF-8/replacement blockers and eighteen import-source grammar cases; full paths are
+in estree-exceptions.log.gz. TestRepositoryAgreement passes all 17521 cases in uninstrumented
+source Node, sanitized native and emitted JS (626232285 answer bytes). The remaining native
+refusal tail was tested separately after the first witness: 430 passed. Evidence: estree-old-
+comparison.log.gz, estree-tail-native-refusals.log.gz. No commit in the bump causes this old exception.
+
+Infrastructure retry: 26 lint TestMutants subtests hit no space left on device before the cache cleanup.
+Derived Go build cache pruning recovered 5.02 GB; no input was removed. Its retry is recorded
+separately, so the interrupted build is not counted as evidence that a mutant was caught.
+
+The retry caught all 26 planted differences: 27/0/0 including the parent, 164.389s.
+Lint reconciled results: 111/2/1; initial 2994.624s plus retry 164.389s.
+
+Coverage notes
+
+All 36 requested Go packages are enumerated in package-results.log. Generator commands with
+no test files are counted as 0/0/0, not input skips. The only unavailable compiler-interface
+check is TestCheckerBridgeRefusalPending: checker_pending_test.go:49 awaits
+codex/tsgo-errors-as-values, because tsgoInspect must return TSGoError from the C error buffer.
+External inputs, profiles, timing switches, Unicode dependencies, compiler volume manifests
+and the whole-repository Markdown census are supplied. Gate sampling is unset.
+The helper's refreshed descriptors do not expand its frozen 23539 cases. The regex census is
+current, but its original 107-row translation baseline is intentionally frozen; this bump
+does not claim that the added fixed class-matcher pattern has a native translation.
+Gofmt, go vet over stage1/cohere/..., stage1/typescript/... and internal/corpusfiles, and
+git diff --check are clean. The TypeScript nested pin check passes at unchanged d92d9bfee.
+No port implementation changed in this unit beyond the inherited matching dominance fix.
+
+Markdown resource failure
+
+The first whole-package run recorded 73 test/subtest passes, no individual failures, then the
+Go test process was OOM-killed while TestMarkdownAstPath and TestNativeMdastConstruction
+overlapped. Package exit 1, 2072.539s wall (test elapsed 2064.810s). Cgroup oom=2, oom_kill=1,
+peak 17180024832 bytes. Its orphaned private native/Node children were stopped. This is not
+a demonstrated Go-answer change. The unfinished tests were retried unchanged with -parallel=1,
+full census and all controls; the initial log is retained alongside the retry.
+The AstPath input has 5352 contexts / 1252 physical documents and a 99 MB tree transport.
+Largest physical inputs include stage3/triage/contracts.md (1512781 characters),
+stage1/cohere/lint/inventory/PIPELINE.md (410207), and
+cohere/internal/format/prettier/bundles/THIRD-PARTY-NOTICES.md (363771).
+No case is excluded. Markdown's only Go code change is the equivalent whitespace-predicate
+consolidation in febfb416/92794013; formatter bundles are unchanged.
+Whitespace consolidation proof: the old Markdown predicate and text.IsWhitespace agree
+on all 1114112 code points. An oracle-side U+00A0 mutant is caught (one difference, exit 1).
+Scratch program and both outputs are whitespace-*.log.gz.
+
+The serial AstPath retry fails after 703.37s at testdata/path_library.mjs:45: Node 24.19.0
+RangeError: Invalid string length, output.join over the full corpus. This is a fixture-output
+capacity failure, not a Go/port byte mismatch. Go's transported-facts check passed before the
+fork check failed; native and source/backend comparisons in the loop were not reached, although
+the sanitized native process completed and its result was collected. All full-corpus runners
+were invoked by the eager result list. The fixture is unchanged by this pin unit.
+A dedicated streaming/chunked driver follow-up is needed; no file or control was excluded.
+A two-line Node-only witness reproduces the joined-string bound without any Go or port
+code: path-join-limit.mjs.log.gz, output in path-join-limit.log.log.gz. It does not isolate
+a failing individual Markdown document: the observed failure joins the whole batch.
+Git diff 7945d102..f5d1934a contains no .md/.markdown/.mdown/.mkd identity changes.
+Markdown fixtures and port source are unchanged by this unit. The AstPath driver limitation
+is pre-existing on the merged corpus, rather than a demonstrated answer change in the bump.
+
+Lint and Markdown wall times include their initial attempts plus narrowly targeted retries;
+raw attempts and named retry lists remain in package-results.log and the compressed logs.
+Markdown: 73 initial passes before OOM; serial retry 33 passes / one failure / zero skips,
+1875.040s, no additional OOM kill. All unfinished top-level tests were rerun; remaining
+representation probes pass. The AstPath corpus failure prevents its mutants and final
+comparison assertions from running. Every other reached package mutant is caught.
+
+Final load: 1.06 1.17 1.31; nproc 5; four-core quota.
+Final OOM counters: oom=2, oom_kill=1, attributable to the first Markdown attempt.
+
+Delivery
+
+No push: the user's standing green-before-push rule arrived during validation. Behavioral
+port fixes are explicitly out of scope for this pin unit, and the red tests are kept intact.
+The final local pin commit includes all refreshed references and this report. The required
+upstream lint merge is preserved; only unpublished unit edits are consolidated.
+
+Post-consolidation clean-HEAD checks: TestCorpusPinBeforeSampling and
+TestCorpusPinRejectsMissingProvisionedInputs pass (json 1.532s);
+TestTypeScriptIsThePinnedCommit passes (internal/load 0.007s). Final gofmt is clean.
+These logs are included by a report-only amendment; input source files are unchanged.
