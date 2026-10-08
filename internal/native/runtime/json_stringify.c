@@ -135,6 +135,8 @@ static void indent(json_writer *w, size_t depth) {
 }
 static bool write_value(json_writer *w, adamic_value value, const adamic_json_schema *schema, size_t depth);
 static void write_field(json_writer *w, const adamic_object *object, const adamic_json_field *field, size_t depth, size_t *written) {
+	// Reserved and unset slots are omitted without interpreting their storage.
+	if (!adamic_object_present(object, field->slot) || !adamic_object_initialized(object)[field->slot]) return;
 	// Undefined and function-valued object fields are omitted, rather than becoming null.
 	json_scalar s = scalar(object->slots[field->slot], field->schema->kind);
 	if (s.kind == adamic_json_undefined || s.kind == adamic_json_function) { return; }
@@ -189,7 +191,17 @@ static bool write_value(json_writer *w, adamic_value value, const adamic_json_sc
 				}
 			}
 		} else {
-			for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], depth, &written); }
+			if (object->write_order == NULL) {
+				for (size_t index = 0; index < schema->count; index++) { write_field(w, object, &schema->fields[index], depth, &written); }
+			} else {
+				size_t *order = adamic_object_ordered(object);
+				for (size_t position = 0; position < object->shape->count; position++) {
+					for (size_t index = 0; index < schema->count; index++) {
+						if (schema->fields[index].slot == order[position]) { write_field(w, object, &schema->fields[index], depth, &written); break; }
+					}
+				}
+				free(order);
+			}
 		}
 		if (written != 0) { indent(w, depth); }
 		ascii(w, "}");

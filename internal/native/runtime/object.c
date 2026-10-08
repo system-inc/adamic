@@ -11,6 +11,7 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->write_order = NULL;
 	memset(object->slots, 0, shape->count * sizeof object->slots[0]);
 	memset(adamic_object_initialized(object), 1, shape->count);
 	memset(adamic_object_field_types(object), 0, shape->count);
@@ -20,9 +21,11 @@ adamic_object *adamic_object_new(const adamic_shape *shape) {
 adamic_object *adamic_object_copy_checked(const adamic_object *source, const char *expression) {
 	if (adamic_record_is(source)) adamic_panic("NotYet: spread of record storage", sizeof "NotYet: spread of record storage" - 1);
 	const adamic_shape *shape = source->class == NULL ? source->shape : source->class->public_shape;
-	adamic_object *object = adamic_object_new(shape);
+	adamic_object *object = source->write_order == NULL ? adamic_object_new(shape) : adamic_object_construct(shape);
+	if (source->write_order != NULL) memcpy(object->write_order, source->write_order, shape->count * sizeof(size_t));
 	for (size_t position = 0; position < shape->count; position++) {
 		size_t index = adamic_public_index(shape, position);
+		if (!adamic_object_present(source, index)) continue;
 		adamic_slot_cache cache = {NULL, 0};
 		const adamic_accessor *accessor = adamic_accessor_find(source, shape->names[index]);
 		object->slots[index] = accessor == NULL ? *(expression == NULL ? adamic_object_field(source, shape->names[index], &cache) : adamic_object_read(source, shape->names[index], &cache, expression)) : adamic_accessor_get((adamic_object *)source, shape->names[index]);
@@ -47,7 +50,7 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 		const char *field = object->shape->names[index];
 		size_t length = strlen(field);
 		if (length == name->length && memcmp(field, name->bytes, length) == 0) {
-			return true;
+			return adamic_object_present(object, index);
 		}
 	}
 	return false;
@@ -120,7 +123,7 @@ adamic_value *adamic_object_optional_find(const adamic_object *object, const cha
 			break;
 		}
 	}
-	if (cache->index == object->shape->count) {
+	if (cache->index == object->shape->count || !adamic_object_present(object, cache->index)) {
 		return NULL;
 	}
 	return &((adamic_object *)object)->slots[cache->index];
@@ -157,6 +160,7 @@ void adamic_object_set_initialized(adamic_object *object, const char *name, bool
 	adamic_slot_cache cache = {NULL, 0};
 	(void)adamic_object_field(object, name, &cache);
 	adamic_object_initialized(object)[cache.index] = initialized;
+	adamic_object_publish(object, cache.index);
 }
 
 // Required-field contract checks use the shared readiness bitmap. Representation evidence is
@@ -217,7 +221,8 @@ void adamic_view_literal_failure(const char *expression, const char *expected, u
 
 // Writes through an asserted view must not reinterpret or release a differently typed slot.
 void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression) {
-	adamic_value *slot = adamic_object_optional_field(object, name, cache);
+	adamic_value *slot = adamic_object_optional_find(object, name, cache);
+	if (slot == NULL && cache->index < object->shape->count) { slot = &object->slots[cache->index]; }
 	if (slot != NULL) {
 		unsigned char actual = adamic_object_field_types(object)[cache->index];
 		if (actual == wanted || (actual == 10 && wanted <= 2) || (actual == 7 && wanted == 1)) { return; }

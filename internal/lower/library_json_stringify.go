@@ -145,6 +145,10 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 		}
 		return literal, schema, nil
 	}
+	if schema, known := l.constructionJSON(n); known {
+		value, err := l.expression(node)
+		return value, schema, err
+	}
 	schema, err := l.jsonType(node, l.checker.GetTypeAtLocation(node), 0)
 	if err != nil {
 		return nil, nil, err
@@ -176,6 +180,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
 	if of == ir.Array {
 		element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(t))
+		if _, extraElement, known := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(t)); known {
+			element = extraElement
+		}
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}

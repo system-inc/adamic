@@ -14,6 +14,7 @@ type Program struct {
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
 	UninitializedFields map[string]bool
+	FactoryFields       map[string]string
 	// PredicateChecks counts overload-result directions, per emitted call site.
 	// Unobservable is included in Proven: no narrowed read consumes that region.
 	PredicateChecks PredicateCheckCounts
@@ -247,9 +248,11 @@ type Local struct {
 	// Uninitialized uses the temporal-dead-zone readiness state until the first assignment.
 	Uninitialized         bool
 	InitializerExpression string
-	Hoisted               bool
-	Name                  string
-	Type                  Type
+	// UnsetField identifies a tagged, flow-bounded factory save.
+	UnsetField string
+	Hoisted    bool
+	Name       string
+	Type       Type
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
@@ -441,6 +444,8 @@ type (
 		Element  Type
 		Elements []Expression
 		Spread   []bool
+		// Metadata is fixed inline storage; absent fields are not own properties.
+		Metadata []Field
 	}
 
 	// Length is array.length.
@@ -894,6 +899,8 @@ type (
 
 // Field is one field of an object literal.
 type Field struct {
+	// Absent reserves a typed slot without an observable own property.
+	Absent bool
 	// Uninitialized reserves storage without making its typed value readable.
 	Uninitialized bool
 	Name          string

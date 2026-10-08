@@ -856,6 +856,9 @@ func (e *emitter) value(expression ir.Expression) string {
 			fields = append(fields, "..."+spread)
 		}
 		for _, field := range expression.Fields {
+			if field.Absent {
+				continue
+			}
 			fields = append(fields, quote(field.Name)+": "+e.value(field.Value))
 		}
 		object := "({" + strings.Join(fields, ", ") + "})"
@@ -864,14 +867,14 @@ func (e *emitter) value(expression ir.Expression) string {
 		}
 		unready := []string{}
 		for _, field := range expression.Fields {
-			if field.Uninitialized {
+			if field.Uninitialized || field.Absent {
 				unready = append(unready, quote(field.Name))
 			}
 		}
 		if len(unready) > 0 {
 			object = "adamicUninitializedFields(" + object + ", [" + strings.Join(unready, ", ") + "])"
 		}
-		if len(e.program.CheckedFields) != 0 {
+		if len(e.program.CheckedFields) != 0 || jsConstructionFields(expression.Fields) {
 			types := []string{}
 			for _, field := range expression.Fields {
 				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
@@ -910,7 +913,15 @@ func (e *emitter) value(expression ir.Expression) string {
 				elements = append(elements, e.value(element))
 			}
 		}
-		return "[" + strings.Join(elements, ", ") + "]"
+		array := "[" + strings.Join(elements, ", ") + "]"
+		if len(expression.Metadata) != 0 {
+			types := []string{}
+			for _, field := range expression.Metadata {
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(field.Value.Type()))
+			}
+			array = "adamicRecordFieldTypes(" + array + ", {" + strings.Join(types, ", ") + "})"
+		}
+		return array
 	case ir.Length:
 		if expression.Optional {
 			return e.value(expression.Array) + "?.length"

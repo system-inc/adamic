@@ -12,13 +12,17 @@ func parserAheadCounts(t *testing.T) []string {
 	for _, name := range []string{"already-complete", "complete", "escaped"} {
 		rows = append(rows, counted(t, "stage3/parser-ahead/factories/"+name+".a", false, nil, false, false))
 	}
+	for _, name := range []string{"factory-unset", "factory-use", "own-key-order", "node-array-keys", "node-array-json", "node-array-length", "node-array-unset"} {
+		rows = append(rows, counted(t, "stage3/parser-ahead/rulings/"+name+".a", false, nil, false, false))
+	}
+	rows = append(rows, counted(t, "stage3/parser-ahead/node-array/fields.a", false, nil, false, false))
 	return rows
 }
 
 func init() { additionalFixtureCounts = append(additionalFixtureCounts, parserAheadCounts) }
 
-// Only these three rows are updated if inherited fixtures prevent global recording.
-// The complete/escaped rows count boundary stops, not successful factory lowering.
+// Update only owned rows when diagnosing a global recording failure.
+// Complete and escaped now count executed staged factory programs.
 func TestParserAheadCounts(t *testing.T) {
 	rows := parserAheadCounts(t)
 	b, err := os.ReadFile(countsPath)

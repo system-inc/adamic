@@ -1,0 +1,6 @@
+interface FactoryNode {text:string;}
+function createBaseNode():FactoryNode { return {} as FactoryNode; }
+const reserved=createBaseNode();
+const placeholder:FactoryNode={text:null!};
+console.log(String(placeholder.text));
+console.log(String(reserved.text));

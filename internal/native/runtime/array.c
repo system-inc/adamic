@@ -15,6 +15,7 @@ adamic_array *adamic_array_new(size_t capacity, bool references) {
 	array->references = references;
 	array->elements = NULL;
 	array->properties = NULL;
+	array->metadata = NULL;
 	if (capacity > 0) {
 		array->elements = malloc(capacity * sizeof *array->elements);
 		if (array->elements == NULL) {

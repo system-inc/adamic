@@ -201,6 +201,9 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		object := e.value(statement.Object)
+		if statement.Object.Type() == ir.Array {
+			object = e.snapshot(ir.Object, "("+object+")->metadata")
+		}
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
@@ -272,7 +275,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		if converted {
 			e.line("}")
 		}
-		if e.fieldReadinessNeeded(statement.Name) {
+		if e.fieldReadinessNeeded(statement.Name) || e.constructionNeeded() {
 			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
 		}
 		if records {
