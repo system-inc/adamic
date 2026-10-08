@@ -1,0 +1,19 @@
+type Pair = { left: number; right: number };
+let active: Pair = { left: 1, right: 2 };
+const original = active;
+let trace = "";
+function receiver(): Pair { trace += "r"; return active; }
+function key(): "left" | "right" { trace += "k"; return "right"; }
+function value(): number { trace += "v"; active = { left: 10, right: 20 }; return 7; }
+receiver()[key()] = value();
+console.log(trace);
+console.log(`${original.left},${original.right},${active.left},${active.right}`);
+function put(pair: Pair, name: "left" | "right", value: number): void { pair[name] = value; }
+put(original, "left", 11);
+put(original, "right", 13);
+console.log(`${original.left},${original.right}`);
+const words = { left: "L".repeat(3), right: "R".repeat(3) };
+function putWord(name: "left" | "right", word: string): void { words[name] = word; }
+putWord("left", "changed".repeat(2));
+putWord("right", words.left);
+console.log(words.left + "," + words.right);

@@ -1765,6 +1765,9 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 	if err != nil {
 		return nil, err
 	}
+	if array.Type() == ir.Object {
+		return l.setObjectIndex(target, valueNode, array)
+	}
 	if array.Type() != ir.Array {
 		return nil, l.notYet(target, "assigning an element of a "+typeName(array.Type()))
 	}
