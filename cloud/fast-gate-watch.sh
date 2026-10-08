@@ -176,6 +176,42 @@ sameReservedFamily() {
   done < "${state}/slots"
   return 1
 }
+# Stops one running gate on its box: run.py reads the reason from beside its out directory on SIGTERM,
+# publishes what it had and exits (a red with its failures, or void before any).
+stopGate() {
+  local pid=$1 branch=$2 sha=$3 box=$4 reason=$5
+  if ssh "${box}" bash -s -- "$(printf '%q ' "${sha}" "${reason}")" <<'STOP'
+set -eu
+sha=$1 reason=$2
+for out in ~/fast-gate/out/"${sha:0:12}"-*; do
+  [ -d "${out}" ] || continue
+  printf '%s\n' "${reason}" > "${out}.stop-reason"
+done
+pkill -TERM -f "run.py .*--sha ${sha}"
+STOP
+  then
+    touch "${state}/stopped-running/${pid}"
+    return 0
+  fi
+  return 1
+}
+# Integration's skip list names tips that won't land (superseded candidates): one still running there is
+# stopped, so its slot goes to work that can (integration asked twice by hand, Oct 8).
+stopSkipped() {
+  local file pid branch sha slot box rest
+  [ -s "${state}/skip" ] || return 0
+  for file in "${state}"/running/*; do
+    [ -f "${file}" ] || continue
+    pid=$(basename "${file}")
+    [ -f "${state}/stopped-running/${pid}" ] && continue
+    kill -0 "${pid}" 2> /dev/null || continue
+    read -r branch sha slot box rest < "${file}"
+    [ "${branch}" = canary/main ] && continue
+    grep -qxF "${branch} ${sha}" "${state}/skip" || continue
+    stopGate "${pid}" "${branch}" "${sha}" "${box:-threadripper}" "on the skip list" &&
+      echo "$(date -u +%H:%M:%S) stopped ${branch} ${sha}: on the skip list"
+  done
+}
 stopStaleRed() {
   local file pid branch sha slot box rest log failure started class queued newer newerSha reason
   for file in "${state}"/running/*; do
@@ -368,6 +404,7 @@ while true; do
     mv "${state}/now.tmp" "${state}/seen"
   fi
   stopStaleRed
+  stopSkipped
   publishEarlyRed
   for file in "${state}"/running/*; do
     [ -e "${file}" ] || continue
@@ -491,7 +528,8 @@ while true; do
       done | head -1)
       slot=${class} extra=0
       if [[ " ${classes}" != *" ${class} "* ]]; then
-        if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10
+        # A landing candidate (Kirk's five, Oct 8) borrows ahead of small worker tips; any other big tip after them.
+        if [ "${class}" = B ] && [ -n "${borrowable}" ]; then slot=S extra=10; [[ ${branch} == cloud/land-* ]] && extra=0
         elif [ "${class}" = S ] && [[ " ${classes}" == *" B "* ]] && [ "${bigQueued}" = 0 ] && [ $(( pollTime - queued )) -ge 120 ]; then slot=B extra=10
         else continue; fi
       fi

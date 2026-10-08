@@ -214,25 +214,26 @@ class WatchTests(unittest.TestCase):
         self.assertTrue(starts[0].startswith('cloud/land-area-next1 '))
         self.assertEqual(starts[0].split()[-1], 'server')
         self.assertEqual(len([x for x in starts if x.endswith(' server')]), 1)
-        self.assertTrue(any(x.startswith('codex/small ') and x.endswith(' other') for x in starts))
+        # A landing borrows the free small slot ahead of the small worker tip (integration, Oct 8).
+        self.assertTrue(any(x.startswith('cloud/land-other ') and x.endswith(' S other') for x in starts), starts)
         # Only the reserved gate holding its box runs on every CPU of it.
         self.assertEqual(w.read('whole').splitlines(), ['cloud/land-area-next1'])
         time.sleep(.15)
         self.assertEqual(len(w.read('starts').splitlines()), 3)
         w.put('mode', 'pass')
         w.wait(lambda: 'done cloud/land-other' in w.read('output'))
+        w.wait(lambda: any(x.startswith('codex/small ') for x in w.read('starts').splitlines()))
 
     def test_reserved_slot_rejects_other_tip_but_box_serves_small(self):
         w = self.reservation('server B cloud/land-area-next*\nserver S\n',
                              [('cloud/land-other', 'B'), ('codex/small', 'S')])
         w.wait(lambda: len(w.read('starts').splitlines()) == 2)
-        self.assertTrue(w.read('starts').splitlines()[1].startswith('codex/small '))
-        self.assertTrue(w.read('starts').splitlines()[1].endswith(' server'))
+        # The reserved area slot refuses the other landing; it borrows the box's small slot, ahead of the worker.
+        self.assertEqual(w.read('starts').splitlines()[1], 'cloud/land-other ' + w.tips[0][1] + ' S server')
         time.sleep(.15)
         self.assertEqual(len(w.read('starts').splitlines()), 2)
         w.put('mode', 'pass')
-        w.wait(lambda: 'done cloud/land-other' in w.read('output'))
-        self.assertIn('cloud/land-other ' + w.tips[0][1] + ' S server', w.read('starts'))
+        w.wait(lambda: any(x.startswith('codex/small ') and x.endswith(' S server') for x in w.read('starts').splitlines()))
 
     def test_big_borrowing_obeys_globs_and_limit(self):
         w = self.reservation('server S cloud/land-area-next*\nother S\n',
@@ -396,6 +397,37 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'early red cloud/land-x' in w.read('output'))
         time.sleep(.3)
         self.assertEqual(w.read('output').count('early red'), 1)
+
+    def test_a_running_gate_on_the_skip_list_is_stopped_once(self):
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        sha = '9' * 40
+        (w.state / 'running' / str(holder.pid)).write_text('cloud/land-old %s B box0 B x %s\n' % (sha, w.state / 'logs/old.log'))
+        (w.state / 'skip').write_text('cloud/land-old %s\n' % sha)
+        w.wait(lambda: 'stopped cloud/land-old %s: on the skip list' % sha in w.read('output'))
+        time.sleep(.3)
+        self.assertEqual(w.read('output').count('on the skip list'), 1)
+        self.assertEqual(w.read('stops').split()[0], 'box0')
+
+    def test_a_landing_borrows_a_small_slot_ahead_of_small_worker_tips(self):
+        # No tips on origin, so the queue holds exactly these two; one small slot and no area slot.
+        w = Watcher(0)
+        self.addCleanup(w.close)
+        w.put('initial', 'pass')
+        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.put('mode', 'hold')
+        small, landing = '1' * 40, '2' * 40
+        (w.state / 'seen').write_text('cloud/land-x %s\ncodex/small %s\n' % (landing, small))
+        w.put('tips', '%s\trefs/heads/cloud/land-x\n%s\trefs/heads/codex/small\n' % (landing, small))
+        (w.state / 'slots').write_text('box S\n')
+        # The small tip is older; without the landing's exemption it would go first (rank 4 against 11).
+        (w.state / 'queue').write_text('S 800 codex/small %s\nB 900 cloud/land-x %s\n' % (small, landing))
+        w.wait(lambda: len(w.read('starts').splitlines()) >= 2)
+        self.assertTrue(w.read('starts').splitlines()[1].startswith('cloud/land-x %s S box' % landing), w.read('starts'))
 
     def test_control_without_globs(self):
         w = self.reservation('server B\nserver S\n',
