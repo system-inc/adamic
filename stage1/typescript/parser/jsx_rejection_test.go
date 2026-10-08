@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"context"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -12,9 +11,7 @@ import (
 
 func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	stdout, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -23,7 +20,7 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	var stderr strings.Builder
 	command.Stdout = stdout
 	command.Stderr = &stderr
-	err = command.Run()
+	err = parserRunGuard(command, time.Minute)
 	exit, ok := err.(*exec.ExitError)
 	if !ok {
 		t.Fatalf("expected parser rejection from %s: %v %s", name, err, &stderr)

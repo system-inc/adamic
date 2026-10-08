@@ -11,7 +11,9 @@ import (
 )
 
 // A child owns a small manifest, never the whole compiler corpus.
-const incompleteShardDeadline = 2 * time.Minute
+// A manifest contains at most 8 MiB. 120 CPU seconds gives wide headroom
+// over the prior longest child (27 wall seconds); load does not spend this budget.
+const incompleteShardCPUBudget = 2 * time.Minute
 
 // Case headers come from both existing manifest runners. Require exactly the
 // scheduled sequence before comparing bodies, including empty-file cases.

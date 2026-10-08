@@ -30,9 +30,7 @@ type execution struct {
 // Output is a file, never a pipe: the large corpus must also work on Node's writev path.
 func execute(t *testing.T, directory, name string, args ...string) execution {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	command.Dir = directory
 	output, err := os.CreateTemp(t.TempDir(), "stdout-")
 	if err != nil {
@@ -43,7 +41,7 @@ func execute(t *testing.T, directory, name string, args ...string) execution {
 	var stderr bytes.Buffer
 	command.Stderr = &stderr
 	started := time.Now()
-	err = command.Run()
+	err = parserRunGuard(command, 2*time.Minute)
 	duration := time.Since(started)
 	if err != nil || stderr.Len() != 0 {
 		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)

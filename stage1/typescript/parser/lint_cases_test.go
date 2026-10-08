@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -71,9 +70,7 @@ func lintCaseCheck(file string, expected *lintCaseExpectation, port, oracle []by
 // errors and other stderr always fail, even for a listed case.
 func lintCasePort(t *testing.T, name string, args []string, path string) []byte {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	out, err := os.CreateTemp(t.TempDir(), "lint-case-stdout-")
 	if err != nil {
 		t.Fatal(err)
@@ -85,7 +82,7 @@ func lintCasePort(t *testing.T, name string, args []string, path string) []byte 
 	}
 	defer stderr.Close()
 	command.Stdout, command.Stderr = out, stderr
-	runErr := command.Run()
+	runErr := parserRunGuard(command, 5*time.Second)
 	got, err := os.ReadFile(out.Name())
 	if err != nil {
 		t.Fatal(err)
@@ -94,8 +91,8 @@ func lintCasePort(t *testing.T, name string, args []string, path string) []byte 
 	if err != nil {
 		t.Fatal(err)
 	}
-	if ctx.Err() != nil {
-		t.Fatalf("parser timed out for %s: %v", path, ctx.Err())
+	if runErr != nil && strings.Contains(runErr.Error(), "stalled:") {
+		t.Fatalf("parser stalled for %s: %v", path, runErr)
 	}
 	if runErr == nil && len(diagnostic) == 0 {
 		return got

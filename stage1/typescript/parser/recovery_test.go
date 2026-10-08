@@ -2,7 +2,6 @@ package parser
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -33,7 +32,7 @@ func recoveryInput(t *testing.T, name string) string {
 	return string(data)
 }
 
-// Each process has its own deadline. Inputs and answers survive a failing test.
+// Each process has its own CPU budget and long wall backstop. Inputs and answers survive a failing test.
 func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
 	return recoveryRunLimit(t, 2*time.Minute, artifact, name, args...)
@@ -41,9 +40,7 @@ func recoveryRun(t *testing.T, artifact, name string, args ...string) ([]byte, e
 
 func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, args ...string) ([]byte, error) {
 	t.Helper()
-	ctx, cancel := context.WithTimeout(context.Background(), limit)
-	defer cancel()
-	command := exec.CommandContext(ctx, name, args...)
+	command := exec.Command(name, args...)
 	output, err := os.Create(artifact + ".stdout")
 	if err != nil {
 		t.Fatal(err)
@@ -55,10 +52,7 @@ func recoveryRunLimit(t *testing.T, limit time.Duration, artifact, name string, 
 	}
 	defer stderr.Close()
 	command.Stdout, command.Stderr = output, stderr
-	err = command.Run()
-	if ctx.Err() != nil {
-		err = fmt.Errorf("timeout after %s: %w", limit, ctx.Err())
-	}
+	err = parserRunGuard(command, limit)
 	data, readErr := os.ReadFile(output.Name())
 	if readErr != nil {
 		t.Fatal(readErr)
@@ -184,10 +178,10 @@ func TestRecoveryMutants(t *testing.T) {
 				}
 				got, err := recoveryRunLimit(t, limit, path+"."+side.name, side.command, side.args...)
 				if mutation.timeout {
-					if err == nil || !strings.Contains(err.Error(), "timeout after 2s") {
+					if err == nil || !strings.Contains(err.Error(), "stalled: CPU budget 2s exhausted") {
 						t.Fatalf("%s must be caught by the deadline, got %v", side.name, err)
 					}
-					t.Logf("%s: EOF loop caught by 2s deadline; input %s", side.name, path)
+					t.Logf("%s: EOF loop caught by 2s CPU budget; input %s", side.name, path)
 				} else {
 					if err != nil {
 						t.Fatalf("%s mutant must finish normally: %v", side.name, err)

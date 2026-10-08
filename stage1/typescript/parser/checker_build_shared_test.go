@@ -1,7 +1,6 @@
 package parser
 
 import (
-	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -22,11 +21,24 @@ type parserCheckerRequest struct {
 // gives each one a guard without changing the parent process's environment.
 func parserBuildChild() {
 	if real := os.Getenv("ADAMIC_PARSER_COMPILER"); real != "" && filepath.Base(os.Args[0]) == "clang" {
-		ctx, cancel := context.WithTimeout(context.Background(), parserBuildDeadline)
-		defer cancel()
-		command := exec.CommandContext(ctx, real, os.Args[1:]...)
+		command := exec.Command(real, os.Args[1:]...)
 		command.Stdin, command.Stdout, command.Stderr = os.Stdin, os.Stdout, os.Stderr
-		if err := command.Run(); err != nil {
+		if err := parserRunGuard(command, parserBuildCPUBudget); err != nil {
+			fmt.Fprintln(os.Stderr, err)
+			os.Exit(1)
+		}
+		os.Exit(0)
+	}
+	if path := os.Getenv("ADAMIC_PARSER_C_REQUEST"); path != "" {
+		var request parserCheckerRequest
+		data, err := os.ReadFile(path)
+		if err == nil {
+			err = json.Unmarshal(data, &request)
+		}
+		if err == nil {
+			err = parserCompileC(request)
+		}
+		if err != nil {
 			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
@@ -84,15 +96,13 @@ func parserCheckerArchive(t *testing.T, sanitize bool) string {
 		if err != nil {
 			return "", err
 		}
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-		defer cancel()
-		command := exec.CommandContext(ctx, "go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
+		command := exec.Command("go", "build", "-buildmode=c-archive", "-o", archive, "./bridge/tsgo/archive")
 		command.Dir = root
 		command.Env = append(environment, "GOMAXPROCS=4")
 		if sanitize {
 			command.Env = append(command.Env, "CC="+filepath.Join(parserSharedDirectory, "compiler-guard", "clang"), "CGO_CFLAGS=-O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all")
 		}
-		if output, err := command.CombinedOutput(); err != nil || len(output) != 0 {
+		if output, err := parserGuardOutput(command, parserBuildCPUBudget); err != nil || len(output) != 0 {
 			return "", fmt.Errorf("checker archive: %v: %s", err, output)
 		}
 		return archive, nil
@@ -120,12 +130,10 @@ func buildParserChecker(t *testing.T, source, binary string, sanitize bool) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), parserBuildDeadline)
-	defer cancel()
-	command := exec.CommandContext(ctx, executable)
+	command := exec.Command(executable)
 	command.Env = append(parserCompilerEnvironment(t), "ADAMIC_PARSER_CHECKER_REQUEST="+path)
 	started := time.Now()
-	output, err := command.CombinedOutput()
+	output, err := parserGuardOutput(command, parserBuildCPUBudget)
 	elapsed := time.Since(started)
 	parserBuildTimingLock.Lock()
 	if elapsed > parserLongestBuild {
@@ -135,5 +143,5 @@ func buildParserChecker(t *testing.T, source, binary string, sanitize bool) {
 	if err != nil || len(output) != 0 {
 		t.Fatalf("checker native build: %v: %s", err, output)
 	}
-	t.Logf("checker native build: %s; one clang worker; guard %s", elapsed, parserBuildDeadline)
+	t.Logf("checker native build: %s; one clang worker; CPU budget %s", elapsed, parserBuildCPUBudget)
 }

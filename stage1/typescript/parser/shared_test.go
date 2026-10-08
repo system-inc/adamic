@@ -31,6 +31,7 @@ type parserSharedValue struct {
 }
 
 func TestMain(m *testing.M) {
+	parserCPUChild()
 	parserBuildChild()
 	var err error
 	parserSharedDirectory, err = os.MkdirTemp("", "adamic-parser-shared-")
@@ -39,7 +40,7 @@ func TestMain(m *testing.M) {
 		os.Exit(1)
 	}
 	status := m.Run()
-	fmt.Printf("parser longest native build child: %s; build hang guard: %s\n", parserLongestBuild, parserBuildDeadline)
+	fmt.Printf("parser longest native build child: %s; build CPU budget: %s\n", parserLongestBuild, parserBuildCPUBudget)
 	if err := os.RemoveAll(parserSharedDirectory); err != nil {
 		fmt.Fprintln(os.Stderr, err)
 		status = 1
@@ -79,11 +80,9 @@ func sharedParserOracle(t *testing.T) string {
 			return "", err
 		}
 		binary := filepath.Join(parserSharedDirectory, "oracle")
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-		defer cancel()
-		command := exec.CommandContext(ctx, "go", "build", "-overlay="+path, "-o", binary, virtual)
+		command := exec.Command("go", "build", "-overlay="+path, "-o", binary, virtual)
 		command.Dir = root
-		if output, err := command.CombinedOutput(); err != nil || len(output) != 0 {
+		if output, err := parserGuardOutput(command, parserBuildCPUBudget); err != nil || len(output) != 0 {
 			return "", fmt.Errorf("oracle build: %v: %s", err, output)
 		}
 		return binary, nil
@@ -111,25 +110,29 @@ func sharedParserPort(t *testing.T, directory string, sanitize bool) string {
 
 // Use native's normal flags and runtime, including both sanitizers. Clang is a
 // child too, so its deadline is a hang guard, not the package limit.
-const parserBuildDeadline = 4 * time.Minute
+const parserBuildCPUBudget = 10 * time.Minute
 
 func buildParserC(source, binary string, sanitize bool) error {
-	options := native.Options{Sanitize: sanitize}
-	library, err := native.RuntimeLibrary("", options)
-	if err != nil {
-		return err
-	}
 	path := binary + ".c"
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		return err
 	}
 	defer os.Remove(path)
-	flags := native.Flags(options)
-	flags = append(flags, "-I", filepath.Dir(library), "-o", binary, path)
-	flags = append(flags, native.RuntimeLinkFlags(library)...)
-	flags = append(flags, "-lm")
-	ctx, cancel := context.WithTimeout(context.Background(), parserBuildDeadline)
-	defer cancel()
+	request, err := json.Marshal(parserCheckerRequest{Source: path, Binary: binary, Sanitize: sanitize})
+	if err != nil {
+		return err
+	}
+	requestPath := binary + ".build.json"
+	if err := os.WriteFile(requestPath, request, 0644); err != nil {
+		return err
+	}
+	defer os.Remove(requestPath)
+	executable, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	command := exec.Command(executable)
+	command.Env = append(os.Environ(), "ADAMIC_PARSER_C_REQUEST="+requestPath)
 	started := time.Now()
 	defer func() {
 		elapsed := time.Since(started)
@@ -139,9 +142,26 @@ func buildParserC(source, binary string, sanitize bool) error {
 		}
 		parserBuildTimingLock.Unlock()
 	}()
-	command := exec.CommandContext(ctx, "clang", flags...)
-	if output, err := command.CombinedOutput(); err != nil || len(output) != 0 {
-		return fmt.Errorf("parser clang build: %v: %s", err, output)
+	if output, err := parserGuardOutput(command, parserBuildCPUBudget); err != nil || len(output) != 0 {
+		return fmt.Errorf("parser native build %s: %v: %s", binary, err, output)
+	}
+	return nil
+}
+
+// The helper's CPU limit is inherited by runtime compiler children too. The
+// outer 60-minute backstop covers the complete runtime and program build.
+func parserCompileC(request parserCheckerRequest) error {
+	options := native.Options{Sanitize: request.Sanitize}
+	library, err := native.RuntimeLibrary("", options)
+	if err != nil {
+		return err
+	}
+	flags := native.Flags(options)
+	flags = append(flags, "-I", filepath.Dir(library), "-o", request.Binary, request.Source)
+	flags = append(flags, native.RuntimeLinkFlags(library)...)
+	flags = append(flags, "-lm")
+	if output, err := parserGuardOutput(exec.Command("clang", flags...), parserBuildCPUBudget); err != nil || len(output) != 0 {
+		return fmt.Errorf("parser clang build %s: %v: %s", request.Source, err, output)
 	}
 	return nil
 }

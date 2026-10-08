@@ -95,7 +95,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		planned += count
 		t.Logf("planned %s: %d tokens, cutoff stride %d, edit stride %d, %d inputs", sourcePath, len(tokens), stride, editStride, count)
 	}
-	t.Logf("planned all %d compiler files: %d inputs; each shard child has a %s deadline", files, planned, incompleteShardDeadline)
+	t.Logf("planned all %d compiler files: %d inputs; each shard child has a %s CPU budget", files, planned, incompleteShardCPUBudget)
 	if planned != 22497 {
 		t.Fatalf("missing or extra pinned corpus cases: planned %d, expected 22497", planned)
 	}
@@ -167,7 +167,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 		begin = end
 	}
 	workerCount := min(runtime.NumCPU(), 8)
-	t.Logf("%d workers, %d short manifests; maximum %d cases or %d input bytes; child deadline %s", workerCount, len(batches), maxCases, maxBytes, incompleteShardDeadline)
+	t.Logf("%d workers, %d short manifests; maximum %d cases or %d input bytes; child CPU budget %s", workerCount, len(batches), maxCases, maxBytes, incompleteShardCPUBudget)
 	type timing struct {
 		duration time.Duration
 		path     string
@@ -250,7 +250,7 @@ func TestIncompleteCompilerAgrees(t *testing.T) {
 			{"native", binary, []string{"--manifest", manifestPath, "--whole", "--recovery"}},
 		} {
 			started := time.Now()
-			answer, err := recoveryRunLimit(t, incompleteShardDeadline, prefix+"."+side.name, side.command, side.args...)
+			answer, err := recoveryRunLimit(t, incompleteShardCPUBudget, prefix+"."+side.name, side.command, side.args...)
 			elapsed := time.Since(started)
 			resultLock.Lock()
 			if elapsed > slowest[side.name].duration {
