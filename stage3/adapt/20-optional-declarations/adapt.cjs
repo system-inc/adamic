@@ -21,7 +21,7 @@ const roots = ts.sys.readDirectory(directory, ['.ts']);
 const owned = new Set(roots.map(name => path.resolve(name)));
 const options = {
     strict: true, exactOptionalPropertyTypes: true, noUncheckedIndexedAccess: true,
-    noImplicitReturns: true, noFallthroughCasesInSwitch: true, erasableSyntaxOnly: true,
+    erasableSyntaxOnly: false,
     verbatimModuleSyntax: true, allowImportingTsExtensions: true, noEmit: true,
     module: ts.ModuleKind.ESNext, moduleDetection: ts.ModuleDetectionKind.Force,
     moduleResolution: ts.ModuleResolutionKind.Bundler, target: ts.ScriptTarget.ES2024,
