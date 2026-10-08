@@ -14,67 +14,37 @@ import (
 // (adamic/no-unchecked-cast).
 func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
 	as := node.AsAsExpression()
+	proof, err := l.castProof(node)
+	if err != nil {
+		return nil, err
+	}
 	value, err := l.expression(as.Expression)
 	if err != nil {
 		return nil, err
 	}
-	if as.Type.Kind == ast.KindTypeReference && as.Type.AsTypeReferenceNode().TypeName.Text() == "const" {
+	if len(proof.allowed) == 0 && len(proof.classes) == 0 {
 		return value, nil
 	}
-	source := l.checker.GetTypeAtLocation(as.Expression)
-	target := l.checker.GetTypeAtLocation(node)
-	if !l.sameKeeping(source, target, map[[2]*checker.Type]bool{}) {
-		return nil, l.notYet(node, "a cast that changes the runtime representation or ownership of a reference")
-	}
-	// An object literal's type is fresh, and a fresh type is held to excess properties, so { name, age }
-	// as Named would read as not assignable. Its widened type isn't fresh; its own keeps the literal
-	// fields a discriminated union needs. Either assignable makes an upcast candidate; the sound
-	// relation below still has to prove its writable slots, function views and nominal ancestry.
-	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
-		if err := l.provenRelation(node, as.Expression, target); err != nil {
-			return nil, err
-		}
-		return value, nil
-	}
-	refused := &Refused{Where: l.program.Where(node), What: "a cast the runtime can't check", Fix: "narrow it instead (===, typeof, a discriminant), or cast a discriminated union to its members (adamic/no-unchecked-cast)"}
-	if value.Type() != ir.Object || source.Flags()&checker.TypeFlagsUnion == 0 {
+	source := l.concrete(l.checker.GetTypeAtLocation(as.Expression))
+	target := l.concrete(l.checker.GetTypeAtLocation(node))
+	refused := &Refused{Where: l.program.Where(node), What: "a cast without an object tag representation", Fix: castRepair}
+	if value.Type() != ir.Object {
 		return nil, refused
 	}
-	members := source.Types()
-	for _, property := range l.checker.GetPropertiesOfType(members[0]) {
-		field := property.Name
-		literals := map[*checker.Type]*checker.Type{}
-		for _, member := range members {
-			literal := l.fieldLiteral(member, field)
-			if literal == nil {
-				literals = nil
-				break
-			}
-			literals[member] = literal
-		}
-		if literals == nil {
-			continue
-		}
-		// field is a discriminant: every member holds a literal there. The cast allows the members
-		// the target takes.
-		cast := ir.CheckedCast{Value: value, Field: field, Message: "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)}
-		for _, member := range members {
-			if !l.checker.IsTypeAssignableTo(member, target) {
-				continue
-			}
-			allowed, fieldType, isConstant := l.literalConstant(literals[member])
-			if !isConstant {
-				return nil, refused
-			}
-			cast.Allowed = append(cast.Allowed, allowed)
-			cast.FieldType = fieldType
-		}
-		if len(cast.Allowed) == 0 {
+	message := "cast failed: this " + l.checker.TypeToString(source) + " is not a " + l.checker.TypeToString(target)
+	if len(proof.classes) > 0 {
+		return l.checkedClassCast(node, value, proof.classes, message)
+	}
+	cast := ir.CheckedCast{Value: value, Field: proof.field, Message: message}
+	for _, literal := range proof.allowed {
+		allowed, fieldType, constant := l.literalConstant(literal)
+		if !constant || (cast.FieldType != 0 && cast.FieldType != fieldType) {
 			return nil, refused
 		}
-		return cast, nil
+		cast.Allowed = append(cast.Allowed, allowed)
+		cast.FieldType = fieldType
 	}
-	return nil, refused
+	return cast, nil
 }
 
 // fieldLiteral is a member's type for a field when it's a single literal ('Circle', 1, true), the
