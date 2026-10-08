@@ -19,6 +19,9 @@ func sourceExpression(node *ast.Node) string {
 // The two builtin literal assertions reserve or deinitialize a slot.
 // A shadowed identifier named undefined remains an ordinary assertion.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
+	if node != nil && l.checkedAssertionSource(node) {
+		return false
+	}
 	if node == nil {
 		return false
 	}
@@ -494,6 +497,13 @@ func assertionVarList(list *ast.Node) bool {
 
 // lazyAssertion holds the original representation once and assigns only when present.
 func (l *lowering) lazyAssertion(node *ast.Node, to ir.Type) ([]ir.Statement, ir.Expression, ir.Expression, error) {
+	if l.checkedAssertionSource(node) {
+		value, err := l.nonNull(ast.SkipParentheses(node))
+		if err != nil {
+			return nil, nil, nil, err
+		}
+		return nil, ir.BooleanConstant{Value: true}, fit(value, to), nil
+	}
 	operand := ast.SkipParentheses(node).AsNonNullExpression().Expression
 	value, err := l.expression(operand)
 	if err != nil {
