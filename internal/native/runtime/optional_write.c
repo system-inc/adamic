@@ -37,3 +37,30 @@ bool adamic_optional_view_storage(const adamic_object *object, bool nullable, co
  int length = snprintf(message, capacity, "optional view lacks own-presence storage at %s", site);
  adamic_panic(message, (size_t)length);
 }
+
+static void optional_storage_failure(const char *kind, const char *site) {
+ size_t capacity = strlen(kind) + strlen(site) + sizeof "optional contract lacks  storage at ";
+ char *message = malloc(capacity);
+ if (message == NULL) adamic_panic("out of memory", 13);
+ int length = snprintf(message, capacity, "optional contract lacks %s storage at %s", kind, site);
+ adamic_panic(message, (size_t)length);
+}
+
+bool adamic_optional_function_storage(const adamic_closure *callback, const char *site) {
+ if (callback == NULL || callback->heap.kind != adamic_kind_closure) optional_storage_failure("object-return closure", site);
+ return true;
+}
+
+bool adamic_optional_array_presence(const adamic_array *array, bool nullable, const adamic_array *keys, bool element_nullable, const char *site) {
+ if (array == NULL) {
+  if (nullable) return true;
+  optional_storage_failure("object array", site);
+ }
+ if (array->heap.kind != adamic_kind_array || !array->references) optional_storage_failure("object array", site);
+ for (size_t index = 0; index < array->length; index++) {
+  const adamic_object *object = adamic_array_at_integer(array, (int64_t)index)->reference;
+  (void)adamic_optional_view_storage(object, element_nullable, site);
+  if (object != NULL) (void)adamic_optional_spread_presence(object, keys, site);
+ }
+ return true;
+}

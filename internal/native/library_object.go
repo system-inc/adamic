@@ -12,6 +12,12 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "optionalFunctionStorage":
+		e.line("extern bool adamic_optional_function_storage(const adamic_closure *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_function_storage(%s, %s)", arguments[0], cString(call.Readiness)))
+	case "optionalArrayPresence":
+		e.line("extern bool adamic_optional_array_presence(const adamic_array *, bool, const adamic_array *, bool, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_array_presence(%s, %s, %s, %s, %s)", arguments[0], arguments[1], arguments[2], arguments[3], cString(call.Readiness)))
 	case "optionalViewStorage":
 		e.line("extern bool adamic_optional_view_storage(const adamic_object *, bool, const char *);")
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_view_storage(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))

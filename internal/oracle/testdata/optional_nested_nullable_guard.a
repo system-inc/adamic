@@ -1,0 +1,12 @@
+interface Fields { slot?: number | undefined; }
+const source: { slot: number | undefined } = { slot: undefined };
+function wrap(value: typeof source | undefined): { readonly value: typeof source | undefined } { return { value }; }
+const carrier: { readonly value: Fields | undefined } = wrap(source);
+const missing: { readonly value: Fields | undefined } = wrap(undefined);
+function read(container: { readonly value: Fields | undefined }): string {
+    const record = container.value;
+    if (!record) return String(record);
+    return `${'slot' in record}|${String(record.slot)}`;
+}
+console.log(`${read(carrier)}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}`);
+console.log(read(missing));

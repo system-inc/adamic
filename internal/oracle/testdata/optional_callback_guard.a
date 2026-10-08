@@ -1,0 +1,7 @@
+interface Fields { slot?: number | undefined; }
+interface Source { slot?: number | undefined; }
+const source: Source = { slot: undefined };
+function make(): Source { return source; }
+const host: { make: () => Fields } = { make: make };
+const record = host.make();
+console.log(`${'slot' in record}|${Object.keys(source).join(',')}|${Object.hasOwn(source, 'slot')}|${String(record.slot)}`);
