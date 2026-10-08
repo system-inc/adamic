@@ -1,5 +1,5 @@
 // Package load turns Adamic source files into a checked program: every file parsed, bound and
-// type-checked by typescript-go in this process, under the one set of options Adamic 0.1 allows.
+// type-checked by typescript-go in this process, under Adamic options or the owning TypeScript project options.
 //
 // A program either loads clean or Load returns an error naming every diagnostic. There is no
 // half-loaded state, because a compiler that lowers a program the checker rejected is lowering a
@@ -46,6 +46,8 @@ type Program struct {
 // CheckError is a program the checker rejected, with every diagnostic it gave.
 type CheckError struct {
 	Diagnostics []string
+	// OptionSites remain errors until lowering can insert their runtime checks.
+	OptionSites []OptionSite
 }
 
 func (e *CheckError) Error() string {
@@ -116,7 +118,25 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	// bundled.WrapFS lays the embedded lib.*.d.ts files over the source view, and cachedvfs memoizes
 	// the stats module resolution repeats.
 	fileSystem := cachedvfs.From(&regexpLibraryFS{FS: bundled.WrapFS(fs)})
-	config := tsoptions.NewParsedCommandLine(compilerOptions(), roots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	options, project, err := projectOptionsForRoots(fs, roots[:len(roots)-1])
+	if err != nil {
+		return nil, err
+	}
+	checkRoots := roots
+	var projectConfig *tsoptions.ParsedCommandLine
+	if project != "" {
+		// Composite projects must retain their complete root list. Checking only
+		// command-line entry files manufactures TS6307 errors on their imports.
+		projectConfig, _ = tsoptions.GetParsedCommandLineOfConfigFile(tspath.RootedFilePathFromAbsolute(project), &core.CompilerOptions{}, nil, fs, nil)
+		if options.Composite == core.TSTrue {
+			checkRoots = append(append([]tspath.RootedFilePath{}, projectConfig.FileNames()...), preludePath)
+		}
+	}
+	config := tsoptions.NewParsedCommandLine(options, checkRoots, nil, currentDirectory, fileSystem.CaseSensitivity())
+	if projectConfig != nil {
+		config = tsoptions.NewParsedCommandLine(options, checkRoots, projectConfig.ProjectReferences(), tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(project)), fileSystem.CaseSensitivity())
+		config.ConfigFile = projectConfig.ConfigFile
+	}
 	host := compiler.NewCachedFSCompilerHost(fileSystem, bundled.LibPath(), nil, nil, nil)
 	program := compiler.NewProgram(compiler.ProgramOptions{
 		Config:         config,
@@ -128,8 +148,56 @@ func load(paths []string, overlay map[string]string) (*Program, error) {
 	}
 
 	loaded := &Program{compiler: program, fs: fs}
-	if diagnostics := loaded.diagnostics(context.Background()); len(diagnostics) > 0 {
-		return nil, &CheckError{Diagnostics: diagnostics}
+	var sites []OptionSite
+	if project == "" {
+		for _, file := range program.GetSourceFiles() {
+			if file.IsDeclarationFile || IsLibrary(file) || IsPrelude(file) {
+				continue
+			}
+			if _, isAdamic := fs.adamicFile(file.FileName()); !isAdamic && nearestProject(file.FileName().AsString()) != "" {
+				return nil, fmt.Errorf("load: project .ts imported into an Adamic-option program needs separate checker ownership, not implemented yet: %s", loaded.FileName(file))
+			}
+		}
+	}
+	if project != "" {
+		if len(overlay) != 0 {
+			return nil, errors.New("load: project option attribution for source overlays is not implemented yet")
+		}
+		// A project checker must never assign relaxed types to an imported .a file,
+		// or to a file owned by another project. Refuse until separate checker
+		// ownership is supported; sharing the FS host does not share parsed ASTs.
+		for _, file := range program.GetSourceFiles() {
+			if file.IsDeclarationFile || IsLibrary(file) || IsPrelude(file) {
+				continue
+			}
+			if _, isAdamic := fs.adamicFile(file.FileName()); isAdamic {
+				return nil, fmt.Errorf("load: mixed .a and project .ts checking is not implemented: %s", loaded.FileName(file))
+			}
+			if owner := nearestProject(file.FileName().AsString()); owner != project {
+				return nil, fmt.Errorf("load: separate checker ownership is not implemented for %s (project %s)", loaded.FileName(file), owner)
+			}
+		}
+		report, err := AuditProjectOptions(context.Background(), project)
+		if err != nil {
+			return nil, err
+		}
+		loadedFiles := make(map[string]bool)
+		for _, file := range program.GetSourceFiles() {
+			loadedFiles[file.FileName().AsString()] = true
+		}
+		for _, site := range report.Sites {
+			if loadedFiles[site.File] {
+				sites = append(sites, site)
+			}
+		}
+	}
+	diagnostics := loaded.diagnostics(context.Background())
+	for _, site := range sites {
+		diagnostics = append(diagnostics, site.Message)
+	}
+	if len(diagnostics) > 0 {
+		sort.Strings(diagnostics)
+		return nil, &CheckError{Diagnostics: diagnostics, OptionSites: sites}
 	}
 
 	// Every root must be in the program. One that is not would be a file silently left unchecked.
@@ -215,6 +283,9 @@ func (p *Program) diagnostics(ctx context.Context) []string {
 		all = append(all, p.compiler.GetGlobalDiagnostics(ctx)...)
 		all = append(all, p.compiler.GetBindDiagnostics(ctx, nil)...)
 		all = append(all, p.compiler.GetSemanticDiagnostics(ctx, nil)...)
+		if p.compiler.Options().GetEmitDeclarations() {
+			all = append(all, p.compiler.GetDeclarationDiagnostics(ctx, nil)...)
+		}
 	}
 	formatted := make([]string, 0, len(all))
 	for _, diagnostic := range all {
