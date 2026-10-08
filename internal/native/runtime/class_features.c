@@ -40,6 +40,7 @@ size_t adamic_public_index(const adamic_shape *shape, size_t position) {
 }
 
 adamic_array *adamic_class_object_keys(const adamic_object *object) {
+    if (adamic_record_is(object)) { return adamic_record_keys(object); }
     const adamic_shape *shape = object->class == NULL ? object->shape : object->class->public_shape;
     if (object->class != NULL && object->class->is_static) {
         adamic_array *keys = adamic_array_new(shape->count, true);

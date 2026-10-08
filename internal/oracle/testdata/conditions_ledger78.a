@@ -1,0 +1,721 @@
+// Condition-only reductions; full upstream function bodies are not reproduced.
+const emptyNumbers: readonly number[] = [];
+const emptyStrings: readonly string[] = [];
+function canReportDiagnostics(_system: number, options: { readonly value: boolean | undefined }): boolean | undefined { return options.value; }
+// src/compiler/builder.ts:642:13 (readonly SourceFile[] | undefined)
+function conditionSite00(affectedFiles: readonly number[] | undefined): boolean {
+    if (affectedFiles) { return true; }
+    return false;
+}
+
+// src/compiler/commandLineParser.ts:4176:9 (RegExpExecArray | null)
+function conditionSite01(match: RegExpExecArray | null): boolean {
+    if (match) { return true; }
+    return false;
+}
+
+// src/compiler/core.ts:1894:13 ((() => T) | undefined)
+function conditionSite02(callback: (() => number) | undefined): boolean {
+    if (callback) { return true; }
+    return false;
+}
+
+// src/compiler/factory/emitNode.ts:273:9 (EmitHelper[] | undefined)
+function conditionSite03(helpers: readonly number[] | undefined): boolean {
+    if (helpers) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:480:9 (string[] | undefined)
+function conditionSite04(input: readonly number[] | undefined): boolean {
+    const options = { typeRoots: input };
+    if (options.typeRoots) { return true; }
+    return false;
+}
+
+// src/compiler/semver.ts:216:13 (Comparator[][] | undefined)
+function conditionSite05(sets: readonly number[] | undefined): boolean {
+    if (sets) { return true; }
+    return false;
+}
+
+// src/compiler/moduleSpecifiers.ts:699:9 (((fileName: string, rootDir?: string | undefined) => string | undefined) | undefined)
+function conditionSite06(input: (() => number) | undefined): boolean {
+    const host = { getNearestAncestorDirectoryWithPackageJson: input };
+    if (host.getNearestAncestorDirectoryWithPackageJson) { return true; }
+    return false;
+}
+
+// src/compiler/program.ts:768:30 (FormatDiagnosticsHost)
+function conditionSite07(host: { readonly value: number }): boolean {
+    return host ? true : false;
+}
+
+// src/compiler/scanner.ts:469:12 (((line: number, character: number, allowEdits?: true | undefined) => number) | undefined)
+function conditionSite08(input: (() => number) | undefined): boolean {
+    const sourceFile = { getPositionOfLineAndCharacter: input };
+    return sourceFile.getPositionOfLineAndCharacter ? true : false;
+}
+
+// src/compiler/scanner.ts:763:9 (((diag: DiagnosticMessage, pos?: number | undefined, len?: number | undefined) => void) | undefined)
+function conditionSite09(error: (() => number) | undefined): boolean {
+    if (error) { return true; }
+    return false;
+}
+
+// src/compiler/scanner.ts:968:9 (RegExpExecArray | null)
+function conditionSite10(match: RegExpExecArray | null): boolean {
+    if (match) { return true; }
+    return false;
+}
+
+// src/compiler/tsbuildPublic.ts:206:12 ((() => Date) | undefined)
+function conditionSite11(input: (() => number) | undefined): boolean {
+    const host = { now: input };
+    return host.now ? true : false;
+}
+
+// src/compiler/utilities.ts:2339:12 (Node)
+function conditionSite12(container: { readonly value: number }): boolean {
+    while (container) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:2461:22 (DiagnosticMessageChain[] | undefined)
+function conditionSite13(input: readonly number[] | undefined): boolean {
+    const messageChain = { next: input };
+    return messageChain.next ? true : false;
+}
+
+// src/compiler/utilities.ts:2475:22 (DiagnosticMessageChain[] | undefined)
+function conditionSite14(input: readonly number[] | undefined): boolean {
+    const messageChain = { next: input };
+    return messageChain.next ? true : false;
+}
+
+// src/compiler/utilities.ts:2997:9 (Node)
+function conditionSite15(node: { readonly value: number }): boolean {
+    if (node) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:3057:13 (((node: LabeledStatement) => void) | undefined)
+function conditionSite16(beforeUnwrapLabelCallback: (() => number) | undefined): boolean {
+    if (beforeUnwrapLabelCallback) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:3295:9 (ThisContainer)
+function conditionSite17(container: { readonly value: number }): boolean {
+    if (container) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:4751:9 (Symbol)
+function conditionSite18(input: { readonly value: number }): boolean {
+    const node = { symbol: input };
+    if (node.symbol) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:5064:12 (Node)
+function conditionSite19(node: { readonly value: number }): boolean {
+    while (node) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:6484:12 ((() => boolean) | undefined)
+function conditionSite20(input: (() => number) | undefined): boolean {
+    const host = { useCaseSensitiveFileNames: input };
+    return host.useCaseSensitiveFileNames ? true : false;
+}
+
+// src/compiler/utilities.ts:7355:9 (readonly ModifierLike[] | undefined)
+function conditionSite21(modifiers: readonly number[] | undefined): boolean {
+    if (modifiers) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:8745:22 (DiagnosticMessageChain[] | undefined)
+function conditionSite22(input: readonly number[] | undefined): boolean {
+    const chain = { next: input };
+    return chain.next ? true : false;
+}
+
+// src/compiler/utilities.ts:8769:12 (DiagnosticMessageChain[] | undefined)
+function conditionSite23(input: readonly number[] | undefined): boolean {
+    const lastChain = { next: input };
+    while (lastChain.next) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:9896:9 (readonly string[] | undefined)
+function conditionSite24(includes: readonly number[] | undefined): boolean {
+    if (includes) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:10159:12 (RegExpMatchArray | null)
+function conditionSite25(match: RegExpMatchArray | null): boolean {
+    return match ? true : false;
+}
+
+// src/compiler/utilitiesPublic.ts:1037:9 (BindingName)
+function conditionSite26(input: { readonly value: number }): boolean {
+    const param = { name: input };
+    if (param.name) { return true; }
+    return false;
+}
+
+// src/compiler/watch.ts:114:69 (System)
+function conditionSite27(sys: { readonly value: number }): boolean {
+    return sys ? true : false;
+}
+
+// src/compiler/watch.ts:790:9 (RegExpMatchArray | null)
+function conditionSite28(text: string): boolean {
+    const sourceMapCommentRegExpDontCareLineStart = /a/;
+    if (text.match(sourceMapCommentRegExpDontCareLineStart)) { return true; }
+    return false;
+}
+
+// src/compiler/emitter.ts:484:9 (string | undefined)
+function conditionSite29(input: string | undefined): boolean {
+    const options = { tsBuildInfoFile: input };
+    if (options.tsBuildInfoFile) { return true; }
+    return false;
+}
+
+// src/compiler/emitter.ts:554:12 (string | undefined)
+function conditionSite30(outputDir: string | undefined): boolean {
+    return outputDir ? true : false;
+}
+
+// src/compiler/emitter.ts:697:9 (string | undefined)
+function conditionSite31(input: string | undefined): boolean {
+    const configFile = { options: { outFile: input } };
+    if (configFile.options.outFile) { return true; }
+    return false;
+}
+
+// src/compiler/emitter.ts:725:9 (string | undefined)
+function conditionSite32(input: string | undefined): boolean {
+    const configFile = { options: { outFile: input } };
+    if (configFile.options.outFile) { return true; }
+    return false;
+}
+
+// src/compiler/executeCommandLine.ts:241:31 (string | undefined)
+function conditionSite33(input: string | undefined): boolean {
+    const option = { shortName: input };
+    return option.shortName ? true : false;
+}
+
+// src/compiler/executeCommandLine.ts:448:9 (string | undefined)
+function conditionSite34(beforeOptionsDescription: string | undefined): boolean {
+    if (beforeOptionsDescription) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:2135:13 (string)
+function conditionSite35(directory: string): boolean {
+    if (directory) { return true; }
+    return false;
+}
+
+// src/compiler/moduleSpecifiers.ts:398:9 (string | undefined)
+function conditionSite36(ambient: string | undefined): boolean {
+    if (ambient) { return true; }
+    return false;
+}
+
+// src/compiler/parser.ts:10563:9 (string)
+function conditionSite37(standardExtension: string): boolean {
+    if (standardExtension) { return true; }
+    return false;
+}
+
+// src/compiler/path.ts:385:12 (string | undefined)
+function conditionSite38(extension: string | undefined): boolean {
+    return extension ? true : false;
+}
+
+// src/compiler/path.ts:857:12 (string)
+function conditionSite39(pathext: string): boolean {
+    return pathext ? true : false;
+}
+
+// src/compiler/path.ts:872:9 (string | undefined)
+function conditionSite40(declarationExtension: string | undefined): boolean {
+    if (declarationExtension) { return true; }
+    return false;
+}
+
+// src/compiler/program.ts:1142:33 (string | undefined)
+function conditionSite41(input: string | undefined): boolean {
+    const options = { configFilePath: input };
+    return options.configFilePath ? true : false;
+}
+
+// src/compiler/utilities.ts:910:12 (string)
+function conditionSite42(subModuleName: string): boolean {
+    return subModuleName ? true : false;
+}
+
+// src/compiler/utilities.ts:6596:12 (string | undefined)
+function conditionSite43(outputDir: string | undefined): boolean {
+    return outputDir ? true : false;
+}
+
+// src/compiler/utilities.ts:7150:9 (string)
+function conditionSite44(currentLineText: string): boolean {
+    if (currentLineText) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:9431:12 (string | undefined)
+function conditionSite45(base: string | undefined): boolean {
+    return base ? true : false;
+}
+
+// src/compiler/builder.ts:739:9 (boolean | undefined)
+function conditionSite46(emitOnlyDtsFiles: boolean | undefined): boolean {
+    if (emitOnlyDtsFiles) { return true; }
+    return false;
+}
+
+// src/compiler/core.ts:2080:12 (boolean | undefined)
+function conditionSite47(ignoreCase: boolean | undefined): boolean {
+    return ignoreCase ? true : false;
+}
+
+// src/compiler/core.ts:2250:9 (boolean | undefined)
+function conditionSite48(ignoreCase: boolean | undefined): boolean {
+    return ignoreCase ? true : false;
+}
+
+// src/compiler/core.ts:2431:12 (boolean | undefined)
+function conditionSite49(ignoreCase: boolean | undefined): boolean {
+    return ignoreCase ? true : false;
+}
+
+// src/compiler/executeCommandLine.ts:1147:9 (boolean | undefined)
+function conditionSite50(input: boolean | undefined): boolean {
+    const system = 0;
+    const compilerOptions = { value: input };
+    if (canReportDiagnostics(system, compilerOptions)) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:2061:40 (boolean | undefined)
+function conditionSite51(isFolder: boolean | undefined): boolean {
+    return isFolder ? true : false;
+}
+
+// src/compiler/program.ts:888:9 (boolean | undefined)
+function conditionSite52(input: { readonly isTypeOnly: boolean | undefined } | undefined): boolean {
+    const decl = { importClause: input };
+    if (decl.importClause?.isTypeOnly) { return true; }
+    return false;
+}
+
+// src/compiler/scanner.ts:477:13 (true | undefined)
+function conditionSite53(allowEdits: true | undefined): boolean {
+    if (allowEdits) { return true; }
+    return false;
+}
+
+// src/compiler/scanner.ts:658:21 (boolean | undefined)
+function conditionSite54(stopAfterLineBreak: boolean | undefined): boolean {
+    if (stopAfterLineBreak) { return true; }
+    return false;
+}
+
+// src/compiler/tsbuildPublic.ts:289:22 (boolean | undefined)
+function conditionSite55(pretty: boolean | undefined): boolean {
+    return pretty ? true : false;
+}
+
+// src/compiler/utilities.ts:5046:19 (boolean | undefined)
+function conditionSite56(excludeJSDocTypeAssertions: boolean | undefined): boolean {
+    return excludeJSDocTypeAssertions ? true : false;
+}
+
+// src/compiler/utilities.ts:5647:20 (boolean | undefined)
+function conditionSite57(hasArguments: boolean | undefined): boolean {
+    return hasArguments ? true : false;
+}
+
+// src/compiler/utilities.ts:5954:20 (boolean | undefined)
+function conditionSite58(hasArguments: boolean | undefined): boolean {
+    return hasArguments ? true : false;
+}
+
+// src/compiler/utilities.ts:7477:13 (boolean | undefined)
+function conditionSite59(excludeCompoundAssignment: boolean | undefined): boolean {
+    return excludeCompoundAssignment ? true : false;
+}
+
+// src/compiler/watch.ts:194:12 (boolean | undefined)
+function conditionSite60(pretty: boolean | undefined): boolean {
+    return pretty ? true : false;
+}
+
+// src/compiler/factory/nodeFactory.ts:493:25 (number)
+function conditionSite61(input: number): boolean {
+    const NodeFactoryFlags = { NoOriginalNode: 8 };
+    const flags = input;
+    return flags & NodeFactoryFlags.NoOriginalNode ? true : false;
+}
+
+// src/compiler/factory/utilities.ts:1740:9 (number)
+function conditionSite62(input: number): boolean {
+    const TransformFlags = { ContainsObjectRestOrSpread: 65536 };
+    const node = { transformFlags: input };
+    if (node.transformFlags & TransformFlags.ContainsObjectRestOrSpread) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:195:9 (number)
+function conditionSite63(input: number): boolean {
+    const Extensions = { TypeScript: 1 };
+    const extensions = input;
+    if (extensions & Extensions.TypeScript) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:204:9 (number)
+function conditionSite64(input: number): boolean {
+    const Extensions = { TypeScript: 1 };
+    const extensions = input;
+    if (extensions & Extensions.TypeScript) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:301:12 (number)
+function conditionSite65(value: readonly string[]): boolean {
+    return value.length ? true : false;
+}
+
+// src/compiler/parser.ts:485:12 (number)
+function conditionSite66(input: number): boolean {
+    const NodeFlags = { PossiblyContainsImportMeta: 8388608 };
+    const sourceFile = { flags: input };
+    return sourceFile.flags & NodeFlags.PossiblyContainsImportMeta ? true : false;
+}
+
+// src/compiler/utilities.ts:8041:12 (number)
+function conditionSite67(input: number): boolean {
+    const SymbolFlags = { Transient: 33554432 };
+    const symbol = { flags: input };
+    return symbol.flags & SymbolFlags.Transient ? true : false;
+}
+
+// src/compiler/utilities.ts:8069:12 (number)
+function conditionSite68(input: number): boolean {
+    const SymbolFlags = { Alias: 2097152 };
+    const symbol = { flags: input };
+    return symbol.flags & SymbolFlags.Alias ? true : false;
+}
+
+// src/compiler/utilities.ts:8267:9 (number)
+function conditionSite69(input: number): boolean {
+    const SymbolFlags = { Class: 32 };
+    const symbol = { flags: input };
+    if (symbol.flags & SymbolFlags.Class) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:8281:12 (number)
+function conditionSite70(input: number): boolean {
+    const TypeFlags = { ObjectFlagsType: 403963917 };
+    const type = { flags: input };
+    return type.flags & TypeFlags.ObjectFlagsType ? true : false;
+}
+
+// src/compiler/utilities.ts:8884:9 (Comparison)
+function conditionSite71(res: number): boolean {
+    if (res) { return true; }
+    return false;
+}
+
+// src/compiler/utilities.ts:12439:17 (number)
+function conditionSite72(input: number): boolean {
+    const NodeFlags = { BlockScoped: 7 };
+    const node = { declarationList: input };
+    const getCombinedNodeFlags = (value: number): number => value;
+    if (getCombinedNodeFlags(node.declarationList) & NodeFlags.BlockScoped) { return true; }
+    return false;
+}
+
+// src/compiler/moduleNameResolver.ts:3171:9 (string | Pattern | undefined)
+function conditionSite73(matchedPattern: string | { readonly value: number } | undefined): boolean {
+    if (matchedPattern) { return true; }
+    return false;
+}
+
+// src/compiler/path.ts:438:9 (string | readonly string[] | undefined)
+function conditionSite74(extensions: string | readonly string[] | undefined): boolean {
+    if (extensions) { return true; }
+    return false;
+}
+
+// src/compiler/transformer.ts:128:9 (boolean | EmitOnly | undefined)
+function conditionSite75(emitOnly: boolean | number | undefined): boolean {
+    if (emitOnly) { return true; }
+    return false;
+}
+
+// src/compiler/builder.ts:1630:9 (number | undefined)
+function conditionSite76(data: { readonly diagnostics: readonly number[] | undefined } | undefined): boolean {
+    if (data?.diagnostics?.length) { return true; }
+    return false;
+}
+
+// src/compiler/program.ts:941:17 (ResolutionMode)
+function conditionSite77(override: number | undefined): boolean {
+    if (override) { return true; }
+    return false;
+}
+
+console.log(`src/compiler/builder.ts:642:13 sample 0: ${conditionSite00(undefined)}`);
+console.log(`src/compiler/builder.ts:642:13 sample 1: ${conditionSite00(emptyNumbers)}`);
+console.log(`src/compiler/builder.ts:642:13 sample 2: ${conditionSite00([0])}`);
+console.log(`src/compiler/commandLineParser.ts:4176:9 sample 0: ${conditionSite01(/a/.exec(''))}`);
+console.log(`src/compiler/commandLineParser.ts:4176:9 sample 1: ${conditionSite01(/a/.exec('a'))}`);
+console.log(`src/compiler/core.ts:1894:13 sample 0: ${conditionSite02(undefined)}`);
+console.log(`src/compiler/core.ts:1894:13 sample 1: ${conditionSite02(() => 0)}`);
+console.log(`src/compiler/factory/emitNode.ts:273:9 sample 0: ${conditionSite03(undefined)}`);
+console.log(`src/compiler/factory/emitNode.ts:273:9 sample 1: ${conditionSite03(emptyNumbers)}`);
+console.log(`src/compiler/factory/emitNode.ts:273:9 sample 2: ${conditionSite03([0])}`);
+console.log(`src/compiler/moduleNameResolver.ts:480:9 sample 0: ${conditionSite04(undefined)}`);
+console.log(`src/compiler/moduleNameResolver.ts:480:9 sample 1: ${conditionSite04(emptyNumbers)}`);
+console.log(`src/compiler/moduleNameResolver.ts:480:9 sample 2: ${conditionSite04([0])}`);
+console.log(`src/compiler/semver.ts:216:13 sample 0: ${conditionSite05(undefined)}`);
+console.log(`src/compiler/semver.ts:216:13 sample 1: ${conditionSite05(emptyNumbers)}`);
+console.log(`src/compiler/semver.ts:216:13 sample 2: ${conditionSite05([0])}`);
+console.log(`src/compiler/moduleSpecifiers.ts:699:9 sample 0: ${conditionSite06(undefined)}`);
+console.log(`src/compiler/moduleSpecifiers.ts:699:9 sample 1: ${conditionSite06(() => 0)}`);
+console.log(`src/compiler/program.ts:768:30 sample 0: ${conditionSite07({ value: 0 })}`);
+console.log(`src/compiler/scanner.ts:469:12 sample 0: ${conditionSite08(undefined)}`);
+console.log(`src/compiler/scanner.ts:469:12 sample 1: ${conditionSite08(() => 0)}`);
+console.log(`src/compiler/scanner.ts:763:9 sample 0: ${conditionSite09(undefined)}`);
+console.log(`src/compiler/scanner.ts:763:9 sample 1: ${conditionSite09(() => 0)}`);
+console.log(`src/compiler/scanner.ts:968:9 sample 0: ${conditionSite10(/a/.exec(''))}`);
+console.log(`src/compiler/scanner.ts:968:9 sample 1: ${conditionSite10(/a/.exec('a'))}`);
+console.log(`src/compiler/tsbuildPublic.ts:206:12 sample 0: ${conditionSite11(undefined)}`);
+console.log(`src/compiler/tsbuildPublic.ts:206:12 sample 1: ${conditionSite11(() => 0)}`);
+console.log(`src/compiler/utilities.ts:2339:12 sample 0: ${conditionSite12({ value: 0 })}`);
+console.log(`src/compiler/utilities.ts:2461:22 sample 0: ${conditionSite13(undefined)}`);
+console.log(`src/compiler/utilities.ts:2461:22 sample 1: ${conditionSite13(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:2461:22 sample 2: ${conditionSite13([0])}`);
+console.log(`src/compiler/utilities.ts:2475:22 sample 0: ${conditionSite14(undefined)}`);
+console.log(`src/compiler/utilities.ts:2475:22 sample 1: ${conditionSite14(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:2475:22 sample 2: ${conditionSite14([0])}`);
+console.log(`src/compiler/utilities.ts:2997:9 sample 0: ${conditionSite15({ value: 0 })}`);
+console.log(`src/compiler/utilities.ts:3057:13 sample 0: ${conditionSite16(undefined)}`);
+console.log(`src/compiler/utilities.ts:3057:13 sample 1: ${conditionSite16(() => 0)}`);
+console.log(`src/compiler/utilities.ts:3295:9 sample 0: ${conditionSite17({ value: 0 })}`);
+console.log(`src/compiler/utilities.ts:4751:9 sample 0: ${conditionSite18({ value: 0 })}`);
+console.log(`src/compiler/utilities.ts:5064:12 sample 0: ${conditionSite19({ value: 0 })}`);
+console.log(`src/compiler/utilities.ts:6484:12 sample 0: ${conditionSite20(undefined)}`);
+console.log(`src/compiler/utilities.ts:6484:12 sample 1: ${conditionSite20(() => 0)}`);
+console.log(`src/compiler/utilities.ts:7355:9 sample 0: ${conditionSite21(undefined)}`);
+console.log(`src/compiler/utilities.ts:7355:9 sample 1: ${conditionSite21(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:7355:9 sample 2: ${conditionSite21([0])}`);
+console.log(`src/compiler/utilities.ts:8745:22 sample 0: ${conditionSite22(undefined)}`);
+console.log(`src/compiler/utilities.ts:8745:22 sample 1: ${conditionSite22(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:8745:22 sample 2: ${conditionSite22([0])}`);
+console.log(`src/compiler/utilities.ts:8769:12 sample 0: ${conditionSite23(undefined)}`);
+console.log(`src/compiler/utilities.ts:8769:12 sample 1: ${conditionSite23(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:8769:12 sample 2: ${conditionSite23([0])}`);
+console.log(`src/compiler/utilities.ts:9896:9 sample 0: ${conditionSite24(undefined)}`);
+console.log(`src/compiler/utilities.ts:9896:9 sample 1: ${conditionSite24(emptyNumbers)}`);
+console.log(`src/compiler/utilities.ts:9896:9 sample 2: ${conditionSite24([0])}`);
+console.log(`src/compiler/utilities.ts:10159:12 sample 0: ${conditionSite25(''.match(/a/))}`);
+console.log(`src/compiler/utilities.ts:10159:12 sample 1: ${conditionSite25('a'.match(/a/))}`);
+console.log(`src/compiler/utilitiesPublic.ts:1037:9 sample 0: ${conditionSite26({ value: 0 })}`);
+console.log(`src/compiler/watch.ts:114:69 sample 0: ${conditionSite27({ value: 0 })}`);
+console.log(`src/compiler/watch.ts:790:9 sample 0: ${conditionSite28('')}`);
+console.log(`src/compiler/watch.ts:790:9 sample 1: ${conditionSite28('a')}`);
+console.log(`src/compiler/emitter.ts:484:9 sample 0: ${conditionSite29(undefined)}`);
+console.log(`src/compiler/emitter.ts:484:9 sample 1: ${conditionSite29('')}`);
+console.log(`src/compiler/emitter.ts:484:9 sample 2: ${conditionSite29('a')}`);
+console.log(`src/compiler/emitter.ts:484:9 sample 3: ${conditionSite29('0')}`);
+console.log(`src/compiler/emitter.ts:554:12 sample 0: ${conditionSite30(undefined)}`);
+console.log(`src/compiler/emitter.ts:554:12 sample 1: ${conditionSite30('')}`);
+console.log(`src/compiler/emitter.ts:554:12 sample 2: ${conditionSite30('a')}`);
+console.log(`src/compiler/emitter.ts:554:12 sample 3: ${conditionSite30('0')}`);
+console.log(`src/compiler/emitter.ts:697:9 sample 0: ${conditionSite31(undefined)}`);
+console.log(`src/compiler/emitter.ts:697:9 sample 1: ${conditionSite31('')}`);
+console.log(`src/compiler/emitter.ts:697:9 sample 2: ${conditionSite31('a')}`);
+console.log(`src/compiler/emitter.ts:697:9 sample 3: ${conditionSite31('0')}`);
+console.log(`src/compiler/emitter.ts:725:9 sample 0: ${conditionSite32(undefined)}`);
+console.log(`src/compiler/emitter.ts:725:9 sample 1: ${conditionSite32('')}`);
+console.log(`src/compiler/emitter.ts:725:9 sample 2: ${conditionSite32('a')}`);
+console.log(`src/compiler/emitter.ts:725:9 sample 3: ${conditionSite32('0')}`);
+console.log(`src/compiler/executeCommandLine.ts:241:31 sample 0: ${conditionSite33(undefined)}`);
+console.log(`src/compiler/executeCommandLine.ts:241:31 sample 1: ${conditionSite33('')}`);
+console.log(`src/compiler/executeCommandLine.ts:241:31 sample 2: ${conditionSite33('a')}`);
+console.log(`src/compiler/executeCommandLine.ts:241:31 sample 3: ${conditionSite33('0')}`);
+console.log(`src/compiler/executeCommandLine.ts:448:9 sample 0: ${conditionSite34(undefined)}`);
+console.log(`src/compiler/executeCommandLine.ts:448:9 sample 1: ${conditionSite34('')}`);
+console.log(`src/compiler/executeCommandLine.ts:448:9 sample 2: ${conditionSite34('a')}`);
+console.log(`src/compiler/executeCommandLine.ts:448:9 sample 3: ${conditionSite34('0')}`);
+console.log(`src/compiler/moduleNameResolver.ts:2135:13 sample 0: ${conditionSite35('')}`);
+console.log(`src/compiler/moduleNameResolver.ts:2135:13 sample 1: ${conditionSite35('a')}`);
+console.log(`src/compiler/moduleNameResolver.ts:2135:13 sample 2: ${conditionSite35('0')}`);
+console.log(`src/compiler/moduleSpecifiers.ts:398:9 sample 0: ${conditionSite36(undefined)}`);
+console.log(`src/compiler/moduleSpecifiers.ts:398:9 sample 1: ${conditionSite36('')}`);
+console.log(`src/compiler/moduleSpecifiers.ts:398:9 sample 2: ${conditionSite36('a')}`);
+console.log(`src/compiler/moduleSpecifiers.ts:398:9 sample 3: ${conditionSite36('0')}`);
+console.log(`src/compiler/parser.ts:10563:9 sample 0: ${conditionSite37('')}`);
+console.log(`src/compiler/parser.ts:10563:9 sample 1: ${conditionSite37('a')}`);
+console.log(`src/compiler/parser.ts:10563:9 sample 2: ${conditionSite37('0')}`);
+console.log(`src/compiler/path.ts:385:12 sample 0: ${conditionSite38(undefined)}`);
+console.log(`src/compiler/path.ts:385:12 sample 1: ${conditionSite38('')}`);
+console.log(`src/compiler/path.ts:385:12 sample 2: ${conditionSite38('a')}`);
+console.log(`src/compiler/path.ts:385:12 sample 3: ${conditionSite38('0')}`);
+console.log(`src/compiler/path.ts:857:12 sample 0: ${conditionSite39('')}`);
+console.log(`src/compiler/path.ts:857:12 sample 1: ${conditionSite39('a')}`);
+console.log(`src/compiler/path.ts:857:12 sample 2: ${conditionSite39('0')}`);
+console.log(`src/compiler/path.ts:872:9 sample 0: ${conditionSite40(undefined)}`);
+console.log(`src/compiler/path.ts:872:9 sample 1: ${conditionSite40('')}`);
+console.log(`src/compiler/path.ts:872:9 sample 2: ${conditionSite40('a')}`);
+console.log(`src/compiler/path.ts:872:9 sample 3: ${conditionSite40('0')}`);
+console.log(`src/compiler/program.ts:1142:33 sample 0: ${conditionSite41(undefined)}`);
+console.log(`src/compiler/program.ts:1142:33 sample 1: ${conditionSite41('')}`);
+console.log(`src/compiler/program.ts:1142:33 sample 2: ${conditionSite41('a')}`);
+console.log(`src/compiler/program.ts:1142:33 sample 3: ${conditionSite41('0')}`);
+console.log(`src/compiler/utilities.ts:910:12 sample 0: ${conditionSite42('')}`);
+console.log(`src/compiler/utilities.ts:910:12 sample 1: ${conditionSite42('a')}`);
+console.log(`src/compiler/utilities.ts:910:12 sample 2: ${conditionSite42('0')}`);
+console.log(`src/compiler/utilities.ts:6596:12 sample 0: ${conditionSite43(undefined)}`);
+console.log(`src/compiler/utilities.ts:6596:12 sample 1: ${conditionSite43('')}`);
+console.log(`src/compiler/utilities.ts:6596:12 sample 2: ${conditionSite43('a')}`);
+console.log(`src/compiler/utilities.ts:6596:12 sample 3: ${conditionSite43('0')}`);
+console.log(`src/compiler/utilities.ts:7150:9 sample 0: ${conditionSite44('')}`);
+console.log(`src/compiler/utilities.ts:7150:9 sample 1: ${conditionSite44('a')}`);
+console.log(`src/compiler/utilities.ts:7150:9 sample 2: ${conditionSite44('0')}`);
+console.log(`src/compiler/utilities.ts:9431:12 sample 0: ${conditionSite45(undefined)}`);
+console.log(`src/compiler/utilities.ts:9431:12 sample 1: ${conditionSite45('')}`);
+console.log(`src/compiler/utilities.ts:9431:12 sample 2: ${conditionSite45('a')}`);
+console.log(`src/compiler/utilities.ts:9431:12 sample 3: ${conditionSite45('0')}`);
+console.log(`src/compiler/builder.ts:739:9 sample 0: ${conditionSite46(undefined)}`);
+console.log(`src/compiler/builder.ts:739:9 sample 1: ${conditionSite46(false)}`);
+console.log(`src/compiler/builder.ts:739:9 sample 2: ${conditionSite46(true)}`);
+console.log(`src/compiler/core.ts:2080:12 sample 0: ${conditionSite47(undefined)}`);
+console.log(`src/compiler/core.ts:2080:12 sample 1: ${conditionSite47(false)}`);
+console.log(`src/compiler/core.ts:2080:12 sample 2: ${conditionSite47(true)}`);
+console.log(`src/compiler/core.ts:2250:9 sample 0: ${conditionSite48(undefined)}`);
+console.log(`src/compiler/core.ts:2250:9 sample 1: ${conditionSite48(false)}`);
+console.log(`src/compiler/core.ts:2250:9 sample 2: ${conditionSite48(true)}`);
+console.log(`src/compiler/core.ts:2431:12 sample 0: ${conditionSite49(undefined)}`);
+console.log(`src/compiler/core.ts:2431:12 sample 1: ${conditionSite49(false)}`);
+console.log(`src/compiler/core.ts:2431:12 sample 2: ${conditionSite49(true)}`);
+console.log(`src/compiler/executeCommandLine.ts:1147:9 sample 0: ${conditionSite50(undefined)}`);
+console.log(`src/compiler/executeCommandLine.ts:1147:9 sample 1: ${conditionSite50(false)}`);
+console.log(`src/compiler/executeCommandLine.ts:1147:9 sample 2: ${conditionSite50(true)}`);
+console.log(`src/compiler/moduleNameResolver.ts:2061:40 sample 0: ${conditionSite51(undefined)}`);
+console.log(`src/compiler/moduleNameResolver.ts:2061:40 sample 1: ${conditionSite51(false)}`);
+console.log(`src/compiler/moduleNameResolver.ts:2061:40 sample 2: ${conditionSite51(true)}`);
+console.log(`src/compiler/program.ts:888:9 sample 0: ${conditionSite52(undefined)}`);
+console.log(`src/compiler/program.ts:888:9 sample 1: ${conditionSite52({ isTypeOnly: undefined })}`);
+console.log(`src/compiler/program.ts:888:9 sample 2: ${conditionSite52({ isTypeOnly: false })}`);
+console.log(`src/compiler/program.ts:888:9 sample 3: ${conditionSite52({ isTypeOnly: true })}`);
+console.log(`src/compiler/scanner.ts:477:13 sample 0: ${conditionSite53(undefined)}`);
+console.log(`src/compiler/scanner.ts:477:13 sample 1: ${conditionSite53(true)}`);
+console.log(`src/compiler/scanner.ts:658:21 sample 0: ${conditionSite54(undefined)}`);
+console.log(`src/compiler/scanner.ts:658:21 sample 1: ${conditionSite54(false)}`);
+console.log(`src/compiler/scanner.ts:658:21 sample 2: ${conditionSite54(true)}`);
+console.log(`src/compiler/tsbuildPublic.ts:289:22 sample 0: ${conditionSite55(undefined)}`);
+console.log(`src/compiler/tsbuildPublic.ts:289:22 sample 1: ${conditionSite55(false)}`);
+console.log(`src/compiler/tsbuildPublic.ts:289:22 sample 2: ${conditionSite55(true)}`);
+console.log(`src/compiler/utilities.ts:5046:19 sample 0: ${conditionSite56(undefined)}`);
+console.log(`src/compiler/utilities.ts:5046:19 sample 1: ${conditionSite56(false)}`);
+console.log(`src/compiler/utilities.ts:5046:19 sample 2: ${conditionSite56(true)}`);
+console.log(`src/compiler/utilities.ts:5647:20 sample 0: ${conditionSite57(undefined)}`);
+console.log(`src/compiler/utilities.ts:5647:20 sample 1: ${conditionSite57(false)}`);
+console.log(`src/compiler/utilities.ts:5647:20 sample 2: ${conditionSite57(true)}`);
+console.log(`src/compiler/utilities.ts:5954:20 sample 0: ${conditionSite58(undefined)}`);
+console.log(`src/compiler/utilities.ts:5954:20 sample 1: ${conditionSite58(false)}`);
+console.log(`src/compiler/utilities.ts:5954:20 sample 2: ${conditionSite58(true)}`);
+console.log(`src/compiler/utilities.ts:7477:13 sample 0: ${conditionSite59(undefined)}`);
+console.log(`src/compiler/utilities.ts:7477:13 sample 1: ${conditionSite59(false)}`);
+console.log(`src/compiler/utilities.ts:7477:13 sample 2: ${conditionSite59(true)}`);
+console.log(`src/compiler/watch.ts:194:12 sample 0: ${conditionSite60(undefined)}`);
+console.log(`src/compiler/watch.ts:194:12 sample 1: ${conditionSite60(false)}`);
+console.log(`src/compiler/watch.ts:194:12 sample 2: ${conditionSite60(true)}`);
+console.log(`src/compiler/factory/nodeFactory.ts:493:25 sample 0: ${conditionSite61(0)}`);
+console.log(`src/compiler/factory/nodeFactory.ts:493:25 sample 1: ${conditionSite61(8)}`);
+console.log(`src/compiler/factory/nodeFactory.ts:493:25 sample 2: ${conditionSite61(-0)}`);
+console.log(`src/compiler/factory/nodeFactory.ts:493:25 sample 3: ${conditionSite61(NaN)}`);
+console.log(`src/compiler/factory/utilities.ts:1740:9 sample 0: ${conditionSite62(0)}`);
+console.log(`src/compiler/factory/utilities.ts:1740:9 sample 1: ${conditionSite62(65536)}`);
+console.log(`src/compiler/factory/utilities.ts:1740:9 sample 2: ${conditionSite62(-0)}`);
+console.log(`src/compiler/factory/utilities.ts:1740:9 sample 3: ${conditionSite62(NaN)}`);
+console.log(`src/compiler/moduleNameResolver.ts:195:9 sample 0: ${conditionSite63(0)}`);
+console.log(`src/compiler/moduleNameResolver.ts:195:9 sample 1: ${conditionSite63(1)}`);
+console.log(`src/compiler/moduleNameResolver.ts:195:9 sample 2: ${conditionSite63(-0)}`);
+console.log(`src/compiler/moduleNameResolver.ts:195:9 sample 3: ${conditionSite63(NaN)}`);
+console.log(`src/compiler/moduleNameResolver.ts:204:9 sample 0: ${conditionSite64(0)}`);
+console.log(`src/compiler/moduleNameResolver.ts:204:9 sample 1: ${conditionSite64(1)}`);
+console.log(`src/compiler/moduleNameResolver.ts:204:9 sample 2: ${conditionSite64(-0)}`);
+console.log(`src/compiler/moduleNameResolver.ts:204:9 sample 3: ${conditionSite64(NaN)}`);
+console.log(`src/compiler/moduleNameResolver.ts:301:12 sample 0: ${conditionSite65(emptyStrings)}`);
+console.log(`src/compiler/moduleNameResolver.ts:301:12 sample 1: ${conditionSite65(['a'])}`);
+console.log(`src/compiler/parser.ts:485:12 sample 0: ${conditionSite66(0)}`);
+console.log(`src/compiler/parser.ts:485:12 sample 1: ${conditionSite66(8388608)}`);
+console.log(`src/compiler/parser.ts:485:12 sample 2: ${conditionSite66(-0)}`);
+console.log(`src/compiler/parser.ts:485:12 sample 3: ${conditionSite66(NaN)}`);
+console.log(`src/compiler/utilities.ts:8041:12 sample 0: ${conditionSite67(0)}`);
+console.log(`src/compiler/utilities.ts:8041:12 sample 1: ${conditionSite67(33554432)}`);
+console.log(`src/compiler/utilities.ts:8041:12 sample 2: ${conditionSite67(-0)}`);
+console.log(`src/compiler/utilities.ts:8041:12 sample 3: ${conditionSite67(NaN)}`);
+console.log(`src/compiler/utilities.ts:8069:12 sample 0: ${conditionSite68(0)}`);
+console.log(`src/compiler/utilities.ts:8069:12 sample 1: ${conditionSite68(2097152)}`);
+console.log(`src/compiler/utilities.ts:8069:12 sample 2: ${conditionSite68(-0)}`);
+console.log(`src/compiler/utilities.ts:8069:12 sample 3: ${conditionSite68(NaN)}`);
+console.log(`src/compiler/utilities.ts:8267:9 sample 0: ${conditionSite69(0)}`);
+console.log(`src/compiler/utilities.ts:8267:9 sample 1: ${conditionSite69(32)}`);
+console.log(`src/compiler/utilities.ts:8267:9 sample 2: ${conditionSite69(-0)}`);
+console.log(`src/compiler/utilities.ts:8267:9 sample 3: ${conditionSite69(NaN)}`);
+console.log(`src/compiler/utilities.ts:8281:12 sample 0: ${conditionSite70(0)}`);
+console.log(`src/compiler/utilities.ts:8281:12 sample 1: ${conditionSite70(403963917)}`);
+console.log(`src/compiler/utilities.ts:8281:12 sample 2: ${conditionSite70(-0)}`);
+console.log(`src/compiler/utilities.ts:8281:12 sample 3: ${conditionSite70(NaN)}`);
+console.log(`src/compiler/utilities.ts:8884:9 sample 0: ${conditionSite71(0)}`);
+console.log(`src/compiler/utilities.ts:8884:9 sample 1: ${conditionSite71(-0)}`);
+console.log(`src/compiler/utilities.ts:8884:9 sample 2: ${conditionSite71(NaN)}`);
+console.log(`src/compiler/utilities.ts:8884:9 sample 3: ${conditionSite71(1)}`);
+console.log(`src/compiler/utilities.ts:8884:9 sample 4: ${conditionSite71(-1)}`);
+console.log(`src/compiler/utilities.ts:12439:17 sample 0: ${conditionSite72(0)}`);
+console.log(`src/compiler/utilities.ts:12439:17 sample 1: ${conditionSite72(7)}`);
+console.log(`src/compiler/utilities.ts:12439:17 sample 2: ${conditionSite72(-0)}`);
+console.log(`src/compiler/utilities.ts:12439:17 sample 3: ${conditionSite72(NaN)}`);
+console.log(`src/compiler/moduleNameResolver.ts:3171:9 sample 0: ${conditionSite73(undefined)}`);
+console.log(`src/compiler/moduleNameResolver.ts:3171:9 sample 1: ${conditionSite73('')}`);
+console.log(`src/compiler/moduleNameResolver.ts:3171:9 sample 2: ${conditionSite73('0')}`);
+console.log(`src/compiler/moduleNameResolver.ts:3171:9 sample 3: ${conditionSite73({ value: 0 })}`);
+console.log(`src/compiler/path.ts:438:9 sample 0: ${conditionSite74(undefined)}`);
+console.log(`src/compiler/path.ts:438:9 sample 1: ${conditionSite74('')}`);
+console.log(`src/compiler/path.ts:438:9 sample 2: ${conditionSite74('0')}`);
+console.log(`src/compiler/path.ts:438:9 sample 3: ${conditionSite74(emptyStrings)}`);
+console.log(`src/compiler/path.ts:438:9 sample 4: ${conditionSite74(['a'])}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 0: ${conditionSite75(undefined)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 1: ${conditionSite75(false)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 2: ${conditionSite75(true)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 3: ${conditionSite75(0)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 4: ${conditionSite75(-0)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 5: ${conditionSite75(NaN)}`);
+console.log(`src/compiler/transformer.ts:128:9 sample 6: ${conditionSite75(1)}`);
+console.log(`src/compiler/builder.ts:1630:9 sample 0: ${conditionSite76(undefined)}`);
+console.log(`src/compiler/builder.ts:1630:9 sample 1: ${conditionSite76({ diagnostics: undefined })}`);
+console.log(`src/compiler/builder.ts:1630:9 sample 2: ${conditionSite76({ diagnostics: emptyNumbers })}`);
+console.log(`src/compiler/builder.ts:1630:9 sample 3: ${conditionSite76({ diagnostics: [1] })}`);
+console.log(`src/compiler/program.ts:941:17 sample 0: ${conditionSite77(undefined)}`);
+console.log(`src/compiler/program.ts:941:17 sample 1: ${conditionSite77(0)}`);
+console.log(`src/compiler/program.ts:941:17 sample 2: ${conditionSite77(-0)}`);
+console.log(`src/compiler/program.ts:941:17 sample 3: ${conditionSite77(NaN)}`);
+console.log(`src/compiler/program.ts:941:17 sample 4: ${conditionSite77(1)}`);
+console.log(`src/compiler/program.ts:941:17 sample 5: ${conditionSite77(-1)}`);

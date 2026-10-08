@@ -99,11 +99,13 @@ merged declarations, and enums inside functions or blocks are `NotYet`.
 Mixed numeric/string objects work, but mixed-representation switches remain
 `NotYet`. The unit does not compile the complete TypeScript compiler.
 
-Reads before a regular enum's runtime initialization are `NotYet`. JavaScript
-hoists its enum variable, so such a read can fail differently from a lexical
-TDZ. The preflight follows functions, defaults and immutable aliases and checks
-callbacks conservatively; an indirect call or class construction before enum
-initialization may also be refused. Declare enums before executable module code.
+Known reads before a regular enum's runtime initialization retain the named
+`NotYet` initialization boundary. Enums and namespaces share one memoized,
+cycle-safe call graph. Unrelated pending enums do not block calls or Map
+construction. Unresolved callees keep the existing module readiness check at
+actual enum reads, which stops loudly instead of reading zero native storage.
+See [enum initialization reachability](verification/enum-init-reach.md) for the
+probes, Node observations, computed-read pins and mutants.
 
 Member names containing NUL or `__proto__` are refused. Numeric members named
 `NaN`, `Infinity` or `-Infinity` are refused too: TypeScript permits these names,

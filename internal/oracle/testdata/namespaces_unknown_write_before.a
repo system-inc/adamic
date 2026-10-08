@@ -1,0 +1,9 @@
+// A simple namespace var write checks PutValue after the right side.
+function right(): boolean { console.log('right'); return true; }
+function write(): void { Debug.isDebugging = right(); }
+function invoke(action: () => void): void { action(); }
+let action = (): void => {};
+action = write;
+invoke(action);
+namespace Debug { export var isDebugging = false; }
+console.log(`${Debug.isDebugging}`);

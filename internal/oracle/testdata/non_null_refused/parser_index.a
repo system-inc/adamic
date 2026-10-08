@@ -1,0 +1,5 @@
+// Reduced from parser proof ec71eb48, native-nonnull.a:5:16.
+// This extension deliberately promises that the assertion is refused.
+const array: readonly number[] = [1];
+const index = 0;
+console.log(`${array[index]!}`);

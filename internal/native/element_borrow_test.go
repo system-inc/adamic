@@ -118,3 +118,28 @@ func TestCallTargetsElementBorrowPlan(t *testing.T) {
 		}
 	}
 }
+
+func TestDevirtualizeBorrowDocClaim(t *testing.T) {
+	t.Parallel()
+	loaded, err := load.Load([]string{"../oracle/testdata/devirt_borrow_doc_claim.a"})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	borrows, _ := planElementBorrows(program)
+	found := map[string]bool{}
+	for statement := range borrows {
+		if declare, ok := (*statement).(ir.Declare); ok && program.Locals[declare.Local].Name == "first" {
+			local := program.Locals[declare.Local]
+			found[program.Functions[local.Function].Name] = true
+		}
+	}
+	for _, name := range []string{"throughVirtual", "throughClosure"} {
+		if !found[name] {
+			t.Errorf("%s: length-only targets prevented borrowing", name)
+		}
+	}
+}
