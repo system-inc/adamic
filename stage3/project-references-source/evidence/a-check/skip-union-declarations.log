@@ -1,0 +1,6 @@
+--- FAIL: TestProjectReferencesTypesUnion (1.71s)
+    --- FAIL: TestProjectReferencesTypesUnion/duplicate-skipped (1.71s)
+        project_references_test.go:216: want both checker duplicate declarations, got <nil>
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	1.720s
+FAIL

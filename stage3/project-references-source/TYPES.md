@@ -1,3 +1,5 @@
+The subsequent gate fixture correction is recorded in [A-CHECK.md](A-CHECK.md).
+
 Built a transitive, deduplicated union of referenced projects' ambient `types` selections.
 Base is this delivery branch at c00c629b51e6099d262e680c3186cf944ebee8cf; the new delivery SHA is in the final response.
 Focused loader tests, both Node build profiles, native and JavaScript output, counts refresh, and scoped vet pass.
