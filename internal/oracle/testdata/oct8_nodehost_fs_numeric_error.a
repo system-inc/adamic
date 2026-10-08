@@ -1,0 +1,14 @@
+import { Buffer } from 'node:buffer';
+import { readSync } from 'node:fs';
+const buffer = Buffer.from('xx');
+try { readSync(-1, buffer, 9007199254740992, 0, null); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+try { readSync(-1, buffer, 0, 0, 9007199254740992); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+try { readSync(-1, buffer, 0, 2147483647, null); }
+catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+// Gate Node 24.19.0: separator threshold, signs, exponent strings and nonintegers.
+for (const offset of [4294967296, 4294967297, -4294967297, 1e21, -1e21, 1.5, NaN, Infinity, -Infinity]) {
+    try { readSync(-1, buffer, offset, 0, null); }
+    catch(error) { if(error instanceof Error) console.log(`${error.name}|${error.message}`); }
+}
