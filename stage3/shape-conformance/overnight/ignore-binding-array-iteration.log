@@ -1,4 +1,4 @@
-/tmp/adamic-gate/shape-binding-mutants-8r0g977q/ignore-binding-array-iteration/overlay.json
+/tmp/adamic-gate/shape-binding-mutants-nqeyw42m/ignore-binding-array-iteration/overlay.json
 Traceback (most recent call last):
   File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 17, in <module>
     else:assert row['outcome']=='unknown' and any(causes[owner] in d for d in row['detail']),(owner,row)

@@ -381,15 +381,12 @@ func (m *latentShapeMeter) body(root *ast.Node) {
 		case ast.KindVariableDeclaration:
 			declaration := node.AsVariableDeclaration()
 			if ast.IsIdentifier(declaration.Name()) {
-				value := m.expression(declaration.Initializer)
-                if declaration.Initializer == nil {
-                    value = latentShapeUnknown{Category:"flow the graph can't see", Reason:"variable declaration without an initializer at "+m.Loaded.Where(node), Value:m.text(declaration.Name())}
-                }
+				value := m.allocationDeclarationProducer(node)
                 m.append(ir.Declare{Local: m.local(declaration.Name()), Value: value})
 				return false
 			}
             if declaration.Name().Kind == ast.KindObjectBindingPattern || declaration.Name().Kind == ast.KindArrayBindingPattern {
-                m.allocationBindingDeclaration(declaration.Name(), m.expression(declaration.Initializer))
+                m.allocationBindingDeclaration(declaration.Name(), m.allocationDeclarationProducer(node))
                 return false
             }
 		case ast.KindReturnStatement:
@@ -1140,4 +1137,25 @@ func (m *latentShapeMeter) allocationBindingDeclaration(pattern *ast.Node, recei
         }
         declare(name)
     }
+}
+
+// Iteration declarations have no initializer syntax. Their values require an
+// iterator/key producer; treating them as ordinary initialized locals is unsound.
+func (m *latentShapeMeter) allocationDeclarationProducer(node *ast.Node) ir.Expression {
+    declaration := node.AsVariableDeclaration()
+    if declaration.Initializer != nil { return m.expression(declaration.Initializer) }
+    if node.Parent != nil && node.Parent.Parent != nil {
+        loop := node.Parent.Parent
+        reason := ""
+        switch loop.Kind {
+        case ast.KindForOfStatement:
+            reason = "for-of binding requires an iterator value allocation"
+        case ast.KindForInStatement:
+            reason = "for-in binding requires a key producer"
+        }
+        if reason != "" {
+            return latentShapeUnknown{Category:"flow the graph can't see", Reason:reason+" at "+m.Loaded.Where(node), Value:m.text(declaration.Name()), Dependencies:[]ir.Expression{m.expression(loop.AsForInOrOfStatement().Expression)}}
+        }
+    }
+    return latentShapeUnknown{Category:"flow the graph can't see", Reason:"variable declaration without an initializer at "+m.Loaded.Where(node), Value:m.text(declaration.Name())}
 }

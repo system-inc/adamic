@@ -1,0 +1,206 @@
+{
+  "status": "PASS",
+  "node": [
+    "boolean",
+    "boolean",
+    "boolean",
+    "boolean",
+    "undefined",
+    "missing",
+    "boolean"
+  ],
+  "controls": [
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 329,
+      "end": 342,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 329,
+        "end": 342,
+        "owner": "directIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:5:101"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 475,
+      "end": 488,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 475,
+        "end": 488,
+        "owner": "objectIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "opaque call may mutate projected fields",
+        "no reaching allocation established",
+        "untracked source lower.latentShapeUnknown",
+        "for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:6:101"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 615,
+      "end": 628,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 615,
+        "end": 628,
+        "owner": "arrayIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "array binding iteration allocation not certified at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:7:101",
+        "for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:7:100"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 773,
+      "end": 786,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 773,
+        "end": 786,
+        "owner": "hostIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "host metadata",
+      "detail": [
+        "opaque call may mutate projected fields",
+        "no reaching allocation established",
+        "untracked source lower.latentShapeUnknown",
+        "for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:8:57",
+        "opaque host result requires runtime semantic metadata at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:8:67"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [
+        "JSON.parse"
+      ],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 946,
+      "end": 959,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 946,
+        "end": 959,
+        "owner": "keyIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "for-in binding requires a key producer at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:9:98"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1049,
+      "end": 1062,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1049,
+        "end": 1062,
+        "owner": "emptyIterationRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "unknown",
+      "reason": "flow the graph can't see",
+      "detail": [
+        "for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:10:58"
+      ],
+      "allocation_sites": null,
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    },
+    {
+      "file": "src/compiler/main.a",
+      "line": 0,
+      "column": 0,
+      "source_type": "",
+      "target_type": "",
+      "start": 1168,
+      "end": 1181,
+      "kind": "tagged",
+      "text": "node as Ready",
+      "adapted": {
+        "start": 1168,
+        "end": 1181,
+        "owner": "initializedRead"
+      },
+      "measurement": "measured on a checker-rejected program",
+      "outcome": "conforms and ready (free)",
+      "reason": "declared allocation field certificates",
+      "detail": [],
+      "allocation_sites": [
+        -12
+      ],
+      "fields": [],
+      "host_values": [],
+      "diagnostic_causes": []
+    }
+  ]
+}

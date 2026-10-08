@@ -1,4 +1,4 @@
-/tmp/adamic-gate/shape-binding-mutants-8r0g977q/bound-name-is-property-key/overlay.json
+/tmp/adamic-gate/shape-binding-mutants-nqeyw42m/bound-name-is-property-key/overlay.json
 Traceback (most recent call last):
   File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 14, in <module>
     if owner in ['shorthandRead','renamedRead','stringRead','numericRead']:assert row['outcome']=='conforms and ready (free)',(owner,row)

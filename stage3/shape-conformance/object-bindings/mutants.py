@@ -3,7 +3,7 @@ import pathlib,subprocess,tempfile
 root=pathlib.Path.cwd();source=(root/'stage3/shape-conformance/latent/lower.go.txt').read_text()
 mutants={
  'drop-binding-boundary-dependencies':('Reason:reason+" at "+m.Loaded.Where(element), Dependencies:dependencies','Reason:reason+" at "+m.Loaded.Where(element)'),
- 'drop-object-binding-edge':('m.allocationBindingDeclaration(declaration.Name(), m.expression(declaration.Initializer))','m.expression(declaration.Initializer)'),
+ 'drop-object-binding-edge':('m.allocationBindingDeclaration(declaration.Name(), m.allocationDeclarationProducer(node))','m.allocationDeclarationProducer(node)'),
  'bound-name-is-property-key':('Name:key.Text(), Of:ir.Object','Name:name.Text(), Of:ir.Object'),
  'ignore-binding-default':('case binding.Initializer != nil:','case false && binding.Initializer != nil:'),
  'ignore-binding-rest':('case binding.DotDotDotToken != nil:','case false && binding.DotDotDotToken != nil:'),

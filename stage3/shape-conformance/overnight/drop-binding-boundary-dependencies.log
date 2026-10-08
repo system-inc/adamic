@@ -1,4 +1,4 @@
-/tmp/adamic-gate/shape-binding-mutants-8r0g977q/drop-binding-boundary-dependencies/overlay.json
+/tmp/adamic-gate/shape-binding-mutants-nqeyw42m/drop-binding-boundary-dependencies/overlay.json
 Traceback (most recent call last):
   File "/workspace/adamic/stage3/shape-conformance/object-bindings/controls.py", line 26, in <module>
     else:assert host_row['outcome']=='unknown' and host_row['reason']=='host metadata',(host_row['adapted']['owner'],host_row)

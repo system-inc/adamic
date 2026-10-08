@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-iteration-mutants-x383_tav/drop-iteration-source-dependency/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/iteration-frontiers/controls.py", line 18, in <module>
+    if owner=='hostIterationRead':assert row['reason']=='host metadata',(owner,row)
+                                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('hostIterationRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 773, 'end': 786, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 773, 'end': 786, 'owner': 'hostIterationRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['opaque call may mutate projected fields', 'no reaching allocation established', 'untracked source lower.latentShapeUnknown', 'for-of binding requires an iterator value allocation at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:8:57'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

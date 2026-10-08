@@ -1,0 +1,6 @@
+/tmp/adamic-gate/shape-iteration-mutants-x383_tav/erase-for-in-frontier/overlay.json
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/shape-conformance/iteration-frontiers/controls.py", line 17, in <module>
+    assert any(cause in d for d in row['detail']),(owner,row)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('keyIterationRead', {'file': 'src/compiler/main.a', 'line': 0, 'column': 0, 'source_type': '', 'target_type': '', 'start': 946, 'end': 959, 'kind': 'tagged', 'text': 'node as Ready', 'adapted': {'start': 946, 'end': 959, 'owner': 'keyIterationRead'}, 'measurement': 'measured on a checker-rejected program', 'outcome': 'unknown', 'reason': "flow the graph can't see", 'detail': ['missing expression at /tmp/shape-iteration-frontiers-controls/src/compiler/main.a:9:98'], 'allocation_sites': None, 'fields': [], 'host_values': [], 'diagnostic_causes': []})

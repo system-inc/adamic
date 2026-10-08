@@ -1,0 +1,11 @@
+// a-check: type error TS2322
+interface Base {readonly kind:'ok'|'other';readonly ready?:unknown;}
+interface Ready extends Base {readonly kind:'ok';readonly ready:boolean;}
+const rejectedModule:number='bad';
+function directIterationRead():Ready|undefined {const raw={kind:'ok' as const,ready:true};for(const node of [raw])return node as Ready;}
+function objectIterationRead():Ready|undefined {const raw={kind:'ok' as const,ready:true};for(const {node} of [{node:raw}])return node as Ready;}
+function arrayIterationRead():Ready|undefined {const raw={kind:'ok' as const,ready:true};for(const [node] of [[raw]])return node as Ready;}
+function hostIterationRead():Ready|undefined {for(const {node} of JSON.parse('[{"node":{"kind":"ok","ready":true}}]') as {node:Base}[])return node as Ready;}
+function keyIterationRead():Ready|undefined {const raw={kind:'ok' as const,ready:true};for(const key in {slot:raw}){const node=key as unknown as Base;return node as Ready;}}
+function emptyIterationRead():Ready|undefined {for(const node of [] as Ready[])return node as Ready;}
+function initializedRead():Ready {const raw={kind:'ok' as const,ready:true};const node:Base=raw;return node as Ready;}
