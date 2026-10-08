@@ -1,0 +1,72 @@
+{
+  "sha": "f833e1a6ed9741768e6146455bf8f91903170d43",
+  "branch": "codex/embedded-node-types",
+  "branch_source": "given",
+  "session": "01a113e7-55da-7312-a015-61cc4c141009",
+  "session_source": "ai.db reply naming the branch",
+  "base": "c6761c24c4bb35e5a7edbcbe0c5e8937d1879c3e",
+  "tools_sha": "3a244b22531da35c9891e7fd3b98707b69683846",
+  "machine": {
+    "hostname": "Cloud",
+    "nproc": 64
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "deferred_list_blob": "f8ce1054abab2210ddde56d9b4771f399d50f464",
+  "oracle_selection": {
+    "whole": true,
+    "reason": "internal/oracle/counts_test.go changes more than fixture entries"
+  },
+  "unchecked_a_files": [
+    "logs/fs_directory_area_53/fs-directory-area-53-function-truthiness.a",
+    "logs/fs_directory_area_53/fs-directory-area-53-rest.a",
+    "logs/fs_directory_area_53/fs-directory-area-53-truthiness.a",
+    "review/unknown-narrowing/require_pending.a",
+    "stage3/host-process/blockers/string_or.a",
+    "stage3/host-process/blockers/void_method.a",
+    "stage3/host/fs_directory.a"
+  ],
+  "executors": {
+    "inert": 1137,
+    "a-check": 7,
+    "package:internal/oracle": 2,
+    "stage3": 10
+  },
+  "uncovered_files": [
+    "tsconfig.json"
+  ],
+  "coverage_enforced": true,
+  "wall_seconds": 1.8,
+  "steps_seconds": {
+    "coverage": 0.0
+  },
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "failure": {
+    "step": "coverage",
+    "detail": "no gate covers 1 changed path:\ntsconfig.json",
+    "after_seconds": 1.8
+  },
+  "planned_stages": [
+    "coverage",
+    "build",
+    "vet",
+    "tests",
+    "smoke",
+    "census"
+  ],
+  "stages_exit": {
+    "coverage": 1
+  },
+  "finished": true
+}
