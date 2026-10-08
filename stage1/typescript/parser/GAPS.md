@@ -40,17 +40,6 @@ appended an argument list with `children.push(...arguments)`, which met this
 same refusal. Workaround: an explicit loop appends each numeric child index.
 This does not limit parsing spread syntax in the source being parsed.
 
-## 3. Type-only import cycles
-
-Splitting lookahead into its own module first imported the Parser class as a
-TypeScript type. Node accepts that cycle, since the type import is erased.
-Adamic 0.1 refuses an import cycle, including a type-only edge.
-`gaps/3_import_cycle.ts` and its peer print `1` on Node; stage 0 returns
-`lower.Refused` with `What: "an import cycle"`. `TestTypeImportCycleGap`
-requires both observations. Workaround: the lookahead module owns the scanner
-snapshot interface and takes the concrete Scanner class. Parser imports that
-interface and passes its scanner; lookahead does not import Parser.
-
 ## 4. Class methods through a structural interface
 
 The first shared cursor interface exposed `kind`, `next`, `mark` and `rewind`

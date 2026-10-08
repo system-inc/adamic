@@ -1,0 +1,4 @@
+function value() { try { return 1; } finally { return 2; } }
+while (true) try {} finally { switch (true) { case true: continue; } }
+outer: while (true) { try {} finally { while (true) { break outer; } } }
+function error() { try {} finally { throw new Error(); } }

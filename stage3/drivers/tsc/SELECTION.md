@@ -1,7 +1,8 @@
 # Selected compiler tests
 
-All source paths are relative to TypeScript 6.0.3. Baseline paths and hashes
-are in `selection.json`; a clean case has no `.errors.txt` baseline.
+All upstream source paths are relative to TypeScript 6.0.3. Each case stores its
+input under the exact upstream filename; `selection.json` records the local
+`path`, baseline paths and unchanged hashes. A clean case has no `.errors.txt` baseline.
 
 | # | Compiler test | Feature | Codes |
 |---:|---|---|---|

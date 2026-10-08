@@ -1,0 +1,6 @@
+{
+  "doc.js": "/** @param { } x */\nfunction f(x) {}",
+  "tags.js": "/** @typedef {{x:number}} Shape */\n/** @param {Shape} x */\nfunction f(x) {}",
+  "comments.js": "/** Intro {@link Target label}.\n * @param {string} x argument text\n * @returns {number} result text\n */\nfunction f(x) { return 1; }",
+  "empty.js": ""
+}
