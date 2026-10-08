@@ -4,7 +4,7 @@ Built an in-process option audit in internal/load, preserving project options an
 Commit: recorded in the worker's final report; branch codex/stricter-options-checks only.
 Measured 0 project errors and all 171 exact stricter-option sites, with no missing or extra sites.
 Six analysis mutants failed their intended assertions; no runtime-check mutants were run.
-Production per-file loading, inserted runtime checks and explain-checks remain unimplemented.
+Production loading now uses one TypeScript project's options and lib and records sites; mixed ownership and runtime conversion remain unfinished.
 
 ## What is built
 
@@ -18,8 +18,7 @@ Ordinary project diagnostics remain separate. The audit also collects declaratio
 diagnostics. Compiler options use the checker's Clone method, rather than copying
 its noCopy state.
 
-This API is analysis only. It does not change Load, return an accepted Program,
-suppress diagnostics, change catch variable types, or authorize emission. An empty
+The audit API remains analysis only. Production Load now uses its site report to retain unconverted option errors and expose them on CheckError.OptionSites. An empty
 Options list remains unclassified evidence. Diagnostics introduced jointly by
 options retain every responsible option.
 
@@ -71,14 +70,11 @@ The five catch rows in the actual rows.csv are commandLineParser.ts:2301 and
 The 18:05 ruling is retained: their eventual .ts implementation must keep the
 project's type and check the relevant uses, rather than blanket unknown typing.
 
-All 67 optional rows remain unconverted errors pending the presence probe.
+All 67 optional rows remain errors in this loader slice. The user reports that optional-field-write-2 at 7e7464e6 now matches Node for in, Object.keys and Object.hasOwn across aliases. Merge that branch after the current steps and convert all 67 rows; this update authorizes the next implementation, not suppression in the loader slice.
 The two JSON.stringify declaration-contract rows are outside this flag-only
 audit. Their use-site checks and the .a diagnostic naming the fix are not built.
-The production loader still uses its existing options and prelude. Passing the
-project's lib into production .ts loading is also unfinished; only the audit
-currently preserves it. No --explain-checks interface was added. There are zero
-new converted checks of any kind, and no whole-program completion date is
-committed by this report.
+Production .ts loading now preserves the owning project's options and lib, with strictNullChecks and strictFunctionTypes retained as Adamic soundness rules. It keeps the existing prelude. No --explain-checks interface was added. There are zero
+new converted checks of any kind. Planning range communicated October 7: October 8 to 9 by 21:30 MDT for supported indexed representations and catch/JSON, conditional on a second catch/JSON worker and a failing caught-value representation witness; it is not a verified completion date.
 
 ## Mutants actually run
 
@@ -140,3 +136,44 @@ The full repository gate, native/oracle package gates, sanitizer runtime proofs,
 and erase-runtime-check mutants were not run. No runtime or emitter is changed.
 The production loader acceptance boundary is preserved conservatively until
 runtime conversion is implemented and proven. This is an incomplete unit.
+
+## Production loader slice
+
+The production probe reproduces all 171 ledger sites and all ablation memberships:
+99 indexed, 67 optional, 5 catch. All remain errors. The production checker also
+retains 90 diagnostics from the existing prelude/library contracts, separately
+from the 171 sites. These are not converted or trusted. The stock-project audit
+still has 0 ordinary errors. `--allow-project-errors` is an explicit validation
+mode for this comparison; it does not suppress loader errors.
+
+A single project's .ts roots use inherited project options and lib. Catch bindings
+keep the project's type. Composite programs retain their complete root list and
+references, avoiding manufactured TS6307 errors. .a roots keep Adamic options.
+Standalone .ts files without a tsconfig keep the existing Adamic fallback.
+
+Mixed .a/project-.ts ownership in either import direction and separate project
+ownership are explicitly refused until distinct checker/AST ownership is built.
+Project overlays and explicit extra roots outside the config are refused until
+the audit can attest to exactly those inputs. These conservative refusals are
+limitations, not completion of general per-file options. The compiler host caches
+filesystem reads but parses fresh ASTs for each program; reusing it does not solve
+cross-program symbol identity.
+
+Production tests cover ordinary errors, retained sites, project catch types,
+old-versus-new lib facts, .a strictness, mixed imports, composite roots and overlay
+refusal. Four additional Go-overlay mutants actually failed their intended
+TestProduction assertions: replacing project options, erasing recorded sites,
+waiving optional sites and erasing the mixed-file refusal. Logs:
+/tmp/stricter-options-production-mutants.log. These prove loader behavior only.
+
+Commands:
+
+```sh
+go test ./internal/load ./stage3/stricter-options -count=1 -timeout 10m > /tmp/stricter-options-production-loader-final-3.log 2>&1
+go vet ./internal/load ./stage3/stricter-options > /tmp/stricter-options-production-vet-final.log 2>&1
+python3 stage3/stricter-options/production_mutants.py > /tmp/stricter-options-production-mutants.log 2>&1
+# production probe takes the adapted compiler root source paths after --production
+python3 stage3/stricter-options/validate.py /tmp/stricter-options-production-report.json /tmp/stricter-options-adapted --allow-project-errors > /tmp/stricter-options-production-validation.log 2>&1
+```
+
+Revised planning range after optional admission: October 9 to 10 by 21:30 MDT, assuming clean presence-branch integration and a second catch/JSON worker; October 10 to 12 without that split. Runtime witnesses and erase-check mutants remain unverified. This supersedes the earlier range.

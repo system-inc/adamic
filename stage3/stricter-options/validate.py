@@ -12,6 +12,7 @@ parser.add_argument('report', type=Path)
 parser.add_argument('tree', type=Path)
 parser.add_argument('--ledger-ref', default='3f0926c0a55a7b5f64f037b1745e0e984e08c8be')
 parser.add_argument('--save', type=Path)
+parser.add_argument('--allow-project-errors', action='store_true', help='Compare sites while retaining production prelude/soundness errors.')
 args = parser.parse_args()
 repository = Path(__file__).resolve().parents[2]
 ledger = subprocess.check_output(['git', 'show', args.ledger_ref + ':stage3/ledger/checker-259/rows.csv'], cwd=repository, text=True)
@@ -26,7 +27,7 @@ for row in rows:
         raise SystemExit(f'duplicate ledger site: {key}')
     expected[key] = {option for option in options if option in row['removed_by']}
 report = json.loads(args.report.read_text())
-if report['project_errors']:
+if report['project_errors'] and not args.allow_project_errors:
     raise SystemExit(f"project errors: {report['project_errors']}")
 actual = {}
 for site in report['sites']:
@@ -46,7 +47,7 @@ for site in report['sites']:
     if not site['options']:
         raise SystemExit(f'unattributed stricter site: {site}')
     counts[site['options'][0]] += 1
-print(f'project errors=0; sites={len(actual)}; missing=0; extra=0; wrong option attribution=0')
+print(f'project errors={len(report["project_errors"])}; sites={len(actual)}; missing=0; extra=0; wrong option attribution=0')
 print('; '.join(f'{option}={counts[option]}' for option in options))
 if args.save:
     args.save.write_text(json.dumps(report, indent=2) + '\n')
