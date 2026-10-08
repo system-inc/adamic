@@ -386,6 +386,8 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// Record uses counted own-key storage when indexed aliases can add fields.
+		Record          bool
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -1166,6 +1168,7 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
+		Record        bool // write into counted own-key storage
 		Uninitialized bool
 		Object        Expression
 		Name          string

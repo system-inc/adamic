@@ -21,6 +21,11 @@ func (l *lowering) assignment(node *ast.Node) ([]ir.Statement, error) {
 		return []ir.Statement{ir.Evaluate{Value: value}}, err
 	}
 	if target.Kind == ast.KindPropertyAccessExpression && !l.namespaceMember(target) {
+		if !isCompound {
+			if body, handled, err := l.entriesRecordWrite(target, binary.Right); handled {
+				return body, err
+			}
+		}
 		if isCompound {
 			return l.updateProperty(node, target, operator, binary.Right)
 		}

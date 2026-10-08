@@ -53,6 +53,26 @@ func (l *lowering) uninitializedDeclaration(node *ast.Node) bool {
 // between declarations: an assignment makes the slot ready, and calls cannot unset it.
 // Captures and globals participate in this bit analysis even though value SSA excludes them.
 func readiness(program *ir.Program) {
+	// A record's named fields live in a counted table, not inline slots.
+	// Retain their representation checks even through a narrower parameter view.
+	if program.CheckedFields == nil {
+		program.CheckedFields = map[string]bool{}
+	}
+	markRecord := func(node any) bool {
+		if literal, ok := node.(ir.ObjectLiteral); ok && literal.Record {
+			for _, field := range literal.Fields {
+				program.CheckedFields[field.Name] = true
+			}
+		}
+		if set, ok := node.(ir.SetProperty); ok && set.Record {
+			program.CheckedFields[set.Name] = true
+		}
+		return true
+	}
+	walk(program.Main, markRecord)
+	for _, function := range program.Functions {
+		walk(function.Body, markRecord)
+	}
 	names := map[string]bool{}
 	walk(program.Main, func(node any) bool {
 		if value, ok := node.(ir.ObjectLiteral); ok {

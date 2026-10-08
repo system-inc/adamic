@@ -8,7 +8,7 @@ import (
 )
 
 // A binding freezes its origin only when no write in the closed program replaces it.
-// Object mutations keep their independently checked field contracts; shape mutation is refused.
+// Indexed shape mutations select record storage and invalidate this allocation proof.
 // Follow imported symbols and annotated aliases, but do not infer origins for parameters or calls.
 func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, depth int) bool {
 	if node == nil || depth > 32 {
@@ -22,6 +22,9 @@ func (l *lowering) enumerationProven(node *ast.Node, element *checker.Type, dept
 		return l.enumerationProven(node.AsAsExpression().Expression, element, depth+1)
 	}
 	if node.Kind == ast.KindObjectLiteralExpression {
+		if l.entriesRecordLiteral(node) {
+			return false
+		}
 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
 				return false
@@ -98,7 +101,7 @@ func (l *lowering) enumerationBindingWritten(symbol *ast.Symbol) bool {
 }
 
 // Native reflection currently represents own data descriptors only. Do not let an
-// erased accessor origin become a slot read; the fallback remains loudly NotYet.
+// erased accessor origin become a slot read; accessor and symbol layouts are refused.
 func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
 	modules, err := l.moduleOrder(l.program.Files()[0])
 	if err != nil {
@@ -107,11 +110,14 @@ func (l *lowering) enumerationDescriptors(where *ast.Node, checked bool) error {
 	var failure error
 	var visit ast.Visitor
 	visit = func(node *ast.Node) bool {
-		if checked && (node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor) {
-			failure = l.notYet(where, "checked Object enumeration in a program with accessor descriptors")
+		if node.Kind == ast.KindGetAccessor || node.Kind == ast.KindSetAccessor {
+			failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with getter or accessor descriptors", Fix: "use own data properties for this first reflection implementation"}
 		}
 		if node.Kind == ast.KindObjectLiteralExpression {
 			for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+				if property.Name() != nil && property.Name().Kind == ast.KindComputedPropertyName && l.checker.GetTypeAtLocation(property.Name().AsComputedPropertyName().Expression).Flags()&checker.TypeFlagsESSymbolLike != 0 {
+					failure = &Refused{Where: l.program.Where(where), What: "Object enumeration with symbol keys", Fix: "use string-keyed own data properties for this first reflection implementation"}
+				}
 				name, known := l.methodName(property)
 				if known && (strings.ContainsRune(name, 0) || strings.HasPrefix(name, "#") || name == iteratorSlot) {
 					failure = l.notYet(where, "Object enumeration of a literal with reserved or symbol key storage")

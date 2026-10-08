@@ -17,7 +17,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node)}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -94,6 +94,18 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
+		}
+	}
+	if literal.Record {
+		if literal.Spread != nil {
+			return nil, l.notYet(node, "a spread into record storage")
+		}
+		for index := range literal.Fields {
+			field := &literal.Fields[index]
+			if field.Value.Type() != ir.Number && field.Value.Type() != ir.Boolean && field.Value.Type() != ir.String && field.Value.Type() != ir.Union {
+				return nil, l.notYet(node, "record allocation outside scalar storage")
+			}
+			field.Value = fit(field.Value, ir.Union)
 		}
 	}
 	if literal.SpreadMaybeUndefined {
@@ -333,6 +345,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return call, err
 	}
 	access := node.AsPropertyAccessExpression()
+	if l.entriesStringIndexed(access.Expression) && l.checker.GetPropertyOfType(l.checker.GetTypeAtLocation(access.Expression), node.Name().Text()) == nil && l.entriesProgramHasRecords() {
+		return nil, l.notYet(node, "an indexed record field read without a named declared property")
+	}
 	name := l.fieldName(node.Name())
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
@@ -520,6 +535,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 				return ir.Unwrap{Value: read}, nil
 			}
+		}
+		if (of == ir.Union || of.IsMaybe()) && l.entriesProgramHasRecords() {
+			return nil, l.notYet(node, "a union or optional field read in a program with record storage")
 		}
 		if of.IsMaybe() && optional {
 			// box?.size is number | undefined because box may be; the field itself is what's stored.
@@ -1825,6 +1843,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 
 // setIndex lowers array[index] = value, as a statement.
 func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
+	if body, handled, err := l.entriesRecordWrite(target, valueNode); handled {
+		return body, err
+	}
 	access := target.AsElementAccessExpression()
 	array, err := l.expression(access.Expression)
 	if err != nil {

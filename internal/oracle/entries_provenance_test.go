@@ -9,17 +9,17 @@ import (
 )
 
 func init() {
-	for _, name := range []string{"entries_scanner", "entries_proven", "entries_checked_fit", "entries_checked_misfit", "entries_proven_import", "entries_checked_boolean", "entries_checked_literal", "entries_checked_boxed"} {
+	for _, name := range []string{"entries_scanner", "entries_proven", "entries_checked_fit", "entries_checked_misfit", "entries_proven_import", "entries_checked_boolean", "entries_checked_literal", "entries_checked_boxed", "entries_record_alias", "entries_record_misfit"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
-		}{"internal/oracle/testdata/" + name + ".a", true, name == "entries_checked_misfit" || name == "entries_checked_literal"})
+		}{"internal/oracle/testdata/" + name + ".a", true, name == "entries_checked_misfit" || name == "entries_checked_literal" || name == "entries_record_misfit"})
 	}
 }
 
 func TestEntriesProvenance(t *testing.T) {
 	t.Parallel()
-	for _, name := range []string{"entries_scanner", "entries_proven", "entries_checked_fit", "entries_checked_misfit", "entries_proven_import", "entries_checked_boolean", "entries_checked_literal", "entries_checked_boxed"} {
+	for _, name := range []string{"entries_scanner", "entries_proven", "entries_checked_fit", "entries_checked_misfit", "entries_proven_import", "entries_checked_boolean", "entries_checked_literal", "entries_checked_boxed", "entries_record_alias", "entries_record_misfit"} {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/"+name+".a"))
@@ -38,6 +38,9 @@ func TestEntriesProvenance(t *testing.T) {
 
 			if name == "entries_checked_literal" {
 				want = run{exitCode: 70, stderr: []byte("adamic: panic: Object enumeration key 'hidden': actual string, declared \"good\"\n")}
+			}
+			if name == "entries_record_misfit" {
+				want = run{exitCode: 70, stdout: []byte("before entries\n"), stderr: []byte("adamic: panic: Object enumeration key 'late': actual string, declared number\n")}
 			}
 			if name == "entries_checked_misfit" {
 				want = run{exitCode: 70, stderr: []byte("adamic: panic: Object enumeration key 'hidden': actual string, declared number\n")}
@@ -65,7 +68,7 @@ func TestEntriesProvenance(t *testing.T) {
 			if proven && checks != 0 || !proven && checks == 0 {
 				t.Fatalf("proven=%t, checks=%d", proven, checks)
 			}
-			if name == "entries_checked_misfit" || name == "entries_checked_literal" {
+			if name == "entries_checked_misfit" || name == "entries_checked_literal" || name == "entries_record_misfit" {
 				for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 					if difference := disagreement(node, got); difference != "" {
 						t.Fatalf("unchecked mutant must match Node: %s, %#v", difference, got)

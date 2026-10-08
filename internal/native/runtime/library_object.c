@@ -41,6 +41,7 @@ void adamic_object_check_write(const adamic_object *object, const char *name) {
 }
 
 bool adamic_object_has_own(const adamic_object *object, const adamic_string *key) {
+ if (adamic_record_is(object)) return adamic_record_has_own(object, key);
  for (size_t index = 0; index < object->shape->count; index++) {
   const char *name = object->shape->names[index];
   if (name[0] != '#' && strlen(name) == key->length && memcmp(name, key->bytes, key->length) == 0) return true;
@@ -95,6 +96,7 @@ static adamic_string *key_string(const char *name) {
 
 adamic_array *adamic_object_keys(const adamic_object *object) {
  // Class descriptors hide private storage and track static own-property presence.
+ if (adamic_record_is(object)) return adamic_record_keys(object);
  if (object->class != NULL) return adamic_class_object_keys(object);
  size_t *indices = ordered(object);
  adamic_array *keys = adamic_array_new(object->shape->count, true);
@@ -157,11 +159,11 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
  adamic_array *keys = adamic_object_keys(object);
  bool references = expected == 3;
  adamic_array *result = adamic_array_new(keys->length, entries || references);
- static const char *const names[] = {"0", "1"};
+ static const char *const checked_names[] = {"0", "1"};
  static const bool scalar_references[] = {true, false};
  static const bool string_references[] = {true, true};
- static const adamic_shape scalar_pair = {2, names, scalar_references, NULL};
- static const adamic_shape string_pair = {2, names, string_references, NULL};
+ static const adamic_shape scalar_pair = {2, checked_names, scalar_references, NULL};
+ static const adamic_shape string_pair = {2, checked_names, string_references, NULL};
  for (size_t at = 0; at < keys->length; at++) {
   adamic_string *key = (adamic_string *)keys->elements[at].reference;
   char *name = malloc(key->length + 1);
@@ -169,8 +171,14 @@ adamic_array *adamic_object_values_checked(adamic_object *object, int expected, 
   memcpy(name, key->bytes, key->length);
   name[key->length] = '\0';
   adamic_slot_cache cache = {NULL, 0};
-  (void)adamic_object_data_field(object, name, &cache);
-  adamic_heap *observed = adamic_object_initialized(object)[cache.index] ? adamic_dynamic_property(&object->heap, name) : NULL;
+  adamic_heap *observed;
+  if (adamic_record_is(object)) {
+   const adamic_value *slot = adamic_record_get_own(object, key);
+   observed = slot == NULL ? NULL : adamic_retain(slot->reference);
+  } else {
+   (void)adamic_object_data_field(object, name, &cache);
+   observed = adamic_object_initialized(object)[cache.index] ? adamic_dynamic_property(&object->heap, name) : NULL;
+  }
   const char *actual_name = observed == NULL ? "undefined" : observed->kind == adamic_kind_number ? "number" : observed->kind == adamic_kind_boolean ? "boolean" : observed->kind == adamic_kind_string ? "string" : observed->kind == adamic_kind_closure ? "function" : "object";
   adamic_value value = {.number = 0};
   bool fits = false;
