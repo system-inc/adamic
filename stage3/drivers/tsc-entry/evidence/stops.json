@@ -1,0 +1,19 @@
+[
+  {
+    "ordinal": 1,
+    "file": "src/compiler/builder.ts",
+    "line": 1246,
+    "column": 69,
+    "phase": "checker",
+    "code": "TS2345",
+    "message": "Argument of type 'Path | undefined' is not assignable to parameter of type 'string'.",
+    "outside_compiler": false,
+    "split_0_exit": 1,
+    "split_1_exit": 1,
+    "probe": "probes/01-indexed-path.a",
+    "node_exit": 0,
+    "node_stdout": "undefined\n",
+    "meter_lowering_message_match": false,
+    "meter_note": "Checker diagnostic, not a lowering message. Not a new lowering reason."
+  }
+]
