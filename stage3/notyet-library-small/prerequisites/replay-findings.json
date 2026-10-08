@@ -1,0 +1,2690 @@
+[
+  {
+    "where": "src/compiler/core.ts:1877:9",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/core.ts:2433:11",
+    "reason": "lastIndexOf with these arguments",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/tracing.ts:194:19",
+    "reason": "node:fs.writeSync: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:191:9",
+        "reason": "reading performance",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:191:9: stage 0 can't lower reading performance yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:191:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:191:9: stage 0 can't lower reading performance yet",
+        "start": 7176,
+        "end": 7221
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:194:19",
+        "reason": "node:fs.writeSync: JSON.stringify recursive array types",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:194:19: stage 0 can't lower node:fs.writeSync: JSON.stringify recursive array types yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:194:19",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:194:19: stage 0 can't lower node:fs.writeSync: JSON.stringify recursive array types yet",
+        "start": 7420,
+        "end": 7478
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:196:9",
+        "reason": "reading performance",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:196:9: stage 0 can't lower reading performance yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:196:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:196:9: stage 0 can't lower reading performance yet",
+        "start": 7515,
+        "end": 7556
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:197:9",
+        "reason": "reading performance",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:197:9: stage 0 can't lower reading performance yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tracing.ts:187:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tracing.ts:197:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tracing.ts:197:9: stage 0 can't lower reading performance yet",
+        "start": 7556,
+        "end": 7627
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/sys.ts:1734:20",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/sys.ts:1750:46",
+    "reason": "numeric coercion requiring dynamic ToPrimitive",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46",
+        "reason": "numeric coercion requiring dynamic ToPrimitive",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet",
+        "start": 77392,
+        "end": 77816
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22",
+        "reason": "numeric coercion requiring dynamic ToPrimitive",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet",
+        "start": 77816,
+        "end": 78576
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: numeric coercion requiring dynamic ToPrimitive at /tmp/library-small-adapted/src/compiler/sys.ts:1750:46"
+    ]
+  },
+  {
+    "where": "src/compiler/sys.ts:1751:22",
+    "reason": "numeric coercion requiring dynamic ToPrimitive",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46",
+        "reason": "numeric coercion requiring dynamic ToPrimitive",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1750:46: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet",
+        "start": 77392,
+        "end": 77816
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22",
+        "reason": "numeric coercion requiring dynamic ToPrimitive",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/sys.ts:1747:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/sys.ts:1751:22: stage 0 can't lower numeric coercion requiring dynamic ToPrimitive yet",
+        "start": 77816,
+        "end": 78576
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: numeric coercion requiring dynamic ToPrimitive at /tmp/library-small-adapted/src/compiler/sys.ts:1751:22"
+    ]
+  },
+  {
+    "where": "src/compiler/scanner.ts:222:46",
+    "reason": "Object.entries on a shape not proven by a plain literal or its const binding",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/scanner.ts:224:44",
+    "reason": "Object.entries on a shape not proven by a plain literal or its const binding",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:44",
+        "reason": "Object.entries on a shape not proven by a plain literal or its const binding",
+        "text": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:44: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/scanner.ts:224:44: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet",
+        "start": 8488,
+        "end": 11073
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: Object.entries on a shape not proven by a plain literal or its const binding at /tmp/library-small-adapted/src/compiler/scanner.ts:224:44"
+    ]
+  },
+  {
+    "where": "src/compiler/scanner.ts:4075:59",
+    "reason": "Object.entries on a shape not proven by a plain literal or its const binding",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:59",
+        "reason": "Object.entries on a shape not proven by a plain literal or its const binding",
+        "text": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:59: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/scanner.ts:4075:59: stage 0 can't lower Object.entries on a shape not proven by a plain literal or its const binding yet",
+        "start": 212216,
+        "end": 212651
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: Object.entries on a shape not proven by a plain literal or its const binding at /tmp/library-small-adapted/src/compiler/scanner.ts:4075:59"
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:6211:12",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:6207:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:6211:12",
+        "reason": "regex replacement callback taking captures, offset or input",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:6211:12: stage 0 can't lower regex replacement callback taking captures, offset or input yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:6207:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:6211:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:6211:12: stage 0 can't lower regex replacement callback taking captures, offset or input yet",
+        "start": 244743,
+        "end": 244802
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/utilities.ts:6221:9",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/utilities.ts:6252:12",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/utilities.ts:8578:19",
+    "reason": "Object.assign on a shape not proven by a plain literal or its const binding",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:8577:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:8578:19",
+        "reason": "Object.assign on a shape not proven by a plain literal or its const binding",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8578:19: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:8577:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:8578:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8578:19: stage 0 can't lower Object.assign on a shape not proven by a plain literal or its const binding yet",
+        "start": 338334,
+        "end": 338378
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:8577:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/core.ts:33:17",
+        "reason": "a function returning U | undefined",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:8577:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:8579:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:33:17: stage 0 can't lower a function returning U | undefined yet",
+        "start": 338378,
+        "end": 338444
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: Object.assign on a shape not proven by a plain literal or its const binding at /tmp/library-small-adapted/src/compiler/utilities.ts:8578:19"
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:9598:12",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/utilities.ts:9818:23",
+    "reason": "RegExp with a nonconstant pattern",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:9817:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:9818:23",
+        "reason": "RegExp with a nonconstant pattern",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:9818:23: stage 0 can't lower RegExp with a nonconstant pattern yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/utilities.ts:9817:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:9818:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:9818:23: stage 0 can't lower RegExp with a nonconstant pattern yet",
+        "start": 391148,
+        "end": 391219
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: RegExp with a nonconstant pattern at /tmp/library-small-adapted/src/compiler/utilities.ts:9818:23"
+    ]
+  },
+  {
+    "where": "src/compiler/utilities.ts:9930:34",
+    "reason": "lastIndexOf with these arguments",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/utilities.ts:10916:12",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/factory/emitHelpers.ts:1470:11",
+    "reason": "a tagged template other than the intrinsic String.raw",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1467:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1470:11",
+        "reason": "a tagged template other than the intrinsic String.raw",
+        "text": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1470:11: stage 0 can't lower a tagged template other than the intrinsic String.raw yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1467:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1467:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1470:11: stage 0 can't lower a tagged template other than the intrinsic String.raw yet",
+        "start": 68119,
+        "end": 68332
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: a tagged template other than the intrinsic String.raw at /tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1470:11"
+    ]
+  },
+  {
+    "where": "src/compiler/factory/emitHelpers.ts:1478:11",
+    "reason": "a tagged template other than the intrinsic String.raw",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1475:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1478:11",
+        "reason": "a tagged template other than the intrinsic String.raw",
+        "text": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1478:11: stage 0 can't lower a tagged template other than the intrinsic String.raw yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1475:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1475:1",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1478:11: stage 0 can't lower a tagged template other than the intrinsic String.raw yet",
+        "start": 68332,
+        "end": 68830
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: a tagged template other than the intrinsic String.raw at /tmp/library-small-adapted/src/compiler/factory/emitHelpers.ts:1478:11"
+    ]
+  },
+  {
+    "where": "src/compiler/parser.ts:8922:39",
+    "reason": "lastIndexOf with these arguments",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:8951:43",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:8951:43: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:8951:29",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:8951:43: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 443302,
+        "end": 443370
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:8956:29",
+        "reason": "a declaration directly in a case (wrap the case in a block)",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:8956:29: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:8939:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:8956:29: stage 0 can't lower a declaration directly in a case (wrap the case in a block) yet",
+        "start": 442454,
+        "end": 446876
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9016:21",
+        "reason": "a BinaryExpression with a number and a number",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9016:21: stage 0 can't lower a BinaryExpression with a number and a number yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9016:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9016:21: stage 0 can't lower a BinaryExpression with a number and a number yet",
+        "start": 447221,
+        "end": 447421
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9019:21",
+        "reason": "a BinaryExpression with a number and a value",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9019:21: stage 0 can't lower a BinaryExpression with a number and a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9019:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9019:21: stage 0 can't lower a BinaryExpression with a number and a value yet",
+        "start": 447421,
+        "end": 447577
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10655:6",
+        "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:10655:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10655:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:10655:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "start": 426960,
+        "end": 426997
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10656:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "error",
+        "where": "",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10656:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 426997,
+        "end": 427016
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10645:6",
+        "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:10645:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10645:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:10645:6: Adamic 0.1 refuses a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace; keep pos readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "start": 426690,
+        "end": 426727
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10646:5",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:10646:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 426727,
+        "end": 426746
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2596:47",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:2596:47: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2596:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:2596:47: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 133728,
+        "end": 133805
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2597:9",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2597:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 133805,
+        "end": 133828
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9020:35",
+        "reason": "a BinaryExpression with a value and a value",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9020:35: stage 0 can't lower a BinaryExpression with a value and a value yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9020:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9020:35: stage 0 can't lower a BinaryExpression with a value and a value yet",
+        "start": 447577,
+        "end": 447661
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2601:46",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:2601:46: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2601:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:2601:46: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 133919,
+        "end": 133995
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2603:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2603:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 134024,
+        "end": 134081
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2611:13",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2611:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 134452,
+        "end": 134523
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "panic",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2614:9",
+        "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:2614:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+        "start": 134534,
+        "end": 134558
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9021:35",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9021:35: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:8915:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:9021:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:9021:35: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 447661,
+        "end": 447862
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/parser.ts:10707:31",
+    "reason": "RegExp with a nonconstant pattern",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10707:31",
+        "reason": "RegExp with a nonconstant pattern",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10707:31: stage 0 can't lower RegExp with a nonconstant pattern yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10707:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10707:31: stage 0 can't lower RegExp with a nonconstant pattern yet",
+        "start": 535486,
+        "end": 535580
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10708:34",
+        "reason": "reading result",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10708:34: stage 0 can't lower reading result yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10708:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10708:34: stage 0 can't lower reading result yet",
+        "start": 535580,
+        "end": 535623
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10709:12",
+        "reason": "reading result",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10709:12: stage 0 can't lower reading result yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/parser.ts:10703:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/parser.ts:10709:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/parser.ts:10709:12: stage 0 can't lower reading result yet",
+        "start": 535623,
+        "end": 535643
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: RegExp with a nonconstant pattern at /tmp/library-small-adapted/src/compiler/parser.ts:10707:31"
+    ]
+  },
+  {
+    "where": "src/compiler/commandLineParser.ts:2960:31",
+    "reason": "JSON.stringify a union containing containers without runtime element metadata",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2956:5",
+        "phase": "lowering",
+        "kind": "Refused",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2958:50",
+        "reason": "a cast the runtime can't check",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2958:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2956:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2958:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2958:50: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)",
+        "start": 119353,
+        "end": 119482
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2956:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2960:31",
+        "reason": "JSON.stringify a union containing containers without runtime element metadata",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2960:31: stage 0 can't lower JSON.stringify a union containing containers without runtime element metadata yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2956:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2960:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:2960:31: stage 0 can't lower JSON.stringify a union containing containers without runtime element metadata yet",
+        "start": 119493,
+        "end": 119532
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: JSON.stringify a union containing containers without runtime element metadata at /tmp/library-small-adapted/src/compiler/commandLineParser.ts:2960:31"
+    ]
+  },
+  {
+    "where": "src/compiler/commandLineParser.ts:4127:56",
+    "reason": "RegExp with a nonconstant pattern",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4127:56",
+        "reason": "RegExp with a nonconstant pattern",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4127:56: stage 0 can't lower RegExp with a nonconstant pattern yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4127:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4127:56: stage 0 can't lower RegExp with a nonconstant pattern yet",
+        "start": 175380,
+        "end": 175492
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4129:31",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4129:31: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4129:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4129:31: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+        "start": 175559,
+        "end": 175623
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4131:47",
+        "reason": "an array of CanonicalKey",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4131:47: stage 0 can't lower an array of CanonicalKey yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4131:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4131:47: stage 0 can't lower an array of CanonicalKey yet",
+        "start": 175657,
+        "end": 175708
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4134:17",
+        "reason": "reading excludeRegex",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4134:17: stage 0 can't lower reading excludeRegex yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4134:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4134:17: stage 0 can't lower reading excludeRegex yet",
+        "start": 175818,
+        "end": 175920
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4140:25",
+        "reason": "a value of type CanonicalKey",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4140:25: stage 0 can't lower a value of type CanonicalKey yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4140:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4140:25: stage 0 can't lower a value of type CanonicalKey yet",
+        "start": 176038,
+        "end": 176091
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4141:38",
+        "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4141:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4141:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4141:38: stage 0 can't lower a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions yet",
+        "start": 176091,
+        "end": 176157
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4142:39",
+        "reason": "reading existingPath",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4142:39: stage 0 can't lower reading existingPath yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4142:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4142:39: stage 0 can't lower reading existingPath yet",
+        "start": 176157,
+        "end": 176272
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4143:21",
+        "reason": "reading existingFlags",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4143:21: stage 0 can't lower reading existingFlags yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4143:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4143:21: stage 0 can't lower reading existingFlags yet",
+        "start": 176272,
+        "end": 176696
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4156:44",
+        "reason": "reading recursiveKeys",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4156:44: stage 0 can't lower reading recursiveKeys yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4113:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4156:17",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/commandLineParser.ts:4156:44: stage 0 can't lower reading recursiveKeys yet",
+        "start": 176915,
+        "end": 177281
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: RegExp with a nonconstant pattern at /tmp/library-small-adapted/src/compiler/commandLineParser.ts:4127:56"
+    ]
+  },
+  {
+    "where": "src/compiler/moduleNameResolver.ts:1262:25",
+    "reason": "lastIndexOf with these arguments",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1246:9",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1266:20",
+        "reason": "substr with a length argument",
+        "text": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1266:20: stage 0 can't lower substr with a length argument yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1246:9",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1266:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/moduleNameResolver.ts:1266:20: stage 0 can't lower substr with a length argument yet",
+        "start": 57299,
+        "end": 57367
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/checker.ts:8943:45",
+    "reason": "regex replacement other than a string",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8927:28",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8927:28: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8927:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8927:28: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 499799,
+        "end": 499882
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8930:53",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8930:53: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8930:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8930:53: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 499990,
+        "end": 500109
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8931:72",
+        "reason": "reading identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8931:72: stage 0 can't lower reading identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8931:45",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8931:72: stage 0 can't lower reading identifier yet",
+        "start": 500154,
+        "end": 500276
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8932:21",
+        "reason": "reading identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8932:21: stage 0 can't lower reading identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8932:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8932:21: stage 0 can't lower reading identifier yet",
+        "start": 500276,
+        "end": 500325
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8934:40",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8934:40: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8934:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8934:40: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 500398,
+        "end": 500569
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8945:38",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8945:38: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8945:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8945:38: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 501204,
+        "end": 501343
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8947:31",
+        "reason": "a BinaryExpression with a string and a number",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8947:31: stage 0 can't lower a BinaryExpression with a string and a number yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8947:26",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8947:31: stage 0 can't lower a BinaryExpression with a string and a number yet",
+        "start": 501392,
+        "end": 501625
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8952:57",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8952:57: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8952:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8952:57: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 501665,
+        "end": 501788
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8953:76",
+        "reason": "reading identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8953:76: stage 0 can't lower reading identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8953:49",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8953:76: stage 0 can't lower reading identifier yet",
+        "start": 501837,
+        "end": 501959
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8954:25",
+        "reason": "reading identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8954:25: stage 0 can't lower reading identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8954:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8954:25: stage 0 can't lower reading identifier yet",
+        "start": 501959,
+        "end": 502012
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8956:38",
+        "reason": "reading identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8956:38: stage 0 can't lower reading identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8956:25",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8956:38: stage 0 can't lower reading identifier yet",
+        "start": 502085,
+        "end": 502149
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8959:28",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8959:28: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/checker.ts:8911:13",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/checker.ts:8959:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/checker.ts:8959:28: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 502225,
+        "end": 502361
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/sourcemap.ts:380:64",
+    "reason": "a number | undefined argument to substring",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/emitter.ts:1138:27",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/emitter.ts:1137:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/emitter.ts:1138:27",
+        "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "text": "/tmp/library-small-adapted/src/compiler/emitter.ts:1138:27: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/emitter.ts:1137:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/emitter.ts:1138:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/emitter.ts:1138:27: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+        "start": 45606,
+        "end": 45646
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) at /tmp/library-small-adapted/src/compiler/emitter.ts:1138:27"
+    ]
+  },
+  {
+    "where": "src/compiler/emitter.ts:4979:55",
+    "reason": "a number | undefined argument to slice",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/program.ts:751:57",
+    "reason": "a number | undefined argument to slice",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:717:24",
+        "reason": "a BinaryExpression with a number and a string",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:717:24: stage 0 can't lower a BinaryExpression with a number and a string yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:717:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:717:24: stage 0 can't lower a BinaryExpression with a number and a string yet",
+        "start": 26259,
+        "end": 26310
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:719:9",
+        "reason": "assigning to an Identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:719:9: stage 0 can't lower assigning to an Identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:719:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:719:9: stage 0 can't lower assigning to an Identifier yet",
+        "start": 26343,
+        "end": 26406
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:724:20",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:724:20: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:724:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:724:20: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 26489,
+        "end": 26528
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:728:71",
+        "reason": "reading gutterWidth",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:728:71: stage 0 can't lower reading gutterWidth yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:728:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:728:71: stage 0 can't lower reading gutterWidth yet",
+        "start": 26757,
+        "end": 26902
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:739:50",
+        "reason": "a BinaryExpression with a number and a string",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:739:50: stage 0 can't lower a BinaryExpression with a number and a string yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:739:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:739:50: stage 0 can't lower a BinaryExpression with a number and a string yet",
+        "start": 27311,
+        "end": 27538
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:740:34",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:740:34: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:740:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:740:34: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 27538,
+        "end": 27591
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:743:61",
+        "reason": "reading gutterWidth",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:743:61: stage 0 can't lower reading gutterWidth yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:711:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:743:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:743:61: stage 0 can't lower reading gutterWidth yet",
+        "start": 27591,
+        "end": 27784
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/program.ts:2981:46",
+    "reason": "a number | undefined argument to slice",
+    "exit": 1,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:2965:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:2976:17",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:2976:17: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/program.ts:2965:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/program.ts:2976:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/program.ts:2976:17: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 145121,
+        "end": 145296
+      }
+    ],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/builder.ts:1617:68",
+    "reason": "a number | undefined argument to substring",
+    "exit": 1,
+    "parsed": true,
+    "findings": [],
+    "messages": []
+  },
+  {
+    "where": "src/compiler/watchPublic.ts:686:47",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47",
+        "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+        "start": 34197,
+        "end": 34265
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80",
+        "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:32",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+        "start": 34297,
+        "end": 34368
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 34561,
+        "end": 34624
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9",
+        "reason": "replacing a represented method at runtime",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9: stage 0 can't lower replacing a represented method at runtime yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9: stage 0 can't lower replacing a represented method at runtime yet",
+        "start": 34624,
+        "end": 34701
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9",
+        "reason": "replacing a represented method at runtime",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9: stage 0 can't lower replacing a represented method at runtime yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9: stage 0 can't lower replacing a represented method at runtime yet",
+        "start": 34701,
+        "end": 34784
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9",
+        "reason": "assigning to an Identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9: stage 0 can't lower assigning to an Identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9: stage 0 can't lower assigning to an Identifier yet",
+        "start": 34934,
+        "end": 35086
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35086,
+        "end": 35189
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:701:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35189,
+        "end": 35408
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35451,
+        "end": 35504
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21",
+        "reason": "a Map of HostFileInfo",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21: stage 0 can't lower a Map of HostFileInfo yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21: stage 0 can't lower a Map of HostFileInfo yet",
+        "start": 36221,
+        "end": 36284
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) at /tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47"
+    ]
+  },
+  {
+    "where": "src/compiler/watchPublic.ts:687:80",
+    "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47",
+        "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:686:47: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+        "start": 34197,
+        "end": 34265
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80",
+        "reason": "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:32",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80: stage 0 can't lower JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) yet",
+        "start": 34297,
+        "end": 34368
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:692:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 34561,
+        "end": 34624
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9",
+        "reason": "replacing a represented method at runtime",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9: stage 0 can't lower replacing a represented method at runtime yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:693:9: stage 0 can't lower replacing a represented method at runtime yet",
+        "start": 34624,
+        "end": 34701
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9",
+        "reason": "replacing a represented method at runtime",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9: stage 0 can't lower replacing a represented method at runtime yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:694:9: stage 0 can't lower replacing a represented method at runtime yet",
+        "start": 34701,
+        "end": 34784
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9",
+        "reason": "assigning to an Identifier",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9: stage 0 can't lower assigning to an Identifier yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:697:9: stage 0 can't lower assigning to an Identifier yet",
+        "start": 34934,
+        "end": 35086
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:698:9: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35086,
+        "end": 35189
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:701:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:702:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35189,
+        "end": 35408
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:707:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 35451,
+        "end": 35504
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21",
+        "reason": "a Map of HostFileInfo",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21: stage 0 can't lower a Map of HostFileInfo yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:682:5",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/watchPublic.ts:718:21: stage 0 can't lower a Map of HostFileInfo yet",
+        "start": 36221,
+        "end": 36284
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata) at /tmp/library-small-adapted/src/compiler/watchPublic.ts:687:80"
+    ]
+  },
+  {
+    "where": "src/compiler/tsbuildPublic.ts:666:29",
+    "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20",
+        "reason": "a value of type ResolvedConfigFileName",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20: stage 0 can't lower a value of type ResolvedConfigFileName yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:660:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20: stage 0 can't lower a value of type ResolvedConfigFileName yet",
+        "start": 28388,
+        "end": 28493
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "a Map of ResolvedConfigFilePath",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5: stage 0 can't lower a Map of ResolvedConfigFilePath yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5: stage 0 can't lower a Map of ResolvedConfigFilePath yet",
+        "start": 28493,
+        "end": 28605
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet",
+        "start": 28605,
+        "end": 28914
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22",
+        "reason": "a value of type unknown",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22: stage 0 can't lower a value of type unknown yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:672:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22: stage 0 can't lower a value of type unknown yet",
+        "start": 28914,
+        "end": 28967
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1",
+        "reason": "overload 1 of mutateMapSkippingNewValues with additional implementation type parameters",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:674:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 28967,
+        "end": 29080
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:675:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29080,
+        "end": 29165
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:676:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29165,
+        "end": 29252
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:677:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29252,
+        "end": 29335
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:678:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29335,
+        "end": 29426
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:679:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29426,
+        "end": 29519
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:680:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29519,
+        "end": 29605
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:681:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29605,
+        "end": 29693
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:682:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29693,
+        "end": 29793
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:686:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29884,
+        "end": 30055
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet",
+        "start": 30123,
+        "end": 30319
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 30319,
+        "end": 30349
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:701:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30362,
+        "end": 30581
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:707:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30581,
+        "end": 30789
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:713:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30789,
+        "end": 31003
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31",
+        "reason": "reading buildOrder",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31: stage 0 can't lower reading buildOrder yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31: stage 0 can't lower reading buildOrder yet",
+        "start": 31010,
+        "end": 31053
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) at /tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29"
+    ]
+  },
+  {
+    "where": "src/compiler/tsbuildPublic.ts:693:13",
+    "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+    "exit": 0,
+    "parsed": true,
+    "findings": [
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20",
+        "reason": "a value of type ResolvedConfigFileName",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20: stage 0 can't lower a value of type ResolvedConfigFileName yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:660:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:622:20: stage 0 can't lower a value of type ResolvedConfigFileName yet",
+        "start": 28388,
+        "end": 28493
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "a Map of ResolvedConfigFilePath",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5: stage 0 can't lower a Map of ResolvedConfigFilePath yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:663:5: stage 0 can't lower a Map of ResolvedConfigFilePath yet",
+        "start": 28493,
+        "end": 28605
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:666:29: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet",
+        "start": 28605,
+        "end": 28914
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22",
+        "reason": "a value of type unknown",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22: stage 0 can't lower a value of type unknown yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:672:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/core.ts:1794:22: stage 0 can't lower a value of type unknown yet",
+        "start": 28914,
+        "end": 28967
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1",
+        "reason": "overload 1 of mutateMapSkippingNewValues with additional implementation type parameters",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:674:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 28967,
+        "end": 29080
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:675:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29080,
+        "end": 29165
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:676:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29165,
+        "end": 29252
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:677:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29252,
+        "end": 29335
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:678:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29335,
+        "end": 29426
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:679:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29426,
+        "end": 29519
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:680:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29519,
+        "end": 29605
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:681:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29605,
+        "end": 29693
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:682:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29693,
+        "end": 29793
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:686:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 29884,
+        "end": 30055
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13",
+        "reason": "a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13: stage 0 can't lower a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) yet",
+        "start": 30123,
+        "end": 30319
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13",
+        "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:698:13: stage 0 can't lower a method call through a structural signature in a program with statics; use typeof the declaring class yet",
+        "start": 30319,
+        "end": 30349
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:701:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30362,
+        "end": 30581
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:707:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30581,
+        "end": 30789
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:713:9",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/utilities.ts:8199:1: stage 0 can't lower overload 1 of mutateMapSkippingNewValues with additional implementation type parameters yet",
+        "start": 30789,
+        "end": 31003
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "NotYet",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31",
+        "reason": "reading buildOrder",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31: stage 0 can't lower reading buildOrder yet"
+      },
+      {
+        "measurement": "measured on a checker-rejected entry-root program",
+        "unit": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:659:1",
+        "phase": "lowering",
+        "kind": "Boundary",
+        "where": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:5",
+        "reason": "failed statement; state rolled back; continued at next statement or declaration",
+        "text": "/tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:719:31: stage 0 can't lower reading buildOrder yet",
+        "start": 31010,
+        "end": 31053
+      }
+    ],
+    "messages": [
+      "reproduced NotYet: a Set of ResolvedConfigFilePath (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far) at /tmp/library-small-adapted/src/compiler/tsbuildPublic.ts:693:13"
+    ]
+  }
+]

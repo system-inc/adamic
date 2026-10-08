@@ -27,8 +27,6 @@ func build(path, output string, arguments []string) int {
 			options.Count = true
 		case "--sanitize":
 			options.Sanitize = true
-		case "--explain-checks":
-			explain = true
 		case "--tsgo":
 			index++
 			if index >= len(arguments) || archive != "" {
@@ -62,7 +60,9 @@ func build(path, output string, arguments []string) int {
 		return code
 	}
 	if explain {
-		explainPredicateChecks(os.Stderr, program)
+		if len(program.NonNullChecks.Sites) == 0 || len(program.PredicateChecks.Sites) != 0 {
+			explainPredicateChecks(os.Stderr, program)
+		}
 		explainNonNullChecks(os.Stderr, program)
 	}
 	var err error
