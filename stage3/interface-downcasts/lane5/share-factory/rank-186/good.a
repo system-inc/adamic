@@ -1,0 +1,10 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+type ImportPhaseModifierSyntaxKind=number;
+interface Identifier {readonly value:number;}
+interface NamedImportBindings {readonly value:number;}
+interface ImportClause {readonly value:number;}
+interface Base {readonly createImportClause:unknown;}
+interface Target {createImportClause(phaseModifier: ImportPhaseModifierSyntaxKind | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;
+createImportClause(isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;}
+function probe(value:Base):void {const nodeFactory=value as Target;console.log(`${nodeFactory.createImportClause(false,undefined,undefined).value}`);}
+probe({createImportClause:(phaseModifier:ImportPhaseModifierSyntaxKind|boolean|undefined,name:Identifier|undefined,namedBindings:NamedImportBindings|undefined):ImportClause=>({value:7})});

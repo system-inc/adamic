@@ -1,8 +1,8 @@
 {
   "base": "a62778110b958f54d52622da01bf7758bce629dc",
   "roadmapStep": 9,
-  "pairs": 3,
-  "reads": 368,
+  "pairs": 5,
+  "reads": 386,
   "members": [
     {
       "receiver_type_id": 11739,
@@ -107,6 +107,77 @@
       "stdout": "7\n",
       "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
       "certificateDirectory": "rank-24",
+      "test": "TestCheckedViewCallableFactory"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createImportClause",
+      "declared_types": [
+        "{ (phaseModifier: ImportPhaseModifierSyntaxKind | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 734,
+        "column": 25
+      },
+      "rank": 186,
+      "certified": true,
+      "directory": "gap-186",
+      "read": "nodeFactory.createImportClause",
+      "declarations": [
+        "createImportClause(phaseModifier: ImportPhaseModifierSyntaxKind | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;",
+        "createImportClause(isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 28440,
+      "utf16End": 28470,
+      "stdout": "7\n",
+      "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "certificateDirectory": "rank-186",
+      "test": "TestCheckedViewCallableFactory"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createYieldExpression",
+      "declared_types": [
+        "{ (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 9,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 5183,
+        "column": 17
+      },
+      "rank": 189,
+      "certified": true,
+      "directory": "gap-189",
+      "read": "factory.createYieldExpression",
+      "declarations": [
+        "createYieldExpression(asteriskToken: AsteriskToken, expression: Expression): YieldExpression;",
+        "createYieldExpression(asteriskToken: undefined, expression: Expression | undefined): YieldExpression;",
+        "createYieldExpression(asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8",
+      "declarationFile": "src/compiler/types.ts",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "utf16Start": 253844,
+      "utf16End": 253873,
+      "stdout": "7\n",
+      "neededChange": "Demand-time overload contract selection and immutable producer coverage of every advertised signature, preserving arity and parameter/result variance.",
+      "certificateDirectory": "rank-189",
       "test": "TestCheckedViewCallableFactory"
     }
   ]

@@ -14,10 +14,14 @@ func TestCheckedViewCallableFactory(t *testing.T) {
 	for _, pair := range []struct {
 		rank                        int
 		field, conversion, expected string
+		receiver                    string
+		ordinal, signatures         int
 	}{
-		{3, "createIdentifier", "9\n110\n110\n", "{ (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }"},
-		{9, "createStringLiteral", "3\n110\n110\n", "{ (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }"},
-		{24, "createUniqueName", "11\n100\n103\n", "{ (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }"},
+		{3, "createIdentifier", "9\n110\n110\n", "{ (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }", "factory", 2, 2},
+		{9, "createStringLiteral", "3\n110\n110\n", "{ (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }", "factory", 2, 2},
+		{24, "createUniqueName", "11\n100\n103\n", "{ (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }", "factory", 2, 2},
+		{186, "createImportClause", "0\n13\n100\n", "{ (phaseModifier: number | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }", "nodeFactory", 1, 2},
+		{189, "createYieldExpression", "110\n5\n14\n", "{ (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }", "factory", 1, 3},
 	} {
 		t.Run(pair.field, func(t *testing.T) {
 			variants := []string{"good", "conversion", "wrong-overload"}
@@ -49,11 +53,11 @@ func TestCheckedViewCallableFactory(t *testing.T) {
 							}
 						} else {
 							t.Logf("backend%d negative exit=%d stdout=%q stderr=%q", index, got.exitCode, got.stdout, got.stderr)
-							ordinal := 2
+							ordinal := pair.ordinal
 							if variant == "wrong-result" {
 								ordinal = 1
 							}
-							message := fmt.Sprintf("adamic: panic: field read failed: factory.%s expected %s, found function with incompatible overload signature %d\n", pair.field, pair.expected, ordinal)
+							message := fmt.Sprintf("adamic: panic: field read failed: %s.%s expected %s, found function with incompatible overload signature %d\n", pair.receiver, pair.field, pair.expected, ordinal)
 							if got.exitCode != 70 || len(got.stdout) != 0 || string(got.stderr) != message {
 								t.Fatalf("negative did not stop: %#v", got)
 							}
@@ -63,7 +67,7 @@ func TestCheckedViewCallableFactory(t *testing.T) {
 						if report := leaksUncached(t, program, binary); report != "" {
 							t.Fatal(report)
 						}
-						if variant == "conversion" {
+						if variant == "conversion" && pair.rank < 100 {
 							callableFactoryUndefinedMutant(t, program, truth)
 						}
 						return
@@ -74,20 +78,24 @@ func TestCheckedViewCallableFactory(t *testing.T) {
 					changed := 0
 					for index := range program.ViewContracts {
 						contract := &program.ViewContracts[index]
-						if contract.Kind == ir.ViewCallable && len(contract.Members) == 2 {
-							contract.Members = contract.Members[:1]
+						if contract.Kind == ir.ViewCallable && len(contract.Members) == pair.signatures {
+							if pair.rank < 100 {
+								contract.Members = contract.Members[:1]
+							} else {
+								contract.Members = contract.Members[1:2]
+							}
 							changed++
 						}
 					}
 					if changed != 1 {
-						t.Fatalf("last-overload mutant changed %d sets", changed)
+						t.Fatalf("overload-set mutant changed %d sets", changed)
 					}
 					mutantSanitized, mutantBinary := nativelyUncached(t, program)
 					for index, got := range []run{releasedUncached(t, program), mutantSanitized, onJavaScriptBackend(t, program)} {
 						if difference := disagreement(truth, got); difference != "" {
 							t.Fatalf("mutant%d must execute cleanly: %s", index, difference)
 						}
-						t.Logf("backend%d last-overload omission caught: mutant exit 0 stdout %q, negative requires exit 70", index, got.stdout)
+						t.Logf("backend%d overload-set omission caught: mutant exit 0 stdout %q, negative requires exit 70", index, got.stdout)
 					}
 					if report := leaksUncached(t, program, mutantBinary); report != "" {
 						t.Fatal(report)
@@ -143,7 +151,7 @@ func TestCheckedViewCallableFactoryCounts(t *testing.T) {
 	}
 	text := string(data)
 	fixtures, err := filepath.Glob(filepath.Join(repository, "stage3/interface-downcasts/lane5/share-factory/rank-*/*.a"))
-	if err != nil || len(fixtures) != 10 {
+	if err != nil || len(fixtures) != 16 {
 		t.Fatalf("factory fixture inventory: %d, %v", len(fixtures), err)
 	}
 	for _, fixture := range fixtures {
@@ -205,7 +213,7 @@ func TestCheckedViewCallableFactoryDeclarations(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
-			if variant == "good" && string(fixture) != string(original) {
+			if (member.Rank < 100 && variant == "good" || member.Rank >= 100 && variant == "wrong-overload") && string(fixture) != string(original) {
 				t.Fatalf("rank %d original control changed", member.Rank)
 			}
 			for _, declaration := range member.Declarations {
@@ -218,7 +226,7 @@ func TestCheckedViewCallableFactoryDeclarations(t *testing.T) {
 			}
 		}
 	}
-	if evidence.Pairs != 3 || len(evidence.Members) != 3 || evidence.Reads != 368 || reads != 368 {
+	if evidence.Pairs != 5 || len(evidence.Members) != 5 || evidence.Reads != 386 || reads != 386 {
 		t.Fatalf("certificate inventory changed: %#v", evidence)
 	}
 }

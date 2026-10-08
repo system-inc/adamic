@@ -2715,3 +2715,9 @@ compiler proof counts, independent of the runtime allocation counts above.
 | stage3/interface-downcasts/lane5/share-factory/rank-9/conversion.a | 11 | 11 | 7 | 17 | 5 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-factory/rank-9/good.a | 5 | 5 | 3 | 7 | 5 | 0 | 0 | 0 |
 | stage3/interface-downcasts/lane5/share-factory/rank-9/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-186/conversion.a | 14 | 14 | 13 | 27 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-186/good.a | 5 | 5 | 5 | 9 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-186/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-189/conversion.a | 14 | 14 | 10 | 24 | 7 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-189/good.a | 5 | 5 | 4 | 8 | 5 | 0 | 0 | 0 |
+| stage3/interface-downcasts/lane5/share-factory/rank-189/wrong-overload.a | 2 | 0 | 2 | 0 | 2 | 0 | 0 | 0 |

@@ -1,0 +1,10 @@
+// Original overloaded/generic declarations and read; adjacent carriers reduced.
+interface AsteriskToken {readonly value:number;}
+interface Expression {readonly value:number;}
+interface YieldExpression {readonly value:number;}
+interface Base {readonly createYieldExpression:unknown;}
+interface Target {createYieldExpression(asteriskToken: AsteriskToken, expression: Expression): YieldExpression;
+createYieldExpression(asteriskToken: undefined, expression: Expression | undefined): YieldExpression;
+createYieldExpression(asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createYieldExpression(undefined,undefined).value}`);console.log(`${factory.createYieldExpression({value:2},{value:3}).value}`);const token:AsteriskToken|undefined={value:4};const expression:Expression|undefined=undefined;console.log(`${factory.createYieldExpression(token,expression).value}`);}
+probe({createYieldExpression:(asteriskToken:AsteriskToken|undefined,expression:Expression|undefined):YieldExpression=>({value:(asteriskToken===undefined?100:asteriskToken.value)+(expression===undefined?10:expression.value)})});

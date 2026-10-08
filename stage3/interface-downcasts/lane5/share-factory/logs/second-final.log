@@ -1,0 +1,114 @@
+=== RUN   TestCheckedViewCallableFactory
+=== RUN   TestCheckedViewCallableFactory/createIdentifier
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/good
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/conversion
+    checked_views_callable_factory_test.go:71: native0 resolved undefined conversion mutant caught: stdout "9\n110\n0\n", Node requires "9\n110\n110\n"
+    checked_views_callable_factory_test.go:71: native1 resolved undefined conversion mutant caught: stdout "9\n110\n0\n", Node requires "9\n110\n110\n"
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/wrong-overload
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:98: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createIdentifier/wrong-result
+    checked_views_callable_factory_test.go:47: sanitized result exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createIdentifier expected { (text: string): Identifier; (text: string, originalKeywordKind?: number | undefined, hasExtendedUnicodeEscape?: boolean | undefined): Identifier; }, found function with incompatible overload signature 1\n"
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/good
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/conversion
+    checked_views_callable_factory_test.go:71: native0 resolved undefined conversion mutant caught: stdout "3\n110\n0\n", Node requires "3\n110\n110\n"
+    checked_views_callable_factory_test.go:71: native1 resolved undefined conversion mutant caught: stdout "3\n110\n0\n", Node requires "3\n110\n110\n"
+=== RUN   TestCheckedViewCallableFactory/createStringLiteral/wrong-overload
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createStringLiteral expected { (text: string, isSingleQuote?: boolean | undefined): StringLiteral; (text: string, isSingleQuote?: boolean | undefined, hasExtendedUnicodeEscape?: boolean | undefined): StringLiteral; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:98: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createUniqueName
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/good
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/conversion
+    checked_views_callable_factory_test.go:71: native0 resolved undefined conversion mutant caught: stdout "11\n100\n3\n", Node requires "11\n100\n103\n"
+    checked_views_callable_factory_test.go:71: native1 resolved undefined conversion mutant caught: stdout "11\n100\n3\n", Node requires "11\n100\n103\n"
+=== RUN   TestCheckedViewCallableFactory/createUniqueName/wrong-overload
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createUniqueName expected { (text: string, flags?: number | undefined): Identifier; (text: string, flags?: number | undefined, prefix?: string | GeneratedNamePart | undefined, suffix?: string | undefined): Identifier; }, found function with incompatible overload signature 2\n"
+    checked_views_callable_factory_test.go:98: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createImportClause
+=== RUN   TestCheckedViewCallableFactory/createImportClause/good
+=== RUN   TestCheckedViewCallableFactory/createImportClause/conversion
+=== RUN   TestCheckedViewCallableFactory/createImportClause/wrong-overload
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: nodeFactory.createImportClause expected { (phaseModifier: number | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: nodeFactory.createImportClause expected { (phaseModifier: number | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: nodeFactory.createImportClause expected { (phaseModifier: number | undefined, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; (isTypeOnly: boolean, name: Identifier | undefined, namedBindings: NamedImportBindings | undefined): ImportClause; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:98: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+=== RUN   TestCheckedViewCallableFactory/createYieldExpression
+=== RUN   TestCheckedViewCallableFactory/createYieldExpression/good
+=== RUN   TestCheckedViewCallableFactory/createYieldExpression/conversion
+=== RUN   TestCheckedViewCallableFactory/createYieldExpression/wrong-overload
+    checked_views_callable_factory_test.go:55: backend0 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createYieldExpression expected { (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend1 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createYieldExpression expected { (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:55: backend2 negative exit=70 stdout="" stderr="adamic: panic: field read failed: factory.createYieldExpression expected { (asteriskToken: AsteriskToken, expression: Expression): YieldExpression; (asteriskToken: undefined, expression: Expression | undefined): YieldExpression; (asteriskToken: AsteriskToken | undefined, expression: Expression | undefined): YieldExpression; }, found function with incompatible overload signature 1\n"
+    checked_views_callable_factory_test.go:98: backend0 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend1 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+    checked_views_callable_factory_test.go:98: backend2 last-overload omission caught: mutant exit 0 stdout "7\n", negative requires exit 70
+--- PASS: TestCheckedViewCallableFactory (21.72s)
+    --- PASS: TestCheckedViewCallableFactory/createIdentifier (4.92s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/good (0.88s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/conversion (1.58s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/wrong-overload (1.29s)
+        --- PASS: TestCheckedViewCallableFactory/createIdentifier/wrong-result (1.18s)
+    --- PASS: TestCheckedViewCallableFactory/createStringLiteral (4.35s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/good (0.79s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/conversion (1.71s)
+        --- PASS: TestCheckedViewCallableFactory/createStringLiteral/wrong-overload (1.85s)
+    --- PASS: TestCheckedViewCallableFactory/createUniqueName (4.87s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/good (0.93s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/conversion (2.11s)
+        --- PASS: TestCheckedViewCallableFactory/createUniqueName/wrong-overload (1.83s)
+    --- PASS: TestCheckedViewCallableFactory/createImportClause (3.79s)
+        --- PASS: TestCheckedViewCallableFactory/createImportClause/good (1.01s)
+        --- PASS: TestCheckedViewCallableFactory/createImportClause/conversion (1.05s)
+        --- PASS: TestCheckedViewCallableFactory/createImportClause/wrong-overload (1.74s)
+    --- PASS: TestCheckedViewCallableFactory/createYieldExpression (3.78s)
+        --- PASS: TestCheckedViewCallableFactory/createYieldExpression/good (0.82s)
+        --- PASS: TestCheckedViewCallableFactory/createYieldExpression/conversion (1.24s)
+        --- PASS: TestCheckedViewCallableFactory/createYieldExpression/wrong-overload (1.72s)
+=== RUN   TestCheckedViewCallableFactoryCounts
+--- PASS: TestCheckedViewCallableFactoryCounts (3.72s)
+=== RUN   TestCheckedViewCallableFactoryDeclarations
+--- PASS: TestCheckedViewCallableFactoryDeclarations (0.00s)
+=== RUN   TestCheckedViewCallableShareAFrontiers
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-3
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-9
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-12
+    checked_views_callable_share_a_test.go:212: rank 12 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-12/good.a:5:79: Adamic 0.1 refuses checked view read of field cloneNode with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-24
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-174
+    checked_views_callable_share_a_test.go:212: rank 174 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-174/good.a:6:79: Adamic 0.1 refuses checked view read of field createModifier with unsupported callable contract; prove or implement the callable contract before reading this field
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-186
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-189
+=== RUN   TestCheckedViewCallableShareAFrontiers/gap-165
+    checked_views_callable_share_a_test.go:212: rank 165 original read refusal: /workspace/adamic/stage3/interface-downcasts/lane5/share-a/gap-165/good.a:6:64: Adamic 0.1 refuses checked view read of field onEmitNode with unsupported callable contract; prove or implement the callable contract before reading this field
+--- PASS: TestCheckedViewCallableShareAFrontiers (5.83s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-3 (1.15s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-9 (0.81s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-12 (0.18s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-24 (1.17s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-174 (0.19s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-186 (0.92s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-189 (1.24s)
+    --- PASS: TestCheckedViewCallableShareAFrontiers/gap-165 (0.17s)
+PASS
+gate cache: native hits=0 misses=16
+gate cache: node hits=0 misses=50
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	31.327s
