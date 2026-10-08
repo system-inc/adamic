@@ -254,7 +254,7 @@ pairs: 244 accepted pairs (3,660 cases) have zero disagreements. Refusals cover
 cases. This illustrates why a pattern-level refusal also rejects inputs on
 which an unsafe pattern happens to agree. It is separate from test262 cost.
 
-See [the unit report](../cloud/reports/regex-v8-divergences/README.md) for exact
-commands, before/after totals, refusal lists, additional generated-shape
-collateral, and ten real mutants. The fixture and corpus counts describe the
+Exact commands, before/after totals, refusal lists, additional generated-shape
+collateral, and ten real mutants were recorded in the unit report. Attach that
+run evidence to the unit task; raw output is kept outside the repository. The fixture and corpus counts describe the
 checked-in extraction, not a new full 1,879-test runner survey.

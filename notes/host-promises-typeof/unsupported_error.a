@@ -1,3 +1,0 @@
-async function f(): Promise<Error> { return new Error('value'); }
-const value = await f();
-console.log(`${value.message}`);

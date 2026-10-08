@@ -1,8 +1,0 @@
-=== RUN   TestRegExpRuntimeOwnershipOptInMutant
-    library_regexp_compile_test.go:54: caught always-on ownership variant at the symbol assertion
---- PASS: TestRegExpRuntimeOwnershipOptInMutant (6.36s)
-=== RUN   TestRegExpRuntimeCompilerNotLinked
-    regexp_compile_test.go:260: nm: no compiler or ownership symbols in a program without dynamic RegExp
---- PASS: TestRegExpRuntimeCompilerNotLinked (0.19s)
-PASS
-ok  	github.com/system-inc/adamic/internal/native	6.557s

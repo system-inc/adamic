@@ -1,2 +1,0 @@
-const f = async (): Promise<void> => {};
-switch (typeof f) { case 'function': console.log('function'); break; default: console.log('other'); }

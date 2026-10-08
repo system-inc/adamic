@@ -1,0 +1,43 @@
+{
+  "probes": [
+    {
+      "file": "native-same-map-return-cast.a",
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-same-map-return-cast.a:4:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "2\nundefined\n",
+        "stderr": ""
+      }
+    },
+    {
+      "file": "native-sorted-empty-conditional.a",
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-sorted-empty-conditional.a:5:34: Adamic 0.1 refuses a value of type never seen as T, a type parameter whose constraint any can be written, so it can write what never can't hold; take it as never, or constrain T to something readonly, which can't write (adamic/invariant-mutable)\n"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "0\n1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "file": "native-process-next-tick-read.a",
+      "build": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "adamic: /workspace/adamic/stage3/drivers/parser/native-process-next-tick-read.a:6:52: Adamic 0.1 refuses a method read as a value (nextTick would lose its object, and this with it); call it in an arrow that keeps the object: (callback, args) => process.nextTick(callback, args) (unbound-method)\n"
+      },
+      "node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      }
+    }
+  ]
+}

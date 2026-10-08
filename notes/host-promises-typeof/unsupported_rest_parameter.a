@@ -1,2 +1,0 @@
-async function f(...values: number[]): Promise<void> {}
-await f(1);

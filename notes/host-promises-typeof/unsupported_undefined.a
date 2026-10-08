@@ -1,2 +1,0 @@
-async function f(): Promise<undefined> { return undefined; }
-await f();

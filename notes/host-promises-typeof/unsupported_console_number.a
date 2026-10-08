@@ -1,2 +1,0 @@
-async function f(): Promise<void> { console.log(1); }
-await f();

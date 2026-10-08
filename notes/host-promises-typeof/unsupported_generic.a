@@ -1,3 +1,0 @@
-async function f<T>(value: T): Promise<T> { return value; }
-const value = await f(1);
-console.log(`${value}`);

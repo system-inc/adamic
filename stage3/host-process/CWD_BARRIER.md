@@ -43,4 +43,4 @@ go vet ./internal/oracle > /tmp/process-cwd-fix/vet.log 2>&1
 
 All pass. Counts remain unchanged. No compiler lowering or native runtime was changed, so no additional native package rerun is claimed. The uncached oracle builds sanitized binaries for the changed sources and runtime witnesses. Full repository and all 25 host acceptance fixtures are not rerun here; the latter remain pending the area SHA containing fs-file.
 
-Logs, including the independently forced original-driver loss, are under logs/cwd-barrier/. The original stdin probe returns Ok on Linux. This worker has no macOS execution environment.
+Run evidence, including the independently forced original-driver loss, belongs with the unit task outside the repository. The original stdin probe returns Ok on Linux. This worker has no macOS execution environment.

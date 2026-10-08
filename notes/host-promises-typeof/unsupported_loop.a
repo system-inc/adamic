@@ -1,2 +1,0 @@
-async function f(): Promise<void> { for (let i = 0; i < 1; i++) { await Promise.resolve(); } }
-await f();

@@ -1,3 +1,0 @@
-async function f(value: number | undefined): Promise<number | undefined> { return value; }
-const value = await f(1);
-console.log(`${typeof value}`);

@@ -256,7 +256,8 @@ The first merged-tree checks exposed two additional integration blockers:
 `-pthread` conflicts with `-mno-atomics` in the driver, and `share.c` hashes a
 32-bit pointer with a shift by 33. The W7 evidence distinguishes these compile
 failures from runtime agreement; a green WASI oracle is required before landing.
-See `cloud/reports/wasm-threads/` for the hooks, commands, counts and limitations.
+The W7 unit task carries the run evidence for its hooks, commands, counts and
+limitations; raw output is kept outside the repository.
 
 Actual wasm threads would require a wasi-threads-capable host, shared linear
 memory, atomics-enabled compilation and linking, worker instantiation and TLS

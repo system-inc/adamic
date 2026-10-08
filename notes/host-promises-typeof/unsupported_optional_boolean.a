@@ -1,3 +1,0 @@
-async function f(value: boolean | undefined): Promise<boolean | undefined> { return value; }
-const value = await f(true);
-console.log(`${typeof value}`);
