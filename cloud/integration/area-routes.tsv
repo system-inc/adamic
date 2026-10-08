@@ -1,0 +1,50 @@
+# prefix	area	note
+# Which area a worker's green branch merges into, read by area-route.py for the automatic area merges.
+# The longest matching prefix wins. An area of "hold" means a person decides: the branch is held and
+# reported to integration and the Circle named in the note, never merged and never dropped.
+# A family of unlanded codex/* branches (the name's first word) with two or more members that neither a
+# row here nor their workers' fleet decides fails area-route-test.py.
+#
+# Stage 1 (cohere's side, @system_cohere_adamic since Oct 7)
+codex/stage1-lint-	stage1-lint
+codex/stage1-	stage1-format
+codex/lint-	stage1-lint
+codex/typeaware-	stage1-lint
+codex/parser-lint-cases	stage1-lint	the lint rule corpus waves
+codex/scanner-	stage1-lint
+codex/parser-	hold	@system_cohere_adamic: the shared parser serves both stage 1 areas
+codex/realpath-	hold	@system_cohere_adamic
+codex/cohere-	hold	@system_cohere_adamic: a cohere pin moves the submodule every area and gate box reads
+# Compiler (its lowering wall and the stricter checks, @system_adamic Oct 8)
+codex/compiler-	compiler
+codex/notyet-	compiler
+codex/stricter-	compiler
+codex/enum-	compiler
+codex/clock-	compiler
+codex/accessors	compiler
+codex/stdout-	compiler
+codex/optional-	compiler
+codex/method-	compiler	method values, notes/method-values
+# Runtime
+codex/runtime-	runtime
+codex/concurrency	runtime
+codex/typed-array	runtime
+codex/host-	platforms
+codex/host-promises	runtime	census-owners.tsv
+# Library
+codex/library-	library
+codex/regex-	library
+codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
+# Stage 3
+codex/stage3-	stage3
+codex/views-	hold	@system_adamic_compiler or @system_adamic_typescript: the views touch lowering and stage 3's downcasts
+codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
+# Platforms
+codex/platforms-	platforms
+codex/wasm	platforms
+codex/workers-	platforms
+codex/apple-	platforms
+# Developer tools
+codex/developer-tools-	developer-tools
+codex/gate-	developer-tools
+codex/fuzz-	developer-tools
