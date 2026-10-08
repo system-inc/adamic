@@ -1,0 +1,4 @@
+import { createSourceFile, forEachChild } from './src/compiler/parser.ts';
+import { ScriptTarget, ScriptKind } from './src/compiler/types.ts';
+const file = createSourceFile('input.ts', 'const answer = 42;', ScriptTarget.Latest, false, ScriptKind.TS);
+console.log(`${file.text.length} ${file.statements.length}`);

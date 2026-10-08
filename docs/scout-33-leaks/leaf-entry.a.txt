@@ -1,0 +1,2 @@
+import { returnFalse, returnTrue } from './src/compiler/core.ts';
+console.log(`${returnFalse()} ${returnTrue()}`);

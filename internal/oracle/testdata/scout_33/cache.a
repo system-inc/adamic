@@ -1,0 +1,25 @@
+// getOrUpdate specializes tsc core.ts; this driver models checker.ts's
+// getStringLiteralType cache while observing last-owner survival on eviction.
+import type { Literal } from './getOrUpdate.a';
+import { getOrUpdate, getOptional } from './getOrUpdate.a';
+let created = 0;
+function createLiteralType(value: string): Literal { created++; return { value: `${value}:${created}` }; }
+function run(): void {
+ const stringLiteralTypes = new Map<string, Literal>();
+ const key = `name${3}`;
+ const first = getOrUpdate(stringLiteralTypes, key, () => createLiteralType(key));
+ const again = getOrUpdate(stringLiteralTypes, key, () => createLiteralType(key));
+ const read = (): string => first.value;
+ stringLiteralTypes.set(key, createLiteralType(`replacement${3}`));
+ console.log(`${created} ${first === again} ${stringLiteralTypes.get(key)?.value}`);
+ console.log(`${stringLiteralTypes.delete(key)} ${stringLiteralTypes.delete(key)}`);
+ stringLiteralTypes.clear();
+ console.log(`${read()} ${first.value} ${stringLiteralTypes.size}`);
+ const optionalCache = new Map<string, number | undefined>();
+ let called = 0;
+ const absent = getOptional(optionalCache, 'missing', (): number | undefined => { called++; return undefined; });
+ const cached = getOptional(optionalCache, 'missing', (): number | undefined => { called++; return 9; });
+ console.log(`${called} ${absent === undefined} ${cached === undefined} ${optionalCache.has('missing')}`);
+ optionalCache.clear();
+}
+run();

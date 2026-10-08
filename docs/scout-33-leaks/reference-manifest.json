@@ -1,0 +1,65 @@
+[
+  {
+    "url": "https://tc39.es/ecma262/multipage/keyed-collections.html",
+    "retrieved": "2026-10-08",
+    "sha256": "abcd0adaca70e4f5933decd3d295bd317e74871b484b18285117c3869adb92c1",
+    "bytes": 727036,
+    "terms_found": {
+      "Map.prototype.clear": true,
+      "Map.prototype.delete": true,
+      "Map.prototype.get": true,
+      "CreateMapIterator": true
+    }
+  },
+  {
+    "url": "https://tc39.es/ecma262/multipage/executable-code-and-execution-contexts.html",
+    "retrieved": "2026-10-08",
+    "sha256": "5c82df089ae17ab5b5487d71c2e87f25df4e654c8ee4d64f4d845b7325fc492b",
+    "bytes": 883146,
+    "terms_found": {
+      "LexicalEnvironment": true,
+      "Function Environment Records": true
+    }
+  },
+  {
+    "url": "https://tc39.es/ecma262/multipage/managing-memory.html",
+    "retrieved": "2026-10-08",
+    "sha256": "78805d2bef57593af1a00dcfc98abaadee04dad83a572399b26b15e066280bbd",
+    "bytes": 595254,
+    "terms_found": {
+      "KeptAlive": false,
+      "live": true,
+      "garbage": true
+    }
+  },
+  {
+    "url": "https://nodejs.org/en/learn/diagnostics/memory/understanding-and-tuning-memory",
+    "retrieved": "2026-10-08",
+    "sha256": "13a4588748cb8284e6aa746c960346f7f06039c7b7996933b2bcee3d0ebbae9d",
+    "bytes": 88226,
+    "terms_found": {
+      "garbage": true,
+      "V8": true
+    }
+  },
+  {
+    "url": "https://nodejs.org/docs/latest-v24.x/api/process.html",
+    "retrieved": "2026-10-08",
+    "sha256": "1224adf135fbd77cddbada63b43a8fbcd6f56e22d8c2ac02c46a2d9b9180a4b5",
+    "bytes": 359605,
+    "terms_found": {
+      "beforeExit": true,
+      "exit event": true
+    }
+  },
+  {
+    "url": "https://go.dev/doc/gc-guide",
+    "retrieved": "2026-10-08",
+    "sha256": "4c4a708e113331ff95947a262f74e661799cf48b4b94bb191fbac3a66af4a1b9",
+    "bytes": 103962,
+    "terms_found": {
+      "tracing": true,
+      "garbage collector": true
+    }
+  }
+]

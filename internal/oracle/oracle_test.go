@@ -153,6 +153,8 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/graph_regions_coverage_throw.a", true, false},
 	{"internal/oracle/testdata/graph_regions_coverage_arrays.a", true, false},
 	{"internal/oracle/testdata/graph_regions_coverage_maps.a", true, false},
+	{"internal/oracle/testdata/scout_33/main.a", true, false},
+	{"internal/oracle/testdata/scout_33/cache.a", true, false},
 	{"internal/oracle/testdata/graph_regions_coverage_payload_loop.a", true, false},
 	{"internal/oracle/testdata/graph_regions_coverage_spread.a", true, false},
 	{"internal/oracle/testdata/graph_regions_coverage_merge.a", true, false},

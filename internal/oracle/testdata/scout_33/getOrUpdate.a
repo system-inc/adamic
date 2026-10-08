@@ -1,0 +1,18 @@
+// Reduced, checked specialization of tsc core.ts:getOrUpdate and
+// checker.ts:getStringLiteralType. Literal values cannot be undefined;
+// narrow get() explicitly instead of porting tsc's refused non-null assertion.
+export interface Literal { readonly value: string; }
+export function getOrUpdate(map: Map<string, Literal>, key: string, callback: () => Literal): Literal {
+ const existing = map.get(key);
+ if (existing !== undefined) { return existing; }
+ const value = callback();
+ map.set(key, value);
+ return value;
+}
+// The has/get distinction matters for caches whose value domain includes undefined.
+export function getOptional(map: Map<string, number | undefined>, key: string, callback: () => number | undefined): number | undefined {
+ if (map.has(key)) { return map.get(key); }
+ const value = callback();
+ map.set(key, value);
+ return value;
+}

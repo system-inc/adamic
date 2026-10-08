@@ -1,0 +1,8 @@
+export function getOrUpdate<K, V>(map: Map<K, V>, key: K, callback: () => V): V {
+    if (map.has(key)) {
+        return map.get(key)!;
+    }
+    const value = callback();
+    map.set(key, value);
+    return value;
+}

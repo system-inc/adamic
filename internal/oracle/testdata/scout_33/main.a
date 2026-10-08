@@ -1,0 +1,24 @@
+import type { Checker, TreeNode } from './state.a';
+import { remember, lookup, forget, reset } from './state.a';
+function compile(id: number): () => string {
+ const root: TreeNode = { name: `root${id}`, parent: undefined, children: [] };
+ const child: TreeNode = { name: `child${id}`, parent: root, children: [] };
+ root.children.push(child);
+ const nodes = new Map<string, TreeNode>();
+ nodes.set(`node${id}`, root); nodes.set(`node${id}`, child);
+ const checker: Checker = { root, nodes, read: (): string => 'initial' };
+ const read = (): string => `${checker.root.name}:${checker.nodes.get(`node${id}`)?.parent?.name}`;
+ checker.read = read;
+ remember(`program${id}`, checker);
+ console.log(`${lookup(`program${id}`)?.read()}`);
+ forget(`program${id}`);
+ return read;
+}
+function run(): void {
+ for (let id = 0; id < 4; id++) {
+  const read = compile(id);
+  reset();
+  console.log(read());
+ }
+}
+run();

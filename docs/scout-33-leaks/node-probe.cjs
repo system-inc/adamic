@@ -1,0 +1,40 @@
+// Spec hard cases behind tsc caches; no assertion about GC scheduling.
+const assert = require('node:assert/strict');
+let made = 0;
+const cache = new Map();
+function getOrUpdate(map,key,callback) {
+ if (map.has(key)) return map.get(key);
+ const value=callback(); map.set(key,value); return value;
+}
+const first=getOrUpdate(cache,'literal',()=>({text:`literal:${++made}`}));
+const again=getOrUpdate(cache,'literal',()=>({text:`literal:${++made}`}));
+assert.equal(first,again);
+const read=()=>first.text;
+cache.set('literal',{text:`replacement:${++made}`});
+cache.delete('literal'); cache.clear();
+if (global.gc) global.gc();
+assert.equal(read(),'literal:1');
+assert.equal(first.text,'literal:1');
+let called=0;
+getOrUpdate(cache,'undefined',()=>{called++;return undefined;});
+getOrUpdate(cache,'undefined',()=>{called++;return 9;});
+assert.equal(called,1); assert.equal(cache.has('undefined'),true);
+const iteratorMap=new Map([['a',1],['b',2]]), iterator=iteratorMap.values();
+assert.equal(iterator.next().value,1);
+iteratorMap.delete('b'); iteratorMap.set('c',3);
+assert.equal(iterator.next().value,3);
+iteratorMap.clear(); iteratorMap.set('d',4);
+assert.equal(iterator.next().value,4); assert.equal(iterator.next().done,true);
+iteratorMap.set('e',5); assert.equal(iterator.next().done,true);
+let checker;
+const root={parent:undefined,children:[]};
+const child={parent:root,children:[]}; root.children.push(child);
+checker={root,nodes:new Map([['root',root],['child',child]]),read:undefined};
+const heldChecker=checker;
+checker.read=()=>heldChecker.nodes.get('child').parent === heldChecker.root;
+const escaped=checker.read;
+cache.set('program',checker); checker=undefined; cache.clear();
+if (global.gc) global.gc();
+assert.equal(escaped(),true);
+console.log(`Node ${process.version}, V8 ${process.versions.v8}: cache identity, cached undefined, escaped values/closure, iterator delete/clear/add and exhaustion PASS`);
+console.log('No guarantee or measurement of when unreachable cycles are collected.');

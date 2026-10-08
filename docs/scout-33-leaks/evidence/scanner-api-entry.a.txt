@@ -1,0 +1,5 @@
+import { createScanner } from './src/compiler/scanner.ts';
+import { ScriptTarget, SyntaxKind } from './src/compiler/types.ts';
+const scanner = createScanner(ScriptTarget.Latest, true);
+scanner.setText('const answer = 42;');
+while (scanner.scan() !== SyntaxKind.EndOfFileToken) { console.log(scanner.getTokenText()); }

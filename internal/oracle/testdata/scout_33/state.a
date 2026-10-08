@@ -1,0 +1,15 @@
+export interface TreeNode {
+ readonly name: string;
+ parent: TreeNode | undefined;
+ children: TreeNode[];
+}
+export interface Checker {
+ readonly root: TreeNode;
+ readonly nodes: Map<string, TreeNode>;
+ read: () => string;
+}
+const checkers = new Map<string, Checker>();
+export function remember(key: string, checker: Checker): void { checkers.set(key, checker); }
+export function lookup(key: string): Checker | undefined { return checkers.get(key); }
+export function forget(key: string): void { checkers.delete(key); }
+export function reset(): void { checkers.clear(); }
