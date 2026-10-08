@@ -16,14 +16,38 @@ static const adamic_shape error_shape = {2, error_names, error_references, NULL}
 const adamic_class adamic_error_class = {NULL, 0, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
 const adamic_class adamic_host_error_class = {&adamic_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
 static adamic_string error_name = ADAMIC_STRING("Error");
+static adamic_string range_error_name = ADAMIC_STRING("RangeError");
+static adamic_string type_error_name = ADAMIC_STRING("TypeError");
+const adamic_class adamic_range_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_type_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
+const adamic_class adamic_host_type_error_class = {&adamic_type_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+const adamic_class adamic_host_range_error_class = {&adamic_range_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
 
-adamic_object *adamic_error_new(adamic_string *message) {
+
+adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind) {
 	adamic_object *error = adamic_object_new(&error_shape);
 	error->class = &adamic_error_class;
-	error->slots[0].reference = adamic_retain(&error_name);
+	adamic_string *name = &error_name;
+ if (strcmp(kind,"RangeError")==0) { error->class = &adamic_range_error_class; name = &range_error_name; }
+ if (strcmp(kind,"TypeError")==0) { error->class = &adamic_type_error_class; name = &type_error_name; }
+ error->slots[0].reference = adamic_retain(name);
 	error->slots[1].reference = adamic_retain(message);
 	return error;
 }
+
+adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code) {
+ static const char *const names[] = {"name", "message", "code"};
+ static const bool references[] = {true, true, true};
+ static const adamic_shape shape = {3, names, references, NULL};
+ adamic_object *error = adamic_object_new(&shape);
+ error->class = &adamic_host_error_class;
+ error->slots[0].reference = adamic_retain(&error_name);
+ error->slots[1].reference = adamic_retain(message);
+ error->slots[2].reference = adamic_retain(code);
+ return error;
+}
+
+adamic_object *adamic_error_new(adamic_string *message) { return adamic_error_new_kind(message,"Error"); }
 
 _Noreturn void adamic_uncaught(void) {
 	// No implicit conversion or stack rendering: the external contract is stdout and exit 1.

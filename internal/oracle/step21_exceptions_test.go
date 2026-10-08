@@ -16,7 +16,7 @@ import (
 
 // Register this unit without editing the shared oracle's compiler-owned fixture list.
 func init() {
-	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught"} {
+	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool
@@ -25,6 +25,11 @@ func init() {
 			"internal/oracle/testdata/step21_" + name + ".a", true, false,
 		})
 	}
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/step21_soundness_terminal.a", true, true})
 }
 
 // Proposals retain their current barriers; source Node independently establishes their meaning.
@@ -34,7 +39,6 @@ func TestStep21ProposalOutcomes(t *testing.T) {
 		{"saved_error", "throwing an Error that isn't made", "saved1\n"},
 		{"error_subclass", "base", "true\n"},
 		{"unknown_read", "TS18046", "unknown\n"},
-		{"library_failure", "a try around repeat", "caught\n"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()

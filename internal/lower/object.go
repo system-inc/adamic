@@ -344,7 +344,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	}
 	// A library declaration proves a prototype member exists, never an own slot. Keep this
 	// guard in lowering too, even when the up-front unbound-method pass has already refused it.
-	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error") && (name == "name" || name == "message")) {
+	if l.inheritedLibraryMember(node) && !l.regexRuntimeProperty(access.Expression, name) && name != "length" && name != "size" && !(l.isLibraryType(l.checker.GetTypeAtLocation(access.Expression), "Error", "RangeError", "TypeError") && (name == "name" || name == "message")) {
 		return nil, l.prototypeRead(node, name)
 	}
 	if err := l.erasedLiteralMethod(node); err != nil {
@@ -1433,7 +1433,7 @@ func (l *lowering) newExpression(node *ast.Node) (ir.Expression, error) {
 	if l.isLibraryGlobal(created.Expression, "Set") {
 		return l.newSet(node)
 	}
-	if l.isLibraryGlobal(created.Expression, "Error") {
+	if l.isLibraryGlobal(created.Expression, "Error") || l.isLibraryGlobal(created.Expression, "RangeError") || l.isLibraryGlobal(created.Expression, "TypeError") {
 		return l.newError(node)
 	}
 	if !l.isLibraryGlobal(created.Expression, "Map") {

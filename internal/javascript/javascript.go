@@ -770,8 +770,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.HasAccessor:
 		return "adamicFindAccessor(" + e.value(expression.Object) + ", " + quote(expression.Name) + ") !== undefined"
 	case ir.InstanceOf:
-		if expression.Class == -1 {
-			return "(" + e.value(expression.Value) + " instanceof Error)"
+		if expression.Class < 0 {
+			name := map[int]string{-1: "Error", -2: "RangeError", -3: "TypeError"}[expression.Class]
+			return "(" + e.value(expression.Value) + " instanceof " + name + ")"
 		}
 		if expression.Exact {
 			return fmt.Sprintf("adamicClassIdentities.get(%s) === %d", e.value(expression.Value), expression.Class)
@@ -986,10 +987,15 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.Box:
 		return e.value(expression.Value)
 	case ir.MakeError:
-		if expression.Name != nil {
-			return "Object.assign(new Error(" + e.value(expression.Message) + "), {name: " + e.value(expression.Name) + "})"
+		constructor := expression.Constructor
+		if constructor == "" {
+			constructor = "Error"
 		}
-		return "new Error(" + e.value(expression.Message) + ")"
+		result := "new " + constructor + "(" + e.value(expression.Message) + ")"
+		if expression.Name != nil {
+			return "Object.assign(" + result + ", {name: " + e.value(expression.Name) + "})"
+		}
+		return result
 	case ir.WeakOf:
 		// A plain reference: Node keeps what it points to as long as anything does, which is what the
 		// source on Node does too (docs/memory.md says where native differs).

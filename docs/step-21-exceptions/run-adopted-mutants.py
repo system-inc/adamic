@@ -13,7 +13,7 @@ mutants = [
   'e.line("adamic_exception_pending = (adamic_thrown != NULL);")\n\te.end()',
   'TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$', 'stdout differs'),
  ('catch-assumes-error','internal/lower/exceptions.go',
-  'return ir.InstanceOf{Value: value, Class: -1}, true',
+  'return ir.InstanceOf{Value: value, Class: identity}, true',
   '_ = value; return ir.BooleanConstant{Value: true}, true',
   'TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic[.]a$', 'exit codes differ'),
  ('typeof-boolean-is-number','internal/native/runtime/union.c',

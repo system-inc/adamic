@@ -27,7 +27,8 @@ static void raise_error(const char *name, const char *code, const char *message)
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
-    error->class = &adamic_host_error_class;
+    error->class = strcmp(name, "TypeError") == 0 ? &adamic_host_type_error_class :
+        strcmp(name, "RangeError") == 0 ? &adamic_host_range_error_class : &adamic_host_error_class;
     adamic_thrown = &error->heap;
     adamic_exception_pending = true;
 }
