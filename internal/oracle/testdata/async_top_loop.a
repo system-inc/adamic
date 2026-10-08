@@ -1,0 +1,9 @@
+// A top-level loop whose body awaits: its counter and each round's catch binding are frame cells of
+// the module, the binding replaced each round. The counter was an undeclared C local before.
+for (let round = 0; round < 3; round++) {
+    try {
+        await Promise.reject<number>(new Error(`round ${round}`));
+    } catch (error) {
+        console.log(error instanceof Error ? error.message : "not");
+    }
+}

@@ -136,6 +136,9 @@ var fixtures = []struct {
 	{"internal/oracle/testdata/async_mutation.a", true, false},
 	{"internal/oracle/testdata/async_catch_return.a", true, false},
 	{"internal/oracle/testdata/async_fresh_holder.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_binding.a", true, false},
+	{"internal/oracle/testdata/async_top_catch_after_await.a", true, false},
+	{"internal/oracle/testdata/async_top_loop.a", true, false},
 
 	{"internal/oracle/testdata/graph_regions_weak_mixed.a", true, false},
 	{"internal/oracle/testdata/graph_regions_structural_literal.a", true, false},
