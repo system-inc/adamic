@@ -1,0 +1,10 @@
+adamic: native: clang failed: exit status 1
+/tmp/adamic-gate/adamic-build-3460718102/main.c:74:26: error: incompatible pointer types passing 'adamic_map *' (aka 'struct adamic_map *') to parameter of type 'adamic_object *' (aka 'struct adamic_object *') [-Werror,-Wincompatible-pointer-types]
+   74 |         adamic_function_0_probe(adamic_temporary_20);
+      |                                 ^~~~~~~~~~~~~~~~~~~
+/tmp/adamic-gate/adamic-build-3460718102/main.c:22:53: note: passing argument to parameter 'adamic_local_0_value' here
+   22 | static void adamic_function_0_probe(adamic_object * adamic_local_0_value) {
+      |                                                     ^
+1 error generated.
+
+exit status 1

@@ -1,0 +1,2 @@
+adamic: /workspace/adamic/stage3/interface-downcasts/lane5/later-ranked-callables/directory-condition/good.a:5:45: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+exit status 1
