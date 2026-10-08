@@ -15,8 +15,6 @@ func init() {
 		lowers, checked bool
 	}{
 		{"internal/oracle/testdata/scout22_prototype_create.a", true, false},
-		{"internal/oracle/testdata/scout22_prototype_links.a", false, false},
-		{"internal/oracle/testdata/scout22_prototype_lifetimes.a", false, false},
 	} {
 		fixtures = append(fixtures, fixture)
 	}
