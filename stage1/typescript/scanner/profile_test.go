@@ -7,6 +7,7 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
@@ -63,25 +64,19 @@ func TestProfileArtifacts(t *testing.T) {
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	runtime := filepath.Join(repository, "internal/native/runtime")
-	entries, err := os.ReadDir(runtime)
-	if err != nil {
-		t.Fatal(err)
-	}
+	paths := corpusfiles.Repository(t, repository, []string{"internal/native/runtime"}, []string{"*.c", "*.h"})
 	units := []string{filepath.Join(directory, "main.c")}
-	for _, entry := range entries {
-		if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
-			continue
-		}
-		data, err := os.ReadFile(filepath.Join(runtime, entry.Name()))
+	for _, sourcePath := range paths {
+		name := filepath.Base(sourcePath)
+		data, err := os.ReadFile(sourcePath)
 		if err != nil {
 			t.Fatal(err)
 		}
-		path := filepath.Join(directory, entry.Name())
+		path := filepath.Join(directory, name)
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			t.Fatal(err)
 		}
-		if strings.HasSuffix(entry.Name(), ".c") {
+		if strings.HasSuffix(name, ".c") {
 			units = append(units, path)
 		}
 	}
