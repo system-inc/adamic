@@ -1,0 +1,12 @@
+{
+  "name": "structure/next-require-api-parameter-name",
+  "kinds": [
+    "FunctionDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleStructureNextRequireApiParameterName",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestNextRequireApiParameterName"
+}
