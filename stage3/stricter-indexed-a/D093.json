@@ -1,0 +1,8 @@
+{
+  "ids": [
+    "D093"
+  ],
+  "read": "node.parameters[0]",
+  "receiver": "NodeArray object field, constant zero",
+  "source": "interface Parameter { readonly name: number; readonly dotDotDotToken: number; readonly questionToken: number; readonly initializer: number; readonly type: number; }\nconst absent = ABSENT;\nconst node: { readonly parameters: readonly Parameter[] } = { parameters: absent ? [] : [{ name: 7, dotDotDotToken: 7, questionToken: 7, initializer: 7, type: 7 }] };\nconst parameter = node.parameters[0];\nconst value: Parameter = parameter;\nconsole.log(value === undefined ? \"undefined\" : `${value.name}`);\n"
+}
