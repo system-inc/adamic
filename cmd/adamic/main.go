@@ -60,6 +60,10 @@ func run(arguments []string) int {
 		arguments = filtered
 	}
 	switch {
+	case len(arguments) == 3 && (arguments[0] == "c" || arguments[0] == "js") && arguments[2] == "--explain-checks":
+		return renderWithChecks(arguments[0], arguments[1])
+	case len(arguments) >= 5 && arguments[0] == "build" && arguments[2] == "--explain-checks" && arguments[3] == "-o":
+		return build(arguments[1], arguments[4], append([]string{"--explain-checks"}, arguments[5:]...))
 	case len(arguments) >= 2 && arguments[0] == "types":
 		program, code := check(arguments[1:])
 		if program == nil {

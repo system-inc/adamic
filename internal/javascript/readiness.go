@@ -35,7 +35,7 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
 const adamicLogicalKind = value => value === undefined ? 13 : value === null ? 12 : typeof value === "number" ? 1 : typeof value === "boolean" ? 2 : typeof value === "string" ? 3 : value instanceof AdamicClosure ? 8 : Array.isArray(value) ? 5 : value instanceof Map ? 6 : typeof value === "object" ? 4 : 0;
 const adamicNarrow = (value, wanted) => {
  const kind=adamicLogicalKind(value);
- if (wanted === 10 || kind === wanted || (wanted === 7 && (kind === 1 || kind === 13)) || (wanted === 9 && (kind === 2 || kind === 13))) return value;
+ if (wanted === 10 || kind === wanted || (wanted === 4 && kind === 5) || (wanted === 7 && (kind === 1 || kind === 13)) || (wanted === 9 && (kind === 2 || kind === 13))) return value;
  panic("a union value does not match its narrowed type");
 };
 const adamicViewNullish = (object, name, expression, expected, kinds, nullAllowed, undefinedAllowed, allowed, absent, optional) => {

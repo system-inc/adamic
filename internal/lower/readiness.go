@@ -9,6 +9,7 @@ import (
 	"github.com/system-inc/adamic/internal/load"
 	"reflect"
 	"slices"
+	"strings"
 )
 
 func sourceExpression(node *ast.Node) string {
@@ -19,7 +20,7 @@ func sourceExpression(node *ast.Node) string {
 // The two builtin literal assertions reserve or deinitialize a slot.
 // A shadowed identifier named undefined remains an ordinary assertion.
 func (l *lowering) uninitializedInitializer(node *ast.Node) bool {
-	if node == nil {
+	if node == nil || l.checkedAssertionSource(node) {
 		return false
 	}
 	node = ast.SkipParentheses(node)
@@ -480,7 +481,7 @@ func readinessHasCalls(node any) bool {
 
 // assertionInitializer recognizes syntax only; its operand is evaluated at the declaration.
 func assertionInitializer(node *ast.Node) bool {
-	return node != nil && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
+	return node != nil && (!strings.HasSuffix(ast.GetSourceFileOfNode(node).FileName().AsString(), ".ts") || strings.HasSuffix(ast.GetSourceFileOfNode(node).FileName().AsString(), ".a.ts")) && ast.SkipParentheses(node).Kind == ast.KindNonNullExpression
 }
 
 func assertionVarList(list *ast.Node) bool {

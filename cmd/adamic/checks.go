@@ -25,6 +25,7 @@ func renderWithChecks(backend, path string) int {
 		return 1
 	}
 	explainPredicateChecks(os.Stderr, program)
+	explainNonNullChecks(os.Stderr, program)
 	if backend == "js" {
 		fmt.Print(javascript.JavaScript(program))
 	} else {
@@ -52,4 +53,22 @@ func explainPredicateChecks(output io.Writer, program *ir.Program) {
 	}
 	counts := program.PredicateChecks
 	fmt.Fprintf(output, "adamic: predicate checks: proven %d checked %d unobservable %d\n", counts.Proven, counts.Checked, counts.Unobservable)
+}
+
+func explainNonNullChecks(output io.Writer, program *ir.Program) {
+	if len(program.NonNullChecks.Sites) != 0 {
+		sites := append([]ir.NonNullCheck(nil), program.NonNullChecks.Sites...)
+		sort.SliceStable(sites, func(i, j int) bool { return sites[i].Where < sites[j].Where })
+		for _, site := range sites {
+			status := "checked"
+			if site.Proven {
+				status = "proven"
+			}
+			fmt.Fprintf(output, "%s: non-null assertion %s: %s\n", relative(site.Where), site.Expression, status)
+		}
+		fmt.Fprintf(output, "adamic: non-null checks: proven %d checked %d\n", program.NonNullChecks.Proven, program.NonNullChecks.Checked)
+	}
+	if len(program.NonNullChecks.Sites) != 0 {
+		fmt.Fprintf(output, "adamic: checks: proven %d checked %d unobservable 0\n", program.NonNullChecks.Proven, program.NonNullChecks.Checked)
+	}
 }
