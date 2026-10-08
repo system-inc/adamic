@@ -13,6 +13,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"runtime"
+	"sort"
 	"strings"
 	"testing"
 	"time"
@@ -425,6 +426,7 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		t.Fatal(err)
 	}
 	count := min(runtime.NumCPU(), 8)
+	assignments := compilerShardAssignments(t, rows, count)
 	for _, side := range []struct {
 		name    string
 		command string
@@ -434,11 +436,11 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		{"emitted JavaScript", "node", []string{"--disable-warning=ExperimentalWarning", runner, module}},
 		{"sanitized native", binary, nil},
 	} {
-		launcher, timings := compilerShardLauncher(t, side.command, side.args)
+		launcher, timings := compilerShardLauncher(t, side.command, side.args, rows, assignments)
 		started := time.Now()
 		got, err := shards.Run(launcher, path, count, false)
 		if err != nil {
-			t.Fatalf("%s: %v", side.name, err)
+			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, err.Error()))
 		}
 		for index := 0; index < count; index++ {
 			elapsed, err := os.ReadFile(filepath.Join(timings, fmt.Sprintf("%d-%d.time", index, count)))
@@ -449,25 +451,80 @@ func TestCompilerAndStage1Agree(t *testing.T) {
 		}
 		t.Logf("%s: %d shards in %s", side.name, count, time.Since(started))
 		if diff := difference(got, want.output); diff != "" {
-			t.Fatalf("%s: %s", side.name, diff)
+			t.Fatalf("%s: %s", side.name, compilerCasePath(rows, diff))
 		}
 	}
 	t.Logf("Go, Node, emitted JavaScript, native identical: %d bytes", len(want.output))
 }
 
+// Largest-first scheduling is deterministic: equal sizes retain manifest order, and equal
+// loads choose the lowest shard index. Original case numbers survive the local manifests.
+func compilerShardAssignments(t *testing.T, rows []string, count int) [][]int {
+	t.Helper()
+	sizes := make([]int64, len(rows))
+	order := make([]int, len(rows))
+	for index, row := range rows {
+		info, err := os.Stat(row)
+		if err != nil {
+			t.Fatal(err)
+		}
+		sizes[index], order[index] = info.Size(), index
+	}
+	sort.SliceStable(order, func(i, j int) bool { return sizes[order[i]] > sizes[order[j]] })
+	assignments := make([][]int, count)
+	loads := make([]int64, count)
+	for _, index := range order {
+		shard := 0
+		for candidate := 1; candidate < count; candidate++ {
+			if loads[candidate] < loads[shard] {
+				shard = candidate
+			}
+		}
+		assignments[shard] = append(assignments[shard], index)
+		loads[shard] += sizes[index]
+	}
+	for shard := range assignments {
+		sort.Ints(assignments[shard])
+		t.Logf("compiler shard %d/%d: %d files, %d bytes", shard, count, len(assignments[shard]), loads[shard])
+		if len(assignments[shard]) == 1 {
+			t.Logf("compiler shard %d/%d only file: %s", shard, count, rows[assignments[shard][0]])
+		}
+	}
+	return assignments
+}
+
+// Both comparison failures and Merge's missing/extra-case failures retain the input path.
+func compilerCasePath(rows []string, message string) string {
+	var index int
+	if _, err := fmt.Sscanf(message, "case %d", &index); err == nil && index >= 0 && index < len(rows) {
+		return rows[index] + ": " + strings.TrimPrefix(message, fmt.Sprintf("case %d ", index))
+	}
+	return message
+}
+
 // shards.Run accepts an executable, so this adapter supplies Node's fixed arguments too. Each
 // backend still writes to a file, fails on stderr, and has execute's ten-minute limit. Durations belong
 // to individual shards, not the merged run, so a slow shard remains visible on a loaded gate seat.
-func compilerShardLauncher(t *testing.T, command string, arguments []string) (string, string) {
+func compilerShardLauncher(t *testing.T, command string, arguments []string, rows []string, assignments [][]int) (string, string) {
 	t.Helper()
 	directory := t.TempDir()
 	configuration, err := json.Marshal(struct {
-		Command   string
-		Arguments []string
-		Directory string
-	}{command, arguments, directory})
+		Command     string
+		Arguments   []string
+		Directory   string
+		Assignments [][]int
+	}{command, arguments, directory, assignments})
 	if err != nil {
 		t.Fatal(err)
+	}
+	for shard, indices := range assignments {
+		local := make([]string, len(indices))
+		for index, original := range indices {
+			local[index] = rows[original]
+		}
+		if err := os.WriteFile(filepath.Join(directory, fmt.Sprintf("%d.manifest", shard)), []byte(strings.Join(local, "\n")+"\n"), 0644); err != nil {
+			t.Fatal(err)
+		}
 	}
 	launcher := filepath.Join(directory, "shard.cjs")
 	source := `#!/usr/bin/env node
@@ -477,12 +534,15 @@ const { spawnSync } = require('node:child_process');
 const configuration = ` + string(configuration) + `;
 const args = process.argv.slice(2);
 const shard = args[args.indexOf('--shard') + 1].replace('/', '-');
+const shardIndex = Number(shard.split('-')[0]);
+const indices = configuration.Assignments[shardIndex];
+const backendArgs = ['--manifest', path.join(configuration.Directory, shardIndex + '.manifest')];
 const outputPath = path.join(configuration.Directory, shard + '.stdout');
 const errorPath = path.join(configuration.Directory, shard + '.stderr');
 const output = fs.openSync(outputPath, 'w');
 const errors = fs.openSync(errorPath, 'w');
 const started = process.hrtime.bigint();
-const result = spawnSync(configuration.Command, [...(configuration.Arguments || []), ...args], {
+const result = spawnSync(configuration.Command, [...(configuration.Arguments || []), ...backendArgs], {
   stdio: ['ignore', output, errors], timeout: 600000, killSignal: 'SIGKILL'
 });
 fs.writeFileSync(path.join(configuration.Directory, shard + '.time'),
@@ -495,7 +555,14 @@ if (result.error || result.status !== 0 || stderr.length !== 0) {
   process.stderr.write(stderr);
   process.exitCode = 1;
 } else {
-  process.stdout.write(fs.readFileSync(outputPath));
+  // Latin-1 preserves every output byte while only ASCII case headers are rewritten.
+  const local = fs.readFileSync(outputPath).toString('latin1');
+  const merged = local.replace(/^case ([0-9]+)$/gm, (_, number) => {
+    const original = indices[Number(number)];
+    if (original === undefined) throw new Error('unexpected local case ' + number);
+    return 'case ' + original;
+  });
+  process.stdout.write(Buffer.from(merged, 'latin1'));
 }
 `
 	if err := os.WriteFile(launcher, []byte(source), 0755); err != nil {
