@@ -282,3 +282,9 @@ outbound identity, and Git has no credential helper. This is separate from the
 automatic code-review rejection. The last merged integration tip remains
 ba59427. Push is retried after this commit; if authentication remains absent,
 the commit is exported as a format-patch for the user/integrator.
+
+Raw diagnostic logs and the unapplied review diff retain their exact whitespace.
+The lane-local .gitattributes excludes only logs/*.log and *.patch from whitespace
+lint; source and documentation remain checked. The initial staged diff check
+reported raw ASan whitespace and unified-diff context, so it was corrected with
+artifact attributes rather than changing evidence bytes.
