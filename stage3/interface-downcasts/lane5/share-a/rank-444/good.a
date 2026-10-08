@@ -1,0 +1,8 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface CaseBlock {readonly value:number;readonly kind:270;}
+interface SwitchStatement {readonly value:number;readonly kind:256;}
+interface Base {readonly createSwitchStatement:unknown;}
+interface Target {createSwitchStatement(expression: Expression, caseBlock: CaseBlock): SwitchStatement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createSwitchStatement({value:7},{value:7,kind:270}).value}`);}
+probe({createSwitchStatement:(expression: Expression, caseBlock: CaseBlock):SwitchStatement=>({value:7,kind:256})});

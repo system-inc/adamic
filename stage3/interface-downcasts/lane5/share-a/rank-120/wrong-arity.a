@@ -1,0 +1,45 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface AbstractKeyword {readonly value:number;}
+interface AccessorKeyword {readonly value:number;}
+interface AsyncKeyword {readonly value:number;}
+interface ConstKeyword {readonly value:number;}
+interface DeclareKeyword {readonly value:number;}
+interface DefaultKeyword {readonly value:number;}
+interface ExportKeyword {readonly value:number;}
+interface InKeyword {readonly value:number;}
+interface PrivateKeyword {readonly value:number;}
+interface ProtectedKeyword {readonly value:number;}
+interface PublicKeyword {readonly value:number;}
+interface OutKeyword {readonly value:number;}
+interface OverrideKeyword {readonly value:number;}
+interface ReadonlyKeyword {readonly value:number;}
+interface StaticKeyword {readonly value:number;}
+type Modifier =
+    | AbstractKeyword
+    | AccessorKeyword
+    | AsyncKeyword
+    | ConstKeyword
+    | DeclareKeyword
+    | DefaultKeyword
+    | ExportKeyword
+    | InKeyword
+    | PrivateKeyword
+    | ProtectedKeyword
+    | PublicKeyword
+    | OutKeyword
+    | OverrideKeyword
+    | ReadonlyKeyword
+    | StaticKeyword;
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface ParameterDeclaration {readonly value:number;readonly kind:170;}
+interface TypeNode {readonly value:number;}
+interface EqualsGreaterThanToken {readonly value:number;}
+interface Block {readonly value:number;readonly kind:242;}
+type FunctionBody = Block;
+interface Expression {readonly value:number;}
+type ConciseBody = FunctionBody | Expression;
+interface ArrowFunction {readonly value:number;readonly kind:220;}
+interface Base {readonly createArrowFunction:unknown;}
+interface Target {createArrowFunction(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken | undefined, body: ConciseBody): ArrowFunction;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createArrowFunction(undefined,undefined,[],undefined,undefined,{value:7}).value}`);}
+probe({createArrowFunction:():ArrowFunction=>({value:7,kind:220})});

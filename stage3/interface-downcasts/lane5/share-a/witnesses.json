@@ -3,6 +3,422 @@
   "basis": "original member declarations/read spans; reduced adjacent carriers and implementations; candidate counts",
   "members": [
     {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createLiteralTypeNode",
+      "declared_types": [
+        "(literal: LiteralExpression | PrefixUnaryExpression | BooleanLiteral | NullLiteral) => LiteralTypeNode"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 16,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 4539,
+        "column": 27
+      },
+      "rank": 102,
+      "certified": false,
+      "directory": "rank-102",
+      "expected": "(literal: LiteralExpression | NullLiteral | PrefixUnaryExpression | BooleanLiteral) => LiteralTypeNode",
+      "read": "factory.createLiteralTypeNode",
+      "declaration": "createLiteralTypeNode(literal: LiteralTypeNode[\"literal\"]): LiteralTypeNode;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "utf16Start": 223581,
+      "utf16End": 223610,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface NullLiteral {readonly value:number;readonly kind:106;}\ninterface TrueLiteral {readonly value:number;readonly kind:112;}\ninterface FalseLiteral {readonly value:number;readonly kind:97;}\ntype BooleanLiteral = TrueLiteral | FalseLiteral;\ninterface LiteralExpression {readonly value:number;}\ninterface PrefixUnaryExpression {readonly value:number;readonly kind:225;}\ninterface LiteralTypeNode {readonly literal: NullLiteral | BooleanLiteral | LiteralExpression | PrefixUnaryExpression;readonly value:number;readonly kind:202;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createArrowFunction",
+      "declared_types": [
+        "(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken | undefined, body: ConciseBody) => ArrowFunction"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 14,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 274,
+        "column": 13
+      },
+      "rank": 120,
+      "certified": false,
+      "directory": "rank-120",
+      "expected": "(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken | undefined, body: ConciseBody) => ArrowFunction",
+      "read": "factory.createArrowFunction",
+      "declaration": "createArrowFunction(modifiers: readonly Modifier[] | undefined, typeParameters: readonly TypeParameterDeclaration[] | undefined, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, equalsGreaterThanToken: EqualsGreaterThanToken | undefined, body: ConciseBody): ArrowFunction;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "utf16Start": 10608,
+      "utf16End": 10635,
+      "arity": 6,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface TypeParameterDeclaration {readonly value:number;readonly kind:169;}\ninterface ParameterDeclaration {readonly value:number;readonly kind:170;}\ninterface TypeNode {readonly value:number;}\ninterface EqualsGreaterThanToken {readonly value:number;}\ninterface Block {readonly value:number;readonly kind:242;}\ntype FunctionBody = Block;\ninterface Expression {readonly value:number;}\ntype ConciseBody = FunctionBody | Expression;\ninterface ArrowFunction {readonly value:number;readonly kind:220;}"
+    },
+    {
+      "receiver_type_id": 10401,
+      "type": "EmitResolver",
+      "field": "isDeclarationVisible",
+      "declared_types": [
+        "(node: Declaration | AnyImportSyntax) => boolean"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/transformers/declarations.ts",
+        "line": 731,
+        "column": 25
+      },
+      "rank": 276,
+      "certified": false,
+      "directory": "rank-276",
+      "expected": "(node: Declaration | AnyImportSyntax) => boolean",
+      "read": "resolver.isDeclarationVisible",
+      "declaration": "isDeclarationVisible(node: Declaration | AnyImportSyntax): boolean;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ad431e7fd5bfc1e0c60b4925ff6e4a6d1c56e038733a60d07794477063b1268e",
+      "utf16Start": 33131,
+      "utf16End": 33160,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "true\n",
+      "carriers": "interface Declaration {readonly value:number;}\ninterface ImportDeclaration {readonly value:number;readonly kind:273;}\ninterface ImportEqualsDeclaration {readonly value:number;readonly kind:272;}\ntype AnyImportSyntax = ImportDeclaration | ImportEqualsDeclaration;"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createGetAccessorDeclaration",
+      "declared_types": [
+        "(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined) => GetAccessorDeclaration"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 6,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 1628,
+        "column": 12
+      },
+      "rank": 291,
+      "certified": false,
+      "directory": "rank-291",
+      "expected": "(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined) => GetAccessorDeclaration",
+      "read": "factory.createGetAccessorDeclaration",
+      "declaration": "createGetAccessorDeclaration(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], type: TypeNode | undefined, body: Block | undefined): GetAccessorDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "utf16Start": 71252,
+      "utf16End": 71288,
+      "arity": 5,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface Decorator {readonly value:number;readonly kind:171;}\ntype ModifierLike = Modifier | Decorator;\ninterface Identifier {readonly value:number;readonly kind:80;}\ninterface StringLiteral {readonly value:number;readonly kind:11;}\ninterface NoSubstitutionTemplateLiteral {readonly value:number;readonly kind:15;}\ninterface NumericLiteral {readonly value:number;readonly kind:9;}\ninterface ComputedPropertyName {readonly value:number;readonly kind:168;}\ninterface PrivateIdentifier {readonly value:number;readonly kind:81;}\ninterface BigIntLiteral {readonly value:number;readonly kind:10;}\ntype PropertyName =\r\n    | Identifier\r\n    | StringLiteral\r\n    | NoSubstitutionTemplateLiteral\r\n    | NumericLiteral\r\n    | ComputedPropertyName\r\n    | PrivateIdentifier\r\n    | BigIntLiteral;\ninterface ParameterDeclaration {readonly value:number;readonly kind:170;}\ninterface TypeNode {readonly value:number;}\ninterface Block {readonly value:number;readonly kind:242;}\ninterface GetAccessorDeclaration {readonly value:number;readonly kind:178;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createExternalModuleExport",
+      "declared_types": [
+        "(exportName: Identifier) => ExportDeclaration"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 1019,
+        "column": 21
+      },
+      "rank": 435,
+      "certified": false,
+      "directory": "rank-435",
+      "expected": "(exportName: Identifier) => ExportDeclaration",
+      "read": "factory.createExternalModuleExport",
+      "declaration": "createExternalModuleExport(exportName: Identifier): ExportDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "utf16Start": 40294,
+      "utf16End": 40328,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Identifier {readonly value:number;readonly kind:80;}\ninterface ExportDeclaration {readonly value:number;readonly kind:279;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateDoStatement",
+      "declared_types": [
+        "(node: DoStatement, statement: Statement, expression: Expression) => DoStatement"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1307,
+        "column": 16
+      },
+      "rank": 450,
+      "certified": false,
+      "directory": "rank-450",
+      "expected": "(node: DoStatement, statement: Statement, expression: Expression) => DoStatement",
+      "read": "context.factory.updateDoStatement",
+      "declaration": "updateDoStatement(node: DoStatement, statement: Statement, expression: Expression): DoStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 63379,
+      "utf16End": 63412,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface DoStatement {readonly value:number;readonly kind:247;}\ninterface Statement {readonly value:number;}\ninterface Expression {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateObjectLiteralExpression",
+      "declared_types": [
+        "(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]) => ObjectLiteralExpression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 1015,
+        "column": 16
+      },
+      "rank": 453,
+      "certified": false,
+      "directory": "rank-453",
+      "expected": "(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]) => ObjectLiteralExpression",
+      "read": "context.factory.updateObjectLiteralExpression",
+      "declaration": "updateObjectLiteralExpression(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]): ObjectLiteralExpression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 47863,
+      "utf16End": 47908,
+      "arity": 2,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface ObjectLiteralExpression {readonly value:number;readonly kind:211;}\ninterface PropertyAssignment {readonly value:number;readonly kind:304;}\ninterface ShorthandPropertyAssignment {readonly value:number;readonly kind:305;}\ninterface SpreadAssignment {readonly value:number;readonly kind:306;}\ninterface MethodDeclaration {readonly value:number;readonly kind:175;}\ninterface GetAccessorDeclaration {readonly value:number;readonly kind:178;}\ninterface SetAccessorDeclaration {readonly value:number;readonly kind:179;}\ntype AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;\ntype ObjectLiteralElementLike =\r\n    | PropertyAssignment\r\n    | ShorthandPropertyAssignment\r\n    | SpreadAssignment\r\n    | MethodDeclaration\r\n    | AccessorDeclaration;"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateTypeParameterDeclaration",
+      "declared_types": [
+        "(node: TypeParameterDeclaration, modifiers: readonly Modifier[] | undefined, name: Identifier, constraint: TypeNode | undefined, defaultType: TypeNode | undefined) => TypeParameterDeclaration"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/visitorPublic.ts",
+        "line": 641,
+        "column": 16
+      },
+      "rank": 456,
+      "certified": false,
+      "directory": "rank-456",
+      "expected": "(node: TypeParameterDeclaration, modifiers: readonly Modifier[] | undefined, name: Identifier, constraint: TypeNode | undefined, defaultType: TypeNode | undefined) => TypeParameterDeclaration",
+      "read": "context.factory.updateTypeParameterDeclaration",
+      "declaration": "updateTypeParameterDeclaration(node: TypeParameterDeclaration, modifiers: readonly Modifier[] | undefined, name: Identifier, constraint: TypeNode | undefined, defaultType: TypeNode | undefined): TypeParameterDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "51ed57171507f1e3cb0a268fca6eb42eaa3882ccb184b8e8cb384a08aa38045e",
+      "utf16Start": 28262,
+      "utf16End": 28308,
+      "arity": 5,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}\ninterface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface Identifier {readonly value:number;readonly kind:80;}\ninterface TypeNode {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11725,
+      "type": "ParenthesizerRules",
+      "field": "parenthesizeBranchOfConditionalExpression",
+      "declared_types": [
+        "(branch: Expression) => Expression"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/factory/nodeFactory.ts",
+        "line": 3477,
+        "column": 25
+      },
+      "rank": 465,
+      "certified": false,
+      "directory": "rank-465",
+      "expected": "(branch: Expression) => Expression",
+      "read": "parenthesizerRules().parenthesizeBranchOfConditionalExpression",
+      "declaration": "parenthesizeBranchOfConditionalExpression(branch: Expression): Expression;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "45b87af49f05d3b75f17537c50ffaecc610fe1496318a36cf51fcf25a0c1a48c",
+      "utf16Start": 147465,
+      "utf16End": 147527,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Expression {readonly value:number;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createSetAccessorDeclaration",
+      "declared_types": [
+        "(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined) => SetAccessorDeclaration"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/factory/utilities.ts",
+        "line": 1650,
+        "column": 12
+      },
+      "rank": 357,
+      "certified": false,
+      "directory": "rank-357",
+      "expected": "(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined) => SetAccessorDeclaration",
+      "read": "factory.createSetAccessorDeclaration",
+      "declaration": "createSetAccessorDeclaration(modifiers: readonly ModifierLike[] | undefined, name: string | PropertyName, parameters: readonly ParameterDeclaration[], body: Block | undefined): SetAccessorDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7b2e75c131e73ee2b98d097fa80786b6a03965d199bd2fddff4e7c953f093a31",
+      "utf16Start": 72069,
+      "utf16End": 72105,
+      "arity": 4,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface Decorator {readonly value:number;readonly kind:171;}\ntype ModifierLike = Modifier | Decorator;\ninterface Identifier {readonly value:number;readonly kind:80;}\ninterface StringLiteral {readonly value:number;readonly kind:11;}\ninterface NoSubstitutionTemplateLiteral {readonly value:number;readonly kind:15;}\ninterface NumericLiteral {readonly value:number;readonly kind:9;}\ninterface ComputedPropertyName {readonly value:number;readonly kind:168;}\ninterface PrivateIdentifier {readonly value:number;readonly kind:81;}\ninterface BigIntLiteral {readonly value:number;readonly kind:10;}\ntype PropertyName =\r\n    | Identifier\r\n    | StringLiteral\r\n    | NoSubstitutionTemplateLiteral\r\n    | NumericLiteral\r\n    | ComputedPropertyName\r\n    | PrivateIdentifier\r\n    | BigIntLiteral;\ninterface ParameterDeclaration {readonly value:number;readonly kind:170;}\ninterface Block {readonly value:number;readonly kind:242;}\ninterface SetAccessorDeclaration {readonly value:number;readonly kind:179;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "updateModuleDeclaration",
+      "declared_types": [
+        "(node: ModuleDeclaration, modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined) => ModuleDeclaration"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 5,
+      "witness": {
+        "file": "src/compiler/checker.ts",
+        "line": 9434,
+        "column": 30
+      },
+      "rank": 363,
+      "certified": false,
+      "directory": "rank-363",
+      "expected": "(node: ModuleDeclaration, modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined) => ModuleDeclaration",
+      "read": "factory.updateModuleDeclaration",
+      "declaration": "updateModuleDeclaration(node: ModuleDeclaration, modifiers: readonly ModifierLike[] | undefined, name: ModuleName, body: ModuleBody | undefined): ModuleDeclaration;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "ffe288edd0eae68f65e4b81b5bbfd4fe5fbed62b55246dc140813078555050fb",
+      "utf16Start": 531064,
+      "utf16End": 531095,
+      "arity": 4,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface ModuleDeclaration {readonly value:number;readonly kind:268;}\ninterface AbstractKeyword {readonly value:number;}\ninterface AccessorKeyword {readonly value:number;}\ninterface AsyncKeyword {readonly value:number;}\ninterface ConstKeyword {readonly value:number;}\ninterface DeclareKeyword {readonly value:number;}\ninterface DefaultKeyword {readonly value:number;}\ninterface ExportKeyword {readonly value:number;}\ninterface InKeyword {readonly value:number;}\ninterface PrivateKeyword {readonly value:number;}\ninterface ProtectedKeyword {readonly value:number;}\ninterface PublicKeyword {readonly value:number;}\ninterface OutKeyword {readonly value:number;}\ninterface OverrideKeyword {readonly value:number;}\ninterface ReadonlyKeyword {readonly value:number;}\ninterface StaticKeyword {readonly value:number;}\ntype Modifier =\r\n    | AbstractKeyword\r\n    | AccessorKeyword\r\n    | AsyncKeyword\r\n    | ConstKeyword\r\n    | DeclareKeyword\r\n    | DefaultKeyword\r\n    | ExportKeyword\r\n    | InKeyword\r\n    | PrivateKeyword\r\n    | ProtectedKeyword\r\n    | PublicKeyword\r\n    | OutKeyword\r\n    | OverrideKeyword\r\n    | ReadonlyKeyword\r\n    | StaticKeyword;\ninterface Decorator {readonly value:number;readonly kind:171;}\ntype ModifierLike = Modifier | Decorator;\ninterface Identifier {readonly value:number;readonly kind:80;}\ninterface StringLiteral {readonly value:number;readonly kind:11;}\ntype ModuleName =\r\n    | Identifier\r\n    | StringLiteral;\ninterface ModuleBlock {readonly value:number;readonly kind:269;}\ninterface NamespaceDeclaration {readonly value:number;}\ntype NamespaceBody =\r\n    | ModuleBlock\r\n    | NamespaceDeclaration;\ninterface JSDocNamespaceDeclaration {readonly value:number;}\ntype JSDocNamespaceBody =\r\n    | Identifier\r\n    | JSDocNamespaceDeclaration;\ntype ModuleBody =\r\n    | NamespaceBody\r\n    | JSDocNamespaceBody;"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createSwitchStatement",
+      "declared_types": [
+        "(expression: Expression, caseBlock: CaseBlock) => SwitchStatement"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 7050,
+        "column": 37
+      },
+      "rank": 444,
+      "certified": false,
+      "directory": "rank-444",
+      "expected": "(expression: Expression, caseBlock: CaseBlock) => SwitchStatement",
+      "read": "factory.createSwitchStatement",
+      "declaration": "createSwitchStatement(expression: Expression, caseBlock: CaseBlock): SwitchStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "utf16Start": 349211,
+      "utf16End": 349240,
+      "arity": 2,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Expression {readonly value:number;}\ninterface CaseBlock {readonly value:number;readonly kind:270;}\ninterface SwitchStatement {readonly value:number;readonly kind:256;}"
+    },
+    {
+      "receiver_type_id": 11739,
+      "type": "NodeFactory",
+      "field": "createBreakStatement",
+      "declared_types": [
+        "(label?: string | Identifier | undefined) => BreakStatement"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 4,
+      "witness": {
+        "file": "src/compiler/parser.ts",
+        "line": 6986,
+        "column": 15
+      },
+      "rank": 429,
+      "certified": false,
+      "directory": "rank-429",
+      "expected": "(label?: string | Identifier | undefined) => BreakStatement",
+      "read": "factory.createBreakStatement",
+      "declaration": "createBreakStatement(label?: string | Identifier): BreakStatement;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "7d63eca71e53e31f7c26b3804eefe61a8809aa6989ce0a7ce1377919e81b963f",
+      "utf16Start": 346105,
+      "utf16End": 346133,
+      "arity": 1,
+      "mutantArity": 0,
+      "stdout": "7\n",
+      "carriers": "interface Identifier {readonly value:number;readonly kind:80;}\ninterface BreakStatement {readonly value:number;readonly kind:253;}"
+    },
+    {
       "receiver_type_id": 9941,
       "type": "ModuleSpecifierResolutionHost",
       "field": "fileExists",

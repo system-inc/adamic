@@ -1,0 +1,12 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface NullLiteral {readonly value:number;readonly kind:106;}
+interface TrueLiteral {readonly value:number;readonly kind:112;}
+interface FalseLiteral {readonly value:number;readonly kind:97;}
+type BooleanLiteral = TrueLiteral | FalseLiteral;
+interface LiteralExpression {readonly value:number;}
+interface PrefixUnaryExpression {readonly value:number;readonly kind:225;}
+interface LiteralTypeNode {readonly literal: NullLiteral | BooleanLiteral | LiteralExpression | PrefixUnaryExpression;readonly value:number;readonly kind:202;}
+interface Base {readonly createLiteralTypeNode:unknown;}
+interface Target {createLiteralTypeNode(literal: LiteralTypeNode["literal"]): LiteralTypeNode;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createLiteralTypeNode({value:7}).value}`);}
+probe({createLiteralTypeNode:():LiteralTypeNode=>({value:7,kind:202,literal:{value:7}})});

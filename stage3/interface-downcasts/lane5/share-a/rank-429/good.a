@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface BreakStatement {readonly value:number;readonly kind:253;}
+interface Base {readonly createBreakStatement:unknown;}
+interface Target {createBreakStatement(label?: string | Identifier): BreakStatement;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createBreakStatement("ok").value}`);}
+probe({createBreakStatement:(label?: string | Identifier):BreakStatement=>({value:7,kind:253})});

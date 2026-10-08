@@ -222,6 +222,42 @@
       "utf16Start": 253844,
       "utf16End": 253873,
       "stdout": "7\n"
+    },
+    {
+      "receiver_type_id": 10108,
+      "type": "TransformationContext",
+      "field": "onEmitNode",
+      "declared_types": [
+        "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void"
+      ],
+      "families": [
+        "callable contracts"
+      ],
+      "reads": 11,
+      "witness": {
+        "file": "src/compiler/transformers/ts.ts",
+        "line": 253,
+        "column": 32
+      },
+      "rank": 165,
+      "certified": false,
+      "directory": "gap-165",
+      "expected": "(hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void",
+      "read": "context.onEmitNode",
+      "declaration": "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "fileSha256": "f7a8c9a88c3db3ef48c01b4764f9518c6cf40d37d4d4f9e8192107981973caf2",
+      "utf16Start": 6663,
+      "utf16End": 6681,
+      "arity": 3,
+      "mutantArity": 0,
+      "stdout": "done\n",
+      "carriers": "type EmitHint=number;\ninterface Node {readonly value:number;}",
+      "declarations": [
+        "onEmitNode: (hint: EmitHint, node: Node, emitCallback: (hint: EmitHint, node: Node) => void) => void;"
+      ],
+      "sourceSha": "050880ce59e30b356b686bd3144efe24f875ebc8"
     }
   ]
 }

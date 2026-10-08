@@ -2,29 +2,29 @@
   "basis": "original ranked ledger, r mod 3 == 0; candidate reads, not exact reachability",
   "baseline": "926a1d39d1a0d6b4cf49bbccf521a4cc02d10f56",
   "summary": {
-    "certified": {
-      "pairs": 17,
-      "candidateReads": 78
+    "needs-code": {
+      "pairs": 8,
+      "candidateReads": 498
+    },
+    "pending": {
+      "pairs": 762,
+      "candidateReads": 1812
     },
     "excluded-binding": {
       "pairs": 2,
       "candidateReads": 69
     },
-    "excluded-optional-host": {
-      "pairs": 61,
-      "candidateReads": 114
-    },
     "excluded-set-intrinsic": {
       "pairs": 34,
       "candidateReads": 91
     },
-    "needs-code": {
-      "pairs": 7,
-      "candidateReads": 487
+    "certified": {
+      "pairs": 30,
+      "candidateReads": 158
     },
-    "pending": {
-      "pairs": 776,
-      "candidateReads": 1903
+    "excluded-optional-host": {
+      "pairs": 61,
+      "candidateReads": 114
     }
   },
   "pairs": [
@@ -387,7 +387,7 @@
       },
       "rank": 102,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 8811,
@@ -487,7 +487,7 @@
       },
       "rank": 120,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 10136,
@@ -647,7 +647,7 @@
       },
       "rank": 165,
       "certified": false,
-      "status": "pending"
+      "status": "needs-code"
     },
     {
       "receiver_type_id": 1277,
@@ -1132,7 +1132,7 @@
       },
       "rank": 276,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 62087,
@@ -1212,7 +1212,7 @@
       },
       "rank": 291,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -1572,7 +1572,7 @@
       },
       "rank": 357,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -1612,7 +1612,7 @@
       },
       "rank": 363,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2054,7 +2054,7 @@
       },
       "rank": 429,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2094,7 +2094,7 @@
       },
       "rank": 435,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2154,7 +2154,7 @@
       },
       "rank": 444,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2194,7 +2194,7 @@
       },
       "rank": 450,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2214,7 +2214,7 @@
       },
       "rank": 453,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 11739,
@@ -2234,7 +2234,7 @@
       },
       "rank": 456,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 6948,
@@ -2294,7 +2294,7 @@
       },
       "rank": 465,
       "certified": false,
-      "status": "pending"
+      "status": "certified"
     },
     {
       "receiver_type_id": 15322,

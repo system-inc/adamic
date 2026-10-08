@@ -1,0 +1,9 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Declaration {readonly value:number;}
+interface ImportDeclaration {readonly value:number;readonly kind:273;}
+interface ImportEqualsDeclaration {readonly value:number;readonly kind:272;}
+type AnyImportSyntax = ImportDeclaration | ImportEqualsDeclaration;
+interface Base {readonly isDeclarationVisible:unknown;}
+interface Target {isDeclarationVisible(node: Declaration | AnyImportSyntax): boolean;}
+function probe(value:Base):void {const resolver=value as Target;console.log(`${resolver.isDeclarationVisible({value:7})}`);}
+probe({isDeclarationVisible:():boolean=>(true)});

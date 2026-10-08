@@ -1,0 +1,6 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Expression {readonly value:number;}
+interface Base {readonly parenthesizeBranchOfConditionalExpression:unknown;}
+interface Target {parenthesizeBranchOfConditionalExpression(branch: Expression): Expression;}
+function probe(value:Base):void {const parenthesizerRules=()=>value as Target;console.log(`${parenthesizerRules().parenthesizeBranchOfConditionalExpression({value:7}).value}`);}
+probe({parenthesizeBranchOfConditionalExpression:(branch: Expression):Expression=>({value:7})});

@@ -1,0 +1,39 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface TypeParameterDeclaration {readonly value:number;readonly kind:169;}
+interface AbstractKeyword {readonly value:number;}
+interface AccessorKeyword {readonly value:number;}
+interface AsyncKeyword {readonly value:number;}
+interface ConstKeyword {readonly value:number;}
+interface DeclareKeyword {readonly value:number;}
+interface DefaultKeyword {readonly value:number;}
+interface ExportKeyword {readonly value:number;}
+interface InKeyword {readonly value:number;}
+interface PrivateKeyword {readonly value:number;}
+interface ProtectedKeyword {readonly value:number;}
+interface PublicKeyword {readonly value:number;}
+interface OutKeyword {readonly value:number;}
+interface OverrideKeyword {readonly value:number;}
+interface ReadonlyKeyword {readonly value:number;}
+interface StaticKeyword {readonly value:number;}
+type Modifier =
+    | AbstractKeyword
+    | AccessorKeyword
+    | AsyncKeyword
+    | ConstKeyword
+    | DeclareKeyword
+    | DefaultKeyword
+    | ExportKeyword
+    | InKeyword
+    | PrivateKeyword
+    | ProtectedKeyword
+    | PublicKeyword
+    | OutKeyword
+    | OverrideKeyword
+    | ReadonlyKeyword
+    | StaticKeyword;
+interface Identifier {readonly value:number;readonly kind:80;}
+interface TypeNode {readonly value:number;}
+interface Base {readonly updateTypeParameterDeclaration:unknown;}
+interface Target {updateTypeParameterDeclaration(node: TypeParameterDeclaration, modifiers: readonly Modifier[] | undefined, name: Identifier, constraint: TypeNode | undefined, defaultType: TypeNode | undefined): TypeParameterDeclaration;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateTypeParameterDeclaration({value:7,kind:169},undefined,{value:7,kind:80},undefined,undefined).value}`);}
+probe({updateTypeParameterDeclaration:(node: TypeParameterDeclaration, modifiers: readonly Modifier[] | undefined, name: Identifier, constraint: TypeNode | undefined, defaultType: TypeNode | undefined):TypeParameterDeclaration=>({value:7,kind:169})});

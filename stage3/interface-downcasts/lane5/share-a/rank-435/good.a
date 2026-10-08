@@ -1,0 +1,7 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface Identifier {readonly value:number;readonly kind:80;}
+interface ExportDeclaration {readonly value:number;readonly kind:279;}
+interface Base {readonly createExternalModuleExport:unknown;}
+interface Target {createExternalModuleExport(exportName: Identifier): ExportDeclaration;}
+function probe(value:Base):void {const factory=value as Target;console.log(`${factory.createExternalModuleExport({value:7,kind:80}).value}`);}
+probe({createExternalModuleExport:(exportName: Identifier):ExportDeclaration=>({value:7,kind:279})});

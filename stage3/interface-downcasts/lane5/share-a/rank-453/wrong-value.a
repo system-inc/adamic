@@ -1,0 +1,19 @@
+// Original declaration and member read; adjacent carriers and producer bodies reduced.
+interface ObjectLiteralExpression {readonly value:number;readonly kind:211;}
+interface PropertyAssignment {readonly value:number;readonly kind:304;}
+interface ShorthandPropertyAssignment {readonly value:number;readonly kind:305;}
+interface SpreadAssignment {readonly value:number;readonly kind:306;}
+interface MethodDeclaration {readonly value:number;readonly kind:175;}
+interface GetAccessorDeclaration {readonly value:number;readonly kind:178;}
+interface SetAccessorDeclaration {readonly value:number;readonly kind:179;}
+type AccessorDeclaration = GetAccessorDeclaration | SetAccessorDeclaration;
+type ObjectLiteralElementLike =
+    | PropertyAssignment
+    | ShorthandPropertyAssignment
+    | SpreadAssignment
+    | MethodDeclaration
+    | AccessorDeclaration;
+interface Base {readonly updateObjectLiteralExpression:unknown;}
+interface Target {updateObjectLiteralExpression(node: ObjectLiteralExpression, properties: readonly ObjectLiteralElementLike[]): ObjectLiteralExpression;}
+function probe(value:Base):void {const context={factory:value as Target};console.log(`${context.factory.updateObjectLiteralExpression({value:7,kind:211},[]).value}`);}
+probe({updateObjectLiteralExpression:7});
