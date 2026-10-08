@@ -1,0 +1,6 @@
+#!/usr/bin/env​node
+const emoji = '😀'; // skip 　
+const s = '// text 　';
+const t = `skip　 ${　s} skip　`;
+const r = /　/;
+const j = <div>　</div>;

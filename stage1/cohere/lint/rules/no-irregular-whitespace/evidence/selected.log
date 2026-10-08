@@ -1,0 +1,57 @@
+=== RUN   TestMutants
+=== RUN   TestMutants/split_irregular_runs
+=== PAUSE TestMutants/split_irregular_runs
+=== CONT  TestMutants/split_irregular_runs
+    lint_test.go:832: checker compilation phases: load=606.364423ms lower=4.240495516s C=765.843797ms JavaScript=27.028856ms
+    lint_test.go:832: checker native mutant build: 1m21.013962183s
+    lint_test.go:855: split irregular runs caught on Node: case 85 line 4394: port "range 3 4 noIrregularWhitespace \t\t\t3 4", Go "range 3 51 noIrregularWhitespace \t\t\t3 51"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:4
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 3 51 noIrregularWhitespace 			3 51
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:52
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 51 54 noIrregularWhitespace 			51 54
+    lint_test.go:855: split irregular runs caught on emitted JavaScript: case 85 line 4394: port "range 3 4 noIrregularWhitespace \t\t\t3 4", Go "range 3 51 noIrregularWhitespace \t\t\t3 51"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:4
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 3 51 noIrregularWhitespace 			3 51
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:52
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 51 54 noIrregularWhitespace 			51 54
+    lint_test.go:855: split irregular runs caught on native: case 85 line 4394: port "range 3 4 noIrregularWhitespace \t\t\t3 4", Go "range 3 51 noIrregularWhitespace \t\t\t3 51"
+        Go context:
+        fixed	interface Bare { n: number }; interface WrongType { value: number }; type Alias = string; const Choice={Yes:'Yes'} as const; function guard(x: unknown): x is string { return true; } console.log('one'); console['warn']('two'); let count=0; count++; for(let i=0;i<3;i++){count++;} interface CallableType { method: (value: string) => number; readonly property: (value: string) => number; } enum Direction { Left=1, Right=Left|2, Other=compute() } let boxed: number; class Thing implements Boolean {} if(!flag){doOne();}else{doTwo();} const chosen=!flag?left:right; const assigning=()=>left=right; const wrapped=()=>(left=right); function returning(){return left=right;}\u000a
+        case 85
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:4
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 3 51 noIrregularWhitespace 			3 51
+        /tmp/adamic-gate/TestMutantssplit_irregular_runs1906307212/016/no-irregular-whitespace-0.ts:1:52
+          no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+        
+        range 51 54 noIrregularWhitespace 			51 54
+--- PASS: TestMutants (5.14s)
+    --- PASS: TestMutants/split_irregular_runs (93.12s)
+=== RUN   TestOwnedWitnesses
+    registration_test.go:54: checker compilation phases: load=172.633242ms lower=5.580123835s C=799.479696ms JavaScript=39.140352ms
+    registration_test.go:54: checker native build: 8.901472118s
+    registration_test.go:54: typed runtime time: Go program and lint=99.737544ms native program, lint and recording=106.405411ms
+    registration_test.go:54: typed runtime time: native=106.405411ms
+    registration_test.go:54: typed runtime time: Node=716.335579ms
+    registration_test.go:54: typed runtime time: emitted JavaScript=135.062878ms
+    registration_test.go:54: live Go, native, Node and emitted JavaScript replay identical: 2001 bytes
+    registration_test.go:70: checker native build: 13.078381ms
+    registration_test.go:70: Go, Node, emitted JavaScript, native identical: 338425 bytes
+--- PASS: TestOwnedWitnesses (22.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	120.403s

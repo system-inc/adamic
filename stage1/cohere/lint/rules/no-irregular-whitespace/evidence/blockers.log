@@ -1,0 +1,9 @@
+Node 'const \xe9\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-4.tsx
+emitted JavaScript 'const \xe9\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-4.tsx
+ASan/UBSan native 'const \xe9\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-4.tsx
+Node 'const \u4e2d\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-6.tsx
+emitted JavaScript 'const \u4e2d\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-6.tsx
+ASan/UBSan native 'const \u4e2d\u3000x = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-6.tsx
+Node 'var any \u180e = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-16.tsx
+emitted JavaScript 'var any \u180e = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-16.tsx
+ASan/UBSan native 'var any \u180e = 1;' exit=70: adamic: panic: parser slice expected semicolon at 8 in /tmp/no-irregular-whitespace-capture/input-16.tsx

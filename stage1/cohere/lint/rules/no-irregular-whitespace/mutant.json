@@ -1,0 +1,5 @@
+{
+  "name": "split irregular runs",
+  "from": "else if(start < 0) {",
+  "to": "else if(start >= 0) {\n                this.report(start, position);\n                start = position;\n            }\n            else if(start < 0) {"
+}

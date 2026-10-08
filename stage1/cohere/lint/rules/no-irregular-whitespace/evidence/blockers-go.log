@@ -1,0 +1,20 @@
+case 0
+/tmp/no-irregular-whitespace-capture/input-4.tsx:1:9
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 8 11 noIrregularWhitespace 			8 11
+recovery findings only
+
+case 0
+/tmp/no-irregular-whitespace-capture/input-6.tsx:1:10
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 9 12 noIrregularWhitespace 			9 12
+recovery findings only
+
+case 0
+/tmp/no-irregular-whitespace-capture/input-16.tsx:1:9
+  no-irregular-whitespace  This is an irregular whitespace character, not a space or a tab. It is invisible in every editor and in every diff, so the code reads as if it holds an ordinary space while the parser sees something else. That is how a no-break space between two tokens turns a correct-looking line into a syntax error nobody can see, and how two identical-looking names become different bindings. Replace it with an ordinary space, or write it as an escape if the character is genuinely wanted.
+
+range 8 11 noIrregularWhitespace 			8 11
+recovery findings only

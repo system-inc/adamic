@@ -1,0 +1,31 @@
+{
+  "counts_including_direct_subtests": {
+    "PASS": 108,
+    "SKIP": 1,
+    "FAIL": 6
+  },
+  "top_level_counts": {
+    "PASS": 28,
+    "SKIP": 1,
+    "FAIL": 6
+  },
+  "failed_tests": [
+    "TestJsxLintReleaseAndThroughput",
+    "TestJsxLintTrees",
+    "TestRulesAgree",
+    "TestNodeTableIsLinkOnly",
+    "TestShardsAgree",
+    "TestProfileSnapshotsAgree"
+  ],
+  "skipped_tests": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "wall_seconds": 2254.5721057779997,
+  "nproc": 5,
+  "load_before": "0.67 1.07 1.60 2/142 62655",
+  "load_after": "2.60 2.65 2.71 1/145 125784",
+  "typescript_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "typescript_clean": true,
+  "wasi_sysroot": "/workspace/adamic-tools/wasi-sdk/share/wasi-sysroot",
+  "profile_directory_for_both_variables": "/tmp/no-irregular-whitespace-profile"
+}
