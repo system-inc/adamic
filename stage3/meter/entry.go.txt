@@ -13,7 +13,7 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 )
 
-const entryMeasurement = "measured on a checker-clean entry-root program"
+var entryMeasurement = "measured on a checker-clean entry-root program"
 
 // The old measurement API labels its records checker-rejected unconditionally.
 // Relabel only this separately checked, diagnostic-free observation stream.
@@ -68,12 +68,15 @@ func main() {
 	if diagnostics == nil {
 		diagnostics = []string{}
 	}
-	if len(diagnostics) != 0 {
+	if len(diagnostics) != 0 && os.Getenv("LATENT_FULL") != "1" {
 		if err := encoder.Encode(map[string]any{"roots": paths, "status": "blocked", "checker_rejected": true,
 			"diagnostics": diagnostics}); err != nil {
 			panic(err)
 		}
 		return
+	}
+	if len(diagnostics) > 0 {
+		entryMeasurement = "measured on a checker-rejected entry-root program"
 	}
 	program.LatentEntryReach()
 	sources := []string{}
@@ -81,8 +84,12 @@ func main() {
 		sources = append(sources, program.FileName(source))
 	}
 	sort.Strings(sources)
-	if err := encoder.Encode(map[string]any{"roots": paths, "status": "measurement", "checker_rejected": false,
-		"measurement": entryMeasurement, "diagnostics": diagnostics, "sources": sources}); err != nil {
+	diagnosticSites := program.LatentDiagnosticSites()
+	for i := range diagnosticSites {
+		diagnosticSites[i].Measurement = entryMeasurement
+	}
+	if err := encoder.Encode(map[string]any{"roots": paths, "status": "measurement", "latent_mode": map[bool]string{true: "full", false: "first-error"}[os.Getenv("LATENT_FULL") == "1"], "checker_rejected": len(diagnostics) > 0,
+		"measurement": entryMeasurement, "diagnostics": diagnostics, "sources": sources, "diagnostic_sites": diagnosticSites}); err != nil {
 		panic(err)
 	}
 	lower.Latent(context.Background(), program, func(record lower.LatentFile) {
