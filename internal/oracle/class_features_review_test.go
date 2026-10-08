@@ -16,7 +16,7 @@ func TestClassFeaturesReviewInitializerRefusals(t *testing.T) {
 		{"init_super", "caught TypeError\n", "Base.describe -> Derived.name -> Derived.label"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/classfeat_"+probe.name+".a"))
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/classfeat_"+probe.name+".a"))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -34,7 +34,7 @@ func TestClassFeaturesReviewInitializerRefusals(t *testing.T) {
 }
 
 func TestClassFeaturesReviewStaticRefusal(t *testing.T) {
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/classfeat_static_virtual.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/class_wrong_output_refused/classfeat_static_virtual.a"))
 	if err != nil {
 		t.Fatal(err)
 	}
