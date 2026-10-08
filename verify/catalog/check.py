@@ -213,7 +213,9 @@ def main(commit, entry_number=None, jobs=None):
     versions = [subprocess.check_output(command, text=True).splitlines()[0]
                 for command in (["go", "version"], ["clang", "--version"], ["node", "--version"])]
     processors = subprocess.check_output(["nproc"], text=True).strip()
-    cpu_max = Path("/sys/fs/cgroup/cpu.max").read_text().strip()
+    # Not every machine mounts cgroup v2; cloud/setup.sh reports the same absence as unknown.
+    cpu_max_path = Path("/sys/fs/cgroup/cpu.max")
+    cpu_max = cpu_max_path.read_text().strip() if cpu_max_path.exists() else "unknown"
     print(f"build flags: commit={resolved}; nproc={processors}; cpu.max={cpu_max}; "
           + "; ".join(versions) + "; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; "
           "native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; "

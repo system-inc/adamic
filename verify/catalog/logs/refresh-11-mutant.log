@@ -1,0 +1,12 @@
+--- FAIL: TestDefiniteAssignmentIsRefused (0.00s)
+    --- FAIL: TestDefiniteAssignmentIsRefused/definite-field-assigned.a (0.13s)
+        definite_assignment_test.go:22: got <nil>, want definite assignment refusal
+    --- FAIL: TestDefiniteAssignmentIsRefused/definite-local-assigned.a (0.15s)
+        definite_assignment_test.go:22: got <nil>, want definite assignment refusal
+    --- FAIL: TestDefiniteAssignmentIsRefused/definite-local.a (0.15s)
+        definite_assignment_test.go:22: got <nil>, want definite assignment refusal
+    --- FAIL: TestDefiniteAssignmentIsRefused/definite-field.a (0.16s)
+        definite_assignment_test.go:22: got <nil>, want definite assignment refusal
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.174s
+FAIL
