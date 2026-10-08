@@ -211,6 +211,79 @@
       "declarationFile": "src/compiler/types.ts",
       "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
       "declarationLine": 8882
+    },
+    {
+      "rank": 77,
+      "type": "Program",
+      "field": "getCompilerOptions",
+      "candidateReads": 21,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 1258,
+        "column": 28
+      },
+      "read": "program.getCompilerOptions",
+      "readKind": "property",
+      "call": "program.getCompilerOptions()",
+      "utf16Start": 51379,
+      "utf16End": 51405,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "getCompilerOptions(): CompilerOptions;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 4531,
+      "declarationOwner": "ScriptReferenceHost",
+      "inheritancePath": [
+        "Program",
+        "ScriptReferenceHost"
+      ]
+    },
+    {
+      "rank": 78,
+      "type": "System",
+      "field": "write",
+      "candidateReads": 21,
+      "witness": {
+        "file": "src/compiler/program.ts",
+        "line": 487,
+        "column": 31
+      },
+      "read": "system.write",
+      "readKind": "property",
+      "call": "system.write(s + newLine)",
+      "utf16Start": 15131,
+      "utf16End": 15143,
+      "fileSha256": "ffb29a3565664b6da4ddeb62aeb4afeb093fb8935b0fb1793e75aa4387305301",
+      "declaration": "write(s: string): void;",
+      "declarationFile": "src/compiler/sys.ts",
+      "declarationSha256": "9fe83b83c72ee53545fd63384f67c0beb31e864d1cc315ba126014d801e2212a",
+      "declarationLine": 1399
+    },
+    {
+      "rank": 79,
+      "type": "TransformationContext",
+      "field": "getCompilerOptions",
+      "candidateReads": 21,
+      "witness": {
+        "file": "src/compiler/factory/emitHelpers.ts",
+        "line": 403,
+        "column": 33
+      },
+      "read": "context.getCompilerOptions",
+      "readKind": "property",
+      "call": "context.getCompilerOptions()",
+      "utf16Start": 16781,
+      "utf16End": 16807,
+      "fileSha256": "aad8b194e1221e2cf2495cdc824d0a99aef86343da11023f39a1666d5c62bdf8",
+      "declaration": "getCompilerOptions(): CompilerOptions;",
+      "declarationFile": "src/compiler/types.ts",
+      "declarationSha256": "a7324b3c17fe5eae0e84bd537a9822bdf8351854a81231c82a4fa59e7bfb7a11",
+      "declarationLine": 9562,
+      "declarationOwner": "CoreTransformationContext",
+      "inheritancePath": [
+        "TransformationContext",
+        "CoreTransformationContext"
+      ]
     }
   ]
 }

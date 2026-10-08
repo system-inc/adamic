@@ -8,6 +8,7 @@ const sha = child.execFileSync('git', ['-C', pin, 'rev-parse', 'HEAD'], {encodin
 if (sha !== '050880ce59e30b356b686bd3144efe24f875ebc8') throw Error('wrong TypeScript pin');
 const ranks = new Set(process.argv[3] ? process.argv[3].split(',').map(Number) : [7,22,31,36,51,52]);
 const pairs = JSON.parse(fs.readFileSync(path.join(__dirname,'unknown-callable-pairs-ranked.json'),'utf8')).filter(p=>ranks.has(p.rank));
+if(pairs.length!==ranks.size)throw Error("missing requested candidate rank");
 const rows = [];
 for (const pair of pairs) {
  const declarationFile=pair.type==='Scanner'?'src/compiler/scanner.ts':pair.type==='System'?'src/compiler/sys.ts':'src/compiler/types.ts';
@@ -17,6 +18,8 @@ for (const pair of pairs) {
  const bytes = fs.readFileSync(path.join(pin,w.file));
  const source = ts.createSourceFile(w.file,bytes.toString('utf8'),ts.ScriptTarget.Latest,true);
  let read,decl;
+ const interfaces=new Map();
+ let inheritancePath;
  function visit(node) {
   if (ts.isPropertyAccessExpression(node) && node.name.text === pair.field || ts.isBindingElement(node) && node.propertyName && node.propertyName.getText(source) === pair.field) {
    const lc=source.getLineAndCharacterOfPosition(node.getStart(source));
@@ -25,12 +28,29 @@ for (const pair of pairs) {
   ts.forEachChild(node,visit);
  }
  function declaration(node) {
-  if (ts.isMethodSignature(node) && node.name.getText(types)===pair.field && node.parent.name && node.parent.name.text===pair.type) decl=node;
+  if (ts.isInterfaceDeclaration(node)) {
+   const name=node.name.text;
+   interfaces.set(name,[...(interfaces.get(name)||[]),node]);
+  }
   ts.forEachChild(node,declaration);
  }
+ function member(name,chain=[]) {
+  if(chain.includes(name))return undefined;
+  const declarations=interfaces.get(name)||[];
+  for(const declaration of declarations) {
+   const found=declaration.members.find(node=>ts.isMethodSignature(node)&&node.name.getText(types)===pair.field);
+   if(found)return {declaration:found,path:[...chain,name]};
+  }
+  for(const declaration of declarations)for(const clause of declaration.heritageClauses||[])for(const base of clause.types) {
+   const found=member(base.expression.getText(types),[...chain,name]);
+   if(found)return found;
+  }
+ }
  visit(source);declaration(types);
+ const resolved=member(pair.type);
+ if(resolved){decl=resolved.declaration;inheritancePath=resolved.path;}
  if (!read || !decl) throw Error('missing original witness '+pair.type+'.'+pair.field);
- rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),readKind:ts.isBindingElement(read)?"binding":"property",call:ts.isBindingElement(read)?read.getText(source):read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:decl.getText(types),declarationFile,declarationSha256:crypto.createHash('sha256').update(declarationBytes).digest('hex'),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1});
+ rows.push({rank:pair.rank,type:pair.type,field:pair.field,candidateReads:pair.reads,witness:w,read:read.getText(source),readKind:ts.isBindingElement(read)?"binding":"property",call:ts.isBindingElement(read)?read.getText(source):read.parent.getText(source),utf16Start:read.getStart(source),utf16End:read.end,fileSha256:crypto.createHash('sha256').update(bytes).digest('hex'),declaration:decl.getText(types),declarationFile,declarationSha256:crypto.createHash('sha256').update(declarationBytes).digest('hex'),declarationLine:types.getLineAndCharacterOfPosition(decl.getStart(types)).line+1,...(inheritancePath.length>1?{declarationOwner:inheritancePath.at(-1),inheritancePath}:{})});
 }
 fs.writeFileSync(path.join(__dirname,process.argv[4] || 'aggregate-original-witnesses.json'),JSON.stringify({sourceSha:sha,basis:'original declarations and read spans; reduced adjacent helpers and data carriers',members:rows},null,2)+'\n');
 console.log('Verified '+rows.length+' original declarations/read spans, '+rows.reduce((n,p)=>n+p.candidateReads,0)+' conservative candidate reads.');

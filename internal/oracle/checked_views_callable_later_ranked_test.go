@@ -8,6 +8,10 @@ import (
 
 func TestCheckedViewCallableLaterRankedFamilies(t *testing.T) {
 	for _, family := range []struct{ directory, field, good, optional, arity, payload, payloadOut, resultOut, variants string }{
+		{"type-reference", "createTypeReferenceNode", "8\n", "3\n3\n8\n8\n", "0", "typeNode.value", "5\n", "undefined\n", "good,optional-values,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
+		{"program-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"context-options", "getCompilerOptions", "3\n", "", "1", "value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-parameter-payload"},
+		{"system-write", "write", "6\n", "", "0", "", "", "", "good,wrong-value,wrong-arity,wrong-members"},
 		{"system-exit", "exit", "3\n", "3\n3\n7\n", "0", "", "", "", "good,optional-values,wrong-value,wrong-arity,wrong-members"},
 		{"null", "createNull", "3\n", "", "1", "", "", "undefined\n", "good,wrong-value,wrong-arity,wrong-result"},
 		{"parenthesized", "createParenthesizedExpression", "3\n", "", "0", "expression.value", "3\n", "undefined\n", "good,wrong-value,wrong-arity,wrong-result,wrong-members,wrong-parameter-payload"},
