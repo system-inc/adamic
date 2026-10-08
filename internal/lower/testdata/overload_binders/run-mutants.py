@@ -13,6 +13,7 @@ body = original[start:end]
 logs = Path('/tmp/notyet-overloads-mutants')
 logs.mkdir(exist_ok=True)
 mutants = [
+    ('additional-binder-refusal', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters()', 'declaredTypes, servedTypes := overload.TypeParameters(), implementation.TypeParameters(); if len(servedTypes) > len(declaredTypes) { return l.notYet(overload, label + \" with additional implementation type parameters\") }', 'TestNativeAgreesWithNode/internal/oracle/testdata/(census_overload_binders|overload_(array_to_|ancestor_directory|leading_comment_range|trailing_comment_range|original_node))'),
     ('parameter-inference', 'l.inferTypes(l.checker.GetTypeAtLocation(parameter), l.checker.GetTypeAtLocation(overload.Parameters()[index]), inferred)', '_ = parameter // missing parameter inference', 'TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders'),
     ('bottom-witness', 'l.checker.GetNonNullableType(l.checker.GetUndefinedType())', 'l.checker.GetTypeAtLocation(implementation.Name())', 'TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_binders'),
     ('constraint', 'constraint != nil && !l.censusRelated(targets[index], constraint)', 'false && constraint != nil && !l.censusRelated(targets[index], constraint)', 'TestCensusOverloadBinderGuards/constraint'),
@@ -56,5 +57,15 @@ for name, before, after, subtest in mutants:
         if result.returncode == 0 or '--- FAIL:' not in output or '[build failed]' in output:
             raise SystemExit(f'{name}: survived or failed outside the intended test: {output}')
         print(f'{name}: caught by TestOverloadInferenceWitnesses/{subtest}; exit {result.returncode}', flush=True)
+        if name in ('union-inference', 'optional-rigid-binder'):
+            fixtures = ['array_to_map', 'array_to_multimap', 'array_to_numeric_map'] if name == 'union-inference' else ['ancestor_directory']
+            selection = 'TestNativeAgreesWithNode/internal/oracle/testdata/overload_(' + '|'.join(fixtures) + ')'
+            with (logs / f'{name}-oracle.log').open('w') as log:
+                result = subprocess.run(['go', 'test', './internal/oracle', '-run', selection, '-count=1', '-timeout', '10m'], cwd=root, stdout=log, stderr=subprocess.STDOUT, env={**os.environ, 'ADAMIC_GATE_UNCACHED': '1'})
+            output = (logs / f'{name}-oracle.log').read_text()
+            if result.returncode == 0 or '[build failed]' in output or any('overload_' + fixture + '.a' not in output for fixture in fixtures):
+                raise SystemExit(f'{name}: a fixture survived: {output}')
+            print(f'{name}: also caught by {len(fixtures)} oracle fixtures', flush=True)
+
     finally:
         source.write_text(original)
