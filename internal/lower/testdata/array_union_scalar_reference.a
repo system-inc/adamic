@@ -1,0 +1,3 @@
+function first(array: number[] | string[]): string | number | undefined { return array[0]; }
+console.log(typeof first(["owned" + "!"]));
+console.log(typeof first([42]));

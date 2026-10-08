@@ -339,6 +339,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		arrayType = target
 	}
 	arrayType = l.phantomArrayView(arrayType)
+	if arrayType.Flags()&checker.TypeFlagsUnion != 0 {
+		return l.arrayUnionElement(node, arrayType)
+	}
 	if !l.checker.IsArrayType(arrayType) {
 		return 0, l.notYet(node, "a value of type "+l.checker.TypeToString(arrayType)+" where an array goes")
 	}

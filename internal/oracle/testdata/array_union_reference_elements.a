@@ -1,0 +1,14 @@
+function first(array: string[][] | readonly (string | readonly string[] | undefined)[]): string {
+    const value = array[0];
+    if (typeof value === "string") return value;
+    if (value) return value[0] || "empty";
+    return "missing";
+}
+const nested: string[][] = [["nested" + "!"]];
+const mixed: readonly (string | readonly string[] | undefined)[] = ["single" + "!"];
+const absent: readonly (string | readonly string[] | undefined)[] = [undefined];
+console.log(first(nested));
+console.log(first(mixed));
+console.log(first(absent));
+function numbers(array: number[] | readonly number[]): number { return array[0] ?? 0; }
+console.log(numbers([7]).toString());

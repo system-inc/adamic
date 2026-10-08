@@ -1,0 +1,7 @@
+# Array union element storage, 2026-10-08 UTC
+
+At fixture 25:1094:19, flatten<string> indexes string[][] | readonly (string | readonly string[] | undefined)[]. Read the checker numeric-index type, and prove every alternative is an array with compatible existing slots. Strong reference pointers can be read as the existing header-tagged Union. Scalar/reference and distinct scalar layouts remain unsupported; erased any/unknown/never contracts do not authorize a read. Contextual propagation is unchanged.
+
+array_union_reference_elements.a agrees with Node in both backends under ASan/UBSan and leak checks, uncached 0.948s. Cover nested arrays, a scalar string, absence, owned strings and identical numeric layouts. Counts 8 allocations/frees, 14 retains, 22 releases, peak 8, regions 0. The incompatible number[] | string[] source runs on Node (string, number) and retains the pinned NotYet diagnostic. Dropping the layout comparison lets it lower, so TestArrayUnionIncompatibleStorageRefused fails with got nil (/tmp/array-union-storage-mutant.log). The mutant was restored.
+
+The pinned host fixture blob remains bd24f7bd2ed712f6d07455130ab8bbe76c82b743. Its next stop is 1100:17, an array of any at addRange(result, v), /tmp/array-union-host25.log. No full host pass or new nullable kind is claimed. Whole count regeneration remains blocked by the earlier regexp_tree.ts project-root attribution stop; this row was measured through the ordinary counted helper.
