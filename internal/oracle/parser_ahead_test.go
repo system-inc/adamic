@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"strings"
 	"testing"
 )
 
@@ -79,4 +80,27 @@ func TestParserAheadFactoryCompleteControl(t *testing.T) {
 		}
 	}
 	t.Log("factory payload mutant caught in native and JavaScript by source Node stdout")
+}
+
+func TestParserAheadNodeArraySource(t *testing.T) {
+	for _, row := range []struct{ name, stdout, reason string }{
+		{"fields", "-1|7|true|1|1|1\ntrue\n", "a cast the runtime can't check"},
+		{"presence", "false|true\ntrue|true\ntrue|ready\n", "an unproven relation"},
+	} {
+		t.Run(row.name, func(t *testing.T) {
+			path, err := filepath.Abs(filepath.Join(repository, "stage3/parser-ahead/node-array", row.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			truth := onNode(t, path)
+			if truth.exitCode != 0 || string(truth.stdout) != row.stdout || len(truth.stderr) != 0 {
+				t.Fatalf("source Node %+v", truth)
+			}
+			_, err = lowered(t, path)
+			if err == nil || !strings.Contains(err.Error(), row.reason) {
+				t.Fatalf("pending lowering boundary changed: %v", err)
+			}
+			t.Log("pending: source Node contract only; fixed array metadata and presence lowering are absent")
+		})
+	}
 }
