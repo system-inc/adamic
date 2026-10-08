@@ -1,0 +1,13 @@
+// a-check: checked
+// compiler/builder.ts:710-717: delete pending entries or replace their values during Map.forEach.
+const affectedFilesPendingEmit = new Map<string, number>([['a', 0], ['b', 3], ['c', 0], ['d', 2]]);
+const seen: string[] = [];
+affectedFilesPendingEmit.forEach((emitKind, path) => {
+    seen.push(path);
+    const pending = emitKind & 1;
+    if (pending === 0) affectedFilesPendingEmit.delete(path);
+    else affectedFilesPendingEmit.set(path, pending);
+});
+console.log(seen.join(','));
+console.log(`${affectedFilesPendingEmit.size}`);
+for (const [key, value] of affectedFilesPendingEmit) console.log(`${key} ${value}`);
