@@ -748,6 +748,19 @@ func (e *emitter) value(expression ir.Expression) string {
 		return e.value(expression.Value)
 	case ir.Narrow:
 		return e.value(expression.Value)
+	case ir.KindIs:
+		kind := ""
+		switch expression.Of {
+		case ir.Array:
+			kind = "Array.isArray(value)"
+		case ir.Map:
+			kind = "(value instanceof Map || value instanceof Set)"
+		case ir.Object:
+			kind = "(value !== null && typeof value === 'object' && !Array.isArray(value) && !(value instanceof Map) && !(value instanceof Set) && !(value instanceof AdamicClosure) && !ArrayBuffer.isView(value))"
+		default:
+			panic("javascript: unsupported union object kind")
+		}
+		return "((value) => " + kind + ")(" + e.value(expression.Value) + ")"
 	case ir.TypeOf:
 		return "adamicTypeOf(" + e.value(expression.Value) + ")"
 	case ir.UnionToString:

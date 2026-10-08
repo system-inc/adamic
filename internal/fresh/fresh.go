@@ -1155,6 +1155,9 @@ func (a *analysis) value(expression ir.Expression) value {
 	case ir.MaybeToString:
 		a.value(expression.Value)
 		return value{}
+	case ir.KindIs:
+		a.value(expression.Value)
+		return value{}
 	case ir.TypeOf:
 		a.value(expression.Value)
 		return value{}

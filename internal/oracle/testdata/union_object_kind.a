@@ -1,0 +1,17 @@
+interface Named { readonly name: string; }
+let object: Named | readonly number[] = { name: ['Ada', 'mic'].join('') };
+console.log(object.name);
+object = [2, 3];
+console.log(`${object.length} ${object[0]}`);
+let collection: Map<string, number> | readonly number[] | Named = new Map<string, number>();
+collection.set('one', 1);
+console.log(`${collection.get('one')}`);
+collection = [4, 5, 6];
+console.log(`${collection.length}`);
+collection = { name: ['held', ' object'].join('') };
+console.log(collection.name);
+let iterator: MapIterator<number> | readonly number[] = new Map<string, number>().values();
+console.log(`${iterator.next().done}`);
+function absent(): Named | undefined { return undefined; }
+let optional: Named | readonly number[] | undefined = absent();
+console.log(optional?.name ?? 'absent');

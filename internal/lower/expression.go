@@ -451,7 +451,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				case ir.Closure:
 					name = "function"
 				}
-				if name == "object" {
+
+				if name == "object" && narrowed != ir.Object && narrowed != ir.Array && narrowed != ir.Map {
 					// typeof cannot distinguish differently held object members.
 					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
 					members := []*checker.Type{declared}
@@ -467,6 +468,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 				b := l.libraryArrayBuilder([]ir.Expression{read})
 				held := b.read(b.parameters[0])
 				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
+				if name == "object" && (narrowed == ir.Object || narrowed == ir.Array || narrowed == ir.Map) {
+					matches = ir.KindIs{Value: held, Of: narrowed}
+				}
 				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
 					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 				}
