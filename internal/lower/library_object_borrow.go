@@ -95,6 +95,10 @@ func (l *lowering) borrowedOwnValue(node *ast.Node) (ir.Expression, bool, error)
 	for outer.Parent != nil && outer.Parent.Kind == ast.KindParenthesizedExpression {
 		outer = outer.Parent
 	}
+	// Inferred const aliases use compiler intrinsic specialization at each proven use.
+	if outer.Parent != nil && outer.Parent.Kind == ast.KindVariableDeclaration && outer.Parent.AsVariableDeclaration().Type == nil && constMethodInitializer(node) {
+		return nil, false, nil
+	}
 	if outer.Parent == nil || outer.Parent.Kind != ast.KindVariableDeclaration || l.borrowedOwnAlias(outer.Parent.Name()) == nil {
 		return nil, true, l.notYet(node, "Object.prototype.hasOwnProperty value without a const (this: object, key: string) => boolean signature")
 	}
