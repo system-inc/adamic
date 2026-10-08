@@ -1,0 +1,66 @@
+where,requested_reason,observed_status,next_stops
+src/compiler/binder.ts:585:13,a call returning void | undefined,blocked by rollback boundary,NotYet src/compiler/binder.ts:585:73 a value of type Path
+src/compiler/binder.ts:587:13,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:18805:13,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:21028:13,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:23407:17,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:23418:17,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:23420:17,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:24212:21,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:25025:13,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:29040:17,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:41764:9,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:41978:21,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:41985:21,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:45286:9,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:49544:9,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:49548:9,a call returning void | undefined,blocked by rollback boundary,NotYet src/compiler/checker.ts:49548:111 a value of type Path
+src/compiler/checker.ts:49555:9,a call returning void | undefined,statement survived replay,
+src/compiler/commandLineParser.ts:3025:5,a call returning void | undefined,statement survived replay,
+src/compiler/commandLineParser.ts:3027:5,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:795:9,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:797:9,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:799:9,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:801:9,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:803:9,a call returning void | undefined,statement survived replay,
+src/compiler/emitter.ts:805:9,a call returning void | undefined,statement survived replay,
+src/compiler/executeCommandLine.ts:1164:9,a call returning void | undefined,blocked by rollback boundary,NotYet src/compiler/executeCommandLine.ts:1163:23 reading compilerOptions
+src/compiler/parser.ts:1345:5,a call returning void | undefined,statement survived replay,
+src/compiler/parser.ts:1368:5,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2066:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2078:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2102:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2651:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2664:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:2697:9,a call returning void | undefined,blocked by rollback boundary,NotYet src/compiler/program.ts:2697:59 a value of type Path | undefined
+src/compiler/program.ts:2710:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:3529:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:3800:9,a call returning void | undefined,blocked by rollback boundary,NotYet src/compiler/program.ts:3800:232 a value of type Path
+src/compiler/program.ts:3802:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:3876:9,a call returning void | undefined,statement survived replay,
+src/compiler/program.ts:3881:9,a call returning void | undefined,statement survived replay,
+src/compiler/checker.ts:17478:16,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:17476:30 a value of type __String
+src/compiler/checker.ts:27775:21,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:27774:36 a BinaryExpression with a boolean and a value
+src/compiler/checker.ts:30875:28,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:30875:50 a value of type __String
+src/compiler/checker.ts:3467:42,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:3464:78 a value of type __String
+src/compiler/checker.ts:3494:42,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:3492:74 a value of type __String
+src/compiler/checker.ts:35295:24,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:35293:81 a value of type __String
+src/compiler/checker.ts:3537:42,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:3515:74 a value of type __String
+src/compiler/checker.ts:3580:42,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:3578:85 a value of type __String
+src/compiler/checker.ts:3591:42,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:3578:85 a value of type __String
+src/compiler/checker.ts:36397:24,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:36397:53 a value of type __String
+src/compiler/checker.ts:37526:13,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:37528:17 reading jsxFragmentFactoryName
+src/compiler/checker.ts:37931:35,passing union of differently held members to a function value,blocked by rollback boundary,Refused src/compiler/checker.ts:37931:53 a cast the runtime can't check
+src/compiler/checker.ts:4515:22,passing union of differently held members to a function value,statement survived replay,
+src/compiler/checker.ts:4642:24,passing union of differently held members to a function value,statement survived replay,
+src/compiler/checker.ts:51241:16,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:51241:38 a value of type __String
+src/compiler/checker.ts:51257:16,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:51259:13 a value of type __String
+src/compiler/checker.ts:51511:34,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:51511:63 a value of type __String
+src/compiler/checker.ts:6146:24,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:6146:58 a value of type __String
+src/compiler/checker.ts:8442:26,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:8442:60 a value of type __String
+src/compiler/checker.ts:8822:28,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/checker.ts:8821:64 a value of type __String
+src/compiler/parser.ts:7662:22,passing union of differently held members to a function value,statement survived replay,
+src/compiler/parser.ts:7730:22,passing union of differently held members to a function value,statement survived replay,
+src/compiler/utilities.ts:11896:17,passing union of differently held members to a function value,blocked by rollback boundary,NotYet src/compiler/utilities.ts:11513:9 a value of type Identifier | __String
+src/compiler/watchUtilities.ts:540:22,a call returning T,requested stop reproduced,NotYet src/compiler/watchUtilities.ts:540:22 a call returning T
+src/compiler/sys.ts:378:63,a call returning any,requested stop reproduced,NotYet src/compiler/sys.ts:378:63 a call returning any
