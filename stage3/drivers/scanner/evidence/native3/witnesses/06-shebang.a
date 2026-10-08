@@ -1,0 +1,2 @@
+function scan(text: string): number { return /#!/.exec(text)![0].length; }
+console.log(`${scan("#!")}`);
