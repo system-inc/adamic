@@ -1,0 +1,31 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Result, Suggestion, Edit, emptyResults, publish } from '../no-multi-str/results.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    evaluate(node: ParseNode, index: number): void {
+        const parent = this.context.parents[index] ?? -1;
+        if(parent >= 0 && this.context.node(parent).kind.startsWith('Jsx')) { return; }
+        const start = this.context.start(index);
+        const end = node.end;
+        const raw = this.context.source.slice(start, end);
+        if(raw.includes('\n') || raw.includes('\r') || raw.includes('\u2028') || raw.includes('\u2029')) {
+            this.results = [...this.results, new Result(index, 'no-multi-str', 'multilineString', message, start, end)];
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

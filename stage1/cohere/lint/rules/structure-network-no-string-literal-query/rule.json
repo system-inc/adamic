@@ -1,0 +1,13 @@
+{
+  "name": "structure/network-no-string-literal-query",
+  "kinds": [
+    "CallExpression"
+  ],
+  "visit": "visit",
+  "oracle": "oracleNetworkNoStringLiteralQuery",
+  "upstreamPackage": "structure",
+  "upstreamTest": "TestNetworkNoStringLiteralQuery",
+  "factory": "create",
+  "class": "Rule",
+  "node": true
+}

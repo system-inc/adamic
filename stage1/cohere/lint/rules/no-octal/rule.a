@@ -1,0 +1,28 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Result, Suggestion, Edit, emptyResults, publish } from '../no-multi-str/results.a';
+import { message } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) { this.context = context; }
+    evaluate(node: ParseNode, index: number): void {
+        const start = this.context.start(index);
+        const end = node.end;
+        const raw = this.context.source.slice(start, end);
+        const digit = raw.slice(1, 2);
+        if(raw.length >= 2 && raw.slice(0, 1) === '0' && digit >= '0' && digit <= '9') {
+            this.results = [...this.results, new Result(index, 'no-octal', 'noOctal', message, start, end)];
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,75 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { message } from './messages.a';
+
+
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) {
+        this.context = context;
+    }
+    // The parser omits the initializer's equals token from the children. Read
+    // only the gap before the final child, so defaults inside types do not count.
+    defaulted(index: number): boolean {
+        const children = this.context.node(index).children;
+        if(children.length < 2) {
+            return false;
+        }
+        const before = children[children.length - 2] ?? -1;
+        const last = children[children.length - 1] ?? -1;
+        if(before < 0 || last < 0) {
+            return false;
+        }
+        const scanner = this.context.scanner;
+        scanner.pos = this.context.node(before).end;
+        while(scanner.scan() !== 'EndOfFile' && scanner.start < this.context.node(last).pos) {
+            if(scanner.kind === 'EqualsToken') {
+                return true;
+            }
+        }
+        return false;
+    }
+    flag(index: number, kind: string): boolean {
+        for(const child of this.context.node(index).children) {
+            if(this.context.node(child).kind === kind) {
+                return true;
+            }
+        }
+        return false;
+    }
+    visit(node: ParseNode, index: number): void {
+        const parameters: number[] = [];
+        let body = false;
+        for(const child of node.children) {
+            const kind = this.context.node(child).kind;
+            if(kind === 'Block' || kind === 'EqualsGreaterThanToken') {
+                body = true;
+            }
+            if(kind === 'Parameter') {
+                parameters.push(child);
+            }
+        }
+        if(!body) {
+            return;
+        }
+        let lastPlain = -1;
+        const reportable: boolean[] = [];
+        for(let position = 0; position < parameters.length; position++) {
+            const parameter = parameters[position] ?? -1;
+            const special = this.defaulted(parameter) || this.flag(parameter, 'QuestionToken');
+            reportable.push(special);
+            if(!special && !this.flag(parameter, 'DotDotDotToken')) {
+                lastPlain = position;
+            }
+        }
+        for(let position = 0; position < lastPlain; position++) {
+            if(reportable[position] === true) {
+                this.context.report(parameters[position] ?? -1, '@typescript-eslint/default-param-last', 'shouldBeLast', message, '', '', '');
+            }
+        }
+    }
+}
+
+export function create(context: RuleContext): Rule {
+    return new Rule(context);
+}

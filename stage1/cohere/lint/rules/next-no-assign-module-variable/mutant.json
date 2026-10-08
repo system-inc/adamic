@@ -1,0 +1,6 @@
+{
+  "name": "module_name_ignored",
+  "file": "rule.a",
+  "from": "this.context.node(name).text === 'module'",
+  "to": "this.context.node(name).text === 'moduleNever'"
+}

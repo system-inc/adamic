@@ -1,0 +1,66 @@
+import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
+import type { RuleContext } from '../../context.ts';
+import { Edit, Result, emptyResults, publish } from '../no-multi-str/retired-wave15/typescript-no-unnecessary-type-constraint/results.a';
+import { requireCorrectAlias, requireNamespaceImport, requireNodePrefix, render } from './messages.a';
+
+
+export class Rule {
+    readonly context: RuleContext;
+    results: readonly Result[] = emptyResults();
+    constructor(context: RuleContext) { this.context = context; }
+    alias(bare: string): string {
+        switch(bare) {
+            case 'fs/promises': return 'NodeFileSystemPromises';
+            case 'stream/promises': return 'NodeStreamPromises';
+            case 'timers/promises': return 'NodeTimersPromises';
+            case 'fs': return 'NodeFileSystem';
+            case 'os': return 'NodeOperatingSystem';
+            case 'vm': return 'NodeVirtualMachine';
+            case 'v8': return 'NodeV8';
+            default: {
+                let name = 'Node';
+                for(const part of bare.split('_')) {
+                    if(part !== '') { name += part.slice(0, 1).toUpperCase() + part.slice(1); }
+                }
+                return name;
+            }
+        }
+    }
+    evaluate(node: ParseNode, index: number): void {
+        let specifier = -1;
+        let namespace = -1;
+        for(const child of node.children) {
+            if(this.context.node(child).kind === 'StringLiteral') { specifier = child; }
+            if(this.context.node(child).kind === 'ImportClause') {
+                for(const binding of this.context.node(child).children) {
+                    if(this.context.node(binding).kind === 'NamespaceImport') { namespace = binding; }
+                }
+            }
+        }
+        if(specifier < 0) { return; }
+        const source = this.context.node(specifier).text;
+        const bare = source.startsWith('node:') ? source.slice(5) : source;
+        if(!["assert", "async_hooks", "buffer", "child_process", "cluster", "console", "constants", "crypto", "dgram", "diagnostics_channel", "dns", "domain", "events", "fs", "http", "http2", "https", "inspector", "module", "net", "os", "path", "perf_hooks", "process", "punycode", "querystring", "readline", "repl", "stream", "string_decoder", "sys", "timers", "tls", "trace_events", "tty", "url", "util", "v8", "vm", "wasi", "worker_threads", "zlib", "fs/promises", "stream/promises", "timers/promises"].includes(bare)) { return; }
+        const expected = this.alias(bare);
+        if(namespace < 0) {
+            this.results = [...this.results, new Result(index, 'nexus/import-require-node-namespace', 'requireNamespaceImport', render(requireNamespaceImport, '', bare, expected, source))];
+            return;
+        }
+        if(!source.startsWith('node:')) {
+            this.results = [...this.results, new Result(index, 'nexus/import-require-node-namespace', 'requireNodePrefix', render(requireNodePrefix, '', bare, expected, source), [new Edit(this.context.start(specifier), this.context.node(specifier).end, `'node:${bare}'`)])];
+        }
+        const binding = this.context.node(namespace).children[0] ?? -1;
+        if(binding >= 0 && this.context.node(binding).text !== expected) {
+            this.results = [...this.results, new Result(namespace, 'nexus/import-require-node-namespace', 'requireCorrectAlias', render(requireCorrectAlias, this.context.node(binding).text, bare, expected, source))];
+        }
+    }
+    visit(node: ParseNode, index: number): void {
+        const before = this.results.length;
+        this.evaluate(node, index);
+        for(let position = before; position < this.results.length; position++) {
+            const result = this.results[position];
+            if(result !== undefined) { publish(this.context, result); }
+        }
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
