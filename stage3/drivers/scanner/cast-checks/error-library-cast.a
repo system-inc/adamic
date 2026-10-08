@@ -1,0 +1,4 @@
+import type {} from "node:util";
+const error = new Error("failure");
+(Error as Pick<ErrorConstructor, "captureStackTrace">).captureStackTrace(error);
+console.log("ok");

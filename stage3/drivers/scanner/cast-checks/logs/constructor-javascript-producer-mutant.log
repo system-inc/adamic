@@ -1,0 +1,10 @@
+=== RUN   TestScannerStringConstructorProducerMutant
+    scanner_constructor_views_test.go:85: gate cache node miss
+    scanner_constructor_views_test.go:86: imposter must match pinned stop: oracle.run{stdout:[]uint8{0x6c, 0x69, 0x61, 0x72, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestScannerStringConstructorProducerMutant (0.14s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.151s
+FAIL

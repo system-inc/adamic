@@ -4,6 +4,8 @@ Commands and outputs: focused lower/oracle PASS, admission mutant caught, dedica
 Mutants: field-check omission exits 0 on native release and JavaScript instead of pinned 70; admission omission fails TestOptionalPresenceViewCast.
 Not covered: Error/String constructor lowering or their runtime liars, full scanner, full gate, unrestricted any contracts, new initialization semantics.
 
+The String frontier recorded below is superseded by [CONSTRUCTORS.md](CONSTRUCTORS.md). Error now also has an exact library cast NotYet pin in that follow-up.
+
 ## Reductions and outside evidence
 
 The three supplied coordinates refer to the adapted scanner scratch tree. Read-only evidence at scanner worker commit `6a2d222c` contains `03-error-cast.a`, `04-diagnostic-cast.a`, and `07-string-cast.a`; no worker branch was merged. Source declarations are from TypeScript commit `050880ce59e30b356b686bd3144efe24f875ebc8`:
@@ -35,15 +37,15 @@ All test output was redirected to logs. Environment commands used `export GOPROX
 Final focused command:
 
 ```
-ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestOptionalPresenceView|^TestViewPreflightPreservesOtherRefusals$|^TestOptionalWidening(Views|Allowed)$|^TestScannerCast|^TestCheckedViewLazy(Unread|MissingNameMutant)$' -count=1 -v -timeout10m > /tmp/scanner-cast-final-tests.log 2>&1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/lower ./internal/oracle -run '^TestOptionalPresenceView|^TestViewPreflightPreservesOtherRefusals$|^TestOptionalWidening(Views|Allowed)$|^TestScannerCast|^TestCheckedViewLazy(Unread|MissingNameMutant)$' -count=1 -v -timeout 10m > /tmp/scanner-cast-final-tests.log 2>&1
 ```
 
 PASS: lower 0.947s, oracle 7.431s. [Complete output](logs/final-tests.log).
 
 ```
 python3 stage3/drivers/scanner/cast-checks/run-admission-mutant.py > /tmp/scanner-cast-mutants.log 2>&1
-go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout10m -args -update-counts > /tmp/scanner-cast-counts-global.log 2>&1
-go test ./internal/oracle -run '^TestScannerCastCounts$' -count=1 -v -timeout10m -args -update-counts > /tmp/scanner-cast-counts-unit.log 2>&1
+go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 10m -args -update-counts > /tmp/scanner-cast-counts-global.log 2>&1
+go test ./internal/oracle -run '^TestScannerCastCounts$' -count=1 -v -timeout 10m -args -update-counts > /tmp/scanner-cast-counts-unit.log 2>&1
 go vet ./internal/lower ./internal/oracle > /tmp/scanner-cast-vet.log 2>&1
 ```
 

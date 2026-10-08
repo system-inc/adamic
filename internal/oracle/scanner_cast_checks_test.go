@@ -86,7 +86,6 @@ func TestScannerCastDiagnosticMutant(t *testing.T) {
 func TestScannerCastConstructorFrontiers(t *testing.T) {
 	for _, test := range []struct{ name, output, reason string }{
 		{"error-any", "ok\n", "a cast the runtime can't check"},
-		{"string-any", "A\n", "a cast the runtime can't check"},
 		{"error-typed", "ok\n", "captureStackTrace"},
 		{"string-typed", "A\n", "String as a value outside equality or typeof"},
 	} {
@@ -113,6 +112,9 @@ func scannerCastCounts(t *testing.T) []string {
 	var rows []string
 	for _, name := range []string{"good", "undefined", "missing", "wrong"} {
 		rows = append(rows, counted(t, "stage3/drivers/scanner/cast-checks/diagnostic-"+name+".a", false, nil, false, false))
+	}
+	for _, name := range []string{"string-any", "string-checked"} {
+		rows = append(rows, counted(t, "stage3/drivers/scanner/cast-checks/"+name+".a", false, nil, false, false))
 	}
 	return rows
 }

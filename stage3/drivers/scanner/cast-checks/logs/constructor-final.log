@@ -1,0 +1,128 @@
+=== RUN   TestLibraryStringRefusals
+=== PAUSE TestLibraryStringRefusals
+=== RUN   TestViewPreflightPreservesOtherRefusals
+--- PASS: TestViewPreflightPreservesOtherRefusals (0.08s)
+=== RUN   TestOptionalPresenceViewCast
+--- PASS: TestOptionalPresenceViewCast (0.03s)
+=== RUN   TestOptionalPresenceViewPreservesSlotTypes
+--- PASS: TestOptionalPresenceViewPreservesSlotTypes (0.13s)
+=== RUN   TestScannerStringConstructorView
+--- PASS: TestScannerStringConstructorView (0.04s)
+=== RUN   TestScannerStringConstructorViewScope
+--- PASS: TestScannerStringConstructorViewScope (0.40s)
+=== CONT  TestLibraryStringRefusals
+=== RUN   TestLibraryStringRefusals/detached
+=== PAUSE TestLibraryStringRefusals/detached
+=== RUN   TestLibraryStringRefusals/null_receiver
+=== PAUSE TestLibraryStringRefusals/null_receiver
+=== RUN   TestLibraryStringRefusals/undefined_receiver
+=== PAUSE TestLibraryStringRefusals/undefined_receiver
+=== RUN   TestLibraryStringRefusals/String_internal_slot
+=== PAUSE TestLibraryStringRefusals/String_internal_slot
+=== RUN   TestLibraryStringRefusals/object_conversion
+=== PAUSE TestLibraryStringRefusals/object_conversion
+=== RUN   TestLibraryStringRefusals/collation
+=== PAUSE TestLibraryStringRefusals/collation
+=== RUN   TestLibraryStringRefusals/loose_inequality
+=== PAUSE TestLibraryStringRefusals/loose_inequality
+=== RUN   TestLibraryStringRefusals/first_class_constructor
+=== PAUSE TestLibraryStringRefusals/first_class_constructor
+=== RUN   TestLibraryStringRefusals/raw_wider_view
+=== PAUSE TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/detached
+=== CONT  TestLibraryStringRefusals/raw_wider_view
+=== CONT  TestLibraryStringRefusals/first_class_constructor
+=== CONT  TestLibraryStringRefusals/loose_inequality
+=== CONT  TestLibraryStringRefusals/collation
+=== CONT  TestLibraryStringRefusals/object_conversion
+=== CONT  TestLibraryStringRefusals/String_internal_slot
+=== CONT  TestLibraryStringRefusals/undefined_receiver
+=== CONT  TestLibraryStringRefusals/null_receiver
+--- PASS: TestLibraryStringRefusals (0.00s)
+    --- PASS: TestLibraryStringRefusals/loose_inequality (0.09s)
+    --- PASS: TestLibraryStringRefusals/detached (0.10s)
+    --- PASS: TestLibraryStringRefusals/collation (0.11s)
+    --- PASS: TestLibraryStringRefusals/first_class_constructor (0.17s)
+    --- PASS: TestLibraryStringRefusals/raw_wider_view (0.18s)
+    --- PASS: TestLibraryStringRefusals/object_conversion (0.12s)
+    --- PASS: TestLibraryStringRefusals/undefined_receiver (0.11s)
+    --- PASS: TestLibraryStringRefusals/String_internal_slot (0.12s)
+    --- PASS: TestLibraryStringRefusals/null_receiver (0.05s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.945s
+=== RUN   TestCheckedViewCallables
+=== PAUSE TestCheckedViewCallables
+=== RUN   TestCheckedViewUntaggedCallableUnion
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-number
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/good-string
+    checked_views_untagged_unions_test.go:450: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:450: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedCallableUnion/wrong
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\n"
+=== RUN   TestCheckedViewUntaggedCallableUnion/nested
+    checked_views_untagged_unions_test.go:450: native: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+    checked_views_untagged_unions_test.go:450: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\n"
+--- PASS: TestCheckedViewUntaggedCallableUnion (1.15s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-number (0.32s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/good-string (0.26s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/wrong (0.33s)
+    --- PASS: TestCheckedViewUntaggedCallableUnion/nested (0.24s)
+=== RUN   TestScannerCastDiagnostic
+=== RUN   TestScannerCastDiagnostic/good
+=== RUN   TestScannerCastDiagnostic/undefined
+=== RUN   TestScannerCastDiagnostic/missing
+=== RUN   TestScannerCastDiagnostic/wrong
+--- PASS: TestScannerCastDiagnostic (1.78s)
+    --- PASS: TestScannerCastDiagnostic/good (0.45s)
+    --- PASS: TestScannerCastDiagnostic/undefined (0.45s)
+    --- PASS: TestScannerCastDiagnostic/missing (0.42s)
+    --- PASS: TestScannerCastDiagnostic/wrong (0.46s)
+=== RUN   TestScannerCastDiagnosticMutant
+    scanner_cast_checks_test.go:82: native release omission caught by exit/message pin: exit=0 stdout="false\n"
+    scanner_cast_checks_test.go:82: JavaScript omission caught by exit/message pin: exit=0 stdout="42\n"
+--- PASS: TestScannerCastDiagnosticMutant (0.20s)
+=== RUN   TestScannerCastConstructorFrontiers
+=== RUN   TestScannerCastConstructorFrontiers/error-any
+    scanner_cast_checks_test.go:105: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-any.a:2:6: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestScannerCastConstructorFrontiers/error-typed
+    scanner_cast_checks_test.go:105: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-typed.a:2:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet
+=== RUN   TestScannerCastConstructorFrontiers/string-typed
+    scanner_cast_checks_test.go:105: Node-valid frontier: /workspace/adamic/stage3/drivers/scanner/cast-checks/string-typed.a:2:17: stage 0 can't lower String as a value outside equality or typeof (overloaded calls and static properties need their own representation) yet
+--- PASS: TestScannerCastConstructorFrontiers (0.90s)
+    --- PASS: TestScannerCastConstructorFrontiers/error-any (0.15s)
+    --- PASS: TestScannerCastConstructorFrontiers/error-typed (0.62s)
+    --- PASS: TestScannerCastConstructorFrontiers/string-typed (0.12s)
+=== RUN   TestScannerCastCounts
+--- PASS: TestScannerCastCounts (0.74s)
+=== RUN   TestScannerStringConstructorView
+=== RUN   TestScannerStringConstructorView/string-any
+=== RUN   TestScannerStringConstructorView/string-checked
+--- PASS: TestScannerStringConstructorView (1.07s)
+    --- PASS: TestScannerStringConstructorView/string-any (0.56s)
+    --- PASS: TestScannerStringConstructorView/string-checked (0.51s)
+=== RUN   TestScannerErrorLibraryCastNotYet
+    scanner_constructor_views_test.go:51: library #ddwcejg dependency: /workspace/adamic/stage3/drivers/scanner/cast-checks/error-library-cast.a:3:1: stage 0 can't lower node:globals.ErrorConstructor.captureStackTrace yet
+--- PASS: TestScannerErrorLibraryCastNotYet (0.62s)
+=== RUN   TestScannerStringConstructorProducerMutant
+    scanner_constructor_views_test.go:88: producer liar pin: "adamic: panic: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n"
+    scanner_constructor_views_test.go:111: native release omission caught: exit=0 stdout="liar\n1\n"
+    scanner_constructor_views_test.go:111: JavaScript omission caught: exit=0 stdout="liar\n1\n"
+--- PASS: TestScannerStringConstructorProducerMutant (0.53s)
+=== CONT  TestCheckedViewCallables
+=== RUN   TestCheckedViewCallables/function-field
+=== PAUSE TestCheckedViewCallables/function-field
+=== RUN   TestCheckedViewCallables/class-method
+=== PAUSE TestCheckedViewCallables/class-method
+=== CONT  TestCheckedViewCallables/function-field
+=== CONT  TestCheckedViewCallables/class-method
+--- PASS: TestCheckedViewCallables (0.00s)
+    --- PASS: TestCheckedViewCallables/class-method (0.51s)
+    --- PASS: TestCheckedViewCallables/function-field (0.57s)
+PASS
+gate cache: native hits=0 misses=11
+gate cache: node hits=0 misses=32
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	7.603s

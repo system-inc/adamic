@@ -1,0 +1,4 @@
+let calls = 0;
+function point(): number { calls++; return 0x1f642; }
+console.log(`${(String as any).fromCodePoint(point())}`);
+console.log(`${calls}`);

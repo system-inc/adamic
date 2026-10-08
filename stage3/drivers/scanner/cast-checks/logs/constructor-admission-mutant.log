@@ -1,0 +1,6 @@
+=== RUN   TestScannerStringConstructorView
+    view_scanner_constructors_test.go:13: /tmp/adamic-gate/TestScannerStringConstructorView2992092007/001/main.a:1:44: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+--- FAIL: TestScannerStringConstructorView (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.051s
+FAIL

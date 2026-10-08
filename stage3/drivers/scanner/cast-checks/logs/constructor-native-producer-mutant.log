@@ -1,0 +1,11 @@
+=== RUN   TestScannerStringConstructorProducerMutant
+    scanner_constructor_views_test.go:85: gate cache node miss
+    scanner_constructor_views_test.go:88: producer liar pin: "adamic: panic: field read failed: (String as any).fromCodePoint expected (codePoint: number) => string, found function with unknown signature\n"
+    scanner_constructor_views_test.go:92: liar: exit codes differ: oracle.run{stdout:[]uint8{0x6c, 0x69, 0x61, 0x72, 0xa, 0x31, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestScannerStringConstructorProducerMutant (0.51s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.516s
+FAIL
