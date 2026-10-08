@@ -1,0 +1,1 @@
+enum E { Zero = 0 } const n: E = E.Zero; const v = <div>{n && <span/>}</div>;

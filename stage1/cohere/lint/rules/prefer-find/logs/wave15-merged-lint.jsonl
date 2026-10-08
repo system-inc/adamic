@@ -1,0 +1,8 @@
+{"ImportPath":"github.com/system-inc/adamic/bridge/tsgo/checker","Action":"build-output","Output":"# github.com/system-inc/adamic/bridge/tsgo/checker\n"}
+{"ImportPath":"github.com/system-inc/adamic/bridge/tsgo/checker","Action":"build-output","Output":"bridge/tsgo/checker/declaration_facts.go:17:11: cannot use source.FileName() (value of string type \"github.com/microsoft/TypeScript/tsc/internal/tspath\".RootedFilePath) as string value in argument to out.text\n"}
+{"ImportPath":"github.com/system-inc/adamic/bridge/tsgo/checker","Action":"build-output","Output":"bridge/tsgo/checker/declaration_facts.go:22:55: source.Path undefined (type *\"github.com/microsoft/TypeScript/tsc/internal/ast\".SourceFile has no field or method Path)\n"}
+{"ImportPath":"github.com/system-inc/adamic/bridge/tsgo/checker","Action":"build-output","Output":"bridge/tsgo/checker/facts.go:303:14: cannot use f.FileName() (value of string type \"github.com/microsoft/TypeScript/tsc/internal/tspath\".RootedFilePath) as string value in argument to out.text\n"}
+{"ImportPath":"github.com/system-inc/adamic/bridge/tsgo/checker","Action":"build-fail"}
+{"Time":"2026-10-08T09:20:10.413422288Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint"}
+{"Time":"2026-10-08T09:20:10.413659471Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint [build failed]\n","OutputType":"frame"}
+{"Time":"2026-10-08T09:20:10.413711018Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/bridge/tsgo/checker"}

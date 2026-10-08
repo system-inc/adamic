@@ -1,0 +1,1 @@
+function C() { const [s, setS] = useState(0); useEffect(() => { setS(1); }, []); return s; }

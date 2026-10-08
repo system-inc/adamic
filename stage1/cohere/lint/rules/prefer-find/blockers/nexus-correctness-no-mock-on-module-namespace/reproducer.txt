@@ -1,0 +1,1 @@
+import * as mod from './m'; import { mock } from 'node:test'; mock.method(mod, 'run');

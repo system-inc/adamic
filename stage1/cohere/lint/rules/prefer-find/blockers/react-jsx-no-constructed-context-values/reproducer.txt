@@ -1,0 +1,1 @@
+function C() { const dep = {}; const value = useMemo(() => ({}), [dep]); return <Ctx.Provider value={value}/>; }
