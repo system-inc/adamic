@@ -115,3 +115,13 @@ condition and message. Class and provides are byte-for-byte equal; output order
 and required integration fields are checked. Disabling the table export makes
 this proof fail. This is a historical migration proof, not a permanent census
 row-count constraint on future work.
+
+After merging 1db5ab2b1506e699233022eefba0ee7110fe24ce, the export proof
+defaults to that historical table and checks all 76 rows. An optional commit
+argument selects another historical table; the comparison has no fixed count.
+The new optional-widening inventory skip is annotated measurement with its
+original provider text. The central table remains deleted.
+
+Merged-tree validation: all census packages pass uncached, and repository-wide
+`go vet ./...` passes. The incoming metamorphic API fix resolves the setup
+compilation failure recorded above.
