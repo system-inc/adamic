@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "/tmp/unpark-wave/oracle/node.mjs",
+    "/tmp/unpark-wave/stage1/cohere/typeaware/wave_11_suite.a",
+    "/tmp/unpark-wave/stage1/cohere/typeaware/testdata/tsconfig.json",
+    "/tmp/fixes-wave-reproducer/manifest"
+  ],
+  "exit": 70
+}

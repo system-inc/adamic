@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout=15m",
+    "./stage1/cohere/lint",
+    "-run",
+    "^TestJsxLintReleaseAndThroughput$"
+  ],
+  "exit": 0,
+  "wall": 56.004948397998305
+}

@@ -1,0 +1,334 @@
+[
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:159: controls 250 parse-clean 250"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:217: danger-property mutant exit 0 empty stderr, Go bytes catch byte 1203"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:217: namespace-colon mutant exit 0 empty stderr, Go bytes catch byte 2840"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:217: component-first mutant exit 0 empty stderr, Go bytes catch byte 5275"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:227: raw whitespace mutant exit 0 empty stderr, Go bytes catch byte 1115"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:238: raw uppercase mutant exit 0 empty stderr, Go bytes catch byte 5275"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:265: repository go process 200.417537ms cohere: load_ns=117207961 rule_ns=7726219 run_ns=66236754"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:265: repository native process 938.096328ms tsgo: load_ns=108457030 query_ns=398793353 queries=287 first_query_ns=2306980 run_ns=816653500"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:265: compiler go process 368.235716ms cohere: load_ns=274849839 rule_ns=29313606 run_ns=74879028"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:265: compiler native process 7.564474825s tsgo: load_ns=293178116 query_ns=3829883110 queries=77 first_query_ns=43115 run_ns=7222153899"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:275: released handle rejected with panic 70"
+  },
+  {
+    "test": "TestWave11EighthAgreementAndMutants",
+    "observation": "wave_11_eighth_test.go:280: released registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:168: controls: 376 sources, 374 parse-clean, 2 excluded parse diagnostics"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:171: excluded parse diagnostics: control-150.ts"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:171: excluded parse diagnostics: control-172.ts"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: throw mutant: exit 0, empty stderr, independent Go bytes catch byte 804"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: backreference mutant: exit 0, empty stderr, independent Go bytes catch byte 174"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: arrow-fix mutant: exit 0, empty stderr, independent Go bytes catch byte 10999"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: provenance mutant: exit 0, empty stderr, independent Go bytes catch byte 170"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: regex-path mutant: exit 0, empty stderr, independent Go bytes catch byte 4713"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:197: self-resolution mutant: exit 0, empty stderr, independent Go bytes catch byte 10715"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:209: symbol provenance question mutant: exit 0, empty stderr, independent Go bytes catch byte 170"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:237: repository go process=198.415329ms cohere: load_ns=111703060 rule_ns=7442655 run_ns=72968684"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:237: repository native process=371.406453ms tsgo: load_ns=127490182 query_ns=5853020 queries=25 first_query_ns=794188 run_ns=235299549"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:237: compiler go process=406.759196ms cohere: load_ns=274748144 rule_ns=70205348 run_ns=110142625"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:237: compiler native process=2.384900827s tsgo: load_ns=265624211 query_ns=314327641 queries=460 first_query_ns=6149025 run_ns=2087438757"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:250: released query: panic 70, invalid or released checker handle"
+  },
+  {
+    "test": "TestWave11FifthAgreementAndMutants",
+    "observation": "wave_11_fifth_test.go:255: released-registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:181: func mutant: exit 0, empty stderr, independent Go bytes catch byte 90"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:181: nonconstructor mutant: exit 0, empty stderr, independent Go bytes catch byte 6679"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:181: wrappers mutant: exit 0, empty stderr, independent Go bytes catch byte 7884"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:181: global mutant: exit 0, empty stderr, independent Go bytes catch byte 87"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:211: repository go process=191.44967ms cohere: load_ns=111731673 rule_ns=1080219 run_ns=61937769"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:211: repository native process=347.265901ms tsgo: load_ns=123359264 query_ns=0 queries=0 first_query_ns=0 run_ns=217438689"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:211: compiler go process=410.002069ms cohere: load_ns=333663025 rule_ns=4497489 run_ns=52849387"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:211: compiler native process=2.164521796s tsgo: load_ns=332080215 query_ns=109725768 queries=2 first_query_ns=4562773 run_ns=1808683472"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:224: released query: panic 70, invalid or released checker handle"
+  },
+  {
+    "test": "TestWave11FourthAgreementAndMutants",
+    "observation": "wave_11_fourth_test.go:229: released-registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:137: collection mutant: exit 0, empty stderr, independent Go bytes catch byte 91"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:137: outcome mutant: exit 0, empty stderr, independent Go bytes catch byte 24973"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:137: pure mutant: exit 0, empty stderr, independent Go bytes catch byte 14965"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:137: lineage mutant: exit 0, empty stderr, independent Go bytes catch byte 13543"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:137: awaited mutant: exit 0, empty stderr, independent Go bytes catch byte 25898"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:167: repository go process=207.104996ms cohere: load_ns=103969399 rule_ns=30842453 run_ns=87646421"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:167: repository native process=448.687943ms tsgo: load_ns=118314614 query_ns=130457349 queries=8394 first_query_ns=396268 run_ns=321666830"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:167: compiler go process=1.230899181s cohere: load_ns=351147812 rule_ns=767946710 run_ns=843014139"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:167: compiler native process=49.409306636s tsgo: load_ns=445546942 query_ns=38181062433 queries=91563 first_query_ns=15109842 run_ns=48920008267"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:180: released query: panic 70, invalid or released checker handle"
+  },
+  {
+    "test": "TestWave11NextAgreementAndMutants",
+    "observation": "wave_11_next_test.go:185: released-registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:150: controls 230 parse-clean 230"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:208: fragment-attributes mutant exit 0 empty stderr, Go bytes catch byte 1542"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:208: undefined-intrinsic mutant exit 0 empty stderr, Go bytes catch byte 1884"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:208: index-name mutant exit 0 empty stderr, Go bytes catch byte 3280"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:218: raw binding mutant exit 0 empty stderr, Go bytes catch byte 629"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:245: repository go process 179.884654ms cohere: load_ns=104583659 rule_ns=8216150 run_ns=59337442"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:245: repository native process 720.272037ms tsgo: load_ns=114068844 query_ns=307083929 queries=287 first_query_ns=1809511 run_ns=596171529"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:245: compiler go process 399.050472ms cohere: load_ns=282979214 rule_ns=63888794 run_ns=98565012"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:245: compiler native process 5.605869617s tsgo: load_ns=263309262 query_ns=3100597222 queries=77 first_query_ns=47081 run_ns=5299345965"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:255: released handle rejected with panic 70"
+  },
+  {
+    "test": "TestWave11SeventhAgreementAndMutants",
+    "observation": "wave_11_seventh_test.go:260: released registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: regexp mutant: exit 0, empty stderr, independent Go bytes catch byte 484"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: array mutant: exit 0, empty stderr, independent Go bytes catch byte 14071"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: branches mutant: exit 0, empty stderr, independent Go bytes catch byte 16896"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: signature mutant: exit 0, empty stderr, independent Go bytes catch byte 20987"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: index mutant: exit 0, empty stderr, independent Go bytes catch byte 14068"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:124: syntax mutant: exit 0, empty stderr, independent Go bytes catch byte 1343"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:154: repository go process=194.089524ms cohere: load_ns=111332676 rule_ns=1145075 run_ns=65389240"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:154: repository native process=365.168612ms tsgo: load_ns=135554063 query_ns=0 queries=0 first_query_ns=0 run_ns=215909677"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:154: compiler go process=385.096562ms cohere: load_ns=293749970 rule_ns=12887838 run_ns=69261514"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:154: compiler native process=2.04751503s tsgo: load_ns=293873367 query_ns=51390128 queries=74 first_query_ns=5481578 run_ns=1736726928"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:167: released query: panic 70, invalid or released checker handle"
+  },
+  {
+    "test": "TestWave11AgreementAndMutants",
+    "observation": "wave_11_test.go:172: released-registry mutant exits 0, caught by required panic 70"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:189: eval mutant: exit 0, empty stderr, independent Go bytes catch byte 88"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:189: extend mutant: exit 0, empty stderr, independent Go bytes catch byte 19890"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:189: assign mutant: exit 0, empty stderr, independent Go bytes catch byte 28309"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:189: global mutant: exit 0, empty stderr, independent Go bytes catch byte 1778"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:189: anchor mutant: exit 0, empty stderr, independent Go bytes catch byte 35749"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:219: repository go process=210.701046ms cohere: load_ns=119556295 rule_ns=10828714 run_ns=74417660"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:219: repository native process=381.187583ms tsgo: load_ns=119976960 query_ns=26279460 queries=661 first_query_ns=242616 run_ns=252442412"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:219: compiler go process=450.965939ms cohere: load_ns=260965029 rule_ns=93807209 run_ns=168937252"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:219: compiler native process=2.199019303s tsgo: load_ns=270709302 query_ns=245272356 queries=9190 first_query_ns=3121368 run_ns=1907348017"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:232: released query: panic 70, invalid or released checker handle"
+  },
+  {
+    "test": "TestWave11ThirdAgreementAndMutants",
+    "observation": "wave_11_third_test.go:237: released-registry mutant exits 0, caught by required panic 70"
+  }
+]

@@ -1,0 +1,5 @@
+{
+  "exit": 2,
+  "source": "new P(@d async()=>{})\n",
+  "cause": "shared project replay corpus discovery includes invalid parser recovery fixtures"
+}
