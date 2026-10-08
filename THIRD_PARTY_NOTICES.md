@@ -52,6 +52,9 @@ IN THE SOFTWARE.
   - Strict ISO Date parsing (`internal/native/runtime/date_iso_parse_impl.h`, after
     V8 src/date/dateparser-inl.h, src/date/dateparser.cc and src/date/dateparser.h
     as vendored in Node v24.19.0);
+  - Array and String iterator next (`runtime/map_set.c`, after
+    `deps/v8/src/builtins/builtins-array-gen.cc` ArrayIteratorPrototypeNext and
+    `deps/v8/src/builtins/string-iterator.tq`, Node.js v24.19.0; dense Array path);
   - Map and Set number hashing (`runtime/map_set.c`, after Object::GetSimpleHash in
     src/objects/objects-inl.h and ComputeUnseededHash/ComputeLongHash in src/utils/utils.h,
     V8 13.6.233.17);
@@ -415,3 +418,9 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 ````
+
+The numeric helper witness `internal/oracle/testdata/library_iterator_tsc_helpers.a` adapts
+TypeScript 6.0.3 `src/compiler/utilities.ts` (`forEachEntry`) and `src/compiler/core.ts`
+(`firstDefinedIterator`, `reduceLeftIterator`), commit `050880ce59e30b356b686bd3144efe24f875ebc8`.
+Copyright (c) Microsoft Corporation, Apache License 2.0; see [cohere/NOTICE](cohere/NOTICE)
+and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md) for the license.

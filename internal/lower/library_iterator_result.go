@@ -14,8 +14,8 @@ func libraryIteratorDoneTruth(value ir.Expression) ir.Expression {
 	return value
 }
 
-// The runtime's internal next closure represents an inherited collection method.
-// Only a bound call may read that slot; detached reads and copies stay refused.
+// Inherited next uses the existing interface-call ABI. Detached reads and
+// copies stay refused, so private counted state cannot become a public field.
 func (l *lowering) libraryIteratorNextClosure(node *ast.Node) (ir.Expression, bool, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
