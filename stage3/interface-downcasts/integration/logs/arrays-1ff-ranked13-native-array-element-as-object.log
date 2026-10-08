@@ -1,0 +1,9 @@
+--- FAIL: TestCheckedViewRanked13ArrayContracts (0.00s)
+    --- FAIL: TestCheckedViewRanked13ArrayContracts/ranked13-anonymous-alias-arguments-wrong-array (15.33s)
+        checked_views_ranked13_arrays_test.go:59: exit codes differ; stderr "/home/agent/.cache/adamic/runtime/.build-1694420591/object.c:121:32: runtime error: member access within misaligned address 0x000000000001 for type 'const adamic_shape' (aka 'const struct adamic_shape'), which requires 8 byte alignment\n0x000000000001: note: pointer points here\n<memory cannot be printed>\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1694420591/object.c:121:32 \n"; stdout ""; exit 1
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	15.351s
+FAIL

@@ -1,0 +1,64 @@
+internal/native/emit_expressions.go-446-		pair := e.shapeOf([]string{"0", "1"}, []ir.Type{expression.KeyType, expression.ValueType})
+internal/native/emit_expressions.go-447-		return e.graphArray(fmt.Sprintf("adamic_map_entries(%s, &%s)", e.value(expression.Map), pair), expression.GraphTypes)
+internal/native/emit_expressions.go-448-	case ir.ArraySlice:
+internal/native/emit_expressions.go-449-		array := e.value(expression.Array)
+internal/native/emit_expressions.go-450-		arguments := []string{"0.0", "0.0"}
+internal/native/emit_expressions.go-451-		for index, argument := range expression.Arguments {
+internal/native/emit_expressions.go-452-			arguments[index] = e.value(argument)
+internal/native/emit_expressions.go-453-		}
+internal/native/emit_expressions.go:454:<<<<<<< HEAD
+internal/native/emit_expressions.go-455-		slice := "adamic_array_slice"
+internal/native/emit_expressions.go-456-		if ir.HasArrayViews(e.program) {
+internal/native/emit_expressions.go-457-			slice = "adamic_view_array_slice"
+internal/native/emit_expressions.go-458-		}
+internal/native/emit_expressions.go-459-		return e.own(ir.Array, fmt.Sprintf("%s(%s, %s, %s, %t)", slice, array, arguments[0], arguments[1], len(expression.Arguments) == 2))
+internal/native/emit_expressions.go:460:=======
+internal/native/emit_expressions.go-461-		return e.graphArray(fmt.Sprintf("adamic_array_slice(%s, %s, %s, %t)", array, arguments[0], arguments[1], len(expression.Arguments) == 2), expression.GraphTypes)
+internal/native/emit_expressions.go:462:>>>>>>> origin/codex/views-integration
+internal/native/emit_expressions.go-463-	case ir.ArraySort:
+internal/native/emit_expressions.go-464-		array := e.value(expression.Array)
+internal/native/emit_expressions.go-465-		sort := "adamic_array_sort"
+internal/native/emit_expressions.go-466-		if expression.Element == ir.MaybeNumber {
+internal/native/emit_expressions.go-467-			sort = "adamic_array_sort_undefined_last"
+internal/native/emit_expressions.go-468-		}
+internal/native/emit_expressions.go-469-		// A comparator that throws stops the sort, which leaves the array as it was, as V8's does
+internal/native/emit_expressions.go-470-		// (sort.c), and the throw goes on from here.
+--
+docs/checked-views-plan.md-351-Read-based callable demand is 308 type/field pairs and 1,503 source reads in the
+docs/checked-views-plan.md-352-pinned full compiler, from the c898009b-following census at 2de6d1ba. These are
+docs/checked-views-plan.md-353-partial demand, not successful lowerings or a claim every read is blocked. Exact
+docs/checked-views-plan.md-354-pairs and source witnesses are in stage3/interface-downcasts/lane2/read-census.
+docs/checked-views-plan.md-355-Existing controls include function-field, class-method, callable missing/kind/
+docs/checked-views-plan.md-356-uninitialized fixtures and the pinned opaque-signature refusal. The previous
+docs/checked-views-plan.md-357-signature mutant was caught; its evidence is retained in parser-return-logs.
+docs/checked-views-plan.md-358-
+docs/checked-views-plan.md:359:<<<<<<< HEAD
+docs/checked-views-plan.md-360-## Centralized checked-view integration
+docs/checked-views-plan.md-361-
+docs/checked-views-plan.md-362-The lead assigned Codex 01a11882-3830 on codex/views-integration to merge every
+docs/checked-views-plan.md-363-lane tip and resolve conflicts once, hunk by hunk. This supersedes all direct
+docs/checked-views-plan.md-364-cross-lane merge instructions above, including the Lane 1 cast-conflict handoff.
+docs/checked-views-plan.md-365-Each worker pushes only its own branch and obtains another lane's code by merging
+docs/checked-views-plan.md-366-the newest codex/views-integration SHA when needed. Workers blocked on lazy
+docs/checked-views-plan.md-367-admission build against that integration branch where possible; otherwise they
+docs/checked-views-plan.md-368-report the blocker and rest until the lead wakes them. Lane 2 remains native
+docs/checked-views-plan.md-369-arrays only, and Lane 5 retains callable ownership and certification hooks.
+docs/checked-views-plan.md:370:=======
+docs/checked-views-plan.md-371-### Lazy admission checkpoint, October 7, 2026
+docs/checked-views-plan.md-372-
+docs/checked-views-plan.md-373-Lazy unsupported descriptors now admit unread members. The shared allocation flow
+docs/checked-views-plan.md-374-checks demanded callable reads, joining helpers and retaining Unknown callbacks.
+docs/checked-views-plan.md-375-Tagged, untagged, and unread mixed-union fixtures match Node in native sanitized,
+docs/checked-views-plan.md-376-native release, and JavaScript runs. The helper mutant refuses at its opaque read.
+docs/checked-views-plan.md-377-Focused lower and oracle tests passed; array consumer coverage and the full view
+docs/checked-views-plan.md-378-suite are still pending. The earlier lane 2 and lane 3 merges preceded the new
+--
+docs/checked-views-plan.md-417-all five. Full lower tests likewise retain reproduced merged-baseline failures.
+docs/checked-views-plan.md-418-An extra Error.code probe exits 70 at the native read with an unsupported representation,
+docs/checked-views-plan.md-419-rather than matching Node's missing optional field result. It is a recorded limit,
+docs/checked-views-plan.md-420-not a successful positive fixture. Two old eager optional-Error compile assertions
+docs/checked-views-plan.md-421-were updated to expect lazy admission. The final focused lower and view oracle tests
+docs/checked-views-plan.md-422-pass. The integration branch was still absent from origin at the last check. This
+docs/checked-views-plan.md-423-work is available on its own branch; whole-project compilation and a green integration
+docs/checked-views-plan.md-424-gate are not claimed.
+docs/checked-views-plan.md:425:>>>>>>> origin/codex/views-integration

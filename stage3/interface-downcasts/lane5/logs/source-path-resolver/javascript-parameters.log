@@ -1,0 +1,11 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (0.47s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/source-file-path/wrong-members (0.46s)
+        checked_views_callable_later_ranked_test.go:43: gate cache node hit
+        checked_views_callable_later_ranked_test.go:63: gate cache node miss
+        checked_views_callable_later_ranked_test.go:83: backend2 exit 0 stdout "3\n" stderr "" want "getSourceFileByPath" and "found function with incompatible parameter representations"; sanitized exit 70 stderr "adamic: panic: field read failed: realProgram.getSourceFileByPath expected (path: string) => SourceFile | undefined, found function with incompatible parameter representations\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.480s
+FAIL

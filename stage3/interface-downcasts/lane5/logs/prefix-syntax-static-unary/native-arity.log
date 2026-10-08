@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.88s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/prefix-operand/wrong-arity (0.53s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node miss
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend0 exit 0 stdout "9\n" stderr "" want "parenthesizeOperandOfPrefixUnary" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/syntax-kind/wrong-arity (0.44s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node miss
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend0 exit 0 stdout "9\n" stderr "" want "formatSyntaxKind" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/static-block/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node miss
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend0 exit 0 stdout "9\n" stderr "" want "createClassStaticBlockDeclaration" and "found function with arity 0"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/prefix-unary/wrong-arity (0.45s)
+        checked_views_callable_later_ranked_test.go:68: gate cache node miss
+        checked_views_callable_later_ranked_test.go:88: gate cache node miss
+        checked_views_callable_later_ranked_test.go:108: backend0 exit 0 stdout "9\n" stderr "" want "createPrefixUnaryExpression" and "found function with arity 0"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.891s
+FAIL

@@ -1,0 +1,4 @@
+lane1_only [('untagged', 'ResolvedModuleFull', ['nullish members', 'optional properties']), ('untagged', 'ResolvedModuleFull', ['nullish members', 'optional properties'])]
+lane2_only [('untagged', 'U[]', ['array or tuple contracts']), ('untagged', 'U[]', ['array or tuple contracts']), ('untagged', 'MultiMap<K, V>', ['callable contracts'])]
+both [('untagged', 'FlowLabel', ['array or tuple contracts', 'nullish members']), ('untagged', 'ModuleResolutionCache', ['callable contracts', 'nullish members', 'optional properties']), ('untagged', 'FlowLabel', ['array or tuple contracts', 'nullish members'])]
+PASS: all 2936 identities, original counts, remaining sets and exclusive/projection totals agree

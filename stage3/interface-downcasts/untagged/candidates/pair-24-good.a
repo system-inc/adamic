@@ -1,0 +1,17 @@
+// Independent recursive Type projection with a lane-5 scalar checker callable.
+interface TypeChecker {readonly check:()=>number;}
+interface Symbol {readonly name:string;}
+interface InstantiableType {readonly flags:number;readonly id:number;readonly checker:TypeChecker;readonly symbol:Symbol;}
+interface UnionOrIntersectionType {readonly flags:number;readonly id:number;readonly checker:TypeChecker;readonly symbol:Symbol;readonly types:readonly Type[];}
+type Type=InstantiableType|UnionOrIntersectionType;
+interface ReadReceiver {readonly kind:'Receiver';readonly type:Type;}
+const raw0={kind:'Receiver' as const,type:{flags:0,id:1,checker:{check:()=>1},symbol:{name:'s'}}};
+const base0:{readonly kind:'Receiver'}=raw0;
+const view0=base0 as ReadReceiver;
+const value0=view0.type;
+console.log(`${value0!==undefined}`);
+const raw1={kind:'Receiver' as const,type:{flags:1,id:2,checker:{check:()=>2},symbol:{name:'u'},types:[{flags:0,id:1,checker:{check:()=>1},symbol:{name:'s'}}]}};
+const base1:{readonly kind:'Receiver'}=raw1;
+const view1=base1 as ReadReceiver;
+const value1=view1.type;
+console.log(`${value1!==undefined}`);

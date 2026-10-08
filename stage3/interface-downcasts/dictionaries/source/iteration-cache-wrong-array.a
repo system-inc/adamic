@@ -1,0 +1,12 @@
+interface Type { readonly flags: number; readonly unread?: null; }
+interface Signature { readonly minArgumentCount: number; }
+interface IterationTypes { readonly nextType: Type; readonly yieldType: Type; readonly returnType: Type; }
+interface Base { readonly kind: 'Cache'; }
+interface IterationTypes extends Base { readonly anchor: number; readonly nextType: Type; readonly yieldType: Type; }
+function pick(first: boolean): 'nextType' | 'yieldType' { return first ? 'nextType' : 'yieldType'; }
+const payload = { kind: 'Cache' as const, anchor: 1, returnType: {flags: 3}, nextType: [1], yieldType: { flags: 1 } };
+const base: Base = payload;
+const view = base as IterationTypes;
+const key = pick(true);
+const value = view[key];
+console.log(typeof value);

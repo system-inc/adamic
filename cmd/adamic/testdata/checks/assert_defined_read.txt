@@ -1,0 +1,7 @@
+internal/lower/testdata/predicates/assert_defined_read.a:16:5: predicate assertIsDefined
+  true: proven; implementation body proves this direction
+internal/lower/testdata/predicates/assert_defined_read.a:24:5: predicate assertIsDefined
+  true: proven; implementation body proves this direction
+internal/lower/testdata/predicates/assert_defined_read.a:7:5: predicate assertIsDefined
+  true: proven; implementation body proves this direction
+adamic: predicate checks: proven 3 checked 0 unobservable 0

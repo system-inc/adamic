@@ -1,0 +1,10 @@
+// Original tsc declaration/read witness; adjacent helpers and carriers reduced.
+interface Expression {readonly kind:"expression";readonly value:number;}
+type MemberName = Expression;
+type PropertyName = Expression;
+interface PropertyAccessExpression {readonly kind:"property";readonly value:number;}
+interface Base {readonly createPropertyAccessExpression:unknown;readonly createIdentifier:(text:string)=>Expression;readonly createAssignment:(left:Expression,right:Expression)=>Expression;}
+interface Target {createPropertyAccessExpression(expression: Expression, name: string | MemberName): PropertyAccessExpression;createIdentifier(text:string):Expression;createAssignment(left:Expression,right:Expression):Expression;}
+function inspect(node:PropertyAccessExpression):void {console.log(`${node.value}`);}
+function probe(value:Base):void {const factory=value as Target;const elementName:{readonly name:string|MemberName}={name:{kind:"expression",value:4}};inspect(factory.createPropertyAccessExpression(factory.createIdentifier("obj"), elementName.name));}
+probe({createPropertyAccessExpression:(expression:Expression,name:string|MemberName):PropertyAccessExpression=>({kind:"property",value:expression.value+(typeof name==="string"?name.length:name.value)}),createIdentifier:(text:string):Expression=>({kind:"expression",value:5}),createAssignment:(left:Expression,right:Expression):Expression=>left});

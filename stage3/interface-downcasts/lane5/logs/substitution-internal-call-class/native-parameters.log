@@ -1,0 +1,23 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (2.00s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/substitution-hook/wrong-members (0.52s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node miss
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend0 exit -1 stdout "" stderr "" want "onSubstituteNode" and "found function with incompatible parameter representations"; sanitized exit 1 stderr "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==148044==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x557fa4d72c33 bp 0x7fff859a4610 sp 0x7fff859a45f0 T0)\n==148044==The signal is caused by a READ memory access.\n==148044==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x557fa4d72c33 in adamic_retain /home/agent/.cache/adamic/runtime/.build-736802636/heap.c:242:28\n    #1 0x557fa4d59894 in adamic_function_1_closure /tmp/adamic-gate/adamic-build-154147830/main.c:69:2\n    #2 0x557fa4d97963 in adamic_node_performance_invoke /home/agent/.cache/adamic/runtime/.build-736802636/node_process.c:446:12\n    #3 0x557fa4d59354 in adamic_function_0_probe /tmp/adamic-gate/adamic-build-154147830/main.c:43:37\n    #4 0x557fa4d59354 in main /tmp/adamic-gate/adamic-build-154147830/main.c:91:2\n    #5 0x7fce96309ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #6 0x7fce96309d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #7 0x557fa4c72510 in _start (/tmp/adamic-gate/TestCheckedViewCallableLaterRankedFamiliessubstitution-hookwro391498295/001/program+0x62510)\n\n==148044==Register values:\nrax = 0x3ff0000000000008  rbx = 0x3ff0000000000000  rcx = 0x07fe000000000001  rdx = 0x00007bce94100098  \nrdi = 0x3ff0000000000000  rsi = 0x00007bce94100090  rbp = 0x00007fff859a4610  rsp = 0x00007fff859a45f0  \n r8 = 0x00000f79d2800010   r9 = 0x00007fffffffff01  r10 = 0x0000000000001f01  r11 = 0x00007c2e953e0080  \nr12 = 0x00007bce940000a0  r13 = 0x00007bce94100090  r14 = 0x00007c2e953e0080  r15 = 0x00007c0e953e0010  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-736802636/heap.c:242:28 in adamic_retain\n==148044==ABORTING\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/internal-name/wrong-members (0.47s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node miss
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend0 exit 0 stdout "3\n" stderr "" want "getInternalName" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/call-update/wrong-members (0.48s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node miss
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend0 exit 0 stdout "10\n" stderr "" want "updateCallExpression" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/class-update/wrong-members (0.51s)
+        checked_views_callable_later_ranked_test.go:72: gate cache node miss
+        checked_views_callable_later_ranked_test.go:92: gate cache node miss
+        checked_views_callable_later_ranked_test.go:112: backend0 exit 0 stdout "21\n" stderr "" want "updateClassDeclaration" and "found function with incompatible parameter representations"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=8
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	2.004s
+FAIL

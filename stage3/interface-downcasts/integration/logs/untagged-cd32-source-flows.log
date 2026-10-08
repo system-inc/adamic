@@ -1,0 +1,55 @@
+=== RUN   TestCheckedViewUntaggedSourceFlows
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/helper/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/generic/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/callback/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/good
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=0 stdout="true\n" stderr=""
+    checked_views_untagged_unions_test.go:285: javascript: exit=0 stdout="true\n" stderr=""
+=== RUN   TestCheckedViewUntaggedSourceFlows/stored/wrong
+    checked_views_untagged_unions_test.go:278: gate cache node miss
+    checked_views_untagged_unions_test.go:284: gate cache node miss
+    checked_views_untagged_unions_test.go:285: native: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+    checked_views_untagged_unions_test.go:285: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\n"
+--- PASS: TestCheckedViewUntaggedSourceFlows (1.80s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/good (0.27s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/helper/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/generic/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/good (0.23s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/callback/wrong (0.22s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/good (0.21s)
+    --- PASS: TestCheckedViewUntaggedSourceFlows/stored/wrong (0.22s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=16
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.809s

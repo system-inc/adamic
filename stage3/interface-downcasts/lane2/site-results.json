@@ -1,0 +1,23 @@
+{
+  "audit_entries": 2936,
+  "lane2_primary_partition": 1071,
+  "partition_tagged": 25,
+  "partition_untagged": 1046,
+  "before_verified_reduced_witness_sites": 0,
+  "after_verified_reduced_witness_sites": 1,
+  "whole_corpus_lowering": "not measured",
+  "sites": [
+    {
+      "file": "src/compiler/core.ts",
+      "line": 356,
+      "column": 37,
+      "text": "array.slice(0, i) as unknown[] as U[]",
+      "audit_outcome": "undecidable",
+      "before": "parser probe refuses adamic/no-unchecked-cast",
+      "after": "unchanged reduced probe lowers and prints 1 on Node, debug native, release native and JavaScript",
+      "probe": "native-generic-array-cast.a",
+      "parser_slice_site": "core.ts:195",
+      "element_rule_probe": "generic-array-element.a"
+    }
+  ]
+}

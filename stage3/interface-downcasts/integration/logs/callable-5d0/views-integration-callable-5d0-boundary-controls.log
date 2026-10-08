@@ -1,0 +1,21 @@
+=== RUN   TestCheckedViewCallableOriginalMixedCallbackABI
+=== RUN   TestCheckedViewCallableOriginalMixedCallbackABI/mixed_union_callback
+=== RUN   TestCheckedViewCallableOriginalMixedCallbackABI/mixed_union_callback_variance
+--- PASS: TestCheckedViewCallableOriginalMixedCallbackABI (1.07s)
+    --- PASS: TestCheckedViewCallableOriginalMixedCallbackABI/mixed_union_callback (0.66s)
+    --- PASS: TestCheckedViewCallableOriginalMixedCallbackABI/mixed_union_callback_variance (0.41s)
+=== RUN   TestCheckedViewCallableRetainsNeverWiderHelper
+--- PASS: TestCheckedViewCallableRetainsNeverWiderHelper (0.32s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.408s
+=== RUN   TestViewCallableBoxingUnknownProducer
+--- PASS: TestViewCallableBoxingUnknownProducer (0.25s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.266s
+=== RUN   TestViewCallableBoxingUnknownProducer
+--- PASS: TestViewCallableBoxingUnknownProducer (0.08s)
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.085s

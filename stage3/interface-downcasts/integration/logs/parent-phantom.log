@@ -1,0 +1,12 @@
+--- FAIL: TestPhantomArrayRequiredCastsAreErased (0.20s)
+    phantom_array_brands_test.go:137: required undefined array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayCastsAreErased (0.21s)
+    phantom_array_brands_test.go:74: array brands or casts changed the unbranded IR
+--- FAIL: TestPhantomArrayProofs (0.00s)
+    --- FAIL: TestPhantomArrayProofs/tuple_representation (0.10s)
+        phantom_array_brands_test.go:93: got /tmp/adamic-gate/TestPhantomArrayProofstuple_representation1621338836/001/main.a:1:114: Adamic 0.1 refuses a checked view with callable field toString; prove the callable body rather than asserting its signature, want refusal containing not an array
+    --- FAIL: TestPhantomArrayProofs/cycle (0.07s)
+        phantom_array_brands_test.go:93: got <nil>, want refusal containing adamic/cycle-capable
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.227s
+FAIL

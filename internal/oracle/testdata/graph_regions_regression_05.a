@@ -1,0 +1,11 @@
+class Button {
+	label = 'ok';
+	onClick: () => string = () => '';
+}
+function wire(): string {
+	const button = new Button();
+	button.onClick = () => button.label;
+	return button.onClick();
+}
+console.log(wire());
+

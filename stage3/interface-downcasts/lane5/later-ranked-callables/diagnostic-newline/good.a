@@ -1,0 +1,6 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+
+interface Base {readonly getNewLine:unknown;}
+interface Target {getNewLine(): string;}
+function probe(value:Base):void {const host=value as Target;console.log(host.getNewLine());}
+probe({getNewLine:():string=>"abc"});

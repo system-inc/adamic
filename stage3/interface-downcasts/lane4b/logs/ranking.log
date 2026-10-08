@@ -1,0 +1,35 @@
+73 pairs, 267 reads; completed 0 pairs, 0 reads
+ 63 reads 24 pairs: string | NodeArray<JSDocComment> | undefined
+ 33 reads  1 pairs: "string" | "number" | "boolean" | "object" | Map<string, string | number> | "list" | "listOrElement"
+ 24 reads  4 pairs: string | DiagnosticMessageChain
+ 20 reads  1 pairs: true | Node | undefined
+ 13 reads  2 pairs: TsConfigSourceFile | CompilerOptionsValue
+ 12 reads  2 pairs: number | Expression | Statement | undefined
+ 11 reads  1 pairs: false | TypeOnlyAliasDeclaration | undefined
+ 10 reads  1 pairs: string | number | PseudoBigInt
+  7 reads  1 pairs: boolean | (() => boolean) | undefined
+  6 reads  2 pairs: false | Symbol | undefined
+  6 reads  4 pairs: EmitSignature | undefined
+  5 reads  1 pairs: false | BuildInfo
+  4 reads  1 pairs: string | GeneratedNamePart | undefined
+  4 reads  1 pairs: string | number | boolean | DiagnosticMessage | undefined
+  4 reads  1 pairs: "string" | "number" | "boolean" | "object" | Map<string, string | number>
+  4 reads  1 pairs: string | string[] | undefined
+  4 reads  2 pairs: [] | EmitSignature | IncrementalBuildInfoFileId
+  4 reads  2 pairs: readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId
+  3 reads  1 pairs: string | ((node: EmitHelperUniqueNameCallback) => string)
+  3 reads  1 pairs: boolean | (() => boolean)
+  3 reads  1 pairs: string | ReusableDiagnosticMessageChain
+  3 reads  2 pairs: readonly string[] | SourceFile | "paths" | ModuleSpecifierCache | "node_modules" | "redirect" | "relative" | "ambient" | readonly ModulePath[] | undefined
+  3 reads  2 pairs: IncrementalBuildInfoRoot
+  3 reads  3 pairs: boolean | Expression | undefined
+  2 reads  1 pairs: false | Type | undefined
+  2 reads  1 pairs: false | string[] | undefined
+  2 reads  1 pairs: false | VersionPaths | undefined
+  2 reads  1 pairs: false | Date | undefined
+  2 reads  2 pairs: string | readonly string[] | undefined
+  1 reads  1 pairs: T | readonly T[] | T[] | undefined
+  1 reads  1 pairs: CompilerOptionsValue
+  1 reads  1 pairs: K | V[]
+  1 reads  1 pairs: RepopulateDiagnosticChainInfo
+  1 reads  1 pairs: number | ReportFileInError | undefined

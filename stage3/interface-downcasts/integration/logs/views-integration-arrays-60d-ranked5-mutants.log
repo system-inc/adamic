@@ -1,0 +1,8 @@
+native-array-kind: caught by ranked5-signatures-wrong-array; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/native-array-kind.log
+javascript-array-kind: caught by ranked5-tuple-wrong-array; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/javascript-array-kind.log
+native-element-kind: caught by ranked5-tuple-wrong-element; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/native-element-kind.log
+javascript-element-kind: caught by ranked5-jsdoc-wrong-element; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/javascript-element-kind.log
+native-union-element-tag: caught by ranked5-modifiers-wrong-tag; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/native-union-element-tag.log
+javascript-union-element-tag: caught by ranked5-modifiers-wrong-tag; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/javascript-union-element-tag.log
+native-nullable-member-kinds: caught by ranked5-heritage-wrong-array; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/native-nullable-member-kinds.log
+javascript-nullable-member-kinds: caught by ranked5-modifiers-wrong-array; /tmp/adamic-gate/adamic-lane2-ranked5-array-mutants/javascript-nullable-member-kinds.log

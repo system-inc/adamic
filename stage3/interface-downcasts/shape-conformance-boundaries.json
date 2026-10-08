@@ -1,0 +1,138 @@
+[
+  {
+    "file": "src/compiler/debug.ts",
+    "line": 558,
+    "column": 37,
+    "operation": "Object.create",
+    "text": "Object.create(Object.prototype)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/debug.ts",
+    "line": 598,
+    "column": 38,
+    "operation": "Object.create",
+    "text": "Object.create(Array.prototype)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/debug.ts",
+    "line": 944,
+    "column": 54,
+    "operation": "Object.create",
+    "text": "Object.create(/*o*/ null)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/performanceCore.ts",
+    "line": 35,
+    "column": 37,
+    "operation": "require",
+    "text": "require(\"perf_hooks\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/tracing.ts",
+    "line": 63,
+    "column": 22,
+    "operation": "require",
+    "text": "require(\"fs\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1470,
+    "column": 42,
+    "operation": "require",
+    "text": "require(\"fs\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1471,
+    "column": 46,
+    "operation": "require",
+    "text": "require(\"path\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1472,
+    "column": 21,
+    "operation": "require",
+    "text": "require(\"os\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1476,
+    "column": 23,
+    "operation": "require",
+    "text": "require(\"crypto\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1597,
+    "column": 22,
+    "operation": "require",
+    "text": "require(\"source-map-support\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1619,
+    "column": 38,
+    "operation": "require",
+    "text": "require(modulePath)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sys.ts",
+    "line": 1650,
+    "column": 59,
+    "operation": "require",
+    "text": "require(\"inspector\")",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/utilitiesPublic.ts",
+    "line": 749,
+    "column": 44,
+    "operation": "JSON.parse",
+    "text": "JSON.parse(fileContents!)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 7811,
+    "column": 16,
+    "operation": "JSON.parse",
+    "text": "JSON.parse(text)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/utilities.ts",
+    "line": 8578,
+    "column": 5,
+    "operation": "Object.assign",
+    "text": "Object.assign(objectAllocator, alloc)",
+    "result_type": "ObjectAllocator"
+  },
+  {
+    "file": "src/compiler/factory/nodeFactory.ts",
+    "line": 6096,
+    "column": 34,
+    "operation": "Object.create",
+    "text": "Object.create(redirectInfo.redirectTarget)",
+    "result_type": "any"
+  },
+  {
+    "file": "src/compiler/sourcemap.ts",
+    "line": 424,
+    "column": 24,
+    "operation": "JSON.parse",
+    "text": "JSON.parse(text)",
+    "result_type": "any"
+  }
+]

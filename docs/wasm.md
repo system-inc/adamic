@@ -229,3 +229,46 @@ Setup printed `go ready`, `clang ready`, `node ready` and `submodules ready` at
 0 s, `build cache warm` at 106 s, and `done in 106s on 5 processors` (`nproc` = 5,
 cgroup quota four CPUs, 17.6 GB reported memory). Go was 1.27.1 and native clang
 20.1.8. The setup environment was `/workspace/adamic-tools/env.sh`.
+
+## Node host runtime on WASI
+
+The Node filesystem, directory and process translation units also build for
+WASI. Lowering remains target independent. At the target-aware build boundary,
+`TargetRefused` rejects emitted calls to `mkdtempSync`, `process.pid`,
+`process.platform`, `process.argv`, `process.stdout.columns` and
+`process.memoryUsage`. String data and comments do not select a host operation.
+Each unavailable entry also has a runtime panic with its member and reason for
+callers that did not pass through that boundary. There are no fabricated ids,
+platform strings, executable paths, terminal widths or allocation observations.
+
+WASI libc supplies ordinary file and descriptor I/O, positioned reads and writes,
+fsync, directory enumeration, stat/lstat, realpath, readlink, removal, clocks,
+allocation, environment access and mutation. Symlink creation, chmod and
+getrusage are not called by these three translation units. The executable-path
+readlink remains Linux-only; Darwin allocator headers remain Darwin-only.
+
+The shared filesystem adapter resolves a path's parent before invoking a WASI
+path operation. This preserves symlink-before-`..` traversal without following
+an unlink/lstat leaf or requiring a creation leaf to exist. Original input
+spellings remain in errors. The existing `fileStatus` directory bridge uses the
+same adapter through one include. Empty paths report Node's ENOENT, and reading
+a directory reports EISDIR rather than WASI fd_read's EBADF.
+
+Custom file and directory creation modes refuse before the effect: WASI has no
+POSIX permission-bit API. Default creation modes continue through the host.
+Node 24's WASI path_filestat_set_times drops subsecond precision; Preview 1 also
+cannot represent pre-epoch timestamps. Fractional, negative and out-of-range
+utimes inputs therefore refuse before changing timestamps. Nonnegative
+whole-second updates and timestamp reads remain available.
+
+Preview 1 has no initial cwd. The command runner explicitly supplies
+`ADAMIC_WASI_CWD`; the runtime enters that directory within the supplied
+preopens, or panics if it cannot. Without that variable, wasi-libc's virtual
+cwd remains `/`. This does not grant any additional filesystem capability.
+
+`ADAMIC_ORACLE_WASI=1` now also runs the existing input and filesystem host
+fixtures, with their directories, arguments, uid and file-effect comparisons.
+Typed compile refusals and the exact owned runtime refusals above are recorded
+as target skips. Compilation failures, ordinary panics, traps and unexpected
+output remain failures. Runtime refusal probes independently require exit 70
+and the exact reason, using token pasting to bypass the build-boundary check.

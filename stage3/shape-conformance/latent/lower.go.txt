@@ -1,0 +1,901 @@
+// Measurement only, supplied through a scratch overlay. No backend imports.
+package lower
+
+import (
+	"context"
+	"fmt"
+	"path/filepath"
+	"regexp"
+	"sort"
+	"strconv"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/microsoft/TypeScript/tsc/shim/scanner"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+)
+
+const latentShapeLabel = "measured on a checker-rejected program"
+
+type LatentShapeSite struct {
+	File       string `json:"file"`
+	Line       int    `json:"line"`
+	Column     int    `json:"column"`
+	SourceType string `json:"source_type"`
+	TargetType string `json:"target_type"`
+	Start      int    `json:"start"`
+	End        int    `json:"end"`
+	Kind       string `json:"kind"`
+	Text       string `json:"text"`
+	Adapted    *struct {
+		Start int    `json:"start"`
+		End   int    `json:"end"`
+		Owner string `json:"owner"`
+	} `json:"adapted"`
+	Measurement      string                       `json:"measurement"`
+	Outcome          string                       `json:"outcome"`
+	Reason           string                       `json:"reason"`
+	Detail           []string                     `json:"detail"`
+	AllocationSites  []int                        `json:"allocation_sites"`
+	Fields           []latentShapeField           `json:"fields"`
+	HostValues       []string                     `json:"host_values"`
+	DiagnosticCauses []latentShapeDiagnosticCause `json:"diagnostic_causes"`
+}
+type latentShapeField struct {
+	Name     string `json:"name"`
+	Reason   string `json:"reason"`
+	Declared string `json:"declared,omitempty"`
+	Expected string `json:"expected,omitempty"`
+}
+type latentShapeUnknown struct {
+	Category, Reason, Value string
+	Diagnostics             []string
+}
+type latentShapeDiagnosticCause struct {
+	Scope       string   `json:"scope"`
+	Origin      string   `json:"origin"`
+	Diagnostics []string `json:"diagnostics"`
+}
+
+func (latentShapeUnknown) Type() ir.Type { return ir.Object }
+
+type latentShapeAllocation struct {
+	Node       *ast.Node
+	Kind       string
+	Properties map[string]*ast.Node
+	Context    *checker.Type
+}
+type latentShapeFunction struct {
+	Node    *ast.Node
+	Skipped bool
+	Index   int
+}
+type latentShapeMeter struct {
+	Loaded         *load.Program
+	Checker        *checker.Checker
+	IR             *ir.Program
+	Root           string
+	Functions      map[*ast.Node]latentShapeFunction
+	Locals         map[*ast.Symbol]int
+	Memo           map[*ast.Node]ir.Expression
+	Allocations    map[int]latentShapeAllocation
+	NextAllocation int
+	Current        int
+	Queries        map[string]ir.Expression
+	Nodes          map[string]*ast.Node
+	Diagnosed      map[*ast.Node]bool
+	Deinitialized  map[string]bool
+}
+
+func latentShapeKey(file string, start, end int) string {
+	return fmt.Sprintf("%s:%d:%d", file, start, end)
+}
+func (m *latentShapeMeter) file(node *ast.Node) string {
+	p, _ := filepath.Rel(m.Root, m.Loaded.FileName(ast.GetSourceFileOfNode(node)))
+	return filepath.ToSlash(p)
+}
+func (m *latentShapeMeter) text(node *ast.Node) string {
+	if node == nil {
+		return "<missing>"
+	}
+	return sourceExpression(node)
+}
+func (m *latentShapeMeter) append(statement ir.Statement) {
+	if m.Current < 0 {
+		m.IR.Main = append(m.IR.Main, statement)
+	} else {
+		m.IR.Functions[m.Current].Body = append(m.IR.Functions[m.Current].Body, statement)
+	}
+}
+func (m *latentShapeMeter) local(node *ast.Node) int {
+	symbol := m.Checker.GetSymbolAtLocation(node)
+	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = m.Checker.GetAliasedSymbol(symbol)
+	}
+	if index, ok := m.Locals[symbol]; ok && symbol != nil {
+		return index
+	}
+	index := len(m.IR.Locals)
+	m.IR.Locals = append(m.IR.Locals, ir.Local{Type: ir.Object})
+	if symbol != nil {
+		m.Locals[symbol] = index
+	}
+	return index
+}
+func (m *latentShapeMeter) materialize(node *ast.Node, value ir.Expression) ir.Expression {
+	index := len(m.IR.Locals)
+	m.IR.Locals = append(m.IR.Locals, ir.Local{Type: ir.Object})
+	m.append(ir.Declare{Local: index, Value: value})
+	read := ir.Read{Local: index, Of: ir.Object}
+	m.Memo[node] = read
+	return read
+}
+func (m *latentShapeMeter) diagnosticCauses(node *ast.Node) []string {
+	for current := node; current != nil; current = current.Parent {
+		if ast.IsFunctionLike(current) && current.Body() != nil {
+			return m.Loaded.LatentDiagnosticsIn(current.Body())
+		}
+		if current.Kind == ast.KindVariableStatement || current.Kind == ast.KindExpressionStatement {
+			if diagnoses := m.Loaded.LatentDiagnosticsIn(current); len(diagnoses) > 0 {
+				return diagnoses
+			}
+		}
+	}
+	return nil
+}
+func (m *latentShapeMeter) unknown(node *ast.Node, category, reason, value string, origin ...*ast.Node) ir.Expression {
+	source := node
+	if len(origin) > 0 {
+		source = origin[0]
+	}
+	var diagnoses []string
+	if category == "diagnosed body" {
+		diagnoses = m.diagnosticCauses(source)
+	}
+	return m.materialize(node, latentShapeUnknown{Category: category, Reason: reason + " at " + m.Loaded.Where(node), Value: value, Diagnostics: diagnoses})
+}
+
+var latentHostNominal = regexp.MustCompile(`\b([A-Za-z_$][A-Za-z0-9_$]*Host|Host|System|FileSystem)\b`)
+
+func latentShapeHost(text string) bool { return latentHostNominal.MatchString(text) }
+func (m *latentShapeMeter) hostOrigin(node *ast.Node) bool {
+	if node == nil {
+		return false
+	}
+	if latentShapeHost(m.Checker.TypeToString(m.Checker.GetTypeAtLocation(node))) {
+		return true
+	}
+	switch node.Kind {
+	case ast.KindPropertyAccessExpression:
+		return m.text(node) == "JSON.parse" || m.hostOrigin(node.AsPropertyAccessExpression().Expression)
+	case ast.KindElementAccessExpression:
+		return m.hostOrigin(node.AsElementAccessExpression().Expression)
+	case ast.KindCallExpression:
+		text := m.text(node.AsCallExpression().Expression)
+		return text == "require" || text == "readTextFile" || m.hostOrigin(node.AsCallExpression().Expression)
+	case ast.KindParenthesizedExpression:
+		return m.hostOrigin(node.AsParenthesizedExpression().Expression)
+	case ast.KindNonNullExpression:
+		return m.hostOrigin(node.AsNonNullExpression().Expression)
+	}
+	return false
+}
+func (m *latentShapeMeter) unmodeled(node *ast.Node) ir.Expression {
+	category := "flow the graph can't see"
+	if m.hostOrigin(node) {
+		category = "host metadata"
+	}
+	return m.unknown(node, category, "unmodeled expression "+node.Kind.String(), m.text(node))
+}
+func (m *latentShapeMeter) expression(node *ast.Node) ir.Expression {
+	if node == nil {
+		return latentShapeUnknown{Category: "flow the graph can't see", Reason: "missing expression"}
+	}
+	if value, ok := m.Memo[node]; ok {
+		return value
+	}
+	switch node.Kind {
+	case ast.KindNumericLiteral:
+		return m.materialize(node, ir.NumberConstant{})
+	case ast.KindStringLiteral, ast.KindNoSubstitutionTemplateLiteral:
+		return m.materialize(node, ir.StringConstant{})
+	case ast.KindTrueKeyword, ast.KindFalseKeyword:
+		return m.materialize(node, ir.BooleanConstant{})
+	case ast.KindIdentifier:
+		value := ir.Read{Local: m.local(node), Of: ir.Object}
+		m.Memo[node] = value
+		return value
+	case ast.KindParenthesizedExpression:
+		return m.expression(ast.SkipParentheses(node))
+	case ast.KindNonNullExpression:
+		value := m.expression(node.AsNonNullExpression().Expression)
+		m.Memo[node] = value
+		return value
+	case ast.KindAsExpression:
+		value := m.expression(node.AsAsExpression().Expression)
+		file := ast.GetSourceFileOfNode(node)
+		key := latentShapeKey(m.file(node), scanner.GetTokenPosOfNode(node, file, false), node.End())
+		m.Queries[key] = value
+		m.Nodes[key] = node
+		m.Memo[node] = value
+		return value
+	case ast.KindConditionalExpression:
+		conditional := node.AsConditionalExpression()
+		return m.materialize(node, ir.Conditional{WhenTrue: m.expression(conditional.WhenTrue), WhenNot: m.expression(conditional.WhenFalse), Of: ir.Object})
+	case ast.KindObjectLiteralExpression:
+		record := latentShapeAllocation{Node: node, Kind: "record", Properties: map[string]*ast.Node{}, Context: m.Checker.GetContextualType(node, checker.ContextFlagsNone)}
+		parent := node.Parent
+		for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
+			parent = parent.Parent
+		}
+		if parent != nil && parent.Kind == ast.KindAsExpression && m.text(parent.AsAsExpression().Type) != "const" {
+			record.Context = nil
+		}
+		literal := ir.ObjectLiteral{}
+		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+			if property.Kind != ast.KindPropertyAssignment && property.Kind != ast.KindShorthandPropertyAssignment {
+				return m.unknown(node, "flow the graph can't see", "spread, method or accessor allocation", m.text(node))
+			}
+			name := property.Name()
+			if name == nil || (name.Kind != ast.KindIdentifier && name.Kind != ast.KindStringLiteral && name.Kind != ast.KindNumericLiteral) {
+				return m.unknown(node, "flow the graph can't see", "computed allocation key", m.text(node))
+			}
+			initializer := name
+			if property.Kind == ast.KindPropertyAssignment {
+				initializer = property.AsPropertyAssignment().Initializer
+			}
+			record.Properties[name.Text()] = initializer
+			literal.Fields = append(literal.Fields, ir.Field{Name: name.Text(), Value: m.expression(initializer)})
+		}
+		m.NextAllocation++
+		literal.Class = m.NextAllocation
+		m.Allocations[literal.Class] = record
+		return m.materialize(node, literal)
+	case ast.KindArrayLiteralExpression:
+		literal := ir.ArrayLiteral{Element: ir.Object}
+		for _, element := range node.AsArrayLiteralExpression().Elements.Nodes {
+			if element.Kind == ast.KindSpreadElement || element.Kind == ast.KindOmittedExpression {
+				return m.unknown(node, "flow the graph can't see", "spread or omitted array element not modeled", m.text(node))
+			}
+			literal.Elements = append(literal.Elements, m.expression(element))
+		}
+		m.NextAllocation++
+		literal.GraphTypes = []int{m.NextAllocation}
+		m.Allocations[m.NextAllocation] = latentShapeAllocation{Node: node, Kind: "array", Properties: map[string]*ast.Node{}}
+		return m.materialize(node, literal)
+	case ast.KindNewExpression:
+		return m.unknown(node, "flow the graph can't see", "constructor allocation and initialization body not modeled", m.text(node))
+	case ast.KindCallExpression:
+		call := node.AsCallExpression()
+		symbol := m.Checker.GetSymbolAtLocation(call.Expression)
+		if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+			symbol = m.Checker.GetAliasedSymbol(symbol)
+		}
+		if symbol != nil {
+			for _, declaration := range symbol.Declarations {
+				if function, exists := m.Functions[declaration]; exists {
+					if declaration.Kind != ast.KindFunctionDeclaration {
+						return m.unknown(node, "flow the graph can't see", "method/closure dispatch not certified", m.text(call.Expression))
+					}
+					if function.Skipped {
+						return m.unknown(node, "diagnosed body", "callee body skipped", m.text(call.Expression), function.Node)
+					}
+					if len(declaration.TypeParameters()) != 0 {
+						return m.unknown(node, "flow the graph can't see", "generic call substitution not modeled", m.text(call.Expression))
+					}
+					arguments := []ir.Expression{}
+					for _, argument := range call.Arguments.Nodes {
+						arguments = append(arguments, m.expression(argument))
+					}
+					return m.materialize(node, ir.Call{Function: function.Index, Arguments: arguments, Returns: ir.Object})
+				}
+			}
+		}
+		text := m.text(call.Expression)
+		if m.hostOrigin(node) {
+			return m.unknown(node, "host metadata", "opaque host result requires runtime semantic metadata", text)
+		}
+		return m.unknown(node, "flow the graph can't see", "indirect, callback or intrinsic result not modeled", text)
+	case ast.KindPropertyAccessExpression, ast.KindElementAccessExpression:
+		text := m.text(node)
+		if m.hostOrigin(node) {
+			return m.unknown(node, "host metadata", "host property value has no allocation certificate", text)
+		}
+		if node.Kind == ast.KindPropertyAccessExpression {
+			access := node.AsPropertyAccessExpression()
+			return m.materialize(node, ir.Property{Object: m.expression(access.Expression), Name: access.Name().Text(), Of: ir.Object})
+		}
+		access := node.AsElementAccessExpression()
+		key := access.ArgumentExpression
+		if key.Kind == ast.KindStringLiteral {
+			return m.materialize(node, ir.Property{Object: m.expression(access.Expression), Name: key.Text(), Of: ir.Object})
+		}
+		if key.Kind == ast.KindNumericLiteral {
+			value, err := strconv.ParseFloat(key.Text(), 64)
+			if err == nil {
+				return m.materialize(node, ir.ArrayIndex{Array: m.expression(access.Expression), Index: ir.NumberConstant{Value: value}, Element: ir.Object})
+			}
+		}
+		return m.unknown(node, "flow the graph can't see", "dynamic element key not modeled", text)
+	case ast.KindBinaryExpression:
+		binary := node.AsBinaryExpression()
+		if binary.OperatorToken.Kind == ast.KindEqualsToken {
+			right := m.expression(binary.Right)
+			if binary.Left.Kind == ast.KindIdentifier {
+				m.append(ir.Assign{Local: m.local(binary.Left), Value: right})
+				return right
+			}
+			if binary.Left.Kind == ast.KindPropertyAccessExpression {
+				access := binary.Left.AsPropertyAccessExpression()
+				m.append(ir.SetProperty{Object: m.expression(access.Expression), Name: access.Name().Text(), Value: right})
+			}
+			if binary.Left.Kind == ast.KindPropertyAccessExpression && binary.Right.Kind == ast.KindNonNullExpression {
+				operand := binary.Right.AsNonNullExpression().Expression
+				if operand.Kind == ast.KindNullKeyword || operand.Kind == ast.KindIdentifier && operand.Text() == "undefined" {
+					m.Deinitialized[binary.Left.AsPropertyAccessExpression().Name().Text()] = true
+				}
+			}
+		}
+		return m.unmodeled(node)
+	default:
+		return m.unmodeled(node)
+	}
+}
+
+// The adapter only records identity-producing operations. Joins and solving are
+// exclusively newAllocationFlowGraph and graphAllocationSites, not a second engine.
+func (m *latentShapeMeter) body(root *ast.Node) {
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if node != root && ast.IsFunctionLike(node) {
+			return false
+		}
+		if m.Diagnosed[node] {
+			if node.Kind == ast.KindVariableStatement {
+				for _, declaration := range node.AsVariableStatement().DeclarationList.AsVariableDeclarationList().Declarations.Nodes {
+					if ast.IsIdentifier(declaration.Name()) {
+						m.append(ir.Declare{Local: m.local(declaration.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "diagnosed module initializer skipped at " + m.Loaded.Where(declaration), Diagnostics: m.diagnosticCauses(declaration)}})
+					}
+				}
+			}
+			return false
+		}
+		if ast.IsPartOfTypeNode(node) {
+			return false
+		}
+		switch node.Kind {
+		case ast.KindVariableDeclaration:
+			declaration := node.AsVariableDeclaration()
+			if ast.IsIdentifier(declaration.Name()) {
+				m.append(ir.Declare{Local: m.local(declaration.Name()), Value: m.expression(declaration.Initializer)})
+				return false
+			}
+		case ast.KindReturnStatement:
+			m.append(ir.Return{Value: m.expression(node.AsReturnStatement().Expression)})
+			return false
+		}
+		if ast.IsExpressionNode(node) {
+			m.expression(node)
+			return false
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	root.ForEachChild(visit)
+}
+
+// One worklist per query keeps shared fields and cycles from duplicating paths.
+func (m *latentShapeMeter) frontier(graph *allocationFlowGraph, expression ir.Expression) []latentShapeUnknown {
+	result := []latentShapeUnknown{}
+	pending := []ir.Expression{expression}
+	locals := map[int]bool{}
+	projections := map[string]bool{}
+	unique := map[string]bool{}
+	add := func(boundary latentShapeUnknown) {
+		key := boundary.Category + "\x00" + boundary.Reason + "\x00" + boundary.Value
+		if !unique[key] {
+			unique[key] = true
+			result = append(result, boundary)
+		}
+	}
+	demand := func(node int) {
+		if locals[node] {
+			return
+		}
+		locals[node] = true
+		if graph.unknownParameters[node] {
+			add(latentShapeUnknown{Category: "flow the graph can't see", Reason: "untracked or omitted parameter arguments"})
+		}
+		sources := graph.sources[node]
+		if len(sources) == 0 {
+			add(latentShapeUnknown{Category: "flow the graph can't see", Reason: "no tracked producer"})
+		}
+		pending = append(pending, sources...)
+	}
+	for steps := 0; len(pending) > 0; steps++ {
+		if steps >= 100000 {
+			add(latentShapeUnknown{Category: "flow the graph can't see", Reason: "projection frontier work budget exceeded"})
+			break
+		}
+		value := pending[len(pending)-1]
+		pending = pending[:len(pending)-1]
+		switch source := value.(type) {
+		case ir.NumberConstant, ir.StringConstant, ir.BooleanConstant:
+			continue
+		case latentShapeUnknown:
+			add(source)
+			continue
+		case ir.Conditional:
+			pending = append(pending, source.WhenTrue, source.WhenNot)
+			continue
+		case ir.Box:
+			pending = append(pending, source.Value)
+			continue
+		case ir.Narrow:
+			pending = append(pending, source.Value)
+			continue
+		case ir.Unwrap:
+			pending = append(pending, source.Value)
+			continue
+		case ir.CheckedCast:
+			pending = append(pending, source.Value)
+			continue
+		}
+		var receiver ir.Expression
+		name := ""
+		projection := false
+		switch access := value.(type) {
+		case ir.Property:
+			receiver, name, projection = access.Object, access.Name, true
+		case ir.ArrayIndex:
+			receiver, projection = access.Array, true
+			name = fmt.Sprintf("[%v]", access.Index)
+		}
+		if projection {
+			if read, ok := receiver.(ir.Read); ok {
+				key := fmt.Sprintf("%d:%s", read.Local, name)
+				if projections[key] {
+					continue
+				}
+				projections[key] = true
+			}
+			sources, reasons, _ := graph.projectedSources(value, 0)
+			for _, reason := range reasons {
+				add(latentShapeUnknown{Category: "flow the graph can't see", Reason: reason})
+			}
+			pending = append(pending, receiver)
+			pending = append(pending, sources...)
+			pending = append(pending, graph.projectionIndex().opaqueSources[name]...)
+			continue
+		}
+		graph.follow(value, func(int) {}, demand, func(reason string) { add(latentShapeUnknown{Category: "flow the graph can't see", Reason: reason}) })
+	}
+	return result
+}
+func MeasureLatentShapes(ctx context.Context, program *load.Program, root string, sites []LatentShapeSite) map[string]any {
+	checked, release := program.Checker(ctx, program.Files()[0])
+	defer release()
+	m := &latentShapeMeter{Loaded: program, Checker: checked, IR: &ir.Program{}, Root: root, Functions: map[*ast.Node]latentShapeFunction{}, Locals: map[*ast.Symbol]int{}, Memo: map[*ast.Node]ir.Expression{}, Allocations: map[int]latentShapeAllocation{}, Current: -1, Queries: map[string]ir.Expression{}, Nodes: map[string]*ast.Node{}, Diagnosed: map[*ast.Node]bool{}, Deinitialized: map[string]bool{}}
+	// Register every lexical function, including nested functions. Each body uses its own
+	// diagnostic overlap; captured values from skipped parents remain unknown.
+	for _, file := range program.Files() {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindVariableStatement || node.Kind == ast.KindExpressionStatement {
+				insideFunction := false
+				for parent := node.Parent; parent != nil; parent = parent.Parent {
+					if ast.IsFunctionLike(parent) {
+						insideFunction = true
+						break
+					}
+				}
+				if !insideFunction && len(program.LatentDiagnosticsIn(node)) > 0 {
+					var note ast.Visitor
+					note = func(child *ast.Node) bool {
+						if ast.IsFunctionLike(child) {
+							return false
+						}
+						m.Diagnosed[child] = true
+						child.ForEachChild(note)
+						return false
+					}
+					note(node)
+				}
+			}
+			if ast.IsFunctionLike(node) && node.Body() != nil {
+				skipped := len(program.LatentDiagnosticsIn(node.Body())) > 0
+				index := len(m.IR.Functions)
+				m.Functions[node] = latentShapeFunction{Node: node, Skipped: skipped, Index: index}
+				m.IR.Functions = append(m.IR.Functions, ir.Function{Returns: ir.Object})
+				for _, parameter := range node.Parameters() {
+					m.IR.Functions[index].Parameters = append(m.IR.Functions[index].Parameters, m.local(parameter.Name()))
+				}
+				if skipped {
+					var note ast.Visitor
+					note = func(child *ast.Node) bool {
+						if ast.IsFunctionLike(child) {
+							return false
+						}
+						m.Diagnosed[child] = true
+						child.ForEachChild(note)
+						return false
+					}
+					node.Body().ForEachChild(note)
+				}
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	for _, file := range program.Files() {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if function, ok := m.Functions[node]; ok && function.Skipped {
+				for _, parameter := range m.IR.Functions[function.Index].Parameters {
+					m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: "diagnosed body", Reason: "captured parameter of skipped function at " + program.Where(node), Diagnostics: m.diagnosticCauses(node)}})
+				}
+			}
+			if node.Kind == ast.KindVariableDeclaration && m.Diagnosed[node] && ast.IsIdentifier(node.Name()) {
+				m.IR.Main = append(m.IR.Main, ir.Assign{Local: m.local(node.Name()), Value: latentShapeUnknown{Category: "diagnosed body", Reason: "local initializer in skipped body at " + program.Where(node), Diagnostics: m.diagnosticCauses(node)}})
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	// Iterate in source order; map iteration never determines allocation numbering.
+	for _, file := range program.Files() {
+		m.Current = -1
+		m.body(file.AsNode())
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if function, ok := m.Functions[node]; ok && !function.Skipped {
+				m.Current = function.Index
+				for i, parameter := range node.Parameters() {
+					if latentShapeHost(m.Checker.TypeToString(m.Checker.GetTypeAtLocation(parameter.Name()))) {
+						m.append(ir.Assign{Local: m.IR.Functions[function.Index].Parameters[i], Value: latentShapeUnknown{Category: "host metadata", Reason: "host parameter requires boundary metadata at " + program.Where(parameter), Value: m.text(parameter.Name()) + ": " + m.Checker.TypeToString(m.Checker.GetTypeAtLocation(parameter.Name()))}})
+					}
+				}
+				m.body(node.Body())
+				m.Current = -1
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	// Inspect syntax references without analyzing diagnosed bodies. A call from a
+	// skipped body taints callee arguments; a function used as a value is open.
+	for _, file := range program.Files() {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindBinaryExpression {
+				binary := node.AsBinaryExpression()
+				if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && binary.Left.Kind == ast.KindPropertyAccessExpression {
+					if m.Diagnosed[node] || binary.OperatorToken.Kind != ast.KindEqualsToken {
+						category := "flow the graph can't see"
+						if m.Diagnosed[node] {
+							category = "diagnosed body"
+						}
+						cause := latentShapeUnknown{Category: category, Reason: "opaque field store at " + program.Where(node), Diagnostics: m.diagnosticCauses(node)}
+						m.IR.Main = append(m.IR.Main, ir.SetProperty{Object: cause, Name: binary.Left.AsPropertyAccessExpression().Name().Text(), Value: cause})
+					} else {
+						m.expression(node)
+					}
+				}
+
+				if ast.IsAssignmentOperator(binary.OperatorToken.Kind) && binary.Left.Kind == ast.KindPropertyAccessExpression {
+					m.Deinitialized[binary.Left.AsPropertyAccessExpression().Name().Text()] = true
+				}
+			}
+			if node.Kind == ast.KindIdentifier {
+				symbol := checked.GetSymbolAtLocation(node)
+				if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+					symbol = checked.GetAliasedSymbol(symbol)
+				}
+				if symbol != nil {
+					for _, declaration := range symbol.Declarations {
+						function, ok := m.Functions[declaration]
+						if !ok {
+							continue
+						}
+						direct := node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+						definition := declaration.Name() == node
+						if !definition && (!direct || m.Diagnosed[node]) {
+							category, reason := "flow the graph can't see", "function value may receive untracked callback arguments"
+							if m.Diagnosed[node] {
+								category, reason = "diagnosed body", "incoming arguments from a skipped diagnosed body"
+							}
+							for _, parameter := range m.IR.Functions[function.Index].Parameters {
+								m.IR.Main = append(m.IR.Main, ir.Assign{Local: parameter, Value: latentShapeUnknown{Category: category, Reason: reason + " at " + program.Where(node), Value: m.text(node), Diagnostics: m.diagnosticCauses(node)}})
+							}
+						}
+					}
+				}
+			}
+			if !m.Diagnosed[node] && (node.Kind == ast.KindAsExpression || node.Kind == ast.KindCallExpression) {
+				m.Current = -1
+				for parent := node.Parent; parent != nil; parent = parent.Parent {
+					if function, ok := m.Functions[parent]; ok {
+						m.Current = function.Index
+						break
+					}
+				}
+				m.expression(node)
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	m.Current = -1
+	assignAllocationSites(m.IR)
+	graph := newAllocationFlowGraph(m.IR)
+	allocations := map[int]latentShapeAllocation{}
+	collect := func(node any) bool {
+		if literal, ok := node.(ir.ObjectLiteral); ok {
+			allocations[literal.GraphTypes[len(literal.GraphTypes)-1]] = m.Allocations[literal.Class]
+		}
+		if literal, ok := node.(ir.ArrayLiteral); ok {
+			allocations[literal.GraphTypes[len(literal.GraphTypes)-1]] = m.Allocations[literal.GraphTypes[0]]
+		}
+		return true
+	}
+	walk(m.IR.Main, collect)
+	for _, function := range m.IR.Functions {
+		walk(function.Body, collect)
+	}
+	// Locate all casts independently of the eligible-body traversal.
+	castNodes := map[string]*ast.Node{}
+	for _, file := range program.Files() {
+		var visit ast.Visitor
+		visit = func(node *ast.Node) bool {
+			if node.Kind == ast.KindAsExpression {
+				castNodes[latentShapeKey(m.file(node), scanner.GetTokenPosOfNode(node, file, false), node.End())] = node
+			}
+			node.ForEachChild(visit)
+			return false
+		}
+		file.AsNode().ForEachChild(visit)
+	}
+	hostInventory := map[string]int{}
+	schemas := []map[string]any{}
+	ids := []int{}
+	for id := range allocations {
+		ids = append(ids, id)
+	}
+	sort.Ints(ids)
+	for _, id := range ids {
+		allocation := allocations[id]
+		fields := map[string]any{}
+		actual := checked.GetTypeAtLocation(allocation.Node)
+		for name, initializer := range allocation.Properties {
+			property := checked.GetPropertyOfType(actual, name)
+			if property == nil {
+				continue
+			}
+			declared := checked.GetTypeOfSymbol(property)
+			if allocation.Context != nil {
+				if contextual := checked.GetPropertyOfType(allocation.Context, name); contextual != nil {
+					declared = checked.GetTypeOfSymbol(contextual)
+				}
+			}
+			fields[name] = map[string]any{"declared_type": checked.TypeToString(declared), "initialized": !(&lowering{program: program, checker: checked}).uninitializedInitializer(initializer)}
+		}
+		schemas = append(schemas, map[string]any{"measurement": latentShapeLabel, "site": id, "where": program.Where(allocation.Node), "kind": allocation.Kind, "fields": fields})
+	}
+	for i := range sites {
+		site := &sites[i]
+		site.Measurement = latentShapeLabel
+		site.Outcome = "unknown"
+		site.Reason = "flow the graph can't see"
+		site.Fields = []latentShapeField{}
+		site.HostValues = []string{}
+		site.Detail = []string{}
+		if site.Adapted == nil {
+			site.Detail = append(site.Detail, "adapted cast has no exact mapping")
+			continue
+		}
+		key := latentShapeKey(site.File, site.Adapted.Start, site.Adapted.End)
+		node := castNodes[key]
+		if node == nil {
+			site.Detail = append(site.Detail, "mapped cast absent in native-checker AST")
+			continue
+		}
+		if m.Diagnosed[node] {
+			site.Reason = "diagnosed body"
+			site.Detail = append(site.Detail, "containing function body has checker diagnostics; body skipped")
+			site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "own function", Origin: program.Where(node), Diagnostics: m.diagnosticCauses(node)})
+			continue
+		}
+		expression, exists := m.Queries[key]
+		if !exists {
+			site.Detail = append(site.Detail, "cast operand lies behind an unmodeled enclosing expression")
+			continue
+		}
+		set := graph.ReachingAllocations(expression)
+		site.AllocationSites = set.Sites
+		if set.Unknown {
+			frontier := m.frontier(graph, expression)
+			for _, boundary := range frontier {
+				site.Detail = append(site.Detail, boundary.Reason)
+				if boundary.Category == "diagnosed body" {
+					site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "dependency", Origin: boundary.Reason, Diagnostics: boundary.Diagnostics})
+					site.Reason = "diagnosed body"
+				}
+				if boundary.Category == "host metadata" {
+					if site.Reason != "diagnosed body" {
+						site.Reason = "host metadata"
+					}
+					site.HostValues = append(site.HostValues, boundary.Value)
+					hostInventory[boundary.Value]++
+				}
+			}
+			if len(site.Detail) == 0 {
+				site.Detail = set.Reasons
+			}
+			continue
+		}
+		target := checked.GetTypeAtLocation(node)
+		if target.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown|checker.TypeFlagsTypeParameter|checker.TypeFlagsUnion|checker.TypeFlagsIntersection) != 0 || checked.IsArrayType(target) || checker.IsTupleType(target) {
+			site.Detail = append(site.Detail, "target requires union, generic or array certificates outside this eraser")
+			continue
+		}
+		ready := true
+		conditional := false
+		unsupported := false
+		for _, identity := range set.Sites {
+			allocation, ok := allocations[identity]
+			if !ok {
+				unsupported = true
+				site.Detail = append(site.Detail, "reaching allocation has no declared record schema")
+				continue
+			}
+			if allocation.Kind == "array" {
+				unsupported = true
+				site.Detail = append(site.Detail, "array intrinsic and augmented-field certificates unavailable")
+				continue
+			}
+			actual := checked.GetTypeAtLocation(allocation.Node)
+			for _, property := range checked.GetPropertiesOfType(target) {
+				expected := checked.GetTypeOfSymbol(property)
+				initializer, present := allocation.Properties[property.Name]
+				if !present {
+					if property.Flags&ast.SymbolFlagsOptional == 0 {
+						conditional = true
+						site.Fields = append(site.Fields, latentShapeField{Name: property.Name, Reason: "required field absent in reaching allocation", Expected: checked.TypeToString(expected)})
+					}
+					continue
+				}
+				own := checked.GetPropertyOfType(actual, property.Name)
+				if own == nil {
+					unsupported = true
+					continue
+				}
+				declared := checked.GetTypeOfSymbol(own)
+				if allocation.Context != nil {
+					if contextual := checked.GetPropertyOfType(allocation.Context, property.Name); contextual != nil {
+						declared = checked.GetTypeOfSymbol(contextual)
+					}
+				}
+				asserted := false
+				var assertions ast.Visitor
+				assertions = func(value *ast.Node) bool {
+					if value.Kind == ast.KindAsExpression && m.text(value.AsAsExpression().Type) != "const" {
+						asserted = true
+					}
+					value.ForEachChild(assertions)
+					return false
+				}
+				assertions(initializer)
+				staged := (&lowering{program: program, checker: checked}).uninitializedInitializer(initializer)
+				for _, boundary := range m.frontier(graph, m.Memo[initializer]) {
+					if !staged {
+						unsupported = true
+						site.Detail = append(site.Detail, boundary.Reason)
+					}
+					if boundary.Category == "host metadata" || boundary.Category == "diagnosed body" {
+						unsupported = true
+						site.Detail = append(site.Detail, boundary.Reason)
+						if boundary.Category == "diagnosed body" {
+							site.DiagnosticCauses = append(site.DiagnosticCauses, latentShapeDiagnosticCause{Scope: "dependency", Origin: boundary.Reason, Diagnostics: boundary.Diagnostics})
+							site.Reason = "diagnosed body"
+						} else {
+							if site.Reason != "diagnosed body" {
+								site.Reason = "host metadata"
+							}
+							site.HostValues = append(site.HostValues, boundary.Value)
+							hostInventory[boundary.Value]++
+						}
+					}
+				}
+				if asserted {
+					unsupported = true
+					site.Detail = append(site.Detail, "asserted initializer lacks construction validation: "+property.Name)
+					continue
+				}
+				payload := checked.GetTypeAtLocation(initializer)
+				if payload.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+					unsupported = true
+					site.Detail = append(site.Detail, "unvalidated field payload "+property.Name)
+					continue
+				}
+				if len(checked.GetSignaturesOfType(expected, checker.SignatureKindCall)) > 0 || expected.Flags()&checker.TypeFlagsTypeParameter != 0 {
+					unsupported = true
+					site.Detail = append(site.Detail, "callable implementation or generic field certificate unavailable: "+property.Name)
+					continue
+				}
+				if !checked.IsTypeAssignableTo(declared, expected) {
+					conditional = true
+					site.Fields = append(site.Fields, latentShapeField{Name: property.Name, Reason: "declared field type requires a value guard", Declared: checked.TypeToString(declared), Expected: checked.TypeToString(expected)})
+				}
+
+				if m.Deinitialized[property.Name] {
+					unsupported = true
+					site.Detail = append(site.Detail, "mutation effects on field certificate unavailable: "+property.Name)
+				}
+				if staged {
+					ready = false
+					site.Fields = append(site.Fields, latentShapeField{Name: property.Name, Reason: "initialization not proven at the cast", Declared: checked.TypeToString(declared), Expected: checked.TypeToString(expected)})
+				}
+				if expected.Flags()&checker.TypeFlagsObject != 0 {
+					unsupported = true
+					site.Detail = append(site.Detail, "transitive field shape and readiness certificates unavailable: "+property.Name)
+				}
+			}
+		}
+		if unsupported {
+			continue
+		}
+		site.Reason = "declared allocation field certificates"
+		if conditional {
+			site.Outcome = "conforms-if"
+		} else if ready {
+			site.Outcome = "conforms and ready (free)"
+		} else {
+			site.Outcome = "conforms but not proven ready (readiness checks only)"
+		}
+	}
+	// Repeated graph paths do not create distinct diagnostic obligations.
+	hostInventory = map[string]int{}
+	for i := range sites {
+		seen := map[string]bool{}
+		causes := []latentShapeDiagnosticCause{}
+		for _, cause := range sites[i].DiagnosticCauses {
+			key := cause.Scope + "\x00" + strings.Join(cause.Diagnostics, "\x00")
+			if !seen[key] {
+				seen[key] = true
+				causes = append(causes, cause)
+			}
+		}
+		sites[i].DiagnosticCauses = causes
+		hostSeen := map[string]bool{}
+		hostValues := []string{}
+		for _, value := range sites[i].HostValues {
+			if !hostSeen[value] { hostSeen[value] = true; hostValues = append(hostValues, value); hostInventory[value]++ }
+		}
+		sort.Strings(hostValues)
+		sites[i].HostValues = hostValues
+	}
+	counts := map[string]map[string]int{}
+	reasons := map[string]map[string]int{}
+	for _, kind := range []string{"tagged", "untagged"} {
+		counts[kind] = map[string]int{"conforms and ready (free)": 0, "conforms but not proven ready (readiness checks only)": 0, "conforms-if": 0, "unknown": 0}
+		reasons[kind] = map[string]int{}
+	}
+	for _, site := range sites {
+		counts[site.Kind][site.Outcome]++
+		if site.Outcome == "unknown" {
+			reasons[site.Kind][site.Reason]++
+		}
+	}
+	hosts := []string{}
+	for name := range hostInventory {
+		hosts = append(hosts, name)
+	}
+	sort.Strings(hosts)
+	return map[string]any{"measurement": latentShapeLabel, "checker_rejected": len(program.LatentDiagnostics()) > 0, "diagnostics": program.LatentDiagnostics(), "diagnostic_sites": program.LatentDiagnosticSites(), "counts": counts, "unknown_reasons": reasons, "host_values": hostInventory, "host_names": hosts, "sites": sites, "analysis_only": true, "allocation_shapes": len(allocations), "allocation_schemas": schemas, "limits": "Identity-only source adapter feeds the compiler's shared graph. Diagnosed bodies are skipped, no source is emitted. Record property and constant array-element producers are tracked. Callback, generic, constructor, dynamic-index and whole-array contracts remain unknown. Presence is syntax evidence, never inferred from an interface declaration. Readiness is conservative initializer evidence; post-store erasure is not claimed."}
+}

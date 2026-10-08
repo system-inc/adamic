@@ -1,0 +1,15 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.03s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/helper-factory/wrong-result (0.52s)
+        checked_views_callable_later_ranked_test.go:35: gate cache node miss
+        checked_views_callable_later_ranked_test.go:55: gate cache node miss
+        checked_views_callable_later_ranked_test.go:75: backend0 exit 70 stdout "" stderr "adamic: panic: field read failed: context.getEmitHelperFactory().value is not initialized; expected number, found missing\n" want "getEmitHelperFactory" and "found function with incompatible result representation"; sanitized exit 70 stderr "adamic: panic: field read failed: context.getEmitHelperFactory().value is not initialized; expected number, found missing\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/modifier-flags/wrong-result (0.51s)
+        checked_views_callable_later_ranked_test.go:35: gate cache node miss
+        checked_views_callable_later_ranked_test.go:55: gate cache node miss
+        checked_views_callable_later_ranked_test.go:75: backend0 exit 0 stdout "" stderr "" want "createModifiersFromModifierFlags" and "found function with incompatible result representation"; sanitized exit 0 stderr ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.045s
+FAIL

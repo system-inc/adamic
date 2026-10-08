@@ -1,0 +1,11 @@
+// Observed October 8 on 9e4e13fb and views-integration 6a7f1bf3: Node and native print
+// "false true"; the JavaScript backend exits 70 reading kind from an undefined chain result.
+interface A { readonly kind: 'a'; readonly x: number }
+interface B { readonly kind: 'b'; readonly y: number }
+interface Holder { readonly tag: string; readonly item: A | B }
+interface Base { readonly tag: string }
+const actual = { tag: 'h', item: { kind: 'a', x: 1 } };
+const base: Base = actual;
+function get(found: boolean): Holder | undefined { return found ? base as Holder : undefined; }
+function read(found: boolean): boolean { const item = get(found)?.item; return item === undefined; }
+console.log(`${read(true)} ${read(false)}`);

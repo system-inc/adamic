@@ -1,0 +1,137 @@
+=== RUN   TestDefaultTaggedInterfaceAdmission
+=== RUN   TestDefaultTaggedInterfaceAdmission/complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/missing_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/wrong_payload
+=== RUN   TestDefaultTaggedInterfaceAdmission/broad_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/alias_write
+=== RUN   TestDefaultTaggedInterfaceAdmission/unused_bad_factory
+=== RUN   TestDefaultTaggedInterfaceAdmission/different_tag
+=== RUN   TestDefaultTaggedInterfaceAdmission/dynamic_complete
+=== RUN   TestDefaultTaggedInterfaceAdmission/optional_target
+=== RUN   TestDefaultTaggedInterfaceAdmission/spread
+=== RUN   TestDefaultTaggedInterfaceAdmission/reflection_alias
+=== RUN   TestDefaultTaggedInterfaceAdmission/generic
+=== RUN   TestDefaultTaggedInterfaceAdmission/staged_class
+=== RUN   TestDefaultTaggedInterfaceAdmission/forged_payload
+--- PASS: TestDefaultTaggedInterfaceAdmission (0.64s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/complete (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/missing_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/wrong_payload (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/broad_tag (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/alias_write (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/unused_bad_factory (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/different_tag (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/dynamic_complete (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/optional_target (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/spread (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/reflection_alias (0.05s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/generic (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/staged_class (0.04s)
+    --- PASS: TestDefaultTaggedInterfaceAdmission/forged_payload (0.05s)
+=== RUN   TestDefaultTaggedInterfaceNeedsNoFlag
+--- PASS: TestDefaultTaggedInterfaceNeedsNoFlag (0.05s)
+=== RUN   TestLazyViewAdaptedCensus
+    view_adapted_census_test.go:21: set LAZY_ADAPTED_ROOT, LAZY_ADAPTED_SITES and LAZY_ADAPTED_OUTPUT
+--- SKIP: TestLazyViewAdaptedCensus (0.00s)
+=== RUN   TestSharedArrayContractAdapter
+=== RUN   TestSharedArrayContractAdapter/type_Target_=_readonly_boolean[];
+=== RUN   TestSharedArrayContractAdapter/type_Target_=_readonly_(number_|_string)[];
+=== RUN   TestSharedArrayContractAdapter/interface_Child_{readonly_children:_readonly_Child[]}_type_Target=readonly_Child[];
+=== RUN   TestSharedArrayContractAdapter/type_Target_=_unknown[];
+--- PASS: TestSharedArrayContractAdapter (0.17s)
+    --- PASS: TestSharedArrayContractAdapter/type_Target_=_readonly_boolean[]; (0.05s)
+    --- PASS: TestSharedArrayContractAdapter/type_Target_=_readonly_(number_|_string)[]; (0.04s)
+    --- PASS: TestSharedArrayContractAdapter/interface_Child_{readonly_children:_readonly_Child[]}_type_Target=readonly_Child[]; (0.04s)
+    --- PASS: TestSharedArrayContractAdapter/type_Target_=_unknown[]; (0.04s)
+=== RUN   TestLazyViewCensus
+    view_lazy_census_test.go:29: set LAZY_VIEW_CENSUS_ROOT, LAZY_VIEW_CENSUS_SEEDS and LAZY_VIEW_CENSUS_OUTPUT
+--- SKIP: TestLazyViewCensus (0.00s)
+=== RUN   TestLazyViewDemandUsesSharedFlow
+=== RUN   TestLazyViewDemandUsesSharedFlow/helper_merge
+=== RUN   TestLazyViewDemandUsesSharedFlow/wider_helper
+=== RUN   TestLazyViewDemandUsesSharedFlow/ordinary_only
+=== RUN   TestLazyViewDemandUsesSharedFlow/callback_unknown
+=== RUN   TestLazyViewDemandUsesSharedFlow/missing_producer
+--- PASS: TestLazyViewDemandUsesSharedFlow (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/helper_merge (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/wider_helper (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/ordinary_only (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/callback_unknown (0.00s)
+    --- PASS: TestLazyViewDemandUsesSharedFlow/missing_producer (0.00s)
+=== RUN   TestLazyViewArrayDemand
+=== RUN   TestLazyViewArrayDemand/index
+=== RUN   TestLazyViewArrayDemand/map
+=== RUN   TestLazyViewArrayDemand/visit
+=== RUN   TestLazyViewArrayDemand/reduce
+=== RUN   TestLazyViewArrayDemand/pop
+=== RUN   TestLazyViewArrayDemand/join
+=== RUN   TestLazyViewArrayDemand/for_of
+--- PASS: TestLazyViewArrayDemand (0.00s)
+    --- PASS: TestLazyViewArrayDemand/index (0.00s)
+    --- PASS: TestLazyViewArrayDemand/map (0.00s)
+    --- PASS: TestLazyViewArrayDemand/visit (0.00s)
+    --- PASS: TestLazyViewArrayDemand/reduce (0.00s)
+    --- PASS: TestLazyViewArrayDemand/pop (0.00s)
+    --- PASS: TestLazyViewArrayDemand/join (0.00s)
+    --- PASS: TestLazyViewArrayDemand/for_of (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.893s
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.021s [no tests to run]
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/javascript	0.003s [no tests to run]
+=== RUN   TestCheckedViewLane4HelperReads
+=== RUN   TestCheckedViewLane4HelperReads/helper-good
+=== RUN   TestCheckedViewLane4HelperReads/helper-wrong
+    checked_views_mixed_unions_test.go:51: unchecked helper mutant caught: exit 0 stdout "true\nfalse\n"
+    checked_views_mixed_unions_test.go:51: unchecked helper mutant caught: exit 0 stdout "true\n42\n"
+--- PASS: TestCheckedViewLane4HelperReads (0.95s)
+    --- PASS: TestCheckedViewLane4HelperReads/helper-good (0.44s)
+    --- PASS: TestCheckedViewLane4HelperReads/helper-wrong (0.51s)
+=== RUN   TestCheckedViewMixedSelection
+=== RUN   TestCheckedViewMixedSelection/string-number-undefined
+=== RUN   TestCheckedViewMixedSelection/string-object
+=== RUN   TestCheckedViewMixedSelection/untagged-objects
+=== RUN   TestCheckedViewMixedSelection/false-string-undefined
+--- PASS: TestCheckedViewMixedSelection (2.07s)
+    --- PASS: TestCheckedViewMixedSelection/string-number-undefined (0.42s)
+    --- PASS: TestCheckedViewMixedSelection/string-object (0.42s)
+    --- PASS: TestCheckedViewMixedSelection/untagged-objects (0.39s)
+    --- PASS: TestCheckedViewMixedSelection/false-string-undefined (0.43s)
+=== RUN   TestCheckedViewObjectPrimitiveSource
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-false
+    checked_views_object_primitive_unions_test.go:68: wrong-member acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:68: wrong-member acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (node-indicator-false): exit 0 stdout "absent\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (node-indicator-false): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-boolean
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong
+    checked_views_object_primitive_unions_test.go:86: wrong-shape acceptance caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:86: wrong-shape acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (diagnostic-code-wrong): exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (diagnostic-code-wrong): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong
+    checked_views_object_primitive_unions_test.go:86: wrong-shape acceptance caught: exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:86: wrong-shape acceptance caught: exit 0 stdout "false\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (node-indicator-flags-wrong): exit 0 stdout "0\n"
+    checked_views_object_primitive_unions_test.go:110: read check removal caught (node-indicator-flags-wrong): exit 0 stdout "false\n"
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/diagnostic-wrong
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-good
+=== RUN   TestCheckedViewObjectPrimitiveSource/node-indicator-wrong
+--- PASS: TestCheckedViewObjectPrimitiveSource (6.23s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-false (0.92s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-boolean (0.70s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-code-wrong (1.00s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-flags-wrong (0.95s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-good (0.64s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/diagnostic-wrong (0.69s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-good (0.65s)
+    --- PASS: TestCheckedViewObjectPrimitiveSource/node-indicator-wrong (0.69s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=43
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	9.285s

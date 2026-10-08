@@ -1,0 +1,19 @@
+--- FAIL: TestCheckedViewCallableLaterRankedFamilies (1.15s)
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/resolution-path/wrong-arity (0.39s)
+        checked_views_callable_later_ranked_test.go:32: gate cache node hit
+        checked_views_callable_later_ranked_test.go:52: gate cache node miss
+        checked_views_callable_later_ranked_test.go:72: backend2 exit 0 stdout "9\n" stderr "" want "toPath" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: resolutionHost.toPath expected (fileName: string) => string, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/performance-measure/wrong-arity (0.36s)
+        checked_views_callable_later_ranked_test.go:32: gate cache node hit
+        checked_views_callable_later_ranked_test.go:52: gate cache node miss
+        checked_views_callable_later_ranked_test.go:72: backend2 exit 0 stdout "9\n" stderr "" want "measure" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: performance.measure expected (measureName: string, startMarkName?: string | undefined, endMarkName?: string | undefined) => void, found function with arity 0\n"
+    --- FAIL: TestCheckedViewCallableLaterRankedFamilies/binary/wrong-arity (0.40s)
+        checked_views_callable_later_ranked_test.go:32: gate cache node hit
+        checked_views_callable_later_ranked_test.go:52: gate cache node miss
+        checked_views_callable_later_ranked_test.go:72: backend2 exit 0 stdout "9\n" stderr "" want "createBinaryExpression" and "found function with arity 0"; sanitized exit 70 stderr "adamic: panic: field read failed: factory.createBinaryExpression expected (left: Expression, operator: number | BinaryOperatorToken, right: Expression) => BinaryExpression, found function with arity 0\n"
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=3
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.159s
+FAIL

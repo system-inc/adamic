@@ -1,0 +1,7 @@
+// Original tsc declaration/read; adjacent carriers and helpers reduced.
+type Path=string;
+interface SourceFile {readonly value:number;}
+interface Base {readonly getSourceFileByPath:unknown;}
+interface Target {getSourceFileByPath(path: Path): SourceFile | undefined;}
+function probe(value:Base):void {const realProgram=value as Target;const file:Path="abc";const sourceFile=realProgram.getSourceFileByPath(file);console.log(`${sourceFile===undefined?0:sourceFile.value}`);}
+probe({getSourceFileByPath:(path:Path):SourceFile|undefined=>undefined});

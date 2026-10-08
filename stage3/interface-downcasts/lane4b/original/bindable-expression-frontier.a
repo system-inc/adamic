@@ -1,0 +1,6 @@
+import type { BindableStaticPropertyAssignmentExpression } from 'original-tsc-types';
+interface Base { readonly kind: number; }
+function read(node: BindableStaticPropertyAssignmentExpression): string { return `${node.left.expression.kind}`; }
+const concrete = { kind: 227, left: { kind: 212, expression: { kind: 80 } } };
+const base: Base = concrete;
+console.log(read(base as BindableStaticPropertyAssignmentExpression));

@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+    checked_views_intersections_test.go:260: gate cache node miss
+    checked_views_intersections_test.go:260: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-read
+    checked_views_intersections_test.go:279: gate cache node miss
+    checked_views_intersections_test.go:295: gate cache node miss
+    checked_views_intersections_test.go:297: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_test.go:297: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+    checked_views_intersections_test.go:297: exit codes differ; got oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}
+--- FAIL: TestCheckedViewIntersectionRecursiveDemand (0.62s)
+    --- FAIL: TestCheckedViewIntersectionRecursiveDemand/recursive-read (0.38s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.632s
+FAIL

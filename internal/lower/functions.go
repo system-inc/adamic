@@ -75,7 +75,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
-		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body())
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && !l.isPanicCall(declaration.Body()) && !l.isProcessExit(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if !isKnown {
@@ -149,6 +149,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	if declaration.Body() == nil && !ast.HasSyntacticModifier(declaration, ast.ModifierFlagsAbstract) {
 		return l.notYet(declaration, "a function without a body")
 	}
+	l.recordViewCallableRepresentations(index, &function, declaration)
 	l.result.Functions[index] = function
 	if l.signed == nil {
 		l.signed = map[int]signed{}
@@ -201,6 +202,26 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 			if err = l.parameterPropertyDefault(declaration, parameter.initializer); err != nil {
 				break
 			}
+		}
+		if l.uninitializedInitializer(parameter.initializer) {
+			l.result.Locals[parameter.local].Uninitialized = true
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: ir.IsUndefined{Value: incoming}}, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
+		}
+
+		if assertionInitializer(parameter.initializer) {
+			prefix, present, value, lazyErr := l.lazyAssertion(parameter.initializer, l.result.Locals[parameter.local].Type)
+			if lazyErr != nil {
+				err = lazyErr
+				break
+			}
+			l.result.Locals[parameter.local].Uninitialized = true
+			l.result.Locals[parameter.local].InitializerExpression = sourceExpression(parameter.initializer)
+			incoming := ir.Read{Local: parameter.incoming, Of: l.result.Locals[parameter.incoming].Type}
+			fallback := append(prefix, ir.If{Condition: present, Then: []ir.Statement{ir.Assign{Local: parameter.local, Value: value}}})
+			prologue = append(prologue, ir.Declare{Local: parameter.local, Uninitialized: true}, ir.If{Condition: ir.IsUndefined{Value: incoming}, Then: fallback, Else: []ir.Statement{ir.Assign{Local: parameter.local, Value: fit(incoming, l.result.Locals[parameter.local].Type)}}})
+			continue
 		}
 		var fallback ir.Expression
 		if fallback, err = l.expression(parameter.initializer); err != nil {
@@ -257,6 +278,7 @@ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, default
 	function.Environment = l.result.Functions[index].Environment
 	function.Body = append(function.Body, prologue...)
 	function.Body = append(function.Body, lowered...)
+	l.finishNestedEnvironment(&function, index)
 	l.result.Functions[index] = function
 	return nil
 }

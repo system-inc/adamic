@@ -1,0 +1,8 @@
+--- FAIL: TestRegExpSurrogateCounts (0.27s)
+    regexp_remaining_test.go:39: fixture counts changed: | internal/oracle/testdata/regexp_surrogate_methods.a | 631 | 631 | 621 | 628 | 17 | 0 | 0 | 0 |
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=31
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	4.699s
+FAIL

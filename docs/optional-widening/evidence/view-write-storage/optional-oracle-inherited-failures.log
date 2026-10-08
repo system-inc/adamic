@@ -1,0 +1,313 @@
+=== RUN   TestOptionalCheckedWrites
+=== RUN   TestOptionalCheckedWrites/increment
+=== RUN   TestOptionalCheckedWrites/compound-literal
+=== RUN   TestOptionalCheckedWrites/enum-slot
+=== RUN   TestOptionalCheckedWrites/enum-read
+=== RUN   TestOptionalCheckedWrites/uninitialized-slot
+=== RUN   TestOptionalCheckedWrites/dictionary-own-slot
+=== RUN   TestOptionalCheckedWrites/second-optional
+=== RUN   TestOptionalCheckedWrites/boolean-write
+=== RUN   TestOptionalCheckedWrites/fresh-undefined
+=== RUN   TestOptionalCheckedWrites/fresh-boolean
+=== RUN   TestOptionalCheckedWrites/undefined-write
+=== RUN   TestOptionalCheckedWrites/object
+=== RUN   TestOptionalCheckedWrites/nominal-slot
+    optional_write_test.go:58: /tmp/view-write-coherence/adamic/internal/lower/testdata/optional_widening/checked_writes/nominal-slot.a:1:182: Adamic 0.1 refuses checked view read of field label with unsupported nominal class contract; prove or implement the nominal class contract before reading this field
+=== RUN   TestOptionalCheckedWrites/nominal-subclass-slot
+    optional_write_test.go:58: /tmp/view-write-coherence/adamic/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a:1:179: stage 0 can't lower a checked write without a reifiable source-slot type certificate yet
+=== RUN   TestOptionalCheckedWrites/undefined-sentinel
+=== RUN   TestOptionalCheckedWrites/object-invariant
+=== RUN   TestOptionalCheckedWrites/object-sentinel
+=== RUN   TestOptionalCheckedWrites/optional-literal
+=== RUN   TestOptionalCheckedWrites/tag
+=== RUN   TestOptionalCheckedWrites/reduced-never
+=== RUN   TestOptionalCheckedWrites/unreachable
+=== RUN   TestOptionalCheckedWrites/fresh
+=== RUN   TestOptionalCheckedWrites/class
+=== RUN   TestOptionalCheckedWrites/record
+=== RUN   TestOptionalCheckedWrites/sentinel
+=== RUN   TestOptionalCheckedWrites/stored
+=== RUN   TestOptionalCheckedWrites/optional
+=== RUN   TestOptionalCheckedWrites/literal
+=== RUN   TestOptionalCheckedWrites/string
+--- FAIL: TestOptionalCheckedWrites (15.19s)
+    --- PASS: TestOptionalCheckedWrites/increment (0.58s)
+    --- PASS: TestOptionalCheckedWrites/compound-literal (0.49s)
+    --- PASS: TestOptionalCheckedWrites/enum-slot (0.54s)
+    --- PASS: TestOptionalCheckedWrites/enum-read (0.92s)
+    --- PASS: TestOptionalCheckedWrites/uninitialized-slot (0.53s)
+    --- PASS: TestOptionalCheckedWrites/dictionary-own-slot (0.51s)
+    --- PASS: TestOptionalCheckedWrites/second-optional (0.50s)
+    --- PASS: TestOptionalCheckedWrites/boolean-write (0.80s)
+    --- PASS: TestOptionalCheckedWrites/fresh-undefined (0.45s)
+    --- PASS: TestOptionalCheckedWrites/fresh-boolean (0.48s)
+    --- PASS: TestOptionalCheckedWrites/undefined-write (0.56s)
+    --- PASS: TestOptionalCheckedWrites/object (0.73s)
+    --- FAIL: TestOptionalCheckedWrites/nominal-slot (0.16s)
+    --- FAIL: TestOptionalCheckedWrites/nominal-subclass-slot (0.14s)
+    --- PASS: TestOptionalCheckedWrites/undefined-sentinel (0.48s)
+    --- PASS: TestOptionalCheckedWrites/object-invariant (0.54s)
+    --- PASS: TestOptionalCheckedWrites/object-sentinel (0.72s)
+    --- PASS: TestOptionalCheckedWrites/optional-literal (0.52s)
+    --- PASS: TestOptionalCheckedWrites/tag (0.51s)
+    --- PASS: TestOptionalCheckedWrites/reduced-never (0.46s)
+    --- PASS: TestOptionalCheckedWrites/unreachable (0.65s)
+    --- PASS: TestOptionalCheckedWrites/fresh (0.47s)
+    --- PASS: TestOptionalCheckedWrites/class (0.51s)
+    --- PASS: TestOptionalCheckedWrites/record (0.48s)
+    --- PASS: TestOptionalCheckedWrites/sentinel (0.52s)
+    --- PASS: TestOptionalCheckedWrites/stored (0.47s)
+    --- PASS: TestOptionalCheckedWrites/optional (0.49s)
+    --- PASS: TestOptionalCheckedWrites/literal (0.49s)
+    --- PASS: TestOptionalCheckedWrites/string (0.48s)
+=== RUN   TestOptionalNeverWrite
+--- PASS: TestOptionalNeverWrite (0.50s)
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestViewWriteStorageCoherence
+=== PAUSE TestViewWriteStorageCoherence
+=== RUN   TestViewWriteStorageCounts
+=== PAUSE TestViewWriteStorageCounts
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestViewWriteStorageCounts
+=== CONT  TestViewWriteStorageCoherence
+=== RUN   TestViewWriteStorageCoherence/boolean
+=== PAUSE TestViewWriteStorageCoherence/boolean
+=== RUN   TestViewWriteStorageCoherence/boolean-reader
+=== PAUSE TestViewWriteStorageCoherence/boolean-reader
+=== RUN   TestViewWriteStorageCoherence/number
+=== PAUSE TestViewWriteStorageCoherence/number
+=== RUN   TestViewWriteStorageCoherence/string
+=== PAUSE TestViewWriteStorageCoherence/string
+=== RUN   TestViewWriteStorageCoherence/object
+=== PAUSE TestViewWriteStorageCoherence/object
+=== RUN   TestViewWriteStorageCoherence/boolean-nullish
+=== PAUSE TestViewWriteStorageCoherence/boolean-nullish
+=== RUN   TestViewWriteStorageCoherence/boolean-mixed
+=== PAUSE TestViewWriteStorageCoherence/boolean-mixed
+=== RUN   TestViewWriteStorageCoherence/boolean-required
+=== PAUSE TestViewWriteStorageCoherence/boolean-required
+=== RUN   TestViewWriteStorageCoherence/boolean-dictionary
+=== PAUSE TestViewWriteStorageCoherence/boolean-dictionary
+=== RUN   TestViewWriteStorageCoherence/boolean-required-undefined
+=== PAUSE TestViewWriteStorageCoherence/boolean-required-undefined
+=== CONT  TestViewWriteStorageCoherence/boolean
+=== CONT  TestViewWriteStorageCoherence/boolean-required-undefined
+=== CONT  TestViewWriteStorageCoherence/boolean-dictionary
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/increment.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/increment.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-slot.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-slot.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-read.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-read.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/dictionary-own-slot.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/dictionary-own-slot.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/second-optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/second-optional.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/boolean-write.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/boolean-write.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-undefined.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/undefined-write.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/undefined-write.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/object.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/object.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/tag.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/tag.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/reduced-never.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/reduced-never.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/unreachable.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/unreachable.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/class.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/class.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/record.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/record.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/optional.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/string.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/string.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-reader.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-reader.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/number.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/number.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/string.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/string.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/object.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/object.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-mixed.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-mixed.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-dictionary.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-dictionary.a
+=== RUN   TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required-undefined.a
+=== PAUSE TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required-undefined.a
+=== CONT  TestViewWriteStorageCoherence/boolean-required
+=== NAME  TestViewWriteStorageCoherence/boolean
+    view_write_storage_test.go:35: expected backend: stdout="undefined\ntrue\nfalse\nundefined\nundefined\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="undefined\ntrue\nfalse\nundefined\nundefined\nfalse\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean-required-undefined
+    view_write_storage_test.go:35: expected backend: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+    view_write_storage_test.go:36: Node: stdout="undefined\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean-dictionary
+    view_write_storage_test.go:35: expected backend: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean-required
+    view_write_storage_test.go:35: expected backend: stdout="false\ntrue\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="false\ntrue\nfalse\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean
+    view_write_storage_test.go:50: native-sanitized: stdout="undefined\ntrue\nfalse\nundefined\nundefined\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="undefined\ntrue\nfalse\nundefined\nundefined\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="undefined\ntrue\nfalse\nundefined\nundefined\nfalse\n" stderr="" exit=0
+=== CONT  TestViewWriteStorageCoherence/boolean-mixed
+=== NAME  TestViewWriteStorageCoherence/boolean-required-undefined
+    view_write_storage_test.go:50: native-sanitized: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+    view_write_storage_test.go:50: native-release: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+    view_write_storage_test.go:50: javascript: stdout="" stderr="adamic: panic: field read failed: scalar.value is not a boolean; expected boolean, found nullish\n" exit=70
+=== CONT  TestViewWriteStorageCoherence/boolean-nullish
+=== NAME  TestViewWriteStorageCoherence/boolean-dictionary
+    view_write_storage_test.go:50: native-sanitized: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== CONT  TestViewWriteStorageCoherence/object
+=== NAME  TestViewWriteStorageCoherence/boolean-required
+    view_write_storage_test.go:50: native-sanitized: stdout="false\ntrue\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="false\ntrue\nfalse\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="false\ntrue\nfalse\n" stderr="" exit=0
+=== CONT  TestViewWriteStorageCoherence/string
+=== NAME  TestViewWriteStorageCoherence/boolean-mixed
+    view_write_storage_test.go:35: expected backend: stdout="undefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="undefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/string
+    view_write_storage_test.go:35: expected backend: stdout="undefined\nvalue2\nvalue3\nundefined\nundefined\nvalue7\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="undefined\nvalue2\nvalue3\nundefined\nundefined\nvalue7\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/object
+    view_write_storage_test.go:35: expected backend: stdout="value2 true\nvalue3 true\nvalue3 true\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="value2 true\nvalue3 true\nvalue3 true\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean-nullish
+    view_write_storage_test.go:35: expected backend: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/object
+    view_write_storage_test.go:50: native-sanitized: stdout="value2 true\nvalue3 true\nvalue3 true\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="value2 true\nvalue3 true\nvalue3 true\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="value2 true\nvalue3 true\nvalue3 true\n" stderr="" exit=0
+=== CONT  TestViewWriteStorageCoherence/number
+=== NAME  TestViewWriteStorageCoherence/string
+    view_write_storage_test.go:50: native-sanitized: stdout="undefined\nvalue2\nvalue3\nundefined\nundefined\nvalue7\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="undefined\nvalue2\nvalue3\nundefined\nundefined\nvalue7\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="undefined\nvalue2\nvalue3\nundefined\nundefined\nvalue7\n" stderr="" exit=0
+=== CONT  TestViewWriteStorageCoherence/boolean-reader
+=== NAME  TestViewWriteStorageCoherence/boolean-mixed
+    view_write_storage_test.go:50: native-sanitized: stdout="undefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="undefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="undefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/increment.a
+=== NAME  TestViewWriteStorageCoherence/boolean-nullish
+    view_write_storage_test.go:50: native-sanitized: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="false boolean\nundefined undefined\nfalse boolean\ntrue boolean\n" stderr="" exit=0
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh.a
+=== NAME  TestViewWriteStorageCoherence/number
+    view_write_storage_test.go:35: expected backend: stdout="undefined\n2\n3\nundefined\nundefined\n7\nNaN\nNaN\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="undefined\n2\n3\nundefined\nundefined\n7\nNaN\nNaN\n" stderr="" exit=0
+=== NAME  TestViewWriteStorageCoherence/boolean-reader
+    view_write_storage_test.go:35: expected backend: stdout="undefined\n" stderr="" exit=0
+    view_write_storage_test.go:36: Node: stdout="undefined\n" stderr="" exit=0
+--- PASS: TestViewWriteStorageCounts (3.09s)
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required-undefined.a
+=== NAME  TestViewWriteStorageCoherence/boolean-reader
+    view_write_storage_test.go:50: native-sanitized: stdout="undefined\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="undefined\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="undefined\n" stderr="" exit=0
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-dictionary.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-mixed.a
+=== NAME  TestViewWriteStorageCoherence/number
+    view_write_storage_test.go:50: native-sanitized: stdout="undefined\n2\n3\nundefined\nundefined\n7\nNaN\nNaN\n" stderr="" exit=0
+    view_write_storage_test.go:50: native-release: stdout="undefined\n2\n3\nundefined\nundefined\n7\nNaN\nNaN\n" stderr="" exit=0
+    view_write_storage_test.go:50: javascript: stdout="undefined\n2\n3\nundefined\nundefined\n7\nNaN\nNaN\n" stderr="" exit=0
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a
+--- PASS: TestViewWriteStorageCoherence (0.00s)
+    --- PASS: TestViewWriteStorageCoherence/boolean (1.05s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-required-undefined (1.31s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-dictionary (1.32s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-required (1.26s)
+    --- PASS: TestViewWriteStorageCoherence/object (0.98s)
+    --- PASS: TestViewWriteStorageCoherence/string (1.01s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-mixed (1.40s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-nullish (1.16s)
+    --- PASS: TestViewWriteStorageCoherence/boolean-reader (1.06s)
+    --- PASS: TestViewWriteStorageCoherence/number (1.29s)
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/object.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/string.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/number.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-reader.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/string.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/optional.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/record.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/class.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-boolean.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/unreachable.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/reduced-never.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/tag.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a
+    oracle_test.go:738: Lower: /tmp/view-write-coherence/adamic/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a:1:179: stage 0 can't lower a checked write without a reifiable source-slot type certificate yet
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/object.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/undefined-write.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/dictionary-own-slot.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-undefined.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/boolean-write.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/second-optional.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-read.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a
+=== CONT  TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-slot.a
+--- FAIL: TestNativeAgreesWithNode (0.08s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/increment.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required-undefined.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-required.a (0.90s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-nullish.a (0.88s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-dictionary.a (1.15s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-mixed.a (1.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/object.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/number.a (0.92s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/string.a (1.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean-reader.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/storage_coherence/boolean.a (1.23s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/string.a (1.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/record.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/class.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/optional.a (1.20s)
+    --- FAIL: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/nominal-subclass-slot.a (0.11s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-boolean.a (0.91s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/unreachable.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/reduced-never.a (1.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/tag.a (1.13s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/object.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/undefined-write.a (1.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/dictionary-own-slot.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/boolean-write.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/second-optional.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/fresh-undefined.a (1.10s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-read.a (0.89s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/uninitialized-slot.a (0.80s)
+    --- PASS: TestNativeAgreesWithNode/internal/lower/testdata/optional_widening/checked_writes/enum-slot.a (0.60s)
+FAIL
+gate cache: native hits=0 misses=96
+gate cache: node hits=0 misses=136
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	24.786s
+FAIL

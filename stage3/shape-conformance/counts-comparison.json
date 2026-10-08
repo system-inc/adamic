@@ -1,0 +1,1392 @@
+{
+  "before_rows": 615,
+  "after_rows": 615,
+  "added": [],
+  "removed": [],
+  "numeric_changes": [
+    {
+      "fixture": "internal/oracle/testdata/map_foreach_named_keys.a",
+      "before": [
+        92,
+        92,
+        48,
+        144,
+        15,
+        0
+      ],
+      "after": [
+        92,
+        92,
+        60,
+        144,
+        15,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/set_foreach_named_keys.a",
+      "before": [
+        84,
+        84,
+        56,
+        144,
+        15,
+        0
+      ],
+      "after": [
+        84,
+        84,
+        68,
+        144,
+        15,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/json_stringify_options.a",
+      "before": [
+        74,
+        74,
+        29,
+        82,
+        6,
+        0
+      ],
+      "after": [
+        69,
+        69,
+        34,
+        82,
+        6,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/load/testdata/0.1/compile/05_wordcount.ts",
+      "before": [
+        49,
+        49,
+        71,
+        76,
+        26,
+        0
+      ],
+      "after": [
+        45,
+        45,
+        75,
+        76,
+        26,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/load/testdata/0.1/compile/10_unicode.ts",
+      "before": [
+        30,
+        30,
+        1,
+        21,
+        15,
+        0
+      ],
+      "after": [
+        29,
+        29,
+        2,
+        21,
+        15,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_build_caches.a",
+      "before": [
+        26,
+        26,
+        0,
+        26,
+        7,
+        0
+      ],
+      "after": [
+        26,
+        26,
+        2,
+        26,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_build_padding.a",
+      "before": [
+        837,
+        837,
+        48,
+        877,
+        7,
+        0
+      ],
+      "after": [
+        759,
+        759,
+        126,
+        877,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_build_cached_reads.a",
+      "before": [
+        2737,
+        2737,
+        237,
+        2974,
+        9,
+        0
+      ],
+      "after": [
+        2684,
+        2684,
+        333,
+        2974,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_build_boundaries.a",
+      "before": [
+        2325,
+        2325,
+        67,
+        2347,
+        11,
+        0
+      ],
+      "after": [
+        2229,
+        2229,
+        342,
+        2347,
+        11,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_build_calls.a",
+      "before": [
+        49,
+        49,
+        2,
+        52,
+        7,
+        0
+      ],
+      "after": [
+        47,
+        47,
+        4,
+        52,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/maps_and_text.a",
+      "before": [
+        59,
+        59,
+        39,
+        92,
+        10,
+        0
+      ],
+      "after": [
+        58,
+        58,
+        51,
+        92,
+        10,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/sorting.a",
+      "before": [
+        61,
+        61,
+        55,
+        73,
+        38,
+        0
+      ],
+      "after": [
+        59,
+        59,
+        57,
+        73,
+        36,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_index.a",
+      "before": [
+        89,
+        89,
+        44,
+        141,
+        7,
+        0
+      ],
+      "after": [
+        58,
+        58,
+        44,
+        141,
+        6,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/search_halves.a",
+      "before": [
+        40,
+        40,
+        10,
+        44,
+        20,
+        0
+      ],
+      "after": [
+        38,
+        38,
+        12,
+        44,
+        18,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/runtime_last_index_of.a",
+      "before": [
+        714,
+        714,
+        75,
+        730,
+        6,
+        0
+      ],
+      "after": [
+        679,
+        679,
+        120,
+        730,
+        6,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/lint_runtime_equal_headers.a",
+      "before": [
+        102,
+        102,
+        20,
+        113,
+        8,
+        0
+      ],
+      "after": [
+        100,
+        100,
+        22,
+        113,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/strings_more.a",
+      "before": [
+        128,
+        128,
+        29,
+        163,
+        11,
+        0
+      ],
+      "after": [
+        112,
+        112,
+        38,
+        163,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_math_number_convert.a",
+      "before": [
+        199,
+        199,
+        196,
+        364,
+        7,
+        0
+      ],
+      "after": [
+        196,
+        196,
+        199,
+        364,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/number_formats.a",
+      "before": [
+        235,
+        235,
+        45,
+        262,
+        18,
+        0
+      ],
+      "after": [
+        225,
+        225,
+        55,
+        262,
+        18,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/radixes.a",
+      "before": [
+        696,
+        696,
+        95,
+        330,
+        25,
+        0
+      ],
+      "after": [
+        695,
+        695,
+        96,
+        330,
+        25,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/fresh_parser.a",
+      "before": [
+        294,
+        294,
+        280,
+        450,
+        34,
+        0
+      ],
+      "after": [
+        145,
+        145,
+        280,
+        450,
+        34,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/fresh_calls.a",
+      "before": [
+        147,
+        147,
+        218,
+        273,
+        39,
+        0
+      ],
+      "after": [
+        113,
+        113,
+        216,
+        273,
+        37,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/exceptions.a",
+      "before": [
+        133,
+        133,
+        154,
+        229,
+        20,
+        0
+      ],
+      "after": [
+        133,
+        133,
+        163,
+        229,
+        20,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/undefined_elements.a",
+      "before": [
+        20,
+        20,
+        45,
+        42,
+        9,
+        0
+      ],
+      "after": [
+        19,
+        19,
+        46,
+        42,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/adversarial_order.a",
+      "before": [
+        105,
+        105,
+        86,
+        164,
+        31,
+        0
+      ],
+      "after": [
+        105,
+        105,
+        88,
+        164,
+        31,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_positions.a",
+      "before": [
+        436,
+        436,
+        300,
+        606,
+        134,
+        0
+      ],
+      "after": [
+        327,
+        327,
+        368,
+        606,
+        97,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/long_literals.a",
+      "before": [
+        14518,
+        14518,
+        85,
+        14610,
+        8,
+        0
+      ],
+      "after": [
+        6117,
+        6117,
+        85,
+        14610,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/ascii_scan.a",
+      "before": [
+        48,
+        48,
+        14,
+        54,
+        18,
+        0
+      ],
+      "after": [
+        47,
+        47,
+        15,
+        54,
+        18,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/lent_reads.a",
+      "before": [
+        36,
+        36,
+        12,
+        47,
+        9,
+        0
+      ],
+      "after": [
+        36,
+        36,
+        13,
+        47,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/optional_strings.a",
+      "before": [
+        51,
+        51,
+        29,
+        78,
+        8,
+        0
+      ],
+      "after": [
+        43,
+        43,
+        37,
+        78,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/replace_all_large.a",
+      "before": [
+        200060,
+        200060,
+        200012,
+        400075,
+        200003,
+        0
+      ],
+      "after": [
+        200057,
+        200057,
+        200015,
+        400075,
+        200003,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/collections.a",
+      "before": [
+        363,
+        363,
+        380,
+        550,
+        101,
+        0
+      ],
+      "after": [
+        362,
+        362,
+        392,
+        550,
+        103,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/gaps.a",
+      "before": [
+        97,
+        97,
+        84,
+        154,
+        46,
+        0
+      ],
+      "after": [
+        97,
+        97,
+        85,
+        154,
+        47,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/normalize_coverage_quick.a",
+      "before": [
+        80082,
+        80082,
+        496,
+        80505,
+        22,
+        0
+      ],
+      "after": [
+        80082,
+        80082,
+        9324,
+        80505,
+        22,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/normalize_coverage_repeat.a",
+      "before": [
+        97540,
+        97540,
+        1930,
+        99162,
+        19,
+        0
+      ],
+      "after": [
+        97540,
+        97540,
+        23496,
+        99162,
+        19,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/normalize_coverage_stream.a",
+      "before": [
+        522657,
+        522657,
+        1193,
+        523649,
+        19,
+        0
+      ],
+      "after": [
+        522657,
+        522657,
+        27071,
+        523649,
+        19,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/return_panic.a",
+      "before": [
+        13,
+        13,
+        12,
+        25,
+        9,
+        0
+      ],
+      "after": [
+        12,
+        12,
+        13,
+        25,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/from_codes.a",
+      "before": [
+        408,
+        408,
+        53,
+        413,
+        12,
+        0
+      ],
+      "after": [
+        408,
+        408,
+        56,
+        413,
+        12,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/shared_slices.a",
+      "before": [
+        12675,
+        12675,
+        5992,
+        12767,
+        87,
+        0
+      ],
+      "after": [
+        12236,
+        12236,
+        10648,
+        12767,
+        86,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/string_append.a",
+      "before": [
+        249,
+        249,
+        88,
+        278,
+        49,
+        0
+      ],
+      "after": [
+        248,
+        248,
+        140,
+        278,
+        48,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/shared_slice_append.a",
+      "before": [
+        200,
+        200,
+        20,
+        206,
+        8,
+        0
+      ],
+      "after": [
+        200,
+        200,
+        37,
+        206,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_string_prototype.a",
+      "before": [
+        24,
+        24,
+        6,
+        31,
+        3,
+        0
+      ],
+      "after": [
+        23,
+        23,
+        7,
+        31,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_string_indices.a",
+      "before": [
+        639,
+        639,
+        56,
+        701,
+        8,
+        0
+      ],
+      "after": [
+        594,
+        594,
+        89,
+        701,
+        8,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_string_raw.a",
+      "before": [
+        45,
+        45,
+        50,
+        84,
+        11,
+        0
+      ],
+      "after": [
+        45,
+        45,
+        54,
+        88,
+        11,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/library_string_existing.a",
+      "before": [
+        36,
+        36,
+        304,
+        343,
+        11,
+        0
+      ],
+      "after": [
+        34,
+        34,
+        306,
+        343,
+        9,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/regexp.a",
+      "before": [
+        455,
+        455,
+        364,
+        417,
+        62,
+        0
+      ],
+      "after": [
+        437,
+        437,
+        382,
+        417,
+        58,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/sweeps/regexp_methods.a",
+      "before": [
+        448046,
+        448046,
+        126442,
+        335370,
+        68,
+        0
+      ],
+      "after": [
+        345663,
+        345663,
+        228825,
+        335370,
+        54,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/regexp_replace.a",
+      "before": [
+        652,
+        652,
+        29,
+        336,
+        119,
+        0
+      ],
+      "after": [
+        625,
+        625,
+        206,
+        336,
+        113,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/regexp_split.a",
+      "before": [
+        110,
+        110,
+        140,
+        154,
+        13,
+        0
+      ],
+      "after": [
+        103,
+        103,
+        147,
+        154,
+        10,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/regexp_exec.a",
+      "before": [
+        179,
+        179,
+        77,
+        155,
+        18,
+        0
+      ],
+      "after": [
+        163,
+        163,
+        93,
+        155,
+        17,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_deinitialize_static.a",
+      "before": [
+        1,
+        0,
+        5,
+        5,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        2,
+        3,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_deinitialize_field.a",
+      "before": [
+        1,
+        0,
+        3,
+        3,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_weak.a",
+      "before": [
+        4,
+        1,
+        6,
+        7,
+        4,
+        0
+      ],
+      "after": [
+        4,
+        1,
+        5,
+        6,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_definite.a",
+      "before": [
+        7,
+        7,
+        5,
+        12,
+        4,
+        0
+      ],
+      "after": [
+        7,
+        7,
+        4,
+        11,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_static_initialized.a",
+      "before": [
+        8,
+        8,
+        8,
+        18,
+        5,
+        0
+      ],
+      "after": [
+        8,
+        8,
+        6,
+        16,
+        5,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_static_uninitialized.a",
+      "before": [
+        1,
+        0,
+        2,
+        3,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        1,
+        2,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_lazy_initialized.a",
+      "before": [
+        13,
+        13,
+        30,
+        47,
+        4,
+        0
+      ],
+      "after": [
+        13,
+        13,
+        29,
+        46,
+        4,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/non_null_lazy_static.a",
+      "before": [
+        1,
+        0,
+        2,
+        4,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        1,
+        3,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/fresh/testdata/regexp_tree.ts",
+      "before": [
+        97,
+        97,
+        69,
+        85,
+        35,
+        0
+      ],
+      "after": [
+        91,
+        91,
+        81,
+        85,
+        35,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/read_files.a",
+      "before": [
+        59,
+        59,
+        30,
+        76,
+        8,
+        0
+      ],
+      "after": [
+        58,
+        58,
+        33,
+        76,
+        7,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/visitor.a",
+      "before": [
+        21,
+        21,
+        33,
+        41,
+        13,
+        0
+      ],
+      "after": [
+        21,
+        21,
+        32,
+        40,
+        13,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/default-staged.a",
+      "before": [
+        2,
+        2,
+        5,
+        6,
+        2,
+        0
+      ],
+      "after": [
+        2,
+        2,
+        4,
+        5,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/readiness-identifier.a",
+      "before": [
+        2,
+        2,
+        6,
+        8,
+        2,
+        0
+      ],
+      "after": [
+        2,
+        2,
+        4,
+        6,
+        2,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/readiness-identifier-uninitialized.a",
+      "before": [
+        1,
+        0,
+        4,
+        3,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/readiness-number.a",
+      "before": [
+        3,
+        3,
+        5,
+        9,
+        3,
+        0
+      ],
+      "after": [
+        3,
+        3,
+        4,
+        8,
+        3,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "fixture": "stage3/interface-downcasts/readiness-number-uninitialized.a",
+      "before": [
+        1,
+        0,
+        4,
+        3,
+        1,
+        0
+      ],
+      "after": [
+        1,
+        0,
+        3,
+        3,
+        1,
+        0,
+        0,
+        0
+      ]
+    }
+  ]
+}

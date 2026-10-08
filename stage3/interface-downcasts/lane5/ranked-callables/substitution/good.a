@@ -1,0 +1,6 @@
+// Original tsc declaration/read, reduced enum members.
+enum SyntaxKind {PropertyAccessExpression=5}
+interface Base {readonly enableSubstitution:unknown;}
+interface Target {enableSubstitution(kind: SyntaxKind): void;}
+function probe(value:Base):void {const context=value as Target;context.enableSubstitution(SyntaxKind.PropertyAccessExpression);}
+probe({enableSubstitution:(kind:SyntaxKind):void=>{console.log(`${kind}`);}});

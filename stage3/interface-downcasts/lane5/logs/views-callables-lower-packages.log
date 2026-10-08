@@ -1,0 +1,13 @@
+--- FAIL: TestCensusPredicateMarkerKeepsProofBoundaries (0.18s)
+    census_predicate_marker_test.go:19: unobservable marker exception escaped its boundary: /tmp/adamic-gate/TestCensusPredicateMarkerKeepsProofBoundaries3829587269/002/main.a:1:88: stage 0 can't lower passing union of differently held members to a function value yet
+--- FAIL: TestCensusOverloadRelation (0.34s)
+    --- FAIL: TestCensusOverloadRelation/result_covariance (0.10s)
+        census_small_test.go:41: expected strict overload refusal naming "overload 1 of ensureTrailingDirectorySeparator result"; got /tmp/adamic-gate/TestCensusOverloadRelationresult_covariance2889817239/001/main.a:1:13: Adamic 0.1 refuses a primitive brand member __pathBrand whose type is not void; make __pathBrand void (or optional and typed undefined) so the brand is phantom
+--- FAIL: TestUndecidedCycleReadsUseReadyChecks (7.76s)
+    --- FAIL: TestUndecidedCycleReadsUseReadyChecks/initialized_value (2.23s)
+        import_cycle_ready_test.go:62: proven imported read retained a TDZ check
+--- FAIL: TestDefiniteAssignmentUsesReadiness (0.15s)
+    definite_assignment_test.go:21: /tmp/adamic-gate/TestDefiniteAssignmentUsesReadiness3763932199/001/main.a:1:14: Adamic 0.1 refuses a definite assignment assertion !; remove ! and initialize it where it is declared or in the constructor, or type it T | undefined
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	77.343s
+FAIL

@@ -49,7 +49,7 @@ func (l *lowering) iterated(node *ast.Node) (ir.Expression, ir.Type, error) {
 			}
 		}
 	}
-	if l.checker.IsArrayType(l.checker.GetTypeAtLocation(node)) {
+	if l.viewArrayBase(l.phantomArrayView(l.checker.GetTypeAtLocation(node))) != nil {
 		element, err := l.elementType(node)
 		if err != nil {
 			return nil, 0, err
@@ -137,7 +137,7 @@ func (l *lowering) newMapFrom(node *ast.Node, source *ast.Node, key ir.Type, val
 	if element != ir.Object {
 		return nil, l.notYet(source, "new Map from something that isn't [key, value] pairs")
 	}
-	return ir.MapNew{Key: key, Value: value, Pairs: pairs}, nil
+	return l.mapProducer(node, ir.MapNew{Key: key, Value: value, Pairs: pairs}), nil
 }
 
 // pairTypes is how a source of [key, value] pairs holds its keys and values: an array of tuples by its
@@ -345,10 +345,28 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			return nil, err
 		}
 		of := l.result.Locals[local].Type
-		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) {
+		if of == ir.Union {
+			if _, err := l.viewContract(binding, l.concrete(fieldType)); err != nil {
+				return nil, err
+			}
+		}
+		if element, isKnown := l.representation(fieldType); !isKnown || element != of || slotless(of) && !l.viewPrimitiveUnionRead(fieldType) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
 		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
+		value.View = sourceExpression(binding) + " (field " + field + ")"
+		value.ViewType = l.checker.TypeToString(fieldType)
+		value.ViewTypeID = int(fieldType.Id())
+		value.ViewReceiverTypeID = int(destructured.Id())
+		value.ViewWhere = l.program.Where(binding)
+		l.prepareViewCallableProperty(binding, fieldType, &value)
+		value.ViewAllowed = l.viewLiterals(fieldType)
+		l.preparePrimitiveDestructuredRead(binding, destructured, fieldType, &value)
+		if !tuple {
+			if err := l.viewIntersectionBindingRead(binding, destructured, fieldType, &value); err != nil {
+				return nil, err
+			}
+		}
 		statements = append(statements, ir.Declare{Local: local, Value: value})
 	}
 	return statements, nil

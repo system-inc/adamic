@@ -1,0 +1,927 @@
+{
+  "typescript": "6.0.3",
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "diagnostics": 0,
+  "measurement": "Conservative Unknown-fallback read demand, NOT proven reaching-view counts or missing-support counts",
+  "flow_dependency": "Reuses lane 3 c1f4c5a70bd7d98fd543f4eb7ff96191be4a338b ReachingAllocations through make-read-flow-overlay.py; Unknown view propagation retains checks",
+  "read_sites": 66960,
+  "pairs": 12181,
+  "known_view_reachable": null,
+  "known_non_view": null,
+  "unknown_fallback": 66960,
+  "families": [
+    {
+      "family": "callable contracts",
+      "lane": "lane 2",
+      "pairs": 2818,
+      "read_sites": 11063
+    },
+    {
+      "family": "nullish members",
+      "lane": "lane 1",
+      "pairs": 2011,
+      "read_sites": 9084
+    },
+    {
+      "family": "optional properties",
+      "lane": "lane 1",
+      "pairs": 1681,
+      "read_sites": 7863
+    },
+    {
+      "family": "tagged object union",
+      "lane": "lane 1",
+      "pairs": 488,
+      "read_sites": 3116
+    },
+    {
+      "family": "dictionary contracts",
+      "lane": "unassigned",
+      "pairs": 409,
+      "read_sites": 2256
+    },
+    {
+      "family": "array or tuple contracts",
+      "lane": "lane 2",
+      "pairs": 389,
+      "read_sites": 2117
+    },
+    {
+      "family": "intersection field contract",
+      "lane": "unassigned",
+      "pairs": 198,
+      "read_sites": 1145
+    },
+    {
+      "family": "mixed primitive union",
+      "lane": "lane 4",
+      "pairs": 63,
+      "read_sites": 690
+    },
+    {
+      "family": "object plus primitive union",
+      "lane": "lane 4",
+      "pairs": 73,
+      "read_sites": 267
+    },
+    {
+      "family": "untagged object union",
+      "lane": "lane 4",
+      "pairs": 84,
+      "read_sites": 186
+    },
+    {
+      "family": "any field contract",
+      "lane": "unassigned",
+      "pairs": 74,
+      "read_sites": 138
+    },
+    {
+      "family": "generic field contract",
+      "lane": "unassigned",
+      "pairs": 91,
+      "read_sites": 118
+    },
+    {
+      "family": "nominal class fields",
+      "lane": "unassigned",
+      "pairs": 5,
+      "read_sites": 52
+    },
+    {
+      "family": "unknown field contract",
+      "lane": "unassigned",
+      "pairs": 3,
+      "read_sites": 12
+    }
+  ],
+  "lanes": [
+    {
+      "lane": "lane 1",
+      "pairs": 2370,
+      "read_sites": 11321
+    },
+    {
+      "lane": "lane 2",
+      "pairs": 3207,
+      "read_sites": 13180
+    },
+    {
+      "lane": "lane 4",
+      "pairs": 213,
+      "read_sites": 1111
+    },
+    {
+      "lane": "unassigned",
+      "pairs": 780,
+      "read_sites": 3721
+    }
+  ],
+  "top_mixed_shapes": [
+    {
+      "shape": "__String",
+      "read_sites": 543,
+      "pairs": 30,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "string | number | undefined",
+      "read_sites": 66,
+      "pairs": 4,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "string | NodeArray<JSDocComment> | undefined",
+      "read_sites": 63,
+      "pairs": 24,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "\"string\" | \"number\" | \"boolean\" | \"object\" | Map<string, string | number> | \"list\" | \"listOrElement\"",
+      "read_sites": 33,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "Identifier | ObjectBindingPattern | ArrayBindingPattern | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ElementAccessExpression | ComputedPropertyName | JsxNamespacedName | NoSubstitutionTemplateLiteral | PropertyAccessEntityNameExpression",
+      "read_sites": 26,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "string | DiagnosticMessageChain",
+      "read_sites": 24,
+      "pairs": 4,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "CommandLineOptionOfStringType | CommandLineOptionOfNumberType | CommandLineOptionOfBooleanType | CommandLineOptionOfCustomType | TsConfigOnlyOption",
+      "read_sites": 22,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "true | Node | undefined",
+      "read_sites": 20,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | number",
+      "read_sites": 19,
+      "pairs": 7,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "Identifier",
+      "read_sites": 18,
+      "pairs": 7,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "TsConfigSourceFile | CompilerOptionsValue",
+      "read_sites": 13,
+      "pairs": 2,
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "ComputedPropertyName",
+      "read_sites": 12,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "LiteralExpression & StringLiteral",
+      "read_sites": 12,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "number | Expression | Statement | undefined",
+      "read_sites": 12,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "false | TypeOnlyAliasDeclaration | undefined",
+      "read_sites": 11,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | number | PseudoBigInt",
+      "read_sites": 10,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "__String | undefined",
+      "read_sites": 9,
+      "pairs": 5,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "boolean | (() => boolean) | undefined",
+      "read_sites": 7,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "NodeArray<ParameterDeclaration> | readonly JSDocParameterTag[]",
+      "read_sites": 7,
+      "pairs": 3,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[]) | ((cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])",
+      "read_sites": 6,
+      "pairs": 6,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "EmitSignature | undefined",
+      "read_sites": 6,
+      "pairs": 4,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "false | Symbol | undefined",
+      "read_sites": 6,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "(() => CompilerOptions) | (() => CompilerOptions)",
+      "read_sites": 5,
+      "pairs": 4,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "ConstructorDeclaration",
+      "read_sites": 5,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "false | BuildInfo",
+      "read_sites": 5,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "readonly [PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | readonly [PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>, PragmaArgumentSpecification<string>] | undefined",
+      "read_sites": 5,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "string | false | undefined",
+      "read_sites": 5,
+      "pairs": 3,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "\"string\" | \"number\" | \"boolean\" | \"object\" | Map<string, string | number>",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "[] | EmitSignature | IncrementalBuildInfoFileId",
+      "read_sites": 4,
+      "pairs": 2,
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "boolean | 0 | undefined",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "DiagnosticMessageChain[] | ReusableDiagnosticMessageChain[] | undefined",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "keyof CompilerOptions | undefined",
+      "read_sites": 4,
+      "pairs": 2,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "readonly ReusableDiagnostic[] | IncrementalBuildInfoFileId",
+      "read_sites": 4,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | GeneratedNamePart | undefined",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | number | boolean | DiagnosticMessage | undefined",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | string[] | undefined",
+      "read_sites": 4,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])",
+      "read_sites": 3,
+      "pairs": 3,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[]) | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly DiagnosticWithLocation[])",
+      "read_sites": 3,
+      "pairs": 3,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "{ (sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined): readonly Diagnostic[]; (sourceFile: SourceFile | undefined, cancellationToken: CancellationToken | undefined, nodesToCheck: Node[]): readonly Diagnostic[]; } | ((sourceFile?: SourceFile | undefined, cancellationToken?: CancellationToken | undefined) => readonly Diagnostic[])",
+      "read_sites": 3,
+      "pairs": 3,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "{ arguments: { types?: { value: string; pos: number; end: number; } | undefined; } & { lib?: { value: string; pos: number; end: number; } | undefined; } & { path?: { value: string; pos: number; end: number; } | undefined; } & { \"no-default-lib\"?: string | undefined; } & { \"resolution-mode\"?: string | undefined; } & { preserve?: string | undefined; }; range: CommentRange; } | { arguments: { path: string; } & { name?: string | undefined; }; range: CommentRange; } | { arguments: { name: string; }; range: CommentRange; } | { arguments: never; range: CommentRange; } | { arguments: never; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; } | { arguments: { factory: string; }; range: CommentRange; }",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "boolean | (() => boolean)",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "boolean | Expression | undefined",
+      "read_sites": 3,
+      "pairs": 3,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "IncrementalBuildInfoBundlePendingEmit | undefined",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "IncrementalBuildInfoRoot",
+      "read_sites": 3,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "readonly string[] | SourceFile | \"paths\" | ModuleSpecifierCache | \"node_modules\" | \"redirect\" | \"relative\" | \"ambient\" | readonly ModulePath[] | undefined",
+      "read_sites": 3,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | ((node: EmitHelperUniqueNameCallback) => string)",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | ReusableDiagnosticMessageChain",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "string | true | undefined",
+      "read_sites": 3,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "StringLiteral",
+      "read_sites": 3,
+      "pairs": 3,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => readonly Diagnostic[]) | (() => readonly Diagnostic[])",
+      "read_sites": 2,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => string) | (() => string)",
+      "read_sites": 2,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((file: string, callback: FileWatcherCallback, pollingInterval: PollingInterval, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher) | ((directory: string, callback: DirectoryWatcherCallback, flags: WatchDirectoryFlags, options: WatchOptions | undefined, detailInfo1: X, detailInfo2?: Y | undefined) => FileWatcher)",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((s: string) => void) | ((s: string) => void) | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined) => EmitResult) | ((writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined) => EmitResult)",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(<T>(a: T, b: T, msg?: string | undefined, msg2?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void) | ((message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never) | ((a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void) | ((expression: unknown, message?: string | undefined, verboseDebugInfo?: string | (() => string) | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts expression) | (<T>(value: T | null | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => T) | ((func: AnyFunction) => string) | ((level: LogLevel) => boolean) | typeof log | (() => AssertionLevel) | ((level: AssertionLevel) => void) | ((level: AssertionLevel) => boolean) | ((node: Node, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => never) | ((a: number, b: number, msg?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => void) | ((a: number, b: number, stackCrawlMark?: AnyFunction | undefined) => void) | (<T>(value: T, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts value is NonNullable<T>) | { <T extends Node>(value: NodeArray<T>, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is NodeArray<T>; <T>(value: readonly T[], message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts value is readonly NonNullable<T>[]; } | (<T, A extends readonly T[]>(value: A, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => A) | ((member: never, message?: string, stackCrawlMark?: AnyFunction | undefined) => never) | { <T extends Node, U extends T>(nodes: NodeArray<T>, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U>; <T extends Node, U extends T>(nodes: readonly T[], test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[]; <T extends Node, U extends T>(nodes: NodeArray<T> | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is NodeArray<U> | undefined; <T extends Node, U extends T>(nodes: readonly T[] | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts nodes is readonly U[] | undefined; (nodes: readonly Node[], test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T | undefined, test: (node: Node) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Exclude<T, U>; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, U extends T>(node: T, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U; <T extends Node, U extends T>(node: T | undefined, test: (node: T) => node is U, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is U | undefined; (node: Node | undefined, test: ((node: Node) => boolean) | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | { <T extends Node, K extends SyntaxKind>(node: T, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }>; <T extends Node, K extends SyntaxKind>(node: T | undefined, kind: K, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): asserts node is Extract<T, { readonly kind: K; }> | undefined; (node: Node | undefined, kind: SyntaxKind | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined): void; } | ((node: Node | undefined, message?: string | undefined, stackCrawlMark?: AnyFunction | undefined) => asserts node is undefined) | (<T>(value: unknown) => asserts value is T) | ((symbol: Symbol) => string) | ((value: number | undefined, enumObject: any, isFlags?: boolean | undefined) => string) | ((kind: SyntaxKind | undefined) => string) | ((kind: SnippetKind | undefined) => string) | ((kind: ScriptKind | undefined) => string) | ((flags: NodeFlags | undefined) => string) | ((flags: NodeCheckFlags | undefined) => string) | ((flags: ModifierFlags | undefined) => string) | ((flags: TransformFlags | undefined) => string) | ((flags: EmitFlags | undefined) => string) | ((flags: SymbolFlags | undefined) => string) | ((flags: TypeFlags | undefined) => string) | ((flags: SignatureFlags | undefined) => string) | ((flags: ObjectFlags | undefined) => string) | ((flags: FlowFlags | undefined) => string) | ((result: RelationComparisonResult | undefined) => string) | ((mode: CheckMode | undefined) => string) | ((mode: SignatureCheckMode | undefined) => string) | ((facts: TypeFacts | undefined) => string) | ((flowNode: FlowNode) => FlowNode) | ((array: NodeArray<Node>) => void) | (() => void) | ((varianceFlags: VarianceFlags) => string) | ((mapper: TypeMapper) => TypeMapper) | ((flowNode: FlowNode) => void) | ((flowNode: FlowNode) => string)",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "DiagnosticMessage | readonly [string] | readonly [string, string]",
+      "read_sites": 2,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "false | Date | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "false | string[] | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "false | Type | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "false | VersionPaths | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral",
+      "read_sites": 2,
+      "pairs": 2,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "Identifier | PrivateIdentifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral | undefined",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "NamedExports",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "PropertyAccessEntityNameExpression | BindableElementAccessExpression | (ElementAccessExpression & { readonly expression: BindableStaticNameExpression; })",
+      "read_sites": 2,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "string | readonly string[] | undefined",
+      "read_sites": 2,
+      "pairs": 2,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "((_?: unknown) => void) | (() => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => boolean) | (() => boolean)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => number) | (() => number)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => readonly SourceFile[]) | (() => readonly SourceFile[])",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "(() => string | undefined) | (() => string | undefined) | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((callbackfn: (value: IncrementalBundleEmitBuildInfoFileInfo, index: number, array: readonly IncrementalBundleEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void) | ((callbackfn: (value: IncrementalMultiFileEmitBuildInfoFileInfo, index: number, array: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]) => void, thisArg?: any) => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((callbackfn: (value: ResolutionWithFailedLookupLocations, value2: ResolutionWithFailedLookupLocations, set: Set<ResolutionWithFailedLookupLocations>) => void, thisArg?: any) => void) | ((callbackfn: (value: ResolutionWithFailedLookupLocations, key: string, map: Map<string, ResolutionWithFailedLookupLocations>) => void, thisArg?: any) => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((callbackfn: (value: U, key: K, map: ReadonlyMap<K, U>) => void, thisArg?: any) => void) | ((callbackfn: (value: K, value2: K, set: ReadonlySet<K>) => void, thisArg?: any) => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((key: K) => boolean) | ((value: K) => boolean)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((name: string, startMark?: string | undefined, endMark?: string | undefined) => void) | { (measureName: string, startMark?: string | undefined, endMark?: string | undefined): PerformanceMeasure; (measureName: string, options: PerformanceMeasureOptions, endMark?: string | undefined): PerformanceMeasure; }",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((name: string) => void) | ((markName: string, markOptions?: PerformanceMarkOptions | undefined) => PerformanceMark)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((name?: string | undefined) => void) | ((markName?: string | undefined) => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((name?: string | undefined) => void) | ((measureName?: string | undefined) => void)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "((start?: number | undefined, end?: number | undefined) => never[]) | ((start?: number | undefined, end?: number | undefined) => Expression[])",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "{ (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined): EmitResult; (targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnly?: boolean | EmitOnly | undefined, customTransformers?: CustomTransformers | undefined, forceDtsEmit?: boolean | undefined, skipBuildInfo?: boolean | undefined): EmitResult; } | ((targetSourceFile?: SourceFile | undefined, writeFile?: WriteFileCallback | undefined, cancellationToken?: CancellationToken | undefined, emitOnlyDtsFiles?: boolean | undefined, customTransformers?: CustomTransformers | undefined) => EmitResult)",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "AnyBuildOrder | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "boolean | \"circularity\"",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "ClassDeclaration | ClassExpression | ConstructorDeclaration",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "CommandLineOption",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "CompilerOptionsValue",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union",
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "ExternalModuleReference",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "Identifier & GeneratedIdentifier & { readonly escapedText: { __escapedIdentifier: void; } & \"__this\"; }",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "Identifier | StringLiteral | NumericLiteral | BigIntLiteral | ComputedPropertyName | NoSubstitutionTemplateLiteral",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "import(\"/tmp/views-mixed-typescript/src/compiler/performanceCore\").Performance | import(\"node:perf_hooks\").Performance",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "JSDocTemplateTag",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "K | V[]",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "number | ReportFileInError | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "OperationArguments | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "readonly IncrementalMultiFileEmitBuildInfoFileInfo[] | readonly IncrementalBundleEmitBuildInfoFileInfo[]",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "readonly string[] | Program | BuilderProgram | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "RepopulateDiagnosticChainInfo",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    },
+    {
+      "shape": "SourceFile | Program",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "untagged object union"
+      ]
+    },
+    {
+      "shape": "string | false",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "mixed primitive union"
+      ]
+    },
+    {
+      "shape": "T | readonly T[] | T[] | undefined",
+      "read_sites": 1,
+      "pairs": 1,
+      "families": [
+        "object plus primitive union"
+      ]
+    }
+  ],
+  "shared_flow": {
+    "graph_queries": 69621,
+    "matched_inventory_receivers": 66148,
+    "unmapped_inventory_receivers": 812,
+    "matched_known_allocation_receivers": 2457,
+    "matched_overlapping_viewed_allocations": 40,
+    "proven_non_viewed_receivers": 0
+  }
+}

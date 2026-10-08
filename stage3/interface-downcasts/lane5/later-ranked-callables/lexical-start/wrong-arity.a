@@ -1,0 +1,5 @@
+// Original tsc declaration/read; adjacent helpers reduced.
+interface Base {readonly startLexicalEnvironment:unknown;}
+interface Target {startLexicalEnvironment(): void;}
+function probe(value:Base):void {const context=value as Target;context.startLexicalEnvironment();}
+probe({startLexicalEnvironment:(unused:number):void=>{console.log("9");}});

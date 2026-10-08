@@ -1,0 +1,1 @@
+const actual={x:1,y:{label:0}}; const inserted:{label:2}={label:2}; const source:{x:number}=actual; const wider:{x:number;y?:{readonly label:2}}=source; wider.y=inserted; actual.y.label=3; console.log(`${inserted.label}`);
