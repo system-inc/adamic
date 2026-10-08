@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"path/filepath"
+	"regexp"
 	"strings"
 	"testing"
 
@@ -191,4 +192,34 @@ func init() {
 		lowers  bool
 		checked bool
 	}{"internal/oracle/testdata/element_type_unknown.a", false, false})
+}
+
+// TestElementTypeBrandedLengthMutant observes both inhabitable and empty required brands.
+func TestElementTypeBrandedLengthMutant(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/element_type_brands.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := native.C(program)
+	mutant := regexp.MustCompile(`([A-Za-z_][A-Za-z_0-9]*)->length`).ReplaceAllString(source, `($1->length + 1)`)
+	if mutant == source {
+		t.Fatal("length mutant changed nothing")
+	}
+	binary := filepath.Join(t.TempDir(), "mutant")
+	if err := native.Build(mutant, binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	got := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+	if got.exitCode != 0 || len(got.stderr) != 0 {
+		t.Fatalf("mutant failed outside comparison: %+v", got)
+	}
+	if difference := disagreement(onNode(t, path), got); difference != "stdout differs" {
+		t.Fatalf("mutant caught by %q", difference)
+	}
+	t.Log("wrong branded array length caught only by Node stdout")
 }

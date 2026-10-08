@@ -5,7 +5,7 @@ const crypto = require('node:crypto');
 const ts = require('typescript');
 const [input, adapted, output] = process.argv.slice(2);
 if (!input || !adapted || !output) throw new Error('usage: generic_echoes.cjs INPUT_JSON ADAPTED OUTPUT_JSON');
-const expected = new Map([['an array of T', 42], ['an array of U', 6], ['an array of NonNullable<T>', 3], ['an array of Child', 2], ['an array of V', 2], ['an array of TState', 1]]);
+const expected = new Map([['an array of T', 43], ['an array of U', 6], ['an array of NonNullable<T>', 3], ['an array of Child', 2], ['an array of V', 2], ['an array of TState', 1]]);
 const selected = new Map();
 for (const row of JSON.parse(fs.readFileSync(input, 'utf8'))) {
     if (expected.has(row.reason)) selected.set(row.reason + '\0' + row.where, row);

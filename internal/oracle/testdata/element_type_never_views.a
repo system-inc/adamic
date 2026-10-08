@@ -1,0 +1,7 @@
+// An empty never[] can widen through aliases with incompatible element slots.
+// Accepting one fixed slot before checked views exist would corrupt these aliases.
+const empty: never[] = [];
+const numbers: number[] = empty;
+const words: string[] = empty;
+numbers.push(42);
+console.log(`${typeof words[0]} ${words.length}`);

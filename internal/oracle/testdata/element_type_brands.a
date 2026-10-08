@@ -6,3 +6,10 @@ console.log(`${names.length} ${names.slice().length}`);
 console.log(names.join('/'));
 names.reverse();
 console.log(names.join('/'));
+
+// Required brands cannot be manufactured by a cast in .a. Their empty array
+// holders still have string slots, including independently copied holders.
+type Path = string & { readonly __pathBrand: void };
+const paths: Path[] = [];
+const copiedPaths = paths.slice();
+console.log(`${paths.length} ${copiedPaths.length} ${copiedPaths.join('/')}`);

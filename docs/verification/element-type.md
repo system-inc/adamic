@@ -1,5 +1,7 @@
 # elementType lowering results
 
+Historical area/compiler observations follow. The current main-based topic-only result and excluded dependencies are in [element-type-topic.md](element-type-topic.md).
+
 Base: origin/area/compiler d577dd0d7c311bfe5ae972dea390474be3a0ee0d.
 Merged census replay 9a1f14c5 and checked non-null c41c0e06 (merge 981520f8).
 First storage group: f544f4a2. Reference storage is the commit containing this report.

@@ -1,0 +1,401 @@
+{
+  "census": "e8c283b5ed32477805357b652a170b85a04b2469",
+  "base": "6998ebc24ae353193cb1495d3d51308131a4b5c7",
+  "source_manifest": "81/81 exact hashes and byte counts match the census manifest",
+  "measurement": "checker-rejected entry-root programs; detached replay tool, no worker commits in topic ancestry",
+  "kinds": [
+    {
+      "count": 90,
+      "reason": "an array of never",
+      "site": "src/compiler/builderState.ts:567:38",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builderState.ts:566:18",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        }
+      ]
+    },
+    {
+      "count": 43,
+      "reason": "an array of T",
+      "site": "src/compiler/checker.ts:46986:35",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:46986:35",
+          "reason": "an array of T"
+        }
+      ]
+    },
+    {
+      "count": 21,
+      "reason": "an array of any",
+      "site": "src/compiler/checker.ts:11031:21",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:10985:25",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:10991:29",
+          "reason": "a PrefixUnaryExpression on a number"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:10997:65",
+          "reason": "a NonNullExpression"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:11031:21",
+          "reason": "an array of any"
+        }
+      ]
+    },
+    {
+      "count": 6,
+      "reason": "an array of boolean | undefined",
+      "site": "src/compiler/binder.ts:1933:17",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:10703:17",
+          "reason": "a function returning T | undefined"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2846:14",
+          "reason": "a function returning void | number | Symbol"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:1956:21",
+          "reason": "a BinaryExpression as a statement"
+        }
+      ]
+    },
+    {
+      "count": 6,
+      "reason": "an array of U",
+      "site": "src/compiler/core.ts:2524:17",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:2493:5",
+          "reason": "a BinaryExpression as a statement"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:2500:15",
+          "reason": "a value of type NonNullable<T>"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:2501:15",
+          "reason": "a value of type NonNullable<U>"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:2524:17",
+          "reason": "a NonNullExpression"
+        }
+      ]
+    },
+    {
+      "count": 5,
+      "reason": "an array of ResolvedConfigFileName",
+      "site": "src/compiler/tsbuildPublic.ts:2226:28",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/tsbuildPublic.ts:2224:5",
+          "reason": "reading performance"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/tsbuildPublic.ts:2226:16",
+          "reason": "a value of type ResolvedConfigFileName"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/tsbuildPublic.ts:2243:5",
+          "reason": "reading performance"
+        }
+      ]
+    },
+    {
+      "count": 3,
+      "reason": "an array of undefined",
+      "site": "src/compiler/binder.ts:1940:40",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/utilities.ts:10703:17",
+          "reason": "a function returning T | undefined"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:2846:14",
+          "reason": "a function returning void | number | Symbol"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/binder.ts:1956:21",
+          "reason": "a BinaryExpression as a statement"
+        }
+      ]
+    },
+    {
+      "count": 3,
+      "reason": "an array of NonNullable<T>",
+      "site": "src/compiler/core.ts:739:31",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:738:9",
+          "reason": "a value of type NonNullable<T>"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:739:31",
+          "reason": "an array of NonNullable<T>"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:741:15",
+          "reason": "a value of type NonNullable<T>"
+        }
+      ]
+    },
+    {
+      "count": 2,
+      "reason": "an array of Path",
+      "site": "src/compiler/builderState.ts:479:23",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builderState.ts:466:33",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builderState.ts:468:13",
+          "reason": "reading compilerOptions"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builderState.ts:473:13",
+          "reason": "a PrefixUnaryExpression on a value"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builderState.ts:479:24",
+          "reason": "a value of type Path"
+        }
+      ]
+    },
+    {
+      "count": 2,
+      "reason": "an array of V",
+      "site": "src/compiler/core.ts:107:25",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:107:25",
+          "reason": "an array of V"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:108:5",
+          "reason": "reading Debug"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:110:9",
+          "reason": "an array of V"
+        }
+      ]
+    },
+    {
+      "count": 2,
+      "reason": "an array of Child",
+      "site": "src/compiler/emitter.ts:4734:86",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:4734:86",
+          "reason": "an array of Child"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:4735:13",
+          "reason": "reading leadingLineTerminatorCount"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/emitter.ts:6375:12",
+          "reason": ".length on a value"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "reason": "a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes",
+      "site": "src/compiler/builder.ts:2407:5",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2400:90",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2401:61",
+          "reason": "a method call through a structural signature in a program with statics; use typeof the declaring class"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2402:23",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/builder.ts:2407:32",
+          "reason": "a value of type IncrementalMultiFileEmitBuildInfoFileInfo"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "reason": "an array of object",
+      "site": "src/compiler/checker.ts:15326:33",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15327:16",
+          "reason": "a BinaryExpression with a value and a value"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15329:9",
+          "reason": "a function inside a function (a closure)"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/checker.ts:15364:9",
+          "reason": "a function inside a function (a closure)"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "reason": "an array of CanonicalKey",
+      "site": "src/compiler/commandLineParser.ts:4131:47",
+      "exit": 1,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/commandLineParser.ts:4127:56",
+          "reason": "RegExp with a nonconstant pattern"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/commandLineParser.ts:4129:31",
+          "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/path.ts:579:44",
+          "reason": "a parameter that isn't a plain name"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "reason": "an array of unknown",
+      "site": "src/compiler/core.ts:684:12",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/core.ts:684:12",
+          "reason": "an array of unknown"
+        }
+      ]
+    },
+    {
+      "count": 1,
+      "reason": "an array of TState",
+      "site": "src/compiler/factory/utilities.ts:1396:9",
+      "exit": 0,
+      "notyet_observations": [
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:1394:34",
+          "reason": "a generic function as a value"
+        },
+        {
+          "kind": "NotYet",
+          "where": "src/compiler/factory/utilities.ts:1396:9",
+          "reason": "an array of TState"
+        }
+      ]
+    }
+  ],
+  "second_never_example": {
+    "site": "src/compiler/checker.ts:11003:40",
+    "notyet_observations": [
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:10985:25",
+        "reason": "a PrefixUnaryExpression on a value"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:10991:29",
+        "reason": "a PrefixUnaryExpression on a number"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:10997:65",
+        "reason": "a NonNullExpression"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:11003:40",
+        "reason": "an array of never"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:11026:33",
+        "reason": "an array of never"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:11031:21",
+        "reason": "an array of any"
+      },
+      {
+        "kind": "NotYet",
+        "where": "src/compiler/checker.ts:11033:24",
+        "reason": "reading results"
+      }
+    ]
+  }
+}

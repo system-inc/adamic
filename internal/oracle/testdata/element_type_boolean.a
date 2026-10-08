@@ -10,7 +10,6 @@ for (const value of values) {
 	seen += `${value}/`;
 }
 console.log(seen);
-console.log(`${values.find((value) => value === false)} ${values.find((value) => value === undefined)} ${values.find((value) => value === true)}`);
 function compare(left: boolean | undefined, right: boolean | undefined): number {
 	console.log(`compare ${left} ${right}`);
 	return (left === true ? 1 : 0) - (right === true ? 1 : 0);

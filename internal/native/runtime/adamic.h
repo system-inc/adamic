@@ -50,6 +50,7 @@ void *adamic_allocate(size_t size, enum adamic_kind kind);
 typedef union adamic_value {
 	double number;
 	bool boolean;
+	uint8_t maybe_boolean;
 	void *reference;
 } adamic_value;
 
@@ -64,6 +65,10 @@ typedef struct adamic_maybe_boolean {
 	bool present;
 	bool boolean;
 } adamic_maybe_boolean;
+
+// Optional boolean array slots hold undefined (0), false (1), or true (2).
+uint8_t adamic_maybe_boolean_pack(adamic_maybe_boolean value);
+adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t value);
 
 // adamic_cell holds a variable a closure captured, so the function that declared it and every
 // closure that captured it share one (closure.c). references says whether value is a reference.

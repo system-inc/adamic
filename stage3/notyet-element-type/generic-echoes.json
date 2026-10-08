@@ -2,18 +2,59 @@
   "stock_typescript": "6.0.3",
   "explanation": "All selected sites refer to a declared type parameter in an enclosing generic scope. The census attempts isolated declarations without invented specializations. This cancels these elementType storage observations as generic census echoes; it does not certify the enclosing compiler functions or their other stops.",
   "counts": {
+    "an array of T": 43,
     "an array of V": 2,
-    "an array of T": 42,
     "an array of U": 6,
     "an array of NonNullable<T>": 3,
-    "an array of TState": 1,
-    "an array of Child": 2
+    "an array of Child": 2,
+    "an array of TState": 1
   },
   "sites": [
     {
+      "where": "src/compiler/checker.ts:46986:35",
+      "reason": "an array of T",
+      "source_sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "areTypeParametersIdentical",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:1030:37",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "stableSortIndices",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:1052:13",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "rangeEquals",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
       "where": "src/compiler/core.ts:107:25",
       "reason": "an array of V",
-      "attempted_unit": "src/compiler/core.ts:106:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -30,7 +71,6 @@
     {
       "where": "src/compiler/core.ts:110:9",
       "reason": "an array of V",
-      "attempted_unit": "src/compiler/core.ts:106:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -45,9 +85,22 @@
       ]
     },
     {
+      "where": "src/compiler/core.ts:1313:25",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "getOwnValues",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
       "where": "src/compiler/core.ts:148:27",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:145:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -60,9 +113,22 @@
       ]
     },
     {
+      "where": "src/compiler/core.ts:2004:38",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "maxBy",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
       "where": "src/compiler/core.ts:201:23",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:198:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -77,7 +143,6 @@
     {
       "where": "src/compiler/core.ts:212:23",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:209:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -90,329 +155,8 @@
       ]
     },
     {
-      "where": "src/compiler/core.ts:302:15",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:299:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "filterMutate",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:325:13",
-      "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:320:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "map",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:419:25",
-      "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:418:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "flatMapToMutable",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:482:25",
-      "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:481:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "mapAllOrFail",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:488:9",
-      "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:481:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "mapAllOrFail",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:495:25",
-      "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:494:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "mapDefined",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:622:31",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:618:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "some",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:642:18",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:639:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "getRangesWhere",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:1030:37",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:1028:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "stableSortIndices",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:710:25",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:709:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "deduplicateEquality",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:726:33",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:725:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "deduplicate",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:739:31",
-      "reason": "an array of NonNullable<T>",
-      "attempted_unit": "src/compiler/core.ts:735:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "deduplicateSorted",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:756:9",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:735:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "deduplicateSorted",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:873:25",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:871:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "relativeComplement",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:889:30",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:871:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "relativeComplement",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:987:34",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:985:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "addRange",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:991:13",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:985:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "addRange",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:1039:47",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:1038:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "toSorted",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:1052:13",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:1050:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "rangeEquals",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:1313:25",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:1312:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "getOwnValues",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:2004:38",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2002:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "maxBy",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
       "where": "src/compiler/core.ts:2343:9",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2340:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -427,7 +171,6 @@
     {
       "where": "src/compiler/core.ts:2345:5",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2340:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -442,7 +185,6 @@
     {
       "where": "src/compiler/core.ts:2350:5",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2348:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -457,7 +199,6 @@
     {
       "where": "src/compiler/core.ts:2351:5",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2348:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -472,7 +213,6 @@
     {
       "where": "src/compiler/core.ts:2366:23",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2364:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -487,7 +227,6 @@
     {
       "where": "src/compiler/core.ts:2520:18",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2492:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -503,7 +242,6 @@
     {
       "where": "src/compiler/core.ts:2524:17",
       "reason": "an array of U",
-      "attempted_unit": "src/compiler/core.ts:2492:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -519,7 +257,6 @@
     {
       "where": "src/compiler/core.ts:2538:27",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2537:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -534,23 +271,6 @@
     {
       "where": "src/compiler/core.ts:2564:41",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2560:1",
-      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "takeWhile",
-          "parameters": [
-            "T",
-            "U"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/core.ts:2567:16",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2560:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -566,7 +286,6 @@
     {
       "where": "src/compiler/core.ts:2580:41",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2576:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
@@ -580,17 +299,258 @@
       ]
     },
     {
-      "where": "src/compiler/core.ts:2583:16",
+      "where": "src/compiler/core.ts:302:15",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/core.ts:2576:1",
       "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
       "generic_scopes": [
         {
           "kind": "FunctionDeclaration",
-          "name": "skipWhile",
+          "name": "filterMutate",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:325:13",
+      "reason": "an array of U",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "map",
           "parameters": [
             "T",
             "U"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:419:25",
+      "reason": "an array of U",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "flatMapToMutable",
+          "parameters": [
+            "T",
+            "U"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:482:25",
+      "reason": "an array of U",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "mapAllOrFail",
+          "parameters": [
+            "T",
+            "U"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:488:9",
+      "reason": "an array of U",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "mapAllOrFail",
+          "parameters": [
+            "T",
+            "U"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:495:25",
+      "reason": "an array of U",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "mapDefined",
+          "parameters": [
+            "T",
+            "U"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:622:31",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "some",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:642:18",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "getRangesWhere",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:710:25",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "deduplicateEquality",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:726:33",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "deduplicate",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:739:31",
+      "reason": "an array of NonNullable<T>",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "deduplicateSorted",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:756:9",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "deduplicateSorted",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:873:25",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "relativeComplement",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:878:53",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "relativeComplement",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:886:57",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "relativeComplement",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:889:30",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "relativeComplement",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:987:34",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "addRange",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/core.ts:991:13",
+      "reason": "an array of T",
+      "source_sha256": "90530bdf22f00f5783c9e089adafe1c7596b9f7e438300a19f4ba3705a88f962",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "addRange",
+          "parameters": [
+            "T"
           ]
         }
       ]
@@ -598,7 +558,6 @@
     {
       "where": "src/compiler/debug.ts:263:25",
       "reason": "an array of T",
-      "attempted_unit": "src/compiler/debug.ts:262:5",
       "source_sha256": "ca255a522710019f5f852647b077cebc35d8771e966241e2f5fdc56f63f3a0a7",
       "generic_scopes": [
         {
@@ -611,234 +570,8 @@
       ]
     },
     {
-      "where": "src/compiler/scanner.ts:402:25",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/scanner.ts:401:1",
-      "source_sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "makeReverseMap",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/utilities.ts:1121:34",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/utilities.ts:1156:1",
-      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "insertStatementsAfterPrologue",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/utilities.ts:1125:5",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/utilities.ts:1116:1",
-      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "insertStatementsAfterPrologue",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/utilities.ts:10364:24",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/utilities.ts:10362:1",
-      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "minAndMax",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/utilities.ts:10367:32",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/utilities.ts:10362:1",
-      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "minAndMax",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/factory/nodeFactory.ts:1199:53",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/factory/nodeFactory.ts:1169:5",
-      "source_sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "createNodeArray",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/factory/nodeFactory.ts:6966:41",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/factory/nodeFactory.ts:6964:5",
-      "source_sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "findSpanEnd",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/factory/utilities.ts:1396:9",
-      "reason": "an array of TState",
-      "attempted_unit": "src/compiler/factory/utilities.ts:1392:5",
-      "source_sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "pushStack",
-          "parameters": [
-            "TState"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/parser.ts:3495:40",
-      "reason": "an array of NonNullable<T>",
-      "attempted_unit": "src/compiler/parser.ts:3492:5",
-      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "parseDelimitedList",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/parser.ts:3507:17",
-      "reason": "an array of NonNullable<T>",
-      "attempted_unit": "src/compiler/parser.ts:3492:5",
-      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "parseDelimitedList",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/moduleNameResolver.ts:307:5",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/moduleNameResolver.ts:304:1",
-      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "updateResolutionField",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/moduleNameResolver.ts:313:31",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/moduleNameResolver.ts:311:1",
-      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "initializeResolutionFieldForReadonlyCache",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/moduleNameResolver.ts:314:12",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/moduleNameResolver.ts:311:1",
-      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "initializeResolutionFieldForReadonlyCache",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/checker.ts:46986:35",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/checker.ts:46982:5",
-      "source_sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "areTypeParametersIdentical",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
-      "where": "src/compiler/transformer.ts:649:32",
-      "reason": "an array of T",
-      "attempted_unit": "src/compiler/transformer.ts:646:5",
-      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
-      "generic_scopes": [
-        {
-          "kind": "FunctionDeclaration",
-          "name": "transformNodes",
-          "parameters": [
-            "T"
-          ]
-        }
-      ]
-    },
-    {
       "where": "src/compiler/emitter.ts:4734:86",
       "reason": "an array of Child",
-      "attempted_unit": "src/compiler/emitter.ts:4729:5",
       "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
       "generic_scopes": [
         {
@@ -853,7 +586,6 @@
     {
       "where": "src/compiler/emitter.ts:4850:86",
       "reason": "an array of Child",
-      "attempted_unit": "src/compiler/emitter.ts:4729:5",
       "source_sha256": "59401938eda9af4ffc71d0e31a8e5b559475d85155a01163fa8b8f08811d8a19",
       "generic_scopes": [
         {
@@ -861,6 +593,230 @@
           "name": "emitNodeListItems",
           "parameters": [
             "Child"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/factory/nodeFactory.ts:6966:41",
+      "reason": "an array of T",
+      "source_sha256": "6719964224eebda39ea2aea8447bdbbf1858e579430abe1f11555f0891d49ce3",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "findSpanEnd",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/factory/utilities.ts:1396:9",
+      "reason": "an array of TState",
+      "source_sha256": "9d914a1f8339cb44701fc5d8027820b25f1a132c94124a34f55ee40cf607296a",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "pushStack",
+          "parameters": [
+            "TState"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:307:5",
+      "reason": "an array of T",
+      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "updateResolutionField",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:313:31",
+      "reason": "an array of T",
+      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "initializeResolutionFieldForReadonlyCache",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/moduleNameResolver.ts:314:12",
+      "reason": "an array of T",
+      "source_sha256": "5228eb5be57621a3b3ba614fa3a24e6781492265a130b5d68d7f2ccbdf7c0128",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "initializeResolutionFieldForReadonlyCache",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/parser.ts:3495:40",
+      "reason": "an array of NonNullable<T>",
+      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "parseDelimitedList",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/parser.ts:3507:17",
+      "reason": "an array of NonNullable<T>",
+      "source_sha256": "9c8e41e143294677580750ada80e5ba18128645e280e7950b001e054b4ae0df4",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "parseDelimitedList",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/scanner.ts:402:25",
+      "reason": "an array of T",
+      "source_sha256": "2282eb9b4ef6a4380cee54433e76532efe019737382ce754f4dec093041b5750",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "makeReverseMap",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformer.ts:317:24",
+      "reason": "an array of T",
+      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "transformNodes",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformer.ts:336:30",
+      "reason": "an array of T",
+      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "transformNodes",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformer.ts:337:24",
+      "reason": "an array of T",
+      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "transformNodes",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/transformer.ts:649:32",
+      "reason": "an array of T",
+      "source_sha256": "497fa463cff55a2f9a3cdadfb8bdddeba363ab36a6ede4ef6cf28c460455c72c",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "transformNodes",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:10364:24",
+      "reason": "an array of T",
+      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "minAndMax",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:10367:32",
+      "reason": "an array of T",
+      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "minAndMax",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:1121:34",
+      "reason": "an array of T",
+      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "insertStatementsAfterPrologue",
+          "parameters": [
+            "T"
+          ]
+        }
+      ]
+    },
+    {
+      "where": "src/compiler/utilities.ts:1125:5",
+      "reason": "an array of T",
+      "source_sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "generic_scopes": [
+        {
+          "kind": "FunctionDeclaration",
+          "name": "insertStatementsAfterPrologue",
+          "parameters": [
+            "T"
           ]
         }
       ]
