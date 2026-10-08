@@ -48,6 +48,9 @@ func (e *emitter) optionalSelectedCall(call ir.CallClosure, closure, receiver, m
 	of := call.OptionalResult
 	call.Optional = false
 	text, value, owned := e.asideWith(func() string {
+		if call.OptionalPresent != 0 {
+			e.line("%s = true;", e.localName(call.OptionalPresent-1))
+		}
 		value := e.callSelected(call, closure, receiver, method, exactCount)
 		if of.IsMaybe() && call.Returns == of.Present() {
 			return maybe(of, value)

@@ -13,7 +13,7 @@ import (
 
 const step18Directory = "docs/step-18/fixtures/"
 
-var step18Supported = map[string]bool{"function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true, "runtime-return-descriptor.a": true, "runtime-methods.a": true, "runtime-bound-methods.a": true, "runtime-bound-method-arguments.a": true, "runtime-bound-method-selection.a": true, "runtime-discarded-reference.a": true}
+var step18Supported = map[string]bool{"runtime-chain-parentheses-write.a": true, "runtime-chain-parentheses.a": true, "runtime-chain-method-continuation.a": true, "runtime-chain-index.a": true, "runtime-chain-intrinsics.a": true, "runtime-chain-callable.a": true, "runtime-chain-present-undefined.a": true, "element.a": true, "call-result.a": true, "cross-call.a": true, "receiver-call.a": true, "two-guards.a": true, "size.a": true, "runtime-cross-chain.a": true, "function.a": true, "method.a": true, "runtime-values.a": true, "runtime-order.a": true, "runtime-arguments.a": true, "runtime-return-descriptor.a": true, "runtime-methods.a": true, "runtime-bound-methods.a": true, "runtime-bound-method-arguments.a": true, "runtime-bound-method-selection.a": true, "runtime-discarded-reference.a": true}
 
 func init() {
 	for _, name := range []string{"function.a", "method.a", "element.a", "call-result.a", "cross-call.a", "receiver-call.a", "two-guards.a", "size.a", "number.a"} {
@@ -23,7 +23,7 @@ func init() {
 			checked bool
 		}{step18Directory + name, step18Supported[name], false})
 	}
-	for _, name := range []string{"runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a", "runtime-return-descriptor.a", "runtime-bound-methods.a", "runtime-bound-method-arguments.a", "runtime-bound-method-selection.a", "runtime-discarded-reference.a"} {
+	for _, name := range []string{"runtime-chain-parentheses-write.a", "runtime-chain-parentheses.a", "runtime-chain-method-continuation.a", "runtime-chain-index.a", "runtime-chain-intrinsics.a", "runtime-chain-callable.a", "runtime-chain-present-undefined.a", "runtime-values.a", "runtime-order.a", "runtime-methods.a", "runtime-arguments.a", "runtime-cross-chain.a", "runtime-return-descriptor.a", "runtime-bound-methods.a", "runtime-bound-method-arguments.a", "runtime-bound-method-selection.a", "runtime-discarded-reference.a"} {
 		fixtures = append(fixtures, struct {
 			path    string
 			lowers  bool

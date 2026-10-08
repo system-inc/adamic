@@ -10,7 +10,7 @@ import (
 // A void view permits a value-returning target. Its packed reference result is
 // still owned. Identify the selected code, rather than interpreting scalar bits
 // as a pointer or forgetting a reference returned through the discarded view.
-func (e *emitter) discardClosureResult(call ir.CallClosure, closure, receiver, method, invocation string) {
+func (e *emitter) discardClosureResult(call ir.CallClosure, closure, receiver, method, invocation string, holds ...string) {
 	if call.Direct > 0 && e.program.Functions[call.Direct-1].Returns.IsReference() {
 		e.line("adamic_release((%s).reference);", invocation)
 		return
@@ -69,7 +69,7 @@ func (e *emitter) discardClosureResult(call ir.CallClosure, closure, receiver, m
 	}
 	result := e.temporary()
 	e.line("adamic_value %s = %s;", result, invocation)
-	e.closureThrown()
+	e.closureThrown(holds...)
 	condition := strings.Join(conditions, " || ")
 	if closure != "" {
 		// Prototype dispatch has no closure. Test that pointer before its code.

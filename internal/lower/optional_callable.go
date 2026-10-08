@@ -55,7 +55,8 @@ func (l *lowering) optionalCallable(node *ast.Node) (ir.Expression, bool, error)
 		return nil, true, err
 	} else if receiver {
 		property, known := call.Closure.(ir.Property)
-		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] {
+		symbol := l.memberSymbol(callee)
+		if !known || l.result.CheckedFields[property.Name] || l.result.UninitializedFields[property.Name] || l.accessorNames[property.Name] || (symbol != nil && accessorSymbol(symbol)) {
 			return nil, true, l.notYet(node, "an optional method requiring a checked field contract")
 		}
 		call.Optional = true
@@ -143,5 +144,5 @@ func optionalInvocationCallee(node *ast.Node) bool {
 		return false
 	}
 	call := node.Parent.AsCallExpression()
-	return call.Expression == node && call.QuestionDotToken != nil
+	return call.Expression == node && (call.QuestionDotToken != nil || node.Flags&ast.NodeFlagsOptionalChain != 0)
 }

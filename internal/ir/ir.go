@@ -692,6 +692,9 @@ type (
 		// the widened result, or zero when discarded. Returns keeps the call ABI.
 		Optional       bool
 		OptionalResult Type
+		// OptionalPresent names a boolean local plus one, set only after selection.
+		// It distinguishes a skipped invocation from a present undefined result.
+		OptionalPresent int
 	}
 
 	// ArrayMap is array.map(callback): a new array of the callback's results, each called with the

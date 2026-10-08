@@ -474,3 +474,139 @@ python3 stage3/census/latent/make_overlay.py "$PWD" /workspace/scratch/scout-18-
 go build -buildvcs=false -overlay=/workspace/scratch/scout-18-method-overlay/overlay.json -o /workspace/scratch/scout-18-method-census ./stage3/census/latent/tool > /tmp/scout-18-method-build.log 2>&1
 LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 /workspace/scratch/scout-18-method-census /workspace/scratch/scout-optional-adapted/src/compiler /workspace/scratch/scout-18-method.jsonl > /tmp/scout-18-method-census.log 2>&1
 ```
+
+## Continuous chains follow-up
+
+The continuous-chain implementation supersedes the earlier chain deferrals for
+represented references. It saves each receiver once, nests the remaining chain
+inside its nullish guard, and evaluates indices, arguments and callback factories
+only inside the present branch. Calls retain their selected signature's return
+ABI independently of the whole chain's optional result. A method followed by
+another segment records callable presence separately from its returned value:
+a present callable returning undefined must still execute its ordinary continuation.
+Parentheses end a chain. Ordinary reads after that boundary use the existing
+Defined check; ordinary property writes check after evaluating their right side.
+A call that clears the source binding cannot change the saved receiver or callee.
+
+Supported library continuations include Map get/has/set/delete/clear/forEach,
+array indexing, length, map and represented visit methods, and existing string
+methods. Library receivers are passed directly to their lowering rather than
+re-lowering their source expressions. Map and array visitors now release an
+owned reference result hidden by a void callback view, using selected closure
+code; numeric discarded results remain scalar. Expression-local ownership scopes
+release saved chain temporaries after retaining the resulting reference. These
+fixes prevent both out-of-scope generated C locals and leaked saved receivers.
+
+Seven new tsc-reduced acceptance fixtures cover index suppression, Map and array
+intrinsics, free calls returning objects, bound method continuations, stale field
+narrowing across a call, parentheses, and property-write evaluation order. Existing
+element, call-result, cross-call, receiver-call, two-guards, size and runtime-cross-chain
+fixtures now compile. The three intentional panic fixtures match Node's output,
+exit 70 and TypeError text in both backends; normally completing fixtures pass
+native sanitizer, release and leak checks. Historical baseline observations remain
+immutable; runtime-observations.json records the new outcomes.
+
+No language refusal policy changes are implemented. Required numeric optional
+reads retain their original barrier. Weak callable members, callable accessors,
+unrepresented unions and fields, unsupported intrinsic signatures, observed void
+results, erased rest signatures and overloads remain NotYet. Computed ordinary
+index consumers, indexed writes, and ordinary calls after parenthesized optional
+results remain deferred where their evaluation order or representation is absent.
+The following refused implementation probes are recorded in the lower boundary test:
+
+```a
+class Host { get run(): () => number { return (): number => 1; } }
+function probe(host: Host | undefined): number { return host?.run?.() ?? -1; }
+```
+
+```a
+import type { Weak } from 'adamic';
+const callback = (): number => 1;
+const host: { readonly run: Weak<() => number> } = { run: callback };
+function probe(value: typeof host | undefined): number { return value?.run?.() ?? -1; }
+```
+
+Changing Adamic's language acceptance/refusal rules remains a proposal for
+@system_adamic, including the method-write program recorded above. These two
+probes are representation NotYet barriers, not new language refusals.
+
+All following mutants failed and were restored. Runtime mutants compiled C
+successfully. An initial eager-callback mutation that duplicated lambda metadata
+failed C compilation and is not credited; its replacement below fails at runtime.
+
+| Mutant | Fixture or test | Catcher |
+|---|---|---|
+| Execute continuation on absent receiver | call-result | UBSan null member access; JavaScript TypeError |
+| Re-evaluate saved receiver | runtime-chain-index | Both backends disagree with Node's receiver/index counts |
+| Evaluate index eagerly | runtime-chain-index | Both backends disagree with Node's index count |
+| Never mark selected method present | runtime-chain-method-continuation | Native output and index count differ |
+| Omit expression-scope releases | runtime-chain-index | LeakSanitizer, 133 bytes in three allocations |
+| Omit Defined on ordinary field continuation | runtime-chain-present-undefined | UBSan null member access and release-build crash |
+| Ignore parentheses read boundary | runtime-chain-parentheses | Native null access; JavaScript wrong output and exit |
+| Use whole expression type as call return descriptor | runtime-return-descriptor | ASan invalid release; exact earlier mutant rerun |
+| Check property-write receiver before right side | runtime-chain-parentheses-write | Both backends omit Node's right-side effect and report wrong TypeError |
+| Discard Map visitor reference without release | runtime-chain-intrinsics | LeakSanitizer, 75 bytes in one allocation |
+| Discard array visitor reference without release | runtime-chain-intrinsics | LeakSanitizer, 75 bytes in one allocation |
+| Store array-map string result as Number | runtime-chain-intrinsics | LeakSanitizer, 70 bytes in one allocation |
+| Evaluate callback factory before guard | runtime-chain-intrinsics | Both backends report three factories versus Node's one |
+| Allow weak callable member storage | chain weak callable storage boundary test | Got successful lowering instead of required NotYet |
+| Allow callable accessor selection | chain getter selection boundary test | Got successful lowering instead of required NotYet |
+
+Runtime mutant logs are `/tmp/scout-18-mutant-chain-{short-circuit,receiver-repeat,index-eager,method-presence,effects-leak,ordinary-read,parentheses,descriptor,write-order,map-visit-discard,array-visit-discard,array-map-storage,callback-eager-runtime}.log`.
+Boundary mutant logs are `/tmp/scout-18-mutant-chain-{weak-storage,accessor}.log`.
+
+Final scoped validation, with output redirected to corresponding
+`/tmp/scout-18-chains-complete-{oracle,lower,flow,native,regressions,counts}.log`:
+
+```sh
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestStep18|TestNativeAgreesWithNode/docs/step-18/fixtures' -count=1 -v
+go test ./internal/lower -run 'TestStep18OptionalCallableBoundaries|TestIteratorViewsCannotEraseReceivers|TestLiteralMethodViewsDoNotLoseThis|TestRepresentedMethodReplacementIsNotYet|TestDestructuredMethodsCannotLoadOwnSlots|TestOptionalFunctionValueRelation|TestAMethodReadAsAValueIsRefused' -count=1
+go test ./internal/flow -run TestStep18OptionalMethodPaths -count=1
+go test ./internal/native -run 'TestPassThroughsAreNotConsumers|TestOptionalMethodThunksMatchNode|TestClosureConventionDropCount|TestClosureConventionRuntimeDropCount' -count=1
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/(taste_|host_optional_intrinsic|optional_class_method|regexp.a|class_inheritance_interface|class_as_interface|library_string_(conversion|raw)|map_foreach_|library_map_set_visit)' -count=1 -v
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts
+```
+
+Final validation passed: uncached step fixtures and Node observations 5.537s,
+lower boundaries 0.799s, flow 0.602s, native scoped checks 0.723s, uncached
+regression fixtures 7.030s, counts refresh 54.485s. The expanded intrinsic
+fixture's Node observation was refreshed after adding Map visits and array map;
+its earlier stale recorded stdout failed the source-baseline test, then the
+complete fixture run passed after recapture. No production fix was needed.
+
+The census comparison can be reproduced from the repository root with
+`python3 docs/step-18/compare-roots.py BEFORE.jsonl AFTER.jsonl OUTPUT.json`.
+It requires all 79 files, identical checker-rejection metadata, deduplicates exact
+(kind, location, reason, text) roots, and separates replacement barriers on the
+same source line. Source hashes identify the measured implementation. The
+complete chain census uses the existing overlay and the no-output assertion:
+
+```sh
+python3 stage3/census/latent/make_overlay.py "$PWD" /workspace/scratch/scout-18-chains-complete-overlay > /tmp/scout-18-chains-complete-overlay.log 2>&1
+go build -buildvcs=false -overlay=/workspace/scratch/scout-18-chains-complete-overlay/overlay.json -o /workspace/scratch/scout-18-chains-complete-census ./stage3/census/latent/tool > /tmp/scout-18-chains-complete-build.log 2>&1
+LATENT_FULL=1 LATENT_ASSERT_NO_OUTPUT=1 /workspace/scratch/scout-18-chains-complete-census /workspace/scratch/scout-optional-adapted/src/compiler /workspace/scratch/scout-18-chains-complete.jsonl > /tmp/scout-18-chains-complete-census.log 2>&1
+```
+
+The environment restart interrupted a partial census. The run was restarted
+using the identical frozen binary; partial records are not credited.
+
+
+The complete chain census passed its no-output guard (exit 0), contains all 79
+compiler files and identical checker-rejection metadata, and is recorded in
+[chain-roots.json](step-18/chain-roots.json). Optional-call roots are **103 to 0**;
+longer chains **11 to 0**, indexing **6 to 0**, size **20 to 0**, and the original
+numeric-read reason **3 to 1**. New chain representation barriers account for
+15 roots: unsupported stored fields 2, unsupported intrinsic receivers 11,
+and results without undefined representation 2. Thus the measured step groups
+move **143 to 16**. Of 142 disappearing old roots, **65 receive retirement
+credit** because no barrier remains on the same source line; **77 retain another
+same-line barrier** and receive no acceptance credit. The artifact lists every
+root and its remaining barriers. No whole-file acceptance or hidden-byte
+retirement is claimed.
+
+Roots credited per delivery push: return-descriptor fixture **0**; bound-method
+unit **1**; continuous-chain unit **65**. The full census self-comparison passes
+with zero retirements. An input mutant removing one file record fails the
+completeness assertion (`/tmp/scout-18-mutant-census-incomplete.log`). The
+conservative assumption is to leave unrepresented receiver/storage and consumer
+orders NotYet rather than infer a callable ABI or ownership contract.

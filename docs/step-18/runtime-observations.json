@@ -59,12 +59,10 @@
       "stderr": ""
     },
     "compiler": {
-      "exit": 1,
-      "stderr": "adamic: docs/step-18/fixtures/runtime-cross-chain.a:13:13: stage 0 can't lower an optional chain longer than one step yet\nexit status 1\n"
+      "exit": 0,
+      "stderr": ""
     },
-    "c_emitted": false,
-    "reason": "an optional chain longer than one step",
-    "where": "docs/step-18/fixtures/runtime-cross-chain.a:13:13"
+    "c_emitted": true
   },
   {
     "file": "runtime-return-descriptor.a",
@@ -139,6 +137,97 @@
       "exit": 0,
       "stdout": "3\n",
       "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-index.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n5\n2 1\nabsent\nh\n2\n-1\n3 2\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-intrinsics.a",
+    "node": {
+      "exit": 0,
+      "stdout": "-1\n7\n1 true\nabsent\nabsent\nWORD\nvisited\nfalse\n-1\nfalse\ntrue\n1\ntrue\n12\n1\nabsent\nMAPPED\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-callable.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nvalue1\nabsent\nabsent\nreceiver2:argument1\n1\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-method-continuation.a",
+    "node": {
+      "exit": 0,
+      "stdout": "absent\nabsent\nbound1:1\n1 1 true\n",
+      "stderr": ""
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-present-undefined.a",
+    "node": {
+      "exit": 70,
+      "stdout": "absent\n",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-parentheses.a",
+    "node": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: TypeError: Cannot read properties of undefined (reading 'text')\n"
+    },
+    "compiler": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "c_emitted": true
+  },
+  {
+    "file": "runtime-chain-parentheses-write.a",
+    "node": {
+      "exit": 70,
+      "stdout": "right hand side\n",
+      "stderr": "adamic: panic: TypeError: Cannot set properties of undefined (setting 'text')\n"
     },
     "compiler": {
       "exit": 0,

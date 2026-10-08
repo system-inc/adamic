@@ -1,0 +1,9 @@
+// Derived from moduleNameResolver.ts:3103, with an ordinary write after the chain.
+interface Package { readonly contents: { text: string } }
+let current: Package | undefined = { contents: { text: 'present' } };
+function clear(): void { current = undefined; }
+function value(): string { console.log('right hand side'); return 'replacement'; }
+if (current !== undefined) {
+	clear();
+	(current?.contents).text = value();
+}
