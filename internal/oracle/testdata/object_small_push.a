@@ -1,0 +1,26 @@
+let values: number[] = [10];
+let receiverCalls = 0;
+function receiver(): number[] {
+    receiverCalls += 1;
+    return values;
+}
+function argument(value: number): number {
+    console.log(`argument ${value}: ${values.length}`);
+    return value;
+}
+console.log(`empty ${receiver().push()}`);
+console.log(`many ${receiver().push(argument(20), argument(30), argument(40))}`);
+console.log(`${receiverCalls}: ${values.join(',')}`);
+function replace(): number {
+    values = [99];
+    return 50;
+}
+const before = values;
+console.log(`replace ${receiver().push(replace(), argument(60))}`);
+console.log(`old ${before.join(',')}, new ${values.join(',')}`);
+let words: string[] = ['old'];
+function word(value: number): string {
+    console.log(`word ${value}: ${words.length}`);
+    return `built-${value}`;
+}
+console.log(`words ${words.push(word(1), word(2))}: ${words.join(',')}`);

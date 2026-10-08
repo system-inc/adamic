@@ -1148,10 +1148,23 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		return ir.ArraySlice{Array: array, Arguments: arguments}, true, nil
 	}
 	if name == "push" {
-		if len(arguments) != 1 {
-			return nil, true, l.notYet(node, "push with other than one value")
+		for index, argument := range arguments {
+			arguments[index] = fit(argument, element)
+			if arguments[index].Type() != element {
+				return nil, true, l.notYet(written[index], "push with a value of another representation than its elements")
+			}
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+		if len(arguments) == 1 {
+			return ir.ArrayPush{Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}, true, nil
+		}
+		// A call evaluates every argument before appending anything. Ordinary IR keeps
+		// those snapshots and their ownership visible to both backends and analyses.
+		builder := l.libraryArrayBuilder(append([]ir.Expression{array}, arguments...))
+		held := builder.read(builder.parameters[0])
+		for _, parameter := range builder.parameters[1:] {
+			builder.body = append(builder.body, ir.Evaluate{Value: ir.ArrayPush{Array: held, Value: builder.read(parameter), Element: element, Site: l.writeSite(receiver)}})
+		}
+		return builder.finish("array_push_values", ir.Length{Array: held}), true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
