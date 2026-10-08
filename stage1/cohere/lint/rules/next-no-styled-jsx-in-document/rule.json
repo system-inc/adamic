@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-styled-jsx-in-document",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "prepare": "prepare",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoStyledJsxInDocument",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoStyledJsxInDocument"
+}

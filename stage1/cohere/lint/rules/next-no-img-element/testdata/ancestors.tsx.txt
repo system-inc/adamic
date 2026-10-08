@@ -1,0 +1,1 @@
+const a = <img />; const b = <picture><img /></picture>; const c = <picture><div><img /></div></picture>; const d = <picture><img></img></picture>; const e = <picture><Image><img /></Image></picture>;

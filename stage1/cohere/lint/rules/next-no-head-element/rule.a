@@ -1,0 +1,36 @@
+import { isInApplicationDirectory } from '../../helpers/nextjs/is_in_application_directory.a';
+import type { RuleContext } from '../../context.ts';
+import { JsxArena } from '../../helpers/jsx/ast.a';
+import type { HelperNode } from '../../helpers/jsx/ast.a';
+import { elementParts } from '../../helpers/jsx/element_parts.a';
+import { isIntrinsicElementNamed } from '../../helpers/jsx/intrinsic_element_named.a';
+import { message } from './messages.a';
+
+export class Rule {
+ readonly context: RuleContext;
+ readonly nodes: HelperNode[] = [];
+ readonly arena: JsxArena;
+ constructor(context: RuleContext) { this.context = context; this.arena = new JsxArena(this.nodes); }
+ prepare(root: number): void {
+  // Project structural parser facts once. Node identities remain the parser's numeric indices.
+  for (const node of this.context.parser.nodes) {
+   let attributes = -1;
+   if (node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement') {
+    for (const child of node.children) {
+     if (this.context.node(child).kind === 'JsxAttributes') { attributes = child; }
+    }
+   }
+   this.nodes.push({kind:node.kind,text:node.text,name:node.kind === 'JsxAttribute' ? node.children[0] ?? -1 : -1,
+    tagName:node.kind === 'JsxOpeningElement' || node.kind === 'JsxSelfClosingElement' ? node.children[0] ?? -1 : -1,
+    attributes:attributes,properties:node.kind === 'JsxAttributes' ? node.children : [],propertiesPresent:node.kind === 'JsxAttributes'});
+  }
+ }
+ visit(index: number): void {
+  if (isInApplicationDirectory(this.context.parser.path)) { return; }
+  const parts = elementParts(this.arena,index);
+  const tag = parts.tagName < 0 ? undefined : this.nodes[parts.tagName];
+  if (tag === undefined || !isIntrinsicElementNamed(parts.tagName,tag.kind,tag.text,'head')) { return; }
+  this.context.report(index,'@next/next/no-head-element','noHeadElement',message,'','','');
+ }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

@@ -1,0 +1,12 @@
+{
+  "name": "@next/next/no-head-import-in-document",
+  "kinds": [
+    "ImportDeclaration"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoHeadImportInDocument",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoHeadImportInDocument"
+}

@@ -1,0 +1,1 @@
+export const message = "This is styled-jsx inside the custom document. The document shell renders once, outside the React tree that styled-jsx instruments, so the styles it collects here are never injected and the rule that looks correct in a page silently produces nothing. Move the styles into a page or a component, or emit plain CSS with a raw <style> element.";

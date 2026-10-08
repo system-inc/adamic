@@ -1,0 +1,2 @@
+globalThis.location.assign('/positive-control');
+const first = second; const second = first; location.assign(first);

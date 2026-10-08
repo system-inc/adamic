@@ -1,0 +1,5 @@
+{
+  "name": "no-head-element-gate-inverted",
+  "from": "if (isInApplicationDirectory(this.context.parser.path))",
+  "to": "if (!isInApplicationDirectory(this.context.parser.path))"
+}

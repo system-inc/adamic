@@ -1,0 +1,5 @@
+{
+  "name": "go-unicode-scheme-fold-omitted",
+  "from": "/^(?:[a-z\\u017f\\u212a][0-9+.a-z\\u017f\\u212a-]*:|\\/\\/)/i",
+  "to": "/^(?:[a-z][0-9+.a-z-]*:|\\/\\/)/i"
+}

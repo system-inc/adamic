@@ -1,0 +1,5 @@
+{
+  "name": "document-import-gate-inverted",
+  "from": "node.text === 'next/head'",
+  "to": "node.text !== 'next/head'"
+}

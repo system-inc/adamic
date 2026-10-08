@@ -1,0 +1,15 @@
+{
+  "name": "@next/next/no-unwanted-polyfillio",
+  "kinds": [
+    "ImportDeclaration",
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoUnwantedPolyfillio",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoUnwantedPolyfillio",
+  "prepare": "prepare"
+}

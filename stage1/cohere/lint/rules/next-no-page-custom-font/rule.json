@@ -1,0 +1,14 @@
+{
+  "name": "@next/next/no-page-custom-font",
+  "kinds": [
+    "JsxOpeningElement",
+    "JsxSelfClosingElement"
+  ],
+  "visit": "visit",
+  "factory": "create",
+  "class": "Rule",
+  "oracle": "oracleNextNoPageCustomFont",
+  "upstreamPackage": "next",
+  "upstreamTest": "TestNoPageCustomFont",
+  "prepare": "prepare"
+}

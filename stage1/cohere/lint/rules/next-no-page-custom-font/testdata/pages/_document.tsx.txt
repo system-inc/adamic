@@ -1,0 +1,1 @@
+const outside = <link href="https://fonts.googleapis.com/css?family=X" />; function D(){ return <link href="https://fonts.googleapis.com/css2?family=X" />; } export default D; const Inner = function Named(){return <link href="https://fonts.googleapis.com/css?family=X" />;}; const Expr = <link href={"https://fonts.googleapis.com/css"} />;
