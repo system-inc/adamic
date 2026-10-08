@@ -1,0 +1,8 @@
+import type { AstNode } from './ast.a';
+import { AstArena } from './ast.a';
+export function labelsOf(ast: AstArena, node: AstNode | undefined): string[] {
+ const labels: string[] = []; if(node === undefined) return labels;
+ let current = node;
+ while(current.Parent !== undefined) { const parent = ast.read(current.Parent); if(parent.Kind !== 'LabeledStatement' || parent.Statement !== current.index) break; labels.push(ast.read(parent.Label).Text); current = parent; }
+ return labels;
+}

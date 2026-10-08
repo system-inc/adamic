@@ -1,0 +1,25 @@
+import { needNode, needList, at, filled, append } from './support.a';
+import type { AstNode } from './ast.a';
+import type { Builder, Graph, Hooks, TryFrame, JumpTarget } from './builder.a';
+import { CfgBlockIndex as BlockIndex } from '../../../arena/arena_index.a';
+export function makeContinue(b: Builder, label: AstNode | undefined): void {
+    if (!b.block(b.cur).Reachable) {
+        return;
+    }
+    let name = "";
+    if ((label !== undefined)) {
+        name = needNode(label).Text;
+    }
+    for (let i = ((b.jumps).length - 1); (i >= 0); i--) {
+        let target = at(b.jumps, i);
+        if ((target.continueTo === undefined)) {
+            continue;
+        }
+        if (((name === "") || target.labels.includes(name))) {
+            b.loop(target.loop);
+            b.link(b.cur, target.continueTo);
+            break;
+        }
+    }
+    b.makeUnreachable();
+}

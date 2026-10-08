@@ -1,0 +1,2 @@
+import type { AstNode } from './ast.a';
+export function isBreakableStatement(node: AstNode | undefined): boolean { if(node === undefined) return false; return node.Kind === 'SwitchStatement' || node.Kind === 'WhileStatement' || node.Kind === 'DoStatement' || node.Kind === 'ForStatement' || node.Kind === 'ForInStatement' || node.Kind === 'ForOfStatement'; }

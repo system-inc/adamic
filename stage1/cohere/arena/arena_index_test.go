@@ -10,6 +10,7 @@ import (
 )
 
 func TestConcreteIndices(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../..")
 	if err != nil {
 		t.Fatal(err)
@@ -67,11 +68,14 @@ func TestConcreteIndices(t *testing.T) {
 			t.Fatalf("mutant wasn't caught: %v %s", err, out)
 		}
 	}
+	if err := os.WriteFile(filepath.Join(dir, "arena_index.a"), data, 0600); err != nil {
+		t.Fatal(err)
+	}
 	for name, code := range map[string]string{
 		"private": "new FunctionIndex(2);",
 		"brand":   "const functions: FunctionIndex[] = []; const blocks: BlockIndex[] = []; FunctionIndex.read(functions, BlockIndex.push(blocks));",
 	} {
-		p := filepath.Join(lane, "testdata", name+"-generated.a")
+		p := filepath.Join(dir, "testdata", name+"-generated.a")
 		text := "import { FunctionIndex, BlockIndex } from '../arena_index.a';\n" + code
 		if err := os.WriteFile(p, []byte(text), 0600); err != nil {
 			t.Fatal(err)
@@ -84,5 +88,45 @@ func TestConcreteIndices(t *testing.T) {
 			t.Fatalf("%s rejection failed: %s", name, out)
 		}
 		t.Logf("%s rejected: %s", name, out)
+	}
+}
+
+func TestCfgConcreteIndices(t *testing.T) {
+	t.Parallel()
+	root, err := filepath.Abs("../../..")
+	if err != nil {
+		t.Fatal(err)
+	}
+	dir := t.TempDir()
+	home, err := os.ReadFile("arena_index.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(dir, "arena_index.a"), home, 0600); err != nil {
+		t.Fatal(err)
+	}
+	code := `import { CfgBlockIndex, CfgNodeIndex } from './arena_index.a';
+import type { CfgBlock, CfgNode } from './arena_index.a';
+const blocks: CfgBlock[]=[]; const nodes: CfgNode[]=[];
+const b=CfgBlockIndex.push(blocks); const n=CfgNodeIndex.push(nodes);
+console.log(CfgBlockIndex.read(blocks,b).toString()+','+CfgNodeIndex.read(nodes,n).toString());
+`
+	entry := filepath.Join(dir, "main.a")
+	if err := os.WriteFile(entry, []byte(code), 0600); err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(dir, "cfg-indices")
+	build := exec.Command("go", "run", "./cmd/adamic", "build", entry, "-o", binary)
+	build.Dir = root
+	if out, err := build.CombinedOutput(); err != nil {
+		t.Fatalf("build: %v %s", err, out)
+	}
+	for _, args := range [][]string{{"node", "--no-warnings", filepath.Join(root, "oracle/node.mjs"), entry}, {binary}} {
+		cmd := exec.Command(args[0], args[1:]...)
+		cmd.Dir = root
+		out, err := cmd.CombinedOutput()
+		if err != nil || string(out) != "0,0\n" {
+			t.Fatalf("indices: %v %s", err, out)
+		}
 	}
 }

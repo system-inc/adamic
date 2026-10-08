@@ -1,0 +1,13 @@
+import { normalizeBigIntLiteral } from './normalize_big_int_literal.a';
+import { AstArena } from './ast.a';
+import { needNode } from './support.a';
+import type { AstNode } from './ast.a';
+import { SkipParentheses } from './skip_parentheses.a';
+export function isAlwaysTruthyTest(ast: AstArena, input: AstNode | undefined): boolean {
+ const node = needNode(SkipParentheses(ast,input));
+ if(node.Kind === 'TrueKeyword' || node.Kind === 'RegularExpressionLiteral') return true;
+ if(node.Kind === 'NumericLiteral') return node.Text !== '0';
+ if(node.Kind === 'BigIntLiteral') return normalizeBigIntLiteral(node.Text) !== '0';
+ if(node.Kind === 'StringLiteral') return node.Text !== '';
+ return false;
+}
