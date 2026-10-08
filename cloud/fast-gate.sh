@@ -85,7 +85,9 @@ for directory in tools tree; do
 done
 # Holding the slot's lock means nothing else uses this tree, so any git lock in it is stale: a gate
 # killed mid-switch left one (Oct 7 23:02), and every later gate in the slot failed in 12 s on it.
-find ~/fast-gate/tree${suffix}/.git -maxdepth 4 -name index.lock -print -delete 2>/dev/null | sed 's/^/removed stale /'
+# The deepest is the nested submodule's, .git/modules/cohere/modules/TypeScript/index.lock (depth 5):
+# at depth 4 the sweep missed it, and slot 1 voided gates on it from 09:45Z (Oct 8).
+find ~/fast-gate/tree${suffix}/.git -maxdepth 6 -name index.lock -print -delete 2>/dev/null | sed 's/^/removed stale /'
 git -C ~/fast-gate/tools${suffix} fetch -q origin "${tools}"
 git -C ~/fast-gate/tools${suffix} switch -q --detach "${tools}"
 git -C ~/fast-gate/tree${suffix} fetch -q origin "${sha}" "${base}"
