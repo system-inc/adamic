@@ -20,6 +20,7 @@ string sharing, even short or empty subarrays are views, never copies.
 | `adamic_typed_array_set(array, index, value)` | Inline in adamic.h: an in-bounds whole index with a value already in the kind's range stores directly; anything else calls `adamic_typed_array_set_slow`, which checks the index itself, then converts and writes |
 | `adamic_typed_array_length(array)` | Element count as double |
 | `adamic_typed_array_fill(array, value, start, end, has_start, has_end)` | Converts value, uses relative clamped indexes; returns borrowed self |
+| `adamic_typed_array_sort(array)` | Stable numeric ascending, in place within the receiver range; borrowed self; Float64 -0 precedes +0 and NaNs come last |
 | `adamic_typed_array_set_from(array, source, offset, has_offset)` | Same kind only; offset defaults to 0, ToIntegerOrInfinity, negative or insufficient room panics with RangeError; overlap behaves as a temporary copy |
 | `adamic_typed_array_subarray(array, start, end, has_end)` | Owned view; relative clamped indexes, omitted end is length; start defaults to 0 at call site |
 | `adamic_typed_array_iterate(array)` | Owned counted iterator retaining array |
@@ -171,3 +172,60 @@ harness also runs release and ASan/UBSan with leak detection enabled. Counts
 regeneration passed in 20.396s; vet, format and whitespace checks had no output.
 The whole repository test suite was not run; the three requested packages were
 run in full, uncached, and `go vet ./...` covered the repository.
+
+## Numeric sort, October 8, 2026
+
+All four kinds support `sort()` without arguments, mutating their own range and
+returning the same header. Subarray sorting writes into the shared buffer and
+leaves elements outside that range unchanged. Sort takes and returns a borrowed
+reference, like fill; a temporary receiver and a returned view use the existing
+compiler ownership paths. Comparator arguments remain NotYet with the precise
+name `typed array sort with a comparator`. For this unit, every supplied argument,
+including explicit undefined, stays behind that gap; the admitted form is `sort()`.
+
+The implementation uses stable bottom-up merges specialized at each element
+width, with one temporary unboxed buffer for a nontrivial sort. It chooses the
+left run on equality, preserving equal elements, including NaN payload order.
+The Float64 comparison distinguishes signed zero and puts all NaNs last. Neither
+sort nor its workspace creates counted heap values or mutable static storage.
+The workspace is freed before return; empty and singleton sorts allocate none.
+
+The four `typed_arrays_sort_*.a` fixtures hold both backends to source Node. Each
+covers duplicates and kind-specific limits, empty and singleton arrays, a view
+and nested view with parent sentinels, identity, write-through, temporary
+receivers, escaping views, and 1025 deterministic numbers. Float64 additionally
+prints reciprocal values so signed zero order is observable. The C harness holds
+all four kinds to Node at 13 lengths spanning 0 through 1025, along with existing
+conversion edges, parent/view sorting, surviving views and heap-count balance.
+
+The WASI oracle and emission checks run over these four new fixtures, with the
+byte/exit runner mutants also enabled. That filtered WASI run passed in 7.874s,
+with no opt-in skips. It does not rerun every older WASI fixture.
+
+Workers' million-number sort benchmark and reproducible commands are in
+`internal/native/performance/typed-arrays-sort/REPORT.md`. This unit does not
+change Workers' route. Allocation exhaustion and buffer/shared-task facilities
+that are already NotYet remain outside this unit.
+
+All four requested sort mutants were caught independently by release/sanitized
+C and backend oracles. Equal signed zeros gave `0` where Node gives `-0`;
+NaNs first gave `NaN` where Node gives `-Infinity`; whole-parent sorting moved
+sentinels; string-order comparison reordered 2 and 10. No compile failures or
+sanitizer accidents count as these catches: each failed stdout agreement. A
+fifth mutant bypassing comparator refusal is caught by the named NotYet assertion
+for named and arrow comparators in every kind.
+
+```sh
+python3 internal/native/testdata/typed-arrays/run-sort-mutants.py > /tmp/typed-sort-mutants.log 2>&1
+```
+
+The four behavior mutants were run together; the comparator bypass was added
+and run with `--comparator-only`. The complete runner now reproduces all five.
+It restores sources even on failure and writes individual logs under
+`/tmp/adamic-typed-sort-mutants`.
+
+Linux counts regeneration passed in 97.885s. Only the four new rows are added;
+every previous row is unchanged. Allocations/frees are 2245/2245 for Uint8 and
+Uint16, 2251/2251 for Int32, and 2275/2275 for Float64; all have peak 14 and no
+region values. These counts include the fixture's formatted output; sort itself
+adds no counted allocation, as the C harness asserts.

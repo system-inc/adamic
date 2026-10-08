@@ -459,3 +459,12 @@ Stress observations on codex/signal-mutant-steady, based on area/runtime 915b9e0
 - A complete final native rerun was also launched alongside the stress test. After the environment reconnect its native.test process (PID 136015) was a zombie with PPID 1 and wait status 0, but the enclosing go command's summary was unavailable and `/tmp/signal-steady-native-final.log` was empty. This is not reported as a normal logged package pass. No full repository or oracle rerun was made for these test-only hooks.
 
 Setup completed in 37.548s: Go ready at 0.070s, Node at 0.078s, submodules at 0.177s, clang at 0.403s, build cache warm at 37.506s. nproc is 5 with a four-CPU quota. The generated environment was sourced for each test command.
+
+## Typed array numeric sort, October 8, 2026
+
+`runtime-file:typed_array_sort.c` adds no mutable static storage. Each nontrivial
+sort allocates one temporary buffer of the receiver's length and element width,
+uses automatic pointers and indexes, then frees that buffer before returning.
+Empty and singleton sorts allocate nothing. Sort mutates only the receiver's
+range, including when it is a view. It takes and returns a borrowed reference,
+without changing any counts. The only local static is a const panic message.

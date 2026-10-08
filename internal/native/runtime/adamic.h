@@ -389,7 +389,7 @@ typedef struct adamic_array {
 } adamic_array;
 
 // Fixed-width typed arrays (typed_array.c, docs/typed-arrays.md). Constructors and
-// subarray return one owned reference. Arguments are borrowed; fill returns borrowed self.
+// subarray return one owned reference. Arguments are borrowed; fill and sort return borrowed self.
 enum adamic_typed_array_kind {
 	adamic_typed_array_uint8 = 1,
 	adamic_typed_array_int32,
@@ -470,6 +470,8 @@ static inline void adamic_typed_array_set(adamic_typed_array *array, double inde
 }
 double adamic_typed_array_length(const adamic_typed_array *array);
 adamic_typed_array *adamic_typed_array_fill(adamic_typed_array *array, double value, double start, double end, bool has_start, bool has_end);
+// Numeric ascending, stable for equal values; Float64 orders -0 before +0 and NaN last.
+adamic_typed_array *adamic_typed_array_sort(adamic_typed_array *array);
 void adamic_typed_array_set_from(adamic_typed_array *array, const adamic_typed_array *source, double offset, bool has_offset);
 adamic_typed_array *adamic_typed_array_subarray(const adamic_typed_array *array, double start, double end, bool has_end);
 

@@ -311,6 +311,10 @@ func (n *inference) value(expression ir.Expression) shape {
 			n.value(argument)
 		}
 		return array
+	case ir.TypedArraySort:
+		array := n.value(expression.Array)
+		n.store(array, shape{})
+		return array
 	case ir.TypedArrayFill:
 		array := n.value(expression.Array)
 		for _, argument := range expression.Arguments {
