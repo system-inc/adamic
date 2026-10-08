@@ -108,7 +108,7 @@ for number, (slug, source, owner) in enumerate(slices(), start=1):
     if name in trainHeads:
         candidate = trainHeads[name]
     else:
-        merged = subprocess.run(["git", "merge-tree", "--write-tree", base, sourceSha], capture_output=True, text=True)
+        merged = subprocess.run(["git", "merge-tree", "--write-tree", "--name-only", base, sourceSha], capture_output=True, text=True)
         if merged.returncode != 0:
             files = [line for line in merged.stdout.splitlines()[1:] if line and not line.startswith(("Auto-merging", "CONFLICT"))]
             log(f"conflict: {source} {sourceSha[:8]} onto {base[:8]}: {' '.join(files[:6])}")
