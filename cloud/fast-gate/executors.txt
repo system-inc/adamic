@@ -4,9 +4,16 @@
 # line below whose glob fits it (fnmatch: * spans directories). Adding an inert line is a ruling.
 #
 # "mode report" records uncovered paths in fast.json without failing; "mode enforce" makes them red.
-mode report
+mode enforce
 #
 # executor  glob
+# Darwin only: the Apple package and its examples, tested on Kirk's Mac. A gate on the box reads
+# "needs darwin leg" and is never green until integration attaches the Mac's result.
+darwin      internal/apple/*
+darwin      examples/apple/*
+# An .a file promises proven types, so one outside a package is loaded by stage 0's front end with
+# its refusal pass (a-check, due 23:00; until it is live the status line lists it as unchecked).
+a-check     *.a
 # Not executed by anything: prose, evidence and records.
 inert       *.md
 inert       *.log
@@ -18,6 +25,11 @@ inert       */evidence/*
 inert       documentation/velocity/*
 inert       stage3/meter/runs/*
 inert       cloud/reports/*
+inert       docs/*
+inert       notes/*
+inert       review/*
+inert       logs/*
+inert       examples/*
 # Built and vetted by every gate.
 build       go.mod
 build       go.sum
@@ -31,5 +43,8 @@ build       */go.sum
 stage3      stage3/*
 # The cohere submodule: every stage 1 package that reads it.
 cohere      cohere
+cohere      CohereSettings.json
+cohere      cohere-mirrors.json
+cohere      stage1/cohere/config/*
 # Read by path from outside a package's tree: the Node oracle runners the oracle's tests start.
 package:internal/oracle  oracle/*

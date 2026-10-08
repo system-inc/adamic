@@ -121,7 +121,7 @@ class Gate:
         changed = git(tree, "-c", "core.quotePath=false", "diff", "--name-only", "%s...%s" % (self.arguments.base, self.arguments.sha)).split("\n")
         changed = [path for path in changed if path]
         packages, unowned = self.touched(changed)
-        executors = self.cover(unowned)
+        executors = self.cover(unowned, changed)
         if executors is None:
             return
         if "cohere" in executors:
@@ -172,7 +172,7 @@ class Gate:
         parents = git(self.arguments.tree, "rev-list", "--parents", "-n", "1", self.arguments.sha).split()[1:]
         changed = git(self.arguments.tree, "-c", "core.quotePath=false", "diff", "--name-only", parents[0], self.arguments.sha).split("\n") if parents else []
         _, unowned = self.touched([path for path in changed if path])
-        self.cover(unowned)
+        self.cover(unowned, [path for path in changed if path])
         try:
             self.result["build_ok"] = self.step("build", ["go", "build", "./..."])
         except BaseException:
@@ -195,7 +195,7 @@ class Gate:
         except BaseException:
             self.fail("census", traceback.format_exc())
 
-    def cover(self, unowned):
+    def cover(self, unowned, changed=()):
         """Each changed path outside a Go package to its executor (cloud/fast-gate/executors.txt from the
         tools checkout, since what counts as inert is a ruling, not the candidate's to change). Any path
         with none turns the gate red before anything runs. Returns the set of executors, or None."""
@@ -207,7 +207,10 @@ class Gate:
                     enforce = False  # record uncovered paths without failing, until the rulings are in
                 elif fields and not fields[0].startswith("#") and fields[0] != "mode":
                     rules.append((fields[0], fields[1]))
-        executors, covered, uncovered = set(), {}, []
+        executors, covered, uncovered, unchecked = set(), {}, [], []
+        if "cloud/fast-gate/executors.txt" in changed:
+            # The map itself changed: every executor it names runs, so it can't quietly lose a path.
+            executors.update(name for name, _ in rules if name not in ("inert", "build"))
         for path in unowned:
             executor = next((name for name, glob in rules if fnmatch.fnmatchcase(path, glob)), None)
             if executor is None:
@@ -215,6 +218,11 @@ class Gate:
             else:
                 executors.add(executor)
                 covered[executor] = covered.get(executor, 0) + 1
+                if executor == "a-check":
+                    unchecked.append(path)
+                if executor == "darwin":
+                    self.result.setdefault("needs_darwin", []).append(path)
+        self.result["unchecked_a_files"] = unchecked
         # "package:<path>" runs that package's tests, for files it reads by path from outside its tree.
         self.extraPackages = sorted(module + "/" + name.split(":", 1)[1] for name in executors if name.startswith("package:"))
         self.result["executors"] = covered
@@ -226,6 +234,12 @@ class Gate:
             self.fail("coverage", "no gate covers %d changed path%s:\n%s" % (len(uncovered), "" if len(uncovered) == 1 else "s", "\n".join(uncovered[:200])))
             return None
         self.exits["coverage"] = 0
+        if "darwin" in executors:
+            # Never green on this box alone: the Mac's darwin leg is attached by integration.
+            self.planned.append("darwin")
+            self.exits["darwin"] = 1
+            self.fail("darwin", "needs darwin leg: go test ./internal/apple/... on Kirk's Mac, for %s" % ", ".join(self.result.get("needs_darwin", []) or ["the executor map's change"]))
+            return None
         return executors
 
     def goList(self, pattern):
@@ -742,6 +756,8 @@ class Gate:
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
             steps += "; branch %s, session %s" % (self.arguments.branch or "none", self.arguments.session or "none")
+            if self.result.get("unchecked_a_files"):
+                steps += "; unchecked .a: %s" % ", ".join(self.result["unchecked_a_files"][:20])
         if green:
             self.status("green: %s %s gate in %.1f s (%s), %d packages, %d pass, %d skip, smoke %d fixtures" % (self.arguments.sha, self.kind, wall, steps, len(self.result.get("package_list", self.result.get("packages", []))), self.counts["pass"], self.counts["skip"], len(self.result.get("smoke_fixtures", []))))
         else:
