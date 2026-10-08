@@ -1,0 +1,4 @@
+original {'a-check': 0} {'a_check': {'stage3/verdict/fixtures/case-host/input.a': {'outcome': 'type error', 'expected': 'type error TS2322', 'first': "stage3/verdict/fixtures/case-host/input.a:5:7: error TS2322: Type 'string' is not assignable to type 'number'."}}}
+mutant {'a-check': 1} a-check failed for 1 file:
+stage3/verdict/fixtures/case-host/input.a: type error, expected type error TS9999 (stage3/verdict/fixtures/case-host/input.a:5:7: error TS2322: Type 'string' is not assignable to type 'number'.)
+restored {'a-check': 0}

@@ -1,0 +1,19 @@
+{
+  "status": "fail",
+  "errors": [
+    "missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/verdict-gate/lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+  ],
+  "execution": {
+    "commit": "a9da725e6d1760adf9d0944463142a9443b84584",
+    "apply_exit": 0,
+    "oracle_exit": 1,
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "wall_seconds": 201.84
+  },
+  "results": "/workspace/scratch/verdict-gate/lane",
+  "verdict": "FAIL stage3 landing lane: missing or invalid lane evidence: [Errno 2] No such file or directory: '/workspace/scratch/verdict-gate/lane/adapted-tree/tests/baselines/local/api/typescript.d.ts'"
+}
