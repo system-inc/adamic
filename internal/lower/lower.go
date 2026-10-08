@@ -39,6 +39,7 @@ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
 		return nil, err
 	}
 	lowering.noteAccessorNames(modules)
+	lowering.noteOmittedOptionals(modules)
 	if err := lowering.namespaceInitialization(modules); err != nil {
 		return nil, err
 	}
@@ -117,6 +118,9 @@ type lowering struct {
 
 	// classes maps each module class's symbol to its declaration, and instances each instantiation
 	// already lowered (class.go).
+	// omittedOptionals is every optional property some object literal typed by its context leaves out:
+	// that object has no slot for it (class.go's absentOptionalWrite).
+	omittedOptionals map[*ast.Symbol]bool
 	classes          map[*ast.Symbol]*ast.Node
 	statics          map[*ast.Symbol]*instance
 	staticGlobals    map[*ast.Symbol]int
