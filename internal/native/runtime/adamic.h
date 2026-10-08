@@ -4,6 +4,8 @@
 #define ADAMIC_H
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdatomic.h>
@@ -219,17 +221,38 @@ extern char adamic_literal_mark;
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
 #define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
 
-// adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
+// adamic_shape is an object's layout: field names, storage kinds, and reference ownership.
 //
 // methods are, for the objects a class makes, the class's methods by name, and NULL for any other
 // object: a call through an interface the class implements finds one there (adamic_object_callee).
 typedef struct adamic_methods adamic_methods;
+// One byte per field. References are counted heap values; number also covers packed
+// optional scalars and opaque, unowned implementation words (RegExp's __program).
+enum adamic_field_kind {
+	adamic_field_number, adamic_field_boolean, adamic_field_reference
+};
+typedef uint8_t adamic_field_kind;
 typedef struct adamic_shape {
 	size_t count;
 	const char *const *names;
 	const bool *references;
 	const adamic_methods *methods;
+	const adamic_field_kind *kinds;
 } adamic_shape;
+
+static inline void adamic_shape_check(const adamic_shape *shape) {
+#ifdef ADAMIC_COUNT
+	for (size_t i = 0; i < shape->count; i++) {
+		if (shape->kinds == NULL || shape->kinds[i] > adamic_field_reference ||
+			shape->references[i] != (shape->kinds[i] == adamic_field_reference)) {
+			fprintf(stderr, "adamic: inconsistent shape kind for field %s\n", shape->names[i]);
+			abort();
+		}
+	}
+#else
+	(void)shape;
+#endif
+}
 
 typedef void (*adamic_virtual_method)(void);
 typedef struct adamic_object adamic_object;

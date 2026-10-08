@@ -21,7 +21,8 @@ const graphHarness = `#include "adamic.h"
 
 static const char *const names[] = {"next", "other", "label"};
 static const bool references[] = {true, true, true};
-static const adamic_shape shape = {3, names, references, NULL};
+static const adamic_field_kind shape_kinds_0[] = {adamic_field_reference, adamic_field_reference, adamic_field_reference};
+static const adamic_shape shape = {3, names, references, NULL, shape_kinds_0};
 static adamic_object *node(void) {
  adamic_object *object = adamic_object_new(&shape);
  return adamic_graph_adopt(object, sizeof *object + 3 * sizeof(adamic_value));
