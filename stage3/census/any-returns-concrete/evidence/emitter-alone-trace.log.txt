@@ -1,0 +1,18 @@
+TRACE memoize signature before=() => T after=() => string mapper=0x3e6a3bb73a20
+TRACE memoize signature before=() => T after=() => string mapper=0x3e6a46845c40
+TRACE memoize signature before=() => T after=() => Printer mapper=0x3e6a468454a0
+TRACE memoize signature before=() => T after=() => Printer mapper=0x3e6a46a31400
+TRACE memoize signature before=() => T after=() => Printer mapper=0x3e6a467e9240
+TRACE memoize signature before=() => T after=() => Printer mapper=0x3e6a3d2b2820
+TRACE concrete before=ParenthesizerRuleOrSelector<Child> | undefined after=any mapper=0x3e6a3e2f0de0 count=12 depth=98
+TRACE concrete before=ParenthesizerRuleOrSelector<Child> | undefined after=any mapper=0x3e6a3e2f0de0 count=14 depth=98
+TRACE concrete before=ParenthesizerRuleOrSelector<Child> | undefined after=any mapper=0x3e6a3bbca860 count=14 depth=98
+TRACE concrete before=ParenthesizerRuleOrSelector<Child> | undefined after=any mapper=0x3e6a3bbca860 count=16 depth=98
+TRACE concrete before=(node: Node | undefined) => void after=any mapper=0x1acf600 count=9 depth=100
+TRACE concrete before=() => void after=any mapper=0x1acf600 count=9 depth=100
+TRACE concrete before=T | undefined after=any mapper=0x3e6a3bc8ee40 count=0 depth=100
+TRACE concrete before=T after=any mapper=0x3e6a3b198f40 count=0 depth=100
+TRACE concrete before=T after=any mapper=0x3e6a3b198f40 count=0 depth=100
+TRACE concrete before=Children | undefined after=any mapper=0x3e6a40382900 count=0 depth=100
+[intervening repeated depth-100 records omitted]
+/tmp/any-returns-adapted/src/compiler/emitter.ts 442 2417 measured on a checker-rejected program

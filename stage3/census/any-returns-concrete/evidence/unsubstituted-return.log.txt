@@ -1,0 +1,10 @@
+=== RUN   TestGenericResolvedReturnContracts
+    any_returns_test.go:60: memoize resolved return: got () => T, want () => string
+    any_returns_test.go:60: forEach resolved return: got U | undefined, want string | undefined
+    any_returns_test.go:60: filter resolved return: got readonly T[] | undefined, want readonly number[] | undefined
+    any_returns_test.go:60: setTextRange resolved return: got T, want "value"
+    any_returns_test.go:60: append resolved return: got T[] | undefined, want number[] | undefined
+--- FAIL: TestGenericResolvedReturnContracts (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.038s
+FAIL

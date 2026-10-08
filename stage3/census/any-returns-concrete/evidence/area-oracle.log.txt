@@ -1,0 +1,77 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_append_overload.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/generic_instance_key_typeof.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/census_overload_contracts.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/any_returns_concrete.a (1.00s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_generic.a (1.57s)
+PASS
+gate cache: native hits=5 misses=10
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.608s
