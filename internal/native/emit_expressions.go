@@ -369,7 +369,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 			array := e.value(expression.Array)
 			index := e.value(expression.Index)
 			lookup := "adamic_typed_array_get"
-			if read, isRead := expression.Index.(ir.Read); isRead && e.program.Locals[read.Local].Counter {
+			if read, isRead := expression.Index.(ir.Read); isRead && e.integerCounter(read.Local) {
 				lookup, index = "adamic_typed_array_get_integer", e.localName(read.Local)
 			}
 			return e.snapshot(ir.MaybeNumber, fmt.Sprintf("%s(%s, %s)", lookup, array, index))
