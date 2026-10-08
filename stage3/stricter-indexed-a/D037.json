@@ -3,8 +3,6 @@
     "D037"
   ],
   "read": "declarations[0]",
-  "receiver": "object array input followed by optional function return",
-  "source": "interface Declaration { readonly value: number; }\ninterface SourceFile { readonly endFlowNode: number; }\nconst absent = ABSENT;\nconst declarations: Declaration[] = [{ value: 7 }];\nfunction getSourceFileOfNode(node: Declaration): SourceFile | undefined { return absent ? undefined : { endFlowNode: node.value }; }\nconst file = getSourceFileOfNode(declarations[0]);\nconst value: SourceFile = file;\nconsole.log(value === undefined ? \"undefined\" : `${value.endFlowNode}`);\n",
-  "block_stage": "load",
-  "block": "Type 'SourceFile | undefined' is not assignable to type 'SourceFile'"
+  "receiver": "object array, constant zero, overload-selected optional return",
+  "source": "interface Declaration { readonly value: number; }\ninterface SourceFile { readonly endFlowNode: number; }\nconst absent = ABSENT;\nconst declarations: Declaration[] = absent ? [] : [{ value: 7 }];\nfunction getSourceFileOfNode(node: Declaration): SourceFile;\nfunction getSourceFileOfNode(node: Declaration | undefined): SourceFile | undefined;\nfunction getSourceFileOfNode(node: Declaration | undefined): SourceFile | undefined {\n  return node === undefined ? undefined : { endFlowNode: node.value };\n}\nconst file = getSourceFileOfNode(declarations[0]);\nconst value: SourceFile = file;\nconsole.log(value === undefined ? \"undefined\" : `${value.endFlowNode}`);\n"
 }
