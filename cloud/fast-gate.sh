@@ -79,7 +79,13 @@ git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
 mkdir -p ~/"${out}"
 echo "slot=${slot} load_before=$(cut -d' ' -f1-3 /proc/loadavg)" > ~/"${out}"/box.txt
-python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}"
+# The box's thread budget: each slot owns half the CPUs (Go sizes GOMAXPROCS from the affinity),
+# so two gates never contend with each other; the full gate and any other long job run idle-scheduled
+# (cloud/box-run.sh idle), so they only get cycles the slots leave.
+cpus=$(nproc --all)
+range=$([ "${slot}" = 1 ] && echo "0-$((cpus / 2 - 1))" || echo "$((cpus / 2))-$((cpus - 1))")
+echo "cpus=${range}" >> ~/"${out}"/box.txt
+taskset -c "${range}" python3 ~/fast-gate/tools${suffix}/cloud/fast-gate/run.py --tree ~/fast-gate/tree${suffix} --sha "${sha}" --base "${base}" --tools ~/fast-gate/tools${suffix} --out ~/"${out}" --branch "${branch}" --branch-source "${branchSource}" --session "${session}" --session-source "${sessionSource}"
 BOX
 code=$?
 set -e

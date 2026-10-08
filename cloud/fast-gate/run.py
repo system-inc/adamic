@@ -39,9 +39,10 @@ def main():
     parser.add_argument("--base", required=True)
     parser.add_argument("--tools", required=True)
     parser.add_argument("--out", required=True)
-    # Two fast gates share the box, so each takes half its threads and their load together stays
-    # near the thread count: a timing-sensitive test's verdict shouldn't depend on what else runs.
-    parser.add_argument("--parallel", type=int, default=max(1, (os.cpu_count() or 8) // 2))
+    # A slot owns half the box's CPUs (cloud/fast-gate.sh pins it); half of those again run test
+    # processes, since each also runs parallel subtests, clang and Node: a timing-sensitive test's
+    # verdict shouldn't depend on what else runs.
+    parser.add_argument("--parallel", type=int, default=max(1, len(os.sched_getaffinity(0)) // 2))
     parser.add_argument("--full", action="store_true")
     parser.add_argument("--branch", default="")
     parser.add_argument("--branch-source", default="")
