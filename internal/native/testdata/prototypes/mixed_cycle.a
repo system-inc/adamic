@@ -1,0 +1,12 @@
+// A prototype chain can be acyclic while counted ownership is cyclic.
+interface PrototypeInstance {
+    id: number;
+}
+interface PrototypeOwner {
+    id: number;
+    child?: PrototypeInstance;
+}
+const prototype: PrototypeOwner = { id: 7 };
+const object: PrototypeInstance = Object.create(prototype);
+prototype.child = object;
+console.log(`${Object.getPrototypeOf(object).child === object}`);

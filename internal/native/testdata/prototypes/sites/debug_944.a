@@ -1,0 +1,4 @@
+// debug.ts:944: null dictionary; no inherited object target, but Object.create is refused.
+// Isolate the call; the outside Node shape fixture tests its inherited reads.
+Object.create(null);
+console.log("created");

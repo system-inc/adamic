@@ -1,0 +1,33 @@
+// Reduced from TypeScript 6.0.3 debug.ts and factory/nodeFactory.ts.
+const flowPrototype = Object.create(Object.prototype);
+Object.defineProperties(flowPrototype, {
+    __debugFlowFlags: { get(this: { flags: number }): number { return this.flags; } },
+    __debugToString: { value(this: { flags: number }): string { return `flow ${this.flags}`; } },
+});
+const flowNode = { flags: 4 };
+Object.setPrototypeOf(flowNode, flowPrototype);
+console.log(flowNode.__debugFlowFlags, flowNode.__debugToString());
+flowNode.flags = 8;
+console.log(flowNode.__debugFlowFlags, Object.hasOwn(flowNode, "__debugFlowFlags"));
+const arrayPrototype = Object.create(Array.prototype);
+Object.defineProperty(arrayPrototype, "__tsDebuggerDisplay", {
+    value(this: number[]): string { return `NodeArray ${this.join(",")}`; },
+});
+const nodes = [1, 2];
+Object.setPrototypeOf(nodes, arrayPrototype);
+console.log(nodes.__tsDebuggerDisplay(), Array.isArray(nodes));
+class DebugMapper {
+    declare kind: number;
+    __debugToString(): string { return `mapper ${this.kind}`; }
+}
+const mapper = Object.setPrototypeOf({ kind: 2 }, DebugMapper.prototype);
+console.log(mapper.__debugToString());
+const links = Object.create(null);
+links[1] = "flow";
+console.log(links[1], "toString" in links);
+const target = { text: "source", id: 7 };
+const redirect = Object.create(target);
+redirect.fileName = "alias";
+console.log(redirect.text, redirect.id, Object.hasOwn(redirect, "text"));
+target.text = "updated";
+console.log(redirect.text);

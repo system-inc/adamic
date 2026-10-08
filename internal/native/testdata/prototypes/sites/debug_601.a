@@ -1,0 +1,5 @@
+// debug.ts:601: live edge array -> nodeArrayProto; isolate this setter call.
+const array = [1, 2];
+const nodeArrayProto = { __tsDebuggerDisplay: "NodeArray" };
+Object.setPrototypeOf(array, nodeArrayProto);
+console.log("linked");

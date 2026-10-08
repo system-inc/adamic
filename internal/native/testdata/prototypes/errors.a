@@ -1,0 +1,18 @@
+function report(label: string, operation: () => void): void {
+    try {
+        operation();
+        console.log(`${label}: accepted`);
+    } catch (error) {
+        if (!(error instanceof Error)) throw error;
+        console.log(`${label}: ${error.name}: ${error.message}`);
+    }
+}
+report("cycle", () => {
+    const first = {};
+    const second = Object.create(first);
+    Object.setPrototypeOf(first, second);
+});
+report("create", () => { Object.create(1); });
+report("set", () => { Object.setPrototypeOf({}, 1); });
+report("undefined", () => { Object.create(undefined); });
+report("null receiver", () => { Object.setPrototypeOf(null, {}); });
