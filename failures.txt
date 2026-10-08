@@ -157,6 +157,30 @@
     ranges_test.go:78: 96994 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
 --- FAIL: TestEveryMutationIsInItsRange (159.87s)
 
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequest/request_alias.a
+=== RUN   TestWASIRequest/request_alias.a
+    request_test.go:94: request host: exit status 1
+        node:internal/modules/run_main:107
+            triggerUncaughtException(
+            ^
+        
+        AssertionError [ERR_ASSERTION]: missing _initialize export
+            at file:///workspace/adamic/cmd/adamic/testdata/wasi/request-host.mjs:32:10 {
+          generatedMessage: false,
+          code: 'ERR_ASSERTION',
+          actual: undefined,
+          expected: true,
+          operator: '==',
+          diff: 'simple'
+        }
+        
+        Node.js v24.19.0
+--- FAIL: TestWASIRequest/request_alias.a (0.36s)
+
+== github.com/system-inc/adamic/cmd/adamic TestWASIRequest
+=== RUN   TestWASIRequest
+--- FAIL: TestWASIRequest (0.86s)
+
 == github.com/system-inc/adamic/internal/oracle TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a (skipped; the census table classes it required-input)
 census: Required WASI shard: bash cloud/setup.sh --wasi-sdk provisions wasi-sdk 27.0; source its env.sh for WASI_SYSROOT (SDK/share/wasi-sysroot), WASI clang/linker/builtins on PATH, Go and pinned Node v24.19.0 with node:wasi and registerHooks. Set ADAMIC_TEST_WASI=1 and ADAMIC_ORACLE_WASI=1. Missing SDK, tools, usable runtime or gate switches must fail verification.
 === RUN   TestWASIEmission/internal/oracle/testdata/reland_refused/generic_instance_key_json.a
