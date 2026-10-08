@@ -262,10 +262,10 @@ void adamic_object_view_write(adamic_object *object, const char *name, adamic_sl
 
 // Optional views share the required-field validator after proving presence. An
 // absent slot or undefined payload must never be interpreted as numeric bits.
-adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+static adamic_value object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
  adamic_value *slot = object == NULL ? NULL : adamic_object_optional_field(object, name, cache);
- bool missing = slot == NULL && (absent || optional);
- if (slot != NULL && adamic_object_initialized(object)[cache->index]) {
+ bool missing = (object == NULL && optional) || (object != NULL && slot == NULL && absent);
+ if (slot != NULL && (absent || undefined_member || wanted == 7 || wanted == 9) && adamic_object_initialized(object)[cache->index]) {
   unsigned char actual = adamic_object_field_types(object)[cache->index];
   missing = actual == 13 || (actual >= 3 && actual <= 6 && slot->reference == NULL) || (actual == 7 && !adamic_maybe_number_unpack(slot->number).present) || (actual == 10 && slot->reference == NULL);
  }
@@ -278,6 +278,15 @@ adamic_value adamic_object_optional_view(const adamic_object *object, const char
  if (wanted == 9) { result.reference = result.boolean ? &adamic_box_true : &adamic_box_false; }
  if (wanted == 7) { result.number = adamic_maybe_number_pack((adamic_maybe_number){true, result.number}); }
  return result;
+}
+
+adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional) {
+ return object_optional_view(object, name, cache, wanted, type, expression, absent, optional, false);
+}
+
+// An undefined value member does not make a required property absent.
+adamic_value adamic_object_optional_view_undefined(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression, bool absent, bool optional, bool undefined_member) {
+ return object_optional_view(object, name, cache, wanted, type, expression, absent, optional, undefined_member);
 }
 
 // The write is admitted only by the real shape and its declared slot contract,

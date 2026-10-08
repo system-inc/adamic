@@ -25,6 +25,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 	if family == "" {
 		id, err := l.strictViewContract(node, target)
 		if err == nil {
+			if family := l.viewIntersectionReadFamily(id, target); family != "" {
+				l.result.ViewContracts[id-1].Unsupported = family
+			}
 			return id, nil
 		}
 		family = "representation conversion"
@@ -63,6 +66,9 @@ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {
 	case flags&checker.TypeFlagsTypeParameter != 0:
 		return "generic"
 	case flags&checker.TypeFlagsIntersection != 0:
+		if l.structuralViewIntersection(target) {
+			return ""
+		}
 		return "intersection"
 	case isClassInstance(target):
 		return "nominal class"
@@ -190,7 +196,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" && !certifiedUntaggedCallableRead(program, contract) {
+		if family == "" && !certifiedUntaggedCallableRead(program, contract) && !l.viewIntersectionReadChecks(contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

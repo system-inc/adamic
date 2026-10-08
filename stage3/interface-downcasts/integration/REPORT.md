@@ -1,7 +1,7 @@
 Integrated checked-view lane checkpoints into codex/views-integration from ab4d6f902; further tips remain queued.
 Owner e6aec805 was first; newer owner 5fd6445e was prioritized and array tip 25ed1d3f is included.
 Focused compiler packages, full IR, filtered Node oracle and vet pass after every published merge.
-208 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
+258 explicit implementation/component mutants were caught, with production restored or untouched, alongside fixture payload mutants.
 Full repository gate and production census were not rerun; baseline failures and deferred source families remain.
 
 Merge order follows the user's owner-first ruling. This first merge is clean,
@@ -783,3 +783,98 @@ twice. The requested first-parent fallback patch remains at
 /tmp/views-integration-8afdc7102bbf5c9cdad9f4471923003cac7f8a6f.patch.
 The installed GitHub credential helper then pushed it successfully. That helper
 is configured only in this repository; no credential value was read or logged.
+
+
+## Lazy admission 055333e1 left out
+
+Newest fetched owner tip 055333e1ea0c278bc809b0dbbd292fbb0e9b56a1 contains
+85e958e2deed551a539a665a35fd492a02a7f4ea. Its automatic merge changes
+censusCallableSlotless to admit all boxed union callable slots. The existing
+TestMixedUnionCallbackABIIsPending fails both mixed_union_callback and
+mixed_union_callback_variance: each expected a refusal but received nil (0.073s).
+Preserving the existing union refusal instead makes the new Map certificate
+entry-live-mutation fixture fail at line 5:82: stage 0 cannot lower a function
+value taking string | number | null (0.068s). A global admission therefore cannot
+retain both obligations without a separate callable ABI adapter or scoped proof.
+The item was aborted and left out, as authorized; no incoming production code
+was committed. Exact evidence is owner-055333-abi.log and
+owner-055333-preserved-abi.log. The branch remained at 6a7f1bf3a83e61069b1a380739ed513c0f9b0591.
+
+## Callable scalar witnesses 15b30747
+
+Merged source tip 15b30747f83f57f926fb1b291cda5ba3bc39a27a adds
+Scanner.hasPrecedingLineBreak and performance.mark fixtures. One conflict hunk
+in internal/oracle/counts.md retains all eight incoming allocation rows before
+the complete existing predicate direction table, whose end-of-file placement
+is independently checked. The plan additions merge without conflict. No shared
+production hook changes. Original signatures and reads retain reduced receivers;
+these fixtures do not prove complete compiler contexts or runtime reachability.
+
+All four executable omissions ran: native and JavaScript shape bypass, native
+and JavaScript wrong-arity acceptance. Each caused both original member tests
+to lose their exact exit-70 refusal in valid emitted code (exit 0); restored
+production guards are unchanged. Total implementation/component mutants: 212.
+The mixed scalar/boxed result boundary remains refused and has a Node control.
+The optional-boolean landing hold remains until the user explicitly lifts it.
+
+Final callable-15 required gates: lower 15.322s, native 20.377s, JavaScript 2.834s; full IR 3.380s; uncached filtered Node oracle 247.320s; go vet ./... exit 0. No oracle fixture exclusion. Gate logs retained under integration/logs.
+
+
+## Intersection 9e4e13fb reconciliation
+
+Incoming tip 9e4e13fb1bb9c755c1743eb0937906eeea988de8 carries finite,
+tagged-arm and recursive intersection dispatch and an original SymbolTracker
+witness. Five conflict hunks resolved individually in four files: both plan
+appends retain every lane hook/history; JavaScript readiness retains the ninth
+undefinedMember flag, null diagnostic and owner Map code while admitting actual
+callable kind 8; both nullish emitters retain owner member selection, per-member
+Map certificates and callable signature certificates before direct conjunction
+validation. Tagged intersection arms already run through owner union selection;
+the new conjunction hook excludes that case to avoid duplicate slot reads.
+Automatic strictViewContract merging retains phantomUndefined erasure and adds
+structural intersections and canonical optional descriptors. The shared allocation
+flow graph, lazy descendant refusals and writable-slot certification stay intact.
+
+New source root-read witnesses expose a required-property gap: finite and
+recursive string | undefined required fields missing from actual objects print
+true and exit 0 in sanitized native, release native and generated JavaScript.
+Explicitly present undefined controls also print true as Node does. The repair
+separates field.Optional and child.Undefined in both walkers and descriptor tables.
+Native adds object_optional_view's explicit payload flag and the named
+adamic_object_optional_view_undefined wrapper; viewField forwards the branded
+string undefined flag. Existing wrapper uses the same readiness/presence validator.
+Optional receiver absence does not authorize absent required fields on a present
+receiver, or present undefined payloads without a declared value member. JavaScript
+uses the existing ninth flag. Four restored controls pass, and CompleteBrand
+controls pass. Before/after logs preserve observed output; no check is removed.
+
+The new presence counterfactual makes each required label optional in production
+IR. Both finite and recursive missing cases execute valid code with true/exit 0
+in all three modes, failing six independent refusal assertions. This is four
+backend-specific defects (sanitizer repetition is not separately counted).
+The source tests construct temporary .a witnesses from inline source without
+copying upstream/cohere declarations. Original lane tests enable all 78 declaration
+hashes and complete unchanged field sets through ADAMIC_INTERSECTION_ORIGINAL_DECLS.
+Both original-declaration opt-in suites remain enabled in all later required gates.
+
+Supplemental TestOptionalClassReads fails class_derived, class_generic,
+class_generic_compound and class_transitive with stderr differs; class_expression
+passes. The isolated unmodified prior integration 8afdc710 reproduces the same
+four failures (3.075s). These are existing supplemental failures, not a green
+full-oracle claim. Presence/brand repair selection passes its new controls but
+that supplemental class selection remains red (combined 29.737s). The optional-
+boolean landing hold remains until the user explicitly lifts it; property
+presence and permitted undefined values do not establish storage compatibility.
+
+Intersection counterfactuals complete: source dispatch/shape/nested (six backend
+checks), selected-arm skip/shape/nested/tag (eight), recursive skip/shape/nested/
+canonical/optional/three literals (sixteen), and original skip/shape/nested/
+presence/outer/absence (twelve). Each driver shows valid true/exit-0 execution
+losing the independent refusal pin, except forbidden optional absence produces
+the intended counterfactual exit 70 on its positive control. Together with the
+four new required-undefined presence checks, 46 newly executed implementation
+counterfactuals bring the cumulative total to 258. Sanitizer/release repetitions
+are retained in logs but not separately counted. All descriptor mutants are
+confined to each test's IR; production sources are unmutated.
+
+Final intersection required gates: lower 16.587s, native 52.707s, JavaScript 2.807s; full IR 30.949s; go vet ./... exit 0; uncached filtered Node oracle 376.970s, both original-declaration suites enabled, no fixture exclusion. Protected assembly/oracle files unchanged.

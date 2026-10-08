@@ -21,6 +21,7 @@ func (e *emitter) nullishViewField(property ir.Property) string {
 	e.nullishMemberSelection(property, value)
 	e.mapViewCertificate(property, value)
 	e.viewCallableNullishCertificate(property, value)
+	e.viewIntersectionNullishRead(property, value)
 	if property.Of == ir.Union {
 		return value
 	}

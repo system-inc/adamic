@@ -57,6 +57,25 @@ func TestViewIntersectionContracts(t *testing.T) {
 			if err != nil || len(members) != test.members || calls != test.members {
 				t.Fatalf("members %v, calls %d, error %v; want %d", members, calls, err, test.members)
 			}
+			if !l.structuralViewIntersection(target) {
+				t.Fatal("structural intersection not recognized")
+			}
+			l.result = &ir.Program{}
+			id, err := l.internStructuralViewIntersection(node, target)
+			if err != nil {
+				t.Fatal(err)
+			}
+			contract := l.result.ViewContracts[id-1]
+			if !contract.Intersection || contract.Kind != ir.ViewObject || len(contract.Members) != test.members {
+				t.Fatalf("lost conjunction: %#v", contract)
+			}
+			if test.name == "brand" || test.name == "optional brand" {
+				for _, field := range contract.Fields {
+					if field.Name == "__brand" {
+						t.Fatal("phantom introduced runtime field")
+					}
+				}
+			}
 			sentinel := errors.New("member unavailable")
 			members, err = l.viewIntersectionContracts(node, target, func(*checker.Type) (ir.ViewContractID, error) { return 0, sentinel })
 			if !errors.Is(err, sentinel) || members != nil {
