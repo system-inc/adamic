@@ -149,7 +149,7 @@ func TestWholeDocumentOraclePreflight(t *testing.T) {
 		write(t, path, overlay)
 		command := bounded(t, "go", "build", "-overlay="+path, "-o", binary, mainPath)
 		command.Dir = cohere
-		if output, err := command.CombinedOutput(); err != nil {
+		if output, err := combinedOutput(command); err != nil {
 			t.Fatalf("build: %v\n%s", err, output)
 		}
 	}

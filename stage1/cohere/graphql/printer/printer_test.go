@@ -41,7 +41,7 @@ func printerCases(t *testing.T, mode string) (string, string) {
 	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinter$", "./internal/format/graphql")
 	command.Dir = cohere
 	command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
-	if output, err := command.CombinedOutput(); err != nil {
+	if output, err := combinedOutput(command); err != nil {
 		t.Fatalf("Go oracle: %v\n%s", err, output)
 	}
 	data, err := os.ReadFile(answers)
