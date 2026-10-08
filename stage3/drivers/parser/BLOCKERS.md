@@ -1,3 +1,81 @@
+# Fresh fixes: targeted probes green, earlier integration stops remain
+
+Fresh unpushed scratch 1b382081 plus proven-predicates-2 0f722679,
+views-callables 37fa06d3 and debugger-statement 7d2cbc89 yields 9d2696bb.
+Records-lowering 456c981b remains an ancestor. Arguments-length 9534e8ab and
+quarantined scratch 33bf53ac are absent. No compiler merge is pushed.
+
+Five targeted witnesses match Node, exit 0 with empty stderr, and catch an actual
+native stdout one-byte mutation with cmp exit 1: predicate callback declaration,
+assertIsDefined declaration, namespace-free callable marker, debugger declaration,
+and finite partial-record view. Four of five unchanged probes pass. The original
+namespace-bearing native-function-any-view.a is refused at its namespace; the
+additional namespace-free native-function-any-view-called-only.a matches the
+incoming branch's parser-cache reduction. Predicate/assertion/debugger witnesses
+compile unused declarations and print loaded, so they do not establish runtime
+predicate semantics or executing throw/debugger behavior.
+
+The untouched re-cut slice stops at core.ts:11:52, not core.ts:525:
+`stage 0 can't lower an indirect call or class construction before enum
+initialization; declare enums before executable module code yet`.
+Unsplit, split and repeated split all exit 1 before C emission, in 0.8231,
+0.8247 and 0.8234 seconds respectively. These are compiler attempt times, not
+clang times. No C, binary, native parser comparison or warm-cache claim.
+
+The assumption is to keep exactly the requested fresh scratch and merges,
+without importing historical fixes from the quarantined scratch to force the
+expected 525 stop. The fresh scratch still lacks namespace, generic-empty-array,
+Array.isArray-predicate and method-presence support observed below.
+
+Only in a discovery copy, reduceLeft's body is replaced with the previously used
+throw stub. Its arguments.length read is therefore removed in that copy only;
+it was not reached on the untouched slice. No arguments-length probe was run.
+Then these stops were observed in order, ten behind the first real stop:
+
+| Order | Slice site | Observation | Minimal program |
+| --- | --- | --- | --- |
+| 1 | core.ts:11:52 | Map construction before pending enum | native-enum-map.a |
+| 2 | debug.ts:333:29 | enumMemberCache Map construction before pending enum | native-enum-map.a |
+| 3 | performanceCore.ts:37:37 | require call before pending enum | native-call-before-enum.a |
+| 4 | performance.ts:15:18 | timestamp callable value before pending enum | native-call-before-enum.a |
+| 5 | performance.ts:16:15 | marks Map construction before pending enum | native-enum-map.a |
+| 6 | performance.ts:17:16 | counts Map construction before pending enum | native-enum-map.a |
+| 7 | performance.ts:18:19 | durations Map construction before pending enum | native-enum-map.a |
+| 8 | core.ts:230:22 | never seen as mutable generic U in flatMap fallback | native-generic-empty-array.a |
+| 9 | core.ts:594:5 | isArray(unknown) predicate return is not trusted | native-array-is-array-predicate.a |
+| 10 | core.ts:889:14 | process.nextTick truthiness read refused as unbound method | native-process-next-tick-read.a |
+| 11 | debug.ts:26:1 | namespace refused | native-debug-namespace.a |
+
+Rows after 1 are found behind cumulative stubs, plus the upfront reduceLeft stub;
+this is discovery order, not the eventual unchanged compiler order. Initializers
+are replaced with undefined! while retaining their declared/inferred Map or
+number type. Function bodies become throws; tryGetPerformance's inferred return
+shape is explicitly preserved to avoid artificial checker errors. Discovery
+patch and every exact diagnostic/edit are retained. No discovery source is in
+the published slice or a temporary adaptation. The enum-map and typed-call
+minimals reproduce their common refusal family; they do not individually model
+the Node require host dependency. All listed family minimals run on Node and
+are refused by this compiler with the corresponding diagnostics.
+
+Merge conflicts touched lowering: predicate refusals; callable casts, expressions,
+invariance, object/statement dispatch and refusals; debugger refusals. Resolution
+retains records hooks alongside incoming predicate/callable hooks. Exact scratch
+diff is retained. Two incomplete hook returns in the first resolution caused
+an intermediate build failure, then were corrected; final compiler build passes.
+The callable merge also exhausted disk during checkout. Clearing the rebuildable
+21 GB Go cache and recovering that checkout allowed completion. SDK pins remain
+cohere 7945d102 and TypeScript d92d9bfee through local absolute module paths.
+Missing API-seat/cwd and artificial stub checker failures are retained separately;
+they are not counted as real source blockers.
+
+[Evidence](evidence/front27/report.json) and
+[ordered diagnostics](evidence/front27/ordered-stops.json) retain commands,
+outputs, mutations, conflicts and scope limits. Node references and validated
+slice are unchanged. No full gate or native acceptance run. Holding for the
+closure convention and a compiler integration that carries the other fixes.
+
+---
+
 # Fresh isolated partial-record probe: green
 
 Fresh scratch starts from parser c109c06d, merges area/stage3 b61e7064 and
