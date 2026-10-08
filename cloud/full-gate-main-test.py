@@ -89,6 +89,27 @@ class FullGateLoopTests(unittest.TestCase):
         self.call('dropRequest %s' % red)
         self.assertEqual((self.state / 'requests').read_text(), '%s\n%s\n' % (void, fresh), 'only a finished record drops its line')
 
+    def test_two_loops_never_take_the_same_request(self):
+        first, second = self.code, self.changed
+        (self.state / 'requests').write_text('%s\n%s\n' % (first, second))
+        # Two loops on two boxes, in one shell each: the first claims the bottom line, the second the next.
+        home = self.call('box=home; nextRequest; sleep 3')
+        self.assertEqual(home, (0, first))
+        self.assertEqual(self.call('box=threadripper; nextRequest'), (0, first), "a dead loop's claim is taken over")
+        holder = (self.state / 'claims' / first / 'holder').read_text().split()
+        self.assertEqual(holder[0], 'threadripper')
+        # While the holder lives, the other loop takes the next line.
+        live = subprocess.Popen(['bash', '-c', 'set +e; ADAMIC_FULL_GATE_LIBRARY=1 source %s; box=home; nextRequest; sleep 5' % (self.work / 'cloud' / 'full-gate-main.sh')],
+                                stdout=subprocess.PIPE, text=True, env=dict(os.environ, ADAMIC_FULL_GATE_STATE=str(self.state), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state)))
+        self.addCleanup(live.kill)
+        for _ in range(100):
+            if (self.state / 'claims' / first / 'holder').read_text().split()[0] == 'home':
+                break
+            subprocess.run(['sleep', '0.1'])
+        self.assertEqual(self.call('box=threadripper; nextRequest'), (0, second))
+        self.call('release %s' % second)
+        self.assertFalse((self.state / 'claims' / second).exists())
+
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)
         self.assertEqual(self.call('recordOnly %s %s' % (self.records, self.changed))[0], 1)

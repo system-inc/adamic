@@ -309,13 +309,34 @@ confirmedBy() {
 # loop takes the first whose whole gate hasn't finished green or red (a void runs again) between mains, and drops
 # a line once its record finishes.
 requests=${ADAMIC_FULL_GATE_REQUESTS:-${state}/requests}
+# More than one loop can serve the requests (@system_adamic, Oct 8 22:58Z: Home takes the bottom slice, a second
+# 64-core box the next). Each claims a line before running it: a directory per sha (mkdir is atomic), holding the
+# claiming box and pid. A claim whose pid is gone is taken over. Only the loop whose role is all also gates mains.
+claims=${ADAMIC_FULL_GATE_CLAIMS:-$(dirname "${requests}")/claims}
+role=${ADAMIC_FULL_GATE_ROLE:-all}
+claim() {
+  local sha=$1 holder pid
+  mkdir -p "${claims}"
+  if mkdir "${claims}/${sha}" 2> /dev/null; then
+    echo "${box} $$" > "${claims}/${sha}/holder"
+    return 0
+  fi
+  read -r holder pid < "${claims}/${sha}/holder" 2> /dev/null || return 1
+  [ "${pid}" = $$ ] && return 0
+  kill -0 "${pid}" 2> /dev/null && return 1
+  echo "${box} $$" > "${claims}/${sha}/holder"
+}
+release() {
+  rm -f "${claims}/$1/holder"
+  rmdir "${claims}/$1" 2> /dev/null || true
+}
 nextRequest() {
   local sha
   [ -s "${requests}" ] || return 1
   while read -r sha; do
     [ -n "${sha}" ] || continue
     case $(recordState "${sha}") in
-      none | void) echo "${sha}"; return 0 ;;
+      none | void) claim "${sha}" && { echo "${sha}"; return 0; } ;;
     esac
   done < "${requests}"
   return 1
@@ -326,9 +347,10 @@ dropRequest() {
     green | red) grep -vx "${sha}" "${requests}" > "${requests}.tmp"; mv "${requests}.tmp" "${requests}" ;;
   esac
 }
-# A whole gate started by hand (cloud/full-gate-main.sh <sha>) owns the box: the loop neither runs nor lends.
+# A whole gate started by hand (cloud/full-gate-main.sh <sha>, on Home unless told otherwise) owns Home: Home's loop
+# neither runs nor lends while one runs.
 oneOffRunning() {
-  pgrep -f "full-gate-main\.sh [0-9a-f]{40}" > /dev/null 2>&1
+  [ "${box}" = home ] && pgrep -f "full-gate-main\.sh [0-9a-f]{40}" > /dev/null 2>&1
 }
 
 [ "${ADAMIC_FULL_GATE_LIBRARY:-}" = 1 ] && return 0
@@ -344,8 +366,8 @@ while true; do
   # A network blip or one failed run never ends the loop: it says so and tries again next minute.
   main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1) || main=""
   # A main with no whole gate, or only a void one, is confirmed or run; one that is running or finished is done.
-  mainState=$( [ -n "${main}" ] && recordState "${main}" || echo unknown)
-  if [ "${mainState}" = none ] || [ "${mainState}" = void ] && ! grep -qx "${main}" "${state}/confirmed" 2> /dev/null; then
+  mainState=$( [ -n "${main}" ] && [ "${role}" = all ] && recordState "${main}" || echo unknown)
+  if [ "${role}" = all ] && { [ "${mainState}" = none ] || [ "${mainState}" = void ]; } && ! grep -qx "${main}" "${state}/confirmed" 2> /dev/null; then
     if confirmed=$(confirmedBy "${main}"); then
       echo "${main}" >> "${state}/confirmed"
       echo "$(date -u +%H:%M:%S) full gate of main ${main} confirmed by ${confirmed}'s green whole gate: they differ only in record paths, so it isn't run"
@@ -356,6 +378,7 @@ while true; do
     echo "$(date -u +%H:%M:%S) the star's request ${request} takes ${box} between mains"
     run "${request}" || echo "$(date -u +%H:%M:%S) run of ${request} failed (exit $?); trying again next minute"
     dropRequest "${request}"
+    release "${request}"
   fi
   lend
   idle=$((${idle:-0} + 1)); [ $((idle % 10)) -eq 0 ] && (heartbeat idle "${main}" > /dev/null 2>&1 &)
