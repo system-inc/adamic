@@ -1,0 +1,12 @@
+{"Time":"2026-10-08T16:30:53.512587344-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-08T16:30:53.515430202-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-08T16:30:53.527825644-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere"}
+{"Time":"2026-10-08T16:30:53.527950677-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelpersMatchCohere","Output":"=== RUN   TestHelpersMatchCohere\n","OutputType":"frame"}
+{"Time":"2026-10-08T16:30:53.527670544-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-08T16:30:53.529486094-06:00","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers"}
+{"Time":"2026-10-08T16:30:53.530574819-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutants"}
+{"Time":"2026-10-08T16:30:53.530665111-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestHelperMutants","Output":"=== RUN   TestHelperMutants\n","OutputType":"frame"}
+{"Time":"2026-10-08T16:30:53.539906669-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo"}
+{"Time":"2026-10-08T16:30:53.540038027-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestMessageRefusalsMatchGo","Output":"=== RUN   TestMessageRefusalsMatchGo\n","OutputType":"frame"}
+{"Time":"2026-10-08T16:30:53.544321244-06:00","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit"}
+{"Time":"2026-10-08T16:30:53.544418502-06:00","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/helpers","Test":"TestKnownGapsAreExplicit","Output":"=== RUN   TestKnownGapsAreExplicit\n","OutputType":"frame"}
