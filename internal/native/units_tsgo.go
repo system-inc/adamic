@@ -41,7 +41,7 @@ func splitTSGoRuntime(options Options) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := clangCommand(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", err
 	}

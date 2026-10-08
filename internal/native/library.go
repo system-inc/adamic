@@ -51,7 +51,7 @@ func RuntimeLibrary(directory string, options Options) (string, error) {
 	if err != nil {
 		return "", fmt.Errorf("native: %w", err)
 	}
-	version, err := exec.Command(compiler, "--version").CombinedOutput()
+	version, err := clangCommand(compiler, "--version").CombinedOutput()
 	if err != nil {
 		return "", fmt.Errorf("native: clang --version: %w\n%s", err, version)
 	}
@@ -172,7 +172,7 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 		file := sources[index]
 		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
 		arguments := append(append([]string{}, flags...), "-c", filepath.Join(temporary, file.name), "-o", object)
-		command := exec.Command(compiler, arguments...)
+		command := clangCommand(compiler, arguments...)
 		for _, flag := range flags {
 			if strings.HasPrefix(flag, "-fprofile-") {
 				// ThinLTO uses source identity in private names and GUIDs. Keep it

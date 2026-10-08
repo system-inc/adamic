@@ -4,7 +4,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	goruntime "runtime"
 	"testing"
 )
 
@@ -34,8 +33,8 @@ func TestSplitBuildPolicy(t *testing.T) {
 
 func TestSplitJobsPolicy(t *testing.T) {
 	t.Setenv("ADAMIC_NATIVE_JOBS", "")
-	if jobs, err := splitJobs(Options{}); err != nil || jobs != goruntime.NumCPU() {
-		t.Fatalf("CPU default: %d %v", jobs, err)
+	if jobs, err := splitJobs(Options{}); err != nil || jobs != 1 {
+		t.Fatalf("go-test default: %d %v", jobs, err)
 	}
 	t.Setenv("ADAMIC_NATIVE_JOBS", "2")
 	if jobs, err := splitJobs(Options{}); err != nil || jobs != 2 {
