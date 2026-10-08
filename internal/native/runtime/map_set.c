@@ -61,7 +61,7 @@ static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], N
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {
-	return type != 1 && type != 2 && type != 7;
+	return type != adamic_ir_Number && type != adamic_ir_Boolean && type != adamic_ir_MaybeNumber;
 }
 
 static adamic_value collection_next(adamic_closure *self, adamic_value *arguments) {
@@ -96,7 +96,7 @@ static adamic_value collection_next(adamic_closure *self, adamic_value *argument
 		int type = part == 1 || set ? key_type : value_type;
 		adamic_value element = part == 1 || set ? key : value;
 		if (reference) { adamic_retain(element.reference); }
-		if (type == 1) {
+		if (type == adamic_ir_Number) {
 			// IteratorResult<number, undefined>.value reads the same packed word until narrowed.
 			element.number = adamic_maybe_number_pack((adamic_maybe_number){true, element.number});
 		}

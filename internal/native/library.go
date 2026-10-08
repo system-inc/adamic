@@ -11,6 +11,8 @@ import (
 	goruntime "runtime"
 	"strings"
 	"sync"
+
+	"github.com/system-inc/adamic/internal/ir"
 )
 
 type runtimeFile struct {
@@ -83,6 +85,7 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
 	part("adamic-runtime-v1")
+	part(ir.TypeTagFingerprint())
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
