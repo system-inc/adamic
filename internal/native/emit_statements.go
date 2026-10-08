@@ -81,7 +81,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		owned := e.taken(value)
 		if local.Global {
 			e.store(statement.Local, value, owned)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !local.NamespaceState || statement.Value != nil)
 			e.initialized = append(e.initialized, statement.Local)
 		} else {
 			e.declareLocal(statement.Local, value, owned)
@@ -116,6 +116,9 @@ func (e *emitter) statement(statement ir.Statement) {
 		// The store is the statement's last write: nothing after it can assign the variable again
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
+		if e.program.Locals[statement.Local].NamespaceState {
+			e.line("%s = true;", readyName(statement.Local))
+		}
 		e.end()
 	case ir.Evaluate:
 		if splice, isSplice := statement.Value.(ir.ArraySplice); isSplice {

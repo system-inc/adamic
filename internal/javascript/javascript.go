@@ -340,7 +340,7 @@ func (e *emitter) statement(at *ir.Statement) {
 		}
 		if e.program.Locals[statement.Local].Global {
 			e.line("%s = %s;", e.name(statement.Local), value)
-			e.line("%s = true;", readyName(statement.Local))
+			e.line("%s = %t;", readyName(statement.Local), !e.program.Locals[statement.Local].NamespaceState || statement.Value != nil)
 			return
 		}
 		e.declare(statement.Local, value)
@@ -354,6 +354,9 @@ func (e *emitter) statement(at *ir.Statement) {
 			value = temporary
 		}
 		e.line("%s = %s;", e.variable(statement.Local), value)
+		if e.program.Locals[statement.Local].NamespaceState {
+			e.line("%s = true;", readyName(statement.Local))
+		}
 	case ir.Evaluate:
 		e.line("%s;", e.value(statement.Value))
 	case ir.Panic:

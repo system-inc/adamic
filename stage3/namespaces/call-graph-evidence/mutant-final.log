@@ -1,0 +1,3 @@
+drop memo caught by body-expansion count: 8191 rather than 13; /tmp/namespaces-graph-no-memo.log
+partial cycle union caught by reach-set comparison; /tmp/namespaces-graph-partial-cycle.log
+lost early enum reach caught by independent namespace preflight; /tmp/namespaces-graph-early-enum.log

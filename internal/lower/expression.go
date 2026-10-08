@@ -442,6 +442,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	if value, known, err := l.enumExpression(node); known {
 		return value, err
 	}
+	if value, known, err := l.namespaceExpression(node); known {
+		return value, err
+	}
 	if observed, known := l.libraryArrayObservation(node); known {
 		return observed, nil
 	}
@@ -482,59 +485,7 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if !isLocal {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
-		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
-		if l.result.Locals[local].Type == ir.Union {
-			// Where the checker has narrowed it to fewer members held one way, it's read as that.
-			parent := node.Parent
-			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
-				parent = parent.Parent
-			}
-			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
-				// Calls and captured writes can invalidate the checker's narrowing. Check the
-				// held member before casting it, with ordinary IR shared by both backends.
-				name := "object"
-				switch narrowed.Present() {
-				case ir.Number:
-					name = "number"
-				case ir.Boolean:
-					name = "boolean"
-				case ir.String:
-					name = "string"
-				case ir.Closure:
-					name = "function"
-				}
-				if name == "object" {
-					// typeof cannot distinguish differently held object members.
-					declared := l.concrete(l.checker.GetTypeOfSymbol(l.symbol(node)))
-					members := []*checker.Type{declared}
-					if declared.Flags()&checker.TypeFlagsUnion != 0 {
-						members = declared.Types()
-					}
-					for _, member := range members {
-						if held, known := l.representation(member); known && held != narrowed && (held == ir.Object || held == ir.Array || held == ir.Map) {
-							return nil, l.notYet(node, "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables")
-						}
-					}
-				}
-				b := l.libraryArrayBuilder([]ir.Expression{read})
-				held := b.read(b.parameters[0])
-				matches := ir.Expression(ir.Binary{Operator: ir.Equal, Left: ir.TypeOf{Value: held}, Right: ir.StringConstant{Index: l.constant(name)}})
-				if l.includesUndefined(l.checker.GetTypeAtLocation(node)) {
-					matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
-				}
-				message := "union member where the checker narrowed it away: a call since the narrowing put it back"
-				b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
-				read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
-			}
-		}
-		if declared := l.result.Locals[local].Type; declared.IsMaybe() {
-			// Where the checker has narrowed it to what it holds, it's read as that.
-			if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
-				read = ir.Unwrap{Value: read}
-			}
-		}
-		return l.defined(node, read), nil
+		return l.localRead(node, local)
 	case ast.KindPrefixUnaryExpression:
 		return l.prefix(node)
 	case ast.KindTypeOfExpression:
@@ -904,6 +855,9 @@ func (l *lowering) template(node *ast.Node) (ir.Expression, error) {
 }
 
 func (l *lowering) conditional(node *ast.Node) (ir.Expression, error) {
+	if branch := l.literalCallableBranch(node); branch != nil {
+		return l.expression(branch)
+	}
 	conditional := node.AsConditionalExpression()
 	condition, err := l.condition(conditional.Condition)
 	if err != nil {
@@ -1000,21 +954,30 @@ func slotless(valueType ir.Type) bool {
 func (l *lowering) call(node *ast.Node) (ir.Expression, error) {
 	call := node.AsCallExpression()
 	callee := ast.SkipParentheses(call.Expression)
-	if declaration, isGeneric := l.generics[l.symbol(callee)]; ast.IsIdentifier(callee) && isGeneric {
+	qualified := l.namespaceMember(callee)
+	if declaration, isGeneric := l.generics[l.symbol(callee)]; (ast.IsIdentifier(callee) || qualified) && isGeneric {
 		instance, err := l.instantiateFunction(node, declaration)
 		if err != nil {
 			return nil, err
 		}
-		return l.callFunction(call, instance)
+		value, err := l.callFunction(call, instance)
+		if err == nil {
+			value = l.namespaceReadyCall(callee, value)
+		}
+		return value, err
 	}
 	function, isFunction := l.functions[l.symbol(callee)]
-	if !ast.IsIdentifier(callee) || !isFunction {
+	if (!ast.IsIdentifier(callee) && !qualified) || !isFunction {
 		if calleeType, _ := l.representation(l.checker.GetTypeAtLocation(callee)); calleeType == ir.Closure {
 			return l.callClosure(node)
 		}
 		return nil, l.notYet(node, "a call to "+describe(callee))
 	}
-	return l.callFunction(call, function)
+	value, err := l.callFunction(call, function)
+	if err == nil {
+		value = l.namespaceReadyCall(callee, value)
+	}
+	return value, err
 }
 
 // callFunction lowers a call's arguments, in order, and the call to function.
@@ -1095,6 +1058,9 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	}
 	symbol := l.symbol(node)
 	for _, parameter := range symbol.Declarations[0].Parameters() {
+		if parameter.Name().Text() == "this" {
+			return nil, l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
+		}
 		declared := parameter.AsParameterDeclaration()
 		if declared.Initializer != nil || declared.QuestionToken != nil || declared.DotDotDotToken != nil {
 			return nil, l.notYet(node, "a function with an optional or rest parameter, as a value")

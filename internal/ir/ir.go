@@ -171,6 +171,12 @@ type Local struct {
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
 
+	// NamespaceState stays unready until assigned when its type excludes undefined.
+	NamespaceState bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
+
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int
 
