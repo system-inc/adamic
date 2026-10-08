@@ -1,0 +1,38 @@
+// Supplemental frozen-queue certificate: stock checker, pristine upstream.
+const ts = require('../../../api/node_modules/typescript');
+const fs = require('node:fs');
+const path = require('node:path');
+const crypto = require('node:crypto');
+const cp = require('node:child_process');
+const zlib = require('node:zlib');
+if (process.argv.length !== 4) throw Error('usage: prepare-ranked.cjs <upstream> <declarations>');
+const [root, output] = process.argv.slice(2).map(x => path.resolve(x));
+const pin = '050880ce59e30b356b686bd3144efe24f875ebc8';
+const hash = file => crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex');
+if (cp.execFileSync('git', ['-C', root, 'rev-parse', 'HEAD'], {encoding:'utf8'}).trim() !== pin) throw Error('pin mismatch');
+cp.execFileSync('git', ['-C', root, 'diff', '--exit-code', 'HEAD', '--', 'src']);
+const original = JSON.parse(fs.readFileSync(path.join(output, 'intersection-manifest.json')));
+if (original.upstream_commit !== pin || Object.keys(original.declarations).length !== 78) throw Error('declarations mismatch');
+for (const [file, digest] of Object.entries(original.declarations)) if (hash(path.join(output,file)) !== digest) throw Error('declaration drift '+file);
+const inventoryPath = path.resolve(__dirname, '../../lane4/read-demand-pairs.json.gz');
+const sitePath = path.resolve(__dirname, '../../lane4/read-demand-sites.json.gz');
+const inventory = JSON.parse(zlib.gunzipSync(fs.readFileSync(inventoryPath)));
+const demand = JSON.parse(zlib.gunzipSync(fs.readFileSync(sitePath)));
+const pair = inventory.find(x => x.receiver_type_id === 9245 && x.field === 'argument');
+if (!pair || pair.reads !== 14 || pair.type !== 'LiteralImportTypeNode') throw Error('inventory drift');
+const sites = demand.filter(x => x.receiver_type_id === 9245 && x.field === 'argument').map(x => {
+ const file = path.join(root,x.file), source = fs.readFileSync(file,'utf8');
+ if (source.slice(x.start,x.end) !== x.text) throw Error('source span drift');
+ return {file:x.file,start:x.start,end:x.end,text:x.text,line:x.line,column:x.column,source_sha256:hash(file)};
+});
+if (sites.length !== pair.reads) throw Error('site count drift');
+const file = path.join(root,'src/compiler/types.ts');
+const program = ts.createProgram([file], {target:ts.ScriptTarget.ES2024,module:ts.ModuleKind.ESNext,moduleResolution:ts.ModuleResolutionKind.Bundler,strict:true,types:[]});
+const checker = program.getTypeChecker();
+const moduleExports = checker.getExportsOfModule(checker.getSymbolAtLocation(program.getSourceFile(file)));
+const receiver = checker.getDeclaredTypeOfSymbol(moduleExports.find(x => x.name === pair.type));
+const member = checker.getTypeOfSymbol(checker.getPropertyOfType(receiver,pair.field));
+const fields = type => checker.getPropertiesOfType(type).map(x => x.name).sort();
+const result = {upstream_commit:pin,inventory_sha256:hash(inventoryPath),sites_sha256:hash(sitePath),type_id:9245,type:pair.type,field:pair.field,read_count:pair.reads,sites,receiver_fields:fields(receiver),present_fields:fields(member)};
+fs.writeFileSync(path.join(output,'ranked-intersection-manifest.json'),JSON.stringify(result,null,2)+'\n');
+console.log('9245.argument: 14 original spans; complete receiver and intersection member field sets; 78 declaration hashes verified');

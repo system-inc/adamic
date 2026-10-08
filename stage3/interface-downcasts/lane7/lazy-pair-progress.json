@@ -7479,16 +7479,21 @@
   ],
   "primitive_or_array_candidates_delegated_pairs": 28,
   "primitive_or_array_candidates_delegated_reads": 703,
-  "certified_original_pairs": 10,
-  "certified_original_reads": 56,
-  "lane7_object_candidates_remaining_pairs": 7,
-  "lane7_object_candidates_remaining_reads": 10,
+  "certified_original_pairs": 14,
+  "certified_original_reads": 60,
+  "lane7_object_candidates_remaining_pairs": 3,
+  "lane7_object_candidates_remaining_reads": 6,
   "certification_basis": "Complete pinned upstream declarations, original read-site provenance and representative runtime fixtures; exact allocation reachability remains unmeasured",
   "certified_original_keys": [
     {
       "type_id": 10236,
       "field": "moduleResolverHost",
       "read_count": 1
+    },
+    {
+      "type_id": 7612,
+      "field": "emitNode",
+      "read_count": 4
     },
     {
       "type_id": 9476,
@@ -7511,9 +7516,9 @@
       "read_count": 4
     },
     {
-      "type_id": 7612,
-      "field": "emitNode",
-      "read_count": 4
+      "type_id": 9454,
+      "field": "argumentExpression",
+      "read_count": 1
     },
     {
       "type_id": 8883,
@@ -7534,6 +7539,27 @@
       "type_id": 36241,
       "field": "parent",
       "read_count": 1
+    },
+    {
+      "type_id": 7644,
+      "field": "parent",
+      "read_count": 1
+    },
+    {
+      "type_id": 92175,
+      "field": "class",
+      "read_count": 1
+    },
+    {
+      "type_id": 9657,
+      "field": "expression",
+      "read_count": 1
     }
-  ]
+  ],
+  "assigned_identifier_certificate": {
+    "type_id": 9477,
+    "field": "escapedText",
+    "read_count": 1,
+    "status": "certified; separate assigned inventory"
+  }
 }

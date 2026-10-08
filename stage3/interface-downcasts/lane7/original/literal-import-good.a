@@ -1,0 +1,10 @@
+import type { LiteralImportTypeNode, SyntaxKind } from 'original-tsc-types';
+interface Base {readonly kind:SyntaxKind}
+type Receiver=LiteralImportTypeNode;
+interface CheckedReceiver extends Receiver {}
+const top = {pos: 0, end: 60, kind: 308, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: {}};
+const symbol = {flags: 16, escapedName: 'value', id: 1, mergeId: 0, constEnumOnlyModule: false};
+const name = {pos: 0, end: 10, kind: 80, flags: 0, modifierFlagsCache: 0, transformFlags: 0, parent: top, escapedText: 'value', symbol};
+const literal={pos:0,end:8,kind:11,flags:0,modifierFlagsCache:0,transformFlags:0,parent:top,text:'value',symbol}; const argument={pos:0,end:10,kind:202,flags:0,modifierFlagsCache:0,transformFlags:0,parent:top,literal}; const actual={pos:0,end:20,kind:206,flags:0,modifierFlagsCache:0,transformFlags:0,parent:top,argument,isTypeOf:false};
+const base:Base=actual;function helper(node:Receiver):boolean{const child=node.argument;return child.end>0;}
+console.log(`${helper(base as CheckedReceiver)}`);
