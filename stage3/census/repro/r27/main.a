@@ -1,1 +1,2 @@
+// a-check: refused a spread after the first field
 const source = {count: 1}; const value = {label: "x", ...source}; console.log(String(value.count));

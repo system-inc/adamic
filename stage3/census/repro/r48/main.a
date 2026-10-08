@@ -1,1 +1,2 @@
+// a-check: type error TS7006
 function read(value) { return value; } console.log(String(read(1)));

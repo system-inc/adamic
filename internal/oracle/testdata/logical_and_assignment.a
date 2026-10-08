@@ -1,0 +1,259 @@
+import type { Weak } from 'adamic';
+function mapSize(value: Map<string, number> | undefined): number { return value === undefined ? -1 : value.size; }
+function callValue(value: (() => number) | undefined): number { return value === undefined ? -1 : value(); }
+let objects = 0;
+let indices = 0;
+let rights = 0;
+let order = '';
+function rhsNumber(): number { rights += 1; order += 'r'; return 7; }
+function rhsString(): string { rights += 1; order += 'r'; return `built${rights}`; }
+function rhsBoolean(): boolean { rights += 1; order += 'r'; return true; }
+function index(): number { indices += 1; order += 'i'; return 0; }
+function local_number(value: number): void {
+ const result = (value &&= rhsNumber());
+ console.log(`local number: ${result} ${value} ${rights}`);
+}
+local_number(0);
+local_number(-0);
+local_number(NaN);
+local_number(2);
+interface Field_number { value: number; }
+const field_number: Field_number = { value: 0 };
+function object_number(): Field_number { objects += 1; order += 'o'; return field_number; }
+const array_number: (number)[] = [0];
+function elements_number(): (number)[] { objects += 1; order += 'a'; return array_number; }
+field_number.value = 0;
+console.log(`field number: ${object_number().value &&= rhsNumber()} ${field_number.value} ${objects} ${rights}`);
+array_number[0] = 0;
+console.log(`element number: ${elements_number()[index()] &&= rhsNumber()} ${array_number[0]} ${objects} ${indices} ${rights}`);
+field_number.value = -0;
+console.log(`field number: ${object_number().value &&= rhsNumber()} ${field_number.value} ${objects} ${rights}`);
+array_number[0] = -0;
+console.log(`element number: ${elements_number()[index()] &&= rhsNumber()} ${array_number[0]} ${objects} ${indices} ${rights}`);
+field_number.value = NaN;
+console.log(`field number: ${object_number().value &&= rhsNumber()} ${field_number.value} ${objects} ${rights}`);
+array_number[0] = NaN;
+console.log(`element number: ${elements_number()[index()] &&= rhsNumber()} ${array_number[0]} ${objects} ${indices} ${rights}`);
+field_number.value = 2;
+console.log(`field number: ${object_number().value &&= rhsNumber()} ${field_number.value} ${objects} ${rights}`);
+array_number[0] = 2;
+console.log(`element number: ${elements_number()[index()] &&= rhsNumber()} ${array_number[0]} ${objects} ${indices} ${rights}`);
+function local_string(value: string): void {
+ const result = (value &&= rhsString());
+ console.log(`local string: ${result} ${value} ${rights}`);
+}
+local_string('');
+local_string('live');
+interface Field_string { value: string; }
+const field_string: Field_string = { value: '' };
+function object_string(): Field_string { objects += 1; order += 'o'; return field_string; }
+const array_string: (string)[] = [''];
+function elements_string(): (string)[] { objects += 1; order += 'a'; return array_string; }
+field_string.value = '';
+console.log(`field string: ${object_string().value &&= rhsString()} ${field_string.value} ${objects} ${rights}`);
+array_string[0] = '';
+console.log(`element string: ${elements_string()[index()] &&= rhsString()} ${array_string[0]} ${objects} ${indices} ${rights}`);
+field_string.value = 'live';
+console.log(`field string: ${object_string().value &&= rhsString()} ${field_string.value} ${objects} ${rights}`);
+array_string[0] = 'live';
+console.log(`element string: ${elements_string()[index()] &&= rhsString()} ${array_string[0]} ${objects} ${indices} ${rights}`);
+function local_boolean(value: boolean): void {
+ const result = (value &&= rhsBoolean());
+ console.log(`local boolean: ${result} ${value} ${rights}`);
+}
+local_boolean(false);
+local_boolean(true);
+interface Field_boolean { value: boolean; }
+const field_boolean: Field_boolean = { value: false };
+function object_boolean(): Field_boolean { objects += 1; order += 'o'; return field_boolean; }
+const array_boolean: (boolean)[] = [false];
+function elements_boolean(): (boolean)[] { objects += 1; order += 'a'; return array_boolean; }
+field_boolean.value = false;
+console.log(`field boolean: ${object_boolean().value &&= rhsBoolean()} ${field_boolean.value} ${objects} ${rights}`);
+array_boolean[0] = false;
+console.log(`element boolean: ${elements_boolean()[index()] &&= rhsBoolean()} ${array_boolean[0]} ${objects} ${indices} ${rights}`);
+field_boolean.value = true;
+console.log(`field boolean: ${object_boolean().value &&= rhsBoolean()} ${field_boolean.value} ${objects} ${rights}`);
+array_boolean[0] = true;
+console.log(`element boolean: ${elements_boolean()[index()] &&= rhsBoolean()} ${array_boolean[0]} ${objects} ${indices} ${rights}`);
+function local_maybeNumber(value: number | undefined): void {
+ const result = (value &&= rhsNumber());
+ console.log(`local maybeNumber: ${result} ${value} ${rights}`);
+}
+local_maybeNumber(undefined);
+local_maybeNumber(0);
+local_maybeNumber(NaN);
+local_maybeNumber(2);
+interface Field_maybeNumber { value: number | undefined; }
+const field_maybeNumber: Field_maybeNumber = { value: undefined };
+function object_maybeNumber(): Field_maybeNumber { objects += 1; order += 'o'; return field_maybeNumber; }
+const array_maybeNumber: (number | undefined)[] = [0];
+function elements_maybeNumber(): (number | undefined)[] { objects += 1; order += 'a'; return array_maybeNumber; }
+field_maybeNumber.value = undefined;
+console.log(`field maybeNumber: ${object_maybeNumber().value &&= rhsNumber()} ${field_maybeNumber.value} ${objects} ${rights}`);
+array_maybeNumber[0] = undefined;
+console.log(`element maybeNumber: ${elements_maybeNumber()[index()] &&= rhsNumber()} ${array_maybeNumber[0]} ${objects} ${indices} ${rights}`);
+field_maybeNumber.value = 0;
+console.log(`field maybeNumber: ${object_maybeNumber().value &&= rhsNumber()} ${field_maybeNumber.value} ${objects} ${rights}`);
+array_maybeNumber[0] = 0;
+console.log(`element maybeNumber: ${elements_maybeNumber()[index()] &&= rhsNumber()} ${array_maybeNumber[0]} ${objects} ${indices} ${rights}`);
+field_maybeNumber.value = NaN;
+console.log(`field maybeNumber: ${object_maybeNumber().value &&= rhsNumber()} ${field_maybeNumber.value} ${objects} ${rights}`);
+array_maybeNumber[0] = NaN;
+console.log(`element maybeNumber: ${elements_maybeNumber()[index()] &&= rhsNumber()} ${array_maybeNumber[0]} ${objects} ${indices} ${rights}`);
+field_maybeNumber.value = 2;
+console.log(`field maybeNumber: ${object_maybeNumber().value &&= rhsNumber()} ${field_maybeNumber.value} ${objects} ${rights}`);
+array_maybeNumber[0] = 2;
+console.log(`element maybeNumber: ${elements_maybeNumber()[index()] &&= rhsNumber()} ${array_maybeNumber[0]} ${objects} ${indices} ${rights}`);
+function local_maybeBoolean(value: boolean | undefined): void {
+ const result = (value &&= rhsBoolean());
+ console.log(`local maybeBoolean: ${result} ${value} ${rights}`);
+}
+local_maybeBoolean(undefined);
+local_maybeBoolean(false);
+local_maybeBoolean(true);
+interface Item { readonly label: string; }
+function item(): Item { rights += 1; order += 'r'; return { label: `made${rights}` }; }
+function reference(value: Item | undefined): void {
+ const result = (value &&= item());
+ console.log(`reference: ${result?.label ?? 'none'} ${value?.label ?? 'none'} ${rights}`);
+}
+reference(undefined);
+reference({ label: `old${rights}` });
+interface RefField { value: Item | undefined; }
+const refField: RefField = { value: undefined };
+function objectRef(): RefField { objects += 1; order += 'o'; return refField; }
+const refArray: (Item | undefined)[] = [item()];
+refArray[0] = undefined;
+function elementsRef(): (Item | undefined)[] { objects += 1; order += 'a'; return refArray; }
+console.log(`ref field: ${(objectRef().value &&= item())?.label ?? 'none'}`);
+console.log(`ref field skip: ${(objectRef().value &&= item())?.label ?? 'none'}`);
+console.log(`ref element: ${(elementsRef()[index()] &&= item())?.label ?? 'none'}`);
+console.log(`ref element skip: ${(elementsRef()[index()] &&= item())?.label ?? 'none'}`);
+function mixed(value: number | string | boolean | undefined): void {
+ console.log(`union: ${value &&= rhsString()} ${value}`);
+}
+mixed(0); mixed(''); mixed(false); mixed(undefined); mixed(NaN); mixed(3); mixed('yes'); mixed(true);
+console.log(`counts: ${objects} ${indices} ${rights} ${order}`);
+function make_array(): number[] { rights += 1; return [rights]; }
+function local_ref_array(value: number[] | undefined): void {
+ const result = (value &&= make_array());
+ console.log(`array: ${result?.length ?? -1} ${rights}`);
+}
+local_ref_array(undefined);
+local_ref_array(make_array());
+interface Holder_array { value: number[] | undefined; }
+const holder_array: Holder_array = { value: undefined };
+function field_ref_array(): Holder_array { objects += 1; return holder_array; }
+const list_array: (number[] | undefined)[] = [make_array()];
+list_array[0] = undefined;
+function array_ref_array(): (number[] | undefined)[] { objects += 1; return list_array; }
+console.log(`array target: ${(field_ref_array().value &&= make_array())?.length ?? -1} ${objects} ${indices} ${rights}`);
+console.log(`array target: ${(field_ref_array().value &&= make_array())?.length ?? -1} ${objects} ${indices} ${rights}`);
+console.log(`array target: ${(array_ref_array()[index()] &&= make_array())?.length ?? -1} ${objects} ${indices} ${rights}`);
+console.log(`array target: ${(array_ref_array()[index()] &&= make_array())?.length ?? -1} ${objects} ${indices} ${rights}`);
+function make_map(): Map<string, number> { rights += 1; return new Map<string, number>(); }
+function local_ref_map(value: Map<string, number> | undefined): void {
+ const result = (value &&= make_map());
+ console.log(`map: ${mapSize(result)} ${rights}`);
+}
+local_ref_map(undefined);
+local_ref_map(make_map());
+interface Holder_map { value: Map<string, number> | undefined; }
+const holder_map: Holder_map = { value: undefined };
+function field_ref_map(): Holder_map { objects += 1; return holder_map; }
+const list_map: (Map<string, number> | undefined)[] = [make_map()];
+list_map[0] = undefined;
+function array_ref_map(): (Map<string, number> | undefined)[] { objects += 1; return list_map; }
+console.log(`map target: ${mapSize((field_ref_map().value &&= make_map()))} ${objects} ${indices} ${rights}`);
+console.log(`map target: ${mapSize((field_ref_map().value &&= make_map()))} ${objects} ${indices} ${rights}`);
+console.log(`map target: ${mapSize((array_ref_map()[index()] &&= make_map()))} ${objects} ${indices} ${rights}`);
+console.log(`map target: ${mapSize((array_ref_map()[index()] &&= make_map()))} ${objects} ${indices} ${rights}`);
+function make_closure(): () => number { rights += 1; return () => rights; }
+function local_ref_closure(value: (() => number) | undefined): void {
+ const result = (value &&= make_closure());
+ console.log(`closure: ${callValue(result)} ${rights}`);
+}
+local_ref_closure(undefined);
+local_ref_closure(make_closure());
+interface Holder_closure { value: (() => number) | undefined; }
+const holder_closure: Holder_closure = { value: undefined };
+function field_ref_closure(): Holder_closure { objects += 1; return holder_closure; }
+const list_closure: ((() => number) | undefined)[] = [make_closure()];
+list_closure[0] = undefined;
+function array_ref_closure(): ((() => number) | undefined)[] { objects += 1; return list_closure; }
+console.log(`closure target: ${callValue((field_ref_closure().value &&= make_closure()))} ${objects} ${indices} ${rights}`);
+console.log(`closure target: ${callValue((field_ref_closure().value &&= make_closure()))} ${objects} ${indices} ${rights}`);
+console.log(`closure target: ${callValue((array_ref_closure()[index()] &&= make_closure()))} ${objects} ${indices} ${rights}`);
+console.log(`closure target: ${callValue((array_ref_closure()[index()] &&= make_closure()))} ${objects} ${indices} ${rights}`);
+function optionalBoolean(value: boolean | undefined, right: boolean | undefined): void {
+ const result = (value &&= right);
+ console.log(`optional bool: ${result} ${value}`);
+}
+optionalBoolean(undefined, undefined);
+optionalBoolean(false, undefined);
+optionalBoolean(true, undefined);
+
+function capturedBoolean(): boolean {
+ let seen: boolean | undefined;
+ const mark = (): void => { seen = true; };
+ mark();
+ return seen ?? false;
+}
+console.log(`captured boolean: ${capturedBoolean()}`);
+refField.value = item();
+refArray[0] = item();
+console.log(`ref field taken: ${(objectRef().value &&= item())?.label ?? 'none'}`);
+console.log(`ref element taken: ${(elementsRef()[index()] &&= item())?.label ?? 'none'}`);
+holder_array.value = make_array();
+list_array[0] = make_array();
+console.log(`array taken: ${(field_ref_array().value &&= make_array())?.length ?? -1}`);
+console.log(`array element taken: ${(array_ref_array()[index()] &&= make_array())?.length ?? -1}`);
+holder_map.value = make_map();
+list_map[0] = make_map();
+console.log(`map taken: ${mapSize(field_ref_map().value &&= make_map())}`);
+console.log(`map element taken: ${mapSize(array_ref_map()[index()] &&= make_map())}`);
+holder_closure.value = make_closure();
+list_closure[0] = make_closure();
+console.log(`closure taken: ${callValue(field_ref_closure().value &&= make_closure())}`);
+console.log(`closure element taken: ${callValue(array_ref_closure()[index()] &&= make_closure())}`);
+
+function nullableTruth(value: RegExpExecArray | null): void {
+ const result = (value &&= /x/.exec("x"));
+ console.log(`${result === null ? "null" : result[0]} ${value === null ? "null" : value[0]}`);
+}
+nullableTruth(null);
+nullableTruth(/x/.exec("x"));
+const weakOwner = {value: 41};
+let weakLocal: Weak<{value: number}> = undefined;
+const weakField: {value: Weak<{value: number}>} = {value: undefined};
+const weakElements: Weak<{value: number}>[] = [weakOwner, undefined];
+function weakRight(): {value: number} { rights += 1; return weakOwner; }
+console.log(`${weakValue((weakLocal &&= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakLocal &&= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakField.value &&= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakElements[0] &&= weakRight()))} ${rights}`);
+console.log(`${weakValue((weakElements[1] &&= weakRight()))} ${rights}`);
+
+function weakValue(value: {value: number} | undefined): number | undefined { return value?.value; }
+
+let getterReads = 0;
+let setterWrites = 0;
+class AssignmentAccessor {
+ stored: string | undefined = "yes";
+ get logicalAccessor(): string | undefined { getterReads += 1; return this.stored; }
+ set logicalAccessor(next: string | undefined) { setterWrites += 1; this.stored = (next ?? "undefined") + " stored"; }
+}
+const accessor = new AssignmentAccessor();
+function accessorBase(): AssignmentAccessor { objects += 1; return accessor; }
+console.log(`${(accessorBase().logicalAccessor &&= "seven")} ${accessor.stored} ${getterReads} ${setterWrites} ${objects}`);
+console.log(`${(accessorBase().logicalAccessor &&= "eight")} ${accessor.stored} ${getterReads} ${setterWrites} ${objects}`);
+let changedObject: {value: number | undefined} = {value: 1};
+const originalObject = changedObject;
+function replaceObject(): number { changedObject = {value: 99}; return 9; }
+console.log(`${(changedObject.value &&= replaceObject())} ${originalObject.value} ${changedObject.value}`);
+let changedArray: (number | undefined)[] = [1];
+const originalArray = changedArray;
+let changedIndex = 0;
+function replaceArray(): number { changedArray = [99]; changedIndex = 1; return 9; }
+console.log(`${(changedArray[changedIndex] &&= replaceArray())} ${originalArray[0]} ${changedArray[0]} ${changedIndex}`);
