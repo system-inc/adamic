@@ -478,5 +478,165 @@
     },
     "outcome": "Compiles",
     "diagnostic": ""
+  },
+  {
+    "rank": 31,
+    "batch": 4,
+    "source": "commandLineParser.ts:4142:68",
+    "function": "getWildcardDirectories",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getWildcardDirectories.a",
+    "adaptation": "Read, conditional write and deletion retained; numeric flags, supplied canonical paths and prefix containment replace glob/host helpers; dictionary own iteration makes hasProperty redundant.",
+    "node": {
+      "stdout": "root:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 32,
+    "batch": 4,
+    "source": "commandLineParser.ts:4144:21",
+    "function": "getWildcardDirectories",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getWildcardDirectories.a",
+    "adaptation": "Read, conditional write and deletion retained; numeric flags, supplied canonical paths and prefix containment replace glob/host helpers; dictionary own iteration makes hasProperty redundant.",
+    "node": {
+      "stdout": "root:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 33,
+    "batch": 4,
+    "source": "commandLineParser.ts:4154:9",
+    "function": "getWildcardDirectories",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getWildcardDirectories.a",
+    "adaptation": "Read, conditional write and deletion retained; numeric flags, supplied canonical paths and prefix containment replace glob/host helpers; dictionary own iteration makes hasProperty redundant.",
+    "node": {
+      "stdout": "root:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 34,
+    "batch": 4,
+    "source": "commandLineParser.ts:4159:32",
+    "function": "getWildcardDirectories",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/getWildcardDirectories.a",
+    "adaptation": "Read, conditional write and deletion retained; numeric flags, supplied canonical paths and prefix containment replace glob/host helpers; dictionary own iteration makes hasProperty redundant.",
+    "node": {
+      "stdout": "root:2\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Compiles",
+    "diagnostic": ""
+  },
+  {
+    "rank": 35,
+    "batch": 4,
+    "source": "core.ts:1373:5",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 36,
+    "batch": 4,
+    "source": "core.ts:1374:13",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 37,
+    "batch": 4,
+    "source": "core.ts:1375:18",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 38,
+    "batch": 4,
+    "source": "core.ts:1376:35",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 39,
+    "batch": 4,
+    "source": "core.ts:1376:46",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
+  },
+  {
+    "rank": 40,
+    "batch": 4,
+    "source": "core.ts:1380:5",
+    "function": "equalOwnProperties",
+    "static_calls": 1,
+    "fixture": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a",
+    "adaptation": "Original two generic loops, membership calls and comparisons retained; required equality callback replaces the default comparer.",
+    "node": {
+      "stdout": "true\nfalse\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "outcome": "Checker",
+    "diagnostic": "stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T | undefined' is not assignable to parameter of type 'T'.\n  'T' could be instantiated with an arbitrary type which could be unrelated to 'T | undefined'."
   }
 ]

@@ -1,0 +1,19 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: commandLineParser.ts:4142:68, commandLineParser.ts:4144:21, commandLineParser.ts:4154:9, commandLineParser.ts:4159:32
+interface MapLike<T> { [key: string]: T; }
+const wildcardDirectories: MapLike<number> = {};
+const recursiveKeys: string[] = [];
+for (const path of ['root', 'root/child', 'root']) {
+    const existingPath: string | undefined = path === 'root' ? 'root' : undefined;
+    const flags = path === 'root' ? 2 : 1;
+    const existingFlags = existingPath !== undefined ? wildcardDirectories[existingPath] : undefined;
+    if (existingFlags === undefined || existingFlags < flags) {
+        wildcardDirectories[existingPath !== undefined ? existingPath : path] = flags;
+        if (flags === 2) recursiveKeys.push(path);
+    }
+}
+for (const path in wildcardDirectories) {
+    for (const recursiveKey of recursiveKeys) {
+        if (path !== recursiveKey && path.startsWith(recursiveKey + '/')) delete wildcardDirectories[path];
+    }
+}
+for (const [path, flags] of Object.entries(wildcardDirectories)) console.log(path + ':' + String(flags));

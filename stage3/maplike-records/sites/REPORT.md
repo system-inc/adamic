@@ -1,6 +1,6 @@
-Built: Step 22 (#p9v82wa), source reductions for 30 of 56 MapLike and Record operation sites, in static-use order.
+Built: Step 22 (#p9v82wa), source reductions for 40 of 56 MapLike and Record operation sites, in static-use order.
 Commits: continued from e379d2321c081e0e3b02a0dad326eb1a7b3d9a8a on codex/maplike-records; delivery tips are reported after each batch push.
-Commands and outputs: 10 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 10 stop in the checker, 7 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
+Commands and outputs: 14 sites compile and match Node in native and JavaScript backends with ASan, UBSan and Linux leaks; 16 stop in the checker, 7 are Refused, and 3 are NotYet. Counts are regenerated for each added compiling reduction.
 Mutants: removing an integer dictionary input is caught only by Node stdout in both backends, with valid builds, exit 0 and clean leaks; the earlier step 22 ordering and entries omission mutants remain available.
 Not covered: complete tsc functions, host filesystem/package resolution, runtime frequency, or backends for reductions that stop before emission; the full gate was not run.
 
@@ -54,7 +54,17 @@ The evidence log for each batch names every outcome. Compiles means its Node std
 | 28 | 1 | commandLineParser.ts:3322:22 | Compiles |  |
 | 29 | 1 | commandLineParser.ts:3323:77 | Compiles |  |
 | 30 | 1 | commandLineParser.ts:3325:9 | Compiles |  |
+| 31 | 1 | commandLineParser.ts:4142:68 | Compiles |  |
+| 32 | 1 | commandLineParser.ts:4144:21 | Compiles |  |
+| 33 | 1 | commandLineParser.ts:4154:9 | Compiles |  |
+| 34 | 1 | commandLineParser.ts:4159:32 | Compiles |  |
+| 35 | 1 | core.ts:1373:5 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 36 | 1 | core.ts:1374:13 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 37 | 1 | core.ts:1375:18 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 38 | 1 | core.ts:1376:35 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 39 | 1 | core.ts:1376:46 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
+| 40 | 1 | core.ts:1380:5 | Checker | stage3/maplike-records/sites/fixtures/equalOwnProperties.a:10:35: error TS2345: Argument of type 'T &#124; undefined' is not assignable to parameter of type 'T'. |
 
 The concrete Node observations and each reduction adaptation are in results.json.
 
-Observation corrections in batch 3: ranks 1, 20, 21, 28, 29 and 30 now compile after prints were combined into single arguments and optional output reads were guarded. The source operations were retained and all recorded Node bytes stayed unchanged. Their prior checker stops were artifacts of the reductions, not compiler failures on those source operations. See evidence/observer-corrections.log.
+Observation corrections in batch 3: ranks 1, 20, 21, 28, 29 and 30 now compile after prints were combined into single arguments and optional output reads were guarded. The source operations were retained and all recorded Node bytes stayed unchanged. Their prior checker stops were artifacts of the reductions. See evidence/observer-corrections.log.

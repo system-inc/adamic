@@ -1,0 +1,28 @@
+// TypeScript 050880ce59e30b356b686bd3144efe24f875ebc8: core.ts:1373:5, core.ts:1374:13, core.ts:1375:18, core.ts:1376:35, core.ts:1376:46, core.ts:1380:5, core.ts:1381:13, core.ts:1382:18
+interface MapLike<T> { [key: string]: T; }
+const hasOwnProperty = Object.prototype.hasOwnProperty;
+function equalOwnProperties<T>(left: MapLike<T> | undefined, right: MapLike<T> | undefined, equalityComparer: (left: T, right: T) => boolean): boolean {
+    if (left === right) return true;
+    if (!left || !right) return false;
+    for (const key in left) {
+        if (hasOwnProperty.call(left, key)) {
+            if (!hasOwnProperty.call(right, key)) return false;
+            if (!equalityComparer(left[key], right[key])) return false;
+        }
+    }
+    for (const key in right) {
+        if (hasOwnProperty.call(right, key)) {
+            if (!hasOwnProperty.call(left, key)) return false;
+        }
+    }
+    return true;
+}
+const key = 'item' + String(1);
+const map: MapLike<string> = {'10': 'ten', '2': 'two', b: 'bee'};
+map[key] = 'made' + String(1);
+const other: MapLike<string> = {...map};
+console.log(String(equalOwnProperties(map, other, (a, b) => a === b)));
+other[key] = 'changed' + String(1);
+console.log(String(equalOwnProperties(map, other, (a, b) => a === b)));
+delete other[key];
+console.log(String(equalOwnProperties(map, other, (a, b) => a === b)));
