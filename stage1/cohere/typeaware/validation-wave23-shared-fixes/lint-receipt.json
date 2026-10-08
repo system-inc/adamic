@@ -1,0 +1,57 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-json",
+    "./stage1/cohere/lint",
+    "-count=1",
+    "-timeout=90m"
+  ],
+  "exit": 1,
+  "wall_seconds": 2670.1520202680003,
+  "nproc": 5,
+  "load_start": [
+    0.34521484375,
+    1.62646484375,
+    1.93994140625
+  ],
+  "load_end": [
+    2.05078125,
+    1.564453125,
+    2.21142578125
+  ],
+  "load_peak_1m": 4.87548828125,
+  "top_level_counts": {
+    "pass": 35,
+    "skip": 1,
+    "fail": 3
+  },
+  "all_test_counts": {
+    "pass": 137,
+    "skip": 1,
+    "fail": 3
+  },
+  "failures": [
+    "TestRulesAgree",
+    "TestCompilerAndStage1Agree",
+    "TestProfileSnapshotsAgree"
+  ],
+  "skips": [
+    "TestCheckerBridgeRefusalPending"
+  ],
+  "registered_mutants_caught": 90,
+  "owned_witnesses": {
+    "Time": "2026-10-08T12:18:31.559070068Z",
+    "Action": "pass",
+    "Package": "github.com/system-inc/adamic/stage1/cohere/lint",
+    "Test": "TestOwnedWitnesses",
+    "Elapsed": 14.05
+  },
+  "environment": {
+    "GOMAXPROCS": "4",
+    "ADAMIC_TYPESCRIPT_SOURCE": "/workspace/wave-23/typescript",
+    "ADAMIC_LINT_BENCH": "1",
+    "ADAMIC_LINT_PROFILE_DIR": "/workspace/wave-23/fixes-final-profiles",
+    "ADAMIC_LINT_PROFILE_SNAPSHOTS": "/workspace/wave-23/fixes-final-profiles"
+  }
+}

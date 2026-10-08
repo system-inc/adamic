@@ -2,7 +2,6 @@ import type { RuleContext } from '../../context.ts';
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import { RuleFacts } from './facts.a';
 import { PreferReduceTypeParameter } from './engine.a';
-import { ErrorTypes } from '../../../typeaware/error_types.a';
 import { CheckerFacts } from '../../../typeaware/checker_facts.ts';
 export class Rule {
     readonly facts: RuleFacts;
@@ -10,7 +9,7 @@ export class Rule {
     constructor(context: RuleContext) {
         const facts = new RuleFacts(context);
         this.facts = facts;
-        this.engine = new PreferReduceTypeParameter(facts, new ErrorTypes(facts), new CheckerFacts(facts));
+        this.engine = new PreferReduceTypeParameter(facts, new CheckerFacts(facts));
     }
     visit(node: ParseNode, index: number): void {
         this.engine.visit(node, index);

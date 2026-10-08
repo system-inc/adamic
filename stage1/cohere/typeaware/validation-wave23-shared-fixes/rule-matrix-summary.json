@@ -1,0 +1,56 @@
+{
+  "cases": 978,
+  "wall_seconds": 651.5803583680008,
+  "statuses": {
+    "pass": 973,
+    "blocked-oracle": 3,
+    "fail": 2
+  },
+  "rules": {
+    "@typescript-eslint/prefer-reduce-type-parameter": {
+      "pass": 42
+    },
+    "nexus/correctness-no-collection-misuse": {
+      "pass": 6
+    },
+    "nexus/correctness-no-discarded-pure-result": {
+      "pass": 22
+    },
+    "no-eval": {
+      "pass": 91
+    },
+    "no-extend-native": {
+      "pass": 60
+    },
+    "no-func-assign": {
+      "pass": 48
+    },
+    "no-new-func": {
+      "pass": 41
+    },
+    "no-new-native-nonconstructor": {
+      "pass": 15
+    },
+    "no-new-wrappers": {
+      "pass": 23
+    },
+    "no-throw-literal": {
+      "pass": 47,
+      "blocked-oracle": 1
+    },
+    "no-useless-backreference": {
+      "blocked-oracle": 2,
+      "pass": 406
+    },
+    "prefer-arrow-callback": {
+      "pass": 81,
+      "fail": 2
+    },
+    "react/jsx-fragments": {
+      "pass": 46
+    },
+    "react/jsx-no-undef": {
+      "pass": 45
+    }
+  }
+}

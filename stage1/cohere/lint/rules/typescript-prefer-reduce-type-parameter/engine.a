@@ -1,6 +1,5 @@
 import type { ParseNode } from '../../../../typescript/parser/nodes.ts';
 import type { Rules } from '../../../typeaware/rules.ts';
-import type { ErrorTypes } from '../../../typeaware/error_types.a';
 import type { Types } from '../../../typeaware/types.ts';
 import type { TypeFact } from '../../../typeaware/type_fact.ts';
 import { CheckerFacts } from '../../../typeaware/checker_facts.ts';
@@ -8,50 +7,27 @@ import { types } from '../../../typeaware/facts.ts';
 import { Repair } from '../../../typeaware/repair.ts';
 export class PreferReduceTypeParameter {
     readonly rules: Rules;
-    readonly errors: ErrorTypes;
     readonly checker: CheckerFacts;
-    constructor(rules: Rules, errors: ErrorTypes, checker: CheckerFacts) { this.rules = rules; this.errors = errors; this.checker = checker; }
+    constructor(rules: Rules, checker: CheckerFacts) { this.rules = rules; this.checker = checker; }
+    member(index: number): string {
+        const node = this.rules.parser.node(index);
+        const key = node.children[node.children.length - 1] ?? -1;
+        if(key < 0) { return ''; }
+        const property = this.rules.parser.node(key);
+        if(node.kind === 'PropertyAccessExpression' && property.kind === 'Identifier') { return property.text; }
+        if(node.kind === 'ElementAccessExpression' && property.kind === 'StringLiteral') { return property.text; }
+        return '';
+    }
     array(facts: Types, subject: TypeFact): boolean {
         if((subject.flags & (134217728 | 268435456)) !== 0) {
             return subject.parts.every((id) => this.array(facts, facts.type(id)));
         }
         return subject.array || subject.tuple >= 0;
     }
-    run(): void {
-        for(let index = 0; index < this.rules.parser.nodes.length; index++) {
-            const node = this.rules.parser.node(index);
-            if(node.kind !== 'CallExpression') { continue; }
-            const callee = this.rules.skip(node.children[0] ?? -1);
-            if(this.errors.member(callee, false, false, false) !== 'reduce') { continue; }
-            const args = this.errors.arguments(index);
-            if(args.length < 2) { continue; }
-            const assertion = this.rules.skip(args[1] ?? -1);
-            const expression = this.rules.parser.node(assertion);
-            if(!['AsExpression', 'TypeAssertionExpression'].includes(expression.kind)) { continue; }
-            const value = expression.children[expression.kind === 'AsExpression' ? 0 : 1] ?? -1;
-            const annotation = expression.children[expression.kind === 'AsExpression' ? 1 : 0] ?? -1;
-            if(this.rules.text(this.rules.parser.node(annotation)) === 'const') { continue; }
-            const source = types(this.rules.ask(value, 'raw-shape'), 'raw-shape');
-            const target = types(this.rules.ask(annotation, 'raw-shape'), 'raw-shape');
-            if(!this.checker.compare(assertion, source.root().id, target.root().id)) { continue; }
-            const receiver = this.rules.parser.node(callee).children[0] ?? -1;
-            const facts = types(this.rules.ask(receiver, 'type-shape'), 'type-shape');
-            if(!this.array(facts, facts.root())) { continue; }
-            const finding = this.rules.add('prefer-reduce-type-parameter', 'preferTypeParameter', 'Unnecessary assertion: Array#reduce accepts a type parameter for the default value.', assertion);
-            const valueNode = this.rules.parser.node(value);
-            finding.repairs.push(new Repair(this.rules.byte(this.rules.start(expression)), this.rules.byte(this.rules.start(valueNode)), ''));
-            finding.repairs.push(new Repair(this.rules.byte(valueNode.end), this.rules.byte(expression.end), ''));
-            const hasTypes = node.children.slice(1, node.children.length - node.list).some((child) => this.rules.parser.node(child).kind !== 'QuestionDotToken');
-            if(!hasTypes) {
-                const end = this.rules.byte(this.rules.parser.node(callee).end);
-                finding.repairs.push(new Repair(end, end, `<${this.rules.text(this.rules.parser.node(annotation))}>`));
-            }
-        }
-    }
     visit(node: ParseNode, index: number): void {
             const callee = this.rules.skip(node.children[0] ?? -1);
-            if(this.errors.member(callee, false, false, false) !== 'reduce') { return; }
-            const args = this.errors.arguments(index);
+            if(this.member(callee) !== 'reduce') { return; }
+            const args = node.children.slice(node.children.length - node.list);
             if(args.length < 2) { return; }
             const assertion = this.rules.skip(args[1] ?? -1);
             const expression = this.rules.parser.node(assertion);
