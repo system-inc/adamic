@@ -133,6 +133,9 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+
+	// NullishString holds a string, an immortal null tag, or a missing pointer (undefined).
+	NullishString
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -165,7 +168,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == NullishString || t == Weak || t.IsTypedArray()
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -420,7 +423,10 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		Of    Type // Zero selects Union; NullishString preserves the null tag.
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -834,7 +840,12 @@ func (u Unwrap) Type() Type      { return u.Value.Type().Present() }
 func (d Defined) Type() Type     { return d.Value.Type() }
 func (m MaybeOf) Type() Type     { return m.Of }
 func (MaybeToString) Type() Type { return String }
-func (Box) Type() Type           { return Union }
+func (b Box) Type() Type {
+	if b.Of != 0 {
+		return b.Of
+	}
+	return Union
+}
 func (n Narrow) Type() Type      { return n.To }
 func (TypeOf) Type() Type        { return String }
 func (UnionToString) Type() Type { return String }

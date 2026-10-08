@@ -26,7 +26,7 @@ func cType(valueType ir.Type) string {
 		return "adamic_maybe_number"
 	case ir.MaybeBoolean:
 		return "adamic_maybe_boolean"
-	case ir.Union:
+	case ir.Union, ir.NullishString:
 		return "adamic_heap *"
 	case ir.Weak:
 		return "adamic_weak *"

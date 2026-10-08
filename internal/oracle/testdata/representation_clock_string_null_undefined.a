@@ -1,0 +1,7 @@
+function probe(value: string | null | undefined): void {
+    console.log(`${typeof value}:${value === null}:${value === undefined}:${value ?? 'fallback'}`);
+}
+probe('text');
+probe('');
+probe(null);
+probe(undefined);

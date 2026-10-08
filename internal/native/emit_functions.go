@@ -165,6 +165,16 @@ func (e *emitter) arguments(call ir.Call) []string {
 			e.value(argument) // Extra arguments still run, before the call.
 			continue
 		}
+		if e.program.Locals[parameters[index]].Type == ir.NullishString && argument.Type() != ir.NullishString {
+			switch argument.(type) {
+			case ir.Null:
+				argument = ir.Null{Of: ir.NullishString}
+			case ir.Undefined:
+				argument = ir.Undefined{Of: ir.NullishString}
+			default:
+				argument = ir.Box{Value: argument, Of: ir.NullishString}
+			}
+		}
 		if e.reuse.callConsumes(e.program, call, index) {
 			value := e.handOver(argument)
 			handed = append(handed, value)

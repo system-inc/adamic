@@ -29,6 +29,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 
 func (l *lowering) representation(proven *checker.Type) (ir.Type, bool) {
 	proven = l.concrete(proven)
+	if l.clockNullishString(proven) {
+		return ir.NullishString, true
+	}
 	if kind := l.typedArrayKind(proven); kind != 0 {
 		return kind, true
 	}
@@ -454,14 +457,14 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 			return nil, l.notYet(node, "reading "+node.Text())
 		}
 		read := ir.Expression(ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(node, local)})
-		if l.result.Locals[local].Type == ir.Union {
+		if l.result.Locals[local].Type == ir.Union || l.result.Locals[local].Type == ir.NullishString {
 			// Where the checker has narrowed it to fewer members held one way, it's read as that.
 			parent := node.Parent
 			for parent != nil && parent.Kind == ast.KindParenthesizedExpression {
 				parent = parent.Parent
 			}
-			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression)
-			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && !observing {
+			observing := comparedWithUndefined(node) || (parent != nil && parent.Kind == ast.KindTypeOfExpression) || (l.result.Locals[local].Type == ir.NullishString && l.clockStringObservation(node))
+			if narrowed, isKnown := l.representation(l.checker.GetTypeAtLocation(node)); isKnown && narrowed != ir.Union && narrowed != ir.NullishString && !observing {
 				// Calls and captured writes can invalidate the checker's narrowing. Check the
 				// held member before casting it, with ordinary IR shared by both backends.
 				name := "object"
@@ -521,6 +524,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
+		if operand.Type() == ir.NullishString {
+			null = false
+		}
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:
@@ -552,6 +558,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		if binary.OperatorToken.Kind == ast.KindPlusToken {
 			left, right = l.spelled(binary.Left, left), l.spelled(binary.Right, right)
 		}
+		if result, handled := clockStringComparison(binary.OperatorToken.Kind, left, right); handled {
+			return result, nil
+		}
 		return l.combine(node, binary.OperatorToken.Kind, left, right)
 	case ast.KindTaggedTemplateExpression:
 		return l.stringRawTemplate(node)
@@ -564,6 +573,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 	case ast.KindArrayLiteralExpression:
 		return l.arrayLiteral(node)
 	case ast.KindPropertyAccessExpression:
+		if value, handled, err := l.clockStringProperty(node); handled {
+			return value, err
+		}
 		return l.property(node)
 	case ast.KindElementAccessExpression:
 		return l.elementAccess(node)
@@ -619,6 +631,15 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 // number | undefined or boolean | undefined goes, since that is two words and they are one. It also
 // unwraps a maybe value the checker narrowed to its present type. Anything else is left as it is.
 func fit(value ir.Expression, to ir.Type) ir.Expression {
+	if to == ir.NullishString && value != nil && value.Type() != to {
+		if _, ok := value.(ir.Null); ok {
+			return ir.Null{Of: to}
+		}
+		if _, ok := value.(ir.Undefined); ok {
+			return ir.Undefined{Of: to}
+		}
+		return ir.Box{Value: value, Of: to}
+	}
 	if to == ir.Weak && value != nil && value.Type() != ir.Weak {
 		return ir.WeakOf{Value: value}
 	}
@@ -917,6 +938,8 @@ func typeName(valueType ir.Type) string {
 		return "boolean"
 	case ir.String:
 		return "string"
+	case ir.NullishString:
+		return "string | null | undefined"
 	case ir.MaybeNumber:
 		return "number | undefined"
 	case ir.MaybeBoolean:
@@ -989,6 +1012,11 @@ func (l *lowering) callFunction(call *ast.CallExpression, function int) (ir.Expr
 		lowered, err := l.expression(argument)
 		if err != nil {
 			return nil, err
+		}
+		index := len(arguments)
+		parameters := l.result.Functions[function].Parameters
+		if index < len(parameters) && l.result.Locals[parameters[index]].Type == ir.NullishString {
+			lowered = fit(lowered, ir.NullishString)
 		}
 		arguments = append(arguments, lowered)
 	}

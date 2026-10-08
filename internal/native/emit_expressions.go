@@ -28,11 +28,17 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.RegExpProperty:
 		return e.regexProperty(expression)
 	case ir.Null:
+		if expression.Of == ir.NullishString {
+			return "&adamic_clock_null.heap"
+		}
 		return "NULL"
 	case ir.IsNull:
 		if expression.AlwaysFalse {
 			e.value(expression.Value)
 			return "false"
+		}
+		if expression.Value.Type() == ir.NullishString {
+			return fmt.Sprintf("(%s == &adamic_clock_null.heap)", e.value(expression.Value))
 		}
 		return fmt.Sprintf("(%s == NULL)", e.value(expression.Value))
 	case ir.NumberConstant:
@@ -194,6 +200,9 @@ func (e *emitter) evaluate(expression ir.Expression) string {
 	case ir.MaybeToString:
 		return e.maybeToString(expression.Value)
 	case ir.Box:
+		if expression.Of == ir.NullishString {
+			return fmt.Sprintf("((adamic_heap *)(%s))", e.value(expression.Value))
+		}
 		return e.box(expression.Value)
 	case ir.MakeError:
 		return e.makeError(expression)

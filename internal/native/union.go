@@ -13,6 +13,10 @@ func converted(from ir.Type, to ir.Type, value string) (string, bool) {
 	switch {
 	case from == to:
 		return value, false
+	case from == ir.NullishString && to == ir.String:
+		return fmt.Sprintf("((adamic_string *)(%s))", value), false
+	case to == ir.NullishString && from == ir.String:
+		return fmt.Sprintf("((adamic_heap *)(%s))", value), false
 	case to.IsMaybe() && from == to.Present():
 		return maybe(to, value), false
 	case to == ir.Weak:
@@ -62,6 +66,9 @@ func (e *emitter) narrow(narrow ir.Narrow) string {
 func (e *emitter) typeOf(observation ir.TypeOf) string {
 	value := observation.Value
 	operand, null := e.typeOfReference(observation)
+	if value.Type() == ir.NullishString {
+		null = "false"
+	}
 	named := func(name string) string { return "&adamic_typeof_" + name }
 	if _, intrinsic := value.(ir.LibraryGlobal); intrinsic {
 		// Built-in identities are opaque headers, so JSON has no class metadata to inspect.

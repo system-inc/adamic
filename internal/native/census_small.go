@@ -19,6 +19,8 @@ func (e *emitter) censusToBoolean(argument ir.Expression) string {
 		result = fmt.Sprintf("(%s.present && %s.boolean)", value, value)
 	case ir.String:
 		result = fmt.Sprintf("(%s != NULL && %s->length != 0)", value, value)
+	case ir.NullishString:
+		result = fmt.Sprintf("(%s != NULL && %s != &adamic_clock_null.heap && ((adamic_string *)%s)->length != 0)", value, value, value)
 	case ir.Union:
 		result = "adamic_census_to_boolean(" + value + ")"
 	default:
