@@ -1,0 +1,20 @@
+import type { RuleContext } from '../../context.ts';
+import { debuggerMessage } from './messages.ts';
+import { SuggestionEdit } from '../../suggestions.a';
+export class Rule {
+    readonly context: RuleContext;
+    constructor(context: RuleContext) { this.context = context; }
+    visit(index: number, parent: number): void {
+        const context = this.context;
+        const start = context.start(index);
+        const edits: SuggestionEdit[] = [];
+        if(context.source.startsWith('/*😀*/')) {
+            edits.push(new SuggestionEdit(start, start + 1, 'd'));
+            edits.push(new SuggestionEdit(start, start + 8, ''));
+            edits.push(new SuggestionEdit(2, 4, 'ok'));
+            edits.push(new SuggestionEdit(context.node(index).end, context.node(index).end, ''));
+        }
+        context.reportNode(index, 'no-debugger', 'unexpectedDebugger', debuggerMessage, edits);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }
