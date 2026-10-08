@@ -11,6 +11,13 @@ log_root = Path('/tmp/map-storage-mutants')
 log_root.mkdir(exist_ok=True)
 runtime = 'internal/native/runtime/map_view_storage.c'
 cases = [
+ ('nullable-elements-storage', 'internal/ir/view_maps_nominal.go', 'return from.NominalClass != 0 && to.NominalClass != 0', 'return false && from.NominalClass != 0 && to.NominalClass != 0', '^TestCheckedViewMapCertificates$/entry-nominal-elements-.*-widen$'),
+ ('nullable-elements-native-read', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalArrayMutants$/.*-read$'),
+ ('nullable-elements-js-read', 'internal/javascript/view_nominal_reads.go', '"((value) => (" + strings.Join', '"((value) => (true || " + strings.Join', '^TestCheckedViewNullableNominalArrayMutants$/.*-read$'),
+ ('nullable-elements-native-write', 'internal/native/view_nominal_reads.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$'),
+ ('nullable-elements-js-write', 'internal/javascript/view_array_writes.go', 'if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target])', 'if (false && !(adamicInstanceOf(value,adamicArrayNominalClasses[target])', '^TestCheckedViewNullableNominalArrayMutants$/.*-(write|widen)$'),
+ ('nullable-elements-native-producer', 'internal/native/view_maps_nominal.go', 'if (!(%s)) adamic_panic', 'if (false && !(%s)) adamic_panic', '^TestCheckedViewNullableNominalArrayMutants$/.*-producer$'),
+ ('nullable-elements-js-producer', 'internal/javascript/view_maps_nominal.go', '"((entry) => {if (!(" + strings.Join', '"((entry) => {if (false && !(" + strings.Join', '^TestCheckedViewNullableNominalArrayMutants$/.*-producer$'),
  ('json-array-native-representation', 'internal/native/json_array_reads.go', 'wanted := read.Element', 'wanted := read.Element\n if wanted == ir.Map || wanted == ir.Closure { wanted = ir.Object }', '^TestCheckedViewJSONArrayDomainMutants$/^(maps|functions)$'),
  ('json-array-generic-concrete', 'internal/lower/library_json_stringify.go', 'element = l.concrete(element)', '// Counterfactual: keep the uninstantiated element type.', '^TestCheckedViewArrayJSONStorage$/^generic$'),
  ('json-array-native-snapshot-owner', 'internal/native/runtime/json_stringify.c', 'adamic_release(owner); /* JSON element snapshots. */', '/* Counterfactual: retain JSON element snapshots. */', '^TestCheckedViewArrayJSONStorage$/^(finite|nested|arguments)$'),

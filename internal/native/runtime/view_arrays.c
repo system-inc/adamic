@@ -60,9 +60,10 @@ adamic_value *adamic_view_array_at(const adamic_array *array, double index, bool
         else if (reference->kind == adamic_kind_boolean) { actual = 2; snapshot->boolean = ((const adamic_boolean_box *)reference)->boolean; }
         else { actual = reference->kind == adamic_kind_string ? 3 : reference->kind == adamic_kind_object ? 4 : reference->kind == adamic_kind_array ? 5 : reference->kind == adamic_kind_map ? 6 : reference->kind == adamic_kind_closure ? 8 : 0; }
     }
-    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 9 && actual == 2) && !(wanted == 10 && (actual == 1 || actual == 2 || actual == 3 || (array->references && slot->reference == &adamic_null)))) { array_view_failure(expression, expected, array_storage_name(actual)); }
+    if (actual != wanted && !(wanted == 7 && actual == 1) && !(wanted == 9 && actual == 2) && !(wanted == adamic_view_array_nominal_union && (actual == 4 || (array->references && slot->reference == &adamic_null))) && !(wanted == 10 && (actual == 1 || actual == 2 || actual == 3 || (array->references && slot->reference == &adamic_null)))) { array_view_failure(expression, expected, array_storage_name(actual)); }
     if (wanted == 7 && actual == 1) { snapshot->number = adamic_maybe_number_pack((adamic_maybe_number){true, snapshot->number}); }
     if (wanted == 9 && actual == 2) { snapshot->maybe_boolean = adamic_maybe_boolean_pack((adamic_maybe_boolean){true, snapshot->boolean}); }
+    if (wanted == adamic_view_array_nominal_union) { *snapshot = *slot; }
     if (wanted == 10) {
         if (array->references) { *snapshot = *slot; }
         else {

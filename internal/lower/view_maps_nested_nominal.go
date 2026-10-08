@@ -136,7 +136,7 @@ func (l *lowering) mapNominalArrayEntrySlot(node *ast.Node, target *checker.Type
 		return 0
 	}
 	of := l.result.ViewContracts[child-1].Of
-	if of != ir.Object && of != ir.Array {
+	if of != ir.Object && of != ir.Array && !(of == ir.Union && isClassInstance(l.checker.GetNonNullableType(element))) {
 		return 0
 	}
 	contract := ir.ViewContract{Kind: ir.ViewArray, Of: ir.Array, Name: l.checker.TypeToString(target), Element: child, ArrayReadonly: l.isLibraryType(l.viewArrayBase(target), "ReadonlyArray")}

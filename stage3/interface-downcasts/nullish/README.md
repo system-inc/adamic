@@ -920,3 +920,46 @@ array types retain named refusals. Boxed class/null array reads, mutable optiona
 nominal writes, nullable nominal slot widening and recursive nominal witnesses
 remain outside this group. Production reaching-view discharge is unmeasured;
 no fixture closure is subtracted from the 2,018-pair/9,101-read inventory.
+
+### Nullable class array elements, October 8
+
+Finite data-class array elements now retain private nominal witnesses across
+class/null, class/undefined and class/null/undefined representations. The native
+physical adapter selects reference snapshots for nullable classes; the independent
+read guard checks class identity and declared sentinels. Producer scans use the
+same physical adapter followed by their own recursive certificate, preserving
+independent guard evidence. JavaScript checks each present element through the
+same nominal descriptor. Holes remain distinct from present undefined.
+
+Constructor-owned class element contracts govern push and indexed source-alias
+writes. Readonly Map arrays may widen class references into nullable class
+references without changing the source representation or its original write
+contract. Fifteen Node controls cover extraction, helpers, generic scalar helpers,
+callbacks, loops, slices, nullable writes and readonly widening. Twelve isolated
+payload mutants cover producer/read/write lookalikes and rejected null/undefined writes to
+an original nonnullable source after readonly widening. Seven implementation
+counterfactuals remove each backend producer/read/write guard or the readonly
+storage adapter; each was killed by behavior, not a build failure.
+
+Initial probes exposed the existing boxed class array lowering refusal and C
+pointer comparison issues. The first broad gate additionally found the missing
+readonly reference storage certificate; the corrected controls pass. Class join
+stringification keeps its existing named refusal. Evidence is under
+`evidence/nullable-elements-*`. Remaining owned scope includes mutable optional
+nominal slots, nullable nominal source-slot conversions and recursive nominal
+aggregates. Required primitive brands remain refused by
+`internal/lower/phantom_brands.go:133`, `(*lowering).phantomRefusal`:
+`Adamic 0.1 refuses a primitive brand member brand whose type is not void; make brand void (or optional and typed undefined) so the brand is phantom`.
+The conservative inventory remains 2,018 pairs / 9,101 reads; exact production
+reaching-view discharge is unmeasured and fixture closures are not subtracted.
+
+Nullable class element validation: the final restored scoped uncached oracle
+(`Map|Nullish|NullableSelection|JSONArray|ArrayJSONStorage|NominalArray|
+MutableNominal|OptionalNominal|NullableNominal|JSONStringify|
+TestArrayHoles(Milestone|Refusals)$`) passed in 253.639 seconds. Final touched
+packages (`View|Map|Contract|Callable|Tuple|JSON|Generic`, inherited Phantom
+exclusion) passed: IR 0.017s, lower 10.007s, native 51.276s, JavaScript 1.813s.
+Scoped vet passed. The undefined-only source-widening mutant was tightened to
+write undefined, which the target permits, isolating the source guard; all three
+restored source mutants passed in 1.625s and both backend source-write bypasses
+were killed again. The complete repository gate was not run.

@@ -340,7 +340,10 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		if err != nil {
 			return 0, err
 		}
-		if ir.PrimitiveArrayContract(l.result, id) {
+		// A finite data-class union keeps class/null/undefined as heap references.
+		// Its private witness supplies identity at each admitted element read.
+		nominal := valueType == ir.Union && isClassInstance(l.checker.GetNonNullableType(element)) && l.mapNominalEntrySlot(node, element) != 0
+		if ir.PrimitiveArrayContract(l.result, id) || nominal {
 			if _, err := l.viewContract(node, arrayType); err != nil {
 				return 0, err
 			}
@@ -1216,6 +1219,9 @@ func (l *lowering) arrayMethod(node *ast.Node, receiver *ast.Node, name string) 
 		default:
 			return nil, true, l.notYet(node, "boxed primitive array consumer ."+name+" requiring storage conversion")
 		}
+	}
+	if name == "join" && isClassInstance(l.checker.GetNonNullableType(l.viewArrayElementType(l.checker.GetTypeAtLocation(receiver)))) {
+		return nil, true, l.notYet(node, "join on an array of objects, arrays, maps or functions")
 	}
 	if name == "sort" {
 		return l.arraySort(node, array, element)

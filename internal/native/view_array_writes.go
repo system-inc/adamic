@@ -18,12 +18,15 @@ func (e *emitter) viewArraySourceCertificate(expression ir.Expression, value str
 }
 
 func (e *emitter) viewArrayReferenceWrite(array, value string) {
+	incoming := e.temporary()
+	e.line("const void *%s = (const void *)%s;", incoming, value)
+	value = incoming
 	e.line("if (%s->element_kind != 10 || !%s->references) adamic_view_array_storage_check(%s,4,%s);", array, array, array, cString("<array write>"))
 	checked := e.temporary()
 	e.line("bool %s = false;", checked)
 	e.line("switch (%s->element_contract) {", array)
 	for index, source := range e.program.ViewContracts {
-		if source.Of != ir.Object {
+		if source.Of != ir.Object && source.Of != ir.Union {
 			continue
 		}
 		class, _, _ := mapNominalContract(e.program, ir.ViewContractID(index+1))
@@ -37,8 +40,8 @@ func (e *emitter) viewArrayReferenceWrite(array, value string) {
 	e.line("default: break; }")
 	e.line("if (!%s) {", checked)
 	e.viewArrayReferencePolicy()
-	e.line("adamic_view_array_reference_write(%s, %s, adamic_array_reference_pairs, %d, adamic_array_reference_names, %d);", array, value, len(ir.ArrayRecordWritePairs(e.program)), len(e.program.ViewContracts)+1)
-	e.line("adamic_verify_array_record(%s);", value)
+	e.line("adamic_view_array_reference_write(%s, %s, adamic_array_reference_pairs, %d, adamic_array_reference_names, %d);", array, "(const adamic_object *)"+value, len(ir.ArrayRecordWritePairs(e.program)), len(e.program.ViewContracts)+1)
+	e.line("adamic_verify_array_record((const adamic_object *)%s);", value)
 	e.line("}")
 }
 

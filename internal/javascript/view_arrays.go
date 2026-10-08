@@ -49,6 +49,9 @@ const adamicViewArrayElement = (value, expression, type, expected, allowed, requ
 
 func (e *emitter) emitViewArrayRead(read ir.ArrayIndex) string {
 	array, index := e.value(read.Array), e.value(read.Index)
+	if read.Element == ir.Union && e.nominalArrayContract(read.ViewContract) {
+		return fmt.Sprintf("adamicViewArrayIndex(%s, %s, %t, (value) => %s)", array, index, read.Relative, e.nominalViewRead(read.ViewContract, "value", read.View, false))
+	}
 	allowed := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {
@@ -82,8 +85,8 @@ const adamicViewVisit = (array, method, callback, check) => adamicVisit(array, m
 const adamicViewFind = (array, method, callback, check) => adamicFind(array, method, new AdamicClosure((self, values) => adamicCall(callback, [check(values[0]), values[1], values[2]]), []));
 const adamicViewReduce = (array, callback, initial, check) => adamicReduce(array, new AdamicClosure((self, values) => adamicCall(callback, [values[0], check(values[1]), values[2], values[3]]), []), initial);
 const adamicViewPop = (array, check) => { if (array.length === 0) return undefined; const index = array.length - 1; const value = index in array ? check(array[index]) : undefined; array.pop(); return value; };
-const adamicViewPush = (array, value, storage) => { if (storage === 4) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
-const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
+const adamicViewPush = (array, value, storage) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); return array.push(value); };
+const adamicViewSetIndex = (array, index, value, storage, holes) => { if (storage === 4 || storage === 10) adamicArrayReferenceWrite(array, value); else adamicArrayWriteCheck(array, storage); if (holes) array[index] = value; else adamicSetIndex(array, index, value); };
 const adamicViewJoin = (array, separator, check) => array.map(value => check(value)).join(separator);
 `
 
@@ -139,6 +142,9 @@ func (e *emitter) value(expression ir.Expression) string {
 }
 
 func (e *emitter) viewArrayElementCheck(read ir.ArrayViewRead, value string) string {
+	if read.Element == ir.Union && e.nominalArrayContract(read.ViewContract) {
+		return e.nominalViewRead(read.ViewContract, value, read.View, false)
+	}
 	literals := []string{}
 	for _, literal := range read.ViewAllowed {
 		switch literal.Of {

@@ -1,6 +1,9 @@
 #ifndef ADAMIC_VIEW_ARRAYS_H
 #define ADAMIC_VIEW_ARRAYS_H
 
+// Internal extraction selector for nullable class references; not an IR type.
+enum { adamic_view_array_nominal_union = 16 };
+
 // Physical storage lives in the shared adamic_array.element_kind byte.
 struct adamic_array;
 struct adamic_array *adamic_view_array_slice(const struct adamic_array *array, double start, double end, bool has_end);

@@ -200,7 +200,7 @@ func MapCertificatePairs(program *Program, target ViewContractID) [][2]ViewContr
 			}
 			// Shared array readers convert packed numbers and primitive boxes at
 			// each extraction, without rewriting the producer storage.
-			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && ((program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || program.ViewContracts[source.Element-1].Of == Boolean && program.ViewContracts[target.Element-1].Of == MaybeBoolean) || PrimitiveArrayUnionStorage(program, source.Element, target.Element))
+			storage := sameStorage(source.Element, target.Element) || target.ArrayReadonly && ((program.ViewContracts[source.Element-1].Of == Number && program.ViewContracts[target.Element-1].Of == MaybeNumber || program.ViewContracts[source.Element-1].Of == Boolean && program.ViewContracts[target.Element-1].Of == MaybeBoolean) || PrimitiveArrayUnionStorage(program, source.Element, target.Element) || NominalArrayUnionStorage(program, source.Element, target.Element))
 			return storage && accepts(source.Element, target.Element) && (target.ArrayReadonly || accepts(target.Element, source.Element))
 		}
 		if source.Kind == ViewObject && (HasMapNominalWitness(program, from) || HasMapNominalWitness(program, to)) {

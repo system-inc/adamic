@@ -35,7 +35,7 @@ func (l *lowering) viewArrayLiteralSourceContract(node *ast.Node) ir.ViewContrac
 	}
 	element := l.concrete(l.viewArrayElementType(source))
 	if element != nil && isClassInstance(l.checker.GetNonNullableType(element)) {
-		if of, known := l.representation(element); known && of == ir.Object {
+		if of, known := l.representation(element); known && (of == ir.Object || of == ir.Union) {
 			return l.mapNominalEntrySlot(node, element)
 		}
 	}

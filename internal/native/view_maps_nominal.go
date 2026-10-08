@@ -51,8 +51,8 @@ func (e *emitter) mapEntryNominalCertificate(id ir.ViewContractID, value, where 
 		e.line("for(size_t %s=0;%s<((const adamic_array *)%s)->length;%s++){", index, index, stored, index)
 		e.indent++
 		element := e.program.ViewContracts[contract.Element-1]
-		read := ir.ArrayIndex{Element: element.Of, ViewType: element.Name, View: where + "[element]", UndefinedAllowed: element.Undefined}
-		slot := e.emitViewArrayReadWithOwner(read, "(const adamic_array *)"+stored, "(double)"+index, "NULL")
+		read := ir.ArrayIndex{Element: element.Of, ViewType: element.Name, View: where + "[element]", UndefinedAllowed: element.Undefined, ViewContract: contract.Element}
+		slot := e.emitViewArrayReadChecked(read, "(const adamic_array *)"+stored, "(double)"+index, "NULL", false)
 		e.line("if (%s != NULL) {", slot)
 		e.indent++
 		e.mapEntryNominalCertificate(contract.Element, slot+"->reference", where+"[element]")

@@ -52,8 +52,9 @@ func viewArrayReferenceRuntime(program *ir.Program) string {
 	}
 	nominal := map[int]int{}
 	nullable := map[int]bool{}
+	nulls := map[int]bool{}
 	for index, source := range program.ViewContracts {
-		if source.Of != ir.Object {
+		if source.Of != ir.Object && source.Of != ir.Union {
 			continue
 		}
 		c := source
@@ -63,14 +64,16 @@ func viewArrayReferenceRuntime(program *ir.Program) string {
 		if c.NominalClass != 0 {
 			nominal[index+1] = c.NominalClass
 			nullable[index+1] = source.Undefined
+			nulls[index+1] = source.Null
 		}
 	}
 	classes, _ := json.Marshal(nominal)
 	missing, _ := json.Marshal(nullable)
+	nullJSON, _ := json.Marshal(nulls)
 	named, _ := json.Marshal(names)
 	pairs, _ := json.Marshal(ir.ArrayRecordWritePairs(program))
 	descriptors, _ := json.Marshal(fields)
-	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, named, pairs, descriptors) + viewArrayReferenceHelpers
+	return fmt.Sprintf("const adamicArrayNominalClasses = %s;\nconst adamicArrayNominalUndefined = %s;\nconst adamicArrayNominalNull = %s;\nconst adamicArrayReferenceNames = %s;\nconst adamicArrayReferencePairs = %s;\nconst adamicArrayReferenceFields = %s;\n", classes, missing, nullJSON, named, pairs, descriptors) + viewArrayReferenceHelpers
 }
 
 const viewArrayReferenceHelpers = `const adamicArrayElementContracts = new WeakMap();
@@ -83,7 +86,7 @@ const adamicArrayReferenceWrite = (array, value) => {
  const target = adamicArrayElementContracts.get(array) || 0;
  if (!target) adamicArrayReferenceFailure("object", "uncertified source element contract");
  if (adamicArrayNominalClasses[target]) {
-  if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target]) || value === undefined && adamicArrayNominalUndefined[target])) adamicArrayReferenceFailure(adamicArrayReferenceNames[target],"object without required class identity");
+  if (!(adamicInstanceOf(value,adamicArrayNominalClasses[target]) || value === undefined && adamicArrayNominalUndefined[target] || value === null && adamicArrayNominalNull[target])) adamicArrayReferenceFailure(adamicArrayReferenceNames[target],"object without required class identity");
   return;
  }
  if (value === undefined || value === null || typeof value !== 'object' || Array.isArray(value) || value instanceof Map) adamicArrayReferenceFailure(adamicArrayReferenceNames[target], value === undefined ? 'undefined' : 'non-object');

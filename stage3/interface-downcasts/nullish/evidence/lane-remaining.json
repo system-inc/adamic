@@ -68,6 +68,11 @@
       "family": "checked JSON primitive array extraction",
       "scope": "boxed and packed boolean elements, primitive nullish members and finite domains, nested arrays/literal fields, replacer key arrays, sparse boolean sources, helper generic reification and argument mutation; physical Map/function kinds checked without invocation",
       "production_reaching_view_counts": "unmeasured"
+    },
+    {
+      "family": "nullable class elements in reference arrays",
+      "scope": "finite data classes unioned with null, undefined, or both; indexed/callback/loop reads, source-alias push/index stores, readonly Map array widening with original nonnullable constructor writes preserved",
+      "production_reaching_view_counts": "unmeasured"
     }
   ]
 }

@@ -36,3 +36,14 @@ func (e *emitter) nominalViewRead(id ir.ViewContractID, value, where string, opt
 func (e *emitter) nominalViewReceiver(property ir.Property) string {
 	return e.nominalViewRead(e.program.NominalReadContracts[property.ViewReceiverTypeID], e.value(property.Object), property.View+" receiver", property.Optional)
 }
+
+func (e *emitter) nominalArrayContract(id ir.ViewContractID) bool {
+	if id == 0 {
+		return false
+	}
+	c := e.program.ViewContracts[id-1]
+	if c.Kind == ir.ViewNullable && c.Element != 0 {
+		c = e.program.ViewContracts[c.Element-1]
+	}
+	return c.NominalClass != 0
+}

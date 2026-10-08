@@ -165,7 +165,7 @@ func (l *lowering) checkLazyViewReads() error {
 		nominalCheckedRead := false
 		arrayRead := func(array ir.Expression, read ir.ArrayViewRead) {
 			receiver, typeID, field, where = array, read.ViewTypeID, "[element]", read.View
-			nominalCheckedRead = ir.HasArrayViews(program) && read.Element == ir.Object
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
 		}
 		switch read := node.(type) {
 		case ir.RecordCall:
@@ -191,7 +191,7 @@ func (l *lowering) checkLazyViewReads() error {
 			nominalCheckedRead = true
 		case ir.ArrayIndex:
 			receiver, typeID, field, where = read.Array, read.ViewTypeID, "[element]", read.View
-			nominalCheckedRead = ir.HasArrayViews(program) && read.Element == ir.Object
+			nominalCheckedRead = ir.HasArrayViews(program) && (read.Element == ir.Object || read.Element == ir.Union)
 		case ir.ArrayMap:
 			arrayRead(read.Array, read.ViewRead)
 		case ir.ArrayVisit:

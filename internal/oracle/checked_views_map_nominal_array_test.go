@@ -221,3 +221,69 @@ func TestCheckedViewOptionalNominalMutants(t *testing.T) {
 		})
 	}
 }
+
+func TestCheckedViewNullableNominalArrayMutants(t *testing.T) {
+	for _, kind := range []string{"null", "undefined", "both"} {
+		for _, site := range []string{"read", "producer", "write", "widen"} {
+			t.Run(kind+"-"+site, func(t *testing.T) {
+				program, path := interfaceFixture(t, "nullish/maps/entry-nominal-elements-"+kind+"-"+site)
+				truth := onNode(t, path)
+				fake := -1
+				for i, local := range program.Locals {
+					if local.Name == "fake" {
+						fake = i
+					}
+				}
+				if fake < 0 && site != "widen" {
+					t.Fatal("missing fake")
+				}
+				changed := false
+				for i, statement := range program.Main {
+					if site == "write" || site == "widen" {
+						if evaluation, ok := statement.(ir.Evaluate); ok {
+							if push, ok := evaluation.Value.(ir.ArrayPush); ok {
+								push.Value = ir.Read{Local: fake, Of: ir.Object}
+								if push.Element == ir.Union {
+									push.Value = ir.Box{Value: push.Value}
+								}
+								if site == "widen" {
+									push.Value = ir.Box{Value: ir.Null{}, NullReference: true}
+									if kind == "undefined" {
+										push.Value = ir.Undefined{Of: ir.Object}
+									}
+								}
+								evaluation.Value = push
+								program.Main[i] = evaluation
+								changed = true
+							}
+						}
+						continue
+					}
+					if declaration, ok := statement.(ir.Declare); ok && program.Locals[declaration.Local].Name == "item" {
+						array, ok := declaration.Value.(ir.ArrayLiteral)
+						if !ok {
+							t.Fatal("missing array")
+						}
+						array.Elements[0] = ir.Read{Local: fake, Of: ir.Object}
+						if array.Element == ir.Union {
+							array.Elements[0] = ir.Box{Value: array.Elements[0]}
+						}
+						declaration.Value = array
+						program.Main[i] = declaration
+						changed = true
+					}
+				}
+				if !changed {
+					t.Fatal("mutation missed")
+				}
+				native, _ := nativelyUncached(t, program)
+				for _, got := range []run{native, releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+					if got.exitCode != 70 || !strings.Contains(string(got.stderr), "class identity") {
+						t.Fatalf("nullable class lookalike ran on: %#v", got)
+					}
+				}
+				t.Logf("Node=%q; nullable class lookalike caught at %s", truth.stdout, site)
+			})
+		}
+	}
+}

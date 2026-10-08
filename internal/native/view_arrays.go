@@ -69,9 +69,19 @@ func (e *emitter) emitViewArrayRead(read ir.ArrayIndex, array, index string) str
 }
 
 func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, owner string) string {
+	return e.emitViewArrayReadChecked(read, array, index, owner, true)
+}
+
+// Producer scans use the physical adapter, then their own recursive certificate.
+func (e *emitter) emitViewArrayReadChecked(read ir.ArrayIndex, array, index, owner string, logical bool) string {
 	snapshot, slot := e.temporary(), e.temporary()
+	wanted := fmt.Sprint(read.Element)
+	nominal, _, _ := mapNominalContract(e.program, read.ViewContract)
+	if read.Element == ir.Union && nominal.NominalClass != 0 {
+		wanted = "adamic_view_array_nominal_union"
+	}
 	e.line("adamic_value %s;", snapshot)
-	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %d, %s, %s, &%s, %s);", slot, array, index, read.Relative, read.UndefinedAllowed, read.Element, cString(read.ViewType), cString(read.View), snapshot, owner)
+	e.line("adamic_value *%s = adamic_view_array_at(%s, %s, %t, %t, %s, %s, %s, &%s, %s);", slot, array, index, read.Relative, read.UndefinedAllowed, wanted, cString(read.ViewType), cString(read.View), snapshot, owner)
 	if read.Required {
 		e.line("if (%s == NULL) adamic_view_array_missing(%s, %s);", slot, cString(read.View), cString(read.ViewType))
 	}
@@ -95,7 +105,7 @@ func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, o
 		}
 		e.line("if (%s != NULL && !(%s)) adamic_view_literal_failure(%s, %s, %d, %s);", slot, strings.Join(tests, " || "), cString(read.View), cString(read.ViewType), read.Element, snapshot)
 	}
-	if read.Element == ir.Object && read.ViewContract != 0 {
+	if logical && read.Element == ir.Object && read.ViewContract != 0 {
 		e.line("if (%s != NULL) {", slot)
 		e.indent++
 		e.viewObjectUnion(ir.Property{View: read.View, ViewContract: read.ViewContract}, snapshot+".reference")
@@ -103,9 +113,13 @@ func (e *emitter) emitViewArrayReadWithOwner(read ir.ArrayIndex, array, index, o
 		e.indent--
 		e.line("}")
 	}
-	if read.Element == ir.Union {
+	if logical && read.Element == ir.Union {
 		e.line("if (%s != NULL) {", slot)
-		e.arrayPrimitiveUnionRead(read.ViewContract, snapshot+".reference", read.View, read.ViewType)
+		if nominal.NominalClass != 0 {
+			e.nominalViewRead(read.ViewContract, snapshot+".reference", read.View, false)
+		} else {
+			e.arrayPrimitiveUnionRead(read.ViewContract, snapshot+".reference", read.View, read.ViewType)
+		}
 		e.line("}")
 	}
 	return slot
@@ -126,7 +140,7 @@ func (e *emitter) viewArrayElementSlot(read ir.ArrayViewRead, array, index, owne
 }
 
 func (e *emitter) viewArrayMutation(array string, element ir.Type, value string) {
-	if ir.HasArrayViews(e.program) && element == ir.Object {
+	if ir.HasArrayViews(e.program) && (element == ir.Object || element == ir.Union) {
 		e.viewArrayReferenceWrite(array, value)
 		return
 	}
