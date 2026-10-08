@@ -253,6 +253,11 @@ typedef struct adamic_object {
 	adamic_value slots[];
 } adamic_object;
 
+// Metadata belongs to the slot returned by lookup, independently of cache layout.
+static inline size_t adamic_slot_index(const adamic_object *object, const adamic_value *slot) {
+    return (size_t)(slot - object->slots);
+}
+
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
 	return (unsigned char *)(void *)(object->slots + object->shape->count);
