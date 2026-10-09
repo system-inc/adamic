@@ -574,39 +574,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 // Absence is a read result, never a synthetic own field: hasOwnProperty and object spread still see
 // the shape that was actually made. A narrowed number checks the declared optional representation.
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
-	property.Readiness = sourceExpression(node)
-	property.View = sourceExpression(node)
-	property.ViewWhere = l.program.Where(node)
+	var receiver *checker.Type
 	if node.Kind == ast.KindPropertyAccessExpression {
-		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+		receiver = l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression)
 	}
-	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
-		declared := l.checker.GetTypeOfSymbol(symbol)
-		property.ViewTypeID = int(declared.Id())
-		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
-		property.ViewType = l.checker.TypeToString(declared)
-		property.ViewAllowed = l.viewLiterals(declared)
-	}
-	field := l.checker.GetSymbolAtLocation(node.Name())
-	if field != nil {
-		for _, declaration := range field.Declarations {
-			if declaration.Kind == ast.KindPropertyDeclaration {
-				initializer := declaration.AsPropertyDeclaration().Initializer
-				if l.lazyAssertionInitializer(initializer) && !l.uninitializedInitializer(initializer) {
-					property.Readiness = sourceExpression(initializer)
-				}
-			}
-		}
-	}
-	if field == nil || field.Flags&ast.SymbolFlagsOptional == 0 {
-		return property
-	}
-	property.Absent = true
-	if declared, _ := l.representation(l.checker.GetTypeOfSymbol(field)); declared.IsMaybe() && property.Of == declared.Present() {
-		property.Of = declared
-		return fit(property, declared.Present())
-	}
-	return property
+	return l.readViewMember(node, property, l.checker.GetSymbolAtLocation(node.Name()), receiver)
 }
 
 // hasOwnProperty lowers object.hasOwnProperty(key) when the method is the library's, not a field the

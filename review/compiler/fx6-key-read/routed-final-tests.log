@@ -1,0 +1,125 @@
+=== RUN   TestViewStringElementReadControl
+=== PAUSE TestViewStringElementReadControl
+=== RUN   TestViewLiteralTypedElementReadControl
+=== PAUSE TestViewLiteralTypedElementReadControl
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== RUN   TestViewElementDestructuredControl
+=== PAUSE TestViewElementDestructuredControl
+=== RUN   TestViewElementDestructuredUnionControl
+=== PAUSE TestViewElementDestructuredUnionControl
+=== CONT  TestViewStringElementReadControl
+=== CONT  TestViewElementP01CorrectControl
+=== CONT  TestViewElementP05CorrectControl
+=== CONT  TestViewElementDestructuredUnionControl
+=== CONT  TestViewElementFixAgreesWithNode
+--- PASS: TestViewElementFixAgreesWithNode (0.40s)
+=== CONT  TestViewElementP06CorrectControl
+--- PASS: TestViewElementDestructuredUnionControl (0.49s)
+=== CONT  TestViewElementP07CorrectControl
+--- PASS: TestViewElementP05CorrectControl (0.50s)
+=== CONT  TestViewLiteralTypedElementReadControl
+=== CONT  TestViewElementDestructuredControl
+--- PASS: TestViewStringElementReadControl (0.54s)
+--- PASS: TestViewElementP01CorrectControl (0.57s)
+--- PASS: TestViewElementP06CorrectControl (0.36s)
+--- PASS: TestViewLiteralTypedElementReadControl (0.44s)
+--- PASS: TestViewElementP07CorrectControl (0.47s)
+--- PASS: TestViewElementDestructuredControl (0.50s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.067s
+=== RUN   TestCheckedViewElementP01
+=== PAUSE TestCheckedViewElementP01
+=== RUN   TestCheckedViewElementP05
+=== PAUSE TestCheckedViewElementP05
+=== RUN   TestCheckedViewElementP06
+=== PAUSE TestCheckedViewElementP06
+=== RUN   TestCheckedViewElementP07
+=== PAUSE TestCheckedViewElementP07
+=== RUN   TestCheckedViewLiteralTypedKey
+=== PAUSE TestCheckedViewLiteralTypedKey
+=== RUN   TestCheckedViewDestructuredMember
+=== PAUSE TestCheckedViewDestructuredMember
+=== RUN   TestCheckedViewDestructuredUnion
+=== PAUSE TestCheckedViewDestructuredUnion
+=== CONT  TestCheckedViewElementP01
+=== CONT  TestCheckedViewDestructuredUnion
+=== CONT  TestCheckedViewDestructuredMember
+=== CONT  TestCheckedViewLiteralTypedKey
+=== CONT  TestCheckedViewElementP07
+=== NAME  TestCheckedViewDestructuredMember
+    view_element_reads_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:31: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    view_element_reads_test.go:25: gate cache node miss
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:10: gate cache node miss
+=== NAME  TestCheckedViewDestructuredUnion
+    view_element_reads_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:31: gate cache node miss
+=== NAME  TestCheckedViewDestructuredMember
+    view_element_reads_test.go:36: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    view_element_reads_test.go:25: gate cache node miss
+=== NAME  TestCheckedViewDestructuredUnion
+    view_element_reads_test.go:41: gate cache node miss
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:10: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewDestructuredMember
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewDestructuredUnion
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewDestructuredMember
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewLiteralTypedKey (1.14s)
+=== CONT  TestCheckedViewElementP06
+=== NAME  TestCheckedViewDestructuredUnion
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:20: gate cache node miss
+--- PASS: TestCheckedViewElementP07 (1.22s)
+=== CONT  TestCheckedViewElementP05
+--- PASS: TestCheckedViewDestructuredMember (1.27s)
+--- PASS: TestCheckedViewElementP01 (1.28s)
+=== NAME  TestCheckedViewElementP05
+    view_element_reads_test.go:15: gate cache node miss
+--- PASS: TestCheckedViewDestructuredUnion (1.29s)
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:20: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP05
+    view_element_reads_test.go:15: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP05
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewElementP06 (0.43s)
+--- PASS: TestCheckedViewElementP05 (0.40s)
+PASS
+gate cache: native hits=0 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.649s

@@ -12,21 +12,15 @@ interface Box extends Base { readonly kind: 'box'; readonly count: number }
 function read(base: Base): number { const view = base as Box; return view['count']; }
 const raw = {kind: 'box' as const, count: 'wrong'}; console.log(String(read(raw)));`
 
-func TestViewStringElementReadRefused(t *testing.T) {
+func TestViewStringElementReadControl(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, viewElementSource)
-	if err == nil || !strings.Contains(err.Error(), "view member read by element access is not yet checked") || !strings.Contains(err.Error(), "use view.count") || !strings.Contains(err.Error(), ".a:") {
-		t.Fatalf("want located checked-view refusal and fix, got %v", err)
-	}
+	lowersAndAgreesWithNode(t, strings.Replace(viewElementSource, "count: 'wrong'", "count: 2", 1))
 }
 
-func TestViewLiteralTypedElementReadRefused(t *testing.T) {
+func TestViewLiteralTypedElementReadControl(t *testing.T) {
 	t.Parallel()
 	source := strings.Replace(viewElementSource, "return view['count'];", "const key = 'count'; return view[key];", 1)
-	_, err := lowerSource(t, source)
-	if err == nil || !strings.Contains(err.Error(), "view member read by element access is not yet checked") {
-		t.Fatalf("unchecked literal typed key: %v", err)
-	}
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'wrong'", "count: 2", 1))
 }
 
 func TestViewElementFixAgreesWithNode(t *testing.T) {
@@ -36,51 +30,27 @@ func TestViewElementFixAgreesWithNode(t *testing.T) {
 	lowersAndAgreesWithNode(t, source)
 }
 
-func TestViewElementP05Refused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, viewElementFixture(t, "p05"))
-	requireViewElementRefusal(t, err)
-}
-
-func TestViewElementP06Refused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, viewElementFixture(t, "p06"))
-	requireViewElementRefusal(t, err)
-}
-
-func TestViewElementP01Refused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, viewElementFixture(t, "p01"))
-	requireViewElementRefusal(t, err)
-}
-
-func TestViewElementP07Refused(t *testing.T) {
-	t.Parallel()
-	_, err := lowerSource(t, viewElementFixture(t, "p07"))
-	requireViewElementRefusal(t, err)
-}
-
 func TestViewElementP05CorrectControl(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(viewElementFixture(t, "p05"), "view['count']", "view.count")
+	source := viewElementFixture(t, "p05")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
 }
 
 func TestViewElementP06CorrectControl(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(viewElementFixture(t, "p06"), "view['count']", "view.count")
+	source := viewElementFixture(t, "p06")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "count: true", "count: 1", 1))
 }
 
 func TestViewElementP01CorrectControl(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(viewElementFixture(t, "p01"), "view['text']", "view.text")
+	source := viewElementFixture(t, "p01")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "text: 7", "text: 'seven'", 1))
 }
 
 func TestViewElementP07CorrectControl(t *testing.T) {
 	t.Parallel()
-	source := strings.ReplaceAll(viewElementFixture(t, "p07"), "view['value']", "view.value")
+	source := viewElementFixture(t, "p07")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "text: true", "text: 'seven'", 1))
 }
 
@@ -93,9 +63,14 @@ func viewElementFixture(t *testing.T, name string) string {
 	return string(source)
 }
 
-func requireViewElementRefusal(t *testing.T, err error) {
-	t.Helper()
-	if err == nil || !strings.Contains(err.Error(), "view member read by element access is not yet checked") || !strings.Contains(err.Error(), "use view.") {
-		t.Fatalf("unchecked view element read: %v", err)
-	}
+func TestViewElementDestructuredControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "destructured")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}
+
+func TestViewElementDestructuredUnionControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "destructured_union")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "text: true", "text: 'seven'", 1))
 }

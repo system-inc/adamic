@@ -43,9 +43,6 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	if err != nil {
 		return nil, err
 	}
-	if err := l.refuseViewElementReads(fields); err != nil {
-		return nil, err
-	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}
 	}
@@ -412,9 +409,6 @@ func (l *lowering) legacyView(node *ast.Node, value ir.Expression, target *check
 	}
 	if found != nil {
 		return nil, found
-	}
-	if err := l.refuseViewElementReads(fields); err != nil {
-		return nil, err
 	}
 	if l.result.CheckedFields == nil {
 		l.result.CheckedFields = map[string]bool{}

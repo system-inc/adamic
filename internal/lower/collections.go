@@ -302,6 +302,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		}
 		var field string
 		var fieldType *checker.Type
+		var fieldSymbol *ast.Symbol
 		absent := false
 		if tuple {
 			if index >= len(elementTypes) {
@@ -337,6 +338,7 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 			if err := l.erasedMethodField(binding, destructured, field); err != nil {
 				return nil, err
 			}
+			fieldSymbol = property
 			fieldType = l.checker.GetTypeOfSymbol(property)
 			absent = property.Flags&ast.SymbolFlagsOptional != 0
 		}
@@ -348,13 +350,18 @@ func (l *lowering) destructureFrom(pattern *ast.Node, destructured *checker.Type
 		if element, isKnown := l.representation(fieldType); !isKnown || element != of || (slotless(of) && !(of == ir.Union && l.writable(fieldType))) {
 			return nil, l.notYet(binding, "a destructured name held otherwise than its field")
 		}
-		value := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent}
-		value.View = sourceExpression(binding) + " (field " + field + ")"
-		value.ViewReceiverTypeID = int(destructured.Id())
-		value.ViewTypeID = int(fieldType.Id())
-		value.ViewWhere = l.program.Where(binding)
-		value.ViewType = l.checker.TypeToString(fieldType)
-		value.ViewAllowed = l.viewLiterals(fieldType)
+		property := ir.Property{Object: ir.Read{Local: held, Of: ir.Object}, Name: field, Of: of, Absent: absent, View: sourceExpression(binding) + " (field " + field + ")"}
+		var value ir.Expression
+		if tuple {
+			property.ViewReceiverTypeID = int(destructured.Id())
+			property.ViewTypeID = int(fieldType.Id())
+			property.ViewWhere = l.program.Where(binding)
+			property.ViewType = l.checker.TypeToString(fieldType)
+			property.ViewAllowed = l.viewLiterals(fieldType)
+			value = property
+		} else {
+			value = l.readViewMember(binding, property, fieldSymbol, destructured)
+		}
 		statements = append(statements, l.initializeLocal(local, value)...)
 	}
 	return statements, nil

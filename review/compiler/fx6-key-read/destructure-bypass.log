@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewDestructuredUnion
+=== PAUSE TestCheckedViewDestructuredUnion
+=== CONT  TestCheckedViewDestructuredUnion
+    view_element_reads_test.go:41: gate cache node hit
+    view_element_reads_test.go:41: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    view_element_reads_test.go:41: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"; got exit 0 stdout "true\n" stderr ""
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"; got exit 0 stdout "true\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: value (field value) matches no member of Target; expected Target, found object\n"; got exit 0 stdout "true\n" stderr ""
+--- FAIL: TestCheckedViewDestructuredUnion (0.41s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.463s
+FAIL

@@ -1,0 +1,10 @@
+// A wrong untagged union view read by a string-literal key.
+interface Left { readonly text: string; }
+interface Right { readonly count: number; }
+type Target = Left | Right;
+interface Holder { readonly kind: 'Holder'; readonly value: Target; }
+const raw = { kind: 'Holder' as const, value: { text: true } };
+const base: { readonly kind: 'Holder' } = raw;
+const view = base as Holder;
+const { value } = view;
+console.log(`${value !== undefined}`);
