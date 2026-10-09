@@ -237,7 +237,7 @@ func TestRegExpReplacementDynamicCandidate(t *testing.T) {
 	if err != nil {
 		var notYet *lower.NotYet
 		if errors.As(err, &notYet) && strings.Contains(err.Error(), "RegExp with a nonconstant pattern") {
-			t.Skipf("library runtime compiler dependency absent: %v", err)
+			t.Skipf("awaits library/area-on-next-2: runtime regex compiler (#jj9z3qn) absent: %v", err)
 		}
 		t.Fatal(err)
 	}
