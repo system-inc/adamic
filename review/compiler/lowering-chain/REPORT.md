@@ -112,3 +112,11 @@ ok  	github.com/system-inc/adamic/internal/oracle	57.874s
 Top-level pass seconds: {"TestAssignmentProofWiderTargetMutant": 1.46, "TestAssignmentProofChained": 1.49, "TestAssignmentProofIfNarrowingMutant": 1.51, "TestAssignmentProofScannerKeyword": 1.52, "TestAssignmentProofWiderTarget": 1.4, "TestAssignmentProofScannerKeywordMutant": 1.46, "TestAssignmentProofCompoundMutant": 1.54, "TestAssignmentProofReturnDefinedMutant": 1.52, "TestAssignmentProofReturnDefined": 1.4, "TestAssignmentProofCompound": 1.55, "TestAssignmentProofChainedMutant": 1.47, "TestAssignmentProofIfNarrowing": 1.56}. All named controls pass; count-changes and results JSON retain every row and observation.
 
 Member 9 ledger correction: the parser now includes .ts and TypeScript-mode row labels. The actual regeneration added eight rows, not the earlier summary of two. Six were mode-qualified. No counts value was edited.
+
+## Member 11: tsgo.go file-only patch 4e97369532e6bae0c074a9be81562da9feccff3d
+
+Only internal/native/tsgo.go diff applied cleanly. Current typeaware child still calls BuildTSGo. Warm release compile 3.87 to 0.19 seconds; warm sanitizer compile 6.65 to 0.35 seconds, same emitted C, archive and exact Node bytes. Counts unchanged. Include-order feature omission mutant caught.
+
+ok  	github.com/system-inc/adamic/internal/oracle	65.989s
+
+Top-level pass seconds: {"TestTypeAwareNativeBuildChild": 7.03, "TestSharedProductPublication": 0, "TestSixBuildCallbackUsesProductDirectory": 0.01, "TestTypeAwareTopShardPlantedFailure": 0.02, "TestTSGoBuildSeesTheProgramsFeatures": 0.11}. All named controls pass; count-changes and results JSON retain every row and observation.
