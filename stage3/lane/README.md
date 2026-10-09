@@ -139,3 +139,22 @@ inside the adapted output tree; only explicit `--write-table` also updates
 the checked-in `stage3/patch-set.md`. The lane uses ordinary apply and
 preserves a copy beside its report.json.
 See REPORT.md and evidence for the measured area-tip verdict.
+
+## Reading a red lane
+
+report.json now includes failures and cause_counts even when API evidence is
+missing. Each failure keeps the full Mocha error, stack top, elapsed time and
+timeout limit when captured, and first-40-line previews for each implicated
+baseline file. All baseline previews are also available in baseline_previews.
+The verdict line appends all five cause counts; the sanctioned API failure
+still counts as a baseline-content failure in a passing lane.
+
+failures.md publishes a readable explanation beside verdict.txt. verdict.json
+embeds the same details and previews beside the verdict, so the fast gate's
+existing report.json and verdict.json publication preserves them without a
+workflow change. Cause classification is observational: none of these fields
+participates in inspect, api_check, expected counts, or the sanctioned exception.
+A metadata collection error is reported separately and never alters status.
+
+See ERRORS_REPORT.md for the real targeted timeout, source-mutation baseline
+proof, normal full lane, and dropped-text mutant evidence.
