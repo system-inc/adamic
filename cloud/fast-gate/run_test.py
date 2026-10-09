@@ -2345,6 +2345,23 @@ class CacheDrains(unittest.TestCase):
         self.assertTrue(status.startswith("green:"), status)
         self.assertIn("Too many open files", result["cache_drain_units"][1]["detail"])
 
+    def test_every_spawned_go_command_builds_without_the_commit_or_the_checkout_path(self):
+        # @system_adamic, Oct 9 16:33Z: floor1's identity check found main's stage 0, fetched at a candidate's commit,
+        # 12 ranges away from the candidate's own fresh build (vcs stamp, build id); the path is the same kind of input.
+        gate, _, _ = self.gate()
+        seen = []
+        def popen(command, **options):
+            seen.append(options["env"]["GOFLAGS"])
+            return realPopen([sys.executable, "-c", "pass"], **options)
+        realPopen = subprocess.Popen
+        with mock.patch.object(run.subprocess, "Popen", side_effect=popen):
+            gate.spawn(["go", "test", "./probe"], subprocess.PIPE).communicate()
+            gate.spawn(["go", "test", "./probe"], subprocess.PIPE, environment={"GOFLAGS": "-p=1"}).communicate()
+        self.assertEqual(seen[0].split(), ["-buildvcs=false", "-trimpath"])
+        self.assertEqual(seen[1].split(), ["-p=1", "-buildvcs=false", "-trimpath"])
+        # Loom's pool takes the gate's environment from the selection, so it builds the same way.
+        self.assertEqual(run.gateEnvironment["GOFLAGS"].split(), ["-buildvcs=false", "-trimpath"])
+
     def test_two_runs_keep_test_and_drain_queues_isolated(self):
         self.publisher()
         # Two runs of the very same slot must still get fresh queues. Real child

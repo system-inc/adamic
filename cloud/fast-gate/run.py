@@ -52,7 +52,19 @@ import traceback
 
 module = "github.com/system-inc/adamic"
 # What the whole gate sets: no cached results, and the gate inputs' lanes on (see cloud/setup.sh --gate-inputs).
-gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1"}
+gateEnvironment = {"ADAMIC_GATE_UNCACHED": "1", "ADAMIC_TEST_WASI": "1", "ADAMIC_ORACLE_WASI": "1", "ADAMIC_GATE_COHERE": "1",
+                   "GOFLAGS": "-buildvcs=false -trimpath"}
+# Every go command the gate runs builds without the commit stamp or the checkout path (@system_adamic, Oct 9 16:33Z): a
+# product's bytes must be a function of its build cache key, and neither is in a key, so main's product fetched at a
+# candidate's commit or another machine's path differed from the candidate's own fresh build in 12 ranges (stage 0,
+# floor1's identity check) and the rebuild audit would call it poisoning. A phase that sets its own go flags keeps them.
+gateGoFlags = gateEnvironment["GOFLAGS"].split()
+
+
+def withGateGoFlags(variables):
+    flags = variables.get("GOFLAGS", "").split()
+    variables["GOFLAGS"] = " ".join(flags + [flag for flag in gateGoFlags if flag not in flags])
+    return variables
 fullPackageTimeout = "3h"
 slowPackageSeconds = 3600
 # Kirk's hard constraint (Oct 8): no test unit runs longer than this, so every unit can go to any of a hundred
@@ -2219,6 +2231,7 @@ class Gate:
             variables["PATH"] = os.path.expanduser("~/fast-gate/npm/bin") + os.pathsep + variables["PATH"]
             variables.update(environment or {})
             variables.update(self.buildStoreEnvironment)
+            withGateGoFlags(variables)
             process = subprocess.Popen(command, cwd=directory or self.arguments.tree, stdout=stdout, stderr=stderr, text=True, start_new_session=True, env=variables)
             self.processes.append(process)
             self.recordTestStart(command)
