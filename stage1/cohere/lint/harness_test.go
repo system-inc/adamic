@@ -106,40 +106,8 @@ func serializationPort(t *testing.T) string {
 }
 
 func TestCompleteSuggestionSerialization(t *testing.T) {
-	directory := serializationPort(t)
-	source := filepath.Join(t.TempDir(), "suggestions.ts")
-	if err := os.WriteFile(source, []byte("/*😀*/debugger;\n"), 0644); err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{source + "\tno-debugger"})
-	oracle := goOracleFrom(t, directory)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	for _, field := range []string{"suggestion\tfirst", "suggestion\tsecond", "suggestion\tempty", "suggestion-edit\t8 9", "fixed\t/*"} {
-		if !bytes.Contains(want, []byte(field)) {
-			t.Fatalf("missing field %q: %s", field, want)
-		}
-	}
-	changed := filepath.Join(directory, "rules/no-debugger/rule.a")
-	data, err := os.ReadFile(changed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	data = bytes.Replace(data, []byte("start + 1, start + 2, ''"), []byte("start + 1, start + 3, ''"), 1)
-	if err := os.WriteFile(changed, data, 0644); err != nil {
-		t.Fatal(err)
-	}
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", emittedNode(t, directory, path, false)},
-	} {
-		if bytes.Equal(side.run.output, want) {
-			t.Fatalf("second suggestion edit mutant survived on %s", side.name)
-		}
-		t.Logf("second suggestion edit mutant caught on %s: %s", side.name, difference(side.run.output, want))
-	}
+	completeSuggestionUnion(t)
+	completeSuggestionSetup(t)
 }
 
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
