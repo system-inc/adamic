@@ -1,0 +1,5 @@
+FIRST FAILURE (a-check, at 107.7 s):
+a-check failed for 2 files:
+stage3/host-buffer/namespace/truthiness.a: checked, expected refused a value as a condition ()
+stage3/scout/22-slice2/gaps/compiler-two-store.a: checked, expected refused an index signature; use a Map, which keeps keys in the order they were added (adamic: /home/ahra/fast-gate/tree-3/stage3/scout/22-slice2/gaps/compiler-two-store.a:6:51: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array)
+(box load 98.4 on 64 cores at first failure)
