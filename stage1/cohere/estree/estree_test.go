@@ -45,27 +45,6 @@ func root(t *testing.T) string {
 	}
 	return path
 }
-func goOracle(t *testing.T) string {
-	t.Helper()
-	repo := root(t)
-	source, err := filepath.Abs("testdata/oracle.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	virtual := filepath.Join(repo, "cohere/adamic_estree_oracle.go")
-	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: source}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	dir := t.TempDir()
-	path := filepath.Join(dir, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(dir, "oracle")
-	execute(t, filepath.Join(repo, "cohere"), "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
-}
 func build(t *testing.T, path string, sanitize bool) (string, string) {
 	t.Helper()
 	program, err := load.Load([]string{path})

@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 "use strict";
-// Hold extracted functions to upstream source, independently of their goldens.
+// Hold extracted declarations to the adapted source, independently of their goldens.
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
@@ -60,6 +60,57 @@ function audit(file, text) {
     visit(source);
     return count;
 }
+const manifest = JSON.parse(fs.readFileSync(path.join(bucket, "source-spans.json"), "utf8"));
+function canonical(node) { return tokens(node).replace(/^export /, ""); }
+function auditDeclarations(file, text) {
+    const row = manifest.fixtures.find(row => row.file === file);
+    assert.ok(row, file + ": missing source manifest");
+    const source = ts.createSourceFile(file, text, ts.ScriptTarget.Latest, true);
+    const ranges = [];
+    const recorded = row.spans.filter(span => span.tokens && !span.partial);
+    const found = new Set();
+    function collect(node) {
+        if (ts.isFunctionDeclaration(node) || ts.isMethodDeclaration(node) ||
+            ts.isInterfaceDeclaration(node) || ts.isTypeAliasDeclaration(node) || ts.isVariableStatement(node)) {
+            const value = canonical(node);
+            for (const span of recorded) {
+                if (span.tokens !== value) continue;
+                const original = fs.readFileSync(path.join(tree, span.file), "utf8");
+                const upstream = ts.createSourceFile(span.file, original, ts.ScriptTarget.Latest, true);
+                let agrees = false;
+                function seek(candidate) {
+                    if (candidate.kind === node.kind && canonical(candidate) === value) agrees = true;
+                    ts.forEachChild(candidate, seek);
+                }
+                seek(upstream);
+                assert.ok(agrees, file + ": declaration differs from adapted source: " + span.name);
+                ranges.push([node.getStart(source), node.end]);
+                found.add(span);
+            }
+        }
+        ts.forEachChild(node, collect);
+    }
+    collect(source);
+    assert.equal(found.size, recorded.length, file + ": missing or changed copied declaration");
+    function guard(node) {
+        if (ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node) || node.kind === ts.SyntaxKind.AnyKeyword) {
+            assert.ok(ranges.some(([start, end]) => start <= node.getStart(source) && node.end <= end),
+                file + ": reduction introduced a cast, non-null assertion, or any: " + node.getText(source));
+        }
+        ts.forEachChild(node, guard);
+    }
+    guard(source);
+    return found.size;
+}
+let declarationCount = 0;
+for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.a$/.test(name)).sort()) {
+    declarationCount += auditDeclarations(file, fs.readFileSync(path.join(bucket, file), "utf8"));
+}
+console.log(`pass: ${declarationCount} copied declarations match adapted source; no reduction-added casts, non-null assertions or any`);
+const driverFile = "05_writeFile.a";
+const driverSource = fs.readFileSync(path.join(bucket, driverFile), "utf8");
+assert.throws(() => auditDeclarations(driverFile, driverSource.replace("errorCode(e)", "(e as NodeJS.ErrnoException).code")), { code: "ERR_ASSERTION" });
+console.log("caught mutant: reduction-only ErrnoException cast rejected");
 let count = 0;
 for (const file of fs.readdirSync(bucket).filter(name => /^\d\d_.*\.a$/.test(name)).sort()) {
     count += audit(file, fs.readFileSync(path.join(bucket, file), "utf8"));

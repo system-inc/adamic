@@ -1,0 +1,46 @@
+{
+  "file": "14_getCurrentDirectory.a",
+  "node": "v24.19.0",
+  "after": {
+    "stdout": "true\ntrue\n",
+    "stderr": "",
+    "exit": 0
+  },
+  "goldenUnchanged": true,
+  "mutant": {
+    "change": "omit callback clearing, so cwd is recomputed after chdir",
+    "observation": {
+      "stdout": "true\nfalse\n",
+      "stderr": "",
+      "exit": 0
+    },
+    "caught": true,
+    "catcher": "exact Node stdout comparison"
+  },
+  "native": "Direct area compiler stops with TS2591 for Node modules; historical host-capable library status is Refused at source-owned non-null assertion; adaptation 48 admitted no source rewrite",
+  "part1": "34ac6b2a6aa653ceba26d91fd9b6d23aa18c45e5",
+  "host_base": "7218520aaaf9d471f2bd252b269bd818443a9ad2",
+  "source_commit": "ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a",
+  "extraction": {
+    "file": "14_getCurrentDirectory.a",
+    "sourceCommit": "ac5e16ccc578de24fa0680bd9f2e8feafb7ab12a",
+    "copiedDeclarations": 2,
+    "sourceChanged": false,
+    "diagnosticFix": false,
+    "sourceMutantCaught": true
+  },
+  "full_source_audit": {
+    "declarations": 164,
+    "function_and_method_spans": 126,
+    "mutants_caught": [
+      "reduction-only ErrnoException cast",
+      "SHA256 to SHA1"
+    ]
+  },
+  "native_run": {
+    "exit": 1,
+    "diagnostics": "stage3/fixtures/host/14_getCurrentDirectory.a:10:21: error TS2591: Cannot find name 'node:process'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:7:22: error TS2591: Cannot find name 'node:fs'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:8:24: error TS2591: Cannot find name 'node:path'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nstage3/fixtures/host/14_getCurrentDirectory.a:9:24: error TS2591: Cannot find name 'node:os'. Do you need to install type definitions for node? Try `npm i --save-dev @types/node` and then add 'node' to the types field in your tsconfig.\nexit status 1\n"
+  },
+  "source_semantics_changed": false,
+  "reextraction_idempotent": true
+}
