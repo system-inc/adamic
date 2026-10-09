@@ -830,6 +830,9 @@ func (l *lowering) combine(node *ast.Node, operator ast.Kind, left ir.Expression
 		return ir.Binary{Operator: lowered, Left: left, Right: right}, nil
 	}
 	if operator == ast.KindEqualsEqualsEqualsToken || operator == ast.KindExclamationEqualsEqualsToken {
+		if err := l.nullishReferenceComparison(node, left, right); err != nil {
+			return nil, err
+		}
 		_, leftNull := left.(ir.Null)
 		_, rightNull := right.(ir.Null)
 		if leftNull != rightNull {

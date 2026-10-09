@@ -224,6 +224,10 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 					}
 				}
 				if name == "hasOwnProperty" || name == "propertyIsEnumerable" {
+					if l.hasPrivateStorage(shape) {
+						reason = "private class slots are not JavaScript own properties; reflect on a plain object containing the public fields"
+						return true
+					}
 					for _, field := range l.checker.GetPropertiesOfType(shape) {
 						if strings.ContainsRune(field.Name, 0) {
 							reason = "a field name contains NUL, which native shape names cannot represent"
