@@ -1,0 +1,11 @@
+diff --git a/internal/lower/library_node_fs_file.go b/internal/lower/library_node_fs_file.go
+index f9c6cde2..ceb0dfe0 100644
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -475,5 +475,5 @@ func (l *lowering) nodeFSFileReadOnlyArgument(node *ast.Node) bool {
+ }
+ 
+ func init() {
+-	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.code")
++	RegisterNodeLibraryMembers("node:fs.mkdtempSync", "node:fs.rmSync", "node:fs.readSync", "node:fs.readFileSync", "node:fs.openSync", "node:fs.writeSync", "node:fs.closeSync", "node:fs.writeFileSync", "node:fs.existsSync", "node:fs.statSync", "node:fs.mkdirSync", "node:fs.unlinkSync", "node:fs.utimesSync", "node:fs.StatsBase.isFile", "node:fs.StatsBase.isDirectory", "node:fs.StatsBase.isSymbolicLink", "node:fs.StatsBase.size", "node:fs.StatsBase.mtime", "node:fs.StatsBase.atime", "node:fs.StatsBase.mtimeMs", "node:globals.ErrnoException.cod")
+ }

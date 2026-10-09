@@ -1,0 +1,74 @@
+[
+  {
+    "test": "TestNodeFSFileQualifiedErrorType",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeFSFileRefusesOptionEffects"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/library_node_fs_file.go:478",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/library_node_fs_file.go:478",
+        "change": "Change registry constant node:globals.ErrnoException.code to node:globals.ErrnoException.cod",
+        "rows_failed": [
+          "TestNodeFSFileQualifiedErrorType"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D1.log 2>&1; library_node_fs_file_test.go:79: want optional host fields proven before the qualified cast, got /tmp/adamic-gate/TestNodeFSFileQualifiedErrorType2428483307/001/main.a:1:80: stage 0 can't lower node:globals.ErrnoException.code yet"
+  },
+  {
+    "test": "TestNodeLibraryNamesUnimplementedMembers",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeFSFileRefusesOptionEffects"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D4 internal/lower/library_node_fs_file.go:478",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/library_node.go:69",
+        "change": "Off by one: diagnostic name becomes name[:len(name)-1]",
+        "rows_failed": [
+          "TestNodeBufferRefusals",
+          "TestNodeLibraryNamesUnimplementedMembers"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/library_node_fs_file.go:478",
+        "change": "Change registry entry node:fs.utimesSync to node:path.sep, falsely admitting an unsupported member",
+        "rows_failed": [
+          "TestNodeLibraryNamesUnimplementedMembers"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D4.log 2>&1; library_node_test.go:31: want named NotYet node:path.sep, got /tmp/adamic-gate/TestNodeLibraryNamesUnimplementedMembersnodepath.sep855476949/001/main.a:1:44: stage 0 can't lower reading sep yet"
+  },
+  {
+    "test": "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestNodeFSFileRefusesOptionEffects"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/library_node_fs_file.go:32",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/library_node_fs_file.go:32",
+        "change": "Drop the fs source/module ownership proof block; also drop the now-unused source variable at line 20",
+        "rows_failed": [
+          "TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D3.log 2>&1; library_node_test.go:43: JavaScript backend stdout = \"no\\n\", source Node = \"yes\\n\""
+  }
+]

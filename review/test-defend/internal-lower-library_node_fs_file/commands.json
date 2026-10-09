@@ -1,0 +1,6 @@
+{
+  "D1": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D1.log 2>&1",
+  "D2": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D2.log 2>&1",
+  "D3": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D3.log 2>&1",
+  "D4": "ADAMIC_BUILD_CACHE_DIR=/tmp/def-nodefs/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > /tmp/def-nodefs/D4.log 2>&1"
+}

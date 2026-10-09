@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_node.go b/internal/lower/library_node.go
+index 75239e08..6113d0de 100644
+--- a/internal/lower/library_node.go
++++ b/internal/lower/library_node.go
+@@ -66,7 +66,7 @@ func (l *lowering) nodeLibraryRefusal(node *ast.Node) error {
+ 	}
+ 	name := l.nodeLibraryMember(node)
+ 	if name != "" && !implementedNodeMembers[name] {
+-		return l.notYet(node, name)
++		return l.notYet(node, name[:len(name)-1])
+ 	}
+ 	return nil
+ }

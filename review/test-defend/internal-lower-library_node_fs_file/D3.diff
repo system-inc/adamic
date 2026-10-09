@@ -1,0 +1,29 @@
+diff --git a/internal/lower/library_node_fs_file.go b/internal/lower/library_node_fs_file.go
+index f9c6cde2..d56304d9 100644
+--- a/internal/lower/library_node_fs_file.go
++++ b/internal/lower/library_node_fs_file.go
+@@ -17,7 +17,6 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 	}
+ 	declaration := symbol.Declarations[0]
+ 	memberName := symbol.Name
+-	source := ast.GetSourceFileOfNode(declaration)
+ 	if callee.Kind == ast.KindPropertyAccessExpression {
+ 		receiver := callee.AsPropertyAccessExpression().Expression
+ 		if l.isLibraryType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(receiver)), "Date") {
+@@ -31,16 +30,6 @@ func (l *lowering) nodeFSFile(node *ast.Node) (ir.Expression, bool, error) {
+ 			return ir.NodeFSFile{Operation: "date_time", Arguments: []ir.Expression{value}, Of: ir.Number}, true, err
+ 		}
+ 	}
+-	if !load.IsNodeLibrary(source) {
+-		return nil, false, nil
+-	}
+-	parent := declaration.Parent
+-	for parent != nil && parent.Kind != ast.KindModuleDeclaration {
+-		parent = parent.Parent
+-	}
+-	if parent == nil || (parent.Name().Text() != "node:fs" && parent.Name().Text() != "fs") {
+-		return nil, false, nil
+-	}
+ 	args := []ir.Expression{}
+ 	operation := ""
+ 	of := ir.Number // Void calls are only admitted as discarded statements.
