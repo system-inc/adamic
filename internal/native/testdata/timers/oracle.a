@@ -1,0 +1,54 @@
+// Host-only Node oracle. Library lowering binds the corresponding C primitive.
+const mode = process.argv[2];
+let fired = 0;
+let interval;
+console.log("prefix");
+function start(delay, repeat, number) {
+    const label = String(12345);
+    const callback = (text, n) => {
+        fired++;
+        if (mode === "order") {
+            console.log(fired === 1 ? "first" : "second");
+            if (fired === 1) Promise.resolve().then(() => console.log("first-job"));
+        } else if (mode === "interval" || mode === "graph") {
+            console.log(`${label} ${fired} ${text} ${n}`);
+            if (fired === 3) clearInterval(interval);
+        } else if (mode === "cancel-self") {
+            console.log("tick");
+            clearInterval(interval);
+            console.log(`after ${label} ${text}`);
+        } else if (mode === "unref-live" || mode === "deadlines") {
+            console.log(n === 1 ? "early" : "late");
+        } else console.log(`fire ${label}`);
+    };
+    return (repeat ? setInterval : setTimeout)(callback, delay, String(67890), number);
+}
+if (mode === "arity") {
+    const label = String(12345);
+    const callback = (n = 42, ...rest) => console.log(`${label} ${n} ${rest.length} ${rest.reduce((a, b) => a + b, 0)}`);
+    setTimeout(callback, 1);
+    setTimeout(callback, 1, 7);
+    setTimeout(callback, 1, 7, 8, 9);
+} else if (mode === "host") {
+    // A referenced keeper models the pending host request, which mere pending
+    // Node promises do not keep alive. The timer callback retires that work.
+    const keeper = setInterval(() => {}, 1000);
+    setTimeout(() => { console.log("fire 12345"); clearInterval(keeper); }, 1).unref();
+} else if (mode === "order") {
+    Promise.resolve().then(() => console.log("job"));
+    start(1, false, 7); start(1, false, 7);
+} else if (mode === "interval" || mode === "graph" || mode === "cancel-self") {
+    interval = start(1, true, 7);
+} else if (mode === "cancel") {
+    interval = start(1, false, 7);
+    clearTimeout(interval); clearTimeout(interval);
+} else if (mode === "foreign") {
+    interval = start(1, false, 7);
+    clearTimeout({}); clearTimeout(999999999);
+} else if (mode === "unref") {
+    interval = start(1, false, 7); interval.unref();
+} else if (mode === "unref-live") {
+    interval = start(1, false, 1); interval.unref(); start(20, false, 2);
+} else if (mode === "deadlines") {
+    start(20, false, 2); start(0.9, false, 1);
+} else throw new Error("unknown fixture");

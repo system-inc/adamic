@@ -442,3 +442,18 @@ introduced. This entry records this extension, not an inventory of earlier units
 | Audit key | Holds / writers and timing | Classification |
 |---|---|---|
 | `async.c:cleanups:1` | Borrowed frame cleanup records; generated wrappers register, settlement/destruction forget, cancel and exit take records before releasing reactions | Loop confined under the host bridge loop-affinity contract. No foreign publisher accesses this list; source pool callbacks capturing async frames are rejected. Records own no Adamic reference |
+
+## Native CLI timers
+
+- `runtime-file:timers.h`: declarations only, no storage.
+- `runtime-file:timers_impl.h`: included only by async.c. Provider is const.
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `timers_impl.h:timers:1` | Registration list owning callbacks and arguments; start, cancel, dispatch and teardown mutate | Loop confined. Every public operation checks host_loop_thread; no worker publishes timers |
+| `timers_impl.h:timer_next_identity:1` | Monotonic registration identity; start increments, never reused | Loop confined under the same guard |
+
+The native wait uses the existing host pipe and the nearest timer deadline; it
+never creates a delivery thread. Custom host loop hooks with timers are named
+NotYet. Timer entry destruction runs on the loop and dispatches graph references
+through ordinary adamic_release.
