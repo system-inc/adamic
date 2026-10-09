@@ -1,0 +1,12 @@
+=== RUN   TestProduct_ProfileCompilationProfiled
+=== PAUSE TestProduct_ProfileCompilationProfiled
+=== CONT  TestProduct_ProfileCompilationProfiled
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.04
+    profile_compilation_main_test.go:298: build lint-profile-emit-c a75e2a112d15 hit 0.03
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-javascript 22af98d9f085 miss 0.32
+    profile_compilation_main_test.go:201: build lint-profile-profiled 0614a20f59e5 miss 13.18
+    lint_setup_clock_products_test.go:82: product wall=14.681440745s
+--- PASS: TestProduct_ProfileCompilationProfiled (14.68s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	14.708s

@@ -1,0 +1,16 @@
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.04
+    profile_compilation_main_test.go:298: build lint-profile-emit-c a75e2a112d15 hit 0.03
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-javascript 22af98d9f085 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 0614a20f59e5 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-counted ede11463792c hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 0b4c84eb6cda hit 0.05
+    lint_setup_clock_products_test.go:88: build shards-agree-profile-oracle 633214cc3066 hit 1.08
+    lint_setup_clock_products_test.go:88: build lint-profile-oracle-outputs c740bed72207 hit 0.00
+    lint_setup_clock_products_test.go:89: product wall=2.401118437s
+--- PASS: TestProduct_ProfileCompilationOracleOutputs (2.40s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	2.429s

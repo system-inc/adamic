@@ -1,0 +1,155 @@
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-c a75e2a112d15 hit 0.03
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.03
+    profile_compilation_main_test.go:298: build lint-profile-emit-javascript 22af98d9f085 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-profiled 0614a20f59e5 hit 0.03
+    profile_compilation_main_test.go:201: build lint-profile-scanner 0b4c84eb6cda miss 10.09
+    profile_compilation_main_test.go:201: build lint-profile-counted ede11463792c miss 13.11
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_ProfileCompilationOracleOutputs (1m30s)
+
+goroutine 119 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x1eff43952008, 0x1eff436c7b58)
+	testing/testing.go:2199 +0x123
+testing.runTests({0x103105e, 0x1c}, {0x1088156, 0x2f}, 0x1eff437467e0, {0x25b7430, 0x1b0e, 0x1b0e}, {0xc2aa72da368f3b78, 0x14f58c1962, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x1eff43a706e0)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/lint.TestMain(0x1eff43a706e0)
+	github.com/system-inc/adamic/stage1/cohere/lint/registration_test.go:35 +0x111
+main.main()
+	_testmain.go:13898 +0xa5
+
+goroutine 26 [select]:
+github.com/system-inc/adamic/internal/testguard.Run(0x1eff439d4680, 0x8bb2c97000, 0x34630b8a000)
+	github.com/system-inc/adamic/internal/testguard/guard.go:72 +0x5d7
+github.com/system-inc/adamic/stage1/cohere/lint.run({0x1eff439e6228, 0x18}, {0x0, 0x0, 0x1eff43cf5601?}, {0x1007024, 0x2}, {0x1eff43a24c08, 0x50, 0x57})
+	github.com/system-inc/adamic/stage1/cohere/lint/shared_test.go:96 +0x3a8
+github.com/system-inc/adamic/stage1/cohere/lint.goOracleIn({0x1eff438c30b0, 0x24}, {0x1eff436dc2c0, 0x40})
+	github.com/system-inc/adamic/stage1/cohere/lint/shared_test.go:178 +0xc05
+github.com/system-inc/adamic/stage1/cohere/lint.compilationOracle.func1({0x1eff436dc2c0?, 0x1011b26?})
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:352 +0x32
+github.com/system-inc/adamic/internal/buildcache.get({{0x1eff438b2ac0, 0x1b}, {0x1eff43d68008, 0x1ab, 0x1ff}, {0x1eff43d6c000, 0x10, 0x16}, {0x1eff43ea2180, 0x3, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:140 +0xa83
+github.com/system-inc/adamic/internal/buildcache.Product({0x24b6788, 0x1eff43953208}, {{0x1eff438b2ac0, 0x1b}, {0x1eff43d68008, 0x1ab, 0x1ff}, {0x1eff43d6c000, 0x10, 0x16}, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.compilationOracle(0x1eff43953208)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:352 +0x1dc
+github.com/system-inc/adamic/stage1/cohere/lint.compilationPrepare(0x1eff43953208)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:342 +0x1bf
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_ProfileCompilationOracleOutputs(0x1eff43953208)
+	github.com/system-inc/adamic/stage1/cohere/lint/lint_setup_clock_products_test.go:88 +0x3e
+testing.tRunner(0x1eff43953208, 0x24c4620)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 117 [IO wait]:
+internal/poll.runtime_pollWait(0x7fed3458f200, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x1eff4388a300?, 0x1eff4373f868?, 0x1)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x1eff4388a300, {0x1eff4373f868, 0x398, 0x398})
+	internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	os/file_posix.go:30
+os.(*File).Read(0x1eff43702340, {0x1eff4373f868?, 0x9?, 0x35?})
+	os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x1eff437e9950, {0x24a5b80, 0x1eff43702340})
+	bytes/buffer.go:229 +0x98
+io.copyBuffer({0x24a5ca0, 0x1eff437e9950}, {0x24a5b80, 0x1eff43702340}, {0x0, 0x0, 0x0})
+	io/io.go:415 +0x151
+io.Copy(...)
+	io/io.go:388
+os.genericWriteTo(0x1eff43702340?, {0x24a5ca0?, 0x1eff437e9950?})
+	os/file.go:295 +0x35
+os.(*File).WriteTo(0x1eff43702340, {0x24a5ca0, 0x1eff437e9950})
+	os/file.go:273 +0x9c
+io.copyBuffer({0x24a5ca0, 0x1eff437e9950}, {0x24a5c00, 0x1eff43702340}, {0x0, 0x0, 0x0})
+	io/io.go:411 +0x9d
+io.Copy(...)
+	io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x11613fa?)
+	os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 26
+	os/exec/exec.go:767 +0x92b
+
+goroutine 118 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xd, 0x1eff43a91640, 0x4, 0x1eff436aa000, 0x0)
+	syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x10?, 0x1?, 0x1161773?, 0xa?, 0x1?)
+	internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	os/file_posix.go:263
+os.(*Process).pidfdWait(0x1eff43b1d140)
+	os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0xb?)
+	os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	os/exec.go:347
+os/exec.(*Cmd).Wait(0x1eff439d4680)
+	os/exec/exec.go:944 +0x45
+github.com/system-inc/adamic/internal/testguard.Run.func1()
+	github.com/system-inc/adamic/internal/testguard/guard.go:69 +0x25
+created by github.com/system-inc/adamic/internal/testguard.Run in goroutine 26
+	github.com/system-inc/adamic/internal/testguard/guard.go:69 +0x535
+
+goroutine 57 [IO wait, 1 minutes]:
+internal/poll.runtime_pollWait(0x7fed3458f600, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x1eff439f6080?, 0x1eff43e36000?, 0x0)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x1eff439f6080, {0x1eff43e36000, 0x2000, 0x2000})
+	internal/poll/fd_unix.go:170 +0x2a8
+net.(*netFD).Read(0x1eff439f6080, {0x1eff43e36000?, 0x1eff442ad980?, 0x1eff442ad9d8?})
+	net/fd_posix.go:68 +0x25
+net.(*conn).Read(0x1eff43b02008, {0x1eff43e36000?, 0x1eff442ada00?, 0xf0044fb7e?})
+	net/net.go:196 +0x45
+crypto/tls.(*Conn).readFromUntil(0x1eff438eac08, {0x24a7fc0, 0x1eff43b02008}, 0x1eff442adc20?)
+	crypto/tls/conn.go:820 +0xf4
+crypto/tls.(*Conn).readRecordOrCCS(0x1eff438eac08, 0x0)
+	crypto/tls/conn.go:626 +0x3fb
+crypto/tls.(*Conn).readRecord(...)
+	crypto/tls/conn.go:588
+crypto/tls.(*Conn).Read(0x1eff438eac08, {0x1eff43dd0000, 0x1000, 0x482a60?})
+	crypto/tls/conn.go:1392 +0x148
+bufio.(*Reader).Read(0x1eff43dcc2a0, {0x1eff438f2044, 0x9, 0x24a5c20?})
+	bufio/bufio.go:245 +0x193
+io.ReadAtLeast({0x24a6040, 0x1eff43dcc2a0}, {0x1eff438f2044, 0x9, 0x9}, 0x9)
+	io/io.go:335 +0x83
+io.ReadFull(...)
+	io/io.go:354
+net/http/internal/http2.readFrameHeader({0x1eff438f2044, 0x9, 0x1980?}, {0x24a6040?, 0x1eff43dcc2a0?})
+	net/http/internal/http2/frame.go:252 +0x65
+net/http/internal/http2.(*Framer).ReadFrameHeader(0x1eff438f2000)
+	net/http/internal/http2/frame.go:525 +0x67
+net/http/internal/http2.(*Framer).ReadFrame(0x1eff438f2000)
+	net/http/internal/http2/frame.go:584 +0x18
+net/http/internal/http2.(*clientConnReadLoop).run(0x1eff442adfa8)
+	net/http/internal/http2/transport.go:2047 +0xdb
+net/http/internal/http2.(*ClientConn).readLoop(0x1eff43d66540)
+	net/http/internal/http2/transport.go:1913 +0x52
+created by net/http/internal/http2.(*Transport).newClientConn in goroutine 56
+	net/http/internal/http2/transport.go:703 +0xda7
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.117s
+FAIL

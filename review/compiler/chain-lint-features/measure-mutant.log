@@ -1,0 +1,10 @@
+=== RUN   TestMeasureClangUnits
+    units_measure_test.go:120: lint-harness lines=155 bytes=7354 units=3 header=1527
+    units_measure_test.go:139: lint-harness one-line module edit changed 1 of 3 units
+    units_measure_test.go:81: clang: exit status 1
+        /usr/bin/ld: /tmp/adamic-gate/main-1b0931.o:(.data.rel.ro.adamic_runtime_feature_reference[adamic_runtime_feature_reference.21576b91ab9b15712202e1b4a494877f]+0x0): undefined reference to `adamic_runtime_features_closure_convention'
+        clang: error: linker command failed with exit code 1 (use -v to see invocation)
+--- FAIL: TestMeasureClangUnits (8.82s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	8.828s
+FAIL

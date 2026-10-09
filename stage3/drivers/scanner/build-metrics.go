@@ -44,11 +44,11 @@ func main() {
 	os.Unsetenv("ADAMIC_GATE_UNCACHED")
 	report := map[string]any{
 		"generated_c_bytes": len(source), "generated_c_lines": strings.Count(string(source), "\n"),
-		"jobs": jobs, "flags": native.Flags(native.Options{}),
+		"jobs": jobs, "flags": native.SourceFlags(string(source), native.Options{}),
 		"timing_scope": "native.Build wall time, runtime prewarmed; includes splitting, preprocessing, cache checks, compilation and linking; excludes C emission and Go startup",
 	}
 	start := time.Now()
-	if _, err := native.RuntimeLibrary("", native.Options{}); err != nil {
+	if _, err := native.RuntimeLibraryForSource("", string(source), native.Options{}); err != nil {
 		panic(err)
 	}
 	report["runtime_preparation_seconds"] = time.Since(start).Seconds()

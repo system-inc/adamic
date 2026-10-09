@@ -79,32 +79,9 @@ func buildProfile(t *testing.T, directory string) {
 	if err := native.Build(source, filepath.Join(directory, "counted"), native.Options{Count: true}); err != nil {
 		t.Fatal(err)
 	}
-	runtime := filepath.Join(repository, "internal/native/runtime")
-	entries, err := os.ReadDir(runtime)
-	if err != nil {
+	if err := compilationProfileBuild(source, filepath.Join(directory, "profiled"), native.Options{}); err != nil {
 		t.Fatal(err)
 	}
-	units := []string{filepath.Join(directory, "main.c")}
-	for _, entry := range entries {
-		if !strings.HasSuffix(entry.Name(), ".c") && !strings.HasSuffix(entry.Name(), ".h") {
-			continue
-		}
-		data, err := os.ReadFile(filepath.Join(runtime, entry.Name()))
-		if err != nil {
-			t.Fatal(err)
-		}
-		path := filepath.Join(directory, entry.Name())
-		if err := os.WriteFile(path, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-		if strings.HasSuffix(entry.Name(), ".c") {
-			units = append(units, path)
-		}
-	}
-	flags := append(native.Flags(native.Options{}), "-g", "-o", filepath.Join(directory, "profiled"))
-	flags = append(flags, units...)
-	flags = append(flags, "-lm")
-	execute(t, "", "clang", flags...)
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
 

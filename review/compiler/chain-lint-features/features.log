@@ -1,0 +1,7 @@
+=== RUN   TestProfileRuntimeFeaturesMatchNode
+=== PAUSE TestProfileRuntimeFeaturesMatchNode
+=== CONT  TestProfileRuntimeFeaturesMatchNode
+    profile_runtime_features_test.go:50: profile and Node agree: "77\n2\n3\n"
+--- PASS: TestProfileRuntimeFeaturesMatchNode (7.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/lint	7.300s

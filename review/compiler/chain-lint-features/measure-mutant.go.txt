@@ -56,7 +56,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if program == "cohere-typeaware" {
 				library, err = splitTSGoRuntime(source, options)
 			} else {
-				library, err = RuntimeLibraryForSource("", source, options)
+				library, err = RuntimeLibrary("", options)
 			}
 			if err != nil {
 				t.Fatal(err)
@@ -149,7 +149,7 @@ func TestMeasureClangUnits(t *testing.T) {
 			if program == "cohere-typeaware" {
 				_, err = splitTSGoRuntime(source, mode.options)
 			} else {
-				_, err = RuntimeLibraryForSource("", source, mode.options)
+				_, err = RuntimeLibrary("", mode.options)
 			}
 			if err != nil {
 				t.Fatal(err)

@@ -355,7 +355,7 @@ func compilationOracle(t *testing.T) string {
 
 // The profile linker uses the same feature set as the emitted program.
 func compilationProfileBuild(source, output string, options native.Options) error {
-	library, err := native.RuntimeLibraryForSource("", source, options)
+	library, err := native.RuntimeLibrary("", options)
 	if err != nil {
 		return err
 	}
@@ -363,7 +363,7 @@ func compilationProfileBuild(source, output string, options native.Options) erro
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		return err
 	}
-	flags := append(native.SourceFlags(source, options), "-g", "-I", filepath.Dir(library), "-o", output, path)
+	flags := append(native.Flags(options), "-g", "-I", filepath.Dir(library), "-o", output, path)
 	flags = append(flags, native.RuntimeLinkFlags(library)...)
 	flags = append(flags, "-lm")
 	command := exec.CommandContext(context.Background(), "clang", flags...)

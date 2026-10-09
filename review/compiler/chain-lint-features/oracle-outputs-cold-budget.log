@@ -1,0 +1,53 @@
+=== RUN   TestProduct_ProfileCompilationOracleOutputs
+=== PAUSE TestProduct_ProfileCompilationOracleOutputs
+=== CONT  TestProduct_ProfileCompilationOracleOutputs
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 hit 0.04
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_ProfileCompilationOracleOutputs (1m30s)
+
+goroutine 50 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x3c6ae02d2008, 0x3c6ae0443b58)
+	testing/testing.go:2199 +0x123
+testing.runTests({0x103105e, 0x1c}, {0x1088156, 0x2f}, 0x3c6ae00c6660, {0x25b7430, 0x1b0e, 0x1b0e}, {0xc2aa72af63e3c06f, 0x14f5cbf089, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x3c6ae03f0a00)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/lint.TestMain(0x3c6ae03f0a00)
+	github.com/system-inc/adamic/stage1/cohere/lint/registration_test.go:35 +0x111
+main.main()
+	_testmain.go:13898 +0xa5
+
+goroutine 34 [syscall]:
+syscall.Syscall(0x49, 0x3, 0x2, 0x0)
+	syscall/syscall_linux.go:74 +0x25
+syscall.Flock(0x3c6ae0f8c7e0?, 0x65?)
+	syscall/zsyscall_linux_amd64.go:453 +0x25
+github.com/system-inc/adamic/internal/buildcache.get({{0x3c6ae00ee1e0, 0x13}, {0x3c6ae0444000, 0x623, 0xa00}, {0x3c6ae03fa060, 0x2, 0x2}, {0x3c6ae016a000, 0x3, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:104 +0x589
+github.com/system-inc/adamic/internal/buildcache.Product({0x24b6788, 0x3c6ae02d2d88}, {{0x3c6ae00ee1e0, 0x13}, {0x3c6ae0444000, 0x623, 0xa00}, {0x3c6ae03fa060, 0x2, 0x2}, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.compilationEmission(0x3c6ae02d2d88, {{0x3c6ae00ee1e0, 0x13}, {0x3c6ae0444000, 0x623, 0xa00}, {0x3c6ae03fa060, 0x2, 0x2}, {0x3c6ae016a000, ...}}, ...)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:298 +0x3e8
+github.com/system-inc/adamic/stage1/cohere/lint.compilationProductKinds(0x3c6ae02d2d88, {0x3c6ae0495ec8, 0x3, 0x3c6ae02d2d88?})
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:179 +0xe5
+github.com/system-inc/adamic/stage1/cohere/lint.compilationProducts(...)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:173
+github.com/system-inc/adamic/stage1/cohere/lint.compilationPrepare(0x3c6ae02d2d88)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:340 +0x113
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_ProfileCompilationOracleOutputs(0x3c6ae02d2d88)
+	github.com/system-inc/adamic/stage1/cohere/lint/lint_setup_clock_products_test.go:88 +0x3e
+testing.tRunner(0x3c6ae02d2d88, 0x24c4620)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.118s
+FAIL

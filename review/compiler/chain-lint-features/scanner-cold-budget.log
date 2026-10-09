@@ -1,0 +1,135 @@
+=== RUN   TestProduct_ProfileCompilationScanner
+=== PAUSE TestProduct_ProfileCompilationScanner
+=== CONT  TestProduct_ProfileCompilationScanner
+    profile_compilation_main_test.go:272: build lint-profile-lowered 2bf5455e32a4 miss 16.34
+panic: test timed out after 1m30s
+	running tests:
+		TestProduct_ProfileCompilationScanner (1m30s)
+
+goroutine 23 [running]:
+testing.(*M).startAlarm.func1()
+	testing/testing.go:2959 +0x34a
+created by time.goFunc
+	time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	testing/testing.go:2142 +0x425
+testing.tRunner(0x1fd7b7bc0008, 0x1fd7b7e3db58)
+	testing/testing.go:2199 +0x123
+testing.runTests({0x103105e, 0x1c}, {0x1088156, 0x2f}, 0x1fd7b7e08108, {0x25b7430, 0x1b0e, 0x1b0e}, {0xc2aa728c81554e47, 0x14f9b44327, ...})
+	testing/testing.go:2740 +0x510
+testing.(*M).Run(0x1fd7b7cebd60)
+	testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/stage1/cohere/lint.TestMain(0x1fd7b7cebd60)
+	github.com/system-inc/adamic/stage1/cohere/lint/registration_test.go:35 +0x111
+main.main()
+	_testmain.go:13898 +0xa5
+
+goroutine 19 [runnable]:
+github.com/system-inc/adamic/internal/native.walkExpressions.func1({0x1fd7b7d824f0?, 0x1?, 0x1?})
+	github.com/system-inc/adamic/internal/native/reuse.go:513 +0x88
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x2321cd8?, 0x1fd7b7d4ccf0?, 0x1fd7ba2a5290?})
+	github.com/system-inc/adamic/internal/native/reuse.go:487 +0x10d
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x24177a0?, 0x1fd7b7d4ccf0?, 0x1fd7b7d4cc38?})
+	github.com/system-inc/adamic/internal/native/reuse.go:482 +0x172
+github.com/system-inc/adamic/internal/native.walkStatement({0x24177a0, 0x1fd7b7d4ccf0}, 0x0?, 0x94?)
+	github.com/system-inc/adamic/internal/native/reuse.go:507 +0x115
+github.com/system-inc/adamic/internal/native.walkExpressions.func1({0x1fd7b7d824e0?, 0x1fd7b807e690?, 0x1fd7b806d1a0?})
+	github.com/system-inc/adamic/internal/native/reuse.go:515 +0x3b
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x2321cd8?, 0x1fd7b807e690?, 0x0?})
+	github.com/system-inc/adamic/internal/native/reuse.go:487 +0x10d
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x244cac0?, 0x1fd7b807e680?, 0x0?})
+	github.com/system-inc/adamic/internal/native/reuse.go:482 +0x172
+github.com/system-inc/adamic/internal/native.walkStatement({0x244cac0, 0x1fd7b807e680}, 0x0?, 0x1fd7b8d9e560?)
+	github.com/system-inc/adamic/internal/native/reuse.go:507 +0x115
+github.com/system-inc/adamic/internal/native.walkExpressions.func1({0x1fd7b7cfadc0?, 0x1fd7b7d4cd08?, 0x1fd7ba2a4060?})
+	github.com/system-inc/adamic/internal/native/reuse.go:515 +0x3b
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x2321cd8?, 0x1fd7b7d4cd08?, 0x231f9a0?})
+	github.com/system-inc/adamic/internal/native/reuse.go:487 +0x10d
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x24177a0?, 0x1fd7b7d4cd08?, 0x1fd7ba2a40e8?})
+	github.com/system-inc/adamic/internal/native/reuse.go:482 +0x172
+github.com/system-inc/adamic/internal/native.walkStatement({0x24177a0, 0x1fd7b7d4cd08}, 0x0?, 0x94?)
+	github.com/system-inc/adamic/internal/native/reuse.go:507 +0x115
+github.com/system-inc/adamic/internal/native.walkExpressions.func1({0x1fd7b7d823c0?, 0x1fd7b8052818?, 0x1fd7b8d9e890?})
+	github.com/system-inc/adamic/internal/native/reuse.go:515 +0x3b
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x2321cd8?, 0x1fd7b8052818?, 0x1fd7babe3600?})
+	github.com/system-inc/adamic/internal/native/reuse.go:487 +0x10d
+github.com/system-inc/adamic/internal/native.walkStatement.func1({0x2486e90?, 0x1fd7b80527e0?, 0x1fd7b8d9e890?})
+	github.com/system-inc/adamic/internal/native/reuse.go:482 +0x172
+github.com/system-inc/adamic/internal/native.walkStatement({0x2486e90, 0x1fd7b80527e0}, 0xe4c3d5?, 0x1fd7b7c01808?)
+	github.com/system-inc/adamic/internal/native/reuse.go:507 +0x115
+github.com/system-inc/adamic/internal/native.walkExpressions.func1({0x1fd7bbae6820?, 0x1fd7b81051d8?, 0x1fd7b8d9e8e8?})
+	github.com/system-inc/adamic/internal/native/reuse.go:515 +0x3b
+github.com/system-inc/adamic/internal/native.walkExpressions(0x1fd7b7d001c0, 0x1?)
+	github.com/system-inc/adamic/internal/native/reuse.go:519 +0x75
+github.com/system-inc/adamic/internal/native.(*emitter).fieldTypesNeeded(0x1fd7b7d01c00)
+	github.com/system-inc/adamic/internal/native/emit_objects.go:462 +0xaa
+github.com/system-inc/adamic/internal/native.(*emitter).statement(0x1fd7b7d01c00, {0x24a6400?, 0x1fd7b86325f0?})
+	github.com/system-inc/adamic/internal/native/emit_statements.go:253 +0x32b2
+github.com/system-inc/adamic/internal/native.(*emitter).statementAt(0x1fd7b7d01c00, 0x1fd7b864b7a0)
+	github.com/system-inc/adamic/internal/native/emit_statements.go:59 +0x65
+github.com/system-inc/adamic/internal/native.(*emitter).functionBody(_, {0x0, 0x0, 0x0, {0x1fd7b8646608, 0x8}, {0x0, 0x0}, {0x1fd7b8646610, 0x1, ...}, ...})
+	github.com/system-inc/adamic/internal/native/emit_functions.go:117 +0x11dd
+github.com/system-inc/adamic/internal/native.cProgram(0x1fd7b7d001c0, 0xffffffffffffffff)
+	github.com/system-inc/adamic/internal/native/emit.go:96 +0x143b
+github.com/system-inc/adamic/internal/native.C(...)
+	github.com/system-inc/adamic/internal/native/emit.go:23
+github.com/system-inc/adamic/stage1/cohere/lint.compilationEmission.func1({0x1fd7b7dd3360, 0x41})
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:304 +0x1ab
+github.com/system-inc/adamic/internal/buildcache.get({{0x1fd7b7bec108, 0x13}, {0x1fd7b7cd6000, 0x623, 0xa00}, {0x1fd7ba358060, 0x2, 0x2}, {0x1fd7b7b148a0, 0x3, ...}}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:140 +0xa83
+github.com/system-inc/adamic/internal/buildcache.Product({0x24b6788, 0x1fd7b7bc0b48}, {{0x1fd7b7bec108, 0x13}, {0x1fd7b7cd6000, 0x623, 0xa00}, {0x1fd7ba358060, 0x2, 0x2}, ...}, ...)
+	github.com/system-inc/adamic/internal/buildcache/buildcache.go:43 +0x8d
+github.com/system-inc/adamic/stage1/cohere/lint.compilationEmission(0x1fd7b7bc0b48, {{0x1fd7b7bec108, 0x13}, {0x1fd7b7cd6000, 0x623, 0xa00}, {0x1fd7ba358060, 0x2, 0x2}, {0x1fd7b7b148a0, ...}}, ...)
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:298 +0x3e8
+github.com/system-inc/adamic/stage1/cohere/lint.compilationProductKinds(0x1fd7b7bc0b48, {0x1fd7b8d9ff48, 0x1, 0x539dc0?})
+	github.com/system-inc/adamic/stage1/cohere/lint/profile_compilation_main_test.go:179 +0xe5
+github.com/system-inc/adamic/stage1/cohere/lint.TestProduct_ProfileCompilationScanner(0x1fd7b7bc0b48)
+	github.com/system-inc/adamic/stage1/cohere/lint/lint_setup_clock_products_test.go:67 +0x5f
+testing.tRunner(0x1fd7b7bc0b48, 0x24c4630)
+	testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	testing/testing.go:2258 +0x4d4
+
+goroutine 12 [IO wait, 1 minutes]:
+internal/poll.runtime_pollWait(0x7f4df9ee4400, 0x72)
+	runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x1fd7b7d06080?, 0x1fd7b7e88000?, 0x0)
+	internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x1fd7b7d06080, {0x1fd7b7e88000, 0x2000, 0x2000})
+	internal/poll/fd_unix.go:170 +0x2a8
+net.(*netFD).Read(0x1fd7b7d06080, {0x1fd7b7e88000?, 0x1fd7b7e91980?, 0x1fd7b7e919d8?})
+	net/fd_posix.go:68 +0x25
+net.(*conn).Read(0x1fd7b7c03388, {0x1fd7b7e88000?, 0x1fd7b7e91a00?, 0x2000?})
+	net/net.go:196 +0x45
+crypto/tls.(*Conn).readFromUntil(0x1fd7b7b56c08, {0x24a7fc0, 0x1fd7b7c03388}, 0x1fd7b7e91c20?)
+	crypto/tls/conn.go:820 +0xf4
+crypto/tls.(*Conn).readRecordOrCCS(0x1fd7b7b56c08, 0x0)
+	crypto/tls/conn.go:626 +0x3fb
+crypto/tls.(*Conn).readRecord(...)
+	crypto/tls/conn.go:588
+crypto/tls.(*Conn).Read(0x1fd7b7b56c08, {0x1fd7b7d8f000, 0x1000, 0x482a60?})
+	crypto/tls/conn.go:1392 +0x148
+bufio.(*Reader).Read(0x1fd7b7d7ad20, {0x1fd7b7b5e044, 0x9, 0x24a5c20?})
+	bufio/bufio.go:245 +0x193
+io.ReadAtLeast({0x24a6040, 0x1fd7b7d7ad20}, {0x1fd7b7b5e044, 0x9, 0x9}, 0x9)
+	io/io.go:335 +0x83
+io.ReadFull(...)
+	io/io.go:354
+net/http/internal/http2.readFrameHeader({0x1fd7b7b5e044, 0x9, 0x1980?}, {0x24a6040?, 0x1fd7b7d7ad20?})
+	net/http/internal/http2/frame.go:252 +0x65
+net/http/internal/http2.(*Framer).ReadFrameHeader(0x1fd7b7b5e000)
+	net/http/internal/http2/frame.go:525 +0x67
+net/http/internal/http2.(*Framer).ReadFrame(0x1fd7b7b5e000)
+	net/http/internal/http2/frame.go:584 +0x18
+net/http/internal/http2.(*clientConnReadLoop).run(0x1fd7b7e91fa8)
+	net/http/internal/http2/transport.go:2047 +0xdb
+net/http/internal/http2.(*ClientConn).readLoop(0x1fd7b7b7ce00)
+	net/http/internal/http2/transport.go:1913 +0x52
+created by net/http/internal/http2.(*Transport).newClientConn in goroutine 11
+	net/http/internal/http2/transport.go:703 +0xda7
+FAIL	github.com/system-inc/adamic/stage1/cohere/lint	90.112s
+FAIL

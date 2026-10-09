@@ -1,0 +1,5 @@
+=== RUN   TestMeasureClangUnits
+    units_measure_test.go:17: set ADAMIC_CLANG_MEASURE to emitted C evidence directory
+--- SKIP: TestMeasureClangUnits (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.007s
