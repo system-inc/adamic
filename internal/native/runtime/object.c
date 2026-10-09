@@ -281,8 +281,8 @@ static bool adamic_contract_proven(size_t count, const int *proofs, int source) 
 	return false;
 }
 
-// Runtime storage tags prove only unrestricted numeric and boolean declarations.
-// Literal, branded and reference fields still require allocation metadata; a matching
+// Runtime scalar storage tags prove unrestricted numeric and boolean declarations.
+// Literal and branded scalar fields still require allocation metadata; a matching
 // current payload is not evidence that their later values will stay in that domain.
 static bool adamic_contract_runtime_scalar(const adamic_field_contract *expected, unsigned char actual) {
 	if (expected->count != 0 || expected->reference || expected->nullish_only || expected->declared == NULL) { return false; }
@@ -290,6 +290,40 @@ static bool adamic_contract_runtime_scalar(const adamic_field_contract *expected
 	if (expected->kind == 2 && actual == 2 && strcmp(expected->declared, "boolean") == 0) { return true; }
 	if (expected->nullable && expected->kind == 7 && (actual == 1 || actual == 7) && strcmp(expected->declared, "number | undefined") == 0) { return true; }
 	if (expected->nullable && expected->kind == 9 && (actual == 2 || actual == 9) && strcmp(expected->declared, "boolean | undefined") == 0) { return true; }
+	return false;
+}
+
+// A runtime array has no checker allocation identity. Prove its string storage before
+// attaching an element contract, so later writes cannot invalidate the proof. Compiler
+// allocations still use directional type proofs, never payload-based narrowing.
+static bool adamic_contract_runtime_array(const adamic_field_contract *expected, adamic_array *value) {
+	if (value->allocation_type != 0 || !value->references || !expected->structural || expected->field_count != 1) { return false; }
+	const adamic_field_contract *element = &expected->field_contracts[0];
+	if (element->kind != 3 || element->count != 0 || element->reference || element->nullish_only || element->declared == NULL || (strcmp(element->declared, "string") != 0 && strcmp(element->declared, "string | undefined") != 0)) { return false; }
+	for (size_t index = 0; index < value->length; index++) {
+		const adamic_heap *item = value->elements[index].reference;
+		if (item == NULL ? !element->nullable : item->kind != adamic_kind_string) { return false; }
+	}
+	// Keep only a compatible pre-existing contract; nullable storage cannot promise string[].
+	if (value->element_contract != NULL && (value->element_contract->kind != 3 || (value->element_contract->nullable && !element->nullable))) { return false; }
+	if (value->element_contract == NULL) { value->element_contract = element; }
+	return true;
+}
+
+static bool adamic_contract_object(const adamic_field_contract *contract, const adamic_object *value);
+
+static bool adamic_contract_runtime_field(const adamic_field_contract *expected, const adamic_object *object, size_t index) {
+	unsigned char actual = adamic_object_field_types(object)[index];
+	if (adamic_contract_runtime_scalar(expected, actual)) { return true; }
+	// A shape's reference bitmap proves which union member may safely be read,
+	// including runtime constructors that leave the more specific storage tag unset.
+	if (!object->shape->references[index] || expected->declared == NULL) { return false; }
+	const adamic_heap *value = object->slots[index].reference;
+	if (value == NULL) { return expected->nullable && expected->kind >= 3 && expected->kind <= 6; }
+	if (expected->kind == 3 && expected->count == 0 && !expected->nullish_only && (strcmp(expected->declared, "string") == 0 || strcmp(expected->declared, "string | undefined") == 0)) { return value->kind == adamic_kind_string; }
+	if (expected->kind == 5 && value->kind == adamic_kind_array) { return adamic_contract_proven(expected->field_proof_count, expected->field_proofs, ((const adamic_array *)value)->allocation_type) || adamic_contract_runtime_array(expected, (adamic_array *)value); }
+	if (expected->kind == 6 && value->kind == adamic_kind_map) { return adamic_contract_proven(expected->field_proof_count, expected->field_proofs, ((const adamic_map *)value)->allocation_type); }
+	if (expected->kind == 4 && value->kind == adamic_kind_object) { return adamic_contract_object(expected, (const adamic_object *)value); }
 	return false;
 }
 
@@ -306,7 +340,7 @@ static bool adamic_contract_object(const adamic_field_contract *contract, const 
 		if (!adamic_object_initialized(value)[cache.index] || adamic_accessor_find(value, contract->field_names[index]) != NULL) { return false; }
 		const adamic_field_contract *expected = &contract->field_contracts[index];
 		if (value->shape->contracts == NULL) {
-			if (!adamic_contract_runtime_scalar(expected, adamic_object_field_types(value)[cache.index])) { return false; }
+			if (!adamic_contract_runtime_field(expected, value, cache.index)) { return false; }
 			continue;
 		}
 		const adamic_field_contract *actual = &value->shape->contracts[cache.index];
@@ -330,6 +364,7 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
 	if (kind == 7) { present = adamic_maybe_number_unpack(value.number).present; }
 	if (kind == 9) { present = adamic_maybe_boolean_unpack(value.maybe_boolean).present; }
 	bool valid = contract != NULL && contract->kind != 0 && (contract->kind == kind || (contract->kind == 1 && kind == 7) || ((contract->kind == 2 || contract->kind == 9) && (kind == 2 || kind == 9)) || (!present && contract->nullable && contract->kind>=3 && contract->kind<=6 && kind>=3 && kind<=6)) && (present || contract->nullable) && (!contract->nullish_only || !present);
+	if (valid && present && kind == 3) { valid = ((const adamic_heap *)value.reference)->kind == adamic_kind_string; }
 	if (valid && present && contract->count != 0) {
 		valid = false;
 		for (size_t index = 0; index < contract->count; index++) {
@@ -352,11 +387,21 @@ void adamic_check_contract(const adamic_field_contract *contract, unsigned char 
 	if (!present) { got = "undefined"; }
 	else if (kind == 1 || kind == 7) { text = adamic_string_from_number(kind == 7 ? adamic_maybe_number_unpack(value.number).number : value.number); }
 	else if (kind == 2 || kind == 9) { got = (kind == 9 ? adamic_maybe_boolean_unpack(value.maybe_boolean).boolean : value.boolean) ? "true" : "false"; }
-	else if (kind == 3) { text = value.reference; }
+	else if (kind == 3 && ((const adamic_heap *)value.reference)->kind == adamic_kind_string) { text = value.reference; }
+	else if (kind == 3) {
+		enum adamic_kind actual = ((const adamic_heap *)value.reference)->kind;
+		got = actual == adamic_kind_object ? "object" : actual == adamic_kind_array ? "array" : actual == adamic_kind_map ? "Map" : "unsupported representation";
+	}
+	else if (kind == 4 && ((const adamic_heap *)value.reference)->kind == adamic_kind_object) {
+		const adamic_shape *shape = ((const adamic_object *)value.reference)->shape;
+		if (shape->contracts != NULL && shape->contracts[-1].declared != NULL && shape->contracts[-1].declared[0] != '\0') { got = shape->contracts[-1].declared; }
+	}
 	size_t capacity = strlen(expression) + strlen(expected) + strlen(got) + (text == NULL ? 0 : text->length) + 100;
 	char *message = malloc(capacity);
 	if (message == NULL) { static const char oom[] = "out of memory"; adamic_panic(oom, sizeof oom - 1); }
 	int prefix = snprintf(message, capacity, "write failed: %s expects %s, got %s", expression, expected, text == NULL ? got : "");
 	if (text != NULL) { memcpy(message + prefix, text->bytes, text->length); }
-	adamic_panic(message, (size_t)prefix + (text == NULL ? 0 : text->length));
+	size_t length = (size_t)prefix + (text == NULL ? 0 : text->length);
+	if (present && (kind == 1 || kind == 7)) { memcpy(message + length, " (number)", 9); length += 9; }
+	adamic_panic(message, length);
 }

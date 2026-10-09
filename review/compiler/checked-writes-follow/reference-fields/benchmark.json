@@ -1,0 +1,52 @@
+{
+  "instrument": "Python time.perf_counter_ns wall clock around subprocess.run; release -O2 without sanitizers; one warmup and rotated order, best of 5",
+  "machine": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "processor": "AMD EPYC 9V74 80-Core Processor",
+  "nproc": 5,
+  "cpu_quota": "400000 100000",
+  "base_sha": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "previous_sha": "2f5a3f9b42fc5e031caf695ea87636bdae0dc7e9",
+  "load_before": [
+    1.05615234375,
+    2.794921875,
+    2.162109375
+  ],
+  "load_after": [
+    1.05615234375,
+    2.794921875,
+    2.162109375
+  ],
+  "runs": {
+    "base": [
+      0.065942251,
+      0.066432339,
+      0.066836938,
+      0.070374848,
+      0.068877713
+    ],
+    "after": [
+      0.072876276,
+      0.07079839,
+      0.072711258,
+      0.068490919,
+      0.068336267
+    ],
+    "reference": [
+      0.068759174,
+      0.070642777,
+      0.072133658,
+      0.069671709,
+      0.067594049
+    ]
+  },
+  "best": {
+    "base": 0.065942251,
+    "after": 0.068336267,
+    "reference": 0.067594049
+  },
+  "slowdown_percent": {
+    "after": 3.6304735790714915,
+    "reference": 2.504916005976221
+  },
+  "change_from_previous_percent": -1.0861260536809914
+}

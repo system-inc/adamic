@@ -11,12 +11,17 @@ import (
 // IDs reuse the checker's structural identity representatives, including generic
 // instantiations. Proofs are directional: a broad value never proves a narrow slot.
 func (l *lowering) contractTypeID(declared *checker.Type) int {
+	if l.result.ContractTypeNames == nil {
+		l.result.ContractTypeNames = map[int]string{}
+	}
 	for index, representative := range l.instantiated {
 		if identicalTypes(l.checker, declared, representative) {
+			l.result.ContractTypeNames[index+1] = l.checker.TypeToString(representative)
 			return index + 1
 		}
 	}
 	l.instantiated = append(l.instantiated, declared)
+	l.result.ContractTypeNames[len(l.instantiated)] = l.checker.TypeToString(declared)
 	return len(l.instantiated)
 }
 
@@ -70,7 +75,7 @@ func (l *lowering) referenceFields(declared *checker.Type, seen map[*checker.Typ
 	for _, field := range l.checker.GetPropertiesOfType(declared) {
 		own := l.contractType(l.checker.GetTypeOfSymbol(field))
 		kind, known := l.representation(own)
-		if !known || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 || (kind != ir.Number && kind != ir.Boolean && kind != ir.String && kind != ir.MaybeNumber && kind != ir.MaybeBoolean && kind != ir.Object) {
+		if !known || accessorSymbol(field) || field.Flags&ast.SymbolFlagsMethod != 0 || (kind != ir.Number && kind != ir.Boolean && kind != ir.String && kind != ir.MaybeNumber && kind != ir.MaybeBoolean && kind != ir.Object && kind != ir.Array) {
 			return nil, false
 		}
 		child := &ir.FieldContract{Kind: kind, Declared: l.checker.TypeToString(own), Nullable: l.includesUndefined(own) || l.includesNull(own), TypeID: l.contractTypeID(own)}
@@ -82,12 +87,27 @@ func (l *lowering) referenceFields(declared *checker.Type, seen map[*checker.Typ
 				l.addContractProof(expected, child.TypeID)
 			}
 		}
+		if kind == ir.Array {
+			element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(own))
+			if element == nil {
+				return nil, false
+			}
+			child.Reference = true
+			// Runtime string arrays have tagged references. Other element domains
+			// retain allocation proofs, without recursively rebuilding cyclic types.
+			if elementKind, known := l.representation(element); known && elementKind == ir.String {
+				child.Structural = true
+				child.Fields = []ir.ContractField{{Name: "[]", Contract: l.fieldContract(element)}}
+			}
+		}
 		if kind == ir.Object {
+			child.Reference = true
 			var supported bool
 			child.Fields, supported = l.referenceFields(l.checker.GetNonNullableType(own), seen, depth+1)
 			if !supported {
 				return nil, false
 			}
+			child.Structural = true
 		}
 		fields = append(fields, ir.ContractField{Name: field.Name, Optional: field.Flags&ast.SymbolFlagsOptional != 0, Contract: child})
 	}

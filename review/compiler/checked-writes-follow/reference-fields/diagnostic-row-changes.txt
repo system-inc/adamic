@@ -1,0 +1,32 @@
+range-misfit: write failed: range.end expects 1, got 2 (number)
+nullable-number-misfit: write failed: view.count expects 1 | 2 | undefined, got 3 (number)
+compound-misfit: write failed: view.count expects 0 | 1, got 2 (number)
+number-misfit: write failed: view.count expects 1 | 2, got 3 (number)
+flags-misfit: write failed: (node as Mutable<T>).flags expects NodeFlags.Synthesized, got 0 (number)
+reference-structure: write failed: (node as Mutable<T>).parent expects { readonly name: "left"; }, got Parent
+diagnostic-inner-misfit: write failed: view.file.metadata.flags expects 16 | 32, got 0 (number)
+diagnostic-nested-misfit: write failed: view.file expects SynthesizedSourceFile, got SourceFile
+diagnostic-proof-misfit: write failed: (view as Mutable<T>).file expects SynthesizedSourceFile, got SourceFile
+diagnostic-alias-misfit: write failed: wide.flags expects 16, got 0 (number)
+never-object-misfit: write failed: values[] expects never, got { name: string; }
+never-number-misfit: write failed: values[] expects never, got 0 (number)
+never-splice-misfit: write failed: values[] expects never, got 0 (number)
+never-index-misfit: write failed: values[0] expects never, got 0 (number)
+never-nullable-misfit: write failed: view[] expects never, got { name: string; }
+flow-undefined-misfit: write failed: view.node expects undefined, got { readonly kind: string; }
+flow-node-misfit: write failed: view.node expects BinaryExpression | CallExpression, got Expression
+container-object-misfit: write failed: values[] expects DiagnosticWithLocation, got Diagnostic
+container-splice-misfit: write failed: values[] expects 1 | 2, got 3 (number)
+container-map-misfit: write failed: values[value] expects 1 | 2, got 3 (number)
+container-number-misfit: write failed: values[0] expects 1 | 2, got 3 (number)
+container-map-object-misfit: write failed: values[value] expects DiagnosticWithLocation, got Diagnostic
+container-fill-misfit: write failed: values[] expects 1 | 2, got 3 (number)
+container-map-values-misfit: write failed: values[0] expects 1 | 2, got 3 (number)
+container-slice-misfit: write failed: values[0] expects 1 | 2, got 3 (number)
+emit-node-misfit: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got EmitNode
+emit-callback-misfit: write failed: view.emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got EmitNode
+emit-comment-misfit: write failed: view.pos expects -1, got 0 (number)
+overload-result-misfit: write failed: createTempVariable(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got EmitNode
+generic-site-misfit: write failed: view.flags expects 16, got 0 (number)
+branch-bottom-number-misfit: write failed: values[] expects never, got 1 (number)
+overload-callback-misfit: write failed: factory(true).emitNode expects EmitNode & { autoGenerate: AutoGenerateInfo; }, got EmitNode

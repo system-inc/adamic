@@ -1,0 +1,331 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a
+=== RUN   TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== RUN   TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+=== RUN   TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a
+=== RUN   TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a
+=== PAUSE TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_replace/throw.a | 13 | 13 | 11 | 14 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a
+    counts_test.go:233: | stage3/fixtures/taste/01_diagnostic_code.a | 15 | 15 | 0 | 11 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/fallthrough.a | 65 | 65 | 35 | 82 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a
+    counts_test.go:233: | stage3/fixtures/taste/09_literal_cache.a | 6 | 6 | 18 | 26 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/neighbors.a | 18 | 18 | 20 | 35 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/shared.a | 34 | 34 | 25 | 48 | 22 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/scanner.a | 0 | 0 | 3 | 3 | 0 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_generic.a | 9 | 9 | 8 | 18 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_optional.a | 7 | 7 | 16 | 24 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_inherited.a | 14 | 14 | 24 | 37 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_instance.a | 4 | 4 | 5 | 9 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_mixed.a | 15 | 15 | 18 | 32 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a
+    counts_test.go:233: | internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 9 | 13 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a
+    counts_test.go:233: | internal/oracle/testdata/structural_statics_static.a | 3 | 3 | 4 | 8 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a
+    counts_test.go:233: | internal/oracle/testdata/statements_small_parameters.a | 34 | 34 | 9 | 44 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a
+    counts_test.go:233: | internal/oracle/testdata/statements_small_prefix.a | 35 | 35 | 9 | 35 | 13 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a
+    counts_test.go:233: | stage3/drivers/scanner/probes/nested-ancestor-call.a | 6 | 6 | 4 | 7 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a
+    counts_test.go:233: | internal/oracle/testdata/nested_reference_identity.a | 31 | 31 | 71 | 73 | 18 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a
+    counts_test.go:233: | stage3/drivers/scanner/probes/nested-sibling-callback.a | 3 | 3 | 3 | 4 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a
+=== NAME  TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a
+    counts_test.go:233: | stage3/drivers/scanner/probes/nested-generic-sibling-call.a | 5 | 5 | 1 | 6 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a
+    counts_test.go:233: | internal/oracle/testdata/scanner_nested_overload.a | 1 | 1 | 2 | 3 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a
+    counts_test.go:233: | internal/oracle/testdata/regexp_replace/arguments.a | 14 | 14 | 18 | 21 | 12 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a
+    counts_test.go:233: | internal/oracle/testdata/representation_clock_source.a | 4 | 4 | 1 | 3 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a
+    counts_test.go:233: | internal/oracle/testdata/93122fa_s1.a | 1 | 1 | 8 | 9 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a
+    counts_test.go:233: | internal/oracle/testdata/syntax_substr.a | 747 | 747 | 138 | 869 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a
+    counts_test.go:233: | internal/oracle/testdata/syntax_module_declarations.a | 4 | 4 | 9 | 17 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a
+    counts_test.go:233: | internal/oracle/testdata/93122fa_s2.a | 1 | 1 | 3 | 4 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a
+    counts_test.go:233: | internal/oracle/testdata/switch_empty_neighbors.a | 28 | 28 | 34 | 56 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a
+    counts_test.go:233: | stage3/fixtures/taste/13_void_callback.a | 4 | 4 | 8 | 14 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a
+    counts_test.go:233: | stage3/fixtures/taste/14_relative_complement.a | 10 | 10 | 25 | 37 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a | 3 | 3 | 3 | 5 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/dead_zone_write.a | 5 | 1 | 3 | 2 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a | 3 | 0 | 3 | 1 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a
+    counts_test.go:233: | stage3/fixtures/taste/05_this_type.a | 17 | 17 | 3 | 21 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a
+    counts_test.go:233: | internal/oracle/testdata/switch_case_declarations/dead_zone.a | 8 | 5 | 7 | 8 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a
+    counts_test.go:233: | stage3/fixtures/taste/07_compact.a | 12 | 12 | 80 | 88 | 5 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a
+    counts_test.go:233: | stage3/fixtures/taste/03_diagnostic_file.a | 5 | 5 | 5 | 6 | 2 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a
+    counts_test.go:233: | stage3/fixtures/taste/04_jsx_runtime.a | 10 | 10 | 13 | 22 | 4 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a
+    counts_test.go:233: | stage3/fixtures/taste/12_symbol_links.a | 11 | 11 | 13 | 26 | 7 | 0 |
+=== NAME  TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a
+    counts_test.go:233: | stage3/fixtures/taste/10_global_import_meta.a | 2 | 2 | 9 | 15 | 2 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/throw.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/01_diagnostic_code.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/fallthrough.a (0.42s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/09_literal_cache.a (0.43s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/neighbors.a (0.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/shared.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/scanner.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_generic.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_optional.a (0.39s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_inherited.a (0.36s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_instance.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_mixed.a (0.38s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_throw.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/structural_statics_static.a (0.45s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_parameters.a (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/statements_small_prefix.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-ancestor-call.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reference_identity.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-sibling-callback.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/drivers/scanner/probes/nested-generic-sibling-call.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/scanner_nested_overload.a (0.12s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/regexp_replace/arguments.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/representation_clock_source.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s1.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_substr.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/syntax_module_declarations.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/93122fa_s2.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_empty_neighbors.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/13_void_callback.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/14_relative_complement.a (0.24s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_direct.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_write.a (0.19s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone_initializer.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/05_this_type.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/switch_case_declarations/dead_zone.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/07_compact.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/03_diagnostic_file.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/04_jsx_runtime.a (0.23s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/12_symbol_links.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/stage3/fixtures/taste/10_global_import_meta.a (0.18s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.283s

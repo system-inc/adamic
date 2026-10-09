@@ -31,6 +31,8 @@ type Program struct {
 	WriteChecks     []WriteCheck
 	// WriteContracts retain allocation declarations and their directional type proofs.
 	WriteContracts []*FieldContract
+	// ContractTypeNames is diagnostic metadata, never evidence for a write.
+	ContractTypeNames map[int]string
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string

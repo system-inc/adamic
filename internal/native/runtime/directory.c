@@ -169,5 +169,7 @@ adamic_object *adamic_file_status(const adamic_string *path) {
 	result->slots[1].reference = S_ISREG(status.st_mode) ? &file_type : S_ISDIR(status.st_mode) ? &directory_type : &other_type;
 	result->slots[2].number = (double)status.st_size;
 	result->slots[3].boolean = symbolic;
+	adamic_object_field_types(result)[2] = 1;
+	adamic_object_field_types(result)[3] = 2;
 	return result;
 }
