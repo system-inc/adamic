@@ -66,3 +66,13 @@ Required setup used GOPROXY=https://proxy.golang.org|direct. Timing lines: Node 
 ## Remaining design question
 
 V3's own-field array limitation remains separate from V5's genuine intersection blocker. Which slice owns the combined array-elements plus optional own-field adapter? The current dispatcher calls it dictionary, but the source is an interface extending Array. Regardless of ownership, admitting the 119 requires the independently observed V5 EndOfFileToken representation too. This unit leaves both obligations visible rather than treating array ancestry as a complete proof.
+
+## Committed lane checks
+
+After evidence commit 13bd54ab5, the required repository-root command passes with the toolchain environment sourced:
+
+```text
+lane checks 0.9 s: gofmt and tools on 63 Go files, t.Parallel on 7 test packages; no t.Parallel analyzer on this tree; vet 7 packages
+```
+
+The first invocation omitted the environment and stopped before checks with FileNotFoundError: gofmt. The sourced rerun succeeds; both logs are retained. No Go or test file changed in this unit. The inherited V3 tree still lacks the parallel analyzer, as the lane output states. The previous unit's independent integration-analyzer receipt remains in the parent review directory. The final evidence commit is checked again before the single push to this feature branch. No main or area branch is pushed, and the predicates measurement merge remains local.
