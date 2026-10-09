@@ -142,6 +142,32 @@ class ProductTests(unittest.TestCase):
                 (root / 'patch-set.md').write_text('stale generated output')
                 self.assertEqual(APPLY.product_key(), baseline)
 
+    def test_manifest_key_ignores_checkout_permissions(self):
+        # Go keys retain executable status, not checkout umask or group access.
+        with tempfile.TemporaryDirectory() as scratch:
+            root = Path(scratch)
+            for name in ['source.json', 'apply.py', 'api/package.json', 'api/package-lock.json']:
+                path = root / name
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(name)
+                path.chmod(0o600)
+            directory = root / 'adapt/00-setup'
+            directory.mkdir(parents=True, mode=0o700)
+            script = directory / 'adapt.cjs'
+            script.write_text('module.exports = {};')
+            script.chmod(0o600)
+            with mock.patch.object(APPLY, 'stage', root), mock.patch.object(
+                    APPLY.subprocess, 'check_output', return_value=b'pinned tool'):
+                original = APPLY.product_key()
+                (root / 'source.json').chmod(0o644)
+                script.chmod(0o664)
+                directory.chmod(0o755)
+                self.assertEqual(APPLY.product_key(), original,
+                                 'checkout permissions changed the manifest key')
+                script.chmod(0o755)
+                self.assertNotEqual(APPLY.product_key(), original,
+                                    'executable input mode was omitted')
+
     def test_new_adaptation_directory_changes_hash(self):
         with tempfile.TemporaryDirectory() as scratch:
             root = Path(scratch)
