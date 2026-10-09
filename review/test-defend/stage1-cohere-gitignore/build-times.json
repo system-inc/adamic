@@ -1,0 +1,272 @@
+[
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b miss 2.87"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.12"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.21"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.18"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.11"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.11"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.13"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.18"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.27"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.20"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.21"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.18"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.20"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.20"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.18"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct 4228c79bd03b hit 1.29"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-**_matching_one_segment_too_few 34632e397a13 miss 2.87"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-entering_from_below_the_root_forgetting_the_files_above bfbe12e81b00 miss 2.66"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-precedence_read_from_the_root_down 1ab5b38cd2d5 miss 2.74"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-a_linked_exclude_file_refused 4416f41ebaa2 miss 2.84"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-%q_in_uppercase_hexadecimal 8d16d52a99d5 miss 2.83"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_[[:upper:]]_one_letter_short 73bb2e5c5aa7 miss 2.81"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_[[:xdigit:]]_taking_G f579387edba6 miss 2.94"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_an_escaped_range_end_read_as_the_backslash 9ce8c4521b73 miss 3.32"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_a_trailing_tab_trimmed_as_a_space 64b2acc6ca75 miss 2.82"
+  },
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_a_path_never_cleaned a1cd2b6209cb miss 2.69"
+  },
+  {
+    "mutant": "D1",
+    "kind": "optional",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_the_size_limit_one_byte_lower 5e014b650328 miss 3.10"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 miss 2.90"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.15"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.21"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.24"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.29"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.20"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.19"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.18"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.14"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.13"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.19"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.15"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.23"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.23"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.21"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-correct ec9e4643c581 hit 1.15"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-**_matching_one_segment_too_few 7c42db276fb9 miss 2.92"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-entering_from_below_the_root_forgetting_the_files_above 3b0496ff0ba7 miss 2.95"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-precedence_read_from_the_root_down 3554f6c74d71 miss 2.97"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-a_linked_exclude_file_refused 03795318c48e miss 2.95"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-%q_in_uppercase_hexadecimal ea4de997c27f miss 3.00"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_[[:upper:]]_one_letter_short 86af997b9076 miss 3.03"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_[[:xdigit:]]_taking_G e614a8b2b5a9 miss 2.96"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_an_escaped_range_end_read_as_the_backslash 5ad2c1c9856a miss 2.91"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_a_trailing_tab_trimmed_as_a_space 16cee60f3715 miss 2.87"
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_a_path_never_cleaned ac9c325e4329 miss 3.00"
+  },
+  {
+    "mutant": "D2",
+    "kind": "optional",
+    "output": "answers_shards_test.go:447: build gitignore-port-R2_the_size_limit_one_byte_lower 55e722289782 miss 2.69"
+  }
+]

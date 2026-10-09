@@ -1,0 +1,40 @@
+[
+  {
+    "test": "TestPathAnswersAsGosPathPackage",
+    "package": "stage1/cohere/gitignore",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/cohere/gitignore/path.ts:80",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/cohere/gitignore/path.ts:80",
+        "change": "base('') returns '' instead of '.'",
+        "rows_failed": [
+          "TestPathAnswersAsGosPathPackage"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-gitignore-tmp/cache/D1 TMPDIR=/workspace/defend-gitignore-tmp COHERE_GIT_SOURCE=/workspace/defend-gitignore-tmp/git-source timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/gitignore/ -run . > D1-matrix.log 2>&1; path_test.go:80: native and Go's path package differ: line 1: \".\\t\\t.\", Go cohere \".\\t.\\t.\""
+  },
+  {
+    "test": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "package": "stage1/cohere/gitignore",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/expression.go:768",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/expression.go:768",
+        "change": "operator = ir.BitNot becomes operator = ir.Negate",
+        "rows_failed": [
+          "TestEachGapStandsWhereGapsMdSaysItDoes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-gitignore-tmp/cache/D2 TMPDIR=/workspace/defend-gitignore-tmp COHERE_GIT_SOURCE=/workspace/defend-gitignore-tmp/git-source timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/gitignore/ -run . > D2-matrix.log 2>&1; gaps_test.go:73: natively: exit 0, stdout \"25 800 15 8 201 203 -200\\n\", stderr \"\"; Node prints \"25 800 15 8 201 203 -201\\n\""
+  }
+]

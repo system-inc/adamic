@@ -1,0 +1,19 @@
+Cloning into '/workspace/defend-gitignore-tmp/git-source'...
+warning: refs/tags/v2.51.0 6d075e4a2aa4cfa87c49a5a3b9584eae49f49b05 is not a commit!
+Note: switching to 'c44beea485f0f2feaf460e2ac87fdd5608d63cf0'.
+
+You are in 'detached HEAD' state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make in this
+state without impacting any branches by switching back to a branch.
+
+If you want to create a new branch to retain commits you create, you may
+do so (now or later) by using -c with the switch command. Example:
+
+  git switch -c <new-branch-name>
+
+Or undo this operation with:
+
+  git switch -
+
+Turn off this advice by setting config variable advice.detachedHead to false
+

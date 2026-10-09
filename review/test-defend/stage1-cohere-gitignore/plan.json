@@ -1,0 +1,22 @@
+[
+  {
+    "mutant": "D1",
+    "file": "stage1/cohere/gitignore/path.ts",
+    "line": 80,
+    "before": "export function base(path: string): string {\n\tif (path === '') {\n\t\treturn '.';",
+    "after": "export function base(path: string): string {\n\tif (path === '') {\n\t\treturn '';",
+    "menu": "change constant",
+    "target": "TestPathAnswersAsGosPathPackage",
+    "difference": "base empty string is covered by the exhaustive sweep but not by ordinary ignore queries"
+  },
+  {
+    "mutant": "D2",
+    "file": "internal/lower/expression.go",
+    "line": 768,
+    "before": "operator = ir.BitNot",
+    "after": "operator = ir.Negate",
+    "menu": "change enum constant",
+    "target": "TestEachGapStandsWhereGapsMdSaysItDoes",
+    "difference": "gap 2 uses bitwise complement ~200; gitignore port contains no complement expression; Array.from lead rejected because fresh comparison coverage reaches it"
+  }
+]

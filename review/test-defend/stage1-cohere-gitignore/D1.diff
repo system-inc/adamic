@@ -1,0 +1,11 @@
+--- a/stage1/cohere/gitignore/path.ts
++++ b/stage1/cohere/gitignore/path.ts
+@@ -77,7 +77,7 @@
+ // "/" for a path of slashes.
+ export function base(path: string): string {
+ 	if (path === '') {
+-		return '.';
++		return '';
+ 	}
+ 	let end = path.length;
+ 	while (end > 0 && path[end - 1] === '/') {

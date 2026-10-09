@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -765,7 +765,7 @@
+ 			operator = ir.Negate
+ 		}
+ 		if prefix.Operator == ast.KindTildeToken {
+-			operator = ir.BitNot
++			operator = ir.Negate
+ 		}
+ 		return ir.Unary{Operator: operator, Operand: operand}, nil
+ 	}

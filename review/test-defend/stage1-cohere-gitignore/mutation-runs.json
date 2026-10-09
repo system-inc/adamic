@@ -1,0 +1,119 @@
+[
+  {
+    "mutant": "D1",
+    "kind": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-gitignore-tmp/cache/D1",
+      "TMPDIR": "/workspace/defend-gitignore-tmp",
+      "COHERE_GIT_SOURCE": "/workspace/defend-gitignore-tmp/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": ""
+    },
+    "exit": 1,
+    "seconds": 75.99381890800214
+  },
+  {
+    "mutant": "D1",
+    "kind": "optional",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-gitignore-tmp/cache/D1",
+      "TMPDIR": "/workspace/defend-gitignore-tmp",
+      "COHERE_GIT_SOURCE": "/workspace/defend-gitignore-tmp/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": "1"
+    },
+    "exit": 0,
+    "seconds": 19.564612299996952
+  },
+  {
+    "mutant": "D2",
+    "kind": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/lower/"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-gitignore-tmp/cache/D2",
+      "TMPDIR": "/workspace/defend-gitignore-tmp",
+      "COHERE_GIT_SOURCE": "/workspace/defend-gitignore-tmp/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": ""
+    },
+    "exit": 0,
+    "seconds": 0.6563261369992688
+  },
+  {
+    "mutant": "D2",
+    "kind": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-gitignore-tmp/cache/D2",
+      "TMPDIR": "/workspace/defend-gitignore-tmp",
+      "COHERE_GIT_SOURCE": "/workspace/defend-gitignore-tmp/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": ""
+    },
+    "exit": 1,
+    "seconds": 86.24227795600018
+  },
+  {
+    "mutant": "D2",
+    "kind": "optional",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/gitignore/",
+      "-run",
+      "^TestThePortAnswersAsGoCohereAndGitDo_026$"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-gitignore-tmp/cache/D2",
+      "TMPDIR": "/workspace/defend-gitignore-tmp",
+      "COHERE_GIT_SOURCE": "/workspace/defend-gitignore-tmp/git-source",
+      "ADAMIC_GITIGNORE_LARGEST": "1"
+    },
+    "exit": 0,
+    "seconds": 17.820760253998742
+  }
+]
