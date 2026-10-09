@@ -18,6 +18,7 @@ type v8CostRow struct {
 	Disagree   int      `json:"disagree"`
 }
 
+// Not parallel: writes the process-wide ADAMIC_V8_COST_REPORT path outside t.TempDir.
 func TestV8RefusalCost(t *testing.T) {
 	data, err := os.Open("testdata/matches.json.gz")
 	if err != nil {
