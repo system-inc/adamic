@@ -9,10 +9,18 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
+func init() {
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/pow_fractional.a", true, false})
+}
+
 // The fractional cases must reach number.c rather than a folded Go constant.
-func TestNumbersFractionalPowersReachRuntime(t *testing.T) {
+func TestFractionalPowersReachRuntime(t *testing.T) {
 	t.Parallel()
-	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/numbers.a"))
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/pow_fractional.a"))
 	if err != nil {
 		t.Fatal(err)
 	}

@@ -4285,7 +4285,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
+    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
   },
   {
     "package": "flow",
@@ -4726,6 +4726,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -10901,7 +10909,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
+    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
   },
   {
     "package": "flow",
@@ -11342,6 +11350,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -17517,7 +17533,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
+    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
   },
   {
     "package": "flow",
@@ -17958,6 +17974,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -24133,7 +24157,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
+    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
   },
   {
     "package": "flow",
@@ -24574,6 +24598,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "flow",
@@ -30909,7 +30941,7 @@
     "test": "TestFreshWrites____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
+    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
   },
   {
     "package": "fresh",
@@ -31350,6 +31382,14 @@
     "program": "internal/oracle/testdata/params_namespaces_values.a",
     "path": "../oracle/testdata/params_namespaces_values.a",
     "sha256": "1d2f372c908a5be8581f1eb1c3eb684077eded63f5f465d1a0f619c9c62e2c02"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_pow_fractional_a_633be2799c28",
+    "program": "internal/oracle/testdata/pow_fractional.a",
+    "path": "../oracle/testdata/pow_fractional.a",
+    "sha256": "a358a4022f157086b55e069f501427bf65ecaffa9825e932f49601e6f12c7777"
   },
   {
     "package": "fresh",
