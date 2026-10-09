@@ -2,6 +2,7 @@
 package main
 
 import (
+	"bufio"
 	"bytes"
 	"crypto/sha256"
 	"encoding/hex"
@@ -322,8 +323,14 @@ func (c *cache) put(req request, body []byte) response {
 	return out
 }
 
+// serve frames the stream by lines rather than with one json.Decoder. Go writes
+// each request as a JSON line plus a blank line, and a put body as a quoted
+// base64 line. If the body file changes size or fails to read mid-copy, go
+// abandons the put without writing the closing quote, forgets its ID, and
+// writes the next request straight after the truncated base64. That put must
+// never be answered: go treats a response for an unknown ID as fatal.
 func serve(c *cache, input io.Reader, output io.Writer) error {
-	dec, enc := json.NewDecoder(input), json.NewEncoder(output)
+	in, enc := bufio.NewReader(input), json.NewEncoder(output)
 	if err := enc.Encode(response{KnownCommands: []string{"get", "put", "close"}}); err != nil {
 		return err
 	}
@@ -336,21 +343,65 @@ func serve(c *cache, input io.Reader, output io.Writer) error {
 			c.log("protocol output: %v", err)
 		}
 	}
+	// Bodies run to tens of megabytes, so lines are read whole, never through a
+	// bufio.Scanner token limit. carry holds a request that followed an
+	// abandoned body on the same line.
+	var carry []byte
+	next := func() ([]byte, error) {
+		if line := carry; line != nil {
+			carry = nil
+			return line, nil
+		}
+		for {
+			line, err := in.ReadBytes('\n')
+			if line = bytes.TrimSpace(line); len(line) > 0 {
+				return line, nil
+			}
+			if err != nil {
+				return nil, err
+			}
+		}
+	}
 	slots := make(chan struct{}, 16)
 	for {
-		var req request
-		if err := dec.Decode(&req); err != nil {
+		line, err := next()
+		if err != nil {
 			wg.Wait()
 			if err == io.EOF {
 				return nil
 			}
 			return err
 		}
+		var req request
+		if err := json.Unmarshal(line, &req); err != nil {
+			wg.Wait()
+			return err
+		}
 		var body []byte
 		if req.Command == "put" && req.BodySize > 0 {
-			if err := dec.Decode(&body); err != nil {
+			line, err := next()
+			if err != nil && err != io.EOF {
 				wg.Wait()
 				return err
+			}
+			// Base64 never holds a quote or a brace, so a body line that is not one
+			// closed string is a put go abandoned, possibly with EOF right behind it.
+			brace := bytes.IndexByte(line, '{')
+			if len(line) >= 2 && line[0] == '"' && line[len(line)-1] == '"' && brace < 0 {
+				if err := json.Unmarshal(line, &body); err != nil {
+					wg.Wait()
+					return err
+				}
+			} else if len(line) == 0 || line[0] == '"' {
+				arrived := max(len(line)-1, 0)
+				if brace >= 0 {
+					arrived, carry = brace-1, line[brace:]
+				}
+				c.log("put %d abandoned mid-body by go: action %x, BodySize %d, %d base64 bytes arrived; dropped without a response", req.ID, req.ActionID, req.BodySize, arrived)
+				continue
+			} else {
+				wg.Wait()
+				return fmt.Errorf("put %d: body is not a JSON string", req.ID)
 			}
 		}
 		if req.Command == "close" {
