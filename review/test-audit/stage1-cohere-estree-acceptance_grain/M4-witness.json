@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "--disable-warning=ExperimentalWarning",
+    "oracle/node.mjs",
+    "stage1/cohere/estree/main.ts",
+    "/tmp/u084/diagnostic.ts"
+  ],
+  "input": "++await 42;",
+  "before_exit": 70,
+  "after_exit": 70
+}

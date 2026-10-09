@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -42,7 +42,7 @@
+     }
+     const syntax = syntaxError(parser.nodes);
+     if(syntax !== '') {
+-        return panic(`ESTree parser: ${syntax}`);
++        return panic(`ESTree validator: ${syntax}`);
+     }
+     const converter = new Converter(parser, convertedText);
+     converter.babel = babel;

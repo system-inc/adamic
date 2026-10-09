@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:44:50.260595966Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:50.278260438Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup"}
+{"Time":"2026-10-09T11:44:50.278367372Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"=== RUN   TestDeepMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:50.279064721Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"=== PAUSE TestDeepMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:50.279095306Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup"}
+{"Time":"2026-10-09T11:44:50.279099224Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup"}
+{"Time":"2026-10-09T11:44:50.279100876Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"=== CONT  TestDeepMutants_Setup\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:54.251324908Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"    deep_mutants_product_shards_test.go:195: build three-port-mutants-go-oracle-v1 c1b672c7b112 miss 3.95\n"}
+{"Time":"2026-10-09T11:44:54.266924727Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"    deep_mutants_product_shards_test.go:202: build deep-mutants-oracle-output-v2 c593be4c3b67 miss 0.00\n"}
+{"Time":"2026-10-09T11:44:54.266993122Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Output":"--- PASS: TestDeepMutants_Setup (3.99s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:54.267044057Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeepMutants_Setup","Elapsed":3.99}
+{"Time":"2026-10-09T11:44:54.267069511Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:54.268414642Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t4.007s\n"}
+{"Time":"2026-10-09T11:44:54.268453854Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":4.008}

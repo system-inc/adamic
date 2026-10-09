@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T11:44:42.489428933Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:42.497951186Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeadlineChild"}
+{"Time":"2026-10-09T11:44:42.498025728Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeadlineChild","Output":"=== RUN   TestDeadlineChild\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:42.498209824Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeadlineChild","Output":"--- PASS: TestDeadlineChild (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:42.498216595Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestDeadlineChild","Elapsed":0}
+{"Time":"2026-10-09T11:44:42.498230963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:42.498445786Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.009s\n"}
+{"Time":"2026-10-09T11:44:42.49848102Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.009}

@@ -1,0 +1,54 @@
+{
+  "base": "12e77e8972a2e606cab6db05d84f428246a85339",
+  "bounded": true,
+  "matrix_rows": [
+    "TestAcceptanceGrammar",
+    "TestAcceptanceDiagnostics"
+  ],
+  "production": {
+    "M1": [
+      "TestAcceptanceGrammar"
+    ],
+    "M2": [
+      "TestAcceptanceGrammar"
+    ],
+    "M3": [
+      "TestAcceptanceDiagnostics"
+    ],
+    "M4": []
+  },
+  "probe": {
+    "P1": [
+      "TestAcceptanceDiagnostics",
+      "TestAcceptanceGrammar"
+    ]
+  },
+  "harness": {
+    "W1": [
+      "TestAcceptanceMutants_000",
+      "TestAcceptanceMutants_001",
+      "TestDeepMutants_000",
+      "TestDeepMutants_001",
+      "TestDeepMutants_002"
+    ],
+    "W2": [
+      "TestAcceptanceMutantsPlanted_000"
+    ],
+    "W3": [],
+    "S1": [],
+    "S2": [],
+    "S3": [],
+    "S4": [
+      "TestProduct_AcceptanceOracle"
+    ],
+    "S5": [
+      "TestProduct_AcceptanceCatchLowered",
+      "TestProduct_AcceptanceCatchNative",
+      "TestProduct_AcceptanceClassLowered",
+      "TestProduct_AcceptanceClassNative"
+    ],
+    "S6": [
+      "TestDeepMutants_Setup"
+    ]
+  }
+}

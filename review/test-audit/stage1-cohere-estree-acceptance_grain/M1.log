@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:46:52.699533661Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:46:52.729644632Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-09T11:46:52.729713002Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:18.377133912Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:24: native: line 25: Go \"stripped public abstract class C {}\", port \"stripped public\\\\u0020abstract\\\\u0020class\\\\u0020C\\\\u0020{}\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:47:18.381641324Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- FAIL: TestAcceptanceGrammar (25.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:18.381664532Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":25.65}
+{"Time":"2026-10-09T11:47:18.381690827Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics"}
+{"Time":"2026-10-09T11:47:18.381693136Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"=== RUN   TestAcceptanceDiagnostics\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:46.232449569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"    acceptance_test.go:49: 8 Go refusals explicitly refused before deadline on all builds\n"}
+{"Time":"2026-10-09T11:47:46.23364881Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"--- PASS: TestAcceptanceDiagnostics (27.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:46.233688989Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Elapsed":27.85}
+{"Time":"2026-10-09T11:47:46.233766257Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:46.237270372Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t53.537s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:47:46.237491794Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":53.538}

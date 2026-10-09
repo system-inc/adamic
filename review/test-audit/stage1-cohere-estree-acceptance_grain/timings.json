@@ -1,0 +1,187 @@
+[
+  {
+    "members": [
+      "TestProduct_AcceptanceOracle"
+    ],
+    "seconds": 1.551,
+    "runs": [
+      2.6390000000000002,
+      1.141,
+      1.5510000000000002
+    ],
+    "skips": [],
+    "cold_build_lines": [
+      "acceptance_grain_test.go:111: build estree-acceptance-mutants-go-oracle 776a81727a07 miss 2.62"
+    ]
+  },
+  {
+    "members": [
+      "TestProduct_AcceptanceCatchLowered",
+      "TestProduct_AcceptanceCatchNative",
+      "TestProduct_AcceptanceClassLowered",
+      "TestProduct_AcceptanceClassNative"
+    ],
+    "seconds": 3.443,
+    "runs": [
+      40.664,
+      3.271,
+      3.443
+    ],
+    "skips": [],
+    "cold_build_lines": [
+      "acceptance_grain_test.go:142: build estree-acceptance-mutant-lowered-catch-initializer f4de0a236cb0 miss 21.99",
+      "acceptance_grain_test.go:146: build estree-acceptance-mutant-lowered-class-keyword-name ce8a21693084 miss 22.65",
+      "acceptance_grain_test.go:142: build estree-acceptance-mutant-native-catch-initializer b5bd6627dd32 miss 18.02",
+      "acceptance_grain_test.go:150: build estree-acceptance-mutant-native-class-keyword-name c8da89a124db miss 18.00"
+    ]
+  },
+  {
+    "members": [
+      "TestAcceptanceMutants_000",
+      "TestAcceptanceMutants_001",
+      "TestAcceptanceMutantsUnion"
+    ],
+    "seconds": 6.187,
+    "runs": [
+      6.187,
+      5.675,
+      6.902
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestAcceptanceMutantsPlanted_000",
+      "TestAcceptanceMutantsPlanted_001"
+    ],
+    "seconds": 6.658,
+    "runs": [
+      4.763,
+      6.658,
+      7.223
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestAcceptanceGrammar"
+    ],
+    "seconds": 26.562,
+    "runs": [
+      24.823,
+      26.562,
+      26.792
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestAcceptanceDiagnostics"
+    ],
+    "seconds": 28.022,
+    "runs": [
+      28.022,
+      28.308,
+      27.556
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestAcceptanceDiagnosticControl"
+    ],
+    "seconds": 26.244,
+    "runs": [
+      26.244,
+      26.527,
+      24.368
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestRepositoryAgreement"
+    ],
+    "seconds": 0.011,
+    "runs": [
+      0.01,
+      0.011,
+      0.013
+    ],
+    "skips": [
+      "TestRepositoryAgreement"
+    ],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestCorpusNativeRefusals"
+    ],
+    "seconds": 0.02,
+    "runs": [
+      0.063,
+      0.02,
+      0.01
+    ],
+    "skips": [
+      "TestCorpusNativeRefusals"
+    ],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestDeadlineChild"
+    ],
+    "seconds": 0.01,
+    "runs": [
+      0.009,
+      0.01,
+      0.091
+    ],
+    "skips": [],
+    "cold_build_lines": []
+  },
+  {
+    "members": [
+      "TestDeepMutants_Setup"
+    ],
+    "seconds": 1.728,
+    "runs": [
+      4.008,
+      1.087,
+      1.728
+    ],
+    "skips": [],
+    "cold_build_lines": [
+      "deep_mutants_product_shards_test.go:195: build three-port-mutants-go-oracle-v1 c1b672c7b112 miss 3.95",
+      "deep_mutants_product_shards_test.go:202: build deep-mutants-oracle-output-v2 c593be4c3b67 miss 0.00"
+    ]
+  },
+  {
+    "members": [
+      "TestDeepMutants_000",
+      "TestDeepMutants_001",
+      "TestDeepMutants_002"
+    ],
+    "seconds": 9.007,
+    "runs": [
+      59.421,
+      9.007,
+      8.206
+    ],
+    "skips": [],
+    "cold_build_lines": [
+      "deep_mutants_product_shards_test.go:177: build deep-mutants-lowered-v1 d14723258bb5 miss 28.71",
+      "deep_mutants_product_shards_test.go:177: build deep-mutants-lowered-v1 76f891443240 miss 30.82",
+      "deep_mutants_product_shards_test.go:177: build deep-mutants-lowered-v1 77a655384664 miss 31.44",
+      "deep_mutants_product_shards_test.go:179: build deep-mutants-native-v2 ce78b75c3866 miss 12.94",
+      "deep_mutants_product_shards_test.go:179: build deep-mutants-native-v2 698c4014ce79 miss 21.55",
+      "deep_mutants_product_shards_test.go:179: build deep-mutants-native-v2 848a8573caef miss 24.50"
+    ]
+  }
+]

@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:44:26.575818956Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:26.58543599Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRepositoryAgreement"}
+{"Time":"2026-10-09T11:44:26.585696343Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRepositoryAgreement","Output":"=== RUN   TestRepositoryAgreement\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:26.585759694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRepositoryAgreement","Output":"    corpus_test.go:17: set ADAMIC_ESTREE_CORPUS to a completed Go/Node corpus audit directory\n"}
+{"Time":"2026-10-09T11:44:26.585770538Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRepositoryAgreement","Output":"--- SKIP: TestRepositoryAgreement (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:26.585773932Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestRepositoryAgreement","Elapsed":0}
+{"Time":"2026-10-09T11:44:26.585785452Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:26.585930315Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.009s\n"}
+{"Time":"2026-10-09T11:44:26.5859668Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.01}

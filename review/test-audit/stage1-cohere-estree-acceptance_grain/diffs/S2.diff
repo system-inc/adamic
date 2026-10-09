@@ -1,0 +1,10 @@
+--- a/stage1/cohere/estree/acceptance_grain_test.go
++++ b/stage1/cohere/estree/acceptance_grain_test.go
+@@ -42,6 +42,7 @@
+ }
+ 
+ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant, compile bool) (string, string) {
++    if item.name != "" { return "/tmp/u084-missing-main.ts", "/tmp/u084-missing-port" }
+ 	t.Helper()
+ 	inputs := buildcache.Inputs{
+ 		Name:  "estree-acceptance-mutant-lowered-" + item.name,

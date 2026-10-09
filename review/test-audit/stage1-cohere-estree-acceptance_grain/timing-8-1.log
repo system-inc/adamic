@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:44:37.01743644Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:37.036879527Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCorpusNativeRefusals"}
+{"Time":"2026-10-09T11:44:37.037122108Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCorpusNativeRefusals","Output":"=== RUN   TestCorpusNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:37.037152217Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCorpusNativeRefusals","Output":"    corpus_test.go:84: completed frozen corpus required\n"}
+{"Time":"2026-10-09T11:44:37.037165392Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCorpusNativeRefusals","Output":"--- SKIP: TestCorpusNativeRefusals (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:37.037171194Z","Action":"skip","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCorpusNativeRefusals","Elapsed":0}
+{"Time":"2026-10-09T11:44:37.037265522Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:37.037552777Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.020s\n"}
+{"Time":"2026-10-09T11:44:37.037649202Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.02}

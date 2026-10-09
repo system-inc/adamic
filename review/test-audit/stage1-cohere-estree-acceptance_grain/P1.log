@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:50:41.159188615Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:50:41.169866707Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar"}
+{"Time":"2026-10-09T11:50:41.170102981Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"=== RUN   TestAcceptanceGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:09.86318487Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"    acceptance_test.go:24: emitted: line 1: Go \"0 Program 0 26 0 0 0 0 26 0\", port \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:51:09.864629871Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Output":"--- FAIL: TestAcceptanceGrammar (28.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:09.864641267Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceGrammar","Elapsed":28.69}
+{"Time":"2026-10-09T11:51:09.864760234Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics"}
+{"Time":"2026-10-09T11:51:09.864767314Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"=== RUN   TestAcceptanceDiagnostics\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:31.451951686Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"    acceptance_test.go:46: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestAcceptanceDiagnostics2333326978/001/0000.ts]: timeout=false exit=\u003cnil\u003e stdout=1 stderr=\n","OutputType":"error"}
+{"Time":"2026-10-09T11:51:31.452271559Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Output":"--- FAIL: TestAcceptanceDiagnostics (21.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:31.452286172Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestAcceptanceDiagnostics","Elapsed":21.59}
+{"Time":"2026-10-09T11:51:31.452292253Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:31.454964528Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t50.293s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:31.455048496Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":50.296}

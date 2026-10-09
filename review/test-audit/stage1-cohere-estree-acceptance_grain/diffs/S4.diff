@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/acceptance_grain_test.go
++++ b/stage1/cohere/estree/acceptance_grain_test.go
+@@ -115,7 +115,7 @@
+ 			if err != nil {
+ 				return err
+ 			}
+-			return os.WriteFile(filepath.Join(directory, "oracle"), data, 0755)
++			return os.WriteFile(filepath.Join(directory, "missing/oracle"), data, 0755)
+ 		})
+ 		acceptanceOraclePath = filepath.Join(directory, "oracle")
+ 	})

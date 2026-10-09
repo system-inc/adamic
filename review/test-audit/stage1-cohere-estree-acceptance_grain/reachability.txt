@@ -1,0 +1,45 @@
+stage1/cohere/estree/recovery_mutants_product_shards_test.go:181:			t.Log(m.name + " " + name + ": " + firstDifference(want, got))
+stage1/cohere/estree/corpus_test.go:45:	binary, script := build(t, main, true)
+stage1/cohere/estree/corpus_test.go:72:			if diff := firstDifference(want.Bytes(), got); diff != "" {
+stage1/cohere/estree/corpus_test.go:91:	binary, _ := build(t, main, true)
+stage1/cohere/estree/syntax_mutants_self_setup_test.go:266:			if diff := firstDifference(prepared.Want, got); diff == "" {
+stage1/cohere/estree/estree_test.go:163:func firstDifference(want, got []byte) string {
+stage1/cohere/estree/estree_test.go:185:	if diff := firstDifference(want, onNode(t, path, "--manifest", list)); diff != "" {
+stage1/cohere/estree/estree_test.go:188:	binary, script := build(t, path, true)
+stage1/cohere/estree/estree_test.go:189:	if diff := firstDifference(want, execute(t, "", binary, "--manifest", list)); diff != "" {
+stage1/cohere/estree/estree_test.go:192:	if diff := firstDifference(want, onNode(t, script, "--manifest", list)); diff != "" {
+stage1/cohere/estree/interface_type_test.go:51:	controlBinary, controlScript := build(t, control, true)
+stage1/cohere/estree/utf8_test.go:19:	binary, script := build(t, main, true)
+stage1/cohere/estree/utf8_test.go:21:		if d := firstDifference(want, got); d != "" {
+stage1/cohere/estree/utf8_test.go:33:	binary, _ := build(t, path, true)
+stage1/cohere/estree/utf8_test.go:35:		if d := firstDifference(want, got); d == "" {
+stage1/cohere/estree/utf8_test.go:64:	binary, script := build(t, main, true)
+stage1/cohere/estree/misc_shards_test.go:114:	diff := firstDifference(want, got)
+stage1/cohere/estree/scalar_edges_split_products_test.go:227:		if firstDifference(want, got) != "" {
+stage1/cohere/estree/scalar_edges_split_products_test.go:260:		if diff := firstDifference(want, got); diff != "" {
+stage1/cohere/estree/throughput_test.go:32:	binary, _ := build(t, path, false)
+stage1/cohere/estree/throughput_test.go:45:				t.Fatalf("%s: %s", names[index], firstDifference(want, got))
+stage1/cohere/estree/recovery_test.go:37:		if diff := firstDifference(want, got); diff != "" {
+stage1/cohere/estree/gaps_test.go:81:	binary, script := build(t, path, true)
+stage1/cohere/estree/gaps_test.go:90:	t.Logf("Equal size, readTextFile text and utf8Length on Node/native/emitted JS: %q; Go distinguishes: %s", want, firstDifference(left, right))
+stage1/cohere/estree/gaps_test.go:99:	binary, _ := build(t, path, true)
+stage1/cohere/estree/lossy_input_control_products_test.go:59:		if d := firstDifference(want, got); d == "" {
+stage1/cohere/estree/three_port_mutants_deadline_shards_test.go:149:	sourceDifference := firstDifference(want, source)
+stage1/cohere/estree/three_port_mutants_deadline_shards_test.go:150:	nativeDifference := firstDifference(want, native)
+stage1/cohere/estree/three_port_mutants_deadline_shards_test.go:162:	if diff := firstDifference(source, native); diff != "" {
+stage1/cohere/estree/deep_test.go:35:	binary, script := build(t, main, true)
+stage1/cohere/estree/deep_test.go:37:		if diff := firstDifference(want, got); diff != "" {
+stage1/cohere/estree/expressions_test.go:21:		if d := firstDifference(want, got); d != "" {
+stage1/cohere/estree/expressions_test.go:35:		if d := firstDifference(want, got); d == "" {
+stage1/cohere/estree/recovery_shards_test.go:220:	diff := firstDifference(want, got)
+stage1/cohere/estree/deep_mutants_product_shards_test.go:77:			if firstDifference(want, got) != "" {
+stage1/cohere/estree/deep_mutants_product_shards_test.go:277:			if diff := firstDifference(want, got); diff == "" {
+stage1/cohere/estree/syntax_test.go:29:	binary, script := build(t, main, true)
+stage1/cohere/estree/syntax_test.go:31:		if diff := firstDifference(want, got); diff != "" {
+stage1/cohere/estree/syntax_test.go:47:	binary, script := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:21:	binary, script := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:23:		if diff := firstDifference(want, got); diff != "" {
+stage1/cohere/estree/acceptance_test.go:39:	binary, script := build(t, main, true)
+stage1/cohere/estree/acceptance_test.go:60:	binary, _ := build(t, main, true)
+stage1/cohere/estree/acceptance_grain_test.go:38:	if firstDifference(want, got) == "" {
+stage1/cohere/estree/acceptance_grain_test.go:219:		t.Log(name + ": " + firstDifference(want, got))

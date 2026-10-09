@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/protocol.ts
++++ b/stage1/cohere/estree/protocol.ts
+@@ -33,7 +33,7 @@
+         this.property = property;
+     }
+ }
+-export function dump(arena: Arena, root: number, depth = 0): string {
++export function dump(arena: Arena, root: number, depth = 1): string {
+     const parts: string[] = [];
+     const stack = [new DumpFrame(root, depth, -1)];
+     while(stack.length > 0) {
