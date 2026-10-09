@@ -1,0 +1,21 @@
+--- a/internal/native/runtime/checked_json.c
++++ b/internal/native/runtime/checked_json.c
+@@ -59,7 +59,6 @@
+  bool domain = strcmp(contract->kind, "json") == 0;
+  bool literal = strstr(contract->kind, "_literal") != NULL;
+  bool same = literal ? strncmp(contract->kind, kind, strlen(kind)) == 0 : domain ? (strcmp(kind,"non-JSON value") != 0 && strcmp(kind,"function") != 0) : strcmp(kind, contract->kind) == 0;
+- if (depth > 64) { if (terminal) mismatch(path, contract->name, "non-JSON recursion"); return false; }
+  if (strcmp(contract->kind, "ref") == 0) return inspect(value,contract->element,path,depth,terminal);
+  if (strcmp(contract->kind, "union") == 0) {
+   for (size_t i = 0; i < contract->count; i++) {
+@@ -73,8 +72,8 @@
+   }
+   return false;
+  }
+- if (!same || depth > 64) {
+-  if (terminal) mismatch(path, contract->name, depth > 64 ? "non-JSON recursion" : kind);
++ if (!same) {
++  if (terminal) mismatch(path, contract->name, kind);
+   return false;
+  }
+  if(literal) {

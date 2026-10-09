@@ -1,0 +1,8 @@
+=== RUN   TestMergedFieldAdamicUnusedRefused
+=== PAUSE TestMergedFieldAdamicUnusedRefused
+=== CONT  TestMergedFieldAdamicUnusedRefused
+    merged_fields_main_test.go:28: want Refused, got <nil>
+--- FAIL: TestMergedFieldAdamicUnusedRefused (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.061s
+FAIL

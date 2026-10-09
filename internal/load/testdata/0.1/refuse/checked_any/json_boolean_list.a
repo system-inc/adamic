@@ -1,0 +1,4 @@
+function convertJsonOption(value: any): readonly boolean[] { return value; }
+const list = convertJsonOption([false, true]);
+console.log(String(list[0] ?? true));
+console.log(String(list[1] ?? false));

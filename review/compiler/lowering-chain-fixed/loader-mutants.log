@@ -1,0 +1,18 @@
+drop-transitive: caught 5.55s
+declarations-only: caught 5.80s
+allow-conflicts: caught 9.78s
+drop-reference-audit: caught 5.86s
+duplicate-roots: caught 5.54s
+physical-prelude: caught 6.19s
+allow-cycle: caught 11.16s
+entry-types-only: caught 15.67s
+audit-entry-types-only: caught 16.35s
+skip-union-declarations: caught 8.06s
+audit-skip-union-declarations: caught 7.21s
+project-node-roots: not caught as expected: === RUN   TestProjectLoaderNodeImportsKeepReferenceRoots
+=== PAUSE TestProjectLoaderNodeImportsKeepReferenceRoots
+=== CONT  TestProjectLoaderNodeImportsKeepReferenceRoots
+--- PASS: TestProjectLoaderNodeImportsKeepReferenceRoots (0.74s)
+PASS
+ok  	github.com/system-inc/adamic/internal/load	0.759s
+

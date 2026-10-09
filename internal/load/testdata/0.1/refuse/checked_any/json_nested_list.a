@@ -1,0 +1,5 @@
+interface Config { readonly paths: readonly {readonly path: string}[]; }
+function convertToObject(raw: any): Config { return raw; }
+const config = convertToObject({paths: [{path: 'node'}]});
+console.log(config.paths[0]?.path ?? 'missing');
+console.log(config.paths[1]?.path ?? 'missing');

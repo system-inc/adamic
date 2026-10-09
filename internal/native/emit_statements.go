@@ -140,8 +140,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		value := e.value(statement.Value)
 		if e.program.Locals[statement.Local].Uninitialized && e.program.Locals[statement.Local].Global && !e.program.Locals[statement.Local].Hoisted {
 			e.line("if (!%s_declared) {", readyName(statement.Local))
-			message := "ReferenceError: Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization"
-			e.line("\tadamic_panic(%s, %d);", cString(message), len(message))
+			e.readinessError("Cannot access '" + e.program.Locals[statement.Local].Name + "' before initialization")
 			e.line("}")
 		}
 		if statement.Checked {
@@ -152,7 +151,7 @@ func (e *emitter) statement(statement ir.Statement) {
 		// while the statement still reads the value, so what the statement owns, the variable takes.
 		e.store(statement.Local, value, e.taken(value))
 		if e.program.Locals[statement.Local].Uninitialized {
-			e.line("%s = true;", e.localReady(statement.Local))
+			e.line("%s = %t;", e.localReady(statement.Local), !statement.Uninitialized)
 		} else if e.program.Locals[statement.Local].NamespaceState {
 			e.line("%s = true;", readyName(statement.Local))
 		}
@@ -201,6 +200,9 @@ func (e *emitter) statement(statement ir.Statement) {
 			break
 		}
 		object := e.value(statement.Object)
+		if statement.Object.Type() == ir.Array {
+			object = e.snapshot(ir.Object, "("+object+")->metadata")
+		}
 		value := e.value(statement.Value)
 		// The object may be undefined where the checker narrowed it away and a call since put it back
 		// (ir.Defined): JavaScript throws at the write, after the value, and so does this.
@@ -272,8 +274,8 @@ func (e *emitter) statement(statement ir.Statement) {
 		if converted {
 			e.line("}")
 		}
-		if e.fieldReadinessNeeded(statement.Name) {
-			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized)
+		if e.fieldReadinessNeeded(statement.Name) || e.constructionNeeded() {
+			e.line("adamic_object_set_initialized(%s, %s, %t);", object, cString(statement.Name), !statement.Uninitialized || statement.Unset)
 		}
 		if records {
 			e.line("}")

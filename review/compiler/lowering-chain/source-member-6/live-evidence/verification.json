@@ -1,0 +1,84 @@
+{
+  "main_merged": "6f933fa04292441026791bbf3143bdf2dbaa3f02",
+  "merge_commit": "8f8ed55c485d7530a3548d3029d39edec5541536",
+  "checks": [
+    {
+      "command": "go build ./cmd/adamic",
+      "exit": 0,
+      "log": "build.log.gz"
+    },
+    {
+      "command": "go vet ./internal/...",
+      "exit": 0,
+      "log": "vet.log.gz"
+    },
+    {
+      "command": "go test ./internal/lower -run 'Namespace|Mutable|Proven' -count=1",
+      "exit": 0,
+      "log": "lower.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run 'TestNamespace|TestTracingNamespaceValueBoundary' -count=1",
+      "exit": 0,
+      "log": "own-oracles-and-mutants.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run 'TestNativeAgreesWithNode/stage3/namespace-value/' -count=1",
+      "exit": 0,
+      "log": "controls.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run 'TestNativeAgreesWithNode/internal/oracle/testdata/namespaces' -count=1",
+      "exit": 0,
+      "log": "namespace-regression.log.gz"
+    },
+    {
+      "command": "go test ./stage1/... -run 'Gap|Gaps|Probes' -count=1",
+      "exit": 0,
+      "log": "stage1.log.gz"
+    },
+    {
+      "command": "go test ./stage3/fixtures -count=1",
+      "exit": 0,
+      "log": "stage3.log.gz"
+    },
+    {
+      "command": "go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts",
+      "exit": 0,
+      "log": "counts.log.gz"
+    },
+    {
+      "command": "python3 stage3/namespace-value/evidence/run-a-check.py",
+      "exit": 0,
+      "log": "a-check.log.gz"
+    }
+  ],
+  "mutants": [
+    {
+      "name": "drop-native-write-check",
+      "exit": 1,
+      "catcher": "TestNamespaceReadonlyWiderViewStop",
+      "log": "drop-native-write-check.log.gz"
+    },
+    {
+      "name": "drop-js-write-check",
+      "exit": 1,
+      "catcher": "TestNamespaceReadonlyWiderViewStop",
+      "log": "drop-js-write-check.log.gz"
+    },
+    {
+      "name": "drop-erased-block-guard",
+      "exit": 1,
+      "catcher": "TestNamespaceObjectAgreement/erased-block",
+      "log": "drop-erased-block-guard.log.gz"
+    }
+  ],
+  "stock_pin": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "stock_first_stop": "src/compiler/binder.ts:1109:17 TS2412",
+  "protected_files_edited": [],
+  "runtime_sources": {
+    "internal/lower/namespaces.go": "253463f60e72408fd24ec8a18dcde41c681b6c400b24a7a0afb5d856628503a7",
+    "internal/native/runtime/record.c": "96082cdf0cfb3e2d9c7c9449e217a3e438653261a5198baa0b0efeb66b976d17",
+    "internal/javascript/readiness.go": "b060199bafc0c56cae081aa29b02446cb1bdcb070ea8edc7781f77ba32fbd4ad"
+  }
+}

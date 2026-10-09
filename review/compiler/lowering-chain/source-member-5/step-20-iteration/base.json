@@ -1,0 +1,631 @@
+{
+  "compiler": "dcdbb9098f77f30ad41790c56df1bd63ad462b63",
+  "input": "docs/step-20-iteration/base-census.jsonl.gz",
+  "rows": [
+    {
+      "kind": "NotYet",
+      "reason": "a YieldExpression as a statement",
+      "units": 1,
+      "roots": 1,
+      "witnesses": [
+        "core.ts:1045:9"
+      ],
+      "all_sites": [
+        "core.ts:1045:9"
+      ],
+      "root_units": [
+        "core.ts:1043:1"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "a for...of destructuring an object",
+      "units": 4,
+      "roots": 4,
+      "witnesses": [
+        "checker.ts:26333:18",
+        "checker.ts:42067:22",
+        "program.ts:798:18"
+      ],
+      "all_sites": [
+        "checker.ts:26333:18",
+        "checker.ts:42067:22",
+        "program.ts:798:18",
+        "transformers/destructuring.ts:301:10"
+      ],
+      "root_units": [
+        "checker.ts:26331:5",
+        "checker.ts:42036:5",
+        "program.ts:779:1",
+        "transformers/destructuring.ts:244:1"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "for...of over a union of differently held members",
+      "units": 3,
+      "roots": 1,
+      "witnesses": [
+        "core.ts:2173:29"
+      ],
+      "all_sites": [
+        "core.ts:2173:29"
+      ],
+      "root_units": [
+        "scanner.ts:1023:1",
+        "scanner.ts:2615:5",
+        "scanner.ts:3468:9"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "for...of over an object",
+      "units": 129,
+      "roots": 125,
+      "witnesses": [
+        "binder.ts:1296:36",
+        "binder.ts:2061:33",
+        "binder.ts:2809:33"
+      ],
+      "all_sites": [
+        "binder.ts:1296:36",
+        "binder.ts:2061:33",
+        "binder.ts:2809:33",
+        "binder.ts:2814:33",
+        "binder.ts:2824:37",
+        "binder.ts:375:41",
+        "binder.ts:432:37",
+        "builderState.ts:522:33",
+        "checker.ts:11771:39",
+        "checker.ts:15779:30",
+        "checker.ts:21550:29",
+        "checker.ts:21679:28",
+        "checker.ts:21861:28",
+        "checker.ts:28080:36",
+        "checker.ts:28466:34",
+        "checker.ts:28480:30",
+        "checker.ts:33555:28",
+        "checker.ts:33562:34",
+        "checker.ts:33962:29",
+        "checker.ts:37008:35",
+        "checker.ts:38742:31",
+        "checker.ts:41285:28",
+        "checker.ts:41390:25",
+        "checker.ts:42104:31",
+        "checker.ts:42327:30",
+        "checker.ts:42353:30",
+        "checker.ts:42881:25",
+        "checker.ts:43023:28",
+        "checker.ts:44206:32",
+        "checker.ts:44238:26",
+        "checker.ts:44497:30",
+        "checker.ts:44942:34",
+        "checker.ts:46763:34",
+        "checker.ts:47233:30",
+        "checker.ts:47414:30",
+        "checker.ts:47764:30",
+        "checker.ts:47891:34",
+        "checker.ts:48244:49",
+        "checker.ts:48294:38",
+        "checker.ts:48371:32",
+        "checker.ts:52505:42",
+        "checker.ts:52540:42",
+        "checker.ts:52600:28",
+        "checker.ts:52717:28",
+        "checker.ts:53209:35",
+        "checker.ts:53226:35",
+        "checker.ts:53486:28",
+        "core.ts:333:21",
+        "core.ts:438:21",
+        "core.ts:510:21",
+        "core.ts:97:29",
+        "debug.ts:397:49",
+        "debug.ts:411:49",
+        "emitter.ts:3505:33",
+        "expressionToTypeNode.ts:1006:31",
+        "expressionToTypeNode.ts:1026:28",
+        "expressionToTypeNode.ts:1066:28",
+        "expressionToTypeNode.ts:987:31",
+        "factory/nodeFactory.ts:7311:25",
+        "factory/utilities.ts:1710:29",
+        "moduleNameResolver.ts:2716:35",
+        "moduleSpecifiers.ts:800:25",
+        "parser.ts:10114:44",
+        "parser.ts:10124:32",
+        "parser.ts:10224:44",
+        "parser.ts:10267:48",
+        "parser.ts:10297:36",
+        "program.ts:3202:40",
+        "program.ts:3348:28",
+        "transformers/classFields.ts:1724:30",
+        "transformers/classFields.ts:2103:34",
+        "transformers/classFields.ts:2122:38",
+        "transformers/declarations.ts:1625:48",
+        "transformers/es2015.ts:1557:33",
+        "transformers/es2015.ts:1691:33",
+        "transformers/es2015.ts:1909:33",
+        "transformers/es2015.ts:2255:30",
+        "transformers/es2015.ts:2739:32",
+        "transformers/es2015.ts:3415:39",
+        "transformers/es2015.ts:3572:32",
+        "transformers/es2015.ts:4052:35",
+        "transformers/es2015.ts:4806:28",
+        "transformers/es2017.ts:578:35",
+        "transformers/es2017.ts:616:35",
+        "transformers/es2017.ts:640:35",
+        "transformers/es2017.ts:708:33",
+        "transformers/es2018.ts:1148:33",
+        "transformers/es2018.ts:1244:33",
+        "transformers/es2018.ts:976:33",
+        "transformers/esDecorators.ts:604:30",
+        "transformers/esnext.ts:587:32",
+        "transformers/esnext.ts:625:35",
+        "transformers/generators.ts:1591:36",
+        "transformers/generators.ts:737:36",
+        "transformers/generators.ts:918:28",
+        "transformers/jsx.ts:271:28",
+        "transformers/legacyDecorators.ts:174:30",
+        "transformers/module/module.ts:1660:37",
+        "transformers/module/module.ts:1827:36",
+        "transformers/module/module.ts:1983:49",
+        "transformers/module/module.ts:2038:28",
+        "transformers/module/module.ts:2060:35",
+        "transformers/module/module.ts:846:32",
+        "transformers/module/module.ts:873:32",
+        "transformers/module/system.ts:1035:49",
+        "transformers/module/system.ts:1079:28",
+        "transformers/module/system.ts:1104:35",
+        "transformers/module/system.ts:1373:36",
+        "transformers/module/system.ts:647:49",
+        "transformers/module/system.ts:880:36",
+        "transformers/module/system.ts:899:36",
+        "transformers/module/system.ts:924:35",
+        "transformers/taggedTemplate.ts:68:36",
+        "transformers/utilities.ts:163:27",
+        "transformers/utilities.ts:194:24",
+        "transformers/utilities.ts:304:33",
+        "transformers/utilities.ts:357:31",
+        "utilities.ts:10127:29",
+        "utilities.ts:10736:31",
+        "utilities.ts:11428:28",
+        "utilities.ts:11457:26",
+        "utilities.ts:3595:33",
+        "utilities.ts:5244:30",
+        "utilities.ts:9853:31",
+        "utilities.ts:9876:31"
+      ],
+      "root_units": [
+        "binder.ts:1294:5",
+        "binder.ts:2058:5",
+        "binder.ts:2114:5",
+        "binder.ts:2806:5",
+        "binder.ts:2822:5",
+        "binder.ts:330:1",
+        "binder.ts:350:1",
+        "binder.ts:422:1",
+        "builderState.ts:521:5",
+        "checker.ts:11746:5",
+        "checker.ts:15777:5",
+        "checker.ts:21540:5",
+        "checker.ts:21677:5",
+        "checker.ts:21859:5",
+        "checker.ts:28078:5",
+        "checker.ts:28462:5",
+        "checker.ts:28475:5",
+        "checker.ts:33527:5",
+        "checker.ts:33960:5",
+        "checker.ts:37004:5",
+        "checker.ts:38741:5",
+        "checker.ts:41282:5",
+        "checker.ts:41388:5",
+        "checker.ts:42099:5",
+        "checker.ts:42326:5",
+        "checker.ts:42351:5",
+        "checker.ts:42878:5",
+        "checker.ts:43022:5",
+        "checker.ts:44163:5",
+        "checker.ts:44236:5",
+        "checker.ts:44496:5",
+        "checker.ts:44938:5",
+        "checker.ts:46751:5",
+        "checker.ts:47227:5",
+        "checker.ts:47411:5",
+        "checker.ts:47759:5",
+        "checker.ts:47885:5",
+        "checker.ts:48143:5",
+        "checker.ts:48153:9",
+        "checker.ts:48271:5",
+        "checker.ts:48336:5",
+        "checker.ts:52500:5",
+        "checker.ts:52536:5",
+        "checker.ts:52597:5",
+        "checker.ts:52712:5",
+        "checker.ts:53201:5",
+        "checker.ts:53218:5",
+        "checker.ts:53485:5",
+        "core.ts:332:1",
+        "core.ts:437:1",
+        "core.ts:509:1",
+        "debug.ts:389:5",
+        "emitter.ts:3476:5",
+        "executeCommandLine.ts:1160:1",
+        "expressionToTypeNode.ts:1024:5",
+        "expressionToTypeNode.ts:1053:5",
+        "expressionToTypeNode.ts:982:5",
+        "expressionToTypeNode.ts:995:5",
+        "factory/nodeFactory.ts:7309:1",
+        "factory/utilities.ts:1701:1",
+        "moduleNameResolver.ts:2708:1",
+        "moduleSpecifiers.ts:798:1",
+        "parser.ts:10085:5",
+        "parser.ts:10086:5",
+        "parser.ts:10087:5",
+        "parser.ts:10096:9",
+        "parser.ts:10121:9",
+        "parser.ts:10216:5",
+        "parser.ts:10233:5",
+        "parser.ts:10246:9",
+        "parser.ts:10279:9",
+        "program.ts:3201:13",
+        "program.ts:3318:5",
+        "transformers/classFields.ts:1711:5",
+        "transformers/classFields.ts:2098:5",
+        "transformers/declarations.ts:1623:25",
+        "transformers/es2015.ts:1533:5",
+        "transformers/es2015.ts:1659:5",
+        "transformers/es2015.ts:1903:5",
+        "transformers/es2015.ts:2254:5",
+        "transformers/es2015.ts:2733:5",
+        "transformers/es2015.ts:3403:5",
+        "transformers/es2015.ts:3410:9",
+        "transformers/es2015.ts:3551:5",
+        "transformers/es2015.ts:4049:5",
+        "transformers/es2015.ts:4804:5",
+        "transformers/es2017.ts:573:5",
+        "transformers/es2017.ts:611:5",
+        "transformers/es2017.ts:635:5",
+        "transformers/es2017.ts:702:5",
+        "transformers/es2018.ts:1142:5",
+        "transformers/es2018.ts:1242:5",
+        "transformers/es2018.ts:974:5",
+        "transformers/esDecorators.ts:578:5",
+        "transformers/esnext.ts:583:5",
+        "transformers/esnext.ts:622:5",
+        "transformers/generators.ts:1584:5",
+        "transformers/generators.ts:726:5",
+        "transformers/generators.ts:915:5",
+        "transformers/jsx.ts:269:5",
+        "transformers/legacyDecorators.ts:173:5",
+        "transformers/legacyDecorators.ts:88:1",
+        "transformers/module/module.ts:1627:5",
+        "transformers/module/module.ts:1817:5",
+        "transformers/module/module.ts:1960:5",
+        "transformers/module/module.ts:2033:5",
+        "transformers/module/module.ts:2054:5",
+        "transformers/module/module.ts:844:5",
+        "transformers/module/system.ts:1013:5",
+        "transformers/module/system.ts:1074:5",
+        "transformers/module/system.ts:1098:5",
+        "transformers/module/system.ts:1370:5",
+        "transformers/module/system.ts:137:1",
+        "transformers/module/system.ts:592:5",
+        "transformers/module/system.ts:868:5",
+        "transformers/module/system.ts:922:5",
+        "transformers/taggedTemplate.ts:35:1",
+        "transformers/utilities.ts:153:1",
+        "transformers/utilities.ts:179:1",
+        "transformers/utilities.ts:303:5",
+        "transformers/utilities.ts:355:1",
+        "utilities.ts:10124:1",
+        "utilities.ts:10734:5",
+        "utilities.ts:11424:5",
+        "utilities.ts:11455:1",
+        "utilities.ts:3576:1",
+        "utilities.ts:5242:1",
+        "utilities.ts:9826:1",
+        "utilities.ts:9847:5"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "iterating a value",
+      "units": 1,
+      "roots": 1,
+      "witnesses": [
+        "programDiagnostics.ts:219:39"
+      ],
+      "all_sites": [
+        "programDiagnostics.ts:219:39"
+      ],
+      "root_units": [
+        "programDiagnostics.ts:206:5"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "reading iterator",
+      "units": 1,
+      "roots": 1,
+      "witnesses": [
+        "transformers/generators.ts:1047:27"
+      ],
+      "all_sites": [
+        "transformers/generators.ts:1047:27"
+      ],
+      "root_units": [
+        "transformers/generators.ts:1031:5"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "NotYet",
+      "reason": "reading iteratorValueStatement",
+      "units": 1,
+      "roots": 2,
+      "witnesses": [
+        "transformers/es2018.ts:790:27",
+        "transformers/es2018.ts:796:42"
+      ],
+      "all_sites": [
+        "transformers/es2018.ts:790:27",
+        "transformers/es2018.ts:796:42"
+      ],
+      "root_units": [
+        "transformers/es2018.ts:786:5"
+      ],
+      "phases": [
+        "lowering"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a generator function",
+      "units": 12,
+      "roots": 12,
+      "witnesses": [
+        "checker.ts:21677:5",
+        "checker.ts:21685:5",
+        "checker.ts:21781:30"
+      ],
+      "all_sites": [
+        "checker.ts:21677:5",
+        "checker.ts:21685:5",
+        "checker.ts:21781:30",
+        "checker.ts:21822:5",
+        "checker.ts:21859:5",
+        "checker.ts:26543:5",
+        "core.ts:1043:1",
+        "core.ts:1626:5",
+        "core.ts:332:1",
+        "core.ts:437:1",
+        "core.ts:509:1",
+        "core.ts:538:1"
+      ],
+      "root_units": [
+        "checker.ts:21677:5",
+        "checker.ts:21685:5",
+        "checker.ts:21722:5",
+        "checker.ts:21822:5",
+        "checker.ts:21859:5",
+        "checker.ts:26543:5",
+        "core.ts:1043:1",
+        "core.ts:1626:5",
+        "core.ts:332:1",
+        "core.ts:437:1",
+        "core.ts:509:1",
+        "core.ts:538:1"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "a value of type { value: never; done: true; } seen as IteratorResult<Mapping, any>, which can write any where never is read",
+      "units": 1,
+      "roots": 14,
+      "witnesses": [
+        "sourcemap.ts:504:48",
+        "sourcemap.ts:505:52",
+        "sourcemap.ts:511:52"
+      ],
+      "all_sites": [
+        "sourcemap.ts:504:48",
+        "sourcemap.ts:505:52",
+        "sourcemap.ts:511:52",
+        "sourcemap.ts:512:49",
+        "sourcemap.ts:513:61",
+        "sourcemap.ts:516:52",
+        "sourcemap.ts:517:48",
+        "sourcemap.ts:518:61",
+        "sourcemap.ts:521:52",
+        "sourcemap.ts:522:53",
+        "sourcemap.ts:527:56",
+        "sourcemap.ts:528:51",
+        "sourcemap.ts:530:66",
+        "sourcemap.ts:537:20"
+      ],
+      "root_units": [
+        "sourcemap.ts:461:1"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "optional property all in CompilerOptions absent from structural source Pick<CompilerOptions, \"strict\" | \"strictBuiltinIteratorReturn\">, which can hide fields",
+      "units": 1,
+      "roots": 1,
+      "witnesses": [
+        "utilities.ts:9267:41"
+      ],
+      "all_sites": [
+        "utilities.ts:9267:41"
+      ],
+      "root_units": [
+        "utilities.ts:9041:1"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "optional property return in ArrayIterator<JSDocLink | JSDocLinkCode | JSDocLinkPlain | JSDocText> absent from structural source ArrayIterator<JSDocComment>, which can hide fields",
+      "units": 1,
+      "roots": 1,
+      "witnesses": [
+        "parser.ts:9508:101"
+      ],
+      "all_sites": [
+        "parser.ts:9508:101"
+      ],
+      "root_units": [
+        "parser.ts:9499:13"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "optional property return in ArrayIterator<Node> absent from structural source ArrayIterator<JSDocComment>, which can hide fields",
+      "units": 5,
+      "roots": 13,
+      "witnesses": [
+        "parser.ts:1054:92",
+        "parser.ts:1060:89",
+        "parser.ts:1073:89"
+      ],
+      "all_sites": [
+        "parser.ts:1054:92",
+        "parser.ts:1060:89",
+        "parser.ts:1073:89",
+        "parser.ts:1078:89",
+        "parser.ts:1083:89",
+        "parser.ts:1089:89",
+        "parser.ts:1097:97",
+        "parser.ts:1100:97",
+        "parser.ts:1106:89",
+        "parser.ts:1206:85",
+        "parser.ts:1212:85",
+        "parser.ts:1221:88",
+        "parser.ts:1229:88"
+      ],
+      "root_units": [
+        "parser.ts:1201:1",
+        "parser.ts:1209:1",
+        "parser.ts:1219:1",
+        "parser.ts:1224:1",
+        "parser.ts:505:1"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "optional property return in ArrayIterator<Statement> absent from structural source ArrayIterator<JsonObjectExpressionStatement>, which can hide fields",
+      "units": 9,
+      "roots": 14,
+      "witnesses": [
+        "commandLineParser.ts:2445:13",
+        "commandLineParser.ts:2498:65",
+        "commandLineParser.ts:2503:65"
+      ],
+      "all_sites": [
+        "commandLineParser.ts:2445:13",
+        "commandLineParser.ts:2498:65",
+        "commandLineParser.ts:2503:65",
+        "commandLineParser.ts:2506:65",
+        "commandLineParser.ts:2551:69",
+        "commandLineParser.ts:2584:61",
+        "commandLineParser.ts:2587:61",
+        "commandLineParser.ts:2594:68",
+        "commandLineParser.ts:3592:57",
+        "commandLineParser.ts:3626:69",
+        "commandLineParser.ts:3636:69",
+        "commandLineParser.ts:3796:45",
+        "parser.ts:1623:20",
+        "parser.ts:1716:122"
+      ],
+      "root_units": [
+        "commandLineParser.ts:2437:1",
+        "commandLineParser.ts:2491:5",
+        "commandLineParser.ts:2538:5",
+        "commandLineParser.ts:2593:5",
+        "commandLineParser.ts:3567:1",
+        "commandLineParser.ts:3597:5",
+        "commandLineParser.ts:3794:1",
+        "parser.ts:1603:5",
+        "parser.ts:1646:5"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    },
+    {
+      "kind": "Refused",
+      "reason": "yield (generators)",
+      "units": 12,
+      "roots": 15,
+      "witnesses": [
+        "checker.ts:21681:13",
+        "checker.ts:21693:17",
+        "checker.ts:21782:33"
+      ],
+      "all_sites": [
+        "checker.ts:21681:13",
+        "checker.ts:21693:17",
+        "checker.ts:21782:33",
+        "checker.ts:21832:13",
+        "checker.ts:21872:21",
+        "checker.ts:21875:21",
+        "checker.ts:26553:21",
+        "checker.ts:26560:29",
+        "core.ts:1045:9",
+        "core.ts:1629:17",
+        "core.ts:1632:17",
+        "core.ts:334:9",
+        "core.ts:441:9",
+        "core.ts:513:13",
+        "core.ts:539:5"
+      ],
+      "root_units": [
+        "checker.ts:21677:5",
+        "checker.ts:21685:5",
+        "checker.ts:21722:5",
+        "checker.ts:21822:5",
+        "checker.ts:21859:5",
+        "checker.ts:26543:5",
+        "core.ts:1043:1",
+        "core.ts:1626:5",
+        "core.ts:332:1",
+        "core.ts:437:1",
+        "core.ts:509:1",
+        "core.ts:538:1"
+      ],
+      "phases": [
+        "refusal_scan"
+      ]
+    }
+  ]
+}

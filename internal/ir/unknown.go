@@ -10,8 +10,9 @@ func (HasProperty) Type() Type { return Boolean }
 
 // DynamicProperty reads a runtime-tagged value. Its type remains unknown until narrowed.
 type DynamicProperty struct {
-	Object Expression
-	Name   string
+	Optional bool
+	Object   Expression
+	Name     string
 }
 
 func (DynamicProperty) Type() Type { return Union }

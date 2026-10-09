@@ -71,6 +71,13 @@ func jsonScalar(s *ir.JSONSchema) bool {
 // through an object type is refused: that type can hide additional fields or a toJSON method.
 func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
 	n := ast.SkipParentheses(node)
+	if l.uninitializedInitializer(n) && l.placeholderDeclaration(n) {
+		// This temporary field has a known nullish arm and never escapes the serializer.
+		if _, null := l.placeholderInitialValue(n, ir.Union).(ir.Box); null {
+			return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
+		}
+		return ir.Undefined{}, &ir.JSONSchema{Kind: "undefined"}, nil
+	}
 	if n.Kind == ast.KindNullKeyword {
 		return ir.JSONNull{}, &ir.JSONSchema{Kind: "null"}, nil
 	}
@@ -89,7 +96,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 					return l.notYet(v, "JSON.stringify duplicate literal keys")
 				}
 			}
-			value, child, err := l.jsonInput(v)
+			value, child, err := l.jsonLiteralField(v)
 			if err != nil {
 				return err
 			}
@@ -97,7 +104,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 				return l.notYet(v, "JSON.stringify a literal field with a two-word representation")
 			}
 			schema.Fields = append(schema.Fields, ir.JSONField{Name: l.constant(name), Slot: len(literal.Fields), Schema: child})
-			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: name, Value: value, Uninitialized: l.uninitializedInitializer(v), Unset: l.uninitializedInitializer(v)})
 			return nil
 		}
 		if literal.Tuple {
@@ -111,8 +118,8 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			}
 		} else {
 			for _, f := range n.AsObjectLiteralExpression().Properties.Nodes {
-				if f.Kind != ast.KindPropertyAssignment {
-					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread, shorthand or methods")
+				if f.Kind != ast.KindPropertyAssignment && f.Kind != ast.KindShorthandPropertyAssignment {
+					return nil, nil, l.notYet(f, "JSON.stringify a literal with spread or methods")
 				}
 				key := f.Name()
 				if !ast.IsIdentifier(key) && key.Kind != ast.KindStringLiteral && key.Kind != ast.KindNumericLiteral {
@@ -129,7 +136,11 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 						return nil, nil, l.notYet(key, "JSON.stringify a numeric key outside the array-index range (spell it as a string)")
 					}
 				}
-				if err := add(name, f.AsPropertyAssignment().Initializer); err != nil {
+				value := f
+				if f.Kind == ast.KindPropertyAssignment {
+					value = f.AsPropertyAssignment().Initializer
+				}
+				if err := add(name, value); err != nil {
 					return nil, nil, err
 				}
 			}
@@ -144,6 +155,10 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
 			})
 		}
 		return literal, schema, nil
+	}
+	if schema, known := l.constructionJSON(n); known {
+		value, err := l.expression(node)
+		return value, schema, err
 	}
 	schema, err := l.jsonType(node, l.checker.GetTypeAtLocation(node), 0)
 	if err != nil {
@@ -176,6 +191,9 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 	kinds := map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string", ir.Map: "map", ir.Closure: "function", ir.MaybeNumber: "maybe_number", ir.MaybeBoolean: "maybe_boolean", ir.Union: "union"}
 	if of == ir.Array {
 		element := l.checker.GetElementTypeOfArrayType(l.checker.GetNonNullableType(t))
+		if _, extraElement, known := l.nodeArrayLayoutOf(l.checker.GetNonNullableType(t)); known {
+			element = extraElement
+		}
 		if element == nil {
 			return nil, l.notYet(node, "JSON.stringify an array without a proven element type")
 		}
@@ -201,4 +219,26 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
 		return nil, l.notYet(node, "JSON.stringify this representation")
 	}
 	return &ir.JSONSchema{Kind: kind}, nil
+}
+
+// A shorthand name is a property symbol, not the binding it reads. Resolve
+// the value symbol just as ordinary object-literal lowering does. Its declared
+// type describes the stored representation even when the occurrence is narrowed.
+func (l *lowering) jsonLiteralField(node *ast.Node) (ir.Expression, *ir.JSONSchema, error) {
+	if node.Kind != ast.KindShorthandPropertyAssignment {
+		return l.jsonInput(node)
+	}
+	value, err := l.shorthand(node)
+	if err != nil {
+		return nil, nil, err
+	}
+	symbol := l.checker.GetShorthandAssignmentValueSymbol(node)
+	if symbol != nil && symbol.Flags&ast.SymbolFlagsAlias != 0 {
+		symbol = l.checker.GetAliasedSymbol(symbol)
+	}
+	if symbol == nil {
+		return nil, nil, l.notYet(node, "JSON.stringify shorthand without a value binding")
+	}
+	schema, err := l.jsonType(node.Name(), l.checker.GetTypeOfSymbol(symbol), 0)
+	return value, schema, err
 }

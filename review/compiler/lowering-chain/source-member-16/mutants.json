@@ -1,0 +1,116 @@
+[
+  {
+    "mutant": "skip-finally",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/skip-finally/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorCancellation$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "stdout differs"
+  },
+  {
+    "mutant": "delegate-return",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/delegate-return/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorDelegate$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "stdout differs"
+  },
+  {
+    "mutant": "defer-default",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/defer-default/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorDefaults$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "stdout differs"
+  },
+  {
+    "mutant": "first-next-argument",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/first-next-argument/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorBasic$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "stdout differs"
+  },
+  {
+    "mutant": "forget-pattern-parameter",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/forget-pattern-parameter/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorDestructuredParameterCycle$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "want the retained whole parameter's cycle refusal"
+  },
+  {
+    "mutant": "admit-cycle",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/admit-cycle/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestGeneratorCycleFrame$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "LeakSanitizer"
+  }
+]

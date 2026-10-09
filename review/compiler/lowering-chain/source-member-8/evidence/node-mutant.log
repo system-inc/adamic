@@ -1,0 +1,5 @@
+--- FAIL: TestProjectLoaderNodeImportsKeepReferenceRoots (1.30s)
+    project_loader_test.go:148: node import discarded referenced source roots
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	1.323s
+FAIL

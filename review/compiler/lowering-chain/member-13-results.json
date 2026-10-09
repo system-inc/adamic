@@ -1,0 +1,2195 @@
+{
+  "branch": "compiler/placeholder-nonnull-main",
+  "source": "bafb9ef4334a8fb36713c92b0bb372d43edd546a",
+  "tests": [
+    {
+      "test": "TestRequiredViewFieldOperandOnce",
+      "result": "pass",
+      "seconds": 1.97,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestViewFieldInheritedStaticReadiness",
+      "result": "pass",
+      "seconds": 2.02,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-read-before-set",
+      "result": "pass",
+      "seconds": 1.9,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-staged",
+      "result": "pass",
+      "seconds": 2.61,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-literal",
+      "result": "pass",
+      "seconds": 1.7,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-wrong-boolean",
+      "result": "pass",
+      "seconds": 1.71,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-wrong-type",
+      "result": "pass",
+      "seconds": 1.87,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-destructure",
+      "result": "pass",
+      "seconds": 1.88,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-boxed-string",
+      "result": "pass",
+      "seconds": 1.95,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews/default-boxed-write",
+      "result": "pass",
+      "seconds": 2.1,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestDefaultTaggedSourceViews",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/number-uninitialized",
+      "result": "pass",
+      "seconds": 1.73,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/identifier",
+      "result": "pass",
+      "seconds": 1.85,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized",
+      "result": "pass",
+      "seconds": 1.65,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/number",
+      "result": "pass",
+      "seconds": 1.94,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/wrong_type",
+      "result": "pass",
+      "seconds": 1.95,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/number",
+      "result": "pass",
+      "seconds": 1.99,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/missing",
+      "result": "pass",
+      "seconds": 1.3,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/uninitialized",
+      "result": "pass",
+      "seconds": 2.44,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/wrong_string",
+      "result": "pass",
+      "seconds": 1.8,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/string",
+      "result": "pass",
+      "seconds": 2.17,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive/boolean",
+      "result": "pass",
+      "seconds": 1.9,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestRequiredViewFieldPrimitive",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_namespace.a",
+      "result": "pass",
+      "seconds": 2,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_namespace_before_use.a",
+      "result": "pass",
+      "seconds": 1.98,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-13-view-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNamespaceUnsetUse",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-13-namespace-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNamespaceStorage",
+      "result": "pass",
+      "seconds": 1.64,
+      "log": "member-13-namespace-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryArgument",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryCall",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryOrdinaryField",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryTypedLocal",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryReturn",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryProperty",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundarySavedCopy",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryPresence",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestDefiniteAssignmentUsesReadiness",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryPlaceholderFieldCopy",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderWeakSlotStaysNotYet",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundarySavedAfterWrite",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryAssignmentResult",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryAliasReset",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryDominatingWrite",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryReturnAssignment",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullAssertionOnPresentTypeIsErased",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestOptionalWideningSpreadOverwrite",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullAssertionLowersToNullishPanic",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryElementWrite",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryOptionalReceiver",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryOptionalParameterLaterTUse",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryOptionalArrayElement",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderTypedBoundaryArrayElement",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/branch-join",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/field-join",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/field-missing-join",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/throw-before-write",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/catch-write",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/field-write",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/finally-write",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/do-loop",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/captured-write",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/captured-read",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/loop-body",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment/zero-iteration",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessElisionRequiresDominatingAssignment",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestModuleNamespaceReadinessMutants/early",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestModuleNamespaceReadinessMutants/direct_early",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestModuleNamespaceReadinessMutants",
+      "result": "pass",
+      "seconds": 0.95,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckAssignmentResult",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantSavedLeak",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestEntriesRuntimeReadiness",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantReturnAssignment",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckNullSavedLeak",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckNullBeforeUse",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckSavedLeak",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/every_alias.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/overload_every.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/parser_every_result.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_array.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_boolean.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_capture.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_catch.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_field.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_local.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_field.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_initialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_default.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_field.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_initialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_read.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_static.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_assignment.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_return.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_statement.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_map.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_null.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_initialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_uninitialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_append.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_capture.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_catch.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_const.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_default.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_exception.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_field.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_interface.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_loop.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_optional.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_spread.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_union.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak_freed.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-boxed-write.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-read-before-set.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-staged.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number-uninitialized.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number.ts",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestMigratedNonNullFixturesRemainCovered",
+      "result": "pass",
+      "seconds": 0.01,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckBeforeUse",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPossibleNonNullAdamicAssertionsAreRefused/read",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPossibleNonNullAdamicAssertionsAreRefused/typeerror",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPossibleNonNullAdamicAssertionsAreRefused",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullLiteralUnionInitializers/undefined",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestLiteralDefaultPlaceholderAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestParserNonNullSourceExtension",
+      "result": "pass",
+      "seconds": 0.75,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullLiteralUnionInitializers/null",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullLiteralUnionInitializers",
+      "result": "pass",
+      "seconds": 0.98,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNonliteralAssertionStillChecks",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullAdamicRefusal",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantBeforeUse",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckAliasReset",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullCounts",
+      "result": "pass",
+      "seconds": 1.58,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderUseCheckReturnAssignment",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestFieldReadinessRepresentation",
+      "result": "pass",
+      "seconds": 1.02,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantNullSavedLeak",
+      "result": "pass",
+      "seconds": 0.79,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantAssignmentResult",
+      "result": "pass",
+      "seconds": 0.86,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantNullBeforeUse",
+      "result": "pass",
+      "seconds": 0.87,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/identity",
+      "result": "pass",
+      "seconds": 2.2,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestViewFieldInheritedStaticReadiness",
+      "result": "pass",
+      "seconds": 0.5,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestUninitializedIsNotNullishMutant",
+      "result": "pass",
+      "seconds": 0.99,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullWeakFreedNamesExpression",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNullTagMutant",
+      "result": "pass",
+      "seconds": 0.83,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderFlowMutantAliasReset",
+      "result": "pass",
+      "seconds": 0.91,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderSpreadReadinessMutant",
+      "result": "pass",
+      "seconds": 1.27,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a",
+      "result": "pass",
+      "seconds": 0.71,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/staged",
+      "result": "pass",
+      "seconds": 2.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+      "result": "pass",
+      "seconds": 0.78,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/merged",
+      "result": "pass",
+      "seconds": 2.03,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a",
+      "result": "pass",
+      "seconds": 0.77,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullAdamicRefusal",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestImpossibleNonNullFixturesAreRefused",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/narrowed",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/structural-view",
+      "result": "pass",
+      "seconds": 1.89,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/null",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/let_initializer",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/initializer",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/undefined",
+      "result": "pass",
+      "seconds": 0.81,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/identifier",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript/present",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedNonNullTypeScript",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/number-uninitialized",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness/number",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNarrowedFieldUsesSharedReadiness",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/replace-unset-check-with-zero",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/miss-exception-path",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/order",
+      "result": "pass",
+      "seconds": 2.21,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/weak-generic-message",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/initialize-to-zero",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/miss-captured-read",
+      "result": "pass",
+      "seconds": 0.75,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/replace-missing-assertion-with-empty",
+      "result": "pass",
+      "seconds": 0.82,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants/erase-without-proof",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestReadinessMutants",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/effects",
+      "result": "pass",
+      "seconds": 1.89,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/prototype-presence",
+      "result": "pass",
+      "seconds": 1.49,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/imports/main",
+      "result": "pass",
+      "seconds": 1.61,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/wider-reference",
+      "result": "pass",
+      "seconds": 1.64,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement/erased-block",
+      "result": "pass",
+      "seconds": 1.62,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNamespaceObjectAgreement",
+      "result": "pass",
+      "seconds": 18.61,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderExplainChecksOutputC",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderExplainChecksOutputJavaScript",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/narrowed/c",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/narrowed/js",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_null/c",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderExplainChecksOutputBuild",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_null/js",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_undefined/c",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_undefined/js",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/let_initializer/c",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/narrowed/build",
+      "result": "pass",
+      "seconds": 7.67,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/narrowed",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/let_initializer/js",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/initializer/c",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_null/build",
+      "result": "pass",
+      "seconds": 7.97,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_null",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_undefined/build",
+      "result": "pass",
+      "seconds": 7.77,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/refuse_undefined",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/null/c",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/initializer/js",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/let_initializer/build",
+      "result": "pass",
+      "seconds": 7.76,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/let_initializer",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/null/js",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/undefined/c",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/undefined/js",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/present/c",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/null/build",
+      "result": "pass",
+      "seconds": 10.73,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/null",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/initializer/build",
+      "result": "pass",
+      "seconds": 11.06,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/initializer",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/present/js",
+      "result": "pass",
+      "seconds": 0.14,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/present/build",
+      "result": "pass",
+      "seconds": 10.91,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/present",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/undefined/build",
+      "result": "pass",
+      "seconds": 11.33,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks/undefined",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    },
+    {
+      "test": "TestNonNullExplainChecks",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-13-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_namespace.a",
+        "after": [
+          "8",
+          "8",
+          "24",
+          "36",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_scanner.a",
+        "after": [
+          "4",
+          "4",
+          "9",
+          "8",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_local.a",
+        "after": [
+          "12",
+          "12",
+          "11",
+          "24",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_field.a",
+        "after": [
+          "9",
+          "9",
+          "15",
+          "23",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_observe.a",
+        "after": [
+          "27",
+          "27",
+          "48",
+          "79",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+        "after": [
+          "4",
+          "4",
+          "10",
+          "16",
+          "2",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+        "after": [
+          "10",
+          "10",
+          "23",
+          "35",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+        "after": [
+          "1",
+          "1",
+          "7",
+          "10",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+        "after": [
+          "3",
+          "3",
+          "9",
+          "11",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+        "after": [
+          "8",
+          "8",
+          "15",
+          "27",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+        "after": [
+          "6",
+          "6",
+          "16",
+          "25",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+        "after": [
+          "26",
+          "26",
+          "102",
+          "121",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+        "after": [
+          "5",
+          "5",
+          "0",
+          "6",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_namespace_before_use.a",
+        "after": [
+          "3",
+          "0",
+          "3",
+          "4",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+        "after": [
+          "0",
+          "0",
+          "1",
+          "1",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+        "after": [
+          "1",
+          "0",
+          "3",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+        "after": [
+          "0",
+          "0",
+          "2",
+          "1",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+        "after": [
+          "1",
+          "0",
+          "4",
+          "4",
+          "1",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+        "after": [
+          "0",
+          "0",
+          "2",
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+        "after": [
+          "0",
+          "0",
+          "2",
+          "3",
+          "0",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+        "after": [
+          "2",
+          "1",
+          "6",
+          "7",
+          "2",
+          "0"
+        ]
+      }
+    ],
+    "changed": [
+      {
+        "row": "internal/oracle/testdata/non_null_initialized.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "55",
+          "55",
+          "50",
+          "109",
+          "18",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Literal placeholders in locals, parameters and fields no longer stop at initialization. Boxed storage and typed-use checks let the initialization writes and the rest of this program execute."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_field.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "3",
+          "2",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Class field null! is stored as a tagged placeholder. Construction and field-read retention now run before the consuming check, rather than stopping in the initializer."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_capture.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "2",
+          "0",
+          "2",
+          "0",
+          "2",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! becomes tagged storage in a captured cell. Cell/closure construction now precedes the captured-value use check."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_exception.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "1",
+          "1",
+          "3",
+          "2",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The undefined! local is installed without an assertion trap. Error construction, throw/catch cleanup and the later placeholder use now execute."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_loop.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "0",
+          "0",
+          "1",
+          "0",
+          "0",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The null! local survives initialization; the zero-iteration path reaches its tagged read instead of stopping at the initializer."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_const.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "0",
+          "0",
+          "2",
+          "1",
+          "0",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The constant stores the null tag and reaches its later read instead of stopping at null!. Tagged reads add retain/release operations."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_static_initialized.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "1",
+          "1",
+          "0"
+        ],
+        "after": [
+          "9",
+          "9",
+          "12",
+          "22",
+          "6",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Static placeholder fields retain tagged storage and accept the subsequent real writes. The rest of the initialized static/inherited-read program now executes."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_static_uninitialized.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "1",
+          "1",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "3",
+          "2",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The static field stores the null tag before the read. Its tagged field read changes retention before the unset consumption check."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_optional.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        "after": [
+          "3",
+          "3",
+          "2",
+          "6",
+          "3",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Optional field undefined! remains an observable undefined payload. The ?? fallback can execute instead of an initializer assertion stopping construction."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_spread.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "0",
+          "1",
+          "0"
+        ],
+        "after": [
+          "2",
+          "0",
+          "5",
+          "5",
+          "2",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Undefined! field initialization is deferred to typed use. Spread now copies the tagged slot and readiness before the copied-value use."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_literal_assignment.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "1",
+          "1",
+          "2",
+          "2",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): A literal null! reset now writes the null tag into placeholder storage, instead of executing a non-null assertion. Its later observation runs."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+        "before": [
+          "1",
+          "0",
+          "0",
+          "1",
+          "1",
+          "0"
+        ],
+        "after": [
+          "6",
+          "1",
+          "10",
+          "8",
+          "6",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Loop-local undefined! is stored in the captured placeholder representation. Iteration, per-iteration cells, closures and the selected closure read now precede consumption."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_interface.ts",
+        "before": [
+          "1",
+          "0",
+          "1",
+          "0",
+          "1",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "2",
+          "1",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The initialized object carries an undefined placeholder. The interface view reads its tagged slot before the consuming check, changing retained reads."
+      },
+      {
+        "row": "internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "0",
+          "0",
+          "1",
+          "1",
+          "0",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! is installed without trapping; the container-element consuming check is reached, with its own tagged read retention."
+      },
+      {
+        "row": "stage3/interface-downcasts/default-staged.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "2",
+          "2",
+          "6",
+          "7",
+          "2",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The escapedText placeholder is reserved in the object, then the real string write and checked cast/view read execute. The old initializer trap prevented those allocations."
+      },
+      {
+        "row": "stage3/interface-downcasts/default-boxed-write.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "5",
+          "5",
+          "5",
+          "12",
+          "4",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The boxed union field begins as an undefined placeholder. The checked NumberNode write keeps the boxed slot representation, and the checked read and identity observation now execute."
+      },
+      {
+        "row": "stage3/interface-downcasts/default-read-before-set.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "4",
+          "2",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object stores its undefined escapedText slot. The checked downcast/view read reaches the unset-use stop after construction, instead of trapping before object allocation."
+      },
+      {
+        "row": "stage3/interface-downcasts/readiness-identifier.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "2",
+          "2",
+          "6",
+          "8",
+          "2",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object reserves tagged escapedText storage; its subsequent string write initializes it and the completed factory/read path executes."
+      },
+      {
+        "row": "stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "4",
+          "3",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory can return the object with honest undefined storage. The later required-string use stops after object construction and retained field reads."
+      },
+      {
+        "row": "stage3/interface-downcasts/readiness-number.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "5",
+          "5",
+          "5",
+          "10",
+          "5",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves null! as a tagged number placeholder, then boxes the real zero write and performs the initialized number read."
+      },
+      {
+        "row": "stage3/interface-downcasts/readiness-number-uninitialized.ts",
+        "before": [
+          "0",
+          "0",
+          "0",
+          "0",
+          "0",
+          "0"
+        ],
+        "after": [
+          "1",
+          "0",
+          "5",
+          "3",
+          "1",
+          "0"
+        ],
+        "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves the null tag and returns the object. The later required-number use stops after construction and tagged field-read retention."
+      }
+    ],
+    "removed": [],
+    "rows": 1184
+  }
+}

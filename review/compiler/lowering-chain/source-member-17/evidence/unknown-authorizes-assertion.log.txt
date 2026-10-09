@@ -1,0 +1,19 @@
+=== RUN   TestStep21UnknownAssertions
+=== PAUSE TestStep21UnknownAssertions
+=== CONT  TestStep21UnknownAssertions
+=== RUN   TestStep21UnknownAssertions/{_readonly_message:_string_}
+=== PAUSE TestStep21UnknownAssertions/{_readonly_message:_string_}
+=== RUN   TestStep21UnknownAssertions/()_=>_string
+=== PAUSE TestStep21UnknownAssertions/()_=>_string
+=== CONT  TestStep21UnknownAssertions/{_readonly_message:_string_}
+=== CONT  TestStep21UnknownAssertions/()_=>_string
+=== NAME  TestStep21UnknownAssertions/{_readonly_message:_string_}
+    step21_exceptions_test.go:250: want Refused, got <nil>
+=== NAME  TestStep21UnknownAssertions/()_=>_string
+    step21_exceptions_test.go:250: want Refused, got <nil>
+--- FAIL: TestStep21UnknownAssertions (0.00s)
+    --- FAIL: TestStep21UnknownAssertions/{_readonly_message:_string_} (0.04s)
+    --- FAIL: TestStep21UnknownAssertions/()_=>_string (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.051s
+FAIL

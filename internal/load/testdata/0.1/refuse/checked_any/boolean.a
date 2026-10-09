@@ -1,0 +1,2 @@
+function check(value: any): boolean { return value; }
+console.log(check(false) ? 'true' : 'false');

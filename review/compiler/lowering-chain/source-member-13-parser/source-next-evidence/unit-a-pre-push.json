@@ -1,0 +1,127 @@
+{
+  "head": "351a0fdc0f9dc5bfcf32390d99d82a8d307136a3",
+  "a_check": {
+    "stage3/parser-ahead/factories/already-complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/escaped.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/scout.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/factories/scout.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-ca"
+    },
+    "stage3/parser-ahead/node-array/fields.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/node-array/presence.a": {
+      "outcome": "refused",
+      "expected": "refused an unproven relation",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/node-array/presence.a:4:13: Adamic 0.1 refuses an unproven relation from { kind: number; }[] to OptionalNodeArray<Node>: optional field cache has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object wi"
+    },
+    "stage3/parser-ahead/rulings/factory-unset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/factory-use.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-json.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-keys.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-length.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/node-array-unset.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/null-placeholder-pending.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/rulings/own-key-order.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/arrow-tryparse.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/misfit.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/named-lookahead.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/named-tryparse.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-next/speculation/truthiness-rewind.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "scope": "changed .a only; pre-push record, not the full fast gate",
+  "input_sha256": {
+    "stage3/parser-ahead/factories/already-complete.a": "b400f86a6ac87e360617c493e1ba7545cbcea67dd7298b08b19c08eda1d25773",
+    "stage3/parser-ahead/factories/complete.a": "6a10b443d466a76d33b31eced5e0667a2cbcf03f89fac5185f311ad01c062d4f",
+    "stage3/parser-ahead/factories/escaped.a": "5b22fdf6327477f47a88f0288f56b1c520de97d04bec2149940a674364c1c866",
+    "stage3/parser-ahead/factories/scout.a": "6dde0b6585353e1201b1862b0716eb5ee9d94a1d17043dc51f8b1c363f65330f",
+    "stage3/parser-ahead/node-array/fields.a": "e6238348dc7f8cf6468f1729c0a57bc2d5404177ba6590201e09cac75cd71378",
+    "stage3/parser-ahead/node-array/presence.a": "07aab11483c9cc8761512926d3cfbe8d27ffe3d463b1e351bdb9694d6a58ca1a",
+    "stage3/parser-ahead/rulings/factory-unset.a": "b2547b8939fce1fb3af43f9cf766cfbf6d411e5d4abc720b34fd38496f0f0dd4",
+    "stage3/parser-ahead/rulings/factory-use.a": "69bc92f705cff5369dafcaa7f42f6338569c132a80d0783607775446b64b7e54",
+    "stage3/parser-ahead/rulings/node-array-json.a": "b8284c85b2d85fc65f1f6fce2e02d56195072b4b7feee5bc146d2ba3bbb6b6e6",
+    "stage3/parser-ahead/rulings/node-array-keys.a": "3e52f9330f5bcf86a05499a465b23106ca28a45763afb12d681b9aac5d945f43",
+    "stage3/parser-ahead/rulings/node-array-length.a": "51519e6021e16fedc7672438e72250c53004924265c80c5944176dd6a2a31d73",
+    "stage3/parser-ahead/rulings/node-array-unset.a": "6a0aaaaabf21ede47a1865d05f94c4316cb2d36b7d4043d4f3ab20fd39e1666c",
+    "stage3/parser-ahead/rulings/null-placeholder-pending.a": "890984de675d456aa4b47c9b135ddda77ad2394074e84d2254bdee8b5566e043",
+    "stage3/parser-ahead/rulings/own-key-order.a": "fa985d63f4807566e13a40fe1c44328cbbccf7df4d8ea416788c9a6c857270e3",
+    "stage3/parser-next/speculation/arrow-tryparse.a": "2490907fc82ffabe9add511147a772b51aee06f6bbb3fa3f9e3bb4dabf407a3b",
+    "stage3/parser-next/speculation/misfit.a": "1209cb3741181e653d4c0d6099e8f03b8284c74328958a7eb2fedb512a9c8487",
+    "stage3/parser-next/speculation/named-lookahead.a": "a48f99f1febf494c263fb149636e1e2ce13b7bf08ca31f38a1b1adc088afdad1",
+    "stage3/parser-next/speculation/named-tryparse.a": "930556a2432c36fff1af02d03c9ec9a96cb12a187571e3cee19f1ddc5233dee6",
+    "stage3/parser-next/speculation/truthiness-rewind.a": "f5a6356ad6ec14fdc63e6b345475e481bab4d35a26414a4eddf5b09e633163eb"
+  },
+  "worktree_status": " M docs/step24-parser-contract.md\n M internal/lower/cast.go\n M internal/lower/cast_proof.go\n M internal/lower/factory_unset.go\n M internal/oracle/parser_construction_test.go\n M stage3/parser-ahead/check-local.py\n M stage3/parser-ahead/rulings/STATUS.md\n M stage3/parser-ahead/rulings/null-placeholder-pending.a\n M stage3/parser-ahead/rulings/observe.cjs\n?? internal/lower/speculation.go\n?? internal/oracle/parser_speculation_test.go\n?? stage3/parser-next/\n"
+}

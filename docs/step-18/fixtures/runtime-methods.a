@@ -1,0 +1,21 @@
+// Receiver preservation for a class satisfying builder.ts:528's callable view.
+class Counter {
+	count = 0;
+	readonly label: string;
+	constructor(label: string) { this.label = label; }
+	add(n: number): number {
+		this.count += n;
+		console.log(`${this.label}:${this.count}`);
+		return this.count;
+	}
+}
+let receiver = new Counter(`first${1}`);
+function replaceReceiver(): number {
+	receiver = new Counter(`second${2}`);
+	return 3;
+}
+receiver.add?.(replaceReceiver());
+receiver.add?.(4);
+function fresh(): Counter { return new Counter(`fresh${3}`); }
+fresh().add?.(6);
+console.log(`${receiver.count}`);

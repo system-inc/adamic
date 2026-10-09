@@ -1,0 +1,11 @@
+--- internal/native/runtime/union.c
++++ internal/native/runtime/union.c
+@@ -190,7 +190,7 @@
+     // Primitive boxing has no user-defined own fields. String's length is
+     // its own non-enumerable UTF-16 length; prototype members are refused by lowering.
+     if (value->kind == adamic_kind_string) {
+-        if (strcmp(name, "length") == 0) return adamic_box_number(adamic_string_length((adamic_string *)value));
++        if (strcmp(name, "length") == 0) return adamic_box_number((double)((adamic_string *)value)->length);
+         size_t index;
+         if (array_key(name, &index)) adamic_panic("dynamic string index needs UTF-16 element metadata", sizeof "dynamic string index needs UTF-16 element metadata" - 1);
+         return NULL;

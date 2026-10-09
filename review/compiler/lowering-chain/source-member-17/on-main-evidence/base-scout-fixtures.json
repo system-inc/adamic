@@ -1,0 +1,82 @@
+[
+  {
+    "fixture": "step21_builtin_narrow_terminal.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_builtin_narrow_terminal.a:2:22: stage 0 can't lower new an Identifier yet"
+  },
+  {
+    "fixture": "step21_catch_callback.a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "fixture": "step21_dynamic.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_dynamic.a:5:27: Adamic 0.1 refuses throwing a undefined; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"
+  },
+  {
+    "fixture": "step21_dynamic_uncaught.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_dynamic_uncaught.a:2:37: Adamic 0.1 refuses throwing a undefined; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"
+  },
+  {
+    "fixture": "step21_error_subclasses.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_error_subclasses.a:29:17: Adamic 0.1 refuses throwing a Other; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"
+  },
+  {
+    "fixture": "step21_finally_callback.a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "fixture": "step21_finally_completion.a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "fixture": "step21_library_failures.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_failures.a:6:96: stage 0 can't lower instanceof against a value that isn't a declared class yet"
+  },
+  {
+    "fixture": "step21_library_host.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_host.a:18:21: stage 0 can't lower instanceof against a value that isn't a declared class yet"
+  },
+  {
+    "fixture": "step21_library_types.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_library_types.a:5:92: stage 0 can't lower instanceof against a value that isn't a declared class yet"
+  },
+  {
+    "fixture": "step21_liveness.a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "fixture": "step21_object_uncaught.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_object_uncaught.a:7:7: Adamic 0.1 refuses throwing a Payload; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"
+  },
+  {
+    "fixture": "step21_region_payload.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_region_payload.a:5:45: Adamic 0.1 refuses throwing a Failure; throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"
+  },
+  {
+    "fixture": "step21_rethrow.a",
+    "exit": 0,
+    "diagnostic": ""
+  },
+  {
+    "fixture": "step21_saved_error.a",
+    "exit": 1,
+    "diagnostic": "adamic: /workspace/adamic/internal/oracle/testdata/step21_saved_error.a:6:36: stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet"
+  },
+  {
+    "fixture": "step21_soundness_terminal.a",
+    "exit": 0,
+    "diagnostic": ""
+  }
+]

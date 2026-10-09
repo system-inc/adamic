@@ -56,7 +56,13 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("adamic_retain(%s.reference);", element)
 	}
 	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	if visit.Method == "forEach" && !visit.Returns.IsReference() {
+	if visit.Method == "forEach" && visit.Returns == 0 {
+		holds := []string{}
+		if references {
+			holds = append(holds, element+".reference")
+		}
+		e.discardClosureResult(ir.CallClosure{}, callback, "", "", call, holds...)
+	} else if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
 		e.line("adamic_value %s = %s;", answer, call)
