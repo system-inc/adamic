@@ -1,0 +1,50 @@
+[
+  {
+    "id": "B1",
+    "file": "internal/native/runtime/heap.c",
+    "line": 129,
+    "old": "\teach->free = NULL;\n",
+    "new": "",
+    "aim": "Drop fresh/spare-chunk free-list reset, targeting bulk allocation and reuse"
+  },
+  {
+    "id": "B2",
+    "file": "internal/native/runtime/map.c",
+    "line": 238,
+    "old": "\tfree(map->entries);\n\tfree(map->buckets);",
+    "new": "\tfree(map->entries);",
+    "aim": "Drop bucket storage destruction, targeting record workload cleanup"
+  },
+  {
+    "id": "B3",
+    "file": "internal/native/runtime/map.c",
+    "line": 110,
+    "old": "for (size_t bucket = hash_key(map, key) & mask;; bucket = (bucket + 1) & mask)",
+    "new": "for (size_t bucket = hash_key(map, key) & mask;; bucket = (bucket + 2) & mask)",
+    "aim": "Change collision lookup stride, targeting bulk hit/miss workloads"
+  },
+  {
+    "id": "R1",
+    "file": "internal/native/runtime/count.h",
+    "line": 38,
+    "old": "#define ADAMIC_COUNT_FREE() (adamic_counted.frees++, adamic_counted.live--)",
+    "new": "#define ADAMIC_COUNT_FREE() (adamic_counted.frees++)",
+    "aim": "Drop immediate live-count decrement, contrasting direct live assertions with exit counts"
+  },
+  {
+    "id": "R2",
+    "file": "internal/native/runtime/class_inheritance.c",
+    "line": 32,
+    "old": "for (size_t index = 0; index < object->shape->count; index++)",
+    "new": "for (size_t index = 1; index < object->shape->count; index++)",
+    "aim": "Off-by-one first child, targeting two-reference chain destruction"
+  },
+  {
+    "id": "R3",
+    "file": "internal/native/runtime/heap.c",
+    "line": 366,
+    "old": "\tdraining = false;\n",
+    "new": "",
+    "aim": "Drop drain reset, targeting a second release after earlier drain completion"
+  }
+]

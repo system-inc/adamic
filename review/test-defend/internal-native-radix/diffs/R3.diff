@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -363,7 +363,6 @@
+ 	while (freeing_count > 0) {
+ 		free_one(freeing[--freeing_count]);
+ 	}
+-	draining = false;
+ }
+ 
+ void adamic_release(void *value) {

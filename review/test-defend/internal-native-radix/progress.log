@@ -1,0 +1,6 @@
+clean matrix 1 72.03
+Traceback (most recent call last):
+  File "/workspace/scratch/defend-radix/run.py", line 21, in <module>
+    r=run('clean','matrix','^('+'|'.join(rows)+')$');assert not r['failed'],'red bounded baseline'
+                                                            ^^^^^^^^^^^^^^^
+AssertionError: red bounded baseline

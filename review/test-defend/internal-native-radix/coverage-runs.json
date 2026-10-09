@@ -1,0 +1,82 @@
+[
+  {
+    "test": "TestRecordBenchmark",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRecordBenchmark.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRecordBenchmark$"
+    ],
+    "exit": 0,
+    "wall": 63.99046160599755
+  },
+  {
+    "test": "TestRuntimeStringEquality",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRuntimeStringEquality.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeStringEquality$"
+    ],
+    "exit": 0,
+    "wall": 10.012007299003017
+  },
+  {
+    "test": "TestRuntimeReleasePaths",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRuntimeReleasePaths.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeReleasePaths$"
+    ],
+    "exit": 0,
+    "wall": 15.044766387996788
+  },
+  {
+    "test": "TestRegExpIteratorResultShape",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/native",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-native-radix/TestRegExpIteratorResultShape.cover",
+      "./internal/native/",
+      "-run",
+      "^TestRegExpIteratorResultShape$"
+    ],
+    "exit": 0,
+    "wall": 1.9837178269990545
+  }
+]

@@ -1,0 +1,100 @@
+internal/native/case_test.go:81:	adamic_release(lower);
+internal/native/case_test.go:86:		adamic_release(upper_case);
+internal/native/case_test.go:88:	adamic_release(string);
+internal/native/case_test.go:125:			adamic_release(string);
+internal/native/library_map_set_iterator_test.go:22:	adamic_map *map = adamic_map_new(false, false);
+internal/native/library_map_set_iterator_test.go:26:			adamic_map_set(map, (adamic_value){.number = i}, (adamic_value){.number = i});
+internal/native/library_map_set_iterator_test.go:32:				total += adamic_map_get(map, (adamic_value){.number = i})->number;
+internal/native/library_map_set_iterator_test.go:40:		adamic_map_iterator *iterator = held ? adamic_map_iterate(map) : NULL;
+internal/native/library_map_set_iterator_test.go:42:			if (adamic_map_iterator_next(iterator, &key, &value)) { return 3; }
+internal/native/library_map_set_iterator_test.go:44:			adamic_map_iterator *active = adamic_map_iterate(map);
+internal/native/library_map_set_iterator_test.go:45:			if (adamic_map_iterator_next(iterator, &key, &value)) { return 4; }
+internal/native/library_map_set_iterator_test.go:47:			adamic_release(active);
+internal/native/library_map_set_iterator_test.go:50:			adamic_map_set(map, (adamic_value){.number = i}, (adamic_value){.number = i});
+internal/native/library_map_set_iterator_test.go:51:			if (!adamic_map_delete(map, (adamic_value){.number = i})) { return 6; }
+internal/native/library_map_set_iterator_test.go:54:			if (adamic_map_iterator_next(iterator, &key, &value)) { return 7; }
+internal/native/library_map_set_iterator_test.go:55:			adamic_release(iterator);
+internal/native/library_map_set_iterator_test.go:62:	adamic_release(map);
+internal/native/element_borrow_test.go:50:		if strings.Contains(generated, "adamic_release("+name+");") {
+internal/native/dtoa_test.go:42:		adamic_release(text);
+internal/native/dtoa_test.go:178:	adamic_release(text);
+internal/native/map_hash_test.go:33:			const signature = "uint64_t adamic_map_number_hash(double number) {"
+internal/native/loop_borrow_test.go:78:					if !program.Locals[loop.Local].Borrowed || strings.Contains(generated, "adamic_release("+name+")") || strings.Contains(generated, name+" = adamic_retain(") {
+internal/native/loop_borrow_test.go:150:			counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
+internal/native/loop_borrow_test.go:264:		counted := strings.Contains(body, "adamic_release("+iterator[1]+");")
+internal/native/normalize_benchmark_test.go:64: adamic_release(out); adamic_release(input); return 0;
+internal/native/closure_convention_test.go:159:		{"function-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_counted_code erased = (adamic_counted_code)wrong;\n", "cast-function-type-strict"},
+internal/native/closure_convention_test.go:160:		{"void-pointer-cast", "static adamic_value wrong(adamic_closure *self, size_t count, adamic_value *arguments) { return (adamic_value){.number = (double)count}; }\nstatic adamic_closure *erased(void) { return adamic_counted_closure_new((void *)wrong, 0); }\n", "generic association"},
+internal/native/radix_test.go:33:		adamic_release(text);
+internal/native/radix_test.go:117:	adamic_release(text);
+internal/native/record_test.go:66:	if err := Build(recordHarness(t), binary, Options{Sanitize: true, Count: true}); err != nil {
+internal/native/record_test.go:176:	flags := Flags(Options{Sanitize: true, Count: true})
+internal/native/record_test.go:218:	{"overwrite-key-leaked", "map.c", "adamic_release(key.reference);", "(void)key;", "references", "LeakSanitizer"},
+internal/native/record_test.go:219:	{"stored-key-freed", "record.c", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);", "adamic_map_set(table(record), (adamic_value){.reference = key}, value);\n\tadamic_release(key);", "semantics", "AddressSanitizer: heap-use-after-free"},
+internal/native/record_test.go:220:	{"own-slot-null-read", "record.c", "return adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "adamic_value *missing = NULL;\n\tvolatile double observed = missing->number;\n\t(void)observed;\n\treturn adamic_map_get(table(record), (adamic_value){.reference = (void *)key});", "prototypes", "runtime error: member access within null pointer"},
+internal/native/record_test.go:256:		{"prototype-membership-restored", "return adamic_record_get(record, key) != NULL;", "return adamic_record_get_own(record, key) != NULL || prototype_member(key);", "missing-has"},
+internal/native/heap_test.go:28:	adamic_release(text);
+internal/native/heap_test.go:110:			adamic_release(items[index]);
+internal/native/library_test.go:20:	flags := Flags(Options{Sanitize: true, Count: true, slabs: true, cpu: "haswell"})
+internal/native/runtime_profile_test.go:20: adamic_release(NULL);
+internal/native/runtime_profile_test.go:21: adamic_release(&literal);
+internal/native/runtime_profile_test.go:24: adamic_release(text);
+internal/native/runtime_profile_test.go:25: if(adamic_counted.live != 1) {fprintf(stderr,"shared release left %zu values\n",adamic_counted.live);return 1;}
+internal/native/runtime_profile_test.go:27: adamic_release(text);
+internal/native/runtime_profile_test.go:28: if(adamic_counted.live != 0) {fprintf(stderr,"last release left %zu values\n",adamic_counted.live);return 1;}
+internal/native/runtime_profile_test.go:39: adamic_release(chain);
+internal/native/runtime_profile_test.go:40: if(adamic_counted.live != 0) {fprintf(stderr,"chain release left %zu values\n",adamic_counted.live);return 1;}
+internal/native/runtime_profile_test.go:48:		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
+internal/native/runtime_profile_test.go:70: adamic_release(left);adamic_release(copy);adamic_release(other);
+internal/native/normalize_test.go:79:		adamic_release(normalized);
+internal/native/normalize_test.go:81:	adamic_release(string);
+internal/native/normalize_test.go:119:			adamic_release(string);
+internal/native/math_test.go:54:			adamic_release(fixed);
+internal/native/normalize_random_test.go:60:  adamic_release(input);
+internal/native/string_test.go:45:	adamic_release(written);
+internal/native/string_test.go:50:	adamic_release(string);
+internal/native/string_test.go:83:			adamic_release(head);
+internal/native/string_test.go:84:			adamic_release(tail);
+internal/native/string_test.go:85:			adamic_release(joined);
+internal/native/string_test.go:103:			adamic_release(points);
+internal/native/string_test.go:105:		adamic_release(left);
+internal/native/string_test.go:106:		adamic_release(right);
+internal/native/typed_array_test.go:29:			if err := Build(string(source), binary, Options{Sanitize: sanitized, Count: true}); err != nil {
+internal/native/string_build_test.go:44:            adamic_release(text);
+internal/native/string_build_test.go:63:            adamic_release(text);
+internal/native/string_build_test.go:68:            adamic_release(text);
+internal/native/string_build_test.go:72:    adamic_release(text);
+internal/native/string_views_test.go:29: adamic_release(whole);
+internal/native/string_views_test.go:41: adamic_release(first);adamic_release(parent);
+internal/native/string_views_test.go:42: if(adamic_counted.live!=2 || inner->owner->heap.references!=1) {fprintf(stderr,"parent not held\n");return 1;}
+internal/native/string_views_test.go:43: adamic_write_line(adamic_stdout,inner);adamic_release(inner);
+internal/native/string_views_test.go:44: if(adamic_counted.live!=0) {fprintf(stderr,"last view did not free parent\n");return 1;}
+internal/native/string_views_test.go:49: adamic_release(parent);adamic_release(below);adamic_release(boundary);
+internal/native/string_views_test.go:53: adamic_release(parent);adamic_write_line(adamic_stdout,tiny);adamic_release(tiny);
+internal/native/string_views_test.go:54: adamic_string *copy=stack_piece();adamic_write_line(adamic_stdout,copy);adamic_release(copy);
+internal/native/string_views_test.go:57: size_t allocations=adamic_counted.allocations, sum=0;
+internal/native/string_views_test.go:61:  sum=(sum*33+(unsigned char)at->bytes[0])%1000003;adamic_release(at);
+internal/native/string_views_test.go:63: if(adamic_counted.allocations!=allocations) {fprintf(stderr,"ASCII indexing allocated\n");return 1;}
+internal/native/string_views_test.go:64: adamic_output_flush();printf("%zu\n",sum);adamic_release(parent);
+internal/native/string_views_test.go:65: if(adamic_counted.live!=0) {fprintf(stderr,"view test leaked\n");return 1;}
+internal/native/string_views_test.go:72:		if err := Build(source, binary, Options{Sanitize: sanitize, Count: true}); err != nil {
+internal/native/units_measure_test.go:147:		}{{"sanitized", Options{Sanitize: true}}, {"release", Options{}}, {"counted", Options{Count: true}}} {
+internal/native/wasm_test.go:221:			"-DADAMIC_HANDLER="+handler[1], "-mexec-model=reactor", "-Wl,--export=malloc", "-Wl,--export=free", "-Wl,--export=adamic_release")
+internal/native/regexp_test.go:143:     same=same && adamic_string_equal(want,match->elements[k].reference);adamic_release(want);
+internal/native/regexp_test.go:151:  adamic_release(match);adamic_release(regex);adamic_release(input);
+internal/native/regexp_test.go:259: bool result=adamic_regex_test(regex,&input);adamic_release(regex);return result?1:0;
+internal/native/regexp_test.go:292: adamic_release(regex);
+internal/native/regexp_test.go:338: adamic_maybe_boolean done=adamic_regex_done(object);adamic_release(object);
+internal/native/regexp_test.go:341: done=adamic_regex_done(object);adamic_release(object);
+internal/native/string_index_test.go:38:	adamic_release(written);
+internal/native/string_index_test.go:79:		adamic_release(result);
+internal/native/string_index_test.go:94:		adamic_release(at);
+internal/native/string_index_test.go:124:				adamic_release(piece);
+internal/native/string_index_test.go:139:				adamic_release(piece);
+internal/native/string_index_test.go:147:						adamic_release(piece);
+internal/native/string_index_test.go:157:					adamic_release(piece);
+internal/native/string_index_test.go:161:			adamic_release(first);
+internal/native/string_index_test.go:162:			adamic_release(second);
+internal/native/string_index_test.go:357:			adamic_release(piece);
+internal/native/string_index_test.go:361:	adamic_release(text);
+internal/native/string_index_test.go:433:    adamic_release(heap);

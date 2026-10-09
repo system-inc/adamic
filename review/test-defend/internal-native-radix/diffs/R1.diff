@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/count.h
++++ b/internal/native/runtime/count.h
+@@ -35,7 +35,7 @@
+ 
+ #ifdef ADAMIC_COUNT
+ #define ADAMIC_COUNT_ALLOCATION() adamic_count_allocation()
+-#define ADAMIC_COUNT_FREE() (adamic_counted.frees++, adamic_counted.live--)
++#define ADAMIC_COUNT_FREE() (adamic_counted.frees++)
+ #define ADAMIC_COUNT_RETAIN() (adamic_counted.retains++)
+ #define ADAMIC_COUNT_RELEASE() (adamic_counted.releases++)
+ #define ADAMIC_COUNT_REPORT() adamic_count_report()

@@ -1,0 +1,1114 @@
+[
+  {
+    "id": "clean",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics)$"
+    ],
+    "log": "clean-matrix.log",
+    "exit": 1,
+    "wall": 72.03100736400302,
+    "failed": [
+      "TestRecordMutantsUnit03"
+    ],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRuntimeStringViews",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRuntimeStringEquality",
+      "TestRuntimeReleasePaths",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRecordMutantsUnit00",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit01",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestToStringWithARadixMatchesNode",
+      "TestRecordMutantsUnit05",
+      "TestRecordMutantsUnit04",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRecordReadMutants",
+      "TestResidentSetUnits",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodeTest262",
+      "TestMapHashProbeBound",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    record_test.go:242: want LeakSanitizer to catch mutant: fork/exec /workspace/scratch/defend-radix/tmp/TestRecordMutantsUnit03overwrite-key-leaked2553403104/001/main: text file busy\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestRecordMutantsUnit03/overwrite-key-leaked": [
+        "record_test.go:242: want LeakSanitizer to catch mutant: fork/exec /workspace/scratch/defend-radix/tmp/TestRecordMutantsUnit03overwrite-key-leaked2553403104/001/main: text file busy"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [
+      "TestRuntimeKeyKeepsBoundaries"
+    ],
+    "binary_seconds": 66.148
+  },
+  {
+    "id": "clean",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "clean-matrix-retry.log",
+    "exit": 0,
+    "wall": 61.85841205100223,
+    "failed": [],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestRegExpNativeStepLimit",
+      "TestRuntimeStringEquality",
+      "TestRuntimeStringViews",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRuntimeReleasePaths",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRecordReadMutants",
+      "TestRecordMutantsUnit05",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit00",
+      "TestRecordMutantsUnit03",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestToStringWithARadixMatchesNode",
+      "TestRegExpIteratorResultShape",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRegExpBytecodePatternUnits",
+      "TestResidentSetUnits",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodeTest262",
+      "TestMapHashProbeBound",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [],
+    "timeout": false,
+    "errors_by_row": {},
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 59.507
+  },
+  {
+    "id": "B1",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "B1-matrix.log",
+    "exit": 1,
+    "wall": 82.5197316820013,
+    "failed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestMapHashProbeBound"
+    ],
+    "passed": [
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringViews",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRecordMutantsUnit05",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit03",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodeTest262",
+      "TestRecordMutantsUnit02",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRecordMutantsUnit01",
+      "TestToStringWithARadixMatchesNode",
+      "TestResidentSetUnits",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRecordMutantsUnit00",
+      "TestRecordReadMutants",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    heap_test.go:128: control: exit status 1\n",
+      "    record_test.go:321: benchmark side 0: signal: segmentation fault\n",
+      "    heap_test.go:56: slabs, retain after the free: want AddressSanitizer's use-after-poison, got exit status 1\n",
+      "    heap_test.go:56: slabs, length after the free: want AddressSanitizer's use-after-poison, got exit status 1\n",
+      "    heap_test.go:54: slabs, untouched: want a clean run, got exit status 1\n",
+      "    map_hash_test.go:93: runtime map hash: exit status 1\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestSizeClassesShareTheirChunks": [
+        "heap_test.go:128: control: exit status 1"
+      ],
+      "TestRecordBenchmark": [
+        "record_test.go:321: benchmark side 0: signal: segmentation fault"
+      ],
+      "TestFreedValuesAreCaughtWithSlabs": [
+        "heap_test.go:56: slabs, retain after the free: want AddressSanitizer's use-after-poison, got exit status 1",
+        "heap_test.go:56: slabs, length after the free: want AddressSanitizer's use-after-poison, got exit status 1",
+        "heap_test.go:54: slabs, untouched: want a clean run, got exit status 1"
+      ],
+      "TestMapHashProbeBound/slabs": [
+        "map_hash_test.go:93: runtime map hash: exit status 1"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 75.472
+  },
+  {
+    "id": "B2",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "B2-matrix.log",
+    "exit": 1,
+    "wall": 93.07181637900067,
+    "failed": [
+      "TestRecordsAgainstNode",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit00",
+      "TestMapHashProbeBound"
+    ],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRuntimeStringViews",
+      "TestRuntimeReleasePaths",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRecordMutantsUnit05",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit03",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestToStringWithARadixMatchesNode",
+      "TestResidentSetUnits",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRegExpBytecodeTest262",
+      "TestRecordReadMutants",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    map_hash_test.go:93: runtime map hash: exit status 1\n",
+      "    map_hash_test.go:93: runtime map hash: exit status 1\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestRecordsAgainstNode/semantics": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/prototypes": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/reads": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/references": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/iteration": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/numeric": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/workload-1000000": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/bench-1000": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordMutantsUnit02/deleted-key-iterated": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRecordMutantsUnit01/uint32-max-as-index": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRecordMutantsUnit00/indices-in-insertion-order": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestMapHashProbeBound/malloc": [
+        "map_hash_test.go:93: runtime map hash: exit status 1"
+      ],
+      "TestMapHashProbeBound/slabs": [
+        "map_hash_test.go:93: runtime map hash: exit status 1"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 87.05
+  },
+  {
+    "id": "B3",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "B3-matrix.log",
+    "exit": 1,
+    "wall": 75.86985301900131,
+    "failed": [
+      "TestRecordBenchmark",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit00",
+      "TestRecordsAgainstNode",
+      "TestMapHashProbeBound",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRuntimeStringViews",
+      "TestRuntimeReleasePaths",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRecordMutantsUnit05",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit03",
+      "TestRegExpBytecodeTest262",
+      "TestRecordMutantsUnit02",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestToStringWithARadixMatchesNode",
+      "TestRegExpIteratorResultShape",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestResidentSetUnits",
+      "TestRecordReadMutants"
+    ],
+    "errors": [
+      "    record_test.go:321: benchmark side 0: signal: aborted\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:83: Node comparison differs: native 47 bytes, Node 46 bytes; first difference at 17\n",
+      "    record_test.go:83: Node comparison differs: native 24 bytes, Node 36 bytes; first difference at 13\n",
+      "    record_test.go:83: Node comparison differs: native 1472264 bytes, Node 1451860 bytes; first difference at 230\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    record_test.go:73: native: signal: aborted\n",
+      "    record_test.go:73: native: signal: aborted\n",
+      "    map_hash_test.go:131: mutant escaped or failed for another reason: exit status 1\n",
+      "    map_hash_test.go:93: runtime map hash: exit status 1\n",
+      "    map_hash_test.go:93: runtime map hash: exit status 1\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestRecordBenchmark": [
+        "record_test.go:321: benchmark side 0: signal: aborted"
+      ],
+      "TestRecordMutantsUnit01/uint32-max-as-index": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRecordsAgainstNode/semantics": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/prototypes": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/references": [
+        "record_test.go:83: Node comparison differs: native 47 bytes, Node 46 bytes; first difference at 17"
+      ],
+      "TestRecordsAgainstNode/iteration": [
+        "record_test.go:83: Node comparison differs: native 24 bytes, Node 36 bytes; first difference at 13"
+      ],
+      "TestRecordsAgainstNode/numeric": [
+        "record_test.go:83: Node comparison differs: native 1472264 bytes, Node 1451860 bytes; first difference at 230"
+      ],
+      "TestRecordMutantsUnit00/indices-in-insertion-order": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRecordsAgainstNode/workload-1000000": [
+        "record_test.go:73: native: signal: aborted"
+      ],
+      "TestRecordsAgainstNode/bench-1000": [
+        "record_test.go:73: native: signal: aborted"
+      ],
+      "TestMapHashProbeCatchesMutants/old_hash": [
+        "map_hash_test.go:131: mutant escaped or failed for another reason: exit status 1"
+      ],
+      "TestMapHashProbeBound/malloc": [
+        "map_hash_test.go:93: runtime map hash: exit status 1"
+      ],
+      "TestMapHashProbeBound/slabs": [
+        "map_hash_test.go:93: runtime map hash: exit status 1"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 69.354
+  },
+  {
+    "id": "R1",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "R1-matrix.log",
+    "exit": 1,
+    "wall": 91.19207984400055,
+    "failed": [
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringViews"
+    ],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRecordMutantsUnit05",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeTest262",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit03",
+      "TestRecordMutantsUnit04",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpIteratorResultShape",
+      "TestRecordsAgainstNode",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestToStringWithARadixMatchesNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRecordMutantsUnit00",
+      "TestResidentSetUnits",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestMapHashProbeBound",
+      "TestRecordReadMutants",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths2636537541/001/release: exit status 1\n",
+      "    string_views_test.go:75: /tmp/defend-radix/TestRuntimeStringViews4273642455/001/views: exit status 1\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestRuntimeReleasePaths": [
+        "runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths2636537541/001/release: exit status 1"
+      ],
+      "TestRuntimeStringViews": [
+        "string_views_test.go:75: /tmp/defend-radix/TestRuntimeStringViews4273642455/001/views: exit status 1"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 85.19
+  },
+  {
+    "id": "R2",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "R2-matrix.log",
+    "exit": 1,
+    "wall": 85.32269026599897,
+    "failed": [
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRecordMutantsUnit01",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRuntimeReleasePaths",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRecordMutantsUnit02",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRecordsAgainstNode",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRecordMutantsUnit00",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRecordReadMutants"
+    ],
+    "passed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRecordBenchmark",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpNativeStepLimit",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit05",
+      "TestRecordMutantsUnit03",
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestToStringWithARadixMatchesNode",
+      "TestRuntimeStringViews",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestResidentSetUnits",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestMapHashProbeBound",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    regexp_test.go:456: native regex oracle ([]): exit status 1\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    regexp_test.go:521: native regex oracle ([]): exit status 1\n",
+      "    runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths2971802444/001/release: exit status 1\n",
+      "    regexp_test.go:556: native regex oracle ([]): exit status 1\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    regexp_test.go:546: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:53: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:531: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:441: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:436: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:431: native regex oracle ([]): exit status 1\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    record_test.go:73: native: exit status 23\n",
+      "    regexp_test.go:406: native regex oracle ([]): exit status 1\n",
+      "    record_test.go:235: order mutant must finish without sanitizer failure: exit status 23\n",
+      "    record_test.go:273: fallback mutant must finish without sanitizer failures: exit status 23\n",
+      "    regexp_test.go:396: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:381: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:486: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:516: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:501: native regex oracle ([]): exit status 1\n",
+      "    regexp_test.go:496: native regex oracle ([]): exit status 1\n",
+      "    record_test.go:273: fallback mutant must finish without sanitizer failures: exit status 23\n",
+      "    regexp_test.go:461: native regex oracle ([]): exit status 1\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestRegExpBytecodeRandomNodeUnit17": [
+        "regexp_test.go:456: native regex oracle ([]): exit status 1"
+      ],
+      "TestRecordMutantsUnit01/uint32-max-as-index": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit30": [
+        "regexp_test.go:521: native regex oracle ([]): exit status 1"
+      ],
+      "TestRuntimeReleasePaths": [
+        "runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths2971802444/001/release: exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit37": [
+        "regexp_test.go:556: native regex oracle ([]): exit status 1"
+      ],
+      "TestRecordMutantsUnit02/deleted-key-iterated": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit35": [
+        "regexp_test.go:546: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeTest262": [
+        "regexp_test.go:53: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit32": [
+        "regexp_test.go:531: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit14": [
+        "regexp_test.go:441: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit13": [
+        "regexp_test.go:436: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit12": [
+        "regexp_test.go:431: native regex oracle ([]): exit status 1"
+      ],
+      "TestRecordsAgainstNode/semantics": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/prototypes": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/reads": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/references": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/iteration": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/numeric": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/workload-1000000": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRecordsAgainstNode/bench-1000": [
+        "record_test.go:73: native: exit status 23"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit07": [
+        "regexp_test.go:406: native regex oracle ([]): exit status 1"
+      ],
+      "TestRecordMutantsUnit00/indices-in-insertion-order": [
+        "record_test.go:235: order mutant must finish without sanitizer failure: exit status 23"
+      ],
+      "TestRecordReadMutants/prototype-membership-restored": [
+        "record_test.go:273: fallback mutant must finish without sanitizer failures: exit status 23"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit05": [
+        "regexp_test.go:396: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit02": [
+        "regexp_test.go:381: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit23": [
+        "regexp_test.go:486: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit29": [
+        "regexp_test.go:516: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit26": [
+        "regexp_test.go:501: native regex oracle ([]): exit status 1"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit25": [
+        "regexp_test.go:496: native regex oracle ([]): exit status 1"
+      ],
+      "TestRecordReadMutants/missing-read-silent": [
+        "record_test.go:273: fallback mutant must finish without sanitizer failures: exit status 23"
+      ],
+      "TestRegExpBytecodeRandomNodeUnit18": [
+        "regexp_test.go:461: native regex oracle ([]): exit status 1"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 79.393
+  },
+  {
+    "id": "R3",
+    "label": "matrix",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRecordsAgainstNode|TestRecordReadMutants|TestRecordBenchmark|TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05|TestRuntimeReleasePaths|TestRuntimeStringEquality|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestRuntimeStringViews|TestMapHashProbeBound|TestMapHashProbeCatchesMutants|TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestToStringWithARadixMatchesNode|TestToStringWithARadixOutOfRangePanics|TestRuntimeKeyKeepsBoundaries)$"
+    ],
+    "log": "R3-matrix.log",
+    "exit": 1,
+    "wall": 89.79746136700123,
+    "failed": [
+      "TestSizeClassesShareTheirChunks",
+      "TestRuntimeReleasePaths",
+      "TestRuntimeStringViews",
+      "TestRecordMutantsUnit04",
+      "TestRecordMutantsUnit02",
+      "TestRecordMutantsUnit01",
+      "TestRecordMutantsUnit00",
+      "TestRecordsAgainstNode",
+      "TestRecordReadMutants"
+    ],
+    "passed": [
+      "TestRecordBenchmark",
+      "TestRuntimeStringEquality",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRecordMutantsUnit03",
+      "TestRecordMutantsUnit05",
+      "TestRegExpBytecodeTest262",
+      "TestToStringWithARadixOutOfRangePanics",
+      "TestToStringWithARadixMatchesNode",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestResidentSetUnits",
+      "TestMapHashProbeBound",
+      "TestMapHashProbeCatchesMutants"
+    ],
+    "errors": [
+      "    heap_test.go:141: control: acquired 1177 chunks exceeds largest generation 80 + 16 retained class chunks (peak 78640 KiB): spare chunks were not reused\n",
+      "    heap_test.go:141: churn: acquired 773 chunks exceeds largest generation 79 + 16 retained class chunks (peak 52496 KiB): spare chunks were not reused\n",
+      "    runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths845218219/001/release: exit status 1\n",
+      "    string_views_test.go:75: /tmp/defend-radix/TestRuntimeStringViews2083638263/001/views: exit status 1\n",
+      "    record_test.go:242: want AddressSanitizer: heap-use-after-free to catch mutant: <nil>\n",
+      "    record_test.go:237: heap values not balanced: adamic: counts: allocations 21 frees 1 retains 10 releases 22 peak 20 regions 0\n",
+      "    record_test.go:237: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0\n",
+      "    record_test.go:237: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 22 frees 1 retains 15 releases 39 peak 21 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 27 frees 1 retains 3 releases 28 peak 26 regions 0\n",
+      "    record_test.go:275: heap values not balanced: adamic: counts: allocations 3 frees 1 retains 0 releases 2 peak 3 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 350024 frees 1 retains 10005 releases 50025 peak 350023 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 19 frees 1 retains 10 releases 18 peak 18 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 350004 frees 1 retains 100001 releases 350002 peak 350003 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 3500004 frees 1 retains 500001 releases 3000002 peak 3500003 regions 0\n",
+      "    record_test.go:75: heap values not balanced: adamic: counts: allocations 3504 frees 1 retains 501 releases 3002 peak 3503 regions 0\n",
+      "    record_test.go:275: heap values not balanced: adamic: counts: allocations 3 frees 1 retains 0 releases 2 peak 3 regions 0\n"
+    ],
+    "timeout": false,
+    "errors_by_row": {
+      "TestSizeClassesShareTheirChunks": [
+        "heap_test.go:141: control: acquired 1177 chunks exceeds largest generation 80 + 16 retained class chunks (peak 78640 KiB): spare chunks were not reused",
+        "heap_test.go:141: churn: acquired 773 chunks exceeds largest generation 79 + 16 retained class chunks (peak 52496 KiB): spare chunks were not reused"
+      ],
+      "TestRuntimeReleasePaths": [
+        "runtime_profile_test.go:51: /tmp/defend-radix/TestRuntimeReleasePaths845218219/001/release: exit status 1"
+      ],
+      "TestRuntimeStringViews": [
+        "string_views_test.go:75: /tmp/defend-radix/TestRuntimeStringViews2083638263/001/views: exit status 1"
+      ],
+      "TestRecordMutantsUnit04/stored-key-freed": [
+        "record_test.go:242: want AddressSanitizer: heap-use-after-free to catch mutant: <nil>"
+      ],
+      "TestRecordMutantsUnit02/deleted-key-iterated": [
+        "record_test.go:237: heap values not balanced: adamic: counts: allocations 21 frees 1 retains 10 releases 22 peak 20 regions 0"
+      ],
+      "TestRecordMutantsUnit01/uint32-max-as-index": [
+        "record_test.go:237: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0"
+      ],
+      "TestRecordMutantsUnit00/indices-in-insertion-order": [
+        "record_test.go:237: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0"
+      ],
+      "TestRecordsAgainstNode/semantics": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 91 frees 1 retains 129 releases 116 peak 90 regions 0"
+      ],
+      "TestRecordsAgainstNode/prototypes": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 22 frees 1 retains 15 releases 39 peak 21 regions 0"
+      ],
+      "TestRecordsAgainstNode/reads": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 27 frees 1 retains 3 releases 28 peak 26 regions 0"
+      ],
+      "TestRecordReadMutants/prototype-membership-restored": [
+        "record_test.go:275: heap values not balanced: adamic: counts: allocations 3 frees 1 retains 0 releases 2 peak 3 regions 0"
+      ],
+      "TestRecordsAgainstNode/references": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 350024 frees 1 retains 10005 releases 50025 peak 350023 regions 0"
+      ],
+      "TestRecordsAgainstNode/iteration": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 19 frees 1 retains 10 releases 18 peak 18 regions 0"
+      ],
+      "TestRecordsAgainstNode/numeric": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 350004 frees 1 retains 100001 releases 350002 peak 350003 regions 0"
+      ],
+      "TestRecordsAgainstNode/workload-1000000": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 3500004 frees 1 retains 500001 releases 3000002 peak 3500003 regions 0"
+      ],
+      "TestRecordsAgainstNode/bench-1000": [
+        "record_test.go:75: heap values not balanced: adamic: counts: allocations 3504 frees 1 retains 501 releases 3002 peak 3503 regions 0"
+      ],
+      "TestRecordReadMutants/missing-read-silent": [
+        "record_test.go:275: heap values not balanced: adamic: counts: allocations 3 frees 1 retains 0 releases 2 peak 3 regions 0"
+      ]
+    },
+    "infrastructure_failures": [],
+    "build_failures": [],
+    "unknown": [],
+    "binary_seconds": 83.831
+  }
+]
