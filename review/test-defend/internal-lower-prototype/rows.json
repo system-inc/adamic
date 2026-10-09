@@ -1,0 +1,87 @@
+[
+  {
+    "test": "TestRegExpNativeRefusals",
+    "package": "internal/lower",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/regexp/native.go:17",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/regexp/native.go:17",
+        "change": "Drop the counter-width refusal; huge quantifier counts truncate during Uint64 serialization.",
+        "rows_failed": [
+          "TestRegExpNativeRefusals"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-prototype/D1.log 2>&1; regexp_test.go:24: expected loud NotYet for const matches = /a{18446744073709551616}/.test('a');: <nil>",
+    "oracle_kind": "self",
+    "rows_passed_file": "passed-rows.json",
+    "skipped_rows": [
+      "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+      "TestOptionalWideningCensus",
+      "TestOriginalCycleLedger"
+    ],
+    "uniqueness_scope": "All 274 executed top-level rows; two skipped rows unknown."
+  },
+  {
+    "test": "TestRepresentationClockSourceCheckedTypes",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestPrototypeMethodsAreRefusedWithReasons"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/lower/expression.go:64",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/expression.go:64",
+        "change": "Claim unresolved generic parameters have a known ABI even without a substitution; discard now-unused known binding.",
+        "rows_failed": [
+          "TestRepresentationClockSourceCheckedTypes"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-prototype/D2.log 2>&1; representation_clock_source_test.go:69: source: representation = (0, true), want (0, false)",
+    "oracle_kind": "self",
+    "rows_passed_file": "passed-rows.json",
+    "skipped_rows": [
+      "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+      "TestOptionalWideningCensus",
+      "TestOriginalCycleLedger"
+    ],
+    "uniqueness_scope": "All 274 executed top-level rows; two skipped rows unknown."
+  },
+  {
+    "test": "TestSuppressionDirectiveSoundNeighbors",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefaultTaggedInterfaceNeedsNoFlag"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D3 internal/lower/refusals.go:39",
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/refusals.go:39",
+        "change": "Early reject the directive token lexically even when parser says prose/literals contain no directive. No input path/name selection.",
+        "rows_failed": [
+          "TestSuppressionDirectiveSoundNeighbors"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/defend-prototype/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-defend/internal-lower-prototype/D3.log 2>&1; suppression_directives_test.go:56: sound neighbor: /tmp/adamic-gate/TestSuppressionDirectiveSoundNeighbors962150014/002/main.a: Adamic 0.1 refuses suppression directive; remove it and fix the type error",
+    "oracle_kind": "self",
+    "rows_passed_file": "passed-rows.json",
+    "skipped_rows": [
+      "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+      "TestOptionalWideningCensus",
+      "TestOriginalCycleLedger"
+    ],
+    "uniqueness_scope": "All 274 executed top-level rows; two skipped rows unknown."
+  }
+]

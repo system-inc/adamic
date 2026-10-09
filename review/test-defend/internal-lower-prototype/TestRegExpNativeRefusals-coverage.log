@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:22:34.927594624Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:22:34.934564658Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:22:34.934634123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== RUN   TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:34.934657358Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== PAUSE TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:34.934660492Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:22:34.934667904Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals"}
+{"Time":"2026-10-09T17:22:34.934669846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"=== CONT  TestRegExpNativeRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:35.073362942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Output":"--- PASS: TestRegExpNativeRefusals (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:35.07445803Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRegExpNativeRefusals","Elapsed":0.14}
+{"Time":"2026-10-09T17:22:35.074501245Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:35.077019523Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 10.0% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:35.09295876Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.164s\tcoverage: 10.0% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:35.09299173Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.165}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T17:22:38.899034801Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:22:38.906656961Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:22:38.906752685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== RUN   TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:38.906779355Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== PAUSE TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:38.906781809Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:22:38.906784173Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons"}
+{"Time":"2026-10-09T17:22:38.906785765Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"=== CONT  TestPrototypeMethodsAreRefusedWithReasons\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:39.198819873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Output":"--- PASS: TestPrototypeMethodsAreRefusedWithReasons (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:39.19886424Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrototypeMethodsAreRefusedWithReasons","Elapsed":0.29}
+{"Time":"2026-10-09T17:22:39.198885472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:22:39.202782114Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"coverage: 7.0% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:39.217210468Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.317s\tcoverage: 7.0% of statements in ./internal/lower, ./internal/regexp\n"}
+{"Time":"2026-10-09T17:22:39.21724541Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.318}
