@@ -4,14 +4,13 @@ import (
 	"bytes"
 	"context"
 	"errors"
-	"flag"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -32,27 +31,20 @@ type formatfilesShared struct {
 	mutated            map[string]formatfilesPrepared
 }
 
-var formatfilesSetupReady = make(chan struct{})
+var formatfilesCorpusOnce sync.Once
 var formatfilesSharedState *formatfilesShared
+var formatfilesPortOnce sync.Once
+var formatfilesPortState formatfilesPrepared
+var formatfilesUnsanitizedOnce sync.Once
+var formatfilesUnsanitizedState string
+var formatfilesMutantOnce = make([]sync.Once, len(mutants))
+var formatfilesMutantState = make([]formatfilesPrepared, len(mutants))
 var formatfilesSetupRoot string
-var formatfilesSetupContext context.Context
 
-// Not parallel: owns shared fixture lifetime and ensures setup is selected before any leaf.
+// Keep the shared fixtures alive until every parallel leaf has finished.
+// Not parallel: TestMain owns only the process-wide fixture lifetime.
 func TestMain(m *testing.M) {
-	flag.Parse()
-	pattern := flag.Lookup("test.run").Value.String()
-	expression, err := regexp.Compile(pattern)
-	if err != nil {
-		fmt.Fprintln(os.Stderr, err)
-		os.Exit(1)
-	}
-	needsSetup := expression.MatchString("TestThePortParsesAsGoCohereDoesUnion")
-	for index := 0; index < testThePortParsesAsGoCohereDoesShards; index++ {
-		needsSetup = needsSetup || expression.MatchString(fmt.Sprintf("TestThePortParsesAsGoCohereDoes_%03d", index))
-	}
-	if needsSetup {
-		_ = flag.Set("test.run", "("+pattern+")|^TestThePortParsesAsGoCohereDoes_Setup$")
-	}
+	var err error
 	formatfilesSetupRoot, err = os.MkdirTemp("", "formatfiles-shared-")
 	if err != nil {
 		fmt.Fprintln(os.Stderr, err)
@@ -63,37 +55,71 @@ func TestMain(m *testing.M) {
 	os.Exit(code)
 }
 
-// This file sorts before the shard table: setup is scheduled first even with
-// -parallel=1. TestMain includes it for an individually selected leaf as well.
-// Not parallel: initializes shared fixtures and products before parallel shards run.
-func TestThePortParsesAsGoCohereDoes_Setup(t *testing.T) {
-	formatfilesSetupReady = make(chan struct{})
-	formatfilesSharedState = nil
-	defer close(formatfilesSetupReady)
-	formatfilesSetupContext = formatfilesDeadline(t, "shared setup")
-	state := &formatfilesShared{mutated: make(map[string]formatfilesPrepared)}
-	state.casesPath, state.answers = formatfilesAskedCases(t)
-	state.parts = formatfilesPartition(t, state.casesPath, state.answers)
-	state.port.source = formatfilesSetupPort(t, nil)
-	state.port.program = lowered(t, filepath.Join(state.port.source, "main.ts"))
-	state.port.binary = formatfilesBinary(t, state.port.program, nil)
+// Preparation has no test deadline. The gate's process timeout covers cold
+// builds; each leaf starts its own deadline only after fetching its products.
+func formatfilesPreparePort(t *testing.T, applied *mutant) formatfilesPrepared {
+	t.Helper()
+	prepared := formatfilesPrepared{source: formatfilesSetupPort(t, applied)}
+	prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
+	prepared.binary = formatfilesBinary(t, prepared.program, applied)
+	if applied == nil {
+		prepared.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
+		if err := os.WriteFile(prepared.javascript, []byte(javascript.JavaScript(prepared.program)), 0644); err != nil {
+			t.Fatal(err)
+		}
+	}
+	return prepared
+}
+
+func formatfilesPrepareShard(t *testing.T, selected int) *formatfilesShared {
+	t.Helper()
+	state := *formatfilesReady(t)
+	state.port = formatfilesPreparedPort(t)
 	if runtime.GOOS == "darwin" {
-		state.port.unsanitized = formatfilesBinaryWithOptions(t, state.port.program, nil, false)
+		state.port.unsanitized = formatfilesUnsanitized(t)
 	}
-	state.port.javascript = filepath.Join(formatfilesSetupDirectory(t), "program.mjs")
-	if err := os.WriteFile(state.port.javascript, []byte(javascript.JavaScript(state.port.program)), 0644); err != nil {
-		t.Fatal(err)
+	state.mutated = make(map[string]formatfilesPrepared)
+	for index, mutant := range mutants {
+		if formatfilesShard("mutant/"+mutant.name) != selected {
+			continue
+		}
+		state.mutated[mutant.name] = formatfilesPreparedMutant(t, index)
 	}
-	for _, mutant := range mutants {
-		prepared := formatfilesPrepared{source: formatfilesSetupPort(t, &mutant)}
-		prepared.program = lowered(t, filepath.Join(prepared.source, "main.ts"))
-		prepared.binary = formatfilesBinary(t, prepared.program, &mutant)
-		state.mutated[mutant.name] = prepared
+	return &state
+}
+
+// The product units and shards share these once-per-process entry points.
+func formatfilesPreparedPort(t *testing.T) formatfilesPrepared {
+	t.Helper()
+	formatfilesPortOnce.Do(func() { formatfilesPortState = formatfilesPreparePort(t, nil) })
+	if formatfilesPortState.binary == "" {
+		t.Fatal("shared port preparation failed")
 	}
-	if err := formatfilesSetupContext.Err(); err != nil {
-		t.Fatalf("cooked: setup deadline: %v", err)
+	return formatfilesPortState
+}
+
+func formatfilesPreparedMutant(t *testing.T, index int) formatfilesPrepared {
+	t.Helper()
+	formatfilesMutantOnce[index].Do(func() {
+		formatfilesMutantState[index] = formatfilesPreparePort(t, &mutants[index])
+	})
+	if formatfilesMutantState[index].binary == "" {
+		t.Fatalf("mutant %q preparation failed", mutants[index].name)
 	}
-	formatfilesSharedState = state
+	return formatfilesMutantState[index]
+}
+
+func formatfilesUnsanitized(t *testing.T) string {
+	t.Helper()
+	formatfilesUnsanitizedOnce.Do(func() {
+		source := formatfilesSetupPort(t, nil)
+		program := lowered(t, filepath.Join(source, "main.ts"))
+		formatfilesUnsanitizedState = formatfilesBinaryWithOptions(t, program, nil, false)
+	})
+	if formatfilesUnsanitizedState == "" {
+		t.Fatal("unsanitized port preparation failed")
+	}
+	return formatfilesUnsanitizedState
 }
 
 func formatfilesSetupDirectory(t *testing.T) string {
@@ -107,9 +133,14 @@ func formatfilesSetupDirectory(t *testing.T) string {
 
 func formatfilesReady(t *testing.T) *formatfilesShared {
 	t.Helper()
-	<-formatfilesSetupReady
+	formatfilesCorpusOnce.Do(func() {
+		state := &formatfilesShared{}
+		state.casesPath, state.answers = formatfilesAskedCases(t)
+		state.parts = formatfilesPartition(t, state.casesPath, state.answers)
+		formatfilesSharedState = state
+	})
 	if formatfilesSharedState == nil {
-		t.Fatal("shared setup failed")
+		t.Fatal("shared corpus preparation failed")
 	}
 	return formatfilesSharedState
 }
@@ -178,7 +209,7 @@ func formatfilesLeaks(t *testing.T, ctx context.Context, program *ir.Program, bi
 		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
 	}
 	if runtime.GOOS == "darwin" {
-		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesSharedState.port.unsanitized}, args...)...)
+		report := formatfilesExecute(t, ctx, nil, "leaks", append([]string{"--atExit", "--", formatfilesUnsanitizedState}, args...)...)
 		if report.exitCode == 0 {
 			return ""
 		}
@@ -188,8 +219,7 @@ func formatfilesLeaks(t *testing.T, ctx context.Context, program *ir.Program, bi
 	return ""
 }
 
-// A native builder subprocess lets the setup context kill both the builder and
-// its compilers as one process group, even though native.Build has no context API.
+// Run native builds in a subprocess, outside the leaf deadline.
 func init() {
 	source := os.Getenv("ADAMIC_FORMATFILES_NATIVE_SOURCE")
 	if source == "" {
@@ -211,7 +241,7 @@ func formatfilesBuildNative(t *testing.T, source, output string, sanitize bool) 
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
 		return err
 	}
-	command := formatfilesContextCommand(formatfilesSetupContext, os.Args[0])
+	command := formatfilesContextCommand(context.Background(), os.Args[0])
 	command.Env = append(os.Environ(), "ADAMIC_FORMATFILES_NATIVE_SOURCE="+path, "ADAMIC_FORMATFILES_NATIVE_OUTPUT="+output, fmt.Sprintf("ADAMIC_FORMATFILES_NATIVE_SANITIZE=%t", sanitize))
 	result, err := command.CombinedOutput()
 	if err != nil {

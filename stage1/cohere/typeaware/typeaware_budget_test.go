@@ -15,8 +15,8 @@ import (
 const typeAwareUnitBudget = 90 * time.Second
 const typeAwareUnitKill = 90 * time.Second
 
-// Setup is split into individual immutable product builds. Every setup unit and
-// every check shard has its own watchdog; one slow unit cannot hold the worker.
+// Shared Six setup is observed separately; only case work has a watchdog.
+// The outer gate still bounds the whole process, including cold builds.
 // Crossing the deadline kills active command groups and fails the worker.
 func typeAwareDeadline(t *testing.T, name string) func() {
 	return typeAwareDeadlineWithin(t, name, typeAwareUnitBudget, typeAwareUnitKill)
@@ -43,7 +43,12 @@ func typeAwareDeadlineWithin(t *testing.T, name string, budget, kill time.Durati
 
 func typeAwareSetup(h *harness, name string, build func() string) string {
 	h.t.Helper()
-	defer typeAwareDeadline(h.t, "setup/"+name)()
+	if h.sharedSetup {
+		started := time.Now()
+		defer func() { h.t.Logf("shared-setup product=%s elapsed_s=%.6f", name, time.Since(started).Seconds()) }()
+	} else {
+		defer typeAwareDeadline(h.t, "setup/"+name)()
+	}
 	return build()
 }
 func typeAwareStage0(h *harness) string {

@@ -122,6 +122,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if err := l.knownLoweringGap(node); err != nil {
+			found = err
+			return true
+		}
 		if node.Kind == ast.KindTypePredicate {
 			found = l.predicateRefusal(node)
 			return found != nil

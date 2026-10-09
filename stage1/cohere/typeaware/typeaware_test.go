@@ -61,6 +61,7 @@ type harness struct {
 	next                  int
 	parallel              bool
 	sixBuilds             bool
+	sharedSetup           bool
 	setupStarted          time.Time
 	sixFiles              []string
 	sixVersions           []string
@@ -94,7 +95,12 @@ func (h *harness) run(name string, command *exec.Cmd) result {
 		command.Env = append(environment, "GOMAXPROCS=1")
 	}
 	started := time.Now()
-	runError := typeAwareRunCommand(command)
+	var runError error
+	if h.sharedSetup {
+		runError = typeAwareRunBuildCommand(command)
+	} else {
+		runError = typeAwareRunCommand(command)
+	}
 	elapsed := time.Since(started)
 	h.t.Logf("phase command %s %.6fs", name, elapsed.Seconds())
 	stdout, err := os.ReadFile(out.Name())

@@ -1,0 +1,194 @@
+[
+  {
+    "program": "9984394_error_spread.a",
+    "node": {
+      "exit": 0,
+      "stdout": "no name no message\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "9984394_error_spread",
+      "exit": 0,
+      "stdout": "no name no message\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "Error bad 1\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "4ddd17f_long_name.a",
+    "node": {
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "4ddd17f_long_name",
+      "exit": 0,
+      "stdout": "2\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-3043146775/main.c:11:61: error: string literal of length 4100 exceeds maximum length 4095 that ISO C99 compilers are required to support [-Werror,-Woverlength-strings]\n/tmp/adamic-gate/adamic-build-3043146775/main.c:31:33: error: string literal of length 4158 exceeds maximum length 4095 that ISO C99 compilers are required to support [-Werror,-Woverlength-strings]\n/tmp/adamic-gate/adamic-build-3043146775/main.c:34:53: error: string literal of length 4100 exceeds maximum length 4095 that ISO C99 compilers are required to support [-Werror,-Woverlength-strings]\n/tmp/adamic-gate/adamic-build-3043146775/main.c:35:164: error: string literal of length 4100 exceeds maximum length 4095 that ISO C99 compilers are required to support [-Werror,-Woverlength-strings]\n4 errors generated.\n\n"
+    }
+  },
+  {
+    "program": "4ddd17f_opt_3.a",
+    "node": {
+      "exit": 0,
+      "stdout": "[] [m]\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "4ddd17f_opt_3",
+      "exit": 0,
+      "stdout": "[] [m]\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/home/agent/.cache/adamic/runtime/.build-1975192280/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1975192280/string_build_impl.h:40:21 \n"
+    }
+  },
+  {
+    "program": "classfeat_maybe_setter.a",
+    "node": {
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "classfeat_maybe_setter",
+      "exit": 0,
+      "stdout": "3\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: native: clang failed: exit status 1\n/tmp/adamic-gate/adamic-build-1078747523/main.c:58:33: error: C99 forbids casting nonscalar type 'adamic_maybe_number' (aka 'struct adamic_maybe_number') to the same type [-Werror,-Wpedantic]\n   58 |         adamic_maybe_number incoming = (adamic_maybe_number)((type == 1 ? (adamic_maybe_number){true, value.number} : adamic_maybe_number_unpack(value.number)));\n      |                                        ^                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n1 error generated.\n\n"
+    }
+  },
+  {
+    "program": "d7054e9_this_arrow.a",
+    "node": {
+      "exit": 0,
+      "stdout": "undefined:NaN|set\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "d7054e9_this_arrow",
+      "exit": 0,
+      "stdout": "undefined:1|set\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "/home/agent/.cache/adamic/runtime/.build-1975192280/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1975192280/string_build_impl.h:40:21 \n"
+    }
+  },
+  {
+    "program": "d7054e9_this_arrow_number.a",
+    "node": {
+      "exit": 0,
+      "stdout": "NaN\nNaN,NaN\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 0,
+      "stderr": ""
+    },
+    "js": {
+      "program": "d7054e9_this_arrow_number",
+      "exit": 0,
+      "stdout": "1\n1,2\n",
+      "stderr": ""
+    },
+    "build": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "native": {
+      "exit": 0,
+      "stdout": "1\n1,2\n",
+      "stderr": ""
+    }
+  },
+  {
+    "program": "iterators_derived_symbol.a",
+    "node": {
+      "exit": 0,
+      "stdout": "1,2\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 2,
+      "stderr": "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName\n\ngoroutine 1 [running]:\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x3ad0afcbf200?)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x3ad0b05f7a00, 0x3ad0afcbf200, 0x3ad0b0701c80, 0x3ad0b0701b00, 0x0)\n\t/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x3ad0b05f7a00, 0x3ad0afcbf200, 0x3ad0b0701c80)\n\t/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d\ngithub.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x3ad0afcbf200)\n\t/workspace/adamic/internal/lower/refusals.go:210 +0xfc5\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x3ad0b0078a88, 0x3ad0afe3dae8)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast."
+    },
+    "build": {
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName\n\ngoroutine 1 [running]:\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x35e0be9ff170?)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x35e0bf2fb800, 0x35e0be9ff170, 0x35e0bf14f500, 0x35e0bf14f380, 0x0)\n\t/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x35e0bf2fb800, 0x35e0be9ff170, 0x35e0bf14f500)\n\t/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d\ngithub.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x35e0be9ff170)\n\t/workspace/adamic/internal/lower/refusals.go:210 +0xfc5\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x35e0bee80a88, 0x35e0bebf59f0)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast."
+    }
+  },
+  {
+    "program": "iterators_override_source.a",
+    "node": {
+      "exit": 0,
+      "stdout": "300\n3\n",
+      "stderr": ""
+    },
+    "js_compile": {
+      "exit": 2,
+      "stderr": "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName\n\ngoroutine 1 [running]:\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0xd70224250e0?)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0xd7022ea2000, 0xd70224250e0, 0xd70230abc80, 0xd70230abb00, 0x0)\n\t/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0xd7022ea2000, 0xd70224250e0, 0xd70230abc80)\n\t/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d\ngithub.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0xd70224250e0)\n\t/workspace/adamic/internal/lower/refusals.go:210 +0xfc5\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0xd70229fca88, 0xd7023091ae8)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2783 +0x"
+    },
+    "build": {
+      "exit": 2,
+      "stdout": "",
+      "stderr": "panic: Unhandled case in Node.Text: *ast.ComputedPropertyName\n\ngoroutine 1 [running]:\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*Node).Text(0x233cf8572fc0?)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:308 +0x42c\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkMemberOverrides(0x233cf8b1da00, 0x233cf8572fc0, 0x233cf8cefc80, 0x233cf8cefb00, 0x0)\n\t/workspace/adamic/internal/lower/class_inheritance.go:54 +0x17a\ngithub.com/system-inc/adamic/internal/lower.(*lowering).checkOverrides(0x233cf8b1da00, 0x233cf8572fc0, 0x233cf8cefc80)\n\t/workspace/adamic/internal/lower/class_inheritance.go:45 +0x4d\ngithub.com/system-inc/adamic/internal/lower.(*lowering).refuse.func2(0x233cf8572fc0)\n\t/workspace/adamic/internal/lower/refusals.go:210 +0xfc5\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodes(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:40\ngithub.com/microsoft/TypeScript/tsc/internal/ast.visitNodeList(...)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:49\ngithub.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).ForEachChild(0x233cf85a8a88, 0x233cf8ab79f0)\n\t/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast."
+    }
+  }
+]

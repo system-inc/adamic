@@ -916,7 +916,9 @@ bool adamic_weak_held(const void *target);
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
 extern adamic_object *adamic_thrown;
+// NULL is an omitted or undefined message; its empty fallback is not an own field.
 adamic_object *adamic_error_new(adamic_string *message);
+const char *adamic_error_field_name(const adamic_object *object, const char *name);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

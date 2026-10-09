@@ -69,7 +69,7 @@ func buildProduct(t *testing.T, name string, command *exec.Cmd, directory string
 	defer stderr.Close()
 	command.Stdout, command.Stderr = stdout, stderr
 	started := time.Now()
-	err = typeAwareRunCommand(command)
+	err = typeAwareRunBuildCommand(command)
 	t.Logf("phase command %s %.6fs", name, time.Since(started).Seconds())
 	if err != nil {
 		out, _ := os.ReadFile(stdout.Name())

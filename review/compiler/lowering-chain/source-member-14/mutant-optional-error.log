@@ -1,0 +1,24 @@
+=== RUN   TestMiscompile2AOptionalError
+=== PAUSE TestMiscompile2AOptionalError
+=== CONT  TestMiscompile2AOptionalError
+    miscompile_2a_test.go:41: exit codes differ; native stderr: /home/agent/.cache/adamic/runtime/.build-2802157041/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2802157041/string_build_impl.h:40:21 
+--- FAIL: TestMiscompile2AOptionalError (1.04s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.103s
+FAIL
+=== RUN   TestMiscompile2AMarkerUndefined
+=== PAUSE TestMiscompile2AMarkerUndefined
+=== CONT  TestMiscompile2AMarkerUndefined
+    miscompile_2a_test.go:129: exit codes differ; native stderr: /home/agent/.cache/adamic/runtime/.build-3985422157/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3985422157/string_build_impl.h:40:21 
+--- FAIL: TestMiscompile2AMarkerUndefined (4.19s)
+FAIL
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	5.928s
+FAIL
