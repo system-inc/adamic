@@ -25,3 +25,7 @@ Commands source /workspace/adamic-tools/env.sh. Each go test uses -count=1 -v -t
 Restored lower leaves: new behavior test 0.36 seconds; touched checker-contract test 0.20 seconds. Baseline new leaf 0.31 seconds, checker-contract 0.14 seconds. All are below 60 seconds, including the focused package command.
 
 Setup: node 0.022s; Go 0.022s; submodules 0.073s; markdown dependencies 0.073s; clang 0.180s; Go build 35.934s; cache warm 36.173s; total 36.204s. nproc=5, cpu.max=400000 100000 (4 CPUs). Full setup and test outputs are saved here as logs.
+
+Restored existing oracle passed uncached in 0.65 seconds (package 0.670 seconds), including source Node, JavaScript, sanitized native, release native and leaks.
+Test commit: 5555f605e.
+Lane checks passed: "lane checks 1.4 s: gofmt and tools on 2 Go files, t.Parallel on 1 test packages; vet 1 packages".
