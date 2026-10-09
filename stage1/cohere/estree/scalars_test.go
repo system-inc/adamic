@@ -2,7 +2,6 @@ package estree
 
 import (
 	"os"
-	"path/filepath"
 	"strings"
 	"testing"
 )
@@ -19,22 +18,16 @@ func scalarCases() []string {
 		"0n; 0x000000000000000000n; 1_000_000_000_000_000_000_000n;",
 	}
 }
+
+const testScalarEdgesShards = 8
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices modulo n; unset runs all.
 func TestScalarEdges(t *testing.T) {
-	cases := scalarCases()
-	list := manifest(t, cases)
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", list)
-	main, err := filepath.Abs("main.ts")
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", list), "sanitized native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatalf("%s: %s", name, diff)
-		}
-	}
-	t.Logf("%d scalar edge files, %d bytes identical on Go, source Node, sanitized native and emitted JS", len(cases), len(want))
+	estreeAgreementShards(t, testScalarEdgesShards, scalarCases())
+}
+func TestScalarEdgesShardFailure(t *testing.T) {
+	sources := scalarCases()
+	estreeShardFailure(t, testScalarEdgesShards, len(sources), estreeSingles(len(sources)), "agreement", 4)
 }
 
 func TestScalarOriginalLibraries(t *testing.T) {
