@@ -1,5 +1,5 @@
 Built synchronous generator state machines over ordinary counted frames toward step 20, task #qk8rztp.
-Docs first: a918e7fc; lowering: 5d8f670a; current main ee8b5215 merged by ba05fa10; delivery tip is in the handoff.
+Docs first: a918e7fc; lowering: 5d8f670a; main ee8b5215 merged by ba05fa10; latest main b5245943 merged before delivery; delivery tip is in the handoff.
 Focused Node comparisons, both backends, sanitizers, leak counts, flow, freshness, a-check, records and call-target readers pass.
 All seven required mutants are caught; an eighth catches missing type metadata for a retained destructured parameter.
 Opaque protocols, unsupported parameter patterns and other named suspension gaps remain refused; native tsc does not execute.
@@ -48,7 +48,7 @@ Counts added 15 fixture rows, each with allocations equal to frees. The final de
 
 The additional flow and freshness probes found unrecorded generated frame writes. Those writes now have lowering sites, and freshness interprets GeneratorFrame's ordinary object literal. The same cycle proof follows the retained whole destructured parameter, including unbound fields. A first attempted destructuring probe used binding defaults that main already refuses. It was an additional probe, not an existing fixture; supported plain destructuring now proves call-time reads, while the unsupported patterns retain their diagnostics in docs/generators.md.
 
-Local tsc replay merged compiler/scratch-tsc-entry-maplike 4cf6791a into the implementation in a detached worktree, merge ffd9a59121eb34385cae9455cce93f97fd797783. That merge is not pushed. [scratch-conflicts.json](scratch-conflicts.json) names all 12 conflicts and their resolutions. Source conflicts retain generator lowering alongside the scratch's caught-value, sparse and typed-array guards, record deletion, async support and null handling; test metadata retains current main's structure. The delivery merge with ee8b5215 has no conflicts.
+Local tsc replay merged compiler/scratch-tsc-entry-maplike 4cf6791a into the implementation in a detached worktree, merge ffd9a59121eb34385cae9455cce93f97fd797783. That merge is not pushed. [scratch-conflicts.json](scratch-conflicts.json) names all 12 conflicts and their resolutions. Source conflicts retain generator lowering alongside the scratch's caught-value, sparse and typed-array guards, record deletion, async support and null handling; test metadata retains current main's structure. The delivery merges with ee8b5215 and b5245943 have no conflicts. b5245943 changes only unrelated stage 1 tests.
 
 ```
 bash stage3/apply.sh
