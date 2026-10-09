@@ -1,0 +1,1052 @@
+#!/usr/bin/env python3
+"""The fast gate fails closed: a stage that dies without reporting is red, never green.
+
+Every process the gate starts goes through subprocess.Popen, so these tests replace it with fake
+processes that pass, then make one stage at a time raise what a loaded box raises (too many open
+files) or quietly do nothing, and require a red status, a nonzero exit and the stage named. The
+all-pass case proves the harness can go green at all. Run: python3 -m unittest cloud/fast-gate/run_test.py
+"""
+
+import io
+import shutil
+import json
+import os
+import subprocess
+import sys
+import tempfile
+import types
+import signal
+import threading
+import time
+import unittest
+from unittest import mock
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import run  # noqa: E402
+
+realRun, realPopen = subprocess.run, subprocess.Popen
+
+
+def stage(command):
+    if command[:2] == ["go", "build"]:
+        return "build"
+    if command[:2] == ["go", "vet"]:
+        return "vet"
+    if command[:2] == ["go", "run"]:
+        return "census"
+    if command[:2] == ["go", "test"] and "-c" not in command:
+        return "wasi" if any("^" in part and "TestWASI" in part for part in command) and "-run" in command else ("smoke" if any(run.smokeTest in part for part in command) else "tests")
+    return "tests"
+
+
+class FakeProcess:
+    def __init__(self, command, stdout):
+        self.pid = 0
+        self.returncode = 0
+        lines = []
+        if "-c" in command and "-o" in command:
+            with open(command[command.index("-o") + 1], "w") as handle:
+                handle.write("binary")
+        elif "-test.list" in command:
+            lines = ["TestOne\n"]
+        elif "test2json" in command or command[:2] == ["go", "test"]:
+            name = "TestOne"
+            if "-run" in command and "TestWASI" in command[command.index("-run") + 1]:
+                name = "TestWASI/" + ("requests" if "requests" in command[command.index("-run") + 1] else "a.a")
+            lines = [json.dumps({"Action": "pass", "Package": "p", "Test": name}) + "\n"]
+        self.lines = lines
+        self.stdout = io.StringIO("".join(lines)) if stdout == subprocess.PIPE else None
+
+    def wait(self):
+        return 0
+
+    def poll(self):
+        return 0
+
+    def communicate(self):
+        return "".join(self.lines), ""
+
+
+class FailClosed(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.mkdtemp()
+        self.tree = os.path.join(self.directory, "tree")
+        os.makedirs(os.path.join(self.tree, "cloud/fast-gate"))
+        with open(os.path.join(self.tree, "cloud/fast-gate/smoke.txt"), "w") as handle:
+            handle.write("internal/oracle/testdata/a.a\n")
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("inert *.md\nstage3 stage3/*\n")
+        with open(os.path.join(self.tree, "cloud/fast-gate/tools.txt"), "w") as handle:
+            handle.write("# declared tools\ngo\tall\tcommand -v go\n")
+        # The full gate runs stage 3's lane on every main, so the tree has one.
+        os.makedirs(os.path.join(self.tree, "stage3/lane"))
+        with open(os.path.join(self.tree, "stage3/lane/run.sh"), "w") as handle:
+            handle.write("exit 0\n")
+        for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        os.makedirs(os.path.join(self.tree, "internal/native"), exist_ok=True)
+        with open(os.path.join(self.tree, "internal/native/wasm_test.go"), "w") as handle:
+            handle.write('func TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"a.a",\n\t}\n\tt.Run(fixture, f)\n\tt.Run("requests", f)\n}\n')
+
+    def gate(self, full=False, broken=None, silent=None, unowned=(), base=None):
+        out = tempfile.mkdtemp(dir=self.directory)
+        arguments = mock.Mock(tree=self.tree, sha=self.sha, base=base or self.sha, tools=self.tree, out=out, parallel=4, full=full,
+                              branch="", branch_source="", session="", session_source="", weights=None)
+
+        def popen(command, **options):
+            if command[0] == "git":
+                return realPopen(command, **options)
+            if stage(command) == broken:
+                raise OSError(24, "Too many open files")
+            process = FakeProcess(command, options.get("stdout"))
+            if stage(command) == silent:
+                process.returncode = 0
+            return process
+
+        listing = mock.Mock(stdout="example.com/p\n")
+        with mock.patch.object(run.subprocess, "Popen", side_effect=popen), \
+                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"p": self.tree, run.module + "/stage1/cohere/tsprinter": self.tree}) or ["p"], list(unowned))), \
+                mock.patch.object(run.Gate, "command", side_effect=lambda command, **options: listing if command[:2] == ["go", "list"] else realRun(command, **options)), \
+                mock.patch.object(run.Gate, silent, lambda *arguments: None) if silent else mock.patch.object(run, "smokeTest", run.smokeTest), \
+                mock.patch.object(run.Gate, "npmCli", lambda gate: "npm-cli.js"), \
+                mock.patch.object(sys, "argv", ["run.py"]), mock.patch("builtins.print"):
+            gate = run.Gate(arguments)
+            gate.packageDirectories = {}
+            try:
+                gate.run()
+            except BaseException as exception:  # main() does exactly this
+                gate.fail("runner", repr(exception))
+            finally:
+                gate.finish()
+        with open(os.path.join(out, "status.txt")) as handle:
+            status = handle.read()
+        with open(os.path.join(out, ("full" if full else "fast") + ".json")) as handle:
+            result = json.load(handle)
+        return gate, status, result
+
+    def test_an_undeclared_tool_is_red_at_tools_naming_it(self):
+        with open(os.path.join(self.tree, "probe.go"), "w") as handle:
+            handle.write('package probe\n\nimport "os/exec"\n\nvar a = exec.Command("go", "version")\nvar b, _ = exec.LookPath("wasmtime")\n')
+        for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "probe"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        gate, status, result = self.gate()
+        self.assertIn("first failure at tools", status)
+        self.assertEqual(result["undeclared_tools"], ["probe.go:6 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare"])
+
+    def test_all_pass_is_green(self):
+        for full in (False, True):
+            gate, status, result = self.gate(full=full)
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertIsNone(gate.failure)
+            self.assertEqual(result["gate_kind"], "full" if full else "fast")
+            if full:
+                with open(os.path.join(gate.arguments.out, "fast.json")) as handle:
+                    self.assertEqual(json.load(handle), result)
+                self.assertEqual(result["wasi_unit_count"], 2)
+                self.assertEqual([row["name"] for row in result["wasi_units"]], ["a.a", "requests"])
+            self.assertEqual(set(result["stages_exit"]), set(result["planned_stages"]))
+            # Every verdict carries its long-test ledger, empty or not.
+            self.assertEqual((result["long_tests"], result["long_test_threshold_seconds"]), (0, run.longTestSeconds))
+            self.assertIn("0 tests over 10 s", status)
+
+    def test_every_stage_raising_is_red(self):
+        for full, stages in ((False, ["build", "vet", "tests", "smoke", "census"]), (True, ["build", "vet", "tests", "wasi", "census"])):
+            for broken in stages:
+                with self.subTest(full=full, stage=broken):
+                    gate, status, result = self.gate(full=full, broken=broken)
+                    self.assertTrue(status.startswith("red:"), status)
+                    self.assertIsNotNone(gate.failure)
+                    self.assertNotEqual(result["stages_exit"].get(broken), 0)
+
+    def test_a_stage_that_reports_nothing_is_red(self):
+        for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
+            with self.subTest(stage=stageName):
+                gate, status, result = self.gate(silent=silent)
+                self.assertTrue(status.startswith("red:"), status)
+                self.assertIn(stageName, status)
+
+
+class Coverage(FailClosed):
+    def test_reads_add_package_for_matching_changed_paths(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\ninert *\n")
+        for path, matches, unowned in (("stage3/new.ts", True, True), ("stage3/owned.ts", True, False), ("stage3/new.txt", False, True)):
+            with self.subTest(path=path):
+                # A real diff, including a newly added file, drives the additive selection.
+                os.makedirs(os.path.dirname(os.path.join(self.tree, path)), exist_ok=True)
+                with open(os.path.join(self.tree, path), "w") as handle:
+                    handle.write("const x = 1\n")
+                realRun(["git", "-C", self.tree, "add", path], check=True)
+                realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", path], check=True)
+                base = self.sha
+                self.sha = run.git(self.tree, "rev-parse", "HEAD")
+                gate, status, result = self.gate(unowned=[path] if unowned else [], base=base)
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(run.module + "/stage1/cohere/tsprinter" in result["packages"], matches)
+                self.assertEqual(result["executors"], {"inert": 1} if unowned else {})
+                self.assertEqual(result["reads"], [{"line": 1, "package": "stage1/cohere/tsprinter", "glob": "**/*.ts", "paths": [path], "map_changed": False}] if matches else [])
+
+    def test_a_paths_reader_fires_only_when_paths_come_or_go(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/gitignore * paths\nreads stage1/cohere/gitignore *.gitignore\ninert *\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        gate.cover(["notes/edited.md"], ["notes/edited.md"], [])
+        self.assertEqual(gate.extraPackages, [])
+        gate.cover(["notes/added.md"], ["notes/added.md"], ["notes/added.md"])
+        self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
+        gate.cover(["stage3/.gitignore"], ["stage3/.gitignore"], [])
+        self.assertEqual(gate.extraPackages, [run.module + "/stage1/cohere/gitignore"])
+
+    def test_reads_do_not_cover_an_unowned_path(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\n")
+        gate, status, result = self.gate(unowned=["stage3/new.ts"])
+        self.assertEqual(gate.failure["step"], "coverage")
+        self.assertEqual(result["uncovered_files"], ["stage3/new.ts"])
+
+    def test_all_matching_reads_fire_and_name_their_paths(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("inert *\nreads stage1/cohere/tsprinter **/*.ts\nreads internal/flow stage3/*\n")
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tools=self.tree)
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        paths = ["stage3/new.ts", "stage3/second.ts", "elsewhere/notes.txt"]
+        self.assertEqual(gate.cover(paths, paths), {"inert"})
+        self.assertEqual(gate.extraPackages, [run.module + "/internal/flow", run.module + "/stage1/cohere/tsprinter"])
+        self.assertEqual([row["line"] for row in gate.result["reads"]], [2, 3])
+        self.assertEqual([row["paths"] for row in gate.result["reads"]], [paths[:2], paths[:2]])
+
+    def test_map_change_runs_every_reader(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads stage1/cohere/tsprinter **/*.ts\nreads internal/flow dedication/*.a\ninert *\n")
+        arguments = mock.Mock(tools=self.tree)
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments, gate.result, gate.steps, gate.exits = arguments, {}, {}, {}
+        gate.cover([], ["cloud/fast-gate/executors.txt"])
+        self.assertEqual(gate.extraPackages, [run.module + "/internal/flow", run.module + "/stage1/cohere/tsprinter"])
+        self.assertEqual(len(gate.result["reads"]), 2)
+        self.assertTrue(all(row["map_changed"] for row in gate.result["reads"]))
+
+    def test_a_path_with_no_executor_is_red_and_named(self):
+        for full in (False, True):
+            gate, status, result = self.gate(full=full, unowned=["tools/stray.py"])
+            self.assertTrue(status.startswith("red:"), status)
+            self.assertEqual(gate.failure["step"], "coverage")
+            self.assertIn("tools/stray.py", gate.failure["detail"])
+            self.assertEqual(result["uncovered_files"], ["tools/stray.py"])
+
+    def test_an_inert_path_is_covered(self):
+        gate, status, result = self.gate(unowned=["notes/README.md"])
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["executors"], {"inert": 1})
+
+    def test_a_ruled_corpus_is_exempt_from_a_check_and_named(self):
+        # The exemption line comes first, so a path it matches would take it as its executor if the
+        # map read it as one; the path must still be covered by stage3.
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("a-check-exempt stage3/corpus/*\ninert *.md\nstage3 stage3/*\n")
+        os.makedirs(os.path.join(self.tree, "stage3/corpus"))
+        for path in ("stage3/corpus/upstream.a", "stage3/probe.a"):
+            with open(os.path.join(self.tree, path), "w") as handle:
+                handle.write("const x = 1\n")
+        gate, status, result = self.gate(unowned=["stage3/corpus/upstream.a", "stage3/probe.a"])
+        self.assertEqual(result["unchecked_a_files"], ["stage3/probe.a"])
+        self.assertEqual(result["a_check_exempt"], ["stage3/corpus/upstream.a"])
+        self.assertEqual(list(result["a_check"]), ["stage3/probe.a"])
+        self.assertEqual(result["executors"], {"stage3": 2})
+
+
+class GateRuns(unittest.TestCase):
+    def test_a_trailer_runs_a_deferred_test_in_this_gate(self):
+        with tempfile.TemporaryDirectory() as tree:
+            commit = lambda message: realRun(["git", "-C", tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "--allow-empty", "-m", message], check=True)
+            realRun(["git", "init", "-q", tree], check=True)
+            commit("base\n\nGate-runs: internal/native TestRecordMutants")
+            base = run.git(tree, "rev-parse", "HEAD")
+            commit("fix the split build\n\nGate-runs: internal/native TestSplitTSGoAgrees\nGate-runs: internal/native TestNotDeferred")
+            commit("unrelated")
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(tree=tree, base=base, sha=run.git(tree, "rev-parse", "HEAD"))
+            gate.result = {}
+            gate.spawn = lambda command, stdout, stderr=None, directory=None, environment=None: realPopen(command, stdout=stdout, stderr=stderr, cwd=directory, text=True)
+            native = run.module + "/internal/native"
+            gate.deferred = {native: {"TestSplitTSGoAgrees", "TestRecordMutants", "TestWASI"}}
+            gate.runRequested()
+            # Only trailers since the base count, and only for deferred tests.
+            self.assertEqual(gate.deferred[native], {"TestRecordMutants", "TestWASI"})
+            self.assertEqual(gate.result["deferred_run_by_request"], [native + " TestSplitTSGoAgrees"])
+
+
+class GateRunsDeferred(unittest.TestCase):
+    def gate(self, trailer):
+        tree = tempfile.mkdtemp()
+        self.addCleanup(shutil.rmtree, tree)
+        realRun(["git", "init", "-q", tree], check=True)
+        commit = lambda message: realRun(["git", "-C", tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "--allow-empty", "-m", message], check=True)
+        commit("base")
+        base = run.git(tree, "rev-parse", "HEAD")
+        commit("landing\n\nGate-runs: " + trailer)
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=tree, base=base, sha=run.git(tree, "rev-parse", "HEAD"), out=tree, full=False)
+        gate.result, gate.failure, gate.lock, gate.started = {}, None, threading.Lock(), 0.0
+        gate.complete, gate.killSessions = False, lambda: None
+        gate.spawn = lambda command, stdout, stderr=None, directory=None, environment=None: realPopen(command, stdout=stdout, stderr=stderr, cwd=directory, text=True)
+        native, lint = run.module + "/internal/native", run.module + "/stage1/cohere/lint"
+        gate.deferred = {native: {"TestSplitTSGoAgrees", "TestWASI"}, lint: {"TestShardsAgree"}}
+        return gate, native, lint
+
+    def test_deferred_runs_every_deferred_test_and_each_must_reach_a_verdict(self):
+        gate, native, lint = self.gate("deferred")
+        gate.runRequested()
+        self.assertEqual(gate.deferred, {})
+        self.assertTrue(gate.result["deferred_all_requested"])
+        self.assertEqual(sorted(gate.result["deferred_run_by_request"]),
+                         [native + " TestSplitTSGoAgrees", native + " TestWASI", lint + " TestShardsAgree"])
+        with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
+            handle.write(json.dumps({"Action": "pass", "Package": native, "Test": "TestSplitTSGoAgrees"}) + "\n")
+            handle.write(json.dumps({"Action": "skip", "Package": native, "Test": "TestWASI"}) + "\n")
+        with mock.patch("builtins.print"):
+            gate.requestedRan()
+        self.assertEqual(gate.result["deferred_run_results"], {native + " TestSplitTSGoAgrees": "pass", native + " TestWASI": "skip", lint + " TestShardsAgree": "missing"})
+        self.assertEqual(gate.failure["step"], "deferred")
+        self.assertIn("TestWASI: skip", gate.failure["detail"])
+        self.assertIn("TestShardsAgree: missing", gate.failure["detail"])
+
+    def test_every_requested_test_reaching_a_verdict_passes_the_check(self):
+        gate, native, lint = self.gate("internal/native TestWASI")
+        gate.runRequested()
+        with open(os.path.join(gate.arguments.out, "test.jsonl"), "w") as handle:
+            handle.write(json.dumps({"Action": "fail", "Package": native, "Test": "TestWASI"}) + "\n")
+        gate.requestedRan()
+        self.assertIsNone(gate.failure)
+        self.assertEqual(gate.deferred[native], {"TestSplitTSGoAgrees"})
+
+
+class DeletedAFiles(unittest.TestCase):
+    def test_a_deleted_a_file_is_not_checked_and_does_not_crash_the_gate(self):
+        with tempfile.TemporaryDirectory() as tree:
+            with open(os.path.join(tree, "kept.a"), "w") as handle:
+                handle.write("const x = 1\n")
+            gate = run.Gate.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(tree=tree, out=tree)
+            gate.result, gate.steps, gate.exits, gate.failure = {}, {}, {}, None
+            ran = []
+
+            def spawn(command, stdout, stderr=None, directory=None, environment=None):
+                ran.append(command[-1])
+                return types.SimpleNamespace(communicate=lambda: ("", ""), returncode=0)
+
+            with mock.patch.object(gate, "step", lambda *arguments: True), mock.patch.object(gate, "spawn", spawn):
+                gate.aCheck(["kept.a", "stage3/interface-downcasts/default-boxed-write.a"])
+            self.assertIsNone(gate.failure)
+            self.assertEqual(ran, ["kept.a"])
+            self.assertEqual(gate.result["a_check"]["stage3/interface-downcasts/default-boxed-write.a"]["outcome"], "deleted")
+            self.assertEqual(gate.exits["a-check"], 0)
+
+
+class CompleteMode(unittest.TestCase):
+    """Landing and area gates run on after a failure (run.py --complete): every test and fixture still
+    runs and the verdict names them all; an ordinary fast gate still stops everything at the first."""
+
+    def gate(self, complete):
+        gate = run.Gate.__new__(run.Gate)
+        arguments = types.SimpleNamespace(full=False, out=tempfile.mkdtemp(), sha="a" * 40)
+        if complete:
+            arguments.complete = True
+        gate.arguments = arguments
+        gate.complete = vars(arguments).get("complete") is True
+        gate.lock = threading.Lock()
+        gate.started = 0.0
+        gate.failure = None
+        gate.killed = 0
+        gate.killSessions = lambda: setattr(gate, "killed", gate.killed + 1)
+        return gate
+
+    def test_complete_mode_keeps_running_after_the_first_failure(self):
+        gate = self.gate(True)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "first")
+            gate.fail("tests", "second")
+        self.assertEqual(gate.killed, 0)
+        self.assertEqual(gate.failure["detail"], "first")
+
+    def test_an_ordinary_fast_gate_still_stops_at_the_first_failure(self):
+        gate = self.gate(False)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "first")
+        self.assertEqual(gate.killed, 1)
+
+    def test_a_gate_tool_crash_stops_even_a_complete_run(self):
+        # A complete run on broken tools teaches nothing (@system_adamic, Oct 8): a traceback stops it.
+        for full in (False, True):
+            gate = self.gate(True)
+            gate.arguments.full = full
+            gate.status = lambda line: None
+            with mock.patch("builtins.print"):
+                gate.fail("a-check", "Traceback (most recent call last):\n  File run.py\nFileNotFoundError: x.a")
+            self.assertEqual(gate.killed, 1, "full=%s" % full)
+            self.assertTrue(gate.failure["tool_crash"])
+        gate = self.gate(True)
+        with mock.patch("builtins.print"):
+            gate.fail("tests", "p TestFailed\n")
+        self.assertEqual(gate.killed, 0)
+        self.assertNotIn("tool_crash", gate.failure)
+
+
+class OracleSelection(unittest.TestCase):
+    """A fixture-only change to internal/oracle runs its fixtures in the lanes, plus every test over a
+    table of its own that names a changed fixture; a table filled outside its literal runs it whole."""
+
+    lanes = 'package oracle\n\nvar fixtures = []string{\n\t"internal/oracle/testdata/a.a",\n\t"internal/oracle/testdata/c.a",\n}\n\nfunc TestNativeAgreesWithNode(t *testing.T) {\n\tfor _, fixture := range fixtures {\n\t}\n}\n'
+    cast = 'package oracle\n\nvar castFixtures = []string{\n\t"c",\n}\n\nfunc TestCast(t *testing.T) {\n\tfor _, fixture := range castFixtures {\n\t}\n}\n'
+
+    def setUp(self):
+        self.tree = tempfile.mkdtemp()
+        os.makedirs(os.path.join(self.tree, "internal/oracle/testdata"))
+        self.git("init", "-q")
+        self.write("internal/oracle/oracle_test.go", self.lanes)
+        self.write("internal/oracle/cast_test.go", self.cast)
+        for name in ("a", "c"):
+            self.write("internal/oracle/testdata/%s.a" % name, "console.log(1)\n")
+        self.base = self.commit()
+
+    def git(self, *arguments):
+        return realRun(["git", "-C", self.tree] + list(arguments), check=True, capture_output=True, text=True).stdout.strip()
+
+    def write(self, path, text, mode="w"):
+        with open(os.path.join(self.tree, path), mode) as handle:
+            handle.write(text)
+
+    def commit(self):
+        self.git("add", "-A")
+        self.git("-c", "user.name=t", "-c", "user.email=t@t", "commit", "-q", "-m", "change")
+        return self.git("rev-parse", "HEAD")
+
+    def select(self, base):
+        gate = run.Gate.__new__(run.Gate)
+        gate.arguments = mock.Mock(tree=self.tree, base=base, sha=self.commit(), full=False)
+        gate.lock, gate.processes, gate.failure = threading.Lock(), [], None
+        return gate.selectOracle()
+
+    def test_a_fixture_no_table_names_skips_that_tables_test(self):
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertEqual(selection["fixtures"], ["internal/oracle/testdata/a.a"])
+        self.assertNotIn("TestCast", selection["tests"])
+
+    def test_a_fixture_a_table_names_runs_that_tables_test(self):
+        self.write("internal/oracle/testdata/c.a", "console.log(2)\n")
+        selection = self.select(self.base)
+        self.assertFalse(selection["whole"], selection)
+        self.assertIn("TestCast", selection["tests"])
+
+    def test_a_table_filled_outside_its_literal_runs_whole(self):
+        self.write("internal/oracle/cast_test.go", "\nfunc init() { castFixtures = append(castFixtures, \"a\") }\n", "a")
+        base = self.commit()
+        self.write("internal/oracle/testdata/a.a", "console.log(2)\n")
+        selection = self.select(base)
+        self.assertTrue(selection["whole"], selection)
+        self.assertIn("castFixtures", selection["reason"])
+
+
+@unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
+class KillDescendants(unittest.TestCase):
+    def setUp(self):
+        self.directory = tempfile.TemporaryDirectory()
+        self.addCleanup(self.directory.cleanup)
+        self.tree = self.directory.name
+        for name, content in {
+            "go.mod": "module example.com/kill\n\ngo 1.20\n",
+            "kill_test.go": r'''package kill
+import ("os"; "os/exec"; "strconv"; "syscall"; "testing"; "time")
+func TestGuard(t *testing.T) {
+    child := exec.Command("sleep", "600")
+    child.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+    if err := child.Start(); err != nil { t.Fatal(err) }
+    defer child.Process.Kill()
+    if err := os.WriteFile(os.Getenv("CHILD_PID"), []byte(strconv.Itoa(child.Process.Pid)), 0600); err != nil { t.Fatal(err) }
+    for { time.Sleep(time.Second) }
+}
+''',
+        }.items():
+            with open(os.path.join(self.tree, name), "w") as handle:
+                handle.write(content)
+        realRun(["git", "init", "-q", self.tree], check=True)
+        realRun(["git", "-C", self.tree, "add", "."], check=True)
+        realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "scratch"], check=True)
+        self.binary = os.path.join(self.tree, "guard.test")
+        realRun(["go", "test", "-c", "-o", self.binary, "."], cwd=self.tree, check=True, timeout=120)
+
+    def state(self, pid):
+        try:
+            with open("/proc/%d/stat" % pid) as handle:
+                return handle.read().rsplit(")", 1)[1].split()
+        except FileNotFoundError:
+            return None
+
+    def alive(self, pid):
+        state = self.state(pid)
+        return state is not None and state[0] not in ("Z", "X")
+
+    def probe(self, action):
+        pidFile = os.path.join(self.tree, "child.pid")
+        if os.path.exists(pidFile):
+            os.unlink(pidFile)
+        sha = run.git(self.tree, "rev-parse", "HEAD")
+        arguments = mock.Mock(tree=self.tree, tools=self.tree, out=self.tree, sha=sha, base=sha,
+                              full=False, branch="", branch_source="", session="", session_source="")
+        gate = run.Gate(arguments)
+        # The exact testSplit test-binary launch path, including test2json and stream.
+        command = ["go", "tool", "test2json", "-t", "-p", "example.com/kill", self.binary,
+                   "-test.v=test2json", "-test.run", "^TestGuard$"]
+        thread = gate.guarded("tests", gate.stream, "tests", command, None, self.tree, {"CHILD_PID": pidFile})
+        thread.start()
+        pid = None
+        try:
+            deadline = time.monotonic() + 15
+            while not os.path.exists(pidFile) and time.monotonic() < deadline:
+                time.sleep(0.01)
+            self.assertTrue(os.path.exists(pidFile), "Go child did not start")
+            with open(pidFile) as handle:
+                pid = int(handle.read())
+            state = self.state(pid)
+            self.assertTrue(self.alive(pid), "control cannot see sleep")
+            self.assertEqual(int(state[2]), pid, "sleep must have its own process group")
+            self.assertIn(int(state[3]), [process.pid for process in gate.processes])
+            if action == "fail":
+                gate.step("other", ["sh", "-c", "exit 1"])
+            elif action == "finish":
+                gate.planned = []
+                gate.finish()
+            deadline = time.monotonic() + 2
+            while action != "control" and self.alive(pid) and time.monotonic() < deadline:
+                time.sleep(0.01)
+            survived = self.alive(pid)
+            print("kill probe: action=%s pid=%d pgrp=%s sid=%s survived=%s" %
+                  (action, pid, state[2], state[3], survived))
+            return survived
+        finally:
+            # Independent cleanup also handles the intentionally broken mutant and old gate.
+            if pid is not None and self.alive(pid):
+                os.kill(pid, signal.SIGKILL)
+            for process in gate.processes:
+                try:
+                    os.killpg(process.pid, signal.SIGKILL)
+                except ProcessLookupError:
+                    pass
+            thread.join(10)
+            for process in gate.processes:
+                if process.stdout is not None:
+                    process.stdout.close()
+            self.assertFalse(thread.is_alive(), "test stream did not stop")
+
+    def test_control_sees_survivor(self):
+        self.assertTrue(self.probe("control"))
+
+    def test_fail_kills_separate_process_group(self):
+        self.assertFalse(self.probe("fail"), "Setpgid child survived Gate.fail")
+
+    def test_finish_kills_separate_process_group(self):
+        self.assertFalse(self.probe("finish"), "Setpgid child survived Gate.finish")
+
+    def test_mutant_without_session_cleanup_is_caught(self):
+        with mock.patch.object(run.Gate, "killSessions", lambda gate: None):
+            with self.assertRaisesRegex(AssertionError, "Setpgid child survived"):
+                self.test_fail_kills_separate_process_group()
+
+
+class LongestFirst(unittest.TestCase):
+    def test_queue_priorities_and_boost_fallback(self):
+        queue = run.TestQueue(4)
+        queue.add([(seconds, parallel, "p", name, []) for seconds, name, parallel in [(10, "short", False), (60, "unknown", False), (400, "long", True)]])
+        item = queue.take()
+        self.assertEqual(item[1:4], ("long", 400, 4))
+        queue.release(4)
+        self.assertEqual(queue.take()[1], "unknown")
+        queue.add([(500, True, "p", "boost", [])])
+        self.assertEqual(queue.take()[3], 1)  # three free: retain parallel=2
+        queue.release(1)
+        queue.release(1)
+        self.assertEqual(queue.free, 4)
+
+    def test_record_decay_corrupt_and_concurrent_writers(self):
+        with tempfile.TemporaryDirectory() as directory:
+            record = run.TestSeconds(os.path.join(directory, "seconds.tsv"))
+            self.assertEqual(record.read(), {})
+            record.update({("p", "TestA"): (100, True)})
+            record.update({("p", "TestA"): (20, False), ("p", "TestB"): (90, True)})
+            self.assertEqual(record.read()[("p", "TestA")], (80, False))
+            writers = [threading.Thread(target=record.update, args=({("q", "Test%d" % i): (i, False)},)) for i in range(20)]
+            for writer in writers:
+                writer.start()
+            for writer in writers:
+                writer.join()
+            self.assertEqual(len(record.read()), 22)
+            with open(record.path, "w") as handle:
+                handle.write("corrupt\n")
+            self.assertEqual(record.read(), {})
+            record.update({("p", "TestC"): (120, True)})
+            self.assertEqual(record.read(), {("p", "TestC"): (120, True)})
+
+    def split(self, parallel=4, broken=None, complete=False):
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        tree = directory.name
+        arguments = types.SimpleNamespace(tree=tree, out=tree, parallel=parallel)
+        gate = object.__new__(run.Gate)
+        gate.arguments = arguments
+        gate.lock = threading.Lock()
+        gate.failure = None
+        gate.complete = complete
+        gate.watchers = []
+        gate.result = {}
+        gate.steps = {}
+        gate.exits = {}
+        gate.packageDirectories = {"p": tree}
+        gate.deferred = {}
+        gate.fail = lambda stage, detail: setattr(gate, "failure", detail)
+        commands = []
+        def stream(stage, command, log, *args):
+            if "-c" in command:
+                if broken == "build":
+                    return 1
+                with open(command[command.index("-o") + 1], "w") as handle:
+                    handle.write("binary")
+                return 0
+            with gate.lock:
+                gate.recordTestStart(command)
+            commands.append(command)
+            if broken == "dead" and len(commands) == 1:
+                raise OSError("dead process")
+            if broken == "fail" and len(commands) == 1:
+                return 1
+            for watch in gate.watchers:
+                watch(json.dumps({"Package": "p", "Test": "TestLong/sub", "Action": "output", "Output": "=== PAUSE"}))
+                watch(json.dumps({"Package": "p", "Test": "TestLong", "Action": "pass", "Elapsed": 350}))
+            return 0
+        gate.stream = stream
+        gate.capture = lambda *args: "TestShort\nTestUnknown\nTestLong\n"
+        record = run.TestSeconds(os.path.join(tree, "record.tsv"))
+        record.update({("p", "TestLong"): (400, True), ("p", "TestShort"): (10, False)})
+        with mock.patch.object(run, "TestSeconds", return_value=record):
+            thread = threading.Thread(target=gate.testSplit, args=(["p"], io.StringIO()))
+            thread.start()
+            thread.join(5)
+            self.assertFalse(thread.is_alive(), "permits leaked")
+        return gate, commands, record
+
+    def test_split_order_boost_and_event_record(self):
+        gate, commands, record = self.split()
+        self.assertEqual([row["test"] for row in gate.result["test_starts"]], ["TestLong", "TestUnknown", "TestShort"])
+        self.assertIn("-test.parallel=8", commands[0])
+        self.assertEqual(gate.result["test_starts"][0]["slots"], 4)
+        self.assertEqual(record.read()[("p", "TestLong")], (350, True))
+        self.assertEqual(gate.result["split_tally"], {"packages": 1, "planned": 3, "passed": 3, "touched": 1})
+
+    def test_a_ready_long_test_starts_before_the_last_package_builds(self):
+        # q's build waits until TestLong (p's, the longest known) has started: building every package
+        # before any test would deadlock here, and a short test of q can't go first.
+        directory = tempfile.TemporaryDirectory()
+        self.addCleanup(directory.cleanup)
+        tree = directory.name
+        gate = object.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=tree, out=tree, parallel=4)
+        gate.lock = threading.Lock()
+        gate.failure = None
+        gate.complete = False
+        gate.watchers, gate.result, gate.steps, gate.exits, gate.deferred = [], {}, {}, {}, {}
+        gate.packageDirectories = {"p": tree, "q": tree}
+        gate.fail = lambda stage, detail: setattr(gate, "failure", detail)
+        longStarted = threading.Event()
+
+        def stream(stage, command, log, *args):
+            if "-c" in command:
+                if command[-1] == "q" and not longStarted.wait(3):
+                    return 1
+                with open(command[command.index("-o") + 1], "w") as handle:
+                    handle.write("binary")
+                return 0
+            with gate.lock:
+                gate.recordTestStart(command)
+            if "^TestLong$" in command:
+                longStarted.set()
+            return 0
+        gate.stream = stream
+        gate.capture = lambda command, directory: "TestLong\n" if command[0].endswith("p.test") else "TestShortQ\n"
+        record = run.TestSeconds(os.path.join(tree, "record.tsv"))
+        record.update({("p", "TestLong"): (400, False), ("q", "TestShortQ"): (10, False)})
+        with mock.patch.object(run, "TestSeconds", return_value=record):
+            thread = threading.Thread(target=gate.testSplit, args=(["q", "p"], io.StringIO()))
+            thread.start()
+            thread.join(10)
+            self.assertFalse(thread.is_alive())
+        self.assertEqual([row["test"] for row in gate.result["test_starts"]], ["TestLong", "TestShortQ"])
+        self.assertEqual(gate.result["split_tally"], {"packages": 2, "planned": 2, "passed": 2, "touched": 2})
+
+    def test_boost_requires_four_free_slots(self):
+        gate, commands, _ = self.split(parallel=3)
+        self.assertIn("-test.parallel=2", commands[0])
+        self.assertEqual(gate.result["test_starts"][0]["slots"], 1)
+
+    def test_failfast_stops_new_starts_after_dead_process(self):
+        gate, commands, _ = self.split(parallel=1, broken="dead")
+        self.assertEqual(len(commands), 1)
+        self.assertEqual(gate.exits["tests"], 1)
+
+    def test_permits_after_fail_dead_and_build_failure(self):
+        for broken in ("fail", "dead", "build"):
+            gate, commands, _ = self.split(parallel=1, broken=broken, complete=True)
+            self.assertEqual(len(commands), 0 if broken == "build" else 3)
+            self.assertEqual(gate.exits["tests"], 1)
+
+
+class ScopedEnvironment(unittest.TestCase):
+    setUp = FailClosed.setUp
+
+    def gate(self):
+        arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=self.tree, sha=self.sha, base=self.sha,
+                                          full=False, complete=True, branch="cloud/land-x", branch_source="", session="", session_source="")
+        return run.Gate(arguments)
+
+    def test_a_scoped_gate_refuses_and_a_clean_one_records_it(self):
+        with mock.patch.dict(os.environ, {"ADAMIC_LINT_RULES": "no-debugger"}):
+            gate = self.gate()
+            gate.run()
+        self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
+        self.assertEqual(gate.failure["step"], "environment")
+        environment = dict(os.environ)
+        environment.pop("ADAMIC_LINT_RULES", None)
+        with mock.patch.dict(os.environ, environment, clear=True):
+            gate = self.gate()
+            with mock.patch.object(gate, "git", side_effect=RuntimeError("past the check")):
+                with self.assertRaises(RuntimeError):
+                    gate.run()
+        self.assertEqual(gate.result["scoped_env"], [])
+
+    def test_set_but_empty_still_refuses(self):
+        with mock.patch.dict(os.environ, {"ADAMIC_LINT_RULES": ""}):
+            gate = self.gate()
+            gate.run()
+        self.assertEqual(gate.result["scoped_env"], ["ADAMIC_LINT_RULES"])
+
+
+class Stage3Red(unittest.TestCase):
+    def test_a_lane_red_names_the_lanes_verdict_and_last_lines(self):
+        with tempfile.TemporaryDirectory() as root:
+            tree, out = os.path.join(root, "tree"), os.path.join(root, "out")
+            os.makedirs(os.path.join(tree, "stage3/lane"))
+            os.makedirs(out)
+            open(os.path.join(tree, "stage3/lane/run.sh"), "w").close()
+            for command in (["init", "-q"], ["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "t"]):
+                realRun(["git", "-C", tree] + command, check=True)
+            gate = run.Gate(types.SimpleNamespace(tree=tree, out=out, tools=tree, sha="a" * 40, base="a" * 40, full=False,
+                                                  complete=False, branch="", branch_source="", session="", session_source=""))
+
+            def spawn(command, stdout, stderr=None, directory=None, environment=None):
+                lane = command[:2] == ["bash", "stage3/lane/run.sh"]
+                if lane:
+                    os.makedirs(command[2], exist_ok=True)
+                    with open(os.path.join(command[2], "verdict.txt"), "w") as handle:
+                        handle.write("FAIL stage3 landing lane: test counts: expected 1 failing, observed 4\n")
+                stdout.write("".join("noise %d\n" % i for i in range(20)) + ("failed test names: observed ['unusedTypeParameters']\n" if lane else ""))
+                return types.SimpleNamespace(wait=lambda: 1 if lane else 0)
+
+            with mock.patch.object(gate, "spawn", spawn):
+                gate.stage3()
+            detail = gate.failure["detail"]
+            self.assertIn("stage3-lane exit 1", detail)
+            self.assertIn("FAIL stage3 landing lane: test counts", detail)
+            self.assertIn("failed test names: observed ['unusedTypeParameters']", detail)
+            self.assertNotIn("noise 3", detail)
+
+
+class LongTests(unittest.TestCase):
+    def test_the_ledger_holds_top_level_tests_over_the_line_longest_first(self):
+        events = [
+            {"Action": "pass", "Package": "p", "Test": "TestShort", "Elapsed": 9.9},
+            {"Action": "pass", "Package": "p", "Test": "TestAtTheLine", "Elapsed": 10},
+            {"Action": "pass", "Package": "p", "Test": "TestLong", "Elapsed": 12.5},
+            {"Action": "fail", "Package": "q", "Test": "TestLonger", "Elapsed": 400},
+            {"Action": "pass", "Package": "q", "Test": "TestLonger/case", "Elapsed": 390},
+            {"Action": "skip", "Package": "q", "Test": "TestSkipped", "Elapsed": 50},
+            {"Action": "pass", "Package": "q", "Elapsed": 600},
+            {"Action": "output", "Package": "p", "Test": "TestLong", "Output": "x"},
+        ]
+        with tempfile.TemporaryDirectory() as directory:
+            path = os.path.join(directory, "test.jsonl")
+            with open(path, "w") as handle:
+                handle.write("not json\n[1]\n")
+                handle.writelines(json.dumps(event) + "\n" for event in events)
+            self.assertEqual(run.longTests(path), [("q", "TestLonger", 400, "fail"), ("p", "TestLong", 12.5, "pass")])
+            self.assertEqual(run.longTests(os.path.join(directory, "absent.jsonl")), [])
+
+
+@unittest.skipUnless(sys.platform == "linux", "requires Linux /proc sessions")
+class StopTests(unittest.TestCase):
+    setUp = FailClosed.setUp
+
+    def stopped(self, failed, sibling=True):
+        self.addCleanup(shutil.rmtree, self.directory)
+        arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=self.tree,
+            sha=self.sha, base=self.sha, full=False, complete=True, branch="area/test",
+            branch_source="", session="", session_source="")
+        gate = run.Gate(arguments)
+        gate.packageDirectories = {"p": self.tree}
+        gate.result["test_outcomes"] = [{"package": "p", "test": name, "status": "not run"}
+                                        for name in ("TestPassed", "TestFailed", "TestKilled", "TestPending")]
+        tally = {"passed": 0}
+        passed = [sys.executable, "-c", 'import json; print(json.dumps({"Package":"p","Test":"TestPassed","Action":"pass"}))']
+        gate.slotted(passed, io.StringIO(), "p", "TestPassed", tally)
+        if failed:
+            command = [sys.executable, "-c", 'import json; print(json.dumps({"Package":"p","Test":"TestFailed","Action":"fail"})); raise SystemExit(1)']
+            gate.slotted(command, io.StringIO(), "p", "TestFailed", tally)
+        ready = os.path.join(self.tree, "ready")
+        command = [sys.executable, "-c", 'import pathlib,time; pathlib.Path(%r).touch(); time.sleep(60)' % ready]
+        thread = gate.guarded("tests", gate.slotted, command, io.StringIO(), "p", "TestKilled", tally)
+        thread.start()
+        self.addCleanup(thread.join, 5)
+        deadline = time.monotonic() + 5
+        while not os.path.exists(ready) and time.monotonic() < deadline:
+            time.sleep(.01)
+        self.assertTrue(os.path.exists(ready))
+        reason = "superseded by area/new " + "b" * 40
+        if sibling:
+            with open(self.tree + ".stop-reason", "w") as handle:
+                handle.write(reason)
+            self.addCleanup(os.unlink, self.tree + ".stop-reason")
+        previous = signal.signal(signal.SIGTERM, gate.stop)
+        try:
+            with mock.patch.dict(os.environ, {"ADAMIC_FAST_GATE_STOP_REASON": reason}):
+                os.kill(os.getpid(), signal.SIGTERM)
+                thread.join(5)
+        finally:
+            signal.signal(signal.SIGTERM, previous)
+        self.assertFalse(thread.is_alive())
+        before = len(gate.processes)
+        with self.assertRaises(SystemExit):
+            gate.spawn([sys.executable, "-c", "raise SystemExit(0)"], subprocess.PIPE)
+        self.assertEqual(len(gate.processes), before)
+        gate.finish()
+        with open(os.path.join(self.tree, "fast.json")) as handle:
+            result = json.load(handle)
+        with open(os.path.join(self.tree, "status.txt")) as handle:
+            status = handle.read()
+        self.assertEqual(result["stopped"]["reason"], reason)
+        self.assertEqual(result["planned_test_counts"], {"passed": 1, "failed": int(failed), "not run": 3-int(failed)})
+        self.assertEqual(result["failed_tests"], ["p TestFailed"] if failed else [])
+        if failed:
+            self.assertTrue(status.startswith("red:"))
+            self.assertIn("stopped: " + reason, status)
+            self.assertEqual(result["failure"]["detail"], "p TestFailed\n")
+        else:
+            self.assertEqual(status.strip(), "void: stopped before a verdict: " + reason)
+
+    def test_sigterm_mid_tests_preserves_red_and_marks_killed_not_run(self):
+        self.stopped(True)
+
+    def test_sigterm_before_failure_is_void(self):
+        self.stopped(False, sibling=False)
+
+
+class StoppedPublish(unittest.TestCase):
+    def test_stopped_remote_run_still_publishes(self):
+        with tempfile.TemporaryDirectory() as root:
+            cloud = os.path.join(root, "cloud")
+            os.mkdir(cloud)
+            shutil.copy(os.path.join(os.path.dirname(__file__), "../fast-gate.sh"), cloud)
+            with open(os.path.join(cloud, "fast-gate-classify.sh"), "w") as handle:
+                handle.write('gateBase() { echo "main ' + 'a'*40 + '"; }\nclassify() { echo B; }\n')
+            bindir = os.path.join(root, "bin")
+            os.mkdir(bindir)
+            fixture = os.path.join(root, "fixture")
+            os.mkdir(fixture)
+            with open(os.path.join(fixture, "status.txt"), "w") as handle:
+                handle.write("red: first failure at tests\nstopped: superseded by newer\n")
+            with open(os.path.join(fixture, "fast.json"), "w") as handle:
+                json.dump({"stopped": {"reason": "superseded by newer", "at_seconds": 174}}, handle)
+            scripts = {
+                "ssh": "cat >/dev/null; exit 1\n",
+                "scp": 'cp -R "$PUBLISH_FIXTURE" "$4"\n',
+                "git": '''case "$*" in
+*rev-parse*--absolute-git-dir*) echo "$PUBLISH_ROOT" ;;
+*rev-parse*) printf '%040d\\n' 1 ;;
+*write-tree*|*commit-tree*) printf '%040d\\n' 2 ;;
+*push*) printf '%s\\n' "$*" > "$PUBLISH_ROOT/pushed" ;;
+esac
+''',
+            }
+            for name, body in scripts.items():
+                path = os.path.join(bindir, name)
+                with open(path, "w") as handle:
+                    handle.write("#!/bin/bash\n" + body)
+                os.chmod(path, 0o755)
+            env = dict(os.environ, PATH=bindir + ":" + os.environ["PATH"], PUBLISH_ROOT=root,
+                       PUBLISH_FIXTURE=fixture, TMPDIR=root, ADAMIC_FAST_GATE_TOOLS_ON_ORIGIN="1")
+            result = realRun(["bash", os.path.join(cloud, "fast-gate.sh"), "b"*40,
+                              "--branch", "codex/test", "--session", "test"], env=env,
+                             capture_output=True, text=True, timeout=10)
+            self.assertEqual(result.returncode, 1, result.stderr)
+            self.assertIn("published gate-logs/" + "b"*12, result.stdout)
+            self.assertIn("stopped: superseded by newer", result.stdout)
+            with open(os.path.join(root, "pushed")) as handle:
+                self.assertIn("refs/heads/gate-logs/" + "b"*12, handle.read())
+
+
+class PhaseUnitTests(unittest.TestCase):
+    def test_inventory_and_patterns(self):
+        tree = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        names = run.wasiFixtures(tree)
+        self.assertEqual(len(names), 36)
+        self.assertEqual(names[-1], "requests")
+        self.assertIn("internal/native/wasm/io.a", names)
+        for name in names:
+            pattern = run.fixturePattern(["TestWASI"], [name])
+            self.assertEqual(len(pattern.split("/")), len(name.split("/")) + 1)
+            self.assertTrue(all(part.startswith("^(") and part.endswith(")$") for part in pattern.split("/")))
+
+    def test_inventory_refuses_unknown_registration(self):
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "internal/native"))
+            with open(os.path.join(tree, "internal/native/wasm_test.go"), "w") as handle:
+                handle.write('func TestWASI(t *testing.T) {\nfixtures := []string{\n"a",\n\t}\nt.Run(fixture, f)\nt.Run(dynamic, f)\n}')
+            with self.assertRaises(ValueError):
+                run.wasiFixtures(tree)
+
+    def bare_gate(self, tree, out):
+        gate = object.__new__(run.Gate)
+        gate.arguments = types.SimpleNamespace(tree=tree, out=out, parallel=2, sha="abc")
+        gate.result, gate.steps, gate.exits = {}, {}, {}
+        gate.failures = []
+        gate.fail = lambda name, detail: gate.failures.append(name)
+        return gate
+
+    def test_catalog_verdicts_are_per_entry(self):
+        cases = [(0, "applies-and-fails-as-recorded", True), (1, "no-longer-applies", True),
+                 (0, "skipped (reason)", True), (1, "applies-but-failure-not-as-recorded", False),
+                 (1, "error", False), (0, "", False), (1, "applies-and-fails-as-recorded", False)]
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            open(os.path.join(tree, "verify/catalog/check.sh"), "w").close()
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": i+1, "name": "case"+str(i)} for i in range(len(cases))], handle)
+            gate = self.bare_gate(tree, tree)
+            def spawn(command, output, environment):
+                i = int(command[command.index("--entry")+1])-1
+                self.assertEqual(command[command.index("--jobs")+1], "1")
+                self.assertEqual(environment["GOMAXPROCS"], "1")
+                self.assertEqual(environment["GOFLAGS"], "-p=1")
+                self.assertTrue(os.path.isdir(environment["TMPDIR"]))
+                output.write("%02d case%d: %s\n" % (i+1, i, cases[i][1]))
+                return types.SimpleNamespace(wait=lambda: cases[i][0])
+            gate.spawn = spawn
+            gate.catalogFull()
+            self.assertEqual([row["ok"] for row in gate.result["catalog_units"]], [case[2] for case in cases])
+            self.assertEqual(set(gate.failures), {"catalog/04 case3", "catalog/05 case4", "catalog/06 case5", "catalog/07 case6"})
+            cases[0] = (0, "skipped (reason)", True)
+            gate.catalogFull()
+            self.assertEqual(gate.exits["catalog"], 1)
+            self.assertIn("catalog", gate.failures)
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number": 1,"name":"a"},{"number":1,"name":"b"}],handle)
+            with self.assertRaises(ValueError):
+                gate.catalogFull()
+
+    def test_wasi_requires_named_pass_and_exact_selection(self):
+        with tempfile.TemporaryDirectory() as tree:
+            gate = self.bare_gate(tree, tree)
+            def stream(name, command, log, environment):
+                pattern = command[command.index("-run")+1]
+                self.assertEqual(command[command.index("-p")+1], "1")
+                self.assertEqual(environment["PATH"], "sdk-first")
+                self.assertEqual(environment["GOFLAGS"], "-p=1")
+                self.assertEqual(environment["GOMAXPROCS"], "1")
+                if "good" in pattern:
+                    log.write(json.dumps({"Test":"TestWASI/good","Action":"pass"}))
+                if "broad" in pattern:
+                    log.write(json.dumps({"Test":"TestWASI/broad","Action":"pass"}))
+                    log.write(json.dumps({"Test":"TestWASI/extra","Action":"run"}))
+                return 0
+            gate.stream = stream
+            with mock.patch.object(run, "wasiFixtures", return_value=["good","missing","broad"]):
+                gate.wasiSplit(io.StringIO(), {"PATH":"sdk-first"})
+            self.assertEqual([row["ok"] for row in gate.result["wasi_units"]], [True,False,False])
+            self.assertEqual(set(gate.failures), {"wasi/missing","wasi/broad"})
+
+    def test_real_subprocess_planted_failures_are_named(self):
+        tools = os.path.abspath(os.path.join(os.path.dirname(__file__), "../.."))
+        with tempfile.TemporaryDirectory() as tree:
+            os.makedirs(os.path.join(tree, "verify/catalog"))
+            with open(os.path.join(tree, "verify/catalog/catalog.json"), "w") as handle:
+                json.dump([{"number":1,"name":"good"},{"number":2,"name":"planted"}], handle)
+            with open(os.path.join(tree, "verify/catalog/check.sh"), "w") as handle:
+                handle.write('if [ "$2" = 1 ]; then echo "01 good: applies-and-fails-as-recorded"; else echo "02 planted: applies-but-failure-not-as-recorded"; exit 1; fi\n')
+            os.makedirs(os.path.join(tree, "internal/native"))
+            with open(os.path.join(tree, "go.mod"), "w") as handle:
+                handle.write("module example.com/phase-probe\n\ngo 1.25\n")
+            with open(os.path.join(tree, "internal/native/wasm_test.go"), "w") as handle:
+                handle.write('package native\nimport "testing"\nfunc TestWASI(t *testing.T) {\n\tfixtures := []string{\n\t\t"good", "planted",\n\t}\nfor _, fixture := range fixtures { t.Run(fixture, func(t *testing.T) { if fixture == "planted" { t.Fatal("planted unit failure") } }) }\n}\n')
+            for phase in ("catalog", "wasi"):
+                out = tempfile.mkdtemp(dir=tree)
+                arguments = types.SimpleNamespace(tree=tree, tools=tools, sha="probe", base="probe",
+                    out=out, parallel=2, full=True, complete=True, branch="", branch_source="",
+                    session="", session_source="")
+                gate = run.Gate(arguments)
+                gate.planned, gate.kind = [phase], "fast"
+                with open(os.path.join(out,"test.jsonl"),"w") as log:
+                    if phase == "catalog":
+                        gate.catalogFull()
+                    else:
+                        gate.wasiSplit(log, {"PATH":os.environ["PATH"]})
+                gate.finish()
+                with open(os.path.join(out,"fast.json")) as handle:
+                    result = json.load(handle)
+                self.assertEqual(result[phase+"_unit_count"],2)
+                self.assertEqual(result["failure"]["step"], "catalog/02 planted" if phase=="catalog" else "wasi/planted")
+                self.assertEqual([row["name"] for row in result[phase+"_units"] if row["status"]=="failed"],
+                                 ["02 planted"] if phase=="catalog" else ["planted"])
+                if phase == "wasi":
+                    self.assertIn("TestWASI/planted", result["failure"]["detail"])
+                    self.assertIn("example.com/phase-probe/internal/native TestWASI/planted",result["failed_tests"])
+
+    def test_slot_cpu_quota(self):
+        with mock.patch.object(run.os, "sched_getaffinity", return_value=set(range(8))), \
+                mock.patch("builtins.open", mock.mock_open(read_data="400000 100000")):
+            self.assertEqual(run.slotCPUs(), 4)
+
+    def test_units_coverage_failure_scratch_and_budget(self):
+        with tempfile.TemporaryDirectory() as out:
+            gate = object.__new__(run.Gate)
+            gate.arguments = types.SimpleNamespace(out=out, parallel=2)
+            gate.result, gate.steps, gate.exits = {}, {}, {}
+            failures = []
+            gate.fail = lambda name, detail: failures.append(name)
+            active, maximum, lock = [0], [0], threading.Lock()
+            def execute(name, command, scratch):
+                with lock:
+                    active[0] += 1
+                    maximum[0] = max(maximum[0], active[0])
+                time.sleep(0.01)
+                with lock:
+                    active[0] -= 1
+                return {"ok": name != "bad", "exit": int(name == "bad")}
+            gate.phaseUnits("catalog", ["good", "bad", "last"], [["x"]] * 3, execute)
+            rows = gate.result["catalog_units"]
+            self.assertEqual([r["name"] for r in rows], ["good", "bad", "last"])
+            self.assertEqual(gate.result["catalog_unit_count"], 3)
+            self.assertEqual(len(set(r["scratch"] for r in rows)), 3)
+            self.assertEqual(maximum[0], 2)
+            self.assertEqual(failures, ["catalog/bad"])
+            self.assertEqual(gate.exits["catalog"], 1)
+            with mock.patch.object(run.time, "monotonic", side_effect=[0, 0, 30.0004, 32]):
+                gate.phaseUnits("wasi", ["slow"], [["x"]], lambda *args: {"ok": True})
+            self.assertTrue(gate.result["wasi_units"][0]["over_budget"])
+            self.assertEqual(gate.exits["wasi"], 1)
+            self.assertIn("wasi/slow", failures)
+
+if __name__ == "__main__":
+    unittest.main()

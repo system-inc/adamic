@@ -1,0 +1,74 @@
+.........../workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpb_6ouobb/tmploi3g44o/stage3-apply-tests.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpb_6ouobb/tmploi3g44o/stage3-lane-tests.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpb_6ouobb/tmploi3g44o/stage3-lane.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+......../workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpaxj_23hh/tmpssemht0g/stage3-apply-tests.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpaxj_23hh/tmpssemht0g/stage3-lane-tests.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpaxj_23hh/tmpssemht0g/stage3-lane.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+....kill probe: action=control pid=55669 pgrp=55669 sid=55631 survived=True
+FIRST FAILURE (tests, at 0.1 s):
+go tool test2json -t exited -9
+
+.FIRST FAILURE (other, at 0.1 s):
+
+.kill probe: action=fail pid=55770 pgrp=55770 sid=55732 survived=False
+FIRST FAILURE (tests, at 0.1 s):
+go tool test2json -t exited -9
+
+green: c4c29fb6c62acc3eeafb6a020842663b49befe86 fast gate in 0.1 s (; 0 tests over 10 s (0 s); deferred to full gate: 0 tests; branch none, session none), 0 packages, 0 pass, 0 skip, smoke 0 fixtures
+.kill probe: action=finish pid=55869 pgrp=55869 sid=55834 survived=False
+FIRST FAILURE (other, at 0.1 s):
+
+...............kill probe: action=fail pid=55970 pgrp=55970 sid=55933 survived=True
+FIRST FAILURE (catalog/02 planted, at 0.0 s):
+{"name": "02 planted", "command": ["bash", "verify/catalog/check.sh", "--entry", "2", "--jobs", "1", "probe"], "status": "failed", "scratch": "/tmp/adamic-gate/tmp_scqo9k4/tmpr23tzsnr/catalog-units/01-s6fsi_r7", "exit": 1, "ok": false, "caught": false, "stale": false, "skipped": false, "verdicts": ["02 planted: applies-but-failure-not-as-recorded"], "log": "/tmp/adamic-gate/tmp_scqo9k4/tmpr23tzsnr/catalog-units/01-s6fsi_r7/catalog.log", "wall_seconds": 0.002409, "over_budget": false}
+red: probe fast gate, first failure at catalog/02 planted after 0.0 s (catalog=0.0s; 0 tests over 10 s (0 s)), 0 fail, 0 pass
+FIRST FAILURE (wasi/planted, at 0.3 s):
+example.com/phase-probe/internal/native TestWASI/planted
+=== RUN   TestWASI/planted
+    wasm_test.go:7: planted unit failure
+--- FAIL: TestWASI/planted (0.00s)
+
+red: probe fast gate, first failure at wasi/planted after 0.3 s (wasi=0.3s; 0 tests over 10 s (0 s)), 2 fail, 2 pass
+....FIRST FAILURE (environment, at 0.0 s):
+refused: a gate that can land on main never runs scoped, and ADAMIC_LINT_RULES is set
+.FIRST FAILURE (environment, at 0.0 s):
+refused: a gate that can land on main never runs scoped, and ADAMIC_LINT_RULES is set
+./workspace/adamic/cloud/fast-gate/run.py:526: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpmp6fbzuo/out/stage3-lane-verdict.txt' mode='r' encoding='UTF-8'>
+  detail += [line for line in open(verdict, errors="replace").read().splitlines() if line.strip()][:2]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+/workspace/adamic/cloud/fast-gate/run.py:529: ResourceWarning: unclosed file <_io.TextIOWrapper name='/tmp/adamic-gate/tmpmp6fbzuo/out/stage3-lane.log' mode='r' encoding='UTF-8'>
+  lines = [line for line in open(os.path.join(self.arguments.out, name + ".log"), errors="replace").read().splitlines() if line.strip()]
+ResourceWarning: Enable tracemalloc to get the object allocation traceback
+FIRST FAILURE (stage3, at 0.0 s):
+stage 3 tier 1 failed: stage3-lane exit 1 (logs: stage3-lane.log)
+FAIL stage3 landing lane: test counts: expected 1 failing, observed 4
+stage3-lane, last lines:
+noise 15
+noise 16
+noise 17
+noise 18
+noise 19
+failed test names: observed ['unusedTypeParameters']
+.void: stopped before a verdict: superseded by area/new bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+.FIRST FAILURE (tests, at 0.0 s):
+p TestFailed
+
+red: be09dccc3f1bec42638c7902ba38c301f6877f02 fast gate, first failure at tests after 0.0 s (; 0 tests over 10 s (0 s); deferred to full gate: 0 tests; branch area/test, session none), 1 fail, 1 pass
+stopped: superseded by area/new bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb
+..
+----------------------------------------------------------------------
+Ran 51 tests in 5.681s
+
+OK

@@ -1,0 +1,8 @@
+# Deployed by Kirk to the kirkouimet Cloudflare account. The Worker alone holds the bucket binding.
+name = "adamic-build-cache"
+main = "worker.js"
+compatibility_date = "2026-09-01"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "assets"

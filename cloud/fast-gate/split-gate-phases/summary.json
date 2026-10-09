@@ -1,0 +1,260 @@
+{
+  "result": "partial: 30-second budget unmet; all phase units covered",
+  "target_sha": "89cbe74a5009047b0fb2fd31c323794d00dbcc12",
+  "historical_main_sha": "73352e874ddb",
+  "instrument": "Python time.monotonic wall clock, including process startup, Go compilation, test execution, catalog checkout and cleanup",
+  "machine": {
+    "instrument": "Python time.monotonic (including process startup, compilation, setup and cleanup)",
+    "cold": "fresh empty shared GOCACHE at each phase start; compiler artifacts reused within the phase; -count=1, ADAMIC_GATE_UNCACHED=1; no warmup; does not prove independently cold time for later units",
+    "affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "cpu_max": "400000 100000",
+    "hostname": "95dd530494ea",
+    "mode": "after",
+    "unit_workers": 2,
+    "wall_seconds": 797.8971088130002
+  },
+  "scope": "phase-only comparison on tools branch compiler tree 89cbe74a; historical main 73352e87 was not rerun; full gate not run",
+  "cold_limit": "Fresh empty shared GOCACHE at each phase start; reuse within phase. Later units were not independently compiler-cold. OS page cache was not reset.",
+  "catalog_legacy_jobs_override": 2,
+  "split_workers": 2,
+  "split_go_flags": "GOMAXPROCS=1, GOFLAGS=-p=1; WASI -p 1 -parallel 1; catalog --entry NN --jobs 1",
+  "timing_source_notes": "Catalog timed before precision-only overrun check and common-artifact alias edits; WASI timed before alias edit. Commands, scratch isolation and concurrency unchanged.",
+  "aborted_original_default_catalog": "Original default four-worker cold catalog exhausted the 8.8 GiB writable disk and was terminated without a verdict; no valid timing claimed.",
+  "tests": {
+    "run_test.py": {
+      "tests": 51,
+      "result": "green"
+    },
+    "mutants": {
+      "run": 30,
+      "caught": 30
+    }
+  },
+  "coverage": {
+    "catalog": {
+      "count": 16,
+      "old_names": [
+        "01 shared-slice-append",
+        "02 liveness-throw",
+        "03 defined-lent",
+        "04 borrowed-array-move",
+        "05 spread-method-reuse",
+        "06 constructor-capture-region",
+        "07 borrowed-element-reads",
+        "08 narrowed-number-field",
+        "09 literal-undefined-field",
+        "10 override-representation",
+        "11 refuse-definite-assignment",
+        "12 refuse-suppression-directives",
+        "13 typeof-null",
+        "14 constructor-arrow-this",
+        "15 class-instance-key",
+        "16 proven-guards-relations"
+      ],
+      "new_names": [
+        "01 shared-slice-append",
+        "02 liveness-throw",
+        "03 defined-lent",
+        "04 borrowed-array-move",
+        "05 spread-method-reuse",
+        "06 constructor-capture-region",
+        "07 borrowed-element-reads",
+        "08 narrowed-number-field",
+        "09 literal-undefined-field",
+        "10 override-representation",
+        "11 refuse-definite-assignment",
+        "12 refuse-suppression-directives",
+        "13 typeof-null",
+        "14 constructor-arrow-this",
+        "15 class-instance-key",
+        "16 proven-guards-relations"
+      ],
+      "unchanged": true
+    },
+    "wasi": {
+      "count": 36,
+      "old_names": [
+        "internal/load/testdata/0.1/compile/01_hello.ts",
+        "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+        "internal/load/testdata/0.1/compile/03_shapes.ts",
+        "internal/load/testdata/0.1/compile/04_closures.ts",
+        "internal/load/testdata/0.1/compile/05_wordcount.ts",
+        "internal/load/testdata/0.1/compile/06_stack.ts",
+        "internal/load/testdata/0.1/compile/07_modules/main.ts",
+        "internal/load/testdata/0.1/compile/08_results.ts",
+        "internal/load/testdata/0.1/compile/09_tree.ts",
+        "internal/load/testdata/0.1/compile/10_unicode.ts",
+        "internal/oracle/testdata/strings.a",
+        "internal/oracle/testdata/numbers.a",
+        "internal/oracle/testdata/bitwise_sweep.a",
+        "internal/oracle/testdata/functions.a",
+        "internal/oracle/testdata/regions.a",
+        "internal/oracle/testdata/regions_throw.a",
+        "internal/oracle/testdata/weak_parent.a",
+        "internal/oracle/testdata/weak_narrowed.a",
+        "internal/oracle/testdata/reuse_weak_after_reuse.a",
+        "internal/oracle/testdata/reuse_weak_during_spread.a",
+        "internal/oracle/testdata/normalize.a",
+        "internal/oracle/testdata/maps_and_text.a",
+        "internal/oracle/testdata/stack_overflow.a",
+        "internal/oracle/testdata/stack_forever.a",
+        "internal/oracle/testdata/stack_tail_call.a",
+        "internal/oracle/testdata/panic.a",
+        "internal/oracle/testdata/json_stringify_numbers.a",
+        "internal/oracle/testdata/regexp_cycle_collections.a",
+        "internal/oracle/testdata/library_object_keys.a",
+        "internal/oracle/testdata/library_array_flat.a",
+        "internal/oracle/testdata/read_files.a",
+        "internal/native/wasm/io.a",
+        "internal/oracle/testdata/closures_throw.a",
+        "internal/oracle/testdata/write_stdout_order.a",
+        "internal/oracle/testdata/write_stderr_order.a",
+        "requests"
+      ],
+      "new_names": [
+        "internal/load/testdata/0.1/compile/01_hello.ts",
+        "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+        "internal/load/testdata/0.1/compile/03_shapes.ts",
+        "internal/load/testdata/0.1/compile/04_closures.ts",
+        "internal/load/testdata/0.1/compile/05_wordcount.ts",
+        "internal/load/testdata/0.1/compile/06_stack.ts",
+        "internal/load/testdata/0.1/compile/07_modules/main.ts",
+        "internal/load/testdata/0.1/compile/08_results.ts",
+        "internal/load/testdata/0.1/compile/09_tree.ts",
+        "internal/load/testdata/0.1/compile/10_unicode.ts",
+        "internal/oracle/testdata/strings.a",
+        "internal/oracle/testdata/numbers.a",
+        "internal/oracle/testdata/bitwise_sweep.a",
+        "internal/oracle/testdata/functions.a",
+        "internal/oracle/testdata/regions.a",
+        "internal/oracle/testdata/regions_throw.a",
+        "internal/oracle/testdata/weak_parent.a",
+        "internal/oracle/testdata/weak_narrowed.a",
+        "internal/oracle/testdata/reuse_weak_after_reuse.a",
+        "internal/oracle/testdata/reuse_weak_during_spread.a",
+        "internal/oracle/testdata/normalize.a",
+        "internal/oracle/testdata/maps_and_text.a",
+        "internal/oracle/testdata/stack_overflow.a",
+        "internal/oracle/testdata/stack_forever.a",
+        "internal/oracle/testdata/stack_tail_call.a",
+        "internal/oracle/testdata/panic.a",
+        "internal/oracle/testdata/json_stringify_numbers.a",
+        "internal/oracle/testdata/regexp_cycle_collections.a",
+        "internal/oracle/testdata/library_object_keys.a",
+        "internal/oracle/testdata/library_array_flat.a",
+        "internal/oracle/testdata/read_files.a",
+        "internal/native/wasm/io.a",
+        "internal/oracle/testdata/closures_throw.a",
+        "internal/oracle/testdata/write_stdout_order.a",
+        "internal/oracle/testdata/write_stderr_order.a",
+        "requests"
+      ],
+      "all_passed": true,
+      "unchanged": true
+    }
+  },
+  "phases": {
+    "catalog": {
+      "before_wall_seconds": 707.911618482,
+      "after_wall_seconds": 892.9433881929999,
+      "slowest_unit_seconds": 757.906,
+      "over_budget": [
+        {
+          "name": "01 shared-slice-append",
+          "wall_seconds": 750.966
+        },
+        {
+          "name": "02 liveness-throw",
+          "wall_seconds": 757.906
+        },
+        {
+          "name": "03 defined-lent",
+          "wall_seconds": 38.292
+        },
+        {
+          "name": "04 borrowed-array-move",
+          "wall_seconds": 35.497
+        },
+        {
+          "name": "05 spread-method-reuse",
+          "wall_seconds": 37.6
+        },
+        {
+          "name": "06 constructor-capture-region",
+          "wall_seconds": 35.819
+        },
+        {
+          "name": "07 borrowed-element-reads",
+          "wall_seconds": 30.865
+        },
+        {
+          "name": "09 literal-undefined-field",
+          "wall_seconds": 42.758
+        }
+      ]
+    },
+    "wasi": {
+      "before_wall_seconds": 240.72407901099996,
+      "after_wall_seconds": 797.8971088130002,
+      "slowest_unit_seconds": 551.412996,
+      "over_budget": [
+        {
+          "name": "internal/load/testdata/0.1/compile/01_hello.ts",
+          "wall_seconds": 551.412996
+        },
+        {
+          "name": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+          "wall_seconds": 550.206313
+        }
+      ]
+    }
+  },
+  "failure_probes": {
+    "catalog": {
+      "step": "catalog/01 shared-slice-append",
+      "units": [
+        {
+          "name": "01 shared-slice-append",
+          "ok": false,
+          "wall_seconds": 17.333875
+        },
+        {
+          "name": "02 liveness-throw",
+          "ok": true,
+          "wall_seconds": 23.366519
+        }
+      ],
+      "phase": "catalog",
+      "injection": "Go test control exits 2 for shared_slice_append",
+      "real_candidate_tests": true,
+      "warm_compiler_cache": true,
+      "exactly_one_semantic_failure": true
+    },
+    "wasi": {
+      "step": "wasi/internal/load/testdata/0.1/compile/01_hello.ts",
+      "units": [
+        {
+          "name": "internal/load/testdata/0.1/compile/01_hello.ts",
+          "ok": false,
+          "wall_seconds": 12.770871
+        },
+        {
+          "name": "internal/load/testdata/0.1/compile/02_fizzbuzz.ts",
+          "ok": true,
+          "wall_seconds": 12.866957
+        }
+      ],
+      "phase": "wasi",
+      "injection": "Node exits 17 only for 01_hello.ts source oracle",
+      "real_candidate_tests": true,
+      "warm_compiler_cache": true,
+      "exactly_one_semantic_failure": true
+    }
+  },
+  "generated_utc": "2026-10-08T22:30:21.947982+00:00"
+}
