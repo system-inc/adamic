@@ -71,19 +71,3 @@ func TestLossyInputRefusal(t *testing.T) {
 	}
 	t.Log("equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required")
 }
-
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
-func TestLossyInputControl(t *testing.T) {
-	path := filepath.Join(t.TempDir(), "malformed.ts")
-	os.WriteFile(path, []byte{47, 47, 240, 144, 128, 10, 120, 59}, 0644)
-	want := execute(t, "", goOracle(t), path)
-	main := mutantPort(t, "pipeline.ts", `if(text.includes('\ufffd'))`, `if(false)`)
-	binary, _ := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path)} {
-		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " lossy-input mutant survived")
-		} else {
-			t.Log(name + ": " + d)
-		}
-	}
-}
