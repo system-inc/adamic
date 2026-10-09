@@ -1,5 +1,5 @@
 import pathlib,subprocess,json,difflib,time,os
-p=pathlib.Path('review/test-defend/internal-lower-module_namespace'); base=subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip();(p/'base.txt').write_text(base+'\n')
+p=pathlib.Path(__file__).resolve().parent; base=subprocess.check_output(['git','rev-parse','origin/main'],text=True).strip();(p/'base.txt').write_text(base+'\n')
 audit='origin/test-audit/internal-lower-module_namespace'
 for n in ['REPORT.txt','report.json','rows.json','mutant-plan.json','matrix.json','reached-functions.txt']:
  (p/('prior-'+n)).write_bytes(subprocess.check_output(['git','show',audit+':review/test-audit/internal-lower-module_namespace/'+n]))

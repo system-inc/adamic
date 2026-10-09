@@ -1,6 +1,24 @@
-# Namespace test defense
+import json,pathlib,subprocess,gzip
+p=pathlib.Path(__file__).resolve().parent;m=json.loads((p/'matrix.json').read_text());base=(p/'base.txt').read_text().strip()
+prior=gzip.decompress(subprocess.check_output(['git','show','origin/test-audit/internal-lower-module_namespace:review/test-audit/internal-lower-module_namespace/logs/baseline.log.gz'])).decode();(p/'prior-baseline.log').write_text(prior)
+def events(s):
+ out=[]
+ for line in s.splitlines():
+  try:out.append(json.loads(line))
+  except ValueError:pass
+ return out
+old={e['Test'] for e in events(prior) if e.get('Action')=='run' and e.get('Test') and '/' not in e['Test']}
+now={l for l in (p/'list.log').read_text().splitlines() if l.startswith('Test')};delta={'added':sorted(now-old),'vanished':sorted(old-now)};(p/'scope-changes.json').write_text(json.dumps(delta,indent=2)+'\n')
+rows=[]
+subs=['TestEnumNamespaceSharedCycle','TestEnumInitializationReach']
+for r,sub in zip(m,subs):
+ assert r['rows_failed']==[r['target']]
+ rows.append(dict(test=r['target'],package='internal/lower',prior_verdict='subsumed',subsumed_by=[sub],defense='defended',unique_mutant=r['mutant']+' '+r['file_line'],attempts=[{k:r[k] for k in ['mutant','file_line','change','rows_failed']}],evidence=r['command']+'; '+r['failures'][0]['line']))
+ (p/(r['mutant']+'-passed-rows.txt')).write_text('\n'.join(r['rows_passed'])+'\n')
+(p/'results.json').write_text(json.dumps(rows,indent=2)+'\n')
+report=f'''# Namespace test defense
 
-Both requested rows defended by one package-unique observed catch each. Starting origin/main: 6eef5ae586af0354d3032d36535e54cefb2da43a. Production source restored; no tests, harness, checker, oracle or input fixtures mutated.
+Both requested rows defended by one package-unique observed catch each. Starting origin/main: {base}. Production source restored; no tests, harness, checker, oracle or input fixtures mutated.
 
 CODE UNDER TEST: namespaceCallGraph.reach/discover and lowering.namespaceInitialization in internal/lower. The loader/checker prepares typed AST inputs but is not mutated. The graph test calls production reach repeatedly; the initialization test calls production namespaceInitialization directly before module/IR preparation.
 
@@ -16,16 +34,16 @@ The initialization row has ten covered-line leads exclusive to TestEnumInitializ
 
 ## Full matrices and replay
 
-Current scope: 275 top-level Test names. Added since audit: ['TestAgreementAcceptsComputedAnswer', 'TestAgreementAcceptsExpectedPanic', 'TestAgreementEnumConstantWitness', 'TestAgreementInheritedFieldWitness', 'TestAgreementParameterPropertyWitness', 'TestAgreementParseIntRadixWitness', 'TestAgreementRejectsEmptyAnswer', 'TestAgreementRejectsWrongLoweredOutput', 'TestAgreementStaticInitializerWitness', 'TestArgumentsLengthReadKeepsReaderFact', 'TestClassStaticInitializerCallIsEmitted', 'TestClassStaticSideEffectMatchesNode', 'TestEnumFlagProofsWithoutObservableLoweringEffect', 'TestEnumMemberValuesAndReverseNameMatchNode', 'TestEnumReverseMappingUsesSingleSlot', 'TestFSExistsOperation', 'TestFSOpenStringFlagsLower', 'TestFSRemoveDefaultRetryDelayLowers', 'TestFSStatThrowsByDefault', 'TestLiteralMethodSignatureViewsDoNotLoseThis', 'TestNamespaceFactoryBindingsAgreeWithNode', 'TestNativeAgreementRejectsWrongExit', 'TestNativeAgreementRejectsWrongOutput', 'TestParameterPropertyValueMatchesNode', 'TestParseIntMapUsesIndexRadix', 'TestPrivateAndPublicStaticsAgreeWithNode', 'TestReadinessErrorIncludesReceiverExpression', 'TestRegExpEscapedSlashSourceAgreesWithNode', 'TestRegExpSlashClassSourceAgreesWithNode', 'TestRegExpUnicodeClassSourceAgreesWithNode', 'TestSwitchConditionalBreakFallsThrough', 'TestSwitchEmptyBlockFallsThrough', 'TestSwitchEmptyCaseFallsThrough', 'TestSwitchEmptyElseFallsThrough', 'TestTypedArrayFromArray', 'TestTypedArrayFromEmptyArray']. Vanished: []. Every current test was included with -run . in baseline and both matrices. Each mutant independently passed git apply --check against starting origin/main and go vet ./internal/lower/ before its matrix. D01.diff and D02.diff are standalone, switch-free diffs. Each mutation used its own ADAMIC_BUILD_CACHE_DIR. matrix.json retains the command, failed rows, all 272 passing top-level rows, skipped subcases, exact failure lines and timings. D01-passed-rows.txt and D02-passed-rows.txt are the passing-row lists requested by the brief. Both named subsumers pass their respective defense mutant. There are no survivors, panics, timeouts or narrowed matrices.
+Current scope: {len(now)} top-level Test names. Added since audit: {delta['added']}. Vanished: {delta['vanished']}. Every current test was included with -run . in baseline and both matrices. Each mutant independently passed git apply --check against starting origin/main and go vet ./internal/lower/ before its matrix. D01.diff and D02.diff are standalone, switch-free diffs. Each mutation used its own ADAMIC_BUILD_CACHE_DIR. matrix.json retains the command, failed rows, all 272 passing top-level rows, skipped subcases, exact failure lines and timings. D01-passed-rows.txt and D02-passed-rows.txt are the passing-row lists requested by the brief. Both named subsumers pass their respective defense mutant. There are no survivors, panics, timeouts or narrowed matrices.
 
-Skipped in baseline and both matrices: TestOriginalCycleLedger (separate pristine TypeScript tree with generated diagnostics), TestOptionalWideningCensus (external caller project), and one deferred TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[]; subcase. These are unrelated external/deferred scopes retained from the audit. Unique means unique among all executed package rows; catches in the skipped inputs remain unknown. No tests of other packages ran.
+Skipped in baseline and both matrices: TestOriginalCycleLedger (separate pristine TypeScript tree with generated diagnostics), TestOptionalWideningCensus (external caller project), and one deferred TestMixedUnionContractGraph/interface_Node_{{readonly_ready:boolean}}_type_Target=Node|readonly_Node[]; subcase. These are unrelated external/deferred scopes retained from the audit. Unique means unique among all executed package rows; catches in the skipped inputs remain unknown. No tests of other packages ran.
 
 ## Costs and brief friction
 
-Warm /workspace/adamic-tools/env.sh worked, setup skipped. npm ci in stage3/api preceded the green baseline. nproc: 5. Baseline: 41.765 test-binary seconds. Mutant command wall times: D01 47.106s; D02 44.209s, including Go compilation and tests. Native recompilation occurs inside tests; no separate native-build-only duration is available. All runs fit the 90s test-binary budget. We stopped after one successful unique mutant per row, as the brief allows up to three attempts rather than requiring three after a defense succeeds.
+Warm /workspace/adamic-tools/env.sh worked, setup skipped. npm ci in stage3/api preceded the green baseline. nproc: 5. Baseline: 41.765 test-binary seconds. Mutant command wall times: D01 {m[0]['wall_seconds']:.3f}s; D02 {m[1]['wall_seconds']:.3f}s, including Go compilation and tests. Native recompilation occurs inside tests; no separate native-build-only duration is available. All runs fit the 90s test-binary budget. We stopped after one successful unique mutant per row, as the brief allows up to three attempts rather than requiring three after a defense succeeds.
 
 The prior report is split across REPORT.txt, report.json, rows.json, mutant-plan.json and matrix.json; copies are supplied. The prior user evidence abbreviated its failing lines as 'failing output above', so the retained raw audit evidence and this session's complete logs provide the actual proof. Shared-line coverage is not enough to settle subsumption: the three-node versus two-node SCC is precisely the semantic difference that defended the cycle row. Independence from preparation also has multiple meanings; D02's diagnostic-only and result-state limits are explicit above. No unresolved permission block or baseline setup failure occurred.
 
 No requested row remains undefended. Both names have matching assertions for the behavior tested, with the initialization row additionally checking its refusal category. Neither test establishes all graph shapes or all preparation configurations. Keep both rows on the evidence of these unique catches.
-
-Final restored whole-package baseline passed in 38.834 binary seconds, with the same three skipped scopes.
+'''
+(p/'REPORT.md').write_text(report);print(json.dumps(rows,indent=2));print(delta)
