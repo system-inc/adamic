@@ -1,0 +1,5 @@
+// a-check: refused a cast the runtime can't check
+// Reduced from TypeScript core.ts:1778, tryCast; pin 050880ce.
+// The unproved predicate is removed, exposing the arbitrary target cast directly.
+function tryCast<T>(value: unknown): T { return value as T; }
+console.log(`${tryCast<number>(4)}`);

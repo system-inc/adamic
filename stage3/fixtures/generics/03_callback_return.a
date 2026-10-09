@@ -1,0 +1,12 @@
+// Reduced from TypeScript core.ts:67, firstDefined; pin 050880ce.
+// One element replaces the array and loop; the generic optional callback result remains.
+function firstDefined<T, U>(element: T, callback: (element: T) => U | undefined): U | undefined {
+    const result = callback(element);
+    if (result !== undefined) return result;
+    return undefined;
+}
+function relay<T>(value: T): T | undefined {
+    return firstDefined(value, (element: T): T | undefined => element);
+}
+console.log(`${relay(0) ?? 99} ${relay('text'.repeat(3)) ?? 'missing'}`);
+console.log(`${firstDefined(2, (element: number): number | undefined => undefined) ?? 77}`);
