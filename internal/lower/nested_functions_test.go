@@ -32,13 +32,18 @@ func TestNestedFunctionGapsAreLoud(t *testing.T) {
 
 func TestNestedFunctionCycleUsesRegions(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerCycleSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 0 : saved(); }
  saved = read;
  return read;
 }
-console.log(String(make()()));`)
+console.log(String(make()()));`, "type:saved", "cell:saved", "closure:read")
+	if os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		requireProgramCanonicalRefusal(t, err)
+		return
+	}
+
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -93,7 +98,7 @@ func TestNestedEnvironmentHasOneAllocationSite(t *testing.T) {
 
 func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(): () => number {
+	program, err := lowerCycleSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  let count = 1;
  function read(): number { return count; }
@@ -101,7 +106,12 @@ func TestNestedEnvironmentCycleIncludesDisjointSlots(t *testing.T) {
  saved = read;
  console.log(observe());
  return read;
-} const held = make(); console.log(String(held()));`)
+} const held = make(); console.log(String(held()));`, "type:saved", "cell:saved", "counted:count", "cell:count", "closure:read", "closure:closure")
+	if os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		requireProgramCanonicalRefusal(t, err)
+		return
+	}
+
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -203,13 +213,18 @@ func TestNestedRebindingNotYet(t *testing.T) {
 
 func TestNestedCallbackCycleIsRefused(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, `function make(): () => number {
+	_, err := lowerCycleSource(t, `function make(): () => number {
  let saved: (() => number) | undefined = undefined;
  function read(): number { return saved === undefined ? 1 : saved(); }
  function factory(): () => number { return () => read(); }
  saved = factory();
  return saved;
-} console.log(String(make()()));`)
+} console.log(String(make()()));`, "type:saved", "cell:saved", "closure:read", "closure:factory", "closure:closure")
+	if os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		requireProgramCanonicalRefusal(t, err)
+		return
+	}
+
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
 		t.Fatalf("want callback environment cycle refusal, got %v", err)

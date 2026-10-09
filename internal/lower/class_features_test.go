@@ -109,14 +109,14 @@ func TestClassFeaturesStaticSoundness(t *testing.T) {
 
 func TestClassFeaturesAccessorCaptureCycle(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `function make(): { readonly value: string } {
+	program, err := lowerCycleSource(t, `function make(): { readonly value: string } {
         let source: { readonly value: string } | undefined;
         const literal = { get value(): string { return source === undefined ? 'empty' : source.value; } };
         source = literal;
         return literal;
-    } console.log(make().value);`)
-	if err != nil || len(program.GraphTypes) == 0 {
-		t.Fatalf("want graph ownership, got %v", err)
+    } console.log(make().value);`, "type:literal", "cell:source")
+	if err != nil || cycleOwnershipMissing(program) {
+		t.Fatalf("want cycle ownership, got %v", err)
 	}
 }
 
@@ -130,16 +130,16 @@ func TestClassFeaturesNarrowedAccessor(t *testing.T) {
 
 func TestClassFeaturesStaticParentCycle(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `class Base { static child: typeof Child | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
-	if err != nil || len(program.GraphTypes) == 0 {
-		t.Fatalf("want graph ownership, got %v", err)
+	program, err := lowerCycleSource(t, `class Base { static child: typeof Child | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`, "type:Base_class", "type:Child_class")
+	if err != nil || cycleOwnershipMissing(program) {
+		t.Fatalf("want cycle ownership, got %v", err)
 	}
 }
 
 func TestClassFeaturesStaticInterfaceCycle(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `type Constructable={new(required:string):Child}; class Base { static child: Constructable | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`)
-	if err != nil || len(program.GraphTypes) == 0 {
-		t.Fatalf("want graph ownership, got %v", err)
+	program, err := lowerCycleSource(t, `type Constructable={new(required:string):Child}; class Base { static child: Constructable | undefined = undefined; } class Child extends Base { readonly tag='child'; constructor(required: string) { super(); console.log(required); } } Base.child=Child;`, "type:Base_class", "type:Child_class")
+	if err != nil || cycleOwnershipMissing(program) {
+		t.Fatalf("want cycle ownership, got %v", err)
 	}
 }

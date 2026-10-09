@@ -64,7 +64,14 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 
 func TestPromisePayloadCannotHideUserCycles(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, "interface Box { promise: Promise<Box> | undefined; }\nfunction stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }\nconst box: Box = {promise: undefined};\nconst promise = Promise.resolve(box);\nstash(box,promise);")
+	program, err := lowerCycleSource(t, "interface Box { promise: Promise<Box> | undefined; }\nfunction stash(box: Box, promise: Promise<Box>): void { box.promise = promise; }\nconst box: Box = {promise: undefined};\nconst promise = Promise.resolve(box);\nstash(box,promise);", "type:box", "counted:promise")
+	if os.Getenv("ADAMIC_PROGRAM_REGION") == "1" {
+		if err != nil || cycleOwnershipMissing(program) {
+			t.Fatalf("want Program ownership of Box, got %v", err)
+		}
+		return
+	}
+
 	var refused *Refused
 	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/cycle-capable") {
 		t.Fatalf("Promise payload hid the user back-reference: %v", err)
