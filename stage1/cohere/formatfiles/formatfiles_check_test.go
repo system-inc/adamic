@@ -82,18 +82,27 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 			t.Logf("mutant %s", mutant.name)
 			for _, side := range []struct {
 				name string
-				run  run
-			}{{"natively", formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)}, {"on Node", formatfilesNode(t, ctx, filepath.Join(mutated, "main.ts"), casesPath)}} {
-				if side.run.exitCode != 0 {
-					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
-					continue
-				}
-				difference := firstDifference(string(side.run.stdout), goAnswers)
-				if difference == "" {
-					t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
-					continue
-				}
-				t.Logf("%s, caught: %s", side.name, difference)
+				run  func(*testing.T) run
+			}{
+				{"natively", func(t *testing.T) run {
+					return formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)
+				}},
+				{"on Node", func(t *testing.T) run {
+					return formatfilesNode(t, ctx, filepath.Join(mutated, "main.ts"), casesPath)
+				}},
+			} {
+				t.Run(mutant.name+"/"+side.name, func(t *testing.T) {
+					t.Parallel()
+					result := side.run(t)
+					if result.exitCode != 0 {
+						t.Fatalf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, result.exitCode, result.stderr)
+					}
+					difference := firstDifference(string(result.stdout), goAnswers)
+					if difference == "" {
+						t.Fatal("the mutant agrees with Go cohere: the comparison cannot see it")
+					}
+					t.Logf("%s, caught: %s", side.name, difference)
+				})
 			}
 		})
 	}
