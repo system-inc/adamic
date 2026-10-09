@@ -3,6 +3,7 @@ package markdownblocks
 import (
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"os"
 	"strconv"
 	"strings"
@@ -10,43 +11,29 @@ import (
 	"time"
 )
 
-// Bound both transport size and case count. A document is indivisible: a large
-// document gets its own unit, preserving tokenizer state across the whole file.
-func tokenizerEventShards(inputs [][]uint16) [][]int {
-	const maxUnits = 100000
-	const maxCases = 2048
-	var shards [][]int
-	var rows []int
-	units := 0
-	for i, input := range inputs {
-		if len(rows) > 0 && (units+len(input) > maxUnits || len(rows) == maxCases) {
-			shards = append(shards, rows)
-			rows, units = nil, 0
-		}
-		rows = append(rows, i)
-		units += len(input)
+// A case's index is local to its path/generated name, never its list position.
+// Repository files are mutable; the fixed bucket grid does not follow corpus size.
+func tokenizerEventKeys(names []string) []string {
+	keys := make([]string, len(names))
+	occurrences := make(map[string]int)
+	for i, name := range names {
+		keys[i] = fmt.Sprintf("%s\x00case=%d", name, occurrences[name])
+		occurrences[name]++
 	}
-	if len(rows) > 0 {
-		shards = append(shards, rows)
-	}
-	// Smaller corpus modes use the same static gate grid. Split contiguous
-	// ranges deterministically; larger corpora that need more units fail the
-	// declared-count assertion rather than silently changing gate membership.
-	for len(shards) < testTokenizerEventsShards-3 {
-		longest := -1
-		for i, rows := range shards {
-			if len(rows) > 1 && (longest < 0 || len(rows) > len(shards[longest])) {
-				longest = i
-			}
-		}
-		if longest < 0 {
-			break
-		}
-		rows := shards[longest]
-		middle := len(rows) / 2
-		shards = append(shards, nil)
-		copy(shards[longest+2:], shards[longest+1:])
-		shards[longest], shards[longest+1] = rows[:middle], rows[middle:]
+	return keys
+}
+
+func tokenizerEventShard(key string) int {
+	hash := fnv.New64a()
+	_, _ = hash.Write([]byte(key))
+	return int(hash.Sum64() % uint64(testTokenizerEventsShards))
+}
+
+func tokenizerEventShards(keys []string) [][]int {
+	shards := make([][]int, testTokenizerEventsShards)
+	for row, key := range keys {
+		shard := tokenizerEventShard(key)
+		shards[shard] = append(shards[shard], row)
 	}
 	return shards
 }
@@ -55,9 +42,6 @@ func tokenizerEventUnion(total int, shards [][]int) error {
 	seen := make([]bool, total)
 	count := 0
 	for shard, rows := range shards {
-		if len(rows) == 0 {
-			return fmt.Errorf("empty shard %d", shard)
-		}
 		for _, row := range rows {
 			if row < 0 || row >= total {
 				return fmt.Errorf("shard %d: unexpected case id %d", shard, row)
@@ -141,10 +125,9 @@ func tokenizerEventProduct(t *testing.T, inputs tokenizerEventBuildInputs, dir s
 }
 
 func TestTokenizerEventShardUnion(t *testing.T) {
-	inputs := make([][]uint16, 5000)
-	inputs[2300] = make([]uint16, 200000)
-	shards := tokenizerEventShards(inputs)
-	validateTokenizerEventUnion(t, len(inputs), shards)
+	keys := tokenizerEventFixtureKeys()
+	shards := tokenizerEventShards(keys)
+	validateTokenizerEventUnion(t, len(keys), shards)
 	for _, bad := range [][][]int{
 		{{0}, {0, 1}}, // repeated
 		{{0}},         // missing
@@ -159,8 +142,8 @@ func TestTokenizerEventShardUnion(t *testing.T) {
 // Plant a disagreement in one case and use the same comparison as the live
 // oracle. Exactly its owning shard must reject it, and name itself and the id.
 func TestTokenizerEventShardPlantedDisagreement(t *testing.T) {
-	inputs := make([][]uint16, 5000)
-	shards := tokenizerEventShards(inputs)
+	keys := tokenizerEventFixtureKeys()
+	shards := tokenizerEventShards(keys)
 	const planted = 2345
 	caught := 0
 	for ordinal, rows := range shards {
@@ -187,5 +170,40 @@ func TestTokenizerEventShardPlantedDisagreement(t *testing.T) {
 	}
 	if caught != 1 {
 		t.Fatalf("planted case caught by %d shards, want exactly one", caught)
+	}
+}
+
+func tokenizerEventFixtureKeys() []string {
+	names := make([]string, 5000)
+	for i := range names {
+		names[i] = fmt.Sprintf("fixture/file-%d.md", i)
+	}
+	return tokenizerEventKeys(names)
+}
+
+func TestTokenizerEventShardGrowth(t *testing.T) {
+	names := []string{"a.md", "a.md", "b.md", "generated/units/0"}
+	before := tokenizerEventKeys(names)
+	// Inserting an earlier-sorted file and another file with two modes changes
+	// row positions but must not move any existing stable case key.
+	after := tokenizerEventKeys(append([]string{"0-new.md", "new.md", "new.md"}, names...))
+	shards := tokenizerEventShards(after)
+	if len(shards) != testTokenizerEventsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
+	}
+	validateTokenizerEventUnion(t, len(after), shards)
+	owners := make(map[string]int)
+	for shard, rows := range shards {
+		for _, row := range rows {
+			if _, repeated := owners[after[row]]; repeated {
+				t.Fatalf("repeated stable key %q", after[row])
+			}
+			owners[after[row]] = shard
+		}
+	}
+	for i, key := range before {
+		if after[i+3] != key || owners[key] != tokenizerEventShard(key) {
+			t.Fatalf("existing case moved: %q", key)
+		}
 	}
 }

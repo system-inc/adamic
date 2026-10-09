@@ -17,11 +17,14 @@ import (
 	"unicode/utf16"
 )
 
-const testTokenizerEventsShards = 144
+const testTokenizerEventsShards = 512
 
 // TestTokenizerEvents runs every shard when ADAMIC_TEST_SHARD is unset.
 // ADAMIC_TEST_SHARD=i/n (zero based) selects parallel case and mutant units
 // by their deterministic ordinal modulo n. Build products are shared for this run.
+// A fixed 512-way hash of path/generated-name plus its per-name case index
+// leaves headroom without moving existing cases when repository files grow.
+// Shards 000–002 additionally retain the three full-corpus mutant checks.
 func TestTokenizerEvents(t *testing.T) {
 	setupStarted := time.Now()
 	defer func() { t.Logf("setup before shards: %.3fs", time.Since(setupStarted).Seconds()) }()
@@ -35,6 +38,27 @@ func TestTokenizerEvents(t *testing.T) {
 		t.Fatal(err)
 	}
 	corpus, files := blockCorpus(t, root, "whitespace")
+	// Upstream selection verifies the two fixed checkout pins against Git.
+	// The live repository portion must independently remain non-empty.
+	repositoryFiles, cohereFiles, checkerFiles := 0, 0, 0
+	for _, item := range corpus {
+		switch {
+		case strings.HasPrefix(item.Name, "cohere/TypeScript/"):
+			checkerFiles++
+		case strings.HasPrefix(item.Name, "cohere/"):
+			cohereFiles++
+		case !strings.HasPrefix(item.Name, "generated/"):
+			repositoryFiles++
+		}
+	}
+	if repositoryFiles == 0 {
+		t.Fatal("repository Markdown corpus is empty")
+	}
+	// Only pinned upstream counts are fixed: cohere 7945d102 and
+	// TypeScript d92d9bfe, using auditCorpus's explicitly selected roots.
+	if census() && (cohereFiles != 786 || checkerFiles != 67) {
+		t.Fatalf("pinned upstream file counts: cohere %d/786, TypeScript %d/67", cohereFiles, checkerFiles)
+	}
 	inputs := [][]uint16{{}}
 	names := []string{"empty"}
 	for _, item := range corpus {
@@ -73,9 +97,10 @@ func TestTokenizerEvents(t *testing.T) {
 		{"virtual serialization", "if(!expandTabs && atTab) continue;", "if(expandTabs && atTab) continue;"},
 		{"restored construct", "this.construct = info.construct;", "this.construct = 8;"},
 	}
-	shards := tokenizerEventShards(inputs)
-	if len(shards)+len(mutants) != testTokenizerEventsShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards)+len(mutants), testTokenizerEventsShards)
+	keys := tokenizerEventKeys(names)
+	shards := tokenizerEventShards(keys)
+	if len(shards) != testTokenizerEventsShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testTokenizerEventsShards)
 	}
 	validateTokenizerEventUnion(t, len(inputs), shards)
 	selected := tokenizerEventSelection(t)
@@ -182,12 +207,59 @@ func TestTokenizerEvents(t *testing.T) {
 	// Share four process slots across the whole group, including mutants.
 	// Per-shard pools oversubscribe a four-CPU instance when shards overlap.
 	slots := make(chan struct{}, 4)
+	runMutant := func(t *testing.T, mutant int) {
+		m := mutants[mutant]
+		t.Logf("mutant: %s; all %d case ids", m.name, len(inputs))
+
+		cases, want, names := fullCases, fullWant, fullNames
+		scratch := t.TempDir()
+		if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
+			t.Fatal(err)
+		}
+		for _, file := range []string{"inputChunks.ts", "tokenizerEvents.ts", "tokenArena.ts", "codec.ts", "testdata/events_probe.ts"} {
+			data, err := os.ReadFile(file)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if file == "tokenizerEvents.ts" {
+				if strings.Count(string(data), m.from) != 1 {
+					t.Fatal("mutation anchor")
+				}
+				data = []byte(strings.Replace(string(data), m.from, m.to, 1))
+			}
+			write(t, filepath.Join(scratch, file), data)
+		}
+		slots <- struct{}{}
+		defer func() { <-slots }()
+		result := onNode(t, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
+		clean(t, m.name, result)
+		if bytes.Equal(result.stdout, want.stdout) {
+			t.Fatal("survived")
+		}
+		observed := strings.Split(string(result.stdout), "\n")
+		for i, line := range strings.Split(string(want.stdout), "\n") {
+			if i >= len(observed) {
+				t.Logf("caught by missing event result%d", i)
+				break
+			}
+			if observed[i] != line {
+				t.Logf("caught by %s at event byte%d", names[i], firstDifference(observed[i], line))
+				break
+			}
+		}
+	}
 	for ordinal, rows := range shards {
 		if !selected(ordinal) {
 			continue
 		}
 		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
 			t.Parallel()
+			if len(rows) == 0 {
+				if ordinal < len(mutants) {
+					runMutant(t, ordinal)
+				}
+				return
+			}
 			part := make([][]uint16, len(rows))
 			for i, row := range rows {
 				part[i] = inputs[row]
@@ -263,53 +335,12 @@ func TestTokenizerEvents(t *testing.T) {
 					t.Logf("%s %.1f texts/s; three runs, startup and identical numeric UTF-16/event transport included", side.name, float64(3*len(part))/result.elapsed.Seconds())
 				}
 			}
-			t.Logf("union cases %d; ids %d..%d", len(rows), rows[0], rows[len(rows)-1])
-		})
-	}
-	for mutant, m := range mutants {
-		if !selected(len(shards) + mutant) {
-			continue
-		}
-		t.Run(fmt.Sprintf("shard-%03d", len(shards)+mutant), func(t *testing.T) {
-			t.Logf("mutant: %s; all %d case ids", m.name, len(inputs))
-			t.Parallel()
-			cases, want, names := fullCases, fullWant, fullNames
-			scratch := t.TempDir()
-			if err := os.Mkdir(filepath.Join(scratch, "testdata"), 0755); err != nil {
-				t.Fatal(err)
-			}
-			for _, file := range []string{"inputChunks.ts", "tokenizerEvents.ts", "tokenArena.ts", "codec.ts", "testdata/events_probe.ts"} {
-				data, err := os.ReadFile(file)
-				if err != nil {
-					t.Fatal(err)
-				}
-				if file == "tokenizerEvents.ts" {
-					if strings.Count(string(data), m.from) != 1 {
-						t.Fatal("mutation anchor")
-					}
-					data = []byte(strings.Replace(string(data), m.from, m.to, 1))
-				}
-				write(t, filepath.Join(scratch, file), data)
-			}
-			slots <- struct{}{}
-			defer func() { <-slots }()
-			result := onNode(t, filepath.Join(scratch, "testdata/events_probe.ts"), cases)
-			clean(t, m.name, result)
-			if bytes.Equal(result.stdout, want.stdout) {
-				t.Fatal("survived")
-			}
-			observed := strings.Split(string(result.stdout), "\n")
-			for i, line := range strings.Split(string(want.stdout), "\n") {
-				if i >= len(observed) {
-					t.Logf("caught by missing event result%d", i)
-					break
-				}
-				if observed[i] != line {
-					t.Logf("caught by %s at event byte%d", names[i], firstDifference(observed[i], line))
-					break
-				}
+			t.Logf("union cases %d; stable keys hashed to shard %03d", len(rows), ordinal)
+			if ordinal < len(mutants) {
+				runMutant(t, ordinal)
 			}
 		})
 	}
-	t.Logf("%d cases, %d case shards, 3 mutant units; %d physical documents; complete UTF-16 and generated corpus", len(inputs), len(shards), files)
+
+	t.Logf("%d cases, %d case shards, 3 full-corpus mutants in shards 000–002; %d physical documents; complete UTF-16 and generated corpus", len(inputs), len(shards), files)
 }
