@@ -19,28 +19,33 @@ import (
 )
 
 // Not parallel: list-layout fixture and markdown memory configuration.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownListLayout(t *testing.T) {
 	parallelMarkdown(t)
 	listLayoutSetup(t)
 }
 
 // Not parallel: quote lowered and Go build products initialized before parallel shards.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownQuoteLayout(t *testing.T) {
 	quoteLayoutSetup(t)
 }
 
 // Not parallel: table-layout fixture initialized by testMarkdownTableLayout.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownTableLayout(t *testing.T) {
 	testMarkdownTableLayout(t)
 }
 
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -74,18 +79,21 @@ func fullLayoutFixture(t *testing.T) *layoutFixture {
 }
 
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownLeafComposition(t *testing.T) {
 	parallelMarkdown(t)
 	testMarkdownLeafShards(t)
 }
 
 // Not parallel: markdown memory configuration checked by parallelMarkdown before parallel admission.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
 }
 
 // Not parallel: structure-layout fixture and markdown memory configuration.
+// Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownStructureLayout(t *testing.T) {
 	configureMarkdownMemory(t)
 	structureLayoutShared(t)
