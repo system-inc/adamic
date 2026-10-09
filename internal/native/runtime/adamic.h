@@ -56,6 +56,25 @@ typedef struct adamic_heap {
 _Static_assert((intptr_t)ADAMIC_SHARED == INTPTR_MIN, "native count tags require two-complement intptr_t conversion");
 #define ADAMIC_SHARED_HEADER UINT32_C(0x80000000)
 #define ADAMIC_REGION_VALUE UINT32_C(0x40000000)
+// Slab bits 31 and 30 are shared and statement-region flags. Bit 29 stays
+// reserved for graph storage; opt-in Program members use bit 28. With Program
+// regions on, chunk number + 1 must fit below bit 28 (heap_parallel.h).
+#define ADAMIC_PROGRAM_FLAG UINT32_C(0x10000000)
+_Static_assert((ADAMIC_PROGRAM_FLAG & (ADAMIC_SHARED_HEADER | ADAMIC_REGION_VALUE)) == 0,
+    "Program flag overlaps another slab flag");
+static inline bool adamic_program_is(const void *value) {
+#ifdef ADAMIC_PROGRAM_REGION
+    return value != NULL && (((const adamic_heap *)value)->slab & ADAMIC_PROGRAM_FLAG) != 0;
+#else
+    (void)value; return false;
+#endif
+}
+// Adopt a fresh, unaliased counted allocation on the main thread. It moves;
+// preserve the returned address before creating aliases, Weak handles or caches.
+void *adamic_program_adopt_owned(void *value, size_t size);
+// Invalidate Weak handles, release counted children, then free all members.
+// Called after task joins by heap_end; repeated calls on an empty region do nothing.
+void adamic_program_region_end(void);
 static inline bool adamic_is_shared(const adamic_heap *heap) {
 	return (heap->slab & ADAMIC_SHARED_HEADER) != 0;
 }
@@ -75,6 +94,7 @@ void adamic_release_slow(void *value);
 static inline void *adamic_retain(void *value) {
 	ADAMIC_COUNT_RETAIN();
 	adamic_heap *heap = value;
+	if (adamic_program_is(heap)) { return value; }
 	if (heap != NULL && !adamic_is_shared(heap)) {
 		size_t count = heap->references;
 		if (count > 0) { ADAMIC_TSAN_PAUSE(adamic_tsan_plain_count); heap->references = count + 1; return value; }
@@ -85,6 +105,7 @@ static inline void *adamic_retain(void *value) {
 static inline void adamic_release(void *value) {
 	ADAMIC_COUNT_RELEASE();
 	adamic_heap *heap = value;
+	if (adamic_program_is(heap)) { return; }
 	if (heap != NULL && !adamic_is_shared(heap)) {
 		size_t count = heap->references;
 		if (count > 1) { heap->references = count - 1; return; }
@@ -306,6 +327,11 @@ typedef struct adamic_object {
 	const int *dynamic_types;
 	adamic_value slots[];
 } adamic_object;
+
+// Full object allocation: values, insertion ranks, readiness and representation bytes.
+static inline size_t adamic_object_size(size_t count) {
+    return sizeof(adamic_object) + count * (sizeof(adamic_value) + sizeof(size_t) + 2);
+}
 
 // Per-slot insertion ranks follow the values in the same allocation. Zero means absent.
 static inline size_t *adamic_object_orders(const adamic_object *object) {

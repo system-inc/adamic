@@ -455,3 +455,17 @@ allocated per owning array. A subarray retains its ultimate owner and points
 into that buffer. The generic iterator retains the array. Existing heap freeing
 releases owners, buffers and iterators; no new global cache or static counter is
 introduced. This entry records this extension, not an inventory of earlier units.
+
+## Program region runtime core (step 06b)
+
+- `runtime-file:program_region.c`: compiler-selected members only, no tracing.
+- `runtime-file:graph_regions.h`: two-word storage-prefix declarations and helpers
+  only. No graph registry, union-find, classification or lowering is carried.
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `program_region.c:members:1` | Head of the intrusive Program member list; adoption appends, region_end destroys after all workers join | Main-thread only under contract 06a. share.c refuses a member or an interior cell's owner reaching parallel work. Compiler must exclude task-local adoption |
+
+Program mode reserves slab bit 28; bit 29 stays reserved, bit 30 is statement
+region storage and bit 31 is permanent sharing. The page table shrinks under the
+switch, and its chunk number plus one is bounded strictly below the first flag.

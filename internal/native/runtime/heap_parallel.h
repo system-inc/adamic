@@ -1,7 +1,15 @@
 // Private to heap.c. Chunk addresses never move, including while another thread grows the table.
-// 2^19 pages of 1024 pointers cover 2^29 chunks; the slab's region bit remains reserved.
+// Chunk number + 1 stays below the opt-in Program flag; bit 29 is reserved otherwise.
 #define PAGE_SIZE 1024
+#ifdef ADAMIC_PROGRAM_REGION
+#define PAGE_COUNT 262144
+#define ADAMIC_FIRST_FLAG ADAMIC_PROGRAM_FLAG
+#else
 #define PAGE_COUNT 524288
+#define ADAMIC_FIRST_FLAG UINT32_C(0x20000000)
+#endif
+_Static_assert((uint64_t)PAGE_SIZE * PAGE_COUNT <= ADAMIC_FIRST_FLAG,
+    "chunk numbers would reach the slab flags");
 
 typedef struct remote_slot {
 	struct remote_slot *next;
@@ -22,7 +30,7 @@ static size_t thread_number(void) {
 
 static void register_chunk(chunk *each) {
 	size_t number = atomic_fetch_add_explicit(&chunk_count, 1, memory_order_relaxed);
-	if (number >= (size_t)PAGE_SIZE * PAGE_COUNT) { adamic_panic("too many heap chunks", sizeof "too many heap chunks" - 1); }
+	if (number >= (size_t)ADAMIC_FIRST_FLAG - 1) { adamic_panic("too many heap chunks", sizeof "too many heap chunks" - 1); }
 	chunk_page *page = atomic_load_explicit(&chunk_pages[number / PAGE_SIZE], memory_order_acquire);
 	if (page == NULL) {
 		chunk_page *fresh = calloc(1, sizeof *fresh);

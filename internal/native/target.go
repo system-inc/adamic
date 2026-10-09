@@ -8,6 +8,9 @@ import (
 
 // ValidateOptions refuses unsupported combinations before invoking clang.
 func ValidateOptions(options Options) error {
+	if (options.ProgramRegion || os.Getenv("ADAMIC_PROGRAM_REGION") == "1") && (options.Request || options.Target != "") {
+		return fmt.Errorf("native: Program regions require a one-shot native CLI")
+	}
 	if options.Request && options.Target != "wasm32-wasi" {
 		return fmt.Errorf("native: request exports require wasm32-wasi")
 	}

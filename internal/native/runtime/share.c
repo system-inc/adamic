@@ -64,6 +64,9 @@ void adamic_share(void *value) {
 	append(&pending, value);
 	while (pending.count != 0) {
 		adamic_heap *heap = pending.values[--pending.count];
+        if (adamic_program_is(heap)) {
+            adamic_panic("Program region members cannot cross into parallel work", sizeof "Program region members cannot cross into parallel work" - 1);
+        }
 		bool shared = adamic_is_shared(heap);
 		// Immutable shared leaves cannot gain children. Containers can have gained fresh descendants
 		// through unique reuse before the caller retained them again, so always revisit containers.

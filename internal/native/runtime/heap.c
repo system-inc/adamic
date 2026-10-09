@@ -11,6 +11,8 @@ void adamic_release(void *value) { adamic_release_inline(value); }
 #endif
 #include "async.h"
 #include "count.h"
+#include "graph_regions.h"
+#include <string.h>
 #include "slab_quarantine.h"
 
 #include <stdint.h>
@@ -233,7 +235,7 @@ static void drain_remote(chunk *each) {
 	}
 }
 
-void *adamic_allocate(size_t size, enum adamic_kind kind) {
+static void *allocate_storage(size_t size, enum adamic_kind kind) {
 	adamic_heap *heap;
 	uint32_t slab = 0;
 	if (SLABS && size <= CLASSES * GRANULE) {
@@ -250,8 +252,12 @@ void *adamic_allocate(size_t size, enum adamic_kind kind) {
 	heap->references = 1;
 	heap->kind = kind;
 	heap->slab = slab;
-	ADAMIC_COUNT_ALLOCATION();
 	return heap;
+}
+
+void *adamic_allocate(size_t size, enum adamic_kind kind) {
+	ADAMIC_COUNT_ALLOCATION();
+	return allocate_storage(size, kind);
 }
 
 // deallocate gives a value's memory back: to its chunk, or to free.
@@ -276,6 +282,29 @@ static void deallocate(adamic_heap *heap) {
 #endif
 }
 
+// Prefix storage is one logical allocation. Moving it never releases children.
+void *adamic_heap_graph_storage(void *value, size_t size) {
+    adamic_heap *old = value;
+    if (size > SIZE_MAX - sizeof(adamic_graph_header)) {
+        adamic_panic("Program allocation too large", sizeof "Program allocation too large" - 1);
+    }
+    adamic_heap *storage = allocate_storage(size + sizeof(adamic_graph_header), old->kind);
+    uint32_t slab = storage->slab;
+    adamic_graph_header *prefix = (adamic_graph_header *)storage;
+    adamic_heap *heap = (adamic_heap *)(prefix + 1);
+    memcpy(heap, old, size);
+    heap->slab = slab;
+    *prefix = (adamic_graph_header){NULL, NULL};
+    deallocate(old);
+    return heap;
+}
+void *adamic_heap_program_storage(void *value, size_t size) {
+    adamic_heap *heap = adamic_heap_graph_storage(value, size);
+    heap->slab |= ADAMIC_PROGRAM_FLAG;
+    heap->references = 0;
+    return heap;
+}
+
 void *adamic_retain_slow(void *value) {
 	adamic_heap *heap = value;
 #ifdef ADAMIC_CANONICAL_CLOSURES
@@ -284,6 +313,7 @@ void *adamic_retain_slow(void *value) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
 #endif
+	if (adamic_program_is(heap)) { return value; }
 	if (heap != NULL) {
 		size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 		// Clang's native intptr_t conversion makes shared counts negative. One test covers both
@@ -325,7 +355,7 @@ static adamic_heap *drop_reference(void *value) {
 		heap = &((adamic_cell *)heap)->owner->heap;
 	}
 #endif
-	if (heap == NULL) { return NULL; }
+	if (heap == NULL || adamic_program_is(heap)) { return NULL; }
 	size_t count = __atomic_load_n(&heap->references, __ATOMIC_RELAXED);
 	if ((intptr_t)count > 0) {
 		heap->references = count - 1;
@@ -345,54 +375,54 @@ static void let_go(void *value) {
 	if (last != NULL) { list(last); }
 }
 
-static void free_one(void *value) {
+void adamic_heap_free_children(void *value, void (*drop)(void *)) {
 	adamic_heap *heap = value;
 	switch (heap->kind) {
 	case adamic_kind_async_frame:
 	case adamic_kind_async_promise:
 	case adamic_kind_async_reaction:
-		adamic_async_free_children(value, let_go);
+		adamic_async_free_children(value, drop);
 		break;
 	case adamic_kind_string:
 		adamic_string_free_index(value);
 		// A shared slice lets go of the string whose bytes it reads.
-		let_go(((adamic_string *)value)->owner);
+		drop(((adamic_string *)value)->owner);
 		break;
 	case adamic_kind_object: {
 		adamic_object *object = value;
-		adamic_object_free_children(object, let_go);
+		adamic_object_free_children(object, drop);
 		break;
 	}
 	case adamic_kind_array: {
 		adamic_array *array = value;
 		if (array->references) {
 			for (size_t index = 0; index < array->length; index++) {
-				let_go(array->elements[index].reference);
+				drop(array->elements[index].reference);
 			}
 		}
-		let_go(array->properties);
+		drop(array->properties);
 		free(array->elements);
 		break;
 	}
 	case adamic_kind_typed_array: {
 		adamic_typed_array *array = value;
 		if (array->owner != NULL) {
-			let_go(array->owner);
+			drop(array->owner);
 		} else {
 			free(array->data);
 		}
 		break;
 	}
 	case adamic_kind_typed_array_iterator:
-		let_go(((adamic_typed_array_iterator *)value)->array);
+		drop(((adamic_typed_array_iterator *)value)->array);
 		break;
 	case adamic_kind_map:
-		adamic_map_free_children(value, let_go);
+		adamic_map_free_children(value, drop);
 		break;
 	case adamic_kind_cell: {
 		adamic_cell *cell = value;
 		if (cell->references) {
-			let_go(cell->value.reference);
+			drop(cell->value.reference);
 		}
 		break;
 	}
@@ -401,7 +431,7 @@ static void free_one(void *value) {
 		adamic_environment *environment = value;
 		for (size_t index = 0; index < environment->count; index++) {
 			adamic_cell *cell = &environment->cells[index];
-			if (cell->references) { let_go(cell->value.reference); }
+			if (cell->references) { drop(cell->value.reference); }
 		}
 		break;
 	}
@@ -412,7 +442,7 @@ static void free_one(void *value) {
 		adamic_closure_uncache(closure);
 #endif
 		for (size_t index = 0; index < closure->count; index++) {
-			let_go(closure->cells[index]);
+			drop(closure->cells[index]);
 		}
 		break;
 	}
@@ -428,14 +458,24 @@ static void free_one(void *value) {
 		if (!iterator->exhausted) {
 			iterator->map->iterating--;
 		}
-		let_go(iterator->map);
+		drop(iterator->map);
 		break;
 	}
 	}
-	// Anything weak that pointed here now points at nothing, before the memory can be anything else.
-	adamic_weak_forget(value);
-	deallocate(value);
-	ADAMIC_COUNT_FREE();
+}
+
+void adamic_heap_free_storage(void *value, uint32_t slab) {
+    adamic_heap *heap = value;
+    bool member = adamic_program_is(heap);
+    if (member) { heap = (adamic_heap *)adamic_graph_header_of(heap); }
+    heap->slab = member ? slab & ~ADAMIC_PROGRAM_FLAG : slab;
+    deallocate(heap);
+    if (member) { ADAMIC_COUNT_REGION(1); } else { ADAMIC_COUNT_FREE(); }
+}
+static void free_one(void *value) {
+    adamic_heap_free_children(value, let_go);
+    adamic_weak_forget(value);
+    adamic_heap_free_storage(value, ((adamic_heap *)value)->slab);
 }
 
 // Keep destruction out of the common release path: null, immortal and still-shared values need
@@ -468,6 +508,7 @@ void adamic_heap_thread_end(void) {
 
 // Called only after all workers join. No owner can allocate or publish remote frees now.
 void adamic_heap_end(void) {
+	adamic_program_region_end();
 	adamic_heap_thread_end();
 	size_t count = atomic_load_explicit(&chunk_count, memory_order_relaxed);
 	for (size_t index = 0; index < count; index++) {
