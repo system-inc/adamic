@@ -445,7 +445,7 @@ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Stat
 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
 	}
 	// A #private field is stored under its name, # and all, which nothing else can spell.
-	return []ir.Statement{ir.SetProperty{Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
+	return []ir.Statement{ir.SetProperty{WriteCheck: l.checkedWrite(target), WriteOrigin: ir.WriteCheck{Where: l.program.Where(target), Expression: sourceExpression(target)}, WriteType: l.checkedWriteType(target, valueNode), Object: object, Name: l.fieldName(target.Name()), Value: value, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)}}, nil
 }
 
 // absentOptionalWrite refuses a write to an optional own field of a plain object when some literal left
@@ -667,7 +667,7 @@ func (l *lowering) updateProperty(node *ast.Node, target *ast.Node, operator ast
 	if err != nil {
 		return nil, err
 	}
-	statements = append(statements, ir.SetProperty{Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
+	statements = append(statements, ir.SetProperty{WriteCheck: l.checkedWrite(target), WriteOrigin: ir.WriteCheck{Where: l.program.Where(target), Expression: sourceExpression(target)}, Object: object, Name: name, Value: updated, Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)})
 	if len(statements) == 1 {
 		return statements, nil
 	}

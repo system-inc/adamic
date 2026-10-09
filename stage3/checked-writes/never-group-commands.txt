@@ -1,0 +1,12 @@
+source /workspace/adamic-tools/env.sh
+export GOPROXY='https://proxy.golang.org|direct'
+bash cloud/setup.sh > /tmp/checked-never-setup.log 2>&1
+nproc
+ADAMIC_GATE_UNCACHED=1 go test ./internal/oracle ./cmd/adamic -run 'TestCheckedWider|TestCheckedNeverContractMutant|TestCheckedDiagnosticReferenceMutants|TestExplainCheckedWritesOutput' -count=1 -v -timeout 10m > /tmp/checked-never-final.log 2>&1
+bash stage3/checked-writes/census.sh /tmp/checked-wider-adapted /tmp/checked-wider-evidence/stage3/adapt/71-writable-views/language-decision/results.json /tmp/checked-never-census.log > /tmp/checked-never-census-driver.log 2>&1
+go test ./internal/oracle -run TestCountsAreRecorded -count=1 -args -update-counts > /tmp/checked-never-counts.log 2>&1
+
+Assumptions: no fitting value exists for never. Positive witnesses exercise empty
+operations and a guarded writer receiving a broad allocation. The census is
+relation admission, not full compiler lowering. FlowNode unions and general
+container contracts are the next requested groups.

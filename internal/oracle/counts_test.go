@@ -179,6 +179,7 @@ func TestCountsAreRecorded(t *testing.T) {
 	for _, count := range additionalFixtureCounts {
 		rows = append(rows, count(t)...)
 	}
+	rows = append(rows, checkedWriteCounts(t)...)
 	var table strings.Builder
 	table.WriteString(countsHeader)
 	for _, row := range rows {

@@ -18,7 +18,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 	if literal, handled, err := l.accessorLiteral(node); handled {
 		return literal, err
 	}
-	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node)}
+	literal := ir.ObjectLiteral{SpreadReadiness: sourceExpression(node), Record: l.entriesRecordLiteral(node), ContractType: l.allocationContractType(node)}
 	for index, property := range node.AsObjectLiteralExpression().Properties.Nodes {
 		switch property.Kind {
 		case ast.KindSpreadAssignment:
@@ -69,7 +69,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				if declared.IsReference() {
 					value = ir.Undefined{Of: declared}
 				}
-				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true})
+				literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Uninitialized: true, Contract: l.literalFieldContract(node, fieldName)})
 				continue
 			}
 			var value ir.Expression
@@ -92,7 +92,7 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 			if censusFieldSlotless(value.Type()) {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Contract: l.literalFieldContract(node, fieldName)})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -107,6 +107,15 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				return nil, l.notYet(node, "record allocation outside scalar storage")
 			}
 			field.Value = fit(field.Value, ir.Union)
+		}
+	}
+	// A copied shape retains the source declaration, including its allocation type.
+	// Any replacement needs a new contract-bearing shape in a checked-write program.
+	if literal.Spread != nil {
+		for range literal.Fields {
+			if len(l.result.CheckedWrites) != 0 {
+				return nil, l.notYet(node, "overriding a checked field contract in an object spread")
+			}
 		}
 	}
 	if literal.SpreadMaybeUndefined {
@@ -213,6 +222,13 @@ func (l *lowering) arrayLiteral(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	literal := ir.ArrayLiteral{Element: element}
+	declared := l.checker.GetContextualType(node, checker.ContextFlagsNone)
+	if declared == nil {
+		declared = l.checker.GetTypeAtLocation(node)
+	}
+	if l.checker.IsArrayType(declared) {
+		literal.Never = l.checker.GetElementTypeOfArrayType(declared).Flags()&checker.TypeFlagsNever != 0
+	}
 	items := node.AsArrayLiteralExpression().Elements.Nodes
 	if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
 		declared, known := l.representation(l.checker.GetElementTypeOfArrayType(contextual))
@@ -328,6 +344,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 	element := l.checker.GetElementTypeOfArrayType(arrayType)
 	if element.Flags()&checker.TypeFlagsUnknown != 0 {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
+	}
+	if node.Kind == ast.KindArrayLiteralExpression && element.Flags()&checker.TypeFlagsNever != 0 && len(node.AsArrayLiteralExpression().Elements.Nodes) == 0 {
+		return ir.Number, nil
 	}
 	valueType, isKnown := l.kept(element)
 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
@@ -1265,7 +1284,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) != 1 {
 			return nil, true, l.notYet(node, "push with other than one value")
 		}
-		return ir.ArrayPush{Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
+		return ir.ArrayPush{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Value: fit(arguments[0], element), Element: element, Site: l.writeSite(receiver)}, true, nil
 	}
 	switch name {
 	case "includes", "indexOf":
@@ -1293,7 +1312,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) == 0 || len(arguments) > 3 || arguments[0].Type() != element {
 			return nil, true, l.notYet(node, "fill with other than a value of the elements' type")
 		}
-		fill := ir.ArrayFill{Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}
+		fill := ir.ArrayFill{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Value: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		for index, bound := range arguments[1:] {
 			if bound.Type() != ir.Number {
 				return nil, true, l.notYet(node, "fill with a bound that isn't a number")
@@ -1309,7 +1328,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 		if len(arguments) == 0 || arguments[0].Type() != ir.Number || (len(arguments) > 1 && arguments[1].Type() != ir.Number) {
 			return nil, true, l.notYet(node, "splice without a start and a count that are numbers")
 		}
-		splice := ir.ArraySplice{Array: array, Start: arguments[0], Element: element, Site: l.writeSite(receiver)}
+		splice := ir.ArraySplice{WriteOrigin: l.elementWriteOrigin(receiver), Array: array, Start: arguments[0], Element: element, Site: l.writeSite(receiver)}
 		if len(arguments) > 1 {
 			splice.Count = arguments[1]
 			for _, item := range arguments[2:] {
@@ -1616,7 +1635,7 @@ func (l *lowering) mapMethod(node *ast.Node, receiver *ast.Node, name string) (i
 	case "get":
 		return ir.MapGet{Map: object, Key: arguments[0], KeyType: key, ValueType: value}, true, nil
 	case "set":
-		return ir.MapSet{Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
+		return ir.MapSet{WriteOrigin: ir.WriteCheck{Where: l.program.Where(receiver), Expression: sourceExpression(receiver) + "[value]"}, Map: object, Key: arguments[0], Value: arguments[1], KeyType: key, ValueType: value, Site: l.writeSite(receiver)}, true, nil
 	case "has":
 		return ir.MapHas{Map: object, Key: arguments[0], KeyType: key}, true, nil
 	}
@@ -1920,7 +1939,7 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 		}
 		return []ir.Statement{ir.Evaluate{Value: ir.NodeBufferCall{Function: "buffer_set", Arguments: []ir.Expression{array, index, value}, Returns: ir.Number}}}, nil
 	}
-	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
+	return []ir.Statement{ir.SetIndex{WriteOrigin: ir.WriteCheck{Where: l.program.Where(target), Expression: sourceExpression(target)}, Array: array, Index: index, Value: fit(value, element), Element: element, Site: l.writeSite(access.Expression)}}, nil
 }
 
 // stringFromCodes lowers String.fromCharCode(...) and String.fromCodePoint(...), each argument a

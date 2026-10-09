@@ -157,6 +157,8 @@ func unchanging(program *ir.Program, changing map[int]bool, expression ir.Expres
 	switch expression := expression.(type) {
 	case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.Defined:
 		return true
+	case ir.ContractContainer:
+		return unchanging(program, changing, expression.Value)
 	case ir.ArrayLiteral:
 		for _, spread := range expression.Spread {
 			if spread {
