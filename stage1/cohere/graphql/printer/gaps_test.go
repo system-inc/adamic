@@ -41,6 +41,7 @@ const testPrinterWhitespaceGapShards = 5
 // A fixed set of shards hashes the repository-relative JSON path and entry index.
 // Adding entries preserves every existing assignment. ADAMIC_TEST_SHARD=i/n
 // selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
+// Not parallel: printerBuild writes the shared buildcache directory and native.Build writes the shared adamic/runtime cache.
 func TestPrinterWhitespaceGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if library == "" {

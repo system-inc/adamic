@@ -9,6 +9,7 @@ import (
 )
 
 func TestInventoryEngine(t *testing.T) {
+	t.Parallel()
 	root, err := filepath.Abs("../../../..")
 	if err != nil {
 		t.Fatal(err)

@@ -143,6 +143,7 @@ func TestCSSPrinterAgreesWithGo(t *testing.T) {
 	}
 }
 
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestClosedPrinterRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/6_printer_regex_tree.ts")
 	program := lowered(t, path)
@@ -329,6 +330,7 @@ func TestCSSPrinterThroughput(t *testing.T) {
 }
 
 func TestCSSPrinterBoundaryProofs(t *testing.T) {
+	t.Parallel()
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	inputs := "\ufeffa{b:c}"
 	encoded := ">C" + inputs + "\n>C// x\\ra{}\n>C\u00a0\n>C---\\na:     b\\n---\\na{}\n"
@@ -381,6 +383,7 @@ func printerLeaks(t *testing.T, binary string, arguments ...string) string {
 }
 
 // This corpus isolates boolean flags and namespace choices without the full printer corpus.
+// Not parallel: native.Build writes the shared user cache directory adamic/runtime (and adamic/units when split builds are enabled).
 func TestOptionalBooleanPrinterMatchesGo(t *testing.T) {
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	inputs := ">Ca{b:c}\n>Ca{b:c!important}\n>C*|a{b:c}\n>C|a{b:c}\n>Csvg|a{b:c}\n>S$x:1!default;a{b:$x!important}\n"

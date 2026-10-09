@@ -45,6 +45,7 @@ func supportedExpression(node *estree.Node) bool {
 	}
 	return true
 }
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicExpressionCorpus(t *testing.T) {
 	requestData, err := os.ReadFile(os.Getenv("ADAMIC_TS_EXPRESSION_REQUEST"))
 	if err != nil {
@@ -682,6 +683,7 @@ func supportedSyntax(node *ast.Node) bool {
 
 // This optional entry makes the same batch protocol available in a compiled Go test binary.
 // Input decoding, parsing, printing, encoding and file output are inside each timed process.
+// Not parallel: writes the fixed ADAMIC_TS_BENCH_OUTPUT path.
 func TestAdamicExpressionBenchmark(t *testing.T) {
 	path := os.Getenv("ADAMIC_TS_BENCH_CASES")
 	if path == "" {

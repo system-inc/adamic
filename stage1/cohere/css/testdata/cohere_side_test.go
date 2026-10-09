@@ -88,6 +88,7 @@ func adamicCohereTexts(t *testing.T) []string {
 	return texts
 }
 
+// Not parallel: writes the fixed output paths supplied by the environment request.
 func TestAdamicPortCases(t *testing.T) {
 	var request struct{ Cases, Answers, Repository, Fixtures string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
