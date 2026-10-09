@@ -64,6 +64,12 @@ func (l *lowering) inProperty(node *ast.Node) (ir.Expression, error) {
 	if object.Type() != ir.Object && object.Type() != ir.Array && object.Type() != ir.Union {
 		return nil, l.notYet(binary.Right, "in on this runtime representation")
 	}
+	if object.Type() == ir.Object {
+		object, err = l.checkedViewMembers(node, binary.Right, object, key.Text())
+		if err != nil {
+			return nil, err
+		}
+	}
 	return ir.HasProperty{Object: fit(object, ir.Union), Name: key.Text()}, nil
 }
 

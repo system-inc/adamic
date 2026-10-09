@@ -88,3 +88,9 @@ func TestViewSpreadMethodRefused(t *testing.T) {
 		t.Fatalf("want checked method spread refused, got %v", err)
 	}
 }
+
+func TestViewInControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "in")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 'seven'", "count: 7", 1))
+}

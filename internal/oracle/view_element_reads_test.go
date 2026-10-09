@@ -58,3 +58,8 @@ func TestCheckedViewSpread(t *testing.T) {
 	t.Parallel()
 	checkedViewElementFixture(t, "spread", "field read failed: ...view (field count) is not a number; expected number, found string")
 }
+
+func TestCheckedViewIn(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "in", "field read failed: 'count' in view (field count) is not a number; expected number, found string")
+}
