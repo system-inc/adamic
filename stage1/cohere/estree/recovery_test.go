@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -63,37 +62,10 @@ func recoveryMutantCases() []recoveryCase {
 // ADAMIC_TEST_SHARD=i/n runs shards whose index modulo n is i; unset runs all.
 // Each mutant retains the entire grammar corpus on both Node and sanitized native.
 func TestRecoveryMutants(t *testing.T) {
-	setup := beginRecoverySetup(t)
-	defer setup.report(t)
-	shards := partitionRecovery(t, recoveryMutantCases(), testRecoveryMutantsShards)
-	if len(recoveryMutations) != testRecoveryMutantsShards {
-		t.Fatal("mutant/shard enumeration changed")
-	}
-	list := manifest(t, recoveredGrammar())
-	want := recoveryAnswer(t, recoveryOracle(t, setup), list, "--manifest")
-	type product struct{ main, binary string }
-	products := make([]product, len(recoveryMutations))
-	for i, item := range recoveryMutations {
-		main := mutantPort(t, item.file, item.from, item.to)
-		binary, _ := recoveryPort(t, setup, main)
-		products[i] = product{main, binary}
-	}
-	runRecoveryShards(t, shards, func(t *testing.T, i int, cases []recoveryCase) {
-		item := recoveryMutations[i]
-		p := products[i]
-		for _, c := range cases {
-			if !strings.HasPrefix(c.id, item.name+"/") {
-				t.Fatalf("wrong mutant shard: %s", c.id)
-			}
-		}
-		for name, got := range map[string][]byte{"Node": onNode(t, p.main, "--manifest", list), "native": execute(t, "", p.binary, "--manifest", list)} {
-			if failure := recoveryComparison(want, got, true); failure != "" {
-				t.Fatal(name + " " + failure)
-			}
-			t.Log(name + ": " + firstDifference(want, got))
-		}
-	})
+	// Compatibility enumeration only; execution lives in the top-level shards.
+	checkRecoveryMutantUnion(t)
 }
+
 func TestRecoveryMutantsShardSurvivor(t *testing.T) {
 	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
