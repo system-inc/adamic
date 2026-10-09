@@ -1,0 +1,157 @@
+{
+  "P1": {
+    "passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestNumberConstructor",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "failed": [
+      "TestClosedPrefixUpdateValueGap"
+    ],
+    "skipped": [],
+    "failing_lines": [
+      "gaps_test.go:54: prefix update value: {stdout:[48 10] stderr:[] exitCode:0}"
+    ],
+    "logs": [
+      "P1-expressions.log",
+      "P1-extra.log",
+      "P1-small.log",
+      "P1-statements.log",
+      "P1-tsc.log",
+      "P1-vet.log"
+    ]
+  },
+  "N1": {
+    "passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "failed": [
+      "TestNumberConstructor"
+    ],
+    "skipped": [],
+    "failing_lines": [
+      "gaps_test.go:72: Number constructor: {stdout:[48 10] stderr:[] exitCode:0}"
+    ],
+    "logs": [
+      "N1-expressions.log",
+      "N1-extra.log",
+      "N1-small.log",
+      "N1-statements.log",
+      "N1-tsc.log",
+      "N1-vet.log"
+    ]
+  },
+  "E1": {
+    "passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsAgainstGoAndPrettier_037",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestNumberConstructor",
+      "TestProduct_TSPrinterExpressionsSanitized",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "failed": [
+      "TestExpressionsAgainstGoAndPrettier_008"
+    ],
+    "skipped": [],
+    "failing_lines": [
+      "expressions_test.go:89: Node: shard-008 case-170042 random: line 2665: \"ok\\t'\u00e9\ud83d\ude00';\\\\n\", Go cohere \"ok\\t('\u00e9\ud83d\ude00');\\\\n\""
+    ],
+    "logs": [
+      "E1-build.log",
+      "E1-expressions.log",
+      "E1-expressions008.log",
+      "E1-expressions037.log",
+      "E1-extra.log",
+      "E1-small.log",
+      "E1-statements.log",
+      "E1-tsc.log"
+    ]
+  }
+}

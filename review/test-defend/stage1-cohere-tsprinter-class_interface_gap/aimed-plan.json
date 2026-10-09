@@ -1,0 +1,23 @@
+[
+  [
+    "P1",
+    "internal/lower/expression.go",
+    755,
+    "append(body, ir.Return{Value: value})",
+    "append(body, ir.Return{Value: ir.NumberConstant{Value: 0}})"
+  ],
+  [
+    "N1",
+    "internal/lower/library_math_number.go",
+    43,
+    "ast.SkipParentheses(node).Kind == ast.KindNullKeyword",
+    "ast.SkipParentheses(node).Kind == ast.KindStringLiteral"
+  ],
+  [
+    "E1",
+    "stage1/cohere/tsprinter/expressions.ts",
+    1802,
+    "printer.node(printer.unwrapped(root)).kind === 'StringLiteral'",
+    "printer.node(printer.unwrapped(root)).kind === 'NoSubstitutionTemplateLiteral'"
+  ]
+]

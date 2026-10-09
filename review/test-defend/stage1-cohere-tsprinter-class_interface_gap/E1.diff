@@ -1,0 +1,13 @@
+diff --git a/stage1/cohere/tsprinter/expressions.ts b/stage1/cohere/tsprinter/expressions.ts
+index 70539bf2..4e1479dc 100644
+--- a/stage1/cohere/tsprinter/expressions.ts
++++ b/stage1/cohere/tsprinter/expressions.ts
+@@ -1799,7 +1799,7 @@ export function formatExpression(source: string, settings: SettingsOptions): Res
+     if(reason !== '') return { kind: 'NotYet', reason };
+     const parenthesizedString =
+         printer.node(root).kind === 'ParenthesizedExpression' &&
+-        printer.node(printer.unwrapped(root)).kind === 'StringLiteral';
++        printer.node(printer.unwrapped(root)).kind === 'NoSubstitutionTemplateLiteral';
+     printer.state.directive = !parenthesizedString;
+     let printed = printer.print(printer.normalize(root));
+     if(

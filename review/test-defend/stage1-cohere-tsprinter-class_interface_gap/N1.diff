@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_math_number.go b/internal/lower/library_math_number.go
+index 3b6f57e6..519b89df 100644
+--- a/internal/lower/library_math_number.go
++++ b/internal/lower/library_math_number.go
+@@ -40,7 +40,7 @@ func (l *lowering) numberPrototype(node *ast.Node) bool {
+ // libraryNumber implements primitive ToNumber and delegates represented conversion methods.
+ // Dynamic object protocols stay explicit rather than guessing away user code.
+ func (l *lowering) libraryNumber(node *ast.Node) (ir.Expression, error) {
+-	if ast.SkipParentheses(node).Kind == ast.KindNullKeyword {
++	if ast.SkipParentheses(node).Kind == ast.KindStringLiteral {
+ 		return ir.NumberConstant{}, nil
+ 	}
+ 	value, err := l.expression(node)

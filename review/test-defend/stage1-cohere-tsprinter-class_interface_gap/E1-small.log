@@ -1,0 +1,39 @@
+{"Time":"2026-10-09T15:10:15.44767126Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T15:10:15.457156323Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T15:10:15.457236206Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== RUN   TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.457268409Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== PAUSE TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.457270639Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T15:10:15.457274239Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T15:10:15.45727831Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== RUN   TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.457282287Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== PAUSE TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.457284259Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T15:10:15.457286285Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap"}
+{"Time":"2026-10-09T15:10:15.457287992Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"=== RUN   TestClosedPrefixUpdateValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.813928053Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"--- PASS: TestClosedPrefixUpdateValueGap (0.35s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:15.813965321Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Elapsed":0.35}
+{"Time":"2026-10-09T15:10:15.814000347Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor"}
+{"Time":"2026-10-09T15:10:15.814005391Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Output":"=== RUN   TestNumberConstructor\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102140179Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Output":"--- PASS: TestNumberConstructor (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102216363Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestNumberConstructor","Elapsed":0.29}
+{"Time":"2026-10-09T15:10:16.102303425Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier"}
+{"Time":"2026-10-09T15:10:16.10230638Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"=== CONT  TestDocumentsAgainstGoAndPrettier\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102602061Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps"}
+{"Time":"2026-10-09T15:10:16.102609416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"=== CONT  TestCompilerGaps\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102614305Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T15:10:16.102622571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== RUN   TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102625743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== PAUSE TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.102627622Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T15:10:16.102629828Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort"}
+{"Time":"2026-10-09T15:10:16.102634499Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"=== CONT  TestCompilerGaps/defaultSort\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.230268236Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"    gaps_test.go:36: Node \"im\\n\"; stage 0 /workspace/adamic/stage1/cohere/tsprinter/gaps/defaultSort.ts:2:1: Adamic 0.1 refuses sort without a comparator; pass one: the default compares numbers as strings, so [10, 9, 1].sort() is [1, 10, 9]\n"}
+{"Time":"2026-10-09T15:10:16.230303591Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Output":"--- PASS: TestCompilerGaps/defaultSort (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.230307953Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps/defaultSort","Elapsed":0.13}
+{"Time":"2026-10-09T15:10:16.230313488Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Output":"--- PASS: TestCompilerGaps (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:16.620730351Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestCompilerGaps","Elapsed":0}
+{"Time":"2026-10-09T15:10:16.620791032Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"    doc_test.go:35: docs: 5072 cases in 5 largest-first processes\n"}
+{"Time":"2026-10-09T15:10:23.903919942Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"    doc_test.go:56: 5072 docs identical to Go and Prettier on native, Node and backend; sanitizer and leak checks pass\n"}
+{"Time":"2026-10-09T15:10:23.904405401Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Output":"--- PASS: TestDocumentsAgainstGoAndPrettier (7.80s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:23.90446174Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestDocumentsAgainstGoAndPrettier","Elapsed":7.8}
+{"Time":"2026-10-09T15:10:23.904477651Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:10:23.906045953Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t8.458s\n"}
+{"Time":"2026-10-09T15:10:23.906138305Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":8.458}

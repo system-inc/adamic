@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T14:57:16.612802158Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter"}
+{"Time":"2026-10-09T14:57:16.621839662Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap"}
+{"Time":"2026-10-09T14:57:16.622034344Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"=== RUN   TestClosedPrefixUpdateValueGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:57:17.069178117Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Output":"--- PASS: TestClosedPrefixUpdateValueGap (0.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:57:17.069243889Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Test":"TestClosedPrefixUpdateValueGap","Elapsed":0.45}
+{"Time":"2026-10-09T14:57:17.069267514Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:57:17.075063949Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"coverage: 7.9% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:57:17.091806018Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/tsprinter\t0.477s\tcoverage: 7.9% of statements in github.com/system-inc/adamic/internal/lower, github.com/system-inc/adamic/internal/native\n"}
+{"Time":"2026-10-09T14:57:17.091874063Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/tsprinter","Elapsed":0.479}

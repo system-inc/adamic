@@ -1,0 +1,8 @@
+stage1/cohere/tsprinter/testdata/numberConstructor.ts:1:console.log(`${Number('17')}`);
+stage1/cohere/tsprinter/statementsMain.ts:10:const settings = { printWidth: args[2] === undefined ? 120 : Number(args[2]), tabWidth: 4, useTabs: false };
+stage1/cohere/tsprinter/main.ts:8:const settings = { printWidth: args[2] === undefined ? 120 : Number(args[2]), tabWidth: 4, useTabs: false };
+stage1/cohere/tsprinter/docMain.ts:14:            printWidth: Number(fields[1] ?? ''),
+stage1/cohere/tsprinter/docMain.ts:15:            tabWidth: Number(fields[2] ?? ''),
+stage1/cohere/tsprinter/docMain.ts:20:        console.log(`ok\t${escaped(docs.print(Number(fields[1] ?? '')))}`);
+stage1/cohere/tsprinter/docMain.ts:24:        for(const child of (fields[5] ?? '').split(',')) if(child !== '') children.push(Number(child));
+stage1/cohere/tsprinter/docMain.ts:29:            Number(fields[1] ?? ''),

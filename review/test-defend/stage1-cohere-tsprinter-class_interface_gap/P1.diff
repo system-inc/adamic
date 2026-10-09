@@ -1,0 +1,13 @@
+diff --git a/internal/lower/expression.go b/internal/lower/expression.go
+index 8b8c5d6d..33868fdd 100644
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -752,7 +752,7 @@ func (l *lowering) prefix(node *ast.Node) (ir.Expression, error) {
+ 		if value.Type() != ir.Number {
+ 			return nil, l.notYet(node, "a prefix update of a non-number")
+ 		}
+-		l.result.Functions[index].Body = append(body, ir.Return{Value: value})
++		l.result.Functions[index].Body = append(body, ir.Return{Value: ir.NumberConstant{Value: 0}})
+ 		return ir.CallClosure{Closure: ir.MakeClosure{Function: index}, Returns: ir.Number}, nil
+ 	}
+ 	if prefix.Operator == ast.KindPlusToken || prefix.Operator == ast.KindMinusToken || prefix.Operator == ast.KindTildeToken {

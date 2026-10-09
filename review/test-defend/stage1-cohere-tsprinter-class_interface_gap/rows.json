@@ -1,0 +1,171 @@
+[
+  {
+    "test": "TestExpressionsAgainstGoAndPrettier family",
+    "package": "stage1/cohere/tsprinter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDocumentsAgainstGoAndPrettier"
+    ],
+    "defense": "defended",
+    "unique_mutant": "E1 stage1/cohere/tsprinter/expressions.ts:1802",
+    "attempts": [
+      {
+        "mutant": "E1",
+        "file_line": "stage1/cohere/tsprinter/expressions.ts:1802",
+        "change": "printer.node(printer.unwrapped(root)).kind === 'StringLiteral' -> printer.node(printer.unwrapped(root)).kind === 'NoSubstitutionTemplateLiteral'",
+        "rows_failed": [
+          "TestExpressionsAgainstGoAndPrettier_008"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^TestExpressionsAgainstGoAndPrettier_008$; expressions_test.go:89: Node: shard-008 case-170042 random: line 2665: \"ok\\t'\u00e9\ud83d\ude00';\\\\n\", Go cohere \"ok\\t('\u00e9\ud83d\ude00');\\\\n\"",
+    "bounded": true,
+    "rows_passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsAgainstGoAndPrettier_037",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestNumberConstructor",
+      "TestProduct_TSPrinterExpressionsSanitized",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "scope_note": "Unique within the recorded bounded matrix; unrun individual shards and product/witness rows are not claimed observed passes. See report.md for source-based exclusions."
+  },
+  {
+    "test": "TestClosedPrefixUpdateValueGap",
+    "package": "stage1/cohere/tsprinter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDocumentsAgainstGoAndPrettier"
+    ],
+    "defense": "defended",
+    "unique_mutant": "P1 internal/lower/expression.go:755",
+    "attempts": [
+      {
+        "mutant": "P1",
+        "file_line": "internal/lower/expression.go:755",
+        "change": "append(body, ir.Return{Value: value}) -> append(body, ir.Return{Value: ir.NumberConstant{Value: 0}})",
+        "rows_failed": [
+          "TestClosedPrefixUpdateValueGap"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClosedPrefixUpdateValueGap|TestNumberConstructor|TestDocumentsAgainstGoAndPrettier|TestCompilerGaps)$; gaps_test.go:54: prefix update value: {stdout:[48 10] stderr:[] exitCode:0}",
+    "bounded": true,
+    "rows_passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestNumberConstructor",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "scope_note": "Unique within the recorded bounded matrix; unrun individual shards and product/witness rows are not claimed observed passes. See report.md for source-based exclusions."
+  },
+  {
+    "test": "TestNumberConstructor",
+    "package": "stage1/cohere/tsprinter",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "N1 internal/lower/library_math_number.go:43",
+    "attempts": [
+      {
+        "mutant": "N1",
+        "file_line": "internal/lower/library_math_number.go:43",
+        "change": "ast.SkipParentheses(node).Kind == ast.KindNullKeyword -> ast.SkipParentheses(node).Kind == ast.KindStringLiteral",
+        "rows_failed": [
+          "TestNumberConstructor"
+        ]
+      }
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run ^(TestClosedPrefixUpdateValueGap|TestNumberConstructor|TestDocumentsAgainstGoAndPrettier|TestCompilerGaps)$; gaps_test.go:72: Number constructor: {stdout:[48 10] stderr:[] exitCode:0}",
+    "bounded": true,
+    "rows_passed": [
+      "TestClassInterfaceMethodGap",
+      "TestClosedOptionalBooleanFunctionGap",
+      "TestClosedPrefixUpdateValueGap",
+      "TestCompilerGaps",
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestDocumentsAgainstGoAndPrettier",
+      "TestExpressionOwnershipStable",
+      "TestExpressionUnitBoxSelection",
+      "TestExpressionUnitPlantedDisagreement",
+      "TestExpressionUnitUnionRejectsMissingAndRepeated",
+      "TestExpressionsAgainstGoAndPrettier_000",
+      "TestExpressionsShardPlantedDisagreement",
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardSelection",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated",
+      "TestTSPrinterCachedMetadataRelocation",
+      "TestTrackedCorpusRoots"
+    ],
+    "scope_note": "Unique within the recorded bounded matrix; unrun individual shards and product/witness rows are not claimed observed passes. See report.md for source-based exclusions."
+  }
+]
