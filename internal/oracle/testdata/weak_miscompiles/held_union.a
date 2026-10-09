@@ -1,0 +1,21 @@
+import type { Weak } from 'adamic';
+
+// A narrowed union Weak stays readable while its strong owner is held.
+interface Named {
+	readonly kind: 'Named';
+	readonly name: string;
+}
+interface Counted {
+	readonly kind: 'Counted';
+	readonly count: number;
+}
+interface Holder {
+	kept: Weak<Named | Counted>;
+}
+let strong: Named | undefined = { kind: 'Named', name: 'n'.repeat(2) };
+const holder: Holder = { kept: strong };
+if (holder.kept !== undefined) {
+	console.log('before');
+	const seen = holder.kept;
+	console.log(`after: ${seen.kind === 'Named' ? seen.name : seen.count}`);
+}
