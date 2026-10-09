@@ -500,3 +500,5 @@ TypeScript 6.0.3 `src/compiler/utilities.ts` (`forEachEntry`) and `src/compiler/
 (`firstDefinedIterator`, `reduceLeftIterator`), commit `050880ce59e30b356b686bd3144efe24f875ebc8`.
 Copyright (c) Microsoft Corporation, Apache License 2.0; see [cohere/NOTICE](cohere/NOTICE)
 and [cohere/THIRD_PARTY_NOTICES.md](cohere/THIRD_PARTY_NOTICES.md) for the license.
+
+Named RegExp capture dictionaries follow V8 `src/runtime/runtime-regexp.cc` (null-prototype named capture objects); the existing V8 license notice above applies.

@@ -140,7 +140,7 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 				if (strcmp(name, class->accessors[index].name) == 0) return true;
 			}
 		}
-		return object_prototype_name(name);
+		return !object->null_prototype && object_prototype_name(name);
 	}
 	if (value->kind == adamic_kind_array) {
 		const adamic_array *array = (const adamic_array *)value;

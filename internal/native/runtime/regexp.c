@@ -432,12 +432,22 @@ finished:
 	}
 	return matched;
 }
+// Structural dispatch uses the same matcher as intrinsic RegExp calls.
+static adamic_value regex_test_method(adamic_object *self, adamic_value *arguments) {
+    return (adamic_value){.boolean = adamic_regex_test(self, arguments[0].reference)};
+}
+static adamic_value regex_exec_method(adamic_object *self, adamic_value *arguments) {
+    return (adamic_value){.reference = adamic_regex_exec(self, arguments[0].reference)};
+}
+static const char *const regex_method_names[] = {"test", "exec"};
+static const adamic_method regex_method_code[] = {regex_test_method, regex_exec_method};
+static const adamic_methods regex_methods = {2, regex_method_names, regex_method_code};
 static const char *const regex_names[] = {"__program", "lastIndex",	 "source",		"flags",
 										  "global",	   "ignoreCase", "multiline",	"unicode",
 										  "sticky",	   "hasIndices", "unicodeSets", "dotAll"};
 static const bool regex_references[] = {false, false, true,	 true,	false, false,
 										false, false, false, false, false, false};
-static const adamic_shape regex_shape = {12, regex_names, regex_references, NULL};
+static const adamic_shape regex_shape = {12, regex_names, regex_references, &regex_methods};
 adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_string *source,
 								adamic_string *flags) {
 	adamic_object *result = adamic_object_new(&regex_shape);
@@ -456,7 +466,7 @@ adamic_object *adamic_regex_new(const adamic_regex_program *program, adamic_stri
  * including across matchAll/split clones and escaped named-group dictionaries. */
 static const char *const regex_owned_names[] = {"__program","lastIndex","source","flags","global","ignoreCase","multiline","unicode","sticky","hasIndices","unicodeSets","dotAll","#compiler"};
 static const bool regex_owned_references[] = {false,false,true,true,false,false,false,false,false,false,false,false,true};
-static const adamic_shape regex_owned_shape = {13,regex_owned_names,regex_owned_references,NULL};
+static const adamic_shape regex_owned_shape = {13,regex_owned_names,regex_owned_references,&regex_methods};
 adamic_object *adamic_regex_new_owned(const adamic_regex_program *program,adamic_string *source,adamic_string *flags,adamic_array *storage) {
     adamic_object *plain=adamic_regex_new(program,source,flags);
     adamic_object *result=adamic_object_new(&regex_owned_shape);
@@ -661,6 +671,8 @@ static adamic_object *regex_groups(const adamic_regex_program *p, adamic_array *
 	if (p->group_count == 0)
 		return NULL;
 	adamic_object *groups = adamic_object_new(p->group_shape);
+	// V8 runtime-regexp.cc: named captures use a null-prototype dictionary.
+	groups->null_prototype = true;
 
 #ifdef ADAMIC_REGEXP_RUNTIME_OWNER
  if(storage!=NULL)groups->slots[p->group_count].reference=adamic_retain(storage);

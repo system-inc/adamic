@@ -64,6 +64,7 @@ adamic_object *adamic_object_new_in(adamic_region *region, const adamic_shape *s
 	object->shape = shape;
 	object->class = NULL;
 	object->prototype = NULL;
+	object->null_prototype = false;
 	object->frozen = false;
 	object->sealed = false;
 	object->nonextensible = false;

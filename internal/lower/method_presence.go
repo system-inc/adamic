@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
 	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 )
@@ -50,7 +51,10 @@ func (l *lowering) methodRead(node *ast.Node) bool {
 		return false
 	}
 	symbol := l.checker.GetSymbolAtLocation(node)
-	return symbol != nil && symbol.Flags&ast.SymbolFlagsMethod != 0
+	proven := l.checker.GetTypeAtLocation(node)
+	// Function-valued optional fields can observe inherited methods too. Nullable
+	// fields retain ordinary value comparisons: their stored null is observable.
+	return symbol != nil && (symbol.Flags&ast.SymbolFlagsMethod != 0 || (!l.includesNull(proven) && len(l.checker.GetSignaturesOfType(l.checker.GetNonNullableType(proven), checker.SignatureKindCall)) > 0))
 }
 
 func (l *lowering) methodObservation(node *ast.Node) (ir.Expression, bool, error) {
