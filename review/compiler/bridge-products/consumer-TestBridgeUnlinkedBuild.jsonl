@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T06:52:35.378329232Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T06:52:35.387503355Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild"}
+{"Time":"2026-10-09T06:52:35.38758149Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Output":"=== RUN   TestBridgeUnlinkedBuild\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:35.767418946Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Output":"    units_test.go:71: build bridge-test-stage0 6430d092d416 hit 0.04\n"}
+{"Time":"2026-10-09T06:52:36.150074898Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Output":"    units_test.go:227: build bridge-test-stage0 6430d092d416 hit 0.03\n"}
+{"Time":"2026-10-09T06:52:36.227644994Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Output":"    units_test.go:231: build refuses unlinked checker calls\n"}
+{"Time":"2026-10-09T06:52:36.227741106Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Output":"--- PASS: TestBridgeUnlinkedBuild (0.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:36.227745202Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeUnlinkedBuild","Elapsed":0.84}
+{"Time":"2026-10-09T06:52:36.227767655Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:52:36.232516995Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"ok  \tgithub.com/system-inc/adamic/bridge/tsgo\t0.854s\n"}
+{"Time":"2026-10-09T06:52:36.232560329Z","Action":"pass","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":0.854}
