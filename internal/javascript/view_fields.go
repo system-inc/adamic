@@ -10,6 +10,9 @@ type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) checkedViewField(property ir.Property) string {
+	if property.Of == ir.Closure && property.ViewContract > 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable {
+		return e.emitViewCallableProperty(property)
+	}
 	if checkedViewReadAdapter != nil {
 		if value, handled := checkedViewReadAdapter(e, property); handled {
 			return value

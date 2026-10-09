@@ -182,6 +182,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			function.OptionalParameters[function.Parameters[i+offset]] = true
 		}
 	}
+	l.recordViewCallableRepresentations(index, &function, declaration)
 	l.result.Functions[index] = function
 	if !function.Closure && declaration.Kind != ast.KindConstructor && declaration.Name() != nil {
 		l.closureRecords = append(l.closureRecords, closureRecord{proven: l.concrete(l.checker.GetTypeAtLocation(declaration.Name())), function: index, node: declaration})

@@ -13,6 +13,15 @@ type checkedViewReadHook func(*emitter, ir.Property) (string, bool)
 var checkedViewReadAdapter checkedViewReadHook
 
 func (e *emitter) viewField(property ir.Property) string {
+	if property.Of == ir.Closure && property.ViewContract > 0 && e.program.ViewContracts[property.ViewContract-1].Kind == ir.ViewCallable {
+		method := e.temporary()
+		if e.program.ClosureConventionNeeded() {
+			e.line("adamic_method_entry %s = {0};", method)
+		} else {
+			e.line("adamic_method %s = NULL;", method)
+		}
+		return e.emitViewCallableRead(property, e.value(property.Object), method)
+	}
 	if checkedViewReadAdapter != nil {
 		if value, handled := checkedViewReadAdapter(e, property); handled {
 			return value

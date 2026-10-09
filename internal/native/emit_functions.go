@@ -298,6 +298,9 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
+			if property.View != "" && property.ViewContract > 0 {
+				e.emitViewCallableMethodCertificate(property, method)
+			}
 			exactCount = e.program.PackedCountNeeded(function)
 		} else {
 			method = e.temporary()
@@ -306,7 +309,11 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			if property.View != "" {
+				closure = e.emitViewCallableRead(property, receiver, method)
+			} else {
+				closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			}
 		}
 	}
 	packed, count := e.closureArguments(expression)

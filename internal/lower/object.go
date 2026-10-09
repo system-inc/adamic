@@ -586,6 +586,7 @@ func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expr
 		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
+		l.prepareViewCallableProperty(node, declared, &property)
 	}
 	field := l.checker.GetSymbolAtLocation(node.Name())
 	if field != nil {

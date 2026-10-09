@@ -29,6 +29,9 @@ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewCo
 		return l.unionAggregateContract(node, target)
 	}
 	if l.callableViewContract(target) {
+		if viewCallableContractHook != nil {
+			return viewCallableContractHook(l, node, target, nil)
+		}
 		family = "callable"
 	}
 	if l.checker.IsArrayType(target) && viewArrayContractHook == nil {
@@ -102,6 +105,9 @@ func (l *lowering) checkLazyViewReads() error {
 	if len(program.ViewOrigins) == 0 {
 		return nil
 	}
+	if err := l.prepareViewCallableAggregateSchemas(); err != nil {
+		return err
+	}
 	assignAllocationSites(program)
 	graph := newAllocationFlowGraph(program)
 	viewed := map[int]bool{}
@@ -120,7 +126,10 @@ func (l *lowering) checkLazyViewReads() error {
 		add(graph.ReachingAllocations(origin))
 	}
 	index := graph.projectionIndex()
+	callResults := viewCallableAggregateResults(program)
+	l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 	for len(queue) != 0 {
+		l.addViewCallableAggregateResults(graph, callResults, viewed, unknown, add)
 		site := queue[len(queue)-1]
 		queue = queue[:len(queue)-1]
 		if literal, ok := index.records[site]; ok {
@@ -190,7 +199,7 @@ func (l *lowering) checkLazyViewReads() error {
 		if receiverContract := program.ViewContractTypes[receiverTypeID]; family == "" && receiverContract != 0 {
 			family = program.ViewContracts[receiverContract-1].Unsupported
 		}
-		if family == "" {
+		if family == "" && !viewCallableConcreteReadContract(program, contract) {
 			family = unsupportedFields[field]
 		}
 		if family == "" {

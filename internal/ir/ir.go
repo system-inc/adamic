@@ -10,6 +10,8 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	OptionalViewFields map[string]bool
+
 	ArrayViewEnabled                bool
 	ArrayViewTemplateWhere          string
 	ArrayViewNeedsSourceCertificate bool
@@ -122,6 +124,9 @@ type Accessor struct {
 
 // Function is a function declaration.
 type Function struct {
+	// CallableMasks records producer signature members independently of any view.
+	CallableMasks []uint16
+
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string
@@ -735,6 +740,10 @@ type (
 
 	// CallClosure calls a function value. Returns is its result type, 0 for void.
 	CallClosure struct {
+		CheckedDiscard  bool
+		DiscardContract ViewContractID
+		DiscardView     string
+
 		// Direct identifies canonical sibling code sharing Closure as its environment.
 		Direct       int
 		Closure      Expression
