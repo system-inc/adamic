@@ -134,10 +134,10 @@ func (l *lowering) higherRankType(node *ast.Node, proven *checker.Type, path str
 				if len(names) > 0 {
 					slots = append(slots, path+" ("+strings.Join(names, ", ")+")")
 				}
-				// A concrete callable is one instance even when its argument or
-				// result describes a large recursive object graph. Those values
-				// have their own slot/escape checks; do not treat that graph as
-				// the binders of this callable.
+				for _, parameter := range signature.Parameters() {
+					visit(l.checker.GetTypeOfSymbol(parameter), path+"."+parameter.Name, depth+1)
+				}
+				visit(l.checker.GetReturnTypeOfSignature(signature), path+" result", depth+1)
 			}
 		}
 		if proven.Flags()&checker.TypeFlagsObject == 0 {

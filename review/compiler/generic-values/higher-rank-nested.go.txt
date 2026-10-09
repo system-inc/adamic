@@ -85,7 +85,7 @@ func (l *lowering) higherRankSlot(node *ast.Node) error {
 			proven = l.checker.GetTypeAtLocation(node.Name())
 		}
 	case ast.KindFunctionType, ast.KindConstructorType:
-		proven = l.checker.GetTypeFromTypeNode(node)
+		return nil
 	case ast.KindMethodSignature, ast.KindCallSignature, ast.KindConstructSignature:
 		signature := l.checker.GetSignatureFromDeclaration(node)
 		if signature == nil || len(signature.TypeParameters()) == 0 {

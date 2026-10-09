@@ -78,6 +78,19 @@ func TestGenericValueDeclaredDefault(t *testing.T) {
 
 func TestHigherRankBindersBeforeTraversalLimit(t *testing.T) {
 	t.Parallel()
-	checkHigherRank(t, ".a", `function use(run: <U, V>(value: U, extra: V, tree: Grow<number>) => U): void { }
-interface Grow<T> { readonly next: Grow<readonly T[]>; }`, "run", "U", "V")
+	checkHigherRank(t, ".a", `function use(box: { readonly run: <U, V>(value: U, extra: V) => U; readonly tree: Grow<number> }): void { }
+interface Grow<T> { readonly next: Grow<readonly T[]>; }`, "box.run", "U", "V")
+}
+
+func TestGenericValueRecursiveArgumentContract(t *testing.T) {
+	t.Parallel()
+	lowersAndAgreesWithNodeNative(t, `type Grow<T> = () => Grow<readonly T[]>;
+function equate<T>(left: T, right: T): boolean { return left === right; }
+const compare: (left: Grow<number>, right: Grow<number>) => boolean = equate;
+console.log("" + (compare === compare));`)
+}
+
+func TestHigherRankNestedCallableContract(t *testing.T) {
+	t.Parallel()
+	checkHigherRank(t, ".a", `function use(run: (poly: <U>(value: U) => U) => void): void { }`, "run.poly", "U")
 }
