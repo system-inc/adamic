@@ -14,7 +14,6 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -32,15 +31,12 @@ const testSuggestionAlongsideAutomaticFixShards = 3
 
 var suggestionAlongsideCases = []string{"Node", "emitted JavaScript", "native"}
 var suggestionAlongside struct {
-	sync.Mutex
 	ready                                       bool
 	directory, manifest, oracle, binary, module string
 }
 
 func suggestionAlongsideSetup(t *testing.T) {
 	t.Helper()
-	suggestionAlongside.Lock()
-	defer suggestionAlongside.Unlock()
 	if suggestionAlongside.ready {
 		return
 	}
@@ -117,19 +113,58 @@ func suggestionAlongsideSetup(t *testing.T) {
 		}
 		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
-	oracle, err := suggestionAlongsideGoOracle(t, directory, directory)
-	if err != nil {
-		t.Fatal(err)
-	}
+	oracleInputs := inputs
+	oracleInputs.Name = "suggestion-alongside-go-oracle-v1"
+	oracleInputs.Files = append(append([]string{}, inputs.Files...), "cohere/internal", "cohere/mutation_aliasing", "cohere/static_single_assignment", "cohere/rule_runner")
+	oracleInputs.Flags = []string{"go build", "overlay=serialization-semicolon", "GOFLAGS=" + os.Getenv("GOFLAGS"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED")}
+	oracleInputs.Toolchain = []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}
+	oracleProduct := buildcache.Product(t, oracleInputs, func(out string) error {
+		_, err := suggestionAlongsideGoOracle(t, directory, out)
+		return err
+	})
+	oracle := filepath.Join(oracleProduct, "oracle")
 	suggestionAlongside.directory, suggestionAlongside.manifest, suggestionAlongside.oracle = directory, path, oracle
 	suggestionAlongside.binary, suggestionAlongside.module = filepath.Join(built, "scanner"), filepath.Join(lowered, "lint.mjs")
 	suggestionAlongside.ready = true
 }
 
+// Not parallel: prepares the shared fixture and cached runtime products before parallel leaves.
+func TestSuggestionAlongsideAutomaticFix_Setup(t *testing.T) {
+	defer suggestionAlongsideDeadline(t)()
+	suggestionAlongsideSetup(t)
+}
+
+// The setup test is serial: testing releases parallel leaves only after it returns.
+// A filtered leaf must explicitly select _Setup too; it never builds shared products.
+func suggestionAlongsideReady(t *testing.T) {
+	t.Helper()
+	if !suggestionAlongside.ready {
+		t.Fatal("shared setup is not ready; select TestSuggestionAlongsideAutomaticFix_Setup with the leaf")
+	}
+}
+
+func suggestionAlongsideDeadline(t *testing.T) func() {
+	t.Helper()
+	started := time.Now()
+	timer := time.AfterFunc(90*time.Second, func() {
+		fmt.Fprintf(os.Stderr, "P0: %s cooked at 90s\n", t.Name())
+		os.Exit(124)
+	})
+	return func() {
+		timer.Stop()
+		elapsed := time.Since(started)
+		t.Logf("%s: %.3fs cooked=false", t.Name(), elapsed.Seconds())
+		if elapsed >= 60*time.Second {
+			t.Error("exceeds 60s budget")
+		}
+	}
+}
+
 func suggestionAlongsideCheck(got, want []byte) string { return difference(got, want) }
 func suggestionAlongsideShard(t *testing.T, index int) {
 	t.Helper()
-	suggestionAlongsideSetup(t)
+	suggestionAlongsideReady(t)
+	defer suggestionAlongsideDeadline(t)()
 	s := &suggestionAlongside
 	want := execute(t, "", s.oracle, "--manifest", s.manifest).output
 	if !bytes.Contains(want, []byte("fixed\t/*\\ud83d\\ude00*/;\\u000a")) {
@@ -176,7 +211,7 @@ func suggestionAlongsideUnion(t *testing.T) {
 	seen := map[string]int{}
 	assignments := make([]int, len(suggestionAlongsideCases))
 	for _, declaration := range file.Decls {
-		if f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") {
+		if f, ok := declaration.(*ast.FuncDecl); ok && strings.HasPrefix(f.Name.Name, "TestSuggestionAlongsideAutomaticFix_") && f.Name.Name != "TestSuggestionAlongsideAutomaticFix_Setup" {
 			seen[f.Name.Name]++
 			parallel, calls := 0, 0
 			ast.Inspect(f.Body, func(n ast.Node) bool {
@@ -225,9 +260,11 @@ func suggestionAlongsideUnion(t *testing.T) {
 
 func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 	t.Parallel()
+	suggestionAlongsideReady(t)
+	defer suggestionAlongsideDeadline(t)()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
-	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_(Setup|[0-9]+)$", "-test.timeout=90s", "-test.v")
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
@@ -243,6 +280,29 @@ func TestSuggestionAlongsideAutomaticFixPlantedFailure(t *testing.T) {
 		t.Fatalf("wrong planted failure: %v\n%s", err, output)
 	}
 	t.Log("planted mismatch caught only by shard 002")
+}
+
+// A filtered leaf must fail immediately, never silently build the shared products.
+func TestSuggestionAlongsideAutomaticFixSetupIsRequired(t *testing.T) {
+	t.Parallel()
+	suggestionAlongsideReady(t)
+	defer suggestionAlongsideDeadline(t)()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, os.Args[0], "-test.run=^TestSuggestionAlongsideAutomaticFix_[0-9]+$", "-test.timeout=90s", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	output, err := command.CombinedOutput()
+	if err == nil || ctx.Err() != nil || bytes.Count(output, []byte("shared setup is not ready;")) != testSuggestionAlongsideAutomaticFixShards || bytes.Contains(output, []byte("build suggestion-alongside-")) {
+		t.Fatalf("filtered leaves prepared shared state or failed incorrectly: %v\n%s", err, output)
+	}
 }
 
 // Use the same overlay and oracle, accepting only the Go download diagnostics
@@ -291,6 +351,23 @@ func suggestionAlongsideGoOracle(t *testing.T, sourceRoot, directory string) (st
 	}
 	binary := filepath.Join(directory, "oracle")
 	args := append([]string{"build", "-overlay=" + path, "-o", binary}, virtualFiles...)
-	execute(t, root, "go", args...)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "go", args...)
+	command.Dir = root
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	if err := command.Run(); err != nil || len(commandDiagnostics("go", stderr.Bytes())) != 0 {
+		return "", fmt.Errorf("go build: %v\n%s", err, &stderr)
+	}
 	return binary, nil
 }
