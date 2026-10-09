@@ -148,7 +148,7 @@ class Wiring(unittest.TestCase):
                 with patch('sys.argv', ['auto', '--drain']):
                     auto.main()
             self.assertEqual(send.call_count, 3)
-            self.assertEqual({call.args[3] for call in send.call_args_list}, {'system_adamic_integration', 'system_adamic_compiler', 'system_adamic_typescript'})
+            self.assertEqual({call.args[3] for call in send.call_args_list}, {'system_adamic_release_integration', 'system_adamic_compiler', 'system_adamic_typescript'})
             for call in send.call_args_list:
                 self.assertIn(branch, call.args[4])
                 self.assertIn(sha, call.args[4])
@@ -478,7 +478,7 @@ bundle = pathlib.Path(sys.argv[-1]) / token
         stub = binaries / 'ahra'
         stub.write_text('#!' + sys.executable + '\n' + """
 import json, os, pathlib, sys
-assert sys.argv[1:4] == ['os', 'send', 'system_adamic_integration']
+assert sys.argv[1:4] == ['os', 'send', 'system_adamic_release_integration']
 assert sys.argv[-2:] == ['--from', 'system_adamic_developer_tools']
 pathlib.Path(os.environ['AUTO_MERGE_TEST_STATE'], 'hold-delivered.json').write_text(json.dumps(sys.argv[1:]))
 """)

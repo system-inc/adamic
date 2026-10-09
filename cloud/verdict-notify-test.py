@@ -67,22 +67,22 @@ class VerdictTests(unittest.TestCase):
 
     def test_area_reaches_owner_and_integration(self):
         log = 'green: %s fast gate in 630.1 s (stuff)\n' % SHA
-        self.assertEqual([name for name, _ in self.send('area/stage3', log)], ['system_adamic_typescript', 'system_adamic_integration'])
+        self.assertEqual([name for name, _ in self.send('area/stage3', log)], ['system_adamic_typescript', 'system_adamic_release_integration'])
 
     def test_held_or_unrouted_worker_goes_to_integration_with_why(self):
         sends = self.send('codex/held-views', self.red)
         self.assertEqual([name for name, _ in sends], ['system_adamic_compiler'])
         self.assertIn('Routed by the hold: area-routes.tsv holds codex/held-*', sends[0][1])
-        self.assertEqual([name for name, _ in self.send('codex/other', self.red)], ['system_adamic_integration'])
+        self.assertEqual([name for name, _ in self.send('codex/other', self.red)], ['system_adamic_release_integration'])
 
     def test_unrouted_branch_routes_by_its_session_label(self):
         self.assertEqual([name for name, _ in self.send('codex/scout-map-keys', self.red)], ['system_adamic_compiler'])
-        self.assertEqual([name for name, _ in self.send('codex/scout-x', self.red)], ['system_adamic_integration'])
+        self.assertEqual([name for name, _ in self.send('codex/scout-x', self.red)], ['system_adamic_release_integration'])
         self.assertEqual([name for name, _ in self.send('codex/held-views', self.red)], ['system_adamic_compiler'])
 
     def test_switch_copies_integration_and_void_says_nothing(self):
         self.assertEqual([name for name, _ in self.send('codex/compiler-x', self.red, toIntegration=True)],
-                         ['system_adamic_compiler', 'system_adamic_integration'])
+                         ['system_adamic_compiler', 'system_adamic_release_integration'])
         self.assertEqual(self.send('codex/compiler-x', 'void: box lacks wasmtime\n'), [])
 
     def test_the_tools_branch_is_left_to_its_canaries(self):

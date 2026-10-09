@@ -366,7 +366,7 @@ esac
         self.assertFalse((Path(self.tmp.name) / 'gated').exists(), 'a conflict took the box')
         self.assertTrue(self.published(sha).startswith('red: %s full gate, first failure at merge' % sha), self.published(sha))
         self.assertIn('compiler.go', self.published(sha))
-        self.assertIn('system_adamic_integration', (Path(self.tmp.name) / 'sent').read_text())
+        self.assertIn('system_adamic_release_integration', (Path(self.tmp.name) / 'sent').read_text())
 
     def test_record_paths_are_push_main_s_three(self):
         self.assertEqual(self.call('recordOnly %s %s' % (self.code, self.records))[0], 0)

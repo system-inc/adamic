@@ -73,12 +73,12 @@ def route(branch, directory):
         exec(compile(source.read_text(), str(source), 'exec'), module.__dict__)
         area, how = module.route(branch)
         if not isinstance(area, str) or not isinstance(how, str) or not how.strip():
-            return 'hold', 'integration route returned an invalid area/reason; ask system_adamic_integration'
+            return 'hold', 'integration route returned an invalid area/reason; ask system_adamic_release_integration'
         if area != 'hold' and area not in module.areaNames():
-            return 'hold', f'integration route returned unknown area {area!r}; ask system_adamic_integration'
+            return 'hold', f'integration route returned unknown area {area!r}; ask system_adamic_release_integration'
         return area, how
     except Exception as error:
-        return 'hold', f'integration routing unavailable: {error}; ask system_adamic_integration'
+        return 'hold', f'integration routing unavailable: {error}; ask system_adamic_release_integration'
 
 
 def csv_line(row):
@@ -167,13 +167,13 @@ def hold_job(branch, sha, reason, dry=False):
     key = hashlib.sha256(branch.encode()).hexdigest()
     path = directory / (key + '.json')
     previous = json.loads(path.read_text()) if path.exists() else {}
-    reported = previous.get('reported_to', ['system_adamic_integration'] if previous.get('reported') else [])
+    reported = previous.get('reported_to', ['system_adamic_release_integration'] if previous.get('reported') else [])
     entry = {'branch': branch, 'sha': sha, 'reason': reason, 'reported_to': reported}
     atomic_json(path, entry)
     write_held_list()
     circles = set(re.findall(r'@([A-Za-z0-9_]+)', reason))
     circles.update(re.findall(r'\b(system_[A-Za-z0-9_]+)\b', reason))
-    targets = ['system_adamic_integration'] + sorted(circles - {'system_adamic_integration'})
+    targets = ['system_adamic_release_integration'] + sorted(circles - {'system_adamic_release_integration'})
     message = f'Automatic area merge held: {branch} {sha}: {reason}. Job remains .held; integration must decide or clear the refusal.'
     for target in targets:
         if target in entry['reported_to']:
@@ -451,7 +451,7 @@ def main():
                 path.rename(path.with_suffix('.done'))
             else:
                 held_entry = STATE / 'area-held' / (hashlib.sha256(branch.encode()).hexdigest() + '.json')
-                reason = json.loads(held_entry.read_text())['reason'] if held_entry.exists() else f'unrecognized outcome {outcome!r}; ask system_adamic_integration'
+                reason = json.loads(held_entry.read_text())['reason'] if held_entry.exists() else f'unrecognized outcome {outcome!r}; ask system_adamic_release_integration'
                 if not held_entry.exists():
                     hold_job(branch, sha, reason)
                 atomic_json(path, {'branch': branch, 'sha': sha, 'status': 'held', 'reason': reason,

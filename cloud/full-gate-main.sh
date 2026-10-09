@@ -7,7 +7,7 @@
 #
 # Each run publishes to gate-logs/<sha12>/<UTC stamp>/full-main, and again every time its status
 # line changes: the first failure turns status.txt red at once and is sent to
-# @system_adamic_integration (landings pause on it); the rest of the run goes on for triage only,
+# @system_adamic_release_integration (landings pause on it); the rest of the run goes on for triage only,
 # and full.json ("finished": true) lands when it ends. The run owns the box's last quarter of CPUs at
 # normal priority (the fast gate's slots own the rest): under the idle class its own Node reference
 # processes starved whenever the slots were busy, and a 1 s node deadline went red on main.
@@ -380,9 +380,9 @@ BOX
           range="no green full gate recorded yet, so no range to bisect"
         fi
         if [ "${origin}" = request ]; then
-          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Whole gate of the star's candidate ${sha} (a request, not main) is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). It runs on for triage while the candidate stays in the requests file." >/dev/null 2>&1 || true)
         else
-          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
+          (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Full gate of main ${sha} is red: ${status}. Log: gate-logs/${sha:0:12}/${stamp}/full-main (first-failure.txt). ${range}. Bisect those on a fast slot. The rest keeps running for triage." >/dev/null 2>&1 || true)
         fi
         # A red that may be load (a timeout, a stall, a kill) gets Loom's same-instance A/B against the candidate's first
         # parent, and the verdict comes back to integration (cloud/ab-trigger.py; @system_adamic from the witness, Oct 9).
@@ -390,7 +390,7 @@ BOX
         if ssh "${box}" "cat ~/${out}/first-failure.txt" > "${firstFailure}" 2> /dev/null; then
           git -C "${here}" fetch -q origin "${gated}" 2> /dev/null || true
           python3 "${here}/cloud/ab-trigger.py" write --candidate "${gated}" --main "$(git -C "${here}" rev-parse "${gated}^1" 2> /dev/null)" \
-            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_integration || true
+            --red "gate-logs/${sha:0:12}/${stamp}/full-main" --first-failure "${firstFailure}" --notify system_adamic_release_integration || true
         fi
         rm -f "${firstFailure}"
       fi

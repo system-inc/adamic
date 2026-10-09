@@ -1348,7 +1348,7 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'held tools tools-one' in w.read('output'))
         w.wait(lambda: 'system_adamic_developer_tools|' in w.read('messages'))
         self.assertIn('held', w.read('messages'))
-        self.assertNotIn('system_adamic_integration', w.read('messages'))
+        self.assertNotIn('system_adamic_release_integration', w.read('messages'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
         # Held: no second canary for the same tools, ten minutes on or not.
         w.put('clock', '1700')
@@ -1592,7 +1592,7 @@ class WatchTests(unittest.TestCase):
         w.wait(lambda: 'misread: wrong: census' in w.read('output'))
         self.assertEqual(w.read('good-starts').count('gate-mutant/plain '), before + 1)
         w.wait(lambda: w.read('messages').count('gate-mutant suite misread') == 2)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertIn(recipient + '|', w.read('messages'))
         # The same misread half an hour on pages nobody again.
         w.put('clock', '4600')
@@ -1629,7 +1629,7 @@ class WatchTests(unittest.TestCase):
         self.assertIn('with the good tools, the half-hourly canary', w.read('output'))
         self.assertIn('with tools tools-one: red: %s failed' % MAIN, w.read('output'))
         w.wait(lambda: w.read('messages').count('canary is not green') == 2)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertIn(recipient + '|', w.read('messages'))
         # The same red half an hour on pages nobody again; a green clears it, and the next red pages again.
         w.put('clock', '4600')
@@ -1754,7 +1754,7 @@ class WatchTests(unittest.TestCase):
         storm = (w.state / 'storm').read_text()
         first_log = (w.state / 'void-window').read_text().splitlines()[0].split(' ', 1)[1]
         self.assertIn(first_log, storm)
-        for recipient in ('system_adamic_developer_tools', 'system_adamic_integration'):
+        for recipient in ('system_adamic_developer_tools', 'system_adamic_release_integration'):
             self.assertEqual(w.read('messages').count(recipient + '|'), 1)
         self.assertIn('void failure', w.read('messages'))
         self.assertNotRegex(w.read('messages'), r'[A-Z]{3,}')

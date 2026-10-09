@@ -209,7 +209,7 @@ esac
         # Green and unlanded past a minute: the handoff pages integration.
         (self.root / 'whole-gates').write_text('%s green %d\n' % (star, self.now - 200))
         sends = self.check()
-        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_integration', 'system_adamic'])
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_release_integration', 'system_adamic'])
         self.assertIn('green and not landed', sends[0])
 
     def clock(self, ago):
@@ -222,7 +222,7 @@ esac
         self.assertEqual(self.check(), [], 'thirty seconds green is not yet a stalled handoff')
         (self.root / 'watch.log').write_text('%s done cloud/land-views-slice1: green: %s fast gate in 900 s\n' % (self.clock(400), star))
         sends = self.check()
-        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_integration', 'system_adamic'])
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_release_integration', 'system_adamic'])
         self.assertIn('green and not landed', sends[0])
         (self.root / 'landed').write_text(star + '\n')
         self.assertEqual(len(self.check()), 2)
@@ -274,7 +274,7 @@ esac
         # Oct 8: d72728e5 red at TestSplitTSGoAgrees, before main-reds.tsv named its fix-forward.
         self.mainIsRed()
         sends = self.check()
-        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_integration', 'system_adamic'])
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_release_integration', 'system_adamic'])
         self.assertIn('names no fix-forward', sends[0])
         self.assertEqual(len(self.check()), 2)
 
@@ -294,7 +294,7 @@ esac
         (self.root / 'seen').write_text('cloud/land-split-fix %s\n' % other)
         (self.root / 'watch.log').write_text('%s done cloud/land-split-fix: green: %s fast gate in 364.2 s\n' % (self.clock(400), other))
         sends = self.check()
-        self.assertEqual([line.split('|')[0] for line in sends[2:]], ['system_adamic_integration', 'system_adamic'])
+        self.assertEqual([line.split('|')[0] for line in sends[2:]], ['system_adamic_release_integration', 'system_adamic'])
         self.assertIn('green but not landed', sends[2])
         (self.root / 'running/77').write_text('cloud/land-split-fix %s S server S token log\n' % other)
         # An explained red (LIFTED, FIXED FORWARD, CLOSED) is not paged.

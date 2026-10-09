@@ -54,7 +54,7 @@ class StallAlarmTests(unittest.TestCase):
     def test_a_stall_alarms_both_once_and_a_start_rearms(self):
         self.state(queuedAgo=400, startedAgo=360)
         sends = self.check()
-        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_developer_tools', 'system_adamic_integration'])
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_developer_tools', 'system_adamic_release_integration'])
         self.assertIn('no gate has started anywhere for 36', sends[0])
         self.assertIn('codex/old', sends[0])
         self.assertEqual(len(self.check()), 2)

@@ -181,7 +181,7 @@ suiteVerdict() {
 # Notifications are best effort, once per transition; uppercase runs are normalized because
 # ahra refuses all-caps words. Preserve mixed-case paths such as /Users.
 notifyStorm() {
-  local text=$1 recipients=${2:-system_adamic_developer_tools system_adamic_integration} recipient
+  local text=$1 recipients=${2:-system_adamic_developer_tools system_adamic_release_integration} recipient
   text=$(printf '%s\n' "${text}" | awk '{
     out = ""
     while (match($0, /[A-Z][A-Z][A-Z]+/)) {
@@ -1442,7 +1442,7 @@ while true; do
       echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause} (try ${tries} of 3), queued again"
     else
       echo "$(date -u +%H:%M:%S) void ${branch} ${sha}: ${cause}, three tries, given up"
-      (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
+      (cd /Users/kirkouimet/Projects/ahra && ahra os send system_adamic_release_integration "Fast gate of ${branch} ${sha} died three times with no verdict (${cause}): a box problem, not the change. Log: ${state}/logs/${sha:0:12}.log on Kirk's Mac." > /dev/null 2>&1 || true)
     fi
   done
   promoteStaged

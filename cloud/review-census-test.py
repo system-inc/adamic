@@ -57,7 +57,7 @@ class ReviewCensusTests(unittest.TestCase):
         output, sends = self.once()
         self.assertIn('1 review programs outside the lane', output)
         self.assertEqual(len(sends), 1)
-        self.assertTrue(sends[0].startswith('system_adamic_integration|'))
+        self.assertTrue(sends[0].startswith('system_adamic_release_integration|'))
         # The renamed program counts by content; the loose file beside the lane doesn't.
         self.assertIn('fxspptb/oct8_p02.a', sends[0])
         self.assertNotIn('oct8_p01.a', sends[0])
