@@ -395,6 +395,28 @@ class WatchdogTests(unittest.TestCase):
         self.watch(minutesLater=5)
         self.assertEqual(len(self.paged()), 2)
 
+    def test_the_real_page_names_its_sender(self):
+        # launchd gives the watchdog no AHRA_PROFILE, so ahra os send needs --from (23:29Z, Oct 9: every page refused).
+        self.posted(40)
+        bin = self.root / 'bin'
+        bin.mkdir()
+        calls = self.root / 'ahra-calls'
+        (bin / 'ahra').write_text('#!/bin/bash\nprintf "%s\\n" "$*" >> "' + str(calls) + '"\n')
+        (bin / 'ahra').chmod(0o755)
+        jobScript = self.root / 'job.sh'
+        jobScript.write_text('#!/bin/bash\necho "- 1"\n')
+        jobScript.chmod(0o755)
+        env = {key: value for key, value in os.environ.items() if key != 'AHRA_PROFILE'}
+        env.update(ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), ADAMIC_PROBE_NOW=str(self.now), ADAMIC_PROBE_JOB=str(jobScript),
+                   ADAMIC_FAST_GATE_AHRA_DIR=str(self.root), PATH=str(bin) + os.pathsep + os.environ['PATH'])
+        result = subprocess.run(['bash', str(here / 'probe-90-watchdog.sh')], env=env, capture_output=True, text=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        sent = calls.read_text().splitlines()
+        self.assertEqual(len(sent), 2, sent)
+        for line in sent:
+            self.assertTrue(line.startswith('os send system_adamic_loom_'), line)
+            self.assertTrue(line.endswith('--from system_adamic_loom_operations'), line)
+
     def test_the_watchdog_plist(self):
         with open(here / 'probe-90' / 'com.adamic.probe-90-watchdog.plist', 'rb') as handle:
             plist = plistlib.load(handle)

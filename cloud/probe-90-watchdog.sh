@@ -23,6 +23,9 @@ stale=${ADAMIC_PROBE_STALE_SECONDS:-2100}
 cap=${ADAMIC_PROBE_SECONDS:-2100}
 grace=300
 recipients=${ADAMIC_PROBE_PAGE_TO:-system_adamic_loom_judge system_adamic_loom_operations}
+# Under launchd there is no AHRA_PROFILE, and a send without a sender is refused (the first watchdog's pages at
+# 23:29Z, Oct 9, all failed so). The probe's on-call position sends them.
+sender=${ADAMIC_PROBE_PAGE_FROM:-system_adamic_loom_operations}
 now=${ADAMIC_PROBE_NOW:-$(date -u +%s)}
 
 say() {
@@ -34,7 +37,7 @@ page() {
   if [ -n "${ADAMIC_PROBE_PAGE:-}" ]; then
     ${ADAMIC_PROBE_PAGE} "$1" "$2"
   else
-    (cd "${ahraDirectory}" && ahra os send "$1" "$2" > /dev/null)
+    (cd "${ahraDirectory}" && ahra os send "$1" "$2" --from "${sender}" > /dev/null)
   fi
 }
 job() {
