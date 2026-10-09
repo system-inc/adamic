@@ -1,0 +1,139 @@
+{
+  "deliberate_regressions": [],
+  "node_bytes_changed": 0,
+  "bytes_outside_stage0_changed": 0,
+  "changes": [
+    {
+      "file": "stage3/fixtures/objects/17_container_rest.a",
+      "before": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/objects/17_container_rest.a:13:31: stage 0 can't lower an array destructured name that isn't plain yet"
+      },
+      "reason": "array-binding lowering advances to the unsupported rest binding"
+    },
+    {
+      "file": "stage3/fixtures/objects/27_delete_substitution.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/01_has_property.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/01_has_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/01_has_property.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/02_get_property.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/02_get_property.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/02_get_property.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/03_own_keys.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/03_own_keys.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/03_own_keys.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/05_integer_order.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/05_integer_order.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/05_integer_order.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/06_delete_readd.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/06_delete_readd.a:6:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/06_delete_readd.a:6:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/07_optional_view.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/07_optional_view.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/07_optional_view.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/13_strict_option.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/13_strict_option.a:4:72: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/13_strict_option.a:4:72: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/records/16_built_strings.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/records/16_built_strings.a:5:5: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/records/16_built_strings.a:5:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    },
+    {
+      "file": "stage3/fixtures/taste/06_localized_message.a",
+      "before": {
+        "outcome": "Refused",
+        "what": "stage3/fixtures/taste/06_localized_message.a:4:36: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
+      },
+      "after": {
+        "outcome": "NotYet",
+        "what": "stage3/fixtures/taste/06_localized_message.a:4:36: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"
+      },
+      "reason": "readonly dictionary boundary replaces blanket index refusal"
+    }
+  ]
+}

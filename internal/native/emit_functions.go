@@ -224,7 +224,7 @@ func (e *emitter) arguments(call ir.Call) []string {
 		if index >= len(parameters) {
 			e.value(argument) // Extra arguments still run, before the call.
 			continue
-	}
+		}
 		if _, isNull := argument.(ir.Null); isNull && index < len(parameters) {
 			if takes := e.program.Locals[parameters[index]].Type; takes.IsReference() && takes != ir.Union {
 				// Fit the literal to its parameter kind before evaluating it through the shared null helper.

@@ -206,10 +206,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/objects/17_container_rest.a:13:19: stage 0 can't lower destructuring anything but a tuple into [names] yet"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/17_container_rest.a:13:31: stage 0 can't lower an array destructured name that isn't plain yet"}
   },
   {
     "file": "19_identifier_multimap.a",
@@ -332,10 +329,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "Refused",
-      "what": "stage3/fixtures/objects/27_delete_substitution.a:12:23: Adamic 0.1 refuses an index signature; use a Map, which keeps keys in the order they were added"
-    }
+    "stage0": {"outcome":"NotYet","what":"stage3/fixtures/objects/27_delete_substitution.a:12:23: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet"}
   },
   {
     "file": "28_debugger.a",

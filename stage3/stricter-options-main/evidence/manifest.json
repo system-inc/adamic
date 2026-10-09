@@ -1,0 +1,217 @@
+{
+  "setup": {
+    "sha256": "927c8cf113a8f62182c1cb42f78e928e9f2665261850cfd85d12ecf8c01f8770",
+    "bytes": 1087,
+    "source_log": "/tmp/stricter-options-setup.log"
+  },
+  "witnesses": {
+    "sha256": "875db35e7fc04df41fbe7ca79dd68e6f3531e1affd6dfee42d7b2e4e59d1bbea",
+    "bytes": 111579,
+    "source_log": "/tmp/stricter-options-mode-witnesses-final.log"
+  },
+  "focused": {
+    "sha256": "3ec88c4137ab8f00b4d16079dd842c0f445dd48c731e5d077a112fb5a32de0c2",
+    "bytes": 47637,
+    "source_log": "/tmp/stricter-options-focused-green.log"
+  },
+  "optional-witnesses": {
+    "sha256": "54032e3cdd17936e288f5093544db8da1c366ea47a794b2d793860469dbf05fd",
+    "bytes": 8092,
+    "source_log": "/tmp/stricter-options-optional-witnesses-retry.log"
+  },
+  "d069": {
+    "sha256": "5a60aab307b6360a217e3b9a0d4ff4b6a42a1065388304724fa0eb6dcb16ddee",
+    "bytes": 817,
+    "source_log": "/tmp/stricter-options-d069.log"
+  },
+  "entries-repair": {
+    "sha256": "5f395f2e1c63429d2c45e4b98ebf1fcc8ced0778ee2102b79a2bdb041c311a43",
+    "bytes": 15573,
+    "source_log": "/tmp/stricter-options-entries-repair.log"
+  },
+  "attribution-mutants": {
+    "sha256": "e677547e547c12cb08d9cf205b2381ee62a0aca34f36e4a2f24367f02a988ff2",
+    "bytes": 855,
+    "source_log": "/tmp/stricter-options-analysis-mutants-final.log"
+  },
+  "production-mutants": {
+    "sha256": "9a20fbfc32b79f0af4540735f0be2a1bab8b01518da98c00e41dae201bf55376",
+    "bytes": 618,
+    "source_log": "/tmp/stricter-options-production-mutants-final.log"
+  },
+  "library-mutants": {
+    "sha256": "f747e198c3cfeb2b041d2ed6058567479e65ad0e9413c720ae57cd26d781fb7f",
+    "bytes": 789,
+    "source_log": "/tmp/stricter-options-project-lib-mutants-final.log"
+  },
+  "namespace-repair": {
+    "sha256": "3bf1c4531dba6e95e93eb19f69a4a4829a5db6160c93c4e777e7c61496fe8233",
+    "bytes": 6478,
+    "source_log": "/tmp/stricter-options-namespace-repair.log"
+  },
+  "namespace-mutant": {
+    "sha256": "5d5b10b66adad58fd3947ea742d939a8280533b46c223901658d76ec0f2eac6f",
+    "bytes": 4453,
+    "source_log": "/tmp/stricter-options-namespace-mutant.log"
+  },
+  "namespace-node": {
+    "sha256": "35f9f28c2f9e258b39bffda6c6c933b8f5608579f1fd7abbe6839f0403395bf7",
+    "bytes": 71,
+    "source_log": "/tmp/stricter-options-namespace-node.log"
+  },
+  "entry-without-reference-loader": {
+    "sha256": "9c50afbb7769652cdd06e74d8d9d174f615ee33457bd7477bd75b3154f2bf87e",
+    "bytes": 2972,
+    "source_log": "/tmp/stricter-options-entry-stock-1.stderr"
+  },
+  "entry-overlay-before-repair": {
+    "sha256": "ba6e027c5fb24e2388ecee3c612026e150f3fcd070491c3517587135c4fe6b6d",
+    "bytes": 3776,
+    "source_log": "/tmp/stricter-options-entry-overlay-final-0.stderr"
+  },
+  "entry-overlay-split0": {
+    "sha256": "14bf973df56241251367279922f568bf529e5f18d951b9097e2debb8bf6761a4",
+    "bytes": 235,
+    "source_log": "/tmp/stricter-options-entry-overlay-repaired-0.stderr"
+  },
+  "entry-overlay-split1": {
+    "sha256": "14bf973df56241251367279922f568bf529e5f18d951b9097e2debb8bf6761a4",
+    "bytes": 235,
+    "source_log": "/tmp/stricter-options-entry-overlay-repaired-1.stderr"
+  },
+  "latent-build": {
+    "sha256": "273fcc3a7d032006b8fa2e2422ad4fb9eb91e6f9abf73657855728344237cf7f",
+    "bytes": 298,
+    "source_log": "/tmp/stricter-options-latent-build.log"
+  },
+  "stage1-gaps": {
+    "sha256": "563e534d9738def2b0fbab579066a3905460a087a10aebabf9e60192008f2a8e",
+    "bytes": 32778,
+    "source_log": "/tmp/stricter-options-stage1-gaps.log"
+  },
+  "stage3": {
+    "sha256": "a8bc1a5fb6286e8fb4a9982f4134690e70a9741ec232592cee343ed30d228f19",
+    "bytes": 58,
+    "source_log": "/tmp/stricter-options-stage3-release.log"
+  },
+  "stage3-update": {
+    "sha256": "ea186abac0d9fd9762a73c449c4a42c3be37fefaf809f5ee731bef05d0f8f9d8",
+    "bytes": 31324,
+    "source_log": "/tmp/stricter-options-stage3-update.log"
+  },
+  "counts-update": {
+    "sha256": "77c0a28e9e836314378e3aef2d1ab071f5b53801da85a11e1ac4a45d17c923a0",
+    "bytes": 59,
+    "source_log": "/tmp/stricter-options-counts-update-final.log"
+  },
+  "counts-check": {
+    "sha256": "7974fb5ab58fb8c47c4278e1746c9ba4def24337c6dd65a89af337effcb0b760",
+    "bytes": 58,
+    "source_log": "/tmp/stricter-options-counts-check.log"
+  },
+  "build": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "source_log": "/tmp/stricter-options-build-release.log"
+  },
+  "vet": {
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0,
+    "source_log": "/tmp/stricter-options-vet-release.log"
+  },
+  "a-check": {
+    "sha256": "b1fea7e20162e52d52a87d05a483d019dc26b0591d3a3954827be62af91dc47a",
+    "bytes": 70,
+    "source_log": "/tmp/stricter-options-a-check-release.log"
+  },
+  "status-audit": {
+    "sha256": "4fe354c0de6f554e4c0309225300a16cabe622bb7589cf4a2d1882544c90e008",
+    "bytes": 136,
+    "source_log": "/tmp/stricter-options-status-audit.log"
+  },
+  "library-declaration-diagnostics": {
+    "sha256": "930305757d05fd00eb7a16279542d73d8db43da96eb9a3642a62588d3ee4300a",
+    "bytes": 576,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/declaration-diagnostics.log"
+  },
+  "library-iterator-element": {
+    "sha256": "de3670acd465926be53267be1e8709587d41169a78585968118e7e3cdf854e21",
+    "bytes": 6061,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/iterator-element.log"
+  },
+  "library-mixed-projects": {
+    "sha256": "4db807e182069fc95c09279413b0bbbf2ce1ad5237f0de1d163c2a7a90c7f135",
+    "bytes": 545,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/mixed-projects.log"
+  },
+  "library-project-console": {
+    "sha256": "2fd7aa53fc859971bb94d2a9cb7637f0a9f624a067b7a2f3e1739049b85a171e",
+    "bytes": 798,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/project-console.log"
+  },
+  "library-project-declarations": {
+    "sha256": "bcae126215e97e3f48ab03149e4a014349e3993add720bb2a6755ec57eba7af2",
+    "bytes": 581,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/project-declarations.log"
+  },
+  "library-project-options": {
+    "sha256": "ed9e07de21231d2f7be20e6c03dae4f7b10a745bd8aee75edcd46c9b36da089d",
+    "bytes": 6525,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/project-options.log"
+  },
+  "library-project-set-extensions": {
+    "sha256": "688429eb8f4c0b70b0e23541b1eab81717caf54359e182b3fc81765d7060a63f",
+    "bytes": 590,
+    "source_log": "/tmp/stricter-options-project-lib-mutants/project-set-extensions.log"
+  },
+  "attribution-erase-catch-option": {
+    "sha256": "2f3f127f6ed3b127921ee64fd6396b0fcc20706eca2f4f93f3dea8e239001ffe",
+    "bytes": 1084,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/erase-catch-option.log"
+  },
+  "attribution-erase-index-option": {
+    "sha256": "115df59713e75768f24b6fa380beb17f8264f0ef7a3e4e5e97ffd2013ac234ff",
+    "bytes": 996,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/erase-index-option.log"
+  },
+  "attribution-erase-optional-option": {
+    "sha256": "8c078b4145aeda49c587d7848553b0344d9ab21464fdbbb1c665d6f8e085ada1",
+    "bytes": 825,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/erase-optional-option.log"
+  },
+  "attribution-erase-ordinary-membership": {
+    "sha256": "493a572b0aeb9116a4683ae6edc64c184690c0de80cc70870c377be2b0b0bcfc",
+    "bytes": 2444,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/erase-ordinary-membership.log"
+  },
+  "attribution-erase-site-position": {
+    "sha256": "f5da55621e99d894f077fc7831506828d08d22c2192827758e773d68bb6f1994",
+    "bytes": 996,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/erase-site-position.log"
+  },
+  "attribution-overwrite-project-lib": {
+    "sha256": "25e06a228a7a792dec6cca3d3bff2e063022d5e711a4cdc418e8ec86749b0290",
+    "bytes": 735,
+    "source_log": "/tmp/stricter-options-mutants-040fh6o8/overwrite-project-lib.log"
+  },
+  "production-erase-mixed-file-refusal": {
+    "sha256": "0c1efd227d27a2db75215d4a0ff418aa0d3b68bff420c001ae6eb53298c1e6a6",
+    "bytes": 204,
+    "source_log": "/tmp/stricter-production-mutants-k5rx48zy/erase-mixed-file-refusal.log"
+  },
+  "production-erase-recorded-sites": {
+    "sha256": "01d9fc320e56a90d628d145c8f31e61a58d42606d840794b64e86245938becb4",
+    "bytes": 845,
+    "source_log": "/tmp/stricter-production-mutants-k5rx48zy/erase-recorded-sites.log"
+  },
+  "production-replace-project-options": {
+    "sha256": "33f906a011415630c3f9f778c9e35a1dc5f2e78280bcb6a513fcc5f5378fbf43",
+    "bytes": 3052,
+    "source_log": "/tmp/stricter-production-mutants-k5rx48zy/replace-project-options.log"
+  },
+  "production-waive-optional-sites": {
+    "sha256": "157e72701a2f7c62abab8aaf4797bb4dcc66285a45f1525638a30712f85da697",
+    "bytes": 712,
+    "source_log": "/tmp/stricter-production-mutants-k5rx48zy/waive-optional-sites.log"
+  }
+}

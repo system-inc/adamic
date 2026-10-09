@@ -1,0 +1,99 @@
+{
+  "source": "88fe8de4 first fifteen error headers in entry-0.stderr",
+  "measurement": "scratch reference-loader overlay on this branch; current stage3/apply.sh tree at 050880ce59e30b356b686bd3144efe24f875ebc8",
+  "stops": [
+    {
+      "location": "src/compiler/builder.ts:1246:69",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1258:65",
+      "old_code": "TS2488",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1292:61",
+      "old_code": "TS2488",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1345:64",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1347:41",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1347:97",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1493:60",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1495:26",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1496:45",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:1562:64",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:2273:9",
+      "old_code": "TS2375",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:2310:9",
+      "old_code": "TS2375",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:2377:13",
+      "old_code": "TS2769",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:2379:45",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    },
+    {
+      "location": "src/compiler/builder.ts:395:118",
+      "old_code": "TS2345",
+      "loader": "earlier diagnostic absent",
+      "whole_body": "pending; no native tsc emission claimed"
+    }
+  ],
+  "first_stop": "adamic: <adapted>/src/compiler/corePublic.ts:14:5: stage 0 can't lower a record other than a readonly string index signature holding finite readonly records, nonnullable scalars or arrays of nonnullable scalars yet",
+  "production_without_overlay": "TS6305 at src/tsc/_namespaces/ts.ts:3:15; reference source loader absent from pinned base",
+  "acceptance": "pending: codex/project-references-source 88fe8de4; compiler/records-maplike b58629a2; acceptance dependency: compiler/views-rehearsal 2b6c032a"
+}
