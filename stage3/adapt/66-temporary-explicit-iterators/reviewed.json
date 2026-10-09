@@ -1,0 +1,67 @@
+[
+  {
+    "file": "core.ts",
+    "name": "mapIterator",
+    "body": "{\r\n    for (const x of iter) {\r\n        yield mapFn(x);\r\n    }\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "flatMapIterator",
+    "body": "{\r\n    for (const x of iter) {\r\n        const iter2 = mapfn(x);\r\n        if (!iter2) continue;\r\n        yield* iter2;\r\n    }\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "mapDefinedIterator",
+    "body": "{\r\n    for (const x of iter) {\r\n        const value = mapFn(x);\r\n        if (value !== undefined) {\r\n            yield value;\r\n        }\r\n    }\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "singleIterator",
+    "body": "{\r\n    yield value;\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "arrayReverseIterator",
+    "body": "{\r\n    for (let i = array.length - 1; i >= 0; i--) {\r\n        yield array[i]!;\r\n    }\r\n}"
+  },
+  {
+    "file": "core.ts",
+    "name": "getElementIterator",
+    "body": "{\r\n        for (const value of multiMap.values()) {\r\n            if (isArray(value)) {\r\n                yield* value;\r\n            }\r\n            else {\r\n                yield value;\r\n            }\r\n        }\r\n    }"
+  },
+  {
+    "file": "core.ts",
+    "name": "entries",
+    "body": "{\r\n            for (const value of getElementIterator()) {\r\n                yield [value, value];\r\n            }\r\n        }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "generateJsxAttributes",
+    "body": "{\r\n        if (!length(node.properties)) return;\r\n        for (const prop of node.properties) {\r\n            if (isJsxSpreadAttribute(prop) || isHyphenatedJsxName(getTextOfJsxAttributeName(prop.name))) continue;\r\n            yield { errorNode: prop.name, innerExpression: prop.initializer, nameType: getStringLiteralType(getTextOfJsxAttributeName(prop.name)) };\r\n        }\r\n    }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "generateJsxChildren",
+    "body": "{\r\n        if (!length(node.children)) return;\r\n        let memberOffset = 0;\r\n        for (let i = 0; i < node.children.length; i++) {\r\n            const child = node.children[i]!;\r\n            const nameType = getNumberLiteralType(i - memberOffset);\r\n            const elem = getElaborationElementForJsxChild(child, nameType, getInvalidTextDiagnostic);\r\n            if (elem) {\r\n                yield elem;\r\n            }\r\n            else {\r\n                memberOffset++;\r\n            }\r\n        }\r\n    }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "<anonymous>",
+    "body": "{\r\n                                yield elem;\r\n                            }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "generateLimitedTupleElements",
+    "body": "{\r\n        const len = length(node.elements);\r\n        if (!len) return;\r\n        for (let i = 0; i < len; i++) {\r\n            // Skip elements which do not exist in the target - a length error on the tuple overall is likely better than an error on a mismatched index signature\r\n            if (isTupleLikeType(target) && !getPropertyOfType(target, (\"\" + i) as __String)) continue;\r\n            const elem = node.elements[i]!;\r\n            if (isOmittedExpression(elem)) continue;\r\n            const nameType = getNumberLiteralType(i);\r\n            const checkNode = getEffectiveCheckNode(elem);\r\n            yield { errorNode: checkNode, innerExpression: checkNode, nameType };\r\n        }\r\n    }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "generateObjectLiteralElements",
+    "body": "{\r\n        if (!length(node.properties)) return;\r\n        for (const prop of node.properties) {\r\n            if (isSpreadAssignment(prop)) continue;\r\n            const type = getLiteralTypeFromProperty(getSymbolOfDeclaration(prop), TypeFlags.StringOrNumberLiteralOrUnique);\r\n            if (!type || (type.flags & TypeFlags.Never)) {\r\n                continue;\r\n            }\r\n            switch (prop.kind) {\r\n                case SyntaxKind.SetAccessor:\r\n                case SyntaxKind.GetAccessor:\r\n                case SyntaxKind.MethodDeclaration:\r\n                case SyntaxKind.ShorthandPropertyAssignment:\r\n                    yield { errorNode: prop.name, innerExpression: undefined, nameType: type };\r\n                    break;\r\n                case SyntaxKind.PropertyAssignment:\r\n                    yield { errorNode: prop.name, innerExpression: prop.initializer, nameType: type, errorMessage: isComputedNonLiteralName(prop.name) ? Diagnostics.Type_of_computed_property_s_value_is_0_which_is_not_assignable_to_type_1 : undefined };\r\n                    break;\r\n                default:\r\n                    Debug.assertNever(prop);\r\n            }\r\n        }\r\n    }"
+  },
+  {
+    "file": "checker.ts",
+    "name": "getUnmatchedProperties",
+    "body": "{\r\n        const properties = getPropertiesOfType(target);\r\n        for (const targetProp of properties) {\r\n            // TODO: remove this when we support static private identifier fields and find other solutions to get privateNamesAndStaticFields test to pass\r\n            if (isStaticPrivateIdentifierProperty(targetProp)) {\r\n                continue;\r\n            }\r\n            if (requireOptionalProperties || !(targetProp.flags & SymbolFlags.Optional || getCheckFlags(targetProp) & CheckFlags.Partial)) {\r\n                const sourceProp = getPropertyOfType(source, targetProp.escapedName);\r\n                if (!sourceProp) {\r\n                    yield targetProp;\r\n                }\r\n                else if (matchDiscriminantProperties) {\r\n                    const targetType = getTypeOfSymbol(targetProp);\r\n                    if (targetType.flags & TypeFlags.Unit) {\r\n                        const sourceType = getTypeOfSymbol(sourceProp);\r\n                        if (!(sourceType.flags & TypeFlags.Any || getRegularTypeOfLiteralType(sourceType) === getRegularTypeOfLiteralType(targetType))) {\r\n                            yield targetProp;\r\n                        }\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }"
+  }
+]

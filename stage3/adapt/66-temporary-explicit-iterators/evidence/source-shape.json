@@ -1,0 +1,50 @@
+[
+  {
+    "file": "core.ts",
+    "explicitAnyBefore": 19,
+    "explicitAnyAfter": 19,
+    "signaturesUnchanged": [
+      "mapIterator",
+      "flatMapIterator",
+      "mapDefinedIterator",
+      "singleIterator",
+      "arrayReverseIterator",
+      "getElementIterator",
+      "entries"
+    ],
+    "sha256": "4098dfbd47a3c26539685c5e69f8c5f51983a3129983f00cd3a5e1c1478afa8c"
+  },
+  {
+    "sameMapUnchanged": true,
+    "before": {
+      "line": 356,
+      "column": 37
+    },
+    "after": {
+      "line": 368,
+      "column": 37
+    }
+  },
+  {
+    "file": "core.ts",
+    "declaredResultCallbacksAndMethods": 11
+  },
+  {
+    "file": "checker.ts",
+    "explicitAnyBefore": 4,
+    "explicitAnyAfter": 4,
+    "signaturesUnchanged": [
+      "generateJsxAttributes",
+      "generateJsxChildren",
+      "<anonymous>",
+      "generateLimitedTupleElements",
+      "generateObjectLiteralElements",
+      "getUnmatchedProperties"
+    ],
+    "sha256": "9cf413b46474ef4440545d82974dd6fa5773e0e6caf9a18436fd1f8f1078abe5"
+  },
+  {
+    "file": "checker.ts",
+    "declaredResultCallbacksAndMethods": 9
+  }
+]

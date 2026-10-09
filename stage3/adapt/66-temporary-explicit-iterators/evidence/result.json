@@ -1,0 +1,83 @@
+{
+  "base": "fa5e90939a9e4c40aaf15cecd5d5b554c10dd2c9",
+  "compilerScratch": "4cf6791a4a4ba515ebfa99fe3c12dd01a460948c",
+  "generatorsBefore": 13,
+  "generatorsAfter": 0,
+  "delegationsBefore": 2,
+  "delegationsAfter": 0,
+  "patch": {
+    "files": 2,
+    "added": 426,
+    "removed": 78,
+    "changed": 504
+  },
+  "native": {
+    "0": {
+      "exit": 1,
+      "output": "adamic: /tmp/adapt66-typed/src/compiler/core.ts:368:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    },
+    "1": {
+      "exit": 1,
+      "output": "adamic: /tmp/adapt66-typed/src/compiler/core.ts:368:37: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\n"
+    }
+  },
+  "lane": {
+    "status": "pass",
+    "errors": [],
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "api": {
+      "reference_declarations": 28,
+      "composed_declarations": 222,
+      "sanctioned_declarations": 222,
+      "added_lines": 194,
+      "removed_lines": 193
+    },
+    "platform": {
+      "os": "linux",
+      "arch": "x64",
+      "node": "v24.19.0"
+    },
+    "execution": {
+      "commit": "11d37b01905d9efeee68b1cd3d99c9b31acbd2da",
+      "apply_exit": 0,
+      "oracle_exit": 1,
+      "platform": {
+        "os": "linux",
+        "arch": "x64",
+        "node": "v24.19.0"
+      },
+      "wall_seconds": 492.522
+    },
+    "results": "/tmp/adapt66-typed-lane",
+    "verdict": "PASS stage3 landing lane"
+  },
+  "nativeStop": {
+    "file": "src/compiler/core.ts",
+    "line": 368,
+    "column": 37,
+    "code": "adamic/no-unchecked-cast",
+    "function": "sameMap",
+    "outsideAdaptation66": true,
+    "sameMapUnchanged": true,
+    "originalLine": 356,
+    "likelyOwner": "stage3 truthful-cast / sameMap follow-up with compiler type-soundness review",
+    "ownerIsInference": true
+  },
+  "resultAnnotationsDeclared": true,
+  "followupMutant": {
+    "name": "remove-result-annotation",
+    "exit": 1,
+    "caught": true,
+    "catcher": "result callback must declare a type"
+  }
+}

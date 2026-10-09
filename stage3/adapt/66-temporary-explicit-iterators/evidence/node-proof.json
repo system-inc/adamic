@@ -1,0 +1,739 @@
+{
+  "status": "pass",
+  "cases": [
+    {
+      "name": "mapIterator",
+      "status": "pass",
+      "trace": [
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "next",
+        "map:2",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "next",
+        "map:2",
+        "next",
+        "map:3",
+        "next",
+        "iterator",
+        "next-get",
+        "next",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "return-get",
+        "return:0"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": false,
+          "value": 4
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": false,
+          "value": 4
+        },
+        {
+          "done": false,
+          "value": 6
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        "mapped",
+        {
+          "done": true
+        },
+        {
+          "tag": "throw"
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "mapDefinedIterator",
+      "status": "pass",
+      "trace": [
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "next",
+        "map:2",
+        "next",
+        "map:3",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "next",
+        "map:2",
+        "next",
+        "map:3",
+        "next",
+        "iterator",
+        "next-get",
+        "next",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "return-get",
+        "return:0"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": false,
+          "value": 6
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": false,
+          "value": 6
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        "mapped",
+        {
+          "done": true
+        },
+        {
+          "tag": "throw"
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "flatMapIterator",
+      "status": "pass",
+      "trace": [
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "next",
+        "map:2",
+        "next",
+        "map:3",
+        "next",
+        "iterator",
+        "next-get",
+        "next",
+        "return-get",
+        "return:0",
+        "iterator",
+        "next-get",
+        "next",
+        "map:1",
+        "return-get",
+        "return:0"
+      ],
+      "value": [
+        {
+          "value": 1,
+          "done": false
+        },
+        {
+          "value": 11,
+          "done": false
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "value": 1,
+          "done": false
+        },
+        {
+          "value": 11,
+          "done": false
+        },
+        {
+          "value": 3,
+          "done": false
+        },
+        {
+          "value": 13,
+          "done": false
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        "mapped",
+        {
+          "done": true
+        },
+        {
+          "name": "TypeError",
+          "message": "The iterator does not provide a 'throw' method."
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "delegation",
+      "status": "pass",
+      "trace": [
+        "iterator",
+        "next-get",
+        "next",
+        "inner:1",
+        "inner-next:undefined",
+        "inner-return:undefined",
+        "inner-next:7",
+        "next",
+        "inner:2",
+        "inner-next:undefined",
+        "inner-throw:recover",
+        "next"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": 1
+        },
+        {
+          "done": false,
+          "value": 90
+        },
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "delegated-result",
+      "status": "pass",
+      "trace": [
+        "iterator",
+        "next-get",
+        "next",
+        "delegated-done",
+        "delegated-value",
+        "delegated-done",
+        "delegated-value",
+        "next"
+      ],
+      "value": {
+        "atYield": [
+          "iterator",
+          "next-get",
+          "next",
+          "delegated-done"
+        ],
+        "value": 41,
+        "final": {
+          "done": true
+        }
+      }
+    },
+    {
+      "name": "value-getter-throw",
+      "status": "pass",
+      "trace": [
+        "value-get",
+        "value-get",
+        "value-get"
+      ],
+      "value": [
+        {
+          "tag": "getter"
+        },
+        {
+          "done": true
+        },
+        {
+          "tag": "getter"
+        },
+        {
+          "done": true
+        },
+        {
+          "tag": "getter"
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "singleIterator",
+      "status": "pass",
+      "trace": [],
+      "value": [
+        {
+          "done": false,
+          "value": 17
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "arrayReverseIterator",
+      "status": "pass",
+      "trace": [
+        "read:push",
+        "read:length",
+        "read:length",
+        "read:3",
+        "read:2",
+        "read:1",
+        "read:0"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": 4
+        },
+        {
+          "done": false,
+          "value": 9
+        },
+        {
+          "done": false,
+          "value": 2
+        },
+        {
+          "done": false,
+          "value": 1
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "set",
+      "status": "pass",
+      "trace": [],
+      "value": {
+        "values": [
+          {
+            "value": 1,
+            "done": false
+          },
+          {
+            "value": 3,
+            "done": false
+          },
+          {
+            "value": 5,
+            "done": false
+          },
+          {
+            "value": 7,
+            "done": false
+          },
+          {
+            "done": false,
+            "value": 2
+          },
+          {
+            "done": true
+          },
+          {
+            "done": true
+          }
+        ],
+        "entries": [
+          [
+            1,
+            1
+          ],
+          [
+            3,
+            3
+          ],
+          [
+            5,
+            5
+          ],
+          [
+            7,
+            7
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "keys": [
+          1,
+          3,
+          5,
+          7,
+          2
+        ],
+        "all": [
+          1,
+          3,
+          5,
+          7,
+          2
+        ]
+      }
+    },
+    {
+      "name": "generateJsxAttributes",
+      "status": "pass",
+      "trace": [
+        "length",
+        "spread?",
+        "spread?",
+        "text",
+        "hyphen?",
+        "spread?",
+        "text",
+        "hyphen?",
+        "text",
+        "stringType",
+        "spread?",
+        "text",
+        "hyphen?",
+        "text",
+        "stringType"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "errorNode": "ok",
+            "innerExpression": {
+              "text": "ok"
+            },
+            "nameType": {
+              "text": "ok"
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": "last",
+            "innerExpression": {
+              "text": "last"
+            },
+            "nameType": {
+              "text": "last"
+            }
+          }
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "generateJsxChildren",
+      "status": "pass",
+      "trace": [
+        "length",
+        "numberType",
+        "child",
+        "numberType",
+        "child",
+        "numberType",
+        "child"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "errorNode": {
+              "text": "first"
+            },
+            "innerExpression": {
+              "text": "first"
+            },
+            "nameType": {
+              "number": 0
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": {
+              "text": "second"
+            },
+            "innerExpression": {
+              "text": "second"
+            },
+            "nameType": {
+              "number": 1
+            }
+          }
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "generateLimitedTupleElements",
+      "status": "pass",
+      "trace": [
+        "length",
+        "tuple?",
+        "property:0",
+        "omitted?",
+        "tuple?",
+        "property:1",
+        "omitted?",
+        "numberType",
+        "checkNode",
+        "tuple?",
+        "property:2"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "errorNode": {
+              "text": "first"
+            },
+            "innerExpression": {
+              "text": "first"
+            },
+            "nameType": {
+              "number": 1
+            }
+          }
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "generateObjectLiteralElements",
+      "status": "pass",
+      "trace": [
+        "length",
+        "spread?",
+        "spread?",
+        "symbol",
+        "literalType",
+        "spread?",
+        "symbol",
+        "literalType",
+        "spread?",
+        "symbol",
+        "literalType",
+        "spread?",
+        "symbol",
+        "literalType",
+        "spread?",
+        "symbol",
+        "literalType",
+        "spread?",
+        "symbol",
+        "literalType",
+        "computed?"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "errorNode": "name10",
+            "nameType": {
+              "flags": 2
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": "name11",
+            "nameType": {
+              "flags": 2
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": "name12",
+            "nameType": {
+              "flags": 2
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": "name13",
+            "nameType": {
+              "flags": 2
+            }
+          }
+        },
+        {
+          "done": false,
+          "value": {
+            "errorNode": "name14",
+            "innerExpression": {
+              "text": "name14"
+            },
+            "nameType": {
+              "flags": 2
+            }
+          }
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "getUnmatchedProperties",
+      "status": "pass",
+      "trace": [
+        "properties",
+        "private?",
+        "private?",
+        "private?",
+        "checkFlags",
+        "property:missing",
+        "private?",
+        "checkFlags",
+        "property:matched",
+        "symbolType",
+        "symbolType"
+      ],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "escapedName": "missing",
+            "flags": 0
+          }
+        },
+        {
+          "done": true
+        },
+        {
+          "done": true
+        }
+      ]
+    },
+    {
+      "name": "anonymous",
+      "status": "pass",
+      "trace": [],
+      "value": [
+        {
+          "done": false,
+          "value": {
+            "errorNode": "one"
+          }
+        },
+        {
+          "done": true
+        }
+      ]
+    }
+  ]
+}
