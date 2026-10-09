@@ -1,0 +1,21 @@
+FIRST FAILURE (tests, at 1308.3 s):
+github.com/system-inc/adamic/internal/oracle TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+    counts_test.go:221: the counts changed and counts.md wasn't updated with them (go test ./internal/oracle -run TestCountsAreRecorded -args -update-counts):
+        recorded: | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 10 | 17 | 3 | 0 |
+        measured: | internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a | 5 | 5 | 8 | 17 | 3 | 0 |
+        recorded: | internal/lower/testdata/scalar_union_views/p54_n.a | 5 | 5 | 6 | 14 | 4 | 0 |
+        measured: | internal/lower/testdata/scalar_union_views/p54_n.a | 5 | 5 | 5 | 14 | 4 | 0 |
+        recorded: | internal/lower/testdata/scalar_union_views/p54_b.a | 3 | 3 | 6 | 12 | 2 | 0 |
+        measured: | internal/lower/testdata/scalar_union_views/p54_b.a | 3 | 3 | 5 | 12 | 2 | 0 |
+        recorded: | internal/lower/testdata/scalar_union_views/p54_s.a | 4 | 4 | 9 | 14 | 3 | 0 |
+        measured: | internal/lower/testdata/scalar_union_views/p54_s.a | 4 | 4 | 8 | 14 | 3 | 0 |
+        recorded: | stage3/interface-downcasts/v2/snapshot-maybe-boolean.a | 6 | 6 | 9 | 24 | 2 | 0 |
+        measured: | stage3/interface-downcasts/v2/snapshot-maybe-boolean.a | 9 | 9 | 9 | 27 | 3 | 0 |
+        recorded: | stage3/interface-downcasts/v2/snapshot-maybe-number.a | 10 | 10 | 9 | 21 | 4 | 0 |
+        measured: | stage3/interface-downcasts/v2/snapshot-maybe-number.a | 13 | 13 | 9 | 24 | 5 | 0 |
+--- FAIL: TestCountsAreRecorded (105.71s)
+
+(box load 8.6 on 64 cores at first failure)
