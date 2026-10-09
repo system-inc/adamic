@@ -1,0 +1,8 @@
+=== RUN   TestAgreementRejectsWrongLoweredOutput
+=== PAUSE TestAgreementRejectsWrongLoweredOutput
+=== CONT  TestAgreementRejectsWrongLoweredOutput
+    agree_test.go:172: planted wrong output was not caught by stdout comparison: ""
+--- FAIL: TestAgreementRejectsWrongLoweredOutput (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.140s
+FAIL

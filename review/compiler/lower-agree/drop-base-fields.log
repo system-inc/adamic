@@ -1,0 +1,8 @@
+=== RUN   TestAgreementInheritedFieldWitness
+=== PAUSE TestAgreementInheritedFieldWitness
+=== CONT  TestAgreementInheritedFieldWitness
+    agree_test.go:201: JavaScript backend stdout = "7:11:own,#base@1\n", source Node = "7:11:own\n"
+--- FAIL: TestAgreementInheritedFieldWitness (0.16s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.164s
+FAIL

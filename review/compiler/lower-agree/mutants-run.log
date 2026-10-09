@@ -1,0 +1,10 @@
+skip-stdout caught by TestAgreementRejectsWrongLoweredOutput
+accept-empty caught by TestAgreementRejectsEmptyAnswer
+enum-plus-one caught by TestAgreementEnumConstantWitness
+review/compiler/lower-agree/drop-base-fields.diff:8: trailing whitespace.
+		
+warning: 1 line adds whitespace errors.
+drop-base-fields caught by TestAgreementInheritedFieldWitness
+drop-parameter-store caught by TestAgreementParameterPropertyWitness
+drop-static-initializer caught by TestAgreementStaticInitializerWitness
+swap-parseInt-radix caught by TestAgreementParseIntRadixWitness

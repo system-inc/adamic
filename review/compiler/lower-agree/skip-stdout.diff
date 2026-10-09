@@ -1,6 +1,6 @@
 --- a/internal/lower/agree_test.go
 +++ b/internal/lower/agree_test.go
-@@ -115,7 +115,7 @@
+@@ -119,7 +119,7 @@
  
  func compareAgreement(t agreementTesting, got, want nodeObservation) {
  	t.Helper()

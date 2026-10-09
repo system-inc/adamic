@@ -18,35 +18,41 @@ Commands and observations:
 
 - export GOPROXY='https://proxy.golang.org|direct'; timeout 600 bash cloud/setup.sh, logged in setup.log. Succeeded. Ready timings: Node 0.025s, Go 0.030s, clang 0.218s, Markdown dependencies 0.914s, submodules 15.890s, go build 241.130s, build cache 241.228s, total 241.254s. nproc=5, cgroup CPU quota=4. Sourced /workspace/adamic-tools/env.sh. The initial formatting attempt before sourcing reported gofmt: command not found; sourcing resolved it.
 - timeout 120 go test ./internal/lower -run '^TestAgreement' -count=1 -v -timeout 90s > review/compiler/lower-agree/helper.log 2>&1
-- timeout 120 go test ./internal/lower -run '^(TestClassStaticSideEffectMatchesNode|TestUndecidedCycleReadsUseReadyChecks|TestPredicateOverloadRuntime|TestIndirectPredicateOverloadIsPending|TestClassStaticInitializerCallIsEmitted)$' -count=1 -v -timeout 90s > review/compiler/lower-agree/migrations.log 2>&1
+- timeout 120 go test ./internal/lower -run '^(TestClassStaticSideEffectMatchesNode|TestUndecidedCycleReadsUseReadyChecks|TestPredicateOverloadRuntime|TestIndirectPredicateOverloadIsPending|TestClassStaticInitializerCallIsEmitted|TestFSOpenStringFlagsLower|TestFSRemoveDefaultRetryDelayLowers|TestFSExistsOperation|TestFSStatThrowsByDefault)$' -count=1 -v -timeout 90s > review/compiler/lower-agree/migrations.log 2>&1
 - timeout 60 go vet ./internal/lower > review/compiler/lower-agree/vet.log 2>&1: exit 0, no findings.
 - timeout 600 python3 review/compiler/lower-agree/run-mutants.py > review/compiler/lower-agree/mutants-run.log 2>&1: seven expected failing runs, each go test has -timeout 90s and an outer 120-second subprocess timeout; exact commands and wall timings are in mutants.json. All production inputs restored byte for byte by finally blocks.
 - Integration lane command after committing: git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -, bounded externally and logged in lane-checks.log. This checkout fetches only main by default; explicit remote refspecs populated origin/devtools/fast-gate and origin/cloud/merge-tree first.
-- origin/main advanced only with test262 test changes. Fast-forwarded this branch to c0a7667b before committing, then re-ran both focused test selections.
+- origin/main advanced only with test262 test changes. Fast-forwarded this branch to c0a7667b before committing, then merged landed test-only main 09769cb5 and re-ran both focused selections and every mutant.
 
 New leaf timings:
 
 | Test | Seconds |
 | --- | --- |
-| TestAgreementInheritedFieldWitness | 0.25 |
+| TestAgreementRejectsWrongLoweredOutput | 0.27 |
+| TestAgreementInheritedFieldWitness | 0.27 |
+| TestAgreementAcceptsExpectedPanic | 0.28 |
+| TestAgreementEnumConstantWitness | 0.28 |
 | TestAgreementStaticInitializerWitness | 0.29 |
-| TestAgreementParameterPropertyWitness | 0.30 |
-| TestAgreementAcceptsExpectedPanic | 0.32 |
-| TestAgreementRejectsWrongLoweredOutput | 0.33 |
-| TestAgreementRejectsEmptyAnswer | 0.15 |
+| TestAgreementRejectsEmptyAnswer | 0.14 |
 | TestAgreementAcceptsComputedAnswer | 0.18 |
-| TestAgreementParseIntRadixWitness | 0.17 |
-| TestAgreementEnumConstantWitness | 0.19 |
+| TestAgreementParseIntRadixWitness | 0.18 |
+| TestAgreementParameterPropertyWitness | 0.19 |
 
-Helper file result: ok  	github.com/system-inc/adamic/internal/lower	0.501s
+Helper file result: ok  	github.com/system-inc/adamic/internal/lower	0.484s
 
-Migrated leaves:
+Migrated and collision-renamed leaves:
 
-- TestUndecidedCycleReadsUseReadyChecks: 1.90s
-- TestIndirectPredicateOverloadIsPending: 0.05s
-- TestClassStaticInitializerCallIsEmitted: 0.06s
-- TestClassStaticSideEffectMatchesNode: 0.33s
-- TestPredicateOverloadRuntime: 6.39s
+- TestUndecidedCycleReadsUseReadyChecks: 2.30s
+- TestClassStaticInitializerCallIsEmitted: 0.08s
+- TestFSOpenStringFlagsLower: 0.83s
+- TestFSRemoveDefaultRetryDelayLowers: 0.84s
+- TestFSStatThrowsByDefault: 0.77s
+- TestFSExistsOperation: 0.86s
+- TestIndirectPredicateOverloadIsPending: 0.03s
+- TestClassStaticSideEffectMatchesNode: 0.32s
+- TestPredicateOverloadRuntime: 6.53s
+
+Focused migration selection result: ok  	github.com/system-inc/adamic/internal/lower	8.843s
 
 Mutant evidence:
 
@@ -63,3 +69,5 @@ Mutant evidence:
 Evidence provenance: enum_flags M01 changes enum constants by +1; class_inheritance M02 drops inherited fields; parameter_properties M03 returns before stores; library_language M20 passes the input string as parseInt's radix. These diffs were read from origin/test-audit branches without merging their code. Static initializer omission follows review/compiler/class-static-guard/M15.diff, adapted to current source. The two helper diffs are generated against agree_test.go. All are non-compilable .diff evidence.
 
 Observation versus inference: an initial public-field inheritance row survived the exact base-fields mutant; initial-public-base-mutant.log preserves that result. JavaScript uses property names for public reads, so the final witness observes inherited #private field enumeration instead. The final mutant printed 7:11:own,#base@1 where Node printed 7:11:own. All five final survivor witnesses fail stdout comparison rather than clang or a structural snapshot. No claim is made about the remaining acceptance rows until later units migrate them.
+
+Integration adjustment: landed main introduced fs_method_guards_test.go with another lowersAndAgreesWithNode taking four arguments. Merging it produced a redeclaration and argument-count build failure. The requested two-argument API cannot coexist with that declaration. The minimal conservative resolution renames only that existing filesystem helper and its four calls to fsLoweringAgreesWithNode; its implementation and behavior stay intact. This extra test-only file edit resolves a real integration collision rather than expanding the acceptance-row migration. All four renamed leaves were run. Their first run lacked stage3/api/node_modules/@types/node 25.3.3; timeout 120 npm ci in stage3/api installed the pinned declarations (three packages in 989ms), after which the focused selection passed. initial-missing-node-types.log and initial-lane-collision.log retain the failures. No production source changed in this merge or resolution.

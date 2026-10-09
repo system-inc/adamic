@@ -1,0 +1,8 @@
+=== RUN   TestAgreementParseIntRadixWitness
+=== PAUSE TestAgreementParseIntRadixWitness
+=== CONT  TestAgreementParseIntRadixWitness
+    agree_test.go:216: JavaScript backend stdout = "10,10,10\n", source Node = "10,NaN,2\n"
+--- FAIL: TestAgreementParseIntRadixWitness (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.149s
+FAIL

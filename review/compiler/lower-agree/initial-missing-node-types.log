@@ -1,0 +1,100 @@
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== RUN   TestFSOpenStringFlagsLower
+=== PAUSE TestFSOpenStringFlagsLower
+=== RUN   TestFSRemoveDefaultRetryDelayLowers
+=== PAUSE TestFSRemoveDefaultRetryDelayLowers
+=== RUN   TestFSExistsOperation
+=== PAUSE TestFSExistsOperation
+=== RUN   TestFSStatThrowsByDefault
+=== PAUSE TestFSStatThrowsByDefault
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (2.03s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.26s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.27s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.31s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.29s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.31s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.29s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.28s)
+=== RUN   TestPredicateOverloadRuntime
+=== PAUSE TestPredicateOverloadRuntime
+=== RUN   TestIndirectPredicateOverloadIsPending
+=== PAUSE TestIndirectPredicateOverloadIsPending
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestFSExistsOperation
+=== CONT  TestFSStatThrowsByDefault
+=== CONT  TestIndirectPredicateOverloadIsPending
+=== CONT  TestPredicateOverloadRuntime
+=== RUN   TestPredicateOverloadRuntime/parser_every_result
+--- PASS: TestIndirectPredicateOverloadIsPending (0.06s)
+=== CONT  TestFSOpenStringFlagsLower
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.07s)
+=== CONT  TestFSRemoveDefaultRetryDelayLowers
+=== NAME  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:125: Node main.a: exit 70, stdout "missing\n"
+=== NAME  TestFSExistsOperation
+    fs_method_guards_test.go:115: Node main.a: exit 0, stdout "missing\npresent\nmissing\n"
+    fs_method_guards_test.go:115: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+=== NAME  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:125: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSExistsOperation (0.10s)
+--- FAIL: TestFSStatThrowsByDefault (0.10s)
+=== CONT  TestClassStaticSideEffectMatchesNode
+=== NAME  TestFSRemoveDefaultRetryDelayLowers
+    fs_method_guards_test.go:108: Node main.a: exit 0, stdout "present\nmissing\n"
+=== NAME  TestFSOpenStringFlagsLower
+    fs_method_guards_test.go:101: Node main.a: exit 0, stdout "opened bytes\n"
+=== NAME  TestFSRemoveDefaultRetryDelayLowers
+    fs_method_guards_test.go:108: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSRemoveDefaultRetryDelayLowers (0.09s)
+=== NAME  TestFSOpenStringFlagsLower
+    fs_method_guards_test.go:101: Load: load: node:* imports require @types/node 25.3.3 installed in stage3/api/node_modules/@types/node
+--- FAIL: TestFSOpenStringFlagsLower (0.11s)
+--- PASS: TestClassStaticSideEffectMatchesNode (0.33s)
+=== RUN   TestPredicateOverloadRuntime/parser_some_result
+=== RUN   TestPredicateOverloadRuntime/overload_some
+=== RUN   TestPredicateOverloadRuntime/overload_some_empty
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_valid
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_read
+=== RUN   TestPredicateOverloadRuntime/overload_some_objects
+=== RUN   TestPredicateOverloadRuntime/overload_some_true_only
+=== RUN   TestPredicateOverloadRuntime/overload_callback
+=== RUN   TestPredicateOverloadRuntime/overload_erased
+=== RUN   TestPredicateOverloadRuntime/overload_checked
+=== RUN   TestPredicateOverloadRuntime/overload_false
+=== RUN   TestPredicateOverloadRuntime/overload_once
+=== RUN   TestPredicateOverloadRuntime/overload_every
+=== RUN   TestPredicateOverloadRuntime/overload_array_alias
+=== RUN   TestPredicateOverloadRuntime/overload_assertion
+=== RUN   TestPredicateOverloadRuntime/overload_nominal
+--- PASS: TestPredicateOverloadRuntime (6.57s)
+    --- PASS: TestPredicateOverloadRuntime/parser_every_result (0.43s)
+    --- PASS: TestPredicateOverloadRuntime/parser_some_result (0.34s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_empty (0.34s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_valid (0.36s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_read (0.37s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_objects (0.40s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_true_only (0.42s)
+    --- PASS: TestPredicateOverloadRuntime/overload_callback (0.33s)
+    --- PASS: TestPredicateOverloadRuntime/overload_erased (0.34s)
+    --- PASS: TestPredicateOverloadRuntime/overload_checked (0.38s)
+    --- PASS: TestPredicateOverloadRuntime/overload_false (0.35s)
+    --- PASS: TestPredicateOverloadRuntime/overload_once (0.37s)
+    --- PASS: TestPredicateOverloadRuntime/overload_every (0.41s)
+    --- PASS: TestPredicateOverloadRuntime/overload_array_alias (0.55s)
+    --- PASS: TestPredicateOverloadRuntime/overload_assertion (0.41s)
+    --- PASS: TestPredicateOverloadRuntime/overload_nominal (0.42s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	8.615s
+FAIL

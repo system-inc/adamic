@@ -3,7 +3,7 @@
     "mutant": "skip-stdout",
     "test": "TestAgreementRejectsWrongLoweredOutput",
     "exit": 1,
-    "wall_seconds": 7.975,
+    "wall_seconds": 8.028,
     "command": [
       "go",
       "test",
@@ -20,7 +20,7 @@
     "mutant": "accept-empty",
     "test": "TestAgreementRejectsEmptyAnswer",
     "exit": 1,
-    "wall_seconds": 7.79,
+    "wall_seconds": 8.611,
     "command": [
       "go",
       "test",
@@ -37,7 +37,7 @@
     "mutant": "enum-plus-one",
     "test": "TestAgreementEnumConstantWitness",
     "exit": 1,
-    "wall_seconds": 7.001,
+    "wall_seconds": 7.832,
     "command": [
       "go",
       "test",
@@ -54,7 +54,7 @@
     "mutant": "drop-base-fields",
     "test": "TestAgreementInheritedFieldWitness",
     "exit": 1,
-    "wall_seconds": 7.685,
+    "wall_seconds": 7.941,
     "command": [
       "go",
       "test",
@@ -71,7 +71,7 @@
     "mutant": "drop-parameter-store",
     "test": "TestAgreementParameterPropertyWitness",
     "exit": 1,
-    "wall_seconds": 7.639,
+    "wall_seconds": 8.364,
     "command": [
       "go",
       "test",
@@ -88,7 +88,7 @@
     "mutant": "drop-static-initializer",
     "test": "TestAgreementStaticInitializerWitness",
     "exit": 1,
-    "wall_seconds": 7.308,
+    "wall_seconds": 7.624,
     "command": [
       "go",
       "test",
@@ -105,7 +105,7 @@
     "mutant": "swap-parseInt-radix",
     "test": "TestAgreementParseIntRadixWitness",
     "exit": 1,
-    "wall_seconds": 7.631,
+    "wall_seconds": 8.895,
     "command": [
       "go",
       "test",

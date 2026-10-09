@@ -1,0 +1,8 @@
+=== RUN   TestAgreementEnumConstantWitness
+=== PAUSE TestAgreementEnumConstantWitness
+=== CONT  TestAgreementEnumConstantWitness
+    agree_test.go:196: JavaScript backend stdout = "8\n", source Node = "7\n"
+--- FAIL: TestAgreementEnumConstantWitness (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.139s
+FAIL

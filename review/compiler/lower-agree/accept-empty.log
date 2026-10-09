@@ -1,0 +1,8 @@
+=== RUN   TestAgreementRejectsEmptyAnswer
+=== PAUSE TestAgreementRejectsEmptyAnswer
+=== CONT  TestAgreementRejectsEmptyAnswer
+    agree_test.go:180: silent row was not refused by empty-answer probe: ""
+--- FAIL: TestAgreementRejectsEmptyAnswer (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.158s
+FAIL

@@ -1,0 +1,8 @@
+=== RUN   TestAgreementParameterPropertyWitness
+=== PAUSE TestAgreementParameterPropertyWitness
+=== CONT  TestAgreementParameterPropertyWitness
+    agree_test.go:206: JavaScript backend stdout = "0\n", source Node = "7\n"
+--- FAIL: TestAgreementParameterPropertyWitness (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.152s
+FAIL

@@ -1,0 +1,11 @@
+skip-stdout caught by TestAgreementRejectsWrongLoweredOutput
+accept-empty caught by TestAgreementRejectsEmptyAnswer
+enum-plus-one caught by TestAgreementEnumConstantWitness
+review/compiler/lower-agree/drop-base-fields.diff:8: trailing whitespace.
+		
+warning: 1 line adds whitespace errors.
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/lower-agree/run-mutants.py", line 43, in <module>
+    assert ran.returncode == 1 and ('--- FAIL: '+test) in output, (name, output)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('drop-base-fields', '=== RUN   TestAgreementInheritedFieldWitness\n=== PAUSE TestAgreementInheritedFieldWitness\n=== CONT  TestAgreementInheritedFieldWitness\n--- PASS: TestAgreementInheritedFieldWitness (0.13s)\nPASS\nok  \tgithub.com/system-inc/adamic/internal/lower\t0.140s\n')

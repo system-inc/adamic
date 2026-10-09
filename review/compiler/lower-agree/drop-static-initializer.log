@@ -1,0 +1,8 @@
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== CONT  TestAgreementStaticInitializerWitness
+    agree_test.go:211: JavaScript backend stdout = "done\n", source Node = "static side effect\ndone\n"
+--- FAIL: TestAgreementStaticInitializerWitness (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.143s
+FAIL
