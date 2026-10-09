@@ -387,7 +387,7 @@ func rulesAgreeCaptureUpstream(t *testing.T, sourceRoot, directory string) ([]st
 			destination := filepath.Join(capture, name)
 			environment := []string{"COHERE_DOCS_CAPTURE=" + destination}
 			started := time.Now()
-			_, failures[index] = run(root, environment, "timeout", "-k", "1s", "75s", "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=75s")
+			_, failures[index] = run(root, environment, "go", "test", "-overlay="+overlayPath, "./internal/lint/rules/"+name, "-run", "^("+strings.Join(packages[name], "|")+")", "-count=1", "-timeout=75s")
 			t.Logf("capture package %s: %.3fs cooked=%t", name, time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
 			if failures[index] == nil && time.Since(started) >= 60*time.Second {
 				failures[index] = fmt.Errorf("capture package %s cooked: over 60s; split smaller", name)
