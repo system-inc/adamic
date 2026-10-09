@@ -1,0 +1,13 @@
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index 8ca15d7b..e504d237 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -283,7 +283,7 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+ 			if len(values) == 0 {
+ 				return nil
+ 			}
+-			allowed = append(allowed, values...)
++			allowed = append(allowed, values[:len(values)-1]...)
+ 		}
+ 		return allowed
+ 	}

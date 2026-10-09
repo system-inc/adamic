@@ -1,0 +1,13 @@
+diff --git a/internal/lower/cast.go b/internal/lower/cast.go
+index f1e1ea79..aef3a369 100644
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -30,7 +30,7 @@ func (l *lowering) cast(node *ast.Node) (ir.Expression, error) {
+ 	if proof.structuralView {
+ 		return l.structuralViewCast(node, value, source, target)
+ 	}
+-	if proof.interfaceView {
++	if !proof.interfaceView {
+ 		return l.interfaceCast(node, value, l.concrete(l.checker.GetTypeAtLocation(as.Expression)), l.concrete(l.checker.GetTypeAtLocation(node)))
+ 	}
+ 	if len(proof.allowed) == 0 && len(proof.classes) == 0 {

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/cast.go b/internal/lower/cast.go
+index f1e1ea79..0292dad9 100644
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -89,7 +89,7 @@ func (l *lowering) literalConstant(literal *checker.Type) (ir.Expression, ir.Typ
+ 		}
+ 		return ir.NumberConstant{Value: value.Float()}, ir.Number, true
+ 	case flags&checker.TypeFlagsBooleanLiteral != 0:
+-		return ir.BooleanConstant{Value: l.checker.TypeToString(literal) == "true"}, ir.Boolean, true
++		return ir.BooleanConstant{Value: l.checker.TypeToString(literal) != "true"}, ir.Boolean, true
+ 	}
+ 	return nil, 0, false
+ }

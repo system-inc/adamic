@@ -1,0 +1,66 @@
+[
+  {
+    "mutant": "D1",
+    "target": "TestInterfaceCastOracle",
+    "file": "internal/lower/interface_cast.go",
+    "old": "for _, member := range declared.Types() {",
+    "new": "for _, member := range declared.Types()[:len(declared.Types())-1] {",
+    "change": "off by one: omit last member of finite checked-view union"
+  },
+  {
+    "mutant": "D2",
+    "target": "TestInterfaceCastScalarTags",
+    "file": "internal/lower/cast.go",
+    "old": "l.checker.TypeToString(literal) == \"true\"",
+    "new": "l.checker.TypeToString(literal) != \"true\"",
+    "change": "flip boolean literal decoding"
+  },
+  {
+    "mutant": "D3",
+    "target": "TestInterfaceCastImportedConstruction",
+    "file": "internal/lower/cast_proof.go",
+    "old": "if err == nil {",
+    "new": "if err != nil {",
+    "change": "flip successful upcast proof condition"
+  },
+  {
+    "mutant": "D4",
+    "target": "TestInterfaceCastImportedConstruction",
+    "file": "internal/lower/cast_proof.go",
+    "old": "l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target)",
+    "new": "l.checker.IsTypeAssignableTo(target, source) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target)",
+    "change": "swap assignability arguments for upcast proof"
+  },
+  {
+    "mutant": "D5",
+    "target": "TestInterfaceCastImportedConstruction",
+    "file": "internal/lower/cast.go",
+    "old": "if proof.interfaceView {",
+    "new": "if !proof.interfaceView {",
+    "change": "flip interface-view path selection"
+  },
+  {
+    "mutant": "D6",
+    "target": "TestInterfaceCastOracle",
+    "file": "internal/native/view_fields.go",
+    "old": "if len(property.ViewAllowed) != 0 {",
+    "new": "if len(property.ViewAllowed) == 0 {",
+    "change": "flip finite literal field-check condition"
+  },
+  {
+    "mutant": "D7",
+    "target": "TestInterfaceCastOracle",
+    "file": "internal/lower/interface_cast.go",
+    "old": "allowed = append(allowed, values...)",
+    "new": "allowed = append(allowed, values[:len(values)-1]...)",
+    "change": "off by one finite literal list concatenation"
+  },
+  {
+    "mutant": "D8",
+    "target": "TestInterfaceCastOracle",
+    "file": "internal/lower/interface_cast.go",
+    "old": "for _, member := range declared.Types() {",
+    "new": "for _, member := range declared.Types()[:min(len(declared.Types()), 3)] {",
+    "change": "off by one for the four-tag input: retain at most three union alternatives"
+  }
+]

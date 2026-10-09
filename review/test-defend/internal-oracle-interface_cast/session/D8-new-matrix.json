@@ -1,0 +1,26 @@
+{
+  "mutant": "D8",
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./internal/oracle/",
+    "-run",
+    "^(TestFractionalPowersReachRuntime|TestReviewPrograms.*)$"
+  ],
+  "exit": 0,
+  "vet_exit": 0,
+  "wall": 39.882940113002405,
+  "statuses": {
+    "TestReviewProgramsNoLooseFiles": "pass",
+    "TestFractionalPowersReachRuntime": "pass",
+    "TestReviewProgramsSelfTest": "pass",
+    "TestReviewProgramsRefuse": "pass",
+    "TestReviewProgramsAgreeWithNode": "pass"
+  }
+}

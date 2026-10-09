@@ -1,0 +1,131 @@
+[
+  {
+    "test": "TestInterfaceCastOracle",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInterfaceCastImportedConstruction",
+    "defense": "defended",
+    "bounded": true,
+    "unique_mutant": "D8 internal/lower/interface_cast.go:281",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/interface_cast.go:281",
+        "change": "off by one: omit last member of finite checked-view union",
+        "rows_failed": [
+          "TestCheckedViewInterfaces",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewObjects",
+          "TestCheckedViewV2MovedStage3Results",
+          "TestInterfaceCastOracle"
+        ]
+      },
+      {
+        "mutant": "D7",
+        "file_line": "internal/lower/interface_cast.go:286",
+        "change": "off by one finite literal list concatenation",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D8",
+        "file_line": "internal/lower/interface_cast.go:281",
+        "change": "off by one for the four-tag input: retain at most three union alternatives",
+        "rows_failed": [
+          "TestInterfaceCastOracle"
+        ]
+      }
+    ],
+    "evidence": "D1: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D1.log 2>&1; interface_cast_test.go:59: native sanitized: exit codes differ; exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\"\nD7: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D7 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D7.log 2>&1; requested row passed; see matrix\nD8: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D8 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D8-bounded.log 2>&1; interface_cast_test.go:59: JavaScript: exit codes differ; exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+  },
+  {
+    "test": "TestInterfaceCastImportedConstruction",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInterfaceCastChecksMalformedRead",
+    "defense": "not defended",
+    "bounded": true,
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/cast_proof.go:123",
+        "change": "flip successful upcast proof condition",
+        "rows_failed": [
+          "TestCheckedCastFailureContract",
+          "TestCheckedCastMutants"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/cast_proof.go:121",
+        "change": "swap assignability arguments for upcast proof",
+        "rows_failed": [
+          "TestCheckedCastFailureContract",
+          "TestCheckedCastFlushesOutput",
+          "TestCheckedCastMutants",
+          "TestCheckedCastRunsNoCatchOrFinally",
+          "TestCheckedViewFlagDowncast",
+          "TestCheckedViewInterfaces",
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewObjects",
+          "TestCheckedViewOptionalReadBoundary",
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewUntaggedCallableUnion",
+          "TestCheckedViewUntaggedOptionalCallableControl",
+          "TestCheckedViewUntaggedOwnClassData",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewUntaggedSourceFlows",
+          "TestCheckedViewV2ArrayArmBoundary",
+          "TestCheckedViewV2CallableProducerMutant",
+          "TestCheckedViewV2MembershipMutant",
+          "TestCheckedViewV2MovedStage3Results",
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestCheckedViewV2TupleIdentityMutant",
+          "TestCheckedViewV2WrongFamilyMutant",
+          "TestDefaultTaggedSourceViews",
+          "TestInterfaceCastChecksMalformedRead",
+          "TestInterfaceCastImportedConstruction",
+          "TestInterfaceCastOracle",
+          "TestInterfaceCastRuntimeMutants",
+          "TestInterfaceCastScalarTags",
+          "TestReviewProgramsAgreeWithNode"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/cast.go:33",
+        "change": "flip interface-view path selection",
+        "rows_failed": [
+          "TestCheckedViewV2ArrayArmBoundary",
+          "TestInterfaceCastChecksMalformedRead",
+          "TestInterfaceCastImportedConstruction",
+          "TestInterfaceCastOracle",
+          "TestInterfaceCastScalarTags",
+          "TestReviewProgramsRefuse"
+        ]
+      }
+    ],
+    "evidence": "D3: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D3.log 2>&1; requested row passed; see matrix\nD4: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D4.log 2>&1; interface_cast_test.go:169: /tmp/adamic-gate/TestInterfaceCastImportedConstruction674037900/001/main.a:1:104: Adamic 0.1 refuses an unproven relation from Node to Identifier: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)\nD5: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestInterfaceCastImportedConstruction$' > D5-TestInterfaceCastImportedConstruction.log 2>&1; panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]"
+  },
+  {
+    "test": "TestInterfaceCastScalarTags",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": "TestInterfaceCastImportedConstruction",
+    "defense": "defended",
+    "bounded": true,
+    "unique_mutant": "D2 internal/lower/cast.go:92",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/cast.go:92",
+        "change": "flip boolean literal decoding",
+        "rows_failed": [
+          "TestInterfaceCastScalarTags"
+        ]
+      }
+    ],
+    "evidence": "D2: ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/interface-defense/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$' > D2.log 2>&1; interface_cast_test.go:218: native: exit codes differ; exit 70 stdout \"casting\\n\" stderr \"adamic: panic: cast failed: this Base is not a Member\\n\""
+  }
+]

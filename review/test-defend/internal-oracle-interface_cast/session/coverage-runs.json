@@ -1,0 +1,82 @@
+[
+  {
+    "test": "TestInterfaceCastOracle",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-oracle-interface_cast/session/TestInterfaceCastOracle.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastOracle$"
+    ],
+    "exit": 0,
+    "wall": 13.957483820999187
+  },
+  {
+    "test": "TestInterfaceCastImportedConstruction",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-oracle-interface_cast/session/TestInterfaceCastImportedConstruction.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastImportedConstruction$"
+    ],
+    "exit": 0,
+    "wall": 4.767454308999731
+  },
+  {
+    "test": "TestInterfaceCastScalarTags",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-oracle-interface_cast/session/TestInterfaceCastScalarTags.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastScalarTags$"
+    ],
+    "exit": 0,
+    "wall": 4.736279180000565
+  },
+  {
+    "test": "TestInterfaceCastChecksMalformedRead",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native,github.com/system-inc/adamic/internal/javascript",
+      "-coverprofile=/workspace/adamic/review/test-defend/internal-oracle-interface_cast/session/TestInterfaceCastChecksMalformedRead.cover",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastChecksMalformedRead$"
+    ],
+    "exit": 0,
+    "wall": 4.554485642001964
+  }
+]

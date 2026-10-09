@@ -1,0 +1,6 @@
+D5 TestInterfaceCastOracle 1
+D5 TestInterfaceCastImportedConstruction 1
+D5 TestInterfaceCastScalarTags 1
+D5 TestInterfaceCastChecksMalformedRead 1
+D8 ^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$ 1
+completed

@@ -1,0 +1,13 @@
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index 8ca15d7b..18efbbce 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -278,7 +278,7 @@ func (l *lowering) interfaceWrite(node *ast.Node, checked map[string]*checker.Ty
+ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
+ 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
+ 		var allowed []ir.Expression
+-		for _, member := range declared.Types() {
++		for _, member := range declared.Types()[:len(declared.Types())-1] {
+ 			values := l.viewLiterals(member)
+ 			if len(values) == 0 {
+ 				return nil

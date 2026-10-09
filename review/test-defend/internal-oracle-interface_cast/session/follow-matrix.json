@@ -1,0 +1,1080 @@
+[
+  {
+    "mutant": "D5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastOracle$"
+    ],
+    "exit": 1,
+    "wall": 1.721819513997616,
+    "log": "D5-TestInterfaceCastOracle.log",
+    "statuses": {
+      "TestInterfaceCastOracle": "fail"
+    },
+    "panic": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"
+    ],
+    "errors": [
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/expression.go:216 +0x15a"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/object.go:78 +0x2e7"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/expression.go:616 +0xc1b"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/expression.go:475 +0x127"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/expression.go:208 +0x8c"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/locals.go:79 +0x6f3"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/statements.go:76 +0x136"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/statements.go:19 +0xd0"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/functions.go:289 +0x1875"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/functions.go:55 +0x17e"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/functions.go:12 +0x65"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/modules.go:180 +0xa8e"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/lower/lower.go:56 +0x550"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/oracle/oracle_test.go:574 +0x18b"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/oracle/interface_cast_test.go:19 +0x1e6"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic/internal/oracle/interface_cast_test.go:40 +0x59"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea"
+      },
+      {
+        "test": "TestInterfaceCastOracle",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4"
+      }
+    ]
+  },
+  {
+    "mutant": "D5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastImportedConstruction$"
+    ],
+    "exit": 1,
+    "wall": 1.7006046140013495,
+    "log": "D5-TestInterfaceCastImportedConstruction.log",
+    "statuses": {
+      "TestInterfaceCastImportedConstruction": "fail"
+    },
+    "panic": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"
+    ],
+    "errors": [
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:216 +0x15a"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/arguments_length.go:107 +0x24e"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:1147 +0x47"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:1138 +0x2de"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/class.go:321 +0x589"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:661 +0xe9b"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:475 +0x127"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:208 +0x8c"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/object.go:410 +0xb3f"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:620 +0xc57"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:475 +0x127"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/expression.go:208 +0x8c"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/prelude.go:21 +0x185"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/statements.go:139 +0x5b7"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/statements.go:74 +0x165"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/statements.go:19 +0xd0"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/lower/lower.go:60 +0x5ee"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/oracle/oracle_test.go:574 +0x18b"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic/internal/oracle/interface_cast_test.go:167 +0x2ed"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea"
+      },
+      {
+        "test": "TestInterfaceCastImportedConstruction",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4"
+      }
+    ]
+  },
+  {
+    "mutant": "D5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastScalarTags$"
+    ],
+    "exit": 1,
+    "wall": 2.239688706002198,
+    "log": "D5-TestInterfaceCastScalarTags.log",
+    "statuses": {
+      "TestInterfaceCastScalarTags": "fail"
+    },
+    "panic": [],
+    "errors": [
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:218: native: exit codes differ; exit 0 stdout \"casting\\npayloadpayload\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:218: native: exit codes differ; exit 0 stdout \"casting\\npayloadpayload\\n\" stderr \"\""
+      }
+    ]
+  },
+  {
+    "mutant": "D5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^TestInterfaceCastChecksMalformedRead$"
+    ],
+    "exit": 1,
+    "wall": 1.967121068002598,
+    "log": "D5-TestInterfaceCastChecksMalformedRead.log",
+    "statuses": {
+      "TestInterfaceCastChecksMalformedRead": "fail"
+    },
+    "panic": [
+      "panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"
+    ],
+    "errors": [
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/expression.go:216 +0x15a"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/object.go:78 +0x2e7"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/expression.go:616 +0xc1b"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/expression.go:475 +0x127"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/expression.go:208 +0x8c"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/locals.go:79 +0x6f3"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/statements.go:76 +0x136"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/statements.go:19 +0xd0"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/functions.go:289 +0x1875"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/functions.go:55 +0x17e"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/functions.go:12 +0x65"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/modules.go:180 +0xa8e"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/lower/lower.go:56 +0x550"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/oracle/oracle_test.go:574 +0x18b"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic/internal/oracle/interface_cast_test.go:82 +0x275"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea"
+      },
+      {
+        "test": "TestInterfaceCastChecksMalformedRead",
+        "line": "/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4"
+      }
+    ]
+  },
+  {
+    "mutant": "D8",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "exit": 1,
+    "wall": 31.08273591699981,
+    "log": "D8-bounded.log",
+    "statuses": {
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestUncheckableCastAdmission": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "pass",
+      "TestCheckedViewV2MovedStage3Results": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedViewObjects": "pass",
+      "TestCheckedViewInterfaces": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestInterfaceCastScalarTags": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass",
+      "TestInterfaceCastOracle": "fail",
+      "TestCheckedCastFailureContract": "pass",
+      "TestCheckedCastMutants": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedSourceFlows": "pass"
+    },
+    "panic": [
+      "    checked_views_v2_migration_test.go:84: wrong family caught by native: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\\n\"\n",
+      "    checked_views_v2_migration_test.go:84: wrong family caught by native-sanitized: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\\n\"\n",
+      "    checked_views_v2_migration_test.go:84: wrong family caught by javascript: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:90: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:90: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:90: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:90: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:90: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:90: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\"\n",
+      "    checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\"\n",
+      "    checked_views_v2_migration_test.go:125: old-layout int32 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\"\n",
+      "    checked_views_v2_migration_test.go:125: old-layout uint8 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\"\n",
+      "    checked_views_v2_migration_test.go:125: old-layout float64 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\"\n",
+      "    interface_cast_test.go:143: caught twice operand: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\"\n",
+      "    interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\"\n",
+      "    interface_cast_test.go:59: JavaScript: exit codes differ; exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\"\n",
+      "    checked_views_v2_source_test.go:166: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:166: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:166: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:190: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n",
+      "    checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\"\n"
+    ],
+    "errors": [
+      {
+        "test": "TestCheckedViewV2TupleIdentityMutant",
+        "line": "checked_views_v2_migration_test.go:217: tuple flag removal caught by javascript: exit 0 stdout \"first\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2TupleIdentityMutant",
+        "line": "checked_views_v2_migration_test.go:217: tuple flag removal caught by native: exit 0 stdout \"first\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2TupleIdentityMutant",
+        "line": "checked_views_v2_migration_test.go:217: tuple flag removal caught by native-sanitized: exit 0 stdout \"first\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2CallableProducerMutant",
+        "line": "checked_views_v2_migration_test.go:248: producer certificate removal caught by native: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2CallableProducerMutant",
+        "line": "checked_views_v2_migration_test.go:248: producer certificate removal caught by native-sanitized: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2CallableProducerMutant",
+        "line": "checked_views_v2_migration_test.go:248: producer certificate removal caught by javascript: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2MembershipMutant",
+        "line": "checked_views_v2_migration_test.go:186: membership check removal caught by native: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2MembershipMutant",
+        "line": "checked_views_v2_migration_test.go:186: membership check removal caught by native-sanitized: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2MembershipMutant",
+        "line": "checked_views_v2_migration_test.go:186: membership check removal caught by javascript: exit 0 stdout \"true\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2WrongFamilyMutant",
+        "line": "checked_views_v2_migration_test.go:84: wrong family caught by native: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2WrongFamilyMutant",
+        "line": "checked_views_v2_migration_test.go:84: wrong family caught by native-sanitized: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found function\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2WrongFamilyMutant",
+        "line": "checked_views_v2_migration_test.go:84: wrong family caught by javascript: exit 70 stderr \"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/optional-absent",
+        "line": "checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-absent.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/comment-boolean",
+        "line": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/comment-flags-wrong",
+        "line": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/comment-good",
+        "line": "checked_views_v2_object_primitive_test.go:40: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/optional-receiver",
+        "line": "checked_views_v2_object_primitive_test.go:58: preserved base boundary: /workspace/adamic/stage3/interface-downcasts/lane4b/fixtures/optional-receiver.a:6:17: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet"
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-number",
+        "line": "checked_views_v2_source_test.go:90: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-number",
+        "line": "checked_views_v2_source_test.go:90: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-number",
+        "line": "checked_views_v2_source_test.go:90: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/nested",
+        "line": "checked_views_v2_source_test.go:90: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/nested",
+        "line": "checked_views_v2_source_test.go:90: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/nested",
+        "line": "checked_views_v2_source_test.go:90: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.holder.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/wrong",
+        "line": "checked_views_v2_source_test.go:90: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/wrong",
+        "line": "checked_views_v2_source_test.go:90: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/wrong",
+        "line": "checked_views_v2_source_test.go:90: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value expected Target, found function with incompatible parameter representations\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-string",
+        "line": "checked_views_v2_source_test.go:90: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-string",
+        "line": "checked_views_v2_source_test.go:90: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedCallableUnion/good-string",
+        "line": "checked_views_v2_source_test.go:90: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/nested",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; }, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/good",
+        "line": "checked_views_v2_source_test.go:58: native: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/wrong",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/nested",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout=\"true\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=0 stdout=\"true\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/structural/good",
+        "line": "checked_views_v2_source_test.go:58: native: exit=0 stdout=\"true\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+        "line": "checked_views_v2_source_test.go:56: Node: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/wrong",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/null",
+        "line": "checked_views_v2_migration_test.go:125: old-layout null caught: exit 1 stdout \"\" stderr \"/home/agent/.cache/adamic/runtime/.build-2861186432/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2861186432/typed_array.c:88:46 \\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/wrong",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+        "line": "checked_views_v2_source_test.go:58: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/binding-name/nested",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: value.payload matches no member of { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ...; expected { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | { readonly label: string; } | ... 4 more ... | ..., found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+        "line": "checked_views_v2_source_test.go:58: native: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+        "line": "checked_views_v2_source_test.go:58: native-sanitized: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceDispatch/option-element/good",
+        "line": "checked_views_v2_source_test.go:58: javascript: exit=0 stdout=\"true\\ntrue\\ntrue\\ntrue\\ntrue\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/int32",
+        "line": "checked_views_v2_migration_test.go:125: old-layout int32 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/uint8",
+        "line": "checked_views_v2_migration_test.go:125: old-layout uint8 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/float64",
+        "line": "checked_views_v2_migration_test.go:125: old-layout float64 caught: exit 70 stdout \"\" stderr \"adamic: panic: old layout has no slot representation\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2RepresentationMutants/undefined",
+        "line": "checked_views_v2_migration_test.go:125: old-layout undefined caught: exit 1 stdout \"\" stderr \"/home/agent/.cache/adamic/runtime/.build-2861186432/typed_array.c:88:46: runtime error: member access within null pointer of type 'const adamic_typed_array' (aka 'const struct adamic_typed_array')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-2861186432/typed_array.c:88:46 \\n\""
+      },
+      {
+        "test": "TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal",
+        "line": "checked_views_flag_downcast_test.go:72: native release field-check mutant caught: exit 0 stdout \"5e-324\\n\" stderr \"\""
+      },
+      {
+        "test": "TestCheckedViewFlagDowncast/wrong_scalar_and_check_removal",
+        "line": "checked_views_flag_downcast_test.go:72: JavaScript field-check mutant caught: exit 0 stdout \"true\\n\" stderr \"\""
+      },
+      {
+        "test": "TestCheckedViewObjects/objects-wrong-nested",
+        "line": "checked_views_objects_test.go:46: skip transitive view caught by pinned exit/message with valid C"
+      },
+      {
+        "test": "TestRequiredViewFieldPrimitive/wrong_type",
+        "line": "view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C"
+      },
+      {
+        "test": "TestRequiredViewFieldPrimitive/uninitialized",
+        "line": "view_fields_test.go:75: drop field check mutant caught by pinned exit/message, with valid C"
+      },
+      {
+        "test": "TestCheckedViewUntaggedArrayPending/good",
+        "line": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestRequiredViewFieldPrimitive/uninitialized",
+        "line": "view_fields_test.go:87: drop initialization tracking mutant caught by pinned exit/message"
+      },
+      {
+        "test": "TestNarrowedUnionMemberCheck/e4eec87_f2_union_narrow_call.a",
+        "line": "narrowed_union_test.go:70: unchecked member mutant caught: exit 1, stdout \"\", stderr \"=================================================================\\n==363955==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b413bde0060 at pc 0x556ddf7d5c9e bp 0x7ffd3653ca10 sp 0x7ffd3653ca08\\nREAD of size 8 at 0x7b413bde0060 thread T0\\n    #0 0x556ddf7d5c9d in adamic_string_length /home/agent/.cache/adamic/runtime/f4dd3250bbc59a02cb4514a70f46280b0e2701e6fb9c91044247c935f833ebfe/adamic.h:739:17\\n    #1 0x556ddf7d5c9d in adamic_function_2_check /tmp/adamic-gate/adamic-build-934520405/main.c:67:68\\n    #2 0x556ddf7d5c9d in main /tmp/adamic-gate/adamic-build-934520405/main.c:93:2\\n    #3 0x7f113cd7fca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #4 0x7f113cd7fd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #5 0x556ddf6ef460 in _start (/tmp/adamic-gate/TestNarrowedUnionMemberChecke"
+      },
+      {
+        "test": "TestCheckedViewUntaggedArrayPending/mixed",
+        "line": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestCheckedViewUntaggedArrayPending/empty",
+        "line": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestCheckedViewUntaggedArrayPending/nested",
+        "line": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:247: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedArrayPending/wrong",
+        "line": "checked_views_v2_source_test.go:214: awaits compiler/views-v3: array element kind and holes (b065fa576)"
+      },
+      {
+        "test": "TestNarrowedUnionMemberCheck/e4eec87_f2b_union_narrow_number.a",
+        "line": "narrowed_union_test.go:70: unchecked member mutant caught: exit 0, stdout \"after toText: 1\\n\", stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestInterfaceCastOracle/visitor",
+        "line": "interface_cast_test.go:59: JavaScript: exit codes differ; exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/good",
+        "line": "checked_views_v2_source_test.go:166: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/good",
+        "line": "checked_views_v2_source_test.go:166: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/good",
+        "line": "checked_views_v2_source_test.go:166: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/good",
+        "line": "checked_views_v2_source_test.go:190: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/good",
+        "line": "checked_views_v2_source_test.go:190: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/good",
+        "line": "checked_views_v2_source_test.go:190: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/wrong",
+        "line": "checked_views_v2_source_test.go:166: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/wrong",
+        "line": "checked_views_v2_source_test.go:166: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedOwnClassData/wrong",
+        "line": "checked_views_v2_source_test.go:166: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/nested",
+        "line": "checked_views_v2_source_test.go:190: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/nested",
+        "line": "checked_views_v2_source_test.go:190: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/nested",
+        "line": "checked_views_v2_source_test.go:190: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/wrong",
+        "line": "checked_views_v2_source_test.go:190: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/wrong",
+        "line": "checked_views_v2_source_test.go:190: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/wrong",
+        "line": "checked_views_v2_source_test.go:190: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/absent",
+        "line": "checked_views_v2_source_test.go:190: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/absent",
+        "line": "checked_views_v2_source_test.go:190: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedRecursive/absent",
+        "line": "checked_views_v2_source_test.go:190: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/good",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/good",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/good",
+        "line": "checked_views_v2_source_test.go:141: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/good",
+        "line": "checked_views_v2_source_test.go:141: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/good",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/good",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/wrong",
+        "line": "checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/wrong",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/wrong",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/good",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/good",
+        "line": "checked_views_v2_source_test.go:141: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/stored/good",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/wrong",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/wrong",
+        "line": "checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/callback/wrong",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/good",
+        "line": "checked_views_v2_source_test.go:141: native: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/good",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/good",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=0 stdout=\"true\\n\" stderr=\"\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/wrong",
+        "line": "checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/wrong",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/helper/wrong",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+        "line": "checked_views_v2_source_test.go:141: native: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+        "line": "checked_views_v2_source_test.go:141: native-sanitized: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      },
+      {
+        "test": "TestCheckedViewUntaggedSourceFlows/generic/wrong",
+        "line": "checked_views_v2_source_test.go:141: javascript: exit=70 stdout=\"\" stderr=\"adamic: panic: field read failed: holder.value matches no member of Target; expected Target, found object\\n\""
+      }
+    ]
+  }
+]

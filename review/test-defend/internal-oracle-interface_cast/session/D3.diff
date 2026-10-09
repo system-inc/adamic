@@ -1,0 +1,13 @@
+diff --git a/internal/lower/cast_proof.go b/internal/lower/cast_proof.go
+index 3b82dbe8..d29c859d 100644
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -120,7 +120,7 @@ func (l *lowering) castProof(node *ast.Node) (castProof, error) {
+ 	// downcasts may also look assignable, but still need their runtime identity check.
+ 	if l.checker.IsTypeAssignableTo(source, target) || l.checker.IsTypeAssignableTo(l.checker.GetWidenedType(source), target) {
+ 		err := l.provenRelation(node, as.Expression, l.checker.GetTypeAtLocation(node))
+-		if err == nil {
++		if err != nil {
+ 			return castProof{}, nil
+ 		}
+ 		rawSource, rawTarget := l.checker.GetTypeAtLocation(as.Expression), l.checker.GetTypeAtLocation(node)

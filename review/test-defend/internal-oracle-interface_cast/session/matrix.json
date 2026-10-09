@@ -1,0 +1,937 @@
+[
+  {
+    "mutant": "clean",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/clean",
+    "exit": 0,
+    "wall": 23.571301855998172,
+    "cooked": false,
+    "statuses": {
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestUncheckableCastAdmission": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestInterfaceCastOracle": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "pass",
+      "TestCheckedViewV2MovedStage3Results": "pass",
+      "TestCheckedViewUntaggedSourceFlows": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestCheckedViewObjects": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestCheckedViewInterfaces": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedCastMutants": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestInterfaceCastScalarTags": "pass",
+      "TestCheckedCastFailureContract": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:247: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: stdout differs; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce3\\ncalls 3\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\ntexttext\\n5\\n\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\""
+      }
+    ]
+  },
+  {
+    "mutant": "D1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D1",
+    "exit": 1,
+    "wall": 25.45455844499884,
+    "cooked": false,
+    "statuses": {
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestUncheckableCastAdmission": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestInterfaceCastScalarTags": "pass",
+      "TestInterfaceCastOracle": "fail",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedSourceFlows": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "fail",
+      "TestCheckedViewV2MovedStage3Results": "fail",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedViewObjects": "fail",
+      "TestCheckedViewInterfaces": "fail",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedCastMutants": "pass",
+      "TestCheckedCastFailureContract": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:247: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastOracle/visitor",
+        "line": "interface_cast_test.go:59: native sanitized: exit codes differ; exit 70 stdout \"idid\\n42\\n\" stderr \"adamic: panic: field read failed: node.kind expected \\\"binary\\\" | \\\"identifier\\\" | \\\"number\\\" | \\\"string\\\", found string string\\n\""
+      },
+      {
+        "test": "TestCheckedViewV2MovedStage3Results/taste/refused/21_truthy_loops.a",
+        "line": "checked_views_v2_migration_test.go:273: native: exit codes differ; oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa, 0x74, 0x72, 0x75, 0x65, 0xa, 0x6f, 0x75, 0x74, 0x65, 0x72, 0xa, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x74, 0x79, 0x70, 0x65, 0x2e, 0x66, 0x6c, 0x61, 0x67, 0x73, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x30, 0x20, 0x7c, 0x20, 0x38, 0x33, 0x38, 0x38, 0x36, 0x30, 0x38, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x6e, 0x75, 0x6d, 0x62, 0x65, 0x72, 0x20, 0x38, 0x33, 0x38, 0x38, 0x36, 0x30, 0x38, 0xa}, exitCode:70}"
+      },
+      {
+        "test": "TestCheckedViewObjectPrimitiveSource/literal-good",
+        "line": "checked_views_v2_object_primitive_test.go:72: exit codes differ: oracle.run{stdout:[]uint8{0x74, 0x65, 0x78, 0x74, 0xa, 0x34, 0x32, 0xa}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x2e, 0x6e, 0x65, 0x67, 0x61, 0x74, 0x69, 0x76, 0x65, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa}, exitCode:70}"
+      },
+      {
+        "test": "TestCheckedViewObjects/objects-good",
+        "line": "checked_views_objects_test.go:34: exit codes differ; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x63, 0x68, 0x69, 0x6c, 0x64, 0x2e, 0x72, 0x65, 0x61, 0x64, 0x79, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa}, exitCode:70}"
+      },
+      {
+        "test": "TestCheckedViewInterfaces/interfaces-good",
+        "line": "checked_views_interfaces_test.go:28: exit codes differ; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x63, 0x68, 0x69, 0x6c, 0x64, 0x2e, 0x72, 0x65, 0x61, 0x64, 0x79, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa}, exitCode:70}"
+      },
+      {
+        "test": "TestCheckedViewObjects/objects-untagged-good",
+        "line": "checked_views_objects_test.go:34: exit codes differ; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x61, 0x6c, 0x69, 0x61, 0x73, 0x2e, 0x72, 0x65, 0x61, 0x64, 0x79, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x62, 0x6f, 0x6f, 0x6c, 0x65, 0x61, 0x6e, 0x20, 0x74, 0x72, 0x75, 0x65, 0xa}, exitCode:70}"
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      }
+    ]
+  },
+  {
+    "mutant": "D2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D2",
+    "exit": 1,
+    "wall": 25.20847546799996,
+    "cooked": false,
+    "statuses": {
+      "TestUncheckableCastAdmission": "pass",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestCheckedCastMutants": "pass",
+      "TestCheckedViewObjects": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestCheckedViewInterfaces": "pass",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedCastFailureContract": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestInterfaceCastScalarTags": "fail",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestInterfaceCastOracle": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "pass",
+      "TestCheckedViewV2MovedStage3Results": "pass",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedViewUntaggedSourceFlows": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: stdout differs; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce3\\ncalls 3\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\ntexttext\\n5\\n\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_passes",
+        "line": "interface_cast_test.go:218: native: exit codes differ; exit 70 stdout \"casting\\n\" stderr \"adamic: panic: cast failed: this Base is not a Member\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:218: native: exit codes differ; exit 0 stdout \"casting\\npayloadpayload\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      }
+    ]
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D3",
+    "exit": 1,
+    "wall": 24.750804906001576,
+    "cooked": false,
+    "statuses": {
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestUncheckableCastAdmission": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "pass",
+      "TestCheckedViewV2MovedStage3Results": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestInterfaceCastScalarTags": "pass",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedViewObjects": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestCheckedViewInterfaces": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass",
+      "TestInterfaceCastOracle": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedCastFailureContract": "fail",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestCheckedCastMutants": "fail",
+      "TestCheckedViewUntaggedSourceFlows": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:247: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: stdout differs; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce3\\ncalls 3\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\ntexttext\\n5\\n\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      }
+    ]
+  },
+  {
+    "mutant": "D4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D4",
+    "exit": 1,
+    "wall": 12.244242228000076,
+    "cooked": false,
+    "statuses": {
+      "TestInterfaceCastImportedConstruction": "fail",
+      "TestCheckedCastFlushesOutput": "fail",
+      "TestCheckedViewUntaggedOptionalCallableControl": "fail",
+      "TestCheckedViewUntaggedSourceDispatch": "fail",
+      "TestCheckedViewV2CallableProducerMutant": "fail",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "fail",
+      "TestCheckedViewV2MembershipMutant": "fail",
+      "TestCheckedViewV2WrongFamilyMutant": "fail",
+      "TestInterfaceCastChecksMalformedRead": "fail",
+      "TestCheckedViewV2ArrayArmBoundary": "fail",
+      "TestUncheckableCastAdmission": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestDefaultTaggedSourceViews": "fail",
+      "TestInterfaceCastScalarTags": "fail",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestInterfaceCastOracle": "fail",
+      "TestCheckedViewUntaggedArrayPending": "fail",
+      "TestCheckedViewUntaggedRecursive": "fail",
+      "TestCheckedViewUntaggedOwnClassData": "fail",
+      "TestInterfaceCastRuntimeMutants": "fail",
+      "TestCheckedViewUntaggedSourceFlows": "fail",
+      "TestCheckedViewUntaggedCallableUnion": "fail",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "fail",
+      "TestCheckedViewV2MovedStage3Results": "fail",
+      "TestCheckedViewObjects": "fail",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedViewInterfaces": "fail",
+      "TestCheckedViewFlagDowncast": "fail",
+      "TestCheckedViewV2ReadsAfterWrites": "fail",
+      "TestCheckedCastMutants": "fail",
+      "TestCheckedCastRunsNoCatchOrFinally": "fail",
+      "TestCheckedCastFailureContract": "fail",
+      "TestCheckedViewOptionalReadBoundary": "fail"
+    },
+    "errors": [
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedViewOptionalReadBoundary/JavaScript",
+        "line": "checked_views_optional_read_test.go:61: want optional checked-read NotYet, got /workspace/adamic/stage3/interface-downcasts/lane1/optional-read.a:5:34: Adamic 0.1 refuses an unproven relation from Node to Identifier: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      },
+      {
+        "test": "TestCheckedViewOptionalReadBoundary/native",
+        "line": "checked_views_optional_read_test.go:61: want optional checked-read NotYet, got /workspace/adamic/stage3/interface-downcasts/lane1/optional-read.a:5:34: Adamic 0.1 refuses an unproven relation from Node to Identifier: the source is not assignable to the target; use a compatible type or narrow the value before using it; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      }
+    ]
+  },
+  {
+    "mutant": "D5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D5",
+    "exit": 1,
+    "wall": 6.103555868998228,
+    "cooked": false,
+    "statuses": {
+      "TestCheckedViewV2ArrayArmBoundary": "fail"
+    },
+    "errors": []
+  },
+  {
+    "mutant": "D6",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D6",
+    "exit": 1,
+    "wall": 18.676415624002402,
+    "cooked": false,
+    "statuses": {
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedCastFlushesOutput": "fail",
+      "TestRequiredViewFieldOperandOnce": "fail",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestInterfaceCastImportedConstruction": "fail",
+      "TestCheckedViewV2TupleIdentityMutant": "fail",
+      "TestUncheckableCastAdmission": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestInterfaceCastChecksMalformedRead": "fail",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "fail",
+      "TestInterfaceCastRuntimeMutants": "fail",
+      "TestDefaultTaggedSourceViews": "fail",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestRequiredViewFieldPrimitive": "fail",
+      "TestInterfaceCastScalarTags": "fail",
+      "TestCheckedViewFlagDowncast": "fail",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "fail",
+      "TestCheckedViewObjects": "fail",
+      "TestCheckedViewInterfaces": "fail",
+      "TestCheckedViewObjectPrimitiveSource": "fail",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedCastFailureContract": "fail",
+      "TestCheckedCastMutants": "fail",
+      "TestCheckedViewV2RepresentationMutants": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestCheckedViewV2MovedStage3Results": "fail",
+      "TestInterfaceCastOracle": "fail",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "fail",
+      "TestCheckedViewUntaggedSourceFlows": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestDefaultTaggedSourceViews/default-literal",
+        "line": "view_fields_test.go:196: exit codes differ; got oracle.run{stdout:[]uint8{0x6f, 0x74, 0x68, 0x65, 0x72, 0xa}, stderr:[]uint8{}, exitCode:0}"
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      }
+    ]
+  },
+  {
+    "mutant": "D7",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/oracle/",
+      "-run",
+      "^(TestInterfaceCast.*|TestCheckedCast.*|TestUncheckableCastAdmission|Test.*View.*|TestNarrowedUnion.*|TestNarrowedFieldUsesSharedReadiness)$"
+    ],
+    "cache": "/tmp/interface-defense/cache/D7",
+    "exit": 0,
+    "wall": 25.82584092899924,
+    "cooked": false,
+    "statuses": {
+      "TestUncheckableCastAdmission": "pass",
+      "TestCheckedViewV2ArrayArmBoundary": "pass",
+      "TestCheckedCastFlushesOutput": "pass",
+      "TestViewFieldInheritedStaticReadiness": "pass",
+      "TestNarrowedUnionObjectTagRefusal": "pass",
+      "TestRequiredViewFieldOperandOnce": "pass",
+      "TestCheckedViewV2CallableProducerMutant": "pass",
+      "TestInterfaceCastImportedConstruction": "pass",
+      "TestInterfaceCastChecksMalformedRead": "pass",
+      "TestCheckedViewUntaggedOptionalCallableControl": "pass",
+      "TestCheckedViewUntaggedCallableUnion": "pass",
+      "TestCheckedViewV2TupleIdentityMutant": "pass",
+      "TestCheckedViewV2MembershipMutant": "pass",
+      "TestCheckedViewV2WrongFamilyMutant": "pass",
+      "TestCheckedViewFlagDowncast": "pass",
+      "TestCheckedCastRunsNoCatchOrFinally": "pass",
+      "TestCheckedCastFailureContract": "pass",
+      "TestCheckedCastMutants": "pass",
+      "TestCheckedViewV2ReadsAfterWrites": "pass",
+      "TestCheckedViewObjects": "pass",
+      "TestCheckedViewOptionalReadBoundary": "pass",
+      "TestCheckedViewObjectPrimitiveSource": "pass",
+      "TestCheckedViewV2MovedStage3Results": "pass",
+      "TestCheckedViewInterfaces": "pass",
+      "TestInterfaceCastRuntimeMutants": "pass",
+      "TestDefaultTaggedSourceViews": "pass",
+      "TestCheckedViewUntaggedSourceDispatch": "pass",
+      "TestNarrowedFieldUsesSharedReadiness": "pass",
+      "TestRequiredViewFieldPrimitive": "pass",
+      "TestNarrowedUnionMemberCheck": "pass",
+      "TestInterfaceCastScalarTags": "pass",
+      "TestCheckedViewUntaggedOwnClassData": "pass",
+      "TestCheckedViewUntaggedArrayPending": "pass",
+      "TestInterfaceCastOracle": "pass",
+      "TestCheckedViewUntaggedRecursive": "pass",
+      "TestCheckedViewUntaggedSourceFlows": "pass",
+      "TestCheckedViewV2RepresentationMutants": "pass"
+    },
+    "errors": [
+      {
+        "test": "TestCheckedCastMutants/skip_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_class_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/twice_tag_operand",
+        "line": "cast_test.go:247: caught: stdout differs; expected exit 0 stdout \"tag 1\\ncalls 1\\n2 calls 2\\n\", mutant exit 0 stdout \"tag 2\\ncalls 2\\n2 calls 3\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_class_identity",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\nfinally\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_string_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"aaa\\nfirstfirst\\nlastlast\\n\", mutant exit 70 stdout \"\""
+      },
+      {
+        "test": "TestCheckedCastMutants/wrong_numeric_tag",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 0 stdout \"idid\\ntexttext\\nnativenative\\n\", mutant exit 70 stdout \"idid\\ntexttext\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_class_union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n1\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_generic_class",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric_sub-union",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_numeric",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestCheckedCastMutants/skip_const_string",
+        "line": "cast_test.go:247: caught: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\n2\\n\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/skip_tag",
+        "line": "interface_cast_test.go:143: caught skip tag: exit codes differ; expected exit 70 stdout \"casting\\n\", mutant exit 0 stdout \"casting\\notherother\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/twice_operand",
+        "line": "interface_cast_test.go:143: caught twice operand: stdout differs; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce3\\ncalls 3\\n\" stderr \"\""
+      },
+      {
+        "test": "TestInterfaceCastRuntimeMutants/wrong_tag",
+        "line": "interface_cast_test.go:143: caught wrong tag: exit codes differ; expected exit 0 stdout \"idid\\n42\\ntexttext\\n5\\ntrue\\nonce2\\ncalls 2\\n\", mutant exit 70 stdout \"idid\\n42\\ntexttext\\n5\\n\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/boolean_fails",
+        "line": "interface_cast_test.go:247: caught skip boolean tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      },
+      {
+        "test": "TestInterfaceCastScalarTags/number_fails",
+        "line": "interface_cast_test.go:247: caught skip 4 | 9 tag: exit codes differ; checked exit 70, mutant exit 0 stdout \"casting\\npayloadpayload\\n\""
+      }
+    ]
+  }
+]
