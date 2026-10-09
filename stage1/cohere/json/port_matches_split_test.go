@@ -14,7 +14,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -90,54 +90,73 @@ func portMatchesPartition(t *testing.T) [][]textCase {
 }
 
 var portMatchesShared struct {
-	sync.Once
+	ready                                     bool
 	shards                                    [][]textCase
 	oracle, entry, script, release, sanitized string
 }
 
-func portMatchesSetup(t *testing.T) {
-	t.Helper()
-	portMatchesShared.Do(func() {
-		started := time.Now()
-		defer func() { t.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
-		portMatchesShared.shards = portMatchesPartition(t)
-		goTools, err := portMatchesJsonGoToolchain()
-		if err != nil {
-			t.Fatal(err)
-		}
-		clangTools, err := portMatchesJsonClangToolchain()
-		if err != nil {
-			t.Fatal(err)
-		}
-		// The existing Go driver uses an overlay. Build it once per test process,
-		// outside Product, as before; main has no buildcache.GoBuild yet.
-		oracleDir, err := os.MkdirTemp("", "json-port-oracle-")
-		if err != nil {
-			t.Fatal(err)
-		}
-		if err := portMatchesBuildJSONGoOracle(oracleDir); err != nil {
-			t.Fatal(err)
-		}
-		portMatchesShared.oracle = filepath.Join(oracleDir, "go-cohere")
-		loweredDir := buildcache.Product(t, portMatchesJsonLoweredPortInputs(goTools), portMatchesBuildJSONLoweredPort)
-		cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
-		if err != nil {
-			t.Fatal(err)
-		}
-		c := string(cBytes)
-		portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
-		portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
-		portMatchesShared.release = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, false, clangTools), portMatchesBuildJSONReleasePort(c)), "port")
-		portMatchesShared.sanitized = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, true, clangTools), portMatchesBuildJSONSanitizedPort(c)), "port")
-	})
-	if portMatchesShared.sanitized == "" {
-		t.Fatal("shared setup failed")
+// Not parallel: prepares shared immutable products before any parallel leaf resumes.
+func TestPortMatchesGoCohereSplit_Setup(t *testing.T) {
+	deadline := portMatchesDeadline(t.Name())
+	defer deadline.Stop()
+
+	started := time.Now()
+	defer func() { t.Logf("TestPortMatchesGoCohere (setup): %.3fs", time.Since(started).Seconds()) }()
+	portMatchesShared.shards = portMatchesPartition(t)
+	goTools, err := portMatchesJsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
 	}
+	clangTools, err := portMatchesJsonClangToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracleDir := buildcache.Product(t, buildcache.Inputs{
+		Name:      "json split Go oracle",
+		Files:     []string{"go.mod", "go.work", "cohere", "stage1/cohere/json/testdata/cohere_driver.go", "stage1/cohere/json/port_matches_split_test.go"},
+		Flags:     append([]string{"go build -overlay=<product>/overlay.json -o=<product>/go-cohere ./command/formatter_comparison"}, portMatchesJsonBuildEnvironment("PATH", "GOFLAGS", "GOTOOLCHAIN")...),
+		Toolchain: goTools,
+	}, portMatchesBuildJSONGoOracle)
+
+	portMatchesShared.oracle = filepath.Join(oracleDir, "go-cohere")
+	loweredDir := buildcache.Product(t, portMatchesJsonLoweredPortInputs(goTools), portMatchesBuildJSONLoweredPort)
+	cBytes, err := os.ReadFile(filepath.Join(loweredDir, "main.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	c := string(cBytes)
+	portMatchesShared.entry = filepath.Join(loweredDir, "main.ts")
+	portMatchesShared.script = filepath.Join(loweredDir, "program.mjs")
+	portMatchesShared.release = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, false, clangTools), portMatchesBuildJSONReleasePort(c)), "port")
+	portMatchesShared.sanitized = filepath.Join(buildcache.Product(t, portMatchesJsonNativePortInputs(c, true, clangTools), portMatchesBuildJSONSanitizedPort(c)), "port")
+	// The four-digit port/upstream wrappers use the same immutable products.
+	// Complete their once guards here; no leaf is allowed to become a builder.
+	jsonTopCorpus(t)
+	jsonTopState.goOnce.Do(func() { jsonTopState.goTools = goTools })
+	jsonTopState.clangOnce.Do(func() { jsonTopState.clangTools = clangTools })
+	jsonTopState.oracle.Do(func() {
+		jsonTopState.oracleDir = oracleDir
+		jsonTopState.oracleCached = true
+	})
+	for name, directory := range map[string]string{
+		"lowered":   loweredDir,
+		"release":   filepath.Dir(portMatchesShared.release),
+		"sanitized": filepath.Dir(portMatchesShared.sanitized),
+	} {
+		product := &jsonTopBuild{dir: directory}
+		product.once.Do(func() {})
+		jsonTopState.products.Store(name, product)
+	}
+	portMatchesShared.ready = true
 }
 
 func portMatchesRun(t *testing.T, ordinal int) {
 	t.Helper()
-	portMatchesSetup(t)
+	if !portMatchesShared.ready {
+		t.Fatal("shared setup was not selected")
+	}
+	deadline := portMatchesDeadline(t.Name())
+	defer deadline.Stop()
 	items := portMatchesShared.shards[ordinal]
 	if len(items) == 0 {
 		t.Log("empty hash bucket")
@@ -345,7 +364,18 @@ func portMatchesBuildJSONGoOracle(dir string) error {
 	if err := os.WriteFile(overlay, encoded, 0644); err != nil {
 		return err
 	}
-	command := exec.Command("go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "go", "build", "-overlay="+overlay, "-o", filepath.Join(dir, "go-cohere"), "./command/formatter_comparison")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	command.Dir = cohere
 	if output, err := childguard.CombinedOutput(command, jsonGuard); err != nil {
 		return fmt.Errorf("Go driver: %w\n%s", err, output)
@@ -541,3 +571,11 @@ func TestPortMatchesGoCohere_124(t *testing.T) { t.Parallel(); portMatchesRun(t,
 func TestPortMatchesGoCohere_125(t *testing.T) { t.Parallel(); portMatchesRun(t, 125) }
 func TestPortMatchesGoCohere_126(t *testing.T) { t.Parallel(); portMatchesRun(t, 126) }
 func TestPortMatchesGoCohere_127(t *testing.T) { t.Parallel(); portMatchesRun(t, 127) }
+
+// Each independently reported unit owns a full 90-second budget.
+func portMatchesDeadline(name string) *time.Timer {
+	return time.AfterFunc(90*time.Second, func() {
+		fmt.Fprintf(os.Stderr, "%s exceeded its 90s deadline\n", name)
+		os.Exit(124)
+	})
+}
