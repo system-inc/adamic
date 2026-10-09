@@ -680,7 +680,9 @@ pickNext() {
     generalBorrowable=$(borrowableBox "${generalEligible}")
   fi
   local poolFree=no
-  [ -f "${state}/pool-side" ] && echo "${free}" | grep -qx "pool P" && poolFree=yes
+  # Every pool-bound tip goes to the pool at once (#sp2wer3): Loom places the units, and a job it can't place in two
+  # minutes gets a box race (cloud/pool-job.sh), so the slot table's "pool P" lines no longer cap it.
+  [ -f "${state}/pool-side" ] && poolFree=yes
   while read -r key queued class branch sha reserved; do
     position=$(( key / 100 ))
     [ -n "${best}" ] && [ "${position}" -gt "${bestPosition}" ] && break
@@ -1043,7 +1045,7 @@ while true; do
     # Free slots per box and class: the table's count less the gates running there (an entry from
     # before the table names no box: it was Cloud's).
     free=$(freeSlots) draining=$(drainingBoxes)
-    [ -n "${free}" ] || break
+    [ -n "${free}" ] || [ -f "${state}/pool-side" ] || break
     # Boxes where a big tip may borrow a small slot: a free small slot, and fewer than two big gates there
     # already (its area slot and one borrowed). Three big gates borrowing on one box stacked hundreds of
     # compiles and took Cloud and Workshop down (Oct 8 11:2xZ).

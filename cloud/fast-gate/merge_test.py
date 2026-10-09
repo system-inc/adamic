@@ -137,6 +137,12 @@ echo '{"sha": "'"$(cat "$TEST_ROOT/gated")"'"}' > "$destination/fast.json"
         # Not started in time, it asks the watcher for a box race and leaves its job queued at Loom (#04gypqe).
         self.assertEqual((self.root / 'watch' / 'race-wanted' / sha).read_text().strip(), 'codex/feature')
         self.assertFalse((self.root / 'jobs' / (sha + '.cancel')).exists())
+        # Every unit placed by the deadline: no race.
+        placed = self.candidate('codex/placed', {'feature.go': 'package feature // placed\n'})
+        (self.root / 'jobs').mkdir(exist_ok=True)
+        (self.root / 'jobs' / (placed + '.placed')).write_text('13 13\n')
+        self.pool(placed, 'codex/placed')
+        self.assertFalse((self.root / 'watch' / 'race-wanted' / placed).exists())
         conflict = self.candidate('codex/conflict', {'setup.go': 'package setup // budget 120 s\n'})
         result, job = self.pool(conflict, 'codex/conflict')
         self.assertIsNone(job, 'a conflict spent pool time')

@@ -745,20 +745,29 @@ class WatchTests(unittest.TestCase):
         # #7bjfzte: a queued star reserved Server and preempted its work while the star itself was bound for the pool.
         w = self.reservation('server B\npool P\n', [('cloud/land-train-1', 'B')], release=False)
         (w.state / 'front').write_text('cloud/land-train-*\n')
-        holders = [subprocess.Popen(['sleep', '30']) for _ in range(2)]
-        for holder in holders:
-            self.addCleanup(holder.kill)
-        (w.state / 'running' / str(holders[0].pid)).write_text('codex/old %s P pool P x %s\n' % ('7' * 40, w.state / 'logs/old.log'))
-        (w.state / 'running' / str(holders[1].pid)).write_text('codex/side %s B server B x %s\n' % ('6' * 40, w.state / 'logs/side.log'))
+        holder = subprocess.Popen(['sleep', '30'])
+        self.addCleanup(holder.kill)
+        (w.state / 'running' / str(holder.pid)).write_text('codex/side %s B server B x %s\n' % ('6' * 40, w.state / 'logs/side.log'))
         (w.state / 'pool-side').touch()
         w.put('initial', 'pass')
-        w.wait(lambda: 'done canary:' in w.read('output'))
+        w.wait(lambda: 'cloud/land-train-1 ' in w.read('pool-starts'))
         time.sleep(.6)
         self.assertNotIn('preempted codex/side', w.read('output'))
         self.assertEqual(w.read('state/star-boxes'), '')
-        # Once the pool has voided it twice, it goes to the boxes and takes Server as the star again.
-        (w.state / 'pool-void').write_text(w.tips[0][1] + '\n')
+        # Two pool voids send it to the boxes, where it takes Server as the star again.
+        w.put('pool-mode', 'void')
         w.wait(lambda: 'preempted codex/side' in w.read('output'))
+        self.assertEqual(w.read('pool-starts').count('cloud/land-train-1 '), 2)
+
+    def test_every_pool_bound_tip_goes_to_the_pool_at_once_whatever_the_pool_lines(self):
+        # #sp2wer3: Loom places the units; one "pool P" line no longer holds the second tip back for the boxes.
+        w = Watcher(3, mode='hold', slots='pool P\nbox0 S\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.put('initial', 'pass')
+        w.wait(lambda: all('codex/test%d ' % i in w.read('pool-starts') for i in range(3)))
+        time.sleep(.3)
+        self.assertEqual([x for x in w.read('starts').splitlines() if x.startswith('codex/')], [])
 
     def race(self):
         """A side tip on the pool whose job Loom hasn't started asks for a box race, as cloud/pool-job.sh does at 600 s."""

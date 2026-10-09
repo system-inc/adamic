@@ -26,9 +26,10 @@ done
 [[ ${sha} =~ ^[0-9a-f]{40}$ ]] || { echo "void: pool job refused: sha '${sha}' is not 40 hex digits"; exit 2; }
 jobs=${LOOM_FAST_JOBS:-${HOME}/.loom/jobs/fast}
 limit=${ADAMIC_POOL_JOB_SECONDS:-5400}
-# A job Loom hasn't started (no .work or .running) within this long gets a box racing it, the boxes being the fallback
-# once the pool gates everything (@system_adamic, Oct 9 04:19Z): the request goes in the watcher's races directory.
-take=${ADAMIC_POOL_TAKE_SECONDS:-600}
+# A job whose units Loom hasn't all placed within this long gets a box racing it, the boxes being the fallback once the
+# pool gates everything (@system_adamic, Oct 9 04:19Z and 09:21Z: two minutes). Loom writes <sha>.placed, "<placed>
+# <total>" (#3tj643t); the request goes in the watcher's races directory.
+take=${ADAMIC_POOL_TAKE_SECONDS:-120}
 races=${ADAMIC_FAST_GATE_WATCH_STATE:-${HOME}/.adamic-fast-gate-watch}/race-wanted
 mkdir -p "${jobs}"
 . "${here}/cloud/fast-gate-classify.sh"
@@ -68,10 +69,16 @@ while [ ! -f "${jobs}/${sha}.verdict" ]; do
   # Not started in time, the job stays queued at Loom and a box races it (#04gypqe; @system_adamic, Oct 9: never cancel a
   # run to move it, race it). The watcher reads the request, gates the tip on a box too, and stops whichever route is
   # still running when the other answers green or red.
-  if [ "${waited}" -ge "${take}" ] && [ ! -e "${jobs}/${sha}.work" ] && [ ! -e "${jobs}/${sha}.running" ] && [ ! -e "${races}/${sha}" ]; then
-    mkdir -p "${races}"
-    echo "${branch}" > "${races}/${sha}"
-    echo "racing: ${sha} the pool hadn't started it in ${take} s, so a box races it"
+  # Checked once, at the deadline: a unit that ends later doesn't start a race late.
+  if [ -z "${raceChecked:-}" ] && [ "${waited}" -ge "${take}" ]; then
+    raceChecked=1
+    placed="" total=""
+    { read -r placed total < "${jobs}/${sha}.placed"; } 2> /dev/null || true
+    if ! [[ ${placed} =~ ^[0-9]+$ && ${total} =~ ^[0-9]+$ && ${placed} -ge ${total} ]] && [ ! -e "${races}/${sha}" ]; then
+      mkdir -p "${races}"
+      echo "${branch}" > "${races}/${sha}"
+      echo "racing: ${sha} the pool placed ${placed:-0} of ${total:-its} units in ${take} s, so a box races it"
+    fi
   fi
   if [ "${waited}" -ge "${limit}" ]; then
     echo "void: ${sha} the pool gave no verdict in ${limit} s"
