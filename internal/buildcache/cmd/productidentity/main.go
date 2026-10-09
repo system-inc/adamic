@@ -696,18 +696,21 @@ func flip(root, scratch, address string, server *store, results map[string]*mode
 		return false
 	}
 	victim := stored[chosen.key]
-	if len(victim.files) == 0 {
-		fmt.Printf("FAIL flip: product %s has no files\n", chosen.key[:12])
-		return false
+	// The product's largest file: its point, and never an empty blob with no byte to flip.
+	var file productFile
+	var content []byte
+	for _, candidate := range victim.files {
+		held, err := os.ReadFile(filepath.Join(server.directory, "shared", "blobs", candidate.sha256))
+		check(err)
+		if len(held) > len(content) {
+			file, content = candidate, held
+		}
 	}
-	file := victim.files[0]
-	blob := filepath.Join(server.directory, "shared", "blobs", file.sha256)
-	content, err := os.ReadFile(blob)
-	check(err)
 	if len(content) == 0 {
-		fmt.Printf("FAIL flip: %s's blob is empty, nothing to flip\n", file.path)
+		fmt.Printf("FAIL flip: product %s has no file with a byte to flip\n", chosen.key[:12])
 		return false
 	}
+	blob := filepath.Join(server.directory, "shared", "blobs", file.sha256)
 	position := len(content) / 2
 	content[position] ^= 0x01
 	check(os.WriteFile(blob, content, 0o644))
