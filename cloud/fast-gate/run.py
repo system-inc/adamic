@@ -170,9 +170,18 @@ def main():
     parser.add_argument("--session", default="")
     parser.add_argument("--session-source", default="")
     parser.add_argument("--weights", help="package seconds, longest first, to order the full gate's packages")
+    # Side work's fast gates on Loom's pool (#xt96xyp): the pool runs this selection where the tree is whole, so one
+    # selection decides what a fast gate tests wherever it runs. It writes select.json and runs nothing.
+    parser.add_argument("--select", action="store_true", help="write the fast gate's package selection to <out>/select.json and stop")
     arguments = parser.parse_args()
     os.makedirs(arguments.out, exist_ok=True)
     gate = Gate(arguments)
+    if arguments.select:
+        try:
+            gate.run()
+        except BaseException:
+            gate.fail("runner", traceback.format_exc())
+        sys.exit(0 if gate.failure is None and os.path.exists(os.path.join(arguments.out, "select.json")) else 1)
     signal.signal(signal.SIGTERM, gate.stop)
     try:
         gate.run()
@@ -251,9 +260,11 @@ class Gate:
         if head != self.arguments.sha:
             self.fail("setup", "the tree is at %s, not the candidate %s" % (head, self.arguments.sha))
             return
-        self.npmCli()
-        if not self.npmPackages():
-            return
+        selecting = vars(self.arguments).get("select") is True
+        if not selecting:
+            self.npmCli()
+            if not self.npmPackages():
+                return
         if self.arguments.full:
             self.runFull()
             return
@@ -289,6 +300,18 @@ class Gate:
         if "stage3" in executors:
             packages = sorted(set(packages) | set(self.goList("./stage3/...")))
             self.planned.append("stage3")
+        if selecting:
+            # What the pool can run is the Go tests; every other executor this change needs is named, so a pool
+            # verdict says what it didn't cover.
+            selection = {"sha": self.arguments.sha, "base": self.arguments.base, "packages": packages,
+                         "env": dict(gateEnvironment, **self.sampling),
+                         "deferred": {package: sorted(names) for package, names in sorted(self.deferred.items()) if package in packages},
+                         "only_tests": {package: sorted(names) for package, names in sorted(self.onlyTests.items())},
+                         "executors_beyond_go_tests": sorted(executors | ({"smoke"} if smoke else set()))}
+            with open(os.path.join(self.arguments.out, "select.json"), "w") as handle:
+                json.dump(selection, handle, indent=2)
+                handle.write("\n")
+            return
         self.result.update({
             "changed_files": changed,
             "packages": packages,

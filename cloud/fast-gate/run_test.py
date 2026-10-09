@@ -164,6 +164,31 @@ class FailClosed(unittest.TestCase):
         gate, status, result = self.gate(full=False, failing="vet")
         self.assertNotIn("cancelled", status)
 
+    def test_select_writes_the_fast_gate_s_selection_and_runs_nothing(self):
+        # Side work's fast gates on Loom's pool (#xt96xyp): the same selection, run where the tree is whole.
+        out = tempfile.mkdtemp(dir=self.directory)
+        arguments = mock.Mock(tree=self.tree, sha=self.sha, base=self.sha, tools=self.tree, out=out, parallel=4, full=False, select=True,
+                              branch="", branch_source="", session="", session_source="", weights=None, run_to_end=False)
+        launched = []
+        with mock.patch.object(run.subprocess, "Popen", side_effect=lambda command, **options: launched.append(command) or realPopen(command, **options)), \
+                mock.patch.object(run.Gate, "touched", lambda gate, changed: (gate.packageDirectories.update({"example.com/p": self.tree}) or ["example.com/p"], [])), \
+                mock.patch.object(run.Gate, "npmCli", lambda gate: self.fail("select installs nothing")), \
+                mock.patch("builtins.print"):
+            gate = run.Gate(arguments)
+            gate.packageDirectories = {}
+            gate.run()
+        self.assertIsNone(gate.failure)
+        with open(os.path.join(out, "select.json")) as handle:
+            selection = json.load(handle)
+        self.assertEqual(selection["packages"], ["example.com/p"])
+        self.assertEqual((selection["sha"], selection["base"]), (self.sha, self.sha))
+        # The tests' environment is the gate's own: uncached, with the sampling the landing gate uses.
+        self.assertEqual(selection["env"]["ADAMIC_GATE_UNCACHED"], "1")
+        self.assertEqual(selection["env"]["ADAMIC_GATE_SAMPLE"], self.sha)
+        self.assertIn("smoke", selection["executors_beyond_go_tests"])
+        # Nothing but git ran: no build, vet or test.
+        self.assertEqual([command[0] for command in launched if command[0] != "git"], [])
+
     def test_a_stage_that_reports_nothing_is_red(self):
         for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
             with self.subTest(stage=stageName):
