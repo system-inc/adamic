@@ -14,7 +14,7 @@ import (
 )
 
 // Opt-in artifacts outlive t.TempDir so callgrind and the timing runner use the same snapshot.
-// Not parallel: ADAMIC_SCANNER_PROFILE_DIR artifact paths and native.Build runtime archive cache.
+// Not parallel: ADAMIC_SCANNER_PROFILE_DIR artifact paths.
 func TestProfileArtifacts(t *testing.T) {
 	directory := os.Getenv("ADAMIC_SCANNER_PROFILE_DIR")
 	if directory == "" {

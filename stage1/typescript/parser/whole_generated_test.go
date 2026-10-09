@@ -51,8 +51,8 @@ func wholeCases() []string {
 	return cases
 
 }
-// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestWholeGeneratedAgrees(t *testing.T) {
+	t.Parallel()
 	cases := wholeCases()
 	manifest := wholeManifest(t, cases)
 	oracle := goOracle(t)
@@ -72,8 +72,8 @@ func TestWholeGeneratedAgrees(t *testing.T) {
 	t.Logf("%d generated whole files, %d identical bytes", len(cases), len(want.output))
 }
 
-// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestObsoleteImportAttributesAgrees(t *testing.T) {
+	t.Parallel()
 	manifest := wholeManifest(t, []string{`import X from "x" assert {type: "json"}; export * from "x" assert {type: "json"}; type T = import("x", {assert: {type: "json"}});`})
 	oracle := goOracle(t)
 	want := execute(t, "", oracle, "--manifest", manifest, "--whole", "--allow-obsolete-assert")

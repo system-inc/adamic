@@ -325,8 +325,8 @@ func askedCorpus(t *testing.T) corpus {
 	return corpus{write("all.txt", all.String()), write("edges.txt", edges.String()), write("compiler.txt", compiler.String()), len(compilerFiles) + len(stageFiles), generated}
 }
 
-// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestScannerAgreesWithTypescriptGo(t *testing.T) {
+	t.Parallel()
 	asked := askedCorpus(t)
 	oracle := goOracle(t)
 	directory := copyPort(t, "", "", "")
@@ -354,8 +354,8 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 		{"regex rescan skipped", "main.ts", "scanner.rescanSlash();", "scanner.code();"},
 	}
 	for _, mutant := range mutants {
-		// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			mutated := copyPort(t, mutant.file, mutant.from, mutant.to)
 			nativeMutant := buildPort(t, mutated, true)
 			for _, side := range []struct {
@@ -376,7 +376,7 @@ func TestScannerAgreesWithTypescriptGo(t *testing.T) {
 	}
 }
 
-// Not parallel: best-of-five scanner throughput timing requires exclusive CPU use; native.Build runtime archive cache.
+// Not parallel: best-of-five scanner throughput timing requires exclusive CPU use.
 func TestPerformance(t *testing.T) {
 	if os.Getenv("ADAMIC_SCANNER_BENCH") == "" {
 		t.Skip("set ADAMIC_SCANNER_BENCH=1 for best-of-five throughput")

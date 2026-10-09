@@ -99,8 +99,8 @@ func generatedExpressions() []string {
 	return cases
 }
 
-// Not parallel: native.runtimeBuilds and the runtime archive cache at os.UserCacheDir()/adamic/runtime via native.Build.
 func TestGeneratedExpressionsAgree(t *testing.T) {
+	t.Parallel()
 	cases := generatedExpressions()
 	directory := t.TempDir()
 	var manifest strings.Builder
