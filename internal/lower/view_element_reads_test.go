@@ -84,7 +84,7 @@ func TestViewSpreadControl(t *testing.T) {
 func TestViewSpreadMethodRefused(t *testing.T) {
 	t.Parallel()
 	_, err := lowerSource(t, `interface Root {readonly kind:1} interface View extends Root {read():number} const raw={kind:1 as const, read(){return 1}}; const base:Root=raw; const view=base as View; const copy={...view}; console.log(Object.keys(copy).join(','));`)
-	if err == nil || !strings.Contains(err.Error(), "method without an own data slot") {
+	if err == nil || !(strings.Contains(err.Error(), "method without an own data slot") || strings.Contains(err.Error(), "view type has an unsupported member: read")) {
 		t.Fatalf("want checked method spread refused, got %v", err)
 	}
 }

@@ -1,6 +1,8 @@
 package oracle
 
 import (
+	"os"
+	"path/filepath"
 	"testing"
 )
 
@@ -41,7 +43,11 @@ func fx7Text(t *testing.T, name string) {
 	switch name {
 	case "p32", "p33":
 		want.stdout = []byte("3\n")
-		want.stderr = []byte("adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found string\n")
+		expression := "viewed.name"
+		if name == "p33" {
+			expression = "value.name"
+		}
+		want.stderr = []byte("adamic: panic: field read failed: " + expression + " is not a string; expected string, found number\n")
 	case "p67":
 		want.stderr = []byte("adamic: panic: field read failed: viewed.value matches no member of number | Inner; expected number | Inner, found function\n")
 	case "scalar-tuple":
@@ -68,3 +74,32 @@ func TestFX7TextP67(t *testing.T) { t.Parallel(); fx7Text(t, "p67") }
 func TestFX7TextP72(t *testing.T) { t.Parallel(); fx7Text(t, "p72") }
 
 func TestFX7TextScalarTuple(t *testing.T) { t.Parallel(); fx7Text(t, "scalar-tuple") }
+
+// The merged receiver certificates stop p32/p33 at their reads. Exercise the
+// retained legacy checked-write emitter boundary independently of read routing.
+func TestFX7DeclaredWriteText(t *testing.T) {
+	t.Parallel()
+	path := filepath.Join(t.TempDir(), "declared-write.a")
+	source := `interface Root { readonly kind: 'Holder' }
+interface View extends Root { name: string | number }
+const raw = { kind: 'Holder' as const, name: 5 as string | number };
+const base: Root = raw;
+const viewed = base as View;
+viewed.name = 'new';
+`
+	if err := os.WriteFile(path, []byte(source), 0o644); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	program.CheckedFields["name"] = true
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: <write>.name is not a string | number; expected string | number, found number\n")}
+	sanitized, _ := nativelyUncached(t, program)
+	for backend, got := range map[string]run{"native": releasedUncached(t, program), "sanitized": sanitized, "javascript": onJavaScriptBackend(t, program)} {
+		if diff := disagreement(want, got); diff != "" {
+			t.Errorf("%s: %s; stderr %q", backend, diff, got.stderr)
+		}
+	}
+}
