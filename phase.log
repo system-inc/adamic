@@ -1,0 +1,14 @@
+FIRST FAILURE (budget, at 116.6 s):
+10 new test units over the 30 s budget (measured on 1c2612cb6471, 5 CPUs, load 8.1/5.2/5.0; split each into units under 30 s):
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/non-null-assertion/main.a (setup) 37.4 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/function-without-body/main.a (setup) 37.0 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/prefix-unary-value/main.a (setup) 36.6 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/structural-method-statics/main.a (setup) 36.4 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/generic-optional-return/main.a (setup) 36.1 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/binary-value-value/main.a (setup) 35.4 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/value-condition/main.a (setup) 35.4 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/any-value/main.a (setup) 35.1 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/optional-boolean-field/main.a (setup) 35.0 s (pass)
+  github.com/system-inc/adamic/stage3/fixtures TestFixturesReal/real/type-predicate/main.a (setup) 33.5 s (pass)
+(box load 8.1 on 5 cores at first failure)
+red: 114a643952ec18af1a730a6e838f1dcb815f6223 fast gate, first failure at budget after 116.6 s, under load (load 8.1 on 5 cores at first failure) (build=61.8s vet=30.9s smoke=15.7s census=1.4s; 471 units over 30 s (39802 s, 0 on the burn-down, 456 drifted over); products over 30 s, listed not red: product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted 82.3 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_jsx_tree_setup 75.7 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableNative 74.8 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementSanitizedNative 59.9 s; product github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompleteSuggestionNative 40.8 s; box load 2.1 on 5 cores at start, load 8.1 on 5 cores at first failure, load 8.5 on 5 cores at end; deferred to full gate: 0 tests; branch none, session none), 0 fail, 46 pass
