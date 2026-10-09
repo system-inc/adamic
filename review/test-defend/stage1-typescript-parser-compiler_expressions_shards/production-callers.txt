@@ -1,0 +1,30 @@
+stage1/typescript/parser/yield_test.go:42:		{"native", execute(t, "", buildPort(t, port, true), "--manifest", path).output},
+stage1/typescript/parser/whole_test.go:36:	got = execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/whole_mutants_test.go:78:	binary := buildPort(t, mutant, true)
+stage1/typescript/parser/whole_mutants_split_test.go:140:		lowered, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/whole_generated_test.go:68:	got = execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/whole_generated_test.go:87:	}{{"Node", wholeNode(t, directory, manifest, false)}, {"native", execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")}} {
+stage1/typescript/parser/type_kinds_test.go:29:	got = execute(t, "", buildPort(t, directory, true), "--manifest", docs, "--doc-types")
+stage1/typescript/parser/performance_test.go:29:	binary := buildPort(t, directory, false)
+stage1/typescript/parser/performance_test.go:160:	baseline := buildPort(t, absolute, true)
+stage1/typescript/parser/performance_test.go:169:	binary := buildPort(t, mutant, true)
+stage1/typescript/parser/parser_test.go:84:func buildPort(t *testing.T, directory string, sanitize bool) string {
+stage1/typescript/parser/parser_test.go:90:	lowered, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/jsx_test.go:104:		binary := buildPort(t, directory, sanitize)
+stage1/typescript/parser/jsx_scanner_mutants_test.go:16:	for _, got := range []execution{wholeNode(t, directory, manifest, false), execute(t, "", buildPort(t, directory, true), "--manifest", manifest, "--whole")} {
+stage1/typescript/parser/jsx_scanner_mutants_test.go:62:			native := execute(t, "", buildPort(t, mutant, true), "--manifest", manifest, "--whole")
+stage1/typescript/parser/jsx_rejection_test.go:48:	binary := buildPort(t, directory, true)
+stage1/typescript/parser/jsx_rejection_test.go:61:	mutantBinary := buildPort(t, mutant, true)
+stage1/typescript/parser/jsx_rejection_test.go:81:	binary := buildPort(t, directory, true)
+stage1/typescript/parser/jsx_rejection_test.go:117:			mutantBinary := buildPort(t, mutant, true)
+stage1/typescript/parser/generated_test.go:128:	got = execute(t, "", buildPort(t, absolute, true), "--manifest", path)
+stage1/typescript/parser/jsx_mutants_products_test.go:79:		ir, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/compiler_expressions_shards_test.go:63:		ir, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/import_cycles_test.go:34:	lowered, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:36:	_, err = lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:61:	_, err = lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:86:	_, err = lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:112:	lowered, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:123:	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+stage1/typescript/parser/gaps_test.go:158:	lowered, err := lower.Lower(context.Background(), program)
+stage1/typescript/parser/gaps_test.go:169:	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {

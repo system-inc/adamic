@@ -1,0 +1,269 @@
+[
+  {
+    "test": "TestCompilerExpressionsAgree",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/compiler_expressions_shards_test.go",
+    "seconds": 9.658,
+    "oracle": "Go overlay running unmodified typescript-go parser; self union checks",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M3",
+      "M4",
+      "E_LOAD",
+      "E_LOWER",
+      "E_PORT"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: compiler_expressions_shards_test.go:216: Node: case 2 line 7388: port \"2 CallExpression 11320 11334 0 0 1 0 0\\t\\t\\t\", Go \"2 BinaryExpression 11320 11348 0 0 -1 0 0\\t\\t\\t\"",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestGeneratedExpressionsAgree"
+    ],
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_NATIVE_SPLIT=u154-M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => compiler_expressions_shards_test.go:216: Node: case 2 line 7388: port \"2 CallExpression 11320 11334 0 0 1 0 0\\t\\t\\t\", Go \"2 BinaryExpression 11320 11348 0 0 -1 0 0\\t\\t\\t\""
+  },
+  {
+    "test": "TestStrongAstParentGap",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/gaps_test.go",
+    "seconds": 0.112,
+    "oracle": "Node plus self cycle-refusal phrase in GAPS.md",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2",
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: gaps_test.go:39: GAPS.md says strong parent/child cycle is refused, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": null,
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 ADAMIC_NATIVE_SPLIT=u154-M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => gaps_test.go:39: GAPS.md says strong parent/child cycle is refused, got <nil>"
+  },
+  {
+    "test": "TestPushSpreadGap",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/gaps_test.go",
+    "seconds": 0.109,
+    "oracle": "Node plus self SpreadElement NotYet label in GAPS.md",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: gaps_test.go:64: GAPS.md records push spread NotYet, got /workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts:3:15: stage 0 can't lower  yet",
+    "verdict": "subsumed",
+    "subsumed_by": "TestClassMethodInterfaceGap",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_NATIVE_SPLIT=u154-M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => gaps_test.go:64: GAPS.md records push spread NotYet, got /workspace/adamic/stage1/typescript/parser/gaps/2_push_spread.ts:3:15: stage 0 can't lower  yet"
+  },
+  {
+    "test": "TestClassMethodInterfaceGap",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/gaps_test.go",
+    "seconds": 0.119,
+    "oracle": "Node plus self erased-prototype-origin NotYet label in GAPS.md",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1",
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: gaps_test.go:89: GAPS.md records an erased class-method origin NotYet, got /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower  yet",
+    "verdict": "subsumed",
+    "subsumed_by": "TestPushSpreadGap",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_NATIVE_SPLIT=u154-M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => gaps_test.go:89: GAPS.md records an erased class-method origin NotYet, got /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower  yet"
+  },
+  {
+    "test": "TestClosedOptionalFunctionValueGap",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/gaps_test.go",
+    "seconds": 0.312,
+    "oracle": "Source Node output compared with native and JavaScript backends",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3",
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: gaps_test.go:132: native ASan/UBSan/LSan: \"2\\n\", Node \"1\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": "TestTypeOnlyImportCycleCompiles",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_NATIVE_SPLIT=u154-M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => gaps_test.go:132: native ASan/UBSan/LSan: \"2\\n\", Node \"1\\n\""
+  },
+  {
+    "test": "TestClosedConditionalEmptyArrayGap",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/gaps_test.go",
+    "seconds": 0.311,
+    "oracle": "Source Node output compared with native and JavaScript backends",
+    "oracle_kind": "external-run",
+    "kills": [
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "E_LOWER: gaps_test.go:178: native ASan/UBSan/LSan: \"\", Node \"1\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": "TestPushSpreadGap",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=E_LOWER ADAMIC_NATIVE_SPLIT=u154-E_LOWER ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/E_LOWER timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => gaps_test.go:178: native ASan/UBSan/LSan: \"\", Node \"1\\n\""
+  },
+  {
+    "test": "TestGeneratedExpressionsAgree",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/generated_test.go",
+    "seconds": 17.555,
+    "oracle": "Go overlay running unmodified typescript-go parser",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3",
+      "M4",
+      "E_LOAD",
+      "E_LOWER",
+      "E_PORT"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: generated_test.go:126: Node: case 456 line 4474: port \"1 BinaryExpression 0 6 0 0 -1 0 0\\t\\t\\t\", Go \"1 Identifier 0 1 0 0 -1 0 0\\t\\ta\\t\"",
+    "verdict": "subsumed",
+    "subsumed_by": "TestCompilerExpressionsAgree",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_NATIVE_SPLIT=u154-M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => generated_test.go:126: Node: case 456 line 4474: port \"1 BinaryExpression 0 6 0 0 -1 0 0\\t\\t\\t\", Go \"1 Identifier 0 1 0 0 -1 0 0\\t\\ta\\t\""
+  },
+  {
+    "test": "TestTypeOnlyImportCycleCompiles",
+    "package": "github.com/system-inc/adamic/stage1/typescript/parser",
+    "file": "stage1/typescript/parser/import_cycles_test.go",
+    "seconds": 0.306,
+    "oracle": "Source Node output compared with sanitized native",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3",
+      "E_LOAD",
+      "E_LOWER"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3: import_cycles_test.go:44: native \"2\\n\", Node \"1\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": "TestClosedOptionalFunctionValueGap",
+    "mutants_in_matrix": 7,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCompilerExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree",
+      "TestTypeOnlyImportCycleCompiles"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_NATIVE_SPLIT=u154-M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u154/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_[0-9]+|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree|TestTypeOnlyImportCycleCompiles)$' => import_cycles_test.go:44: native \"2\\n\", Node \"1\\n\""
+  }
+]

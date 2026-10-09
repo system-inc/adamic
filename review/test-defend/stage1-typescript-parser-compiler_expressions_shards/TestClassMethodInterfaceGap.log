@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T14:23:41.966088154Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/typescript/parser"}
+{"Time":"2026-10-09T14:23:41.977161214Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-09T14:23:41.977256468Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== RUN   TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:41.977493634Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== PAUSE TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:41.977498141Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-09T14:23:41.977507155Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap"}
+{"Time":"2026-10-09T14:23:41.977510079Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"=== CONT  TestClassMethodInterfaceGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:42.126039843Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"    gaps_test.go:91: Node prints 1; Adamic reports: /workspace/adamic/stage1/typescript/parser/gaps/4_class_interface_method.ts:7:59: stage 0 can't lower a class method through a view that erases its prototype origin yet\n"}
+{"Time":"2026-10-09T14:23:42.128567095Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Output":"--- PASS: TestClassMethodInterfaceGap (0.15s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:42.128596188Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Test":"TestClassMethodInterfaceGap","Elapsed":0.15}
+{"Time":"2026-10-09T14:23:42.128622518Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:23:42.133837743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"coverage: 5.7% of statements in ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:23:42.150985416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Output":"ok  \tgithub.com/system-inc/adamic/stage1/typescript/parser\t0.184s\tcoverage: 5.7% of statements in ./internal/lower, ./internal/native, ./internal/javascript\n"}
+{"Time":"2026-10-09T14:23:42.15106145Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/typescript/parser","Elapsed":0.185}
