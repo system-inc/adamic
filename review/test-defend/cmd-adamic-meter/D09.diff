@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -126,7 +126,7 @@
+ 		}
+ 	}
+ 	if !relevant {
+-		return overlay, 0, nil
++		return nil, 0, nil
+ 	}
+ 	program, owned, err := optionalProgram(paths, overlay)
+ 	if err != nil {

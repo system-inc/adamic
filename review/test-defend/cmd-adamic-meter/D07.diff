@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/returns.go
++++ b/cmd/adamic-meter/returns.go
+@@ -51,7 +51,7 @@
+ 			name += ".ts"
+ 		}
+ 		file := files[name]
+-		if file == nil || !owned[name] {
++		if file == nil {
+ 			continue
+ 		}
+ 		line, _ := strconv.Atoi(match[2])

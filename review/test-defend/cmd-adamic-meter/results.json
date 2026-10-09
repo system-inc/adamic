@@ -1,0 +1,345 @@
+[
+  {
+    "test": "TestFixtureCorpusCountsEveryDiagnosticKind",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestAdaptRewritesTypeOnlyImportInMemory"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D01 cmd/adamic-meter/main.go:359",
+    "attempts": [
+      {
+        "mutant": "D01",
+        "file_line": "cmd/adamic-meter/main.go:359",
+        "change": "change Refused report label to Rejected",
+        "rows_failed": [
+          "TestFixtureCorpusCountsEveryDiagnosticKind"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D01 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D01.log 2>&1; main_test.go:24: counts = map[string]int{\"NotYet\":1, \"Rejected\":1}, want one Refused and one NotYet",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalAdaptationContextualDeclarations"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D03 cmd/adamic-meter/optional.go:302",
+    "attempts": [
+      {
+        "mutant": "D03",
+        "file_line": "cmd/adamic-meter/optional.go:302",
+        "change": "return early for callable property type declarations",
+        "rows_failed": [
+          "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D03.log 2>&1; optional_test.go:32: adaptations = []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:4, DeclarationsChanged:2, FunctionsChanged:0}}",
+    "rows_passed": [
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalAdaptationUTF16AndAdamicExtension"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D09 cmd/adamic-meter/optional.go:128",
+    "attempts": [
+      {
+        "mutant": "D09",
+        "file_line": "cmd/adamic-meter/optional.go:128",
+        "change": "drop accumulated overlay when only non-optional diagnostics remain",
+        "rows_failed": [
+          "TestOptionalAdaptationRechecksPresenceNarrowing"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D09 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D09.log 2>&1; optional_test.go:133: presence consumer was not rechecked: /workspace/meter-defend-tmp/TestOptionalAdaptationRechecksPresenceNarrowing2264952963/001/main.ts:1:46: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationOwnsOnlyNamedRoots",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalAdaptationRechecksPresenceNarrowing"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D02 cmd/adamic-meter/optional.go:299",
+    "attempts": [
+      {
+        "mutant": "D02",
+        "file_line": "cmd/adamic-meter/optional.go:299",
+        "change": "drop external declaration ownership condition",
+        "rows_failed": [
+          "TestOptionalAdaptationOwnsOnlyNamedRoots"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D02 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D02.log 2>&1; optional_test.go:191: rewrote an external declaration: map[string]string{\"/workspace/meter-defend-tmp/TestOptionalAdaptationOwnsOnlyNamedRoots3563250563/001/external.ts\":\"export interface S {p?: (string) | undefined}\"} []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:1, DeclarationsChanged:1, FunctionsChanged:0}}",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationPreservesLiveMethodPlacement",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D08 cmd/adamic-meter/optional.go:172",
+    "attempts": [
+      {
+        "mutant": "D08",
+        "file_line": "cmd/adamic-meter/optional.go:172",
+        "change": "return early from the whole adaptation on a live-method assignment",
+        "rows_failed": [
+          "TestOptionalAdaptationPreservesLiveMethodPlacement"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D08 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D08.log 2>&1; optional_test.go:226: only the optional property may change, not the live method: []main.adaptation(nil) \"class Action { optional?(): string { return 'x'; } }; const action = new Action(); console.log(`${Object.hasOwn(action, 'optional')} ${Object.hasOwn(Action.prototype, 'optional')}`); action.optional = undefined; interface Settings { value?: string }; const settings: Settings = {}; settings.value = undefined;\"",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestOptionalAdaptationRechecksPresenceNarrowing"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D04 cmd/adamic-meter/optional.go:225",
+    "attempts": [
+      {
+        "mutant": "D04",
+        "file_line": "cmd/adamic-meter/optional.go:225",
+        "change": "drop ownership condition distinguishing a real .a.ts from an alias",
+        "rows_failed": [
+          "TestOptionalAdaptationUTF16AndAdamicExtension"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D04.log 2>&1; optional_test.go:250: adaptations = []main.adaptation{main.adaptation{Rewrite:\"present undefined in optional property declarations\", Removed:0, DeclarationsChanged:1, FunctionsChanged:0}}; original=/workspace/meter-defend-tmp/TestOptionalAdaptationUTF16AndAdamicExtension.a.ts2566593293/001/main.a.ts:1:64: error TS2412: Type 'undefined' is not assignable to type 'string' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the type of the target.",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestImplicitReturnsNeedNoAdaptation",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D05 cmd/adamic-meter/main.go:275",
+    "attempts": [
+      {
+        "mutant": "D05",
+        "file_line": "cmd/adamic-meter/main.go:275",
+        "change": "change the valid-baseline early return to an invalid-input refusal",
+        "rows_failed": [
+          "TestImplicitReturnsNeedNoAdaptation"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D05 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D05.log 2>&1; returns_test.go:46: invalid argument",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestReturnAdaptationLeavesUnprovenContracts",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D06 cmd/adamic-meter/returns.go:79",
+    "attempts": [
+      {
+        "mutant": "D06",
+        "file_line": "cmd/adamic-meter/returns.go:79",
+        "change": "change selection condition to admit unknown return contracts",
+        "rows_failed": [
+          "TestReturnAdaptationLeavesUnprovenContracts"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D06 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D06.log 2>&1; returns_test.go:97: only the admitted contract may change: 2 map[string]string{\"/workspace/meter-defend-tmp/TestReturnAdaptationLeavesUnprovenContracts1205663836/001/main.ts\":\"function inferred(flag: boolean) { if (flag) return 1; }\\nfunction required(flag: boolean): number { if (flag) return 1; }\\nfunction uncertain<T>(flag: boolean, value: T): T { if (flag) return value; }\\nfunction opaque(flag: boolean): unknown { if (flag) return 1; \\nreturn void 0;\\n}\\nfunction anything(flag: boolean): any { if (flag) return 1; }\\nasync function asynchronous(flag: boolean): Promise<number | undefined> { if (flag) return 1; }\\nfunction* generator(flag: boolean): Generator<number, number | undefined> { if (flag) return 1; }\\nfunction admitted(flag: boolean): number | undefined { if (flag) return 1; \\nreturn void 0;\\n}\\n\"} <nil>",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationOwnsOnlyRoots",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  },
+  {
+    "test": "TestReturnAdaptationOwnsOnlyRoots",
+    "package": "cmd/adamic-meter",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D07 cmd/adamic-meter/returns.go:54",
+    "attempts": [
+      {
+        "mutant": "D07",
+        "file_line": "cmd/adamic-meter/returns.go:54",
+        "change": "drop return declaration root ownership condition",
+        "rows_failed": [
+          "TestReturnAdaptationOwnsOnlyRoots"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/workspace/meter-defend-tmp/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./cmd/adamic-meter/ -run . > D07.log 2>&1; returns_test.go:124: only the root return may change: 2 map[string]string{\"/workspace/meter-defend-tmp/TestReturnAdaptationOwnsOnlyRoots1284457741/001/external.ts\":\"export function f(flag: boolean): number | undefined { if (flag) return 1; \\nreturn void 0;\\n}\", \"/workspace/meter-defend-tmp/TestReturnAdaptationOwnsOnlyRoots1284457741/001/main.ts\":\"import {f} from \\\"./external.ts\\\"; console.log('' + f(false));\\nfunction local(flag: boolean): number | undefined { if (flag) return 2; \\nreturn void 0;\\n}\"} <nil>",
+    "rows_passed": [
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior"
+    ]
+  }
+]

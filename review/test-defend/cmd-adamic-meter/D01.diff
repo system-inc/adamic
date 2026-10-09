@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -356,7 +356,7 @@
+ 	}
+ 	var refused *lower.Refused
+ 	if errors.As(err, &refused) {
+-		return []observation{{"Refused", normalize(refused.What), refused.Where}}, true
++		return []observation{{"Rejected", normalize(refused.What), refused.Where}}, true
+ 	}
+ 	var notYet *lower.NotYet
+ 	if errors.As(err, &notYet) {

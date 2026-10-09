@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -222,7 +222,7 @@
+ 	for declaration := range selected {
+ 		file := ast.GetSourceFileOfNode(declaration)
+ 		name := file.FileName().AsString()
+-		if strings.HasSuffix(name, ".a.ts") && owned[strings.TrimSuffix(name, ".ts")] {
++		if strings.HasSuffix(name, ".a.ts") {
+ 			name = strings.TrimSuffix(name, ".ts")
+ 		}
+ 		sources[name] = file.Text()

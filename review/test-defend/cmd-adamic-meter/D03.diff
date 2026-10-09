@@ -1,0 +1,10 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -299,6 +299,7 @@
+ 		if !ast.HasQuestionToken(declaration) || declaration.Type() == nil || !owned[ast.GetSourceFileOfNode(declaration).FileName().AsString()] {
+ 			return
+ 		}
++		if declaration.Type().Kind == ast.KindFunctionType { return }
+ 		var target *checker.Type
+ 		if declaration.Kind == ast.KindMethodSignature {
+ 			if len(symbol.Declarations) != 1 {

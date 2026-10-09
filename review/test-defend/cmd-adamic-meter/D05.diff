@@ -1,0 +1,11 @@
+--- a/cmd/adamic-meter/main.go
++++ b/cmd/adamic-meter/main.go
+@@ -273,7 +273,7 @@
+ func importAdaptations(paths []string, baselineErr error) (map[string]string, []adaptation, error) {
+ 	var checkError *load.CheckError
+ 	if !errors.As(baselineErr, &checkError) {
+-		return nil, nil, nil
++		return nil, nil, os.ErrInvalid
+ 	}
+ 	edits := make(map[string][]sourceEdit)
+ 	for _, diagnostic := range checkError.Diagnostics {

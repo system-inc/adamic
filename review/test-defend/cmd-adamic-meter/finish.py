@@ -1,0 +1,53 @@
+import json,pathlib,subprocess
+p=pathlib.Path('review/test-defend/cmd-adamic-meter');m=json.loads((p/'matrix.json').read_text());assert len(m)==9
+names=json.loads((p/'names.json').read_text());by={r['target']:r for r in m}
+scope=[('TestFixtureCorpusCountsEveryDiagnosticKind','subsumed',['TestAdaptRewritesTypeOnlyImportInMemory']),('TestAdaptOptionalPropertiesPreservesRuntimeAndDisk','subsumed',['TestOptionalAdaptationContextualDeclarations']),('TestOptionalAdaptationRechecksPresenceNarrowing','subsumed',['TestOptionalAdaptationUTF16AndAdamicExtension']),('TestOptionalAdaptationOwnsOnlyNamedRoots','subsumed',['TestOptionalAdaptationRechecksPresenceNarrowing']),('TestOptionalAdaptationPreservesLiveMethodPlacement','untrue',[]),('TestOptionalAdaptationUTF16AndAdamicExtension','subsumed',['TestOptionalAdaptationRechecksPresenceNarrowing']),('TestImplicitReturnsNeedNoAdaptation','untrue',[]),('TestReturnAdaptationLeavesUnprovenContracts','untrue',[]),('TestReturnAdaptationOwnsOnlyRoots','untrue',[])]
+rows=[]
+for test,prior,subsumer in scope:
+ r=by[test];assert r['rows_failed']==[test],r;assert set(r['rows_passed'])==set(names)-{test};assert r['vet_exit']==0
+ rows.append(dict(test=test,package='cmd/adamic-meter',prior_verdict=prior,subsumed_by=subsumer,defense='defended',unique_mutant=r['mutant']+' '+r['file_line'],attempts=[{k:r[k] for k in ['mutant','file_line','change','rows_failed']}],evidence=r['command']+'; '+r['failures'][0],rows_passed=r['rows_passed']))
+(p/'results.json').write_text(json.dumps(rows,indent=2)+'\n')
+notes='''# Defense of cmd/adamic-meter audit
+
+Starting origin/main: '''+(p/'base.txt').read_text().strip()+'''. Prior audit: '''+(p/'audit-commit.txt').read_text().strip()+'''.
+
+Nine rows defended, each by one unique production mutant. All 17 current top-level tests ran in every full-package matrix. Every mutant had exactly one failed row and sixteen passed rows. No skips, panics or timeouts occurred. No production, fixture, oracle, harness or test changes remain. Each standalone diff applies to the starting origin/main commit and passed go vet ./cmd/adamic-meter/ while applied alone. Each matrix used its own ADAMIC_BUILD_CACHE_DIR.
+
+results.json contains per-row verdicts, evidence and full passing-row lists. matrix.json retains exact failure output, every passed and failed row, commands and elapsed times. coverage-diffs.json compares each subsumed row with its named subsumer and each untrue row with the union of the other sixteen profiles. Each current row was run alone with -coverpkg=github.com/system-inc/adamic/cmd/adamic-meter and -coverprofile. Individual profiles and logs accompany this report.
+
+## Code under test and oracle
+
+The code under test is the meter's production Go report construction and in-memory adapters. Upstream TypeScript, internal/load, internal/lower, Node and source fixtures remain unchanged. No native products were built. The meter's declaration resolver is production code, but its options were not mutated here.
+
+* Fixture diagnostic kinds: CUT inspect's conversion of lower.Refused and lower.NotYet into report observations. Oracle is handwritten per-kind counts and lowering-entry count. D01 changes the production Refused label to Rejected. Only this row asserts these labels; JSON decoding still sees the same two reasons.
+* Optional runtime/disk: CUT selectOptional's declaration eligibility and the generated optional-property overlay. Oracles are handwritten adaptation counts and callable union text, linked checker acceptance, original-versus-adapted Node runs against a literal stdout, disk equality and idempotence. D03 returns early for a property with a function type, leaving the callback unadapted. It is caught by Removed=4 and DeclarationsChanged=2 instead of 5 and 3, before its Node assertions run.
+* Presence narrowing: CUT optionalAdaptations' preservation of an accumulated overlay when no optional diagnostics remain. Oracle is one TS18048 diagnostic from an unmodified recheck plus the adaptation count. D09 discards the overlay at that early return. Reloading then sees the original TS2412, not the widened presence consumer's TS18048.
+* Optional ownership: CUT selectOptional's ownership condition. Oracle is no overlay or rewrite, followed by exactly one TS2412 in an unmodified recheck. D02 drops only the ownership conjunct and adapts external.ts. Positive owned declarations remain eligible, so the former subsumer passes.
+* Live method: CUT optionalAdaptations' handling of a live-method assignment alongside an ordinary optional property. Oracles are Node own/prototype output, exact adapted source and adaptation counts, plus the remaining TS2412. D08 returns early from the whole adapter when the assignment resolves to a live method. The live method stays intact, so Node passes, but the required neighboring property adaptation is lost. The negative-only live-method subcase in the unsafe-contract row still passes.
+* UTF16/extensions: CUT optional overlay naming, especially the distinction between real .a.ts roots and aliases of .a roots. Oracle is one removed diagnostic and checker acceptance for .ts, .a and .a.ts inputs containing an emoji. D04 drops the ownership conjunct on alias-name normalization, misnaming only the real .a.ts overlay. It is a naming defense, not separate proof of UTF16 conversion.
+* Implicit returns: CUT importAdaptations' early return for an accepted baseline without CheckError. Oracles are loader acceptance, zero adaptations/overlay, original-source Node output, disk equality and idempotence. D05 changes that early return's nil error to os.ErrInvalid. Only this row calls adaptations with an accepted baseline, so it alone catches the false refusal.
+* Unproven return contracts: CUT returnAdaptations' declared-return selection. Oracle is exact adapted source and exactly one changed function, using actual TS7030 diagnostics from the unchanged strict TypeScript resolver. D06 additionally admits unknown return types, rewriting opaque as well as admitted. Only this row supplies that boundary type.
+* Return ownership: CUT returnAdaptations' root ownership gate. Oracle is exactly one changed root and exact overlay/source, with external disk equality, using actual TS7030 diagnostics. D07 drops that ownership conjunct and rewrites both root and external functions. Other return rows have no external function.
+
+## Coverage leads and semantic differences
+
+Fixture counts uniquely reaches inspect's Refused/NotYet branches relative to its subsumer. Optional ownership uniquely reaches its ownership-refusal return. Presence narrowing uniquely reaches the !relevant return with a retained CheckError. The implicit-return row uniquely reaches importAdaptations' non-CheckError early return against the whole remainder of the package. Unproven returns uniquely reaches the type-part selection skip; return ownership uniquely reaches the external-function refusal skip.
+
+The live-method row has no exclusive production coverage against the rest of the package. Its defense rests on mixed input: a refused live method and an ordinary optional property in one file. The unsafe-contract row's live-method subcase has only the refused method. D08 loses progress only in the mixed input. Optional runtime/disk owns a callable property type, while its contextual subsumer's callable cases are method signatures. UTF16/extensions exercises a real .a.ts root as well as an .a alias; that naming history is absent from its subsumer.
+
+D03 and D08 use the permitted return-early operator, with semantic guards on callable property types and live-method declarations. The guards do not inspect test names, fixture names, temporary paths or environment identity. D08 releases the checker before returning. Standalone diffs contain no selector switch.
+
+## Current scope versus prior audit
+
+All nine named rows still exist. Three current rows are new relative to the audit: TestOptionalPositionCountsUTF16Surrogates, TestOptionalResolverPreservesUncheckedIndexDiagnostic, and TestReturnAdaptationRewritesTS7030AndPreservesBehavior. They were included in every matrix and their individual coverage was recorded. The live-method row now also demands successful adaptation of the neighboring ordinary property. The two return-contract rows now exercise the TS7030 adapter using actual strict-resolver diagnostics instead of merely exercising its guard. These changes mean the prior untrue labels do not describe the current assertions.
+
+## Costs and brief friction
+
+Warm toolchain worked, so setup was skipped. npm ci ran before the baseline; separate install timing was not recorded. nproc: '''+(p/'nproc.txt').read_text().strip()+'''. Clean baseline test binary: 1.974 seconds. Nine mutant commands, including compilation: '''+str(round(sum(r['wall_seconds'] for r in m),3))+''' seconds. Nine go vet validations: '''+str(round(sum(r['vet_seconds'] for r in m),3))+''' seconds. Per-test coverage logs retain package-reported binary times. No performance medians were requested.
+
+The audit's main report is report.json with explanatory README.txt; all were read and copied alongside its matrix, menu and function coverage. The requested full refspec avoided the earlier FETCH_HEAD-only trap. The source test file is returns_test.go, not return_test.go; one initial attempted read used the singular name and was immediately corrected. Broad combined file reads exceeded tool output limits, so missing sections were read separately. Reading the current test bodies was essential because the four formerly untrue rows had changed roles or assertions since the audit. There were no baseline setup failures and no cooked runs.
+
+All nine rows are defended, so there is no non-defended name/assertion finding. Unique mutants prove the particular catches listed, not every promise in each multi-assertion name. The runtime/disk and live-method unique catches occurred in their adaptation assertions, while their Node checks provide additional independent coverage. No tests were deleted, rewritten or weakened. No other packages were tested, no PR opened and main was not pushed. All mutants were caught; there are no survivors.
+'''
+(p/'REPORT.md').write_text(notes)
+print([(r['test'],r['unique_mutant']) for r in rows])

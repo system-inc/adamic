@@ -1,0 +1,10 @@
+--- a/cmd/adamic-meter/optional.go
++++ b/cmd/adamic-meter/optional.go
+@@ -169,6 +169,7 @@
+ 				}
+ 				assignment := n.AsBinaryExpression()
+ 				if assignment.OperatorToken.Kind == ast.KindEqualsToken && assignment.Left.Pos() <= pos && pos < assignment.Left.End() && !unprovenIndexRead(c, assignment.Right) && !genericReceiver(c, assignment.Left) {
++					if symbol := c.GetSymbolAtLocation(assignment.Left); symbol != nil && len(symbol.Declarations) != 0 && symbol.Declarations[0].Kind == ast.KindMethodDeclaration { release(); return overlay, 0, nil }
+ 					selectOptional(c, c.GetSymbolAtLocation(assignment.Left), c.GetTypeAtLocation(assignment.Right), owned, selected)
+ 				}
+ 				break

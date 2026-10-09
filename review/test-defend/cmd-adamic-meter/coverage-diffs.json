@@ -1,0 +1,197 @@
+[
+  {
+    "test": "TestFixtureCorpusCountsEveryDiagnosticKind",
+    "compared_with": [
+      "TestAdaptRewritesTypeOnlyImportInMemory"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:207.3,207.57",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:210.3,210.55",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:211.4,212.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:357.2,358.30",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:359.3,360.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:361.2,362.29",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:363.3,364.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:389.2,392.54",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:395.2,395.51"
+    ]
+  },
+  {
+    "test": "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+    "compared_with": [
+      "TestOptionalAdaptationContextualDeclarations"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:91.2,92.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:95.2,96.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:99.2,99.19",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:102.2,105.93",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:106.3,106.21",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:109.3,109.20",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:110.4,111.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:112.3,113.48",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:117.3,117.46",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:120.3,122.13",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:124.2,124.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:127.2,127.55",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:128.3,128.44",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:129.4,131.23",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:132.5,134.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:135.4,137.32",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:138.5,140.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:146.2,146.21",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:147.3,151.12",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:152.4,153.18",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:156.4,156.57",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:156.59,156.100",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:158.3,158.50",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:192.4,192.31",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:193.5,194.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:195.6,196.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:197.5,197.28",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:201.2,201.32",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:202.3,205.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:206.2,206.49",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:215.2,215.20",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:336.2,337.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:353.2,354.16",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:357.2,358.30",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:361.2,362.29",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:363.3,364.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:389.2,392.54",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:395.2,395.51",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:399.2,399.101",
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:400.3,401.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:196.7,196.15"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "compared_with": [
+      "TestOptionalAdaptationUTF16AndAdamicExtension"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:129.3,130.1"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationOwnsOnlyNamedRoots",
+    "compared_with": [
+      "TestOptionalAdaptationRechecksPresenceNarrowing"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:300.4,301.1"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "compared_with": [
+      "TestOptionalAdaptationRechecksPresenceNarrowing"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:323.3,324.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:52.4,53.18",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:56.4,56.73",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:59.4,61.17",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:101.3,102.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:119.3,120.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:151.4,152.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:226.4,227.1",
+      "github.com/system-inc/adamic/cmd/adamic-meter/optional.go:367.4,368.1"
+    ]
+  },
+  {
+    "test": "TestOptionalAdaptationPreservesLiveMethodPlacement",
+    "compared_with": [
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "exclusive_blocks": []
+  },
+  {
+    "test": "TestImplicitReturnsNeedNoAdaptation",
+    "compared_with": [
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestReturnAdaptationLeavesUnprovenContracts",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/main.go:276.3,277.1"
+    ]
+  },
+  {
+    "test": "TestReturnAdaptationLeavesUnprovenContracts",
+    "compared_with": [
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationOwnsOnlyRoots"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/returns.go:68.4,68.12"
+    ]
+  },
+  {
+    "test": "TestReturnAdaptationOwnsOnlyRoots",
+    "compared_with": [
+      "TestOptionalPositionCountsUTF16Surrogates",
+      "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+      "TestReturnAdaptationRewritesTS7030AndPreservesBehavior",
+      "TestFixtureCorpusCountsEveryDiagnosticKind",
+      "TestAdaptRewritesTypeOnlyImportInMemory",
+      "TestJSONIsMachineReadable",
+      "TestNormalizeDropsIncidentalDetails",
+      "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+      "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+      "TestOptionalAdaptationRechecksPresenceNarrowing",
+      "TestOptionalAdaptationContextualDeclarations",
+      "TestOptionalAdaptationOwnsOnlyNamedRoots",
+      "TestOptionalAdaptationPreservesLiveMethodPlacement",
+      "TestOptionalAdaptationUTF16AndAdamicExtension",
+      "TestImplicitReturnsNeedNoAdaptation",
+      "TestReturnAdaptationLeavesUnprovenContracts"
+    ],
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/cmd/adamic-meter/returns.go:55.4,55.12"
+    ]
+  }
+]
