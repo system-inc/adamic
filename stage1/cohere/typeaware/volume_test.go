@@ -201,8 +201,7 @@ console.log(tsgoInspect(program,path,0,1,'Identifier','call-returns'));
 
 // The strict-config limit is explicit. The six-rule runner still supports its
 // previous configs; this expanded runner has not ported implicit-this messages.
-// Not parallel: sanitizer archives consume the same limited scratch space as
-// the main volume test; corpus timings must not compete with that test.
 func TestVolumeConfigGuardAndMutant(t *testing.T) {
+	t.Parallel()
 	runVolumeConfigGuardShards(t)
 }

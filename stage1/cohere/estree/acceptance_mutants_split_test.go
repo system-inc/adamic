@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -88,18 +89,163 @@ func acceptanceMutantProducts(t *testing.T, item acceptanceMutant) (string, stri
 	return filepath.Join(lowered, "main.ts"), filepath.Join(product, "port")
 }
 
+// Only the non-parallel setup test writes this, before parallel tests resume.
+var acceptanceMutantsReady string
+
+func acceptanceMutantsSetupInputs(t *testing.T) buildcache.Inputs {
+	t.Helper()
+	flags := []string{"repository=" + root(t), "ADAMIC_NATIVE_SPLIT=" + os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS=" + os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED=" + os.Getenv("ADAMIC_GATE_UNCACHED")}
+	for _, item := range acceptanceMutantEnumeration() {
+		flags = append(flags, item.name, item.file, item.from, item.to)
+	}
+	flags = append(flags, acceptanceGrammar()...)
+	flags = append(flags, native.Flags(native.Options{Sanitize: true})...)
+	return buildcache.Inputs{Name: "estree-acceptance-mutants-ready", Files: []string{"stage1/cohere/estree", "stage1/typescript", "internal", "cohere", "go.mod", "go.work"}, Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+}
+
+func acceptanceMutantsCopy(from, to string, mode os.FileMode) error {
+	data, err := os.ReadFile(from)
+	if err != nil {
+		return err
+	}
+	return os.WriteFile(to, data, mode)
+}
+
+func acceptanceMutantsPrepare(t *testing.T) string {
+	t.Helper()
+	inputs := acceptanceMutantsSetupInputs(t)
+	return buildcache.Product(t, inputs, func(dir string) error {
+		oracleInputs := inputs
+		oracleInputs.Name = "estree-acceptance-mutants-go-oracle"
+		oracle := buildcache.Product(t, oracleInputs, func(output string) error {
+			// GoBuild is not on main yet; retain the original Go overlay build recipe.
+			return acceptanceMutantsCopy(goOracle(t), filepath.Join(output, "oracle"), 0755)
+		})
+		list := manifest(t, acceptanceGrammar())
+		want := execute(t, "", filepath.Join(oracle, "oracle"), "--manifest", list)
+		if err := os.WriteFile(filepath.Join(dir, "want"), want, 0644); err != nil {
+			return err
+		}
+		for index, item := range acceptanceMutantEnumeration() {
+			main, binary := acceptanceMutantProducts(t, item)
+			sourceDir := filepath.Join(dir, fmt.Sprintf("%03d", index))
+			if err := os.Mkdir(sourceDir, 0755); err != nil {
+				return err
+			}
+			files, err := filepath.Glob(filepath.Join(filepath.Dir(main), "*.ts"))
+			if err != nil {
+				return err
+			}
+			for _, file := range files {
+				if err := acceptanceMutantsCopy(file, filepath.Join(sourceDir, filepath.Base(file)), 0644); err != nil {
+					return err
+				}
+			}
+			if err := acceptanceMutantsCopy(binary, filepath.Join(sourceDir, "port"), 0755); err != nil {
+				return err
+			}
+		}
+		return nil
+	})
+}
+
+func acceptanceMutantsCommand(ctx context.Context, executable string, args ...string) *exec.Cmd {
+	command := exec.CommandContext(ctx, executable, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = 5 * time.Second
+	return command
+}
+
+// Not parallel: prepares immutable products before parallel acceptance-mutant leaves resume.
+func TestAcceptanceMutants_Setup(t *testing.T) {
+	if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_SETUP_CHILD") == "1" {
+		t.Log("ACCEPTANCE_MUTANTS_READY=" + acceptanceMutantsPrepare(t))
+		return
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	executable, err := os.Executable()
+	if err != nil {
+		t.Fatal(err)
+	}
+	command := acceptanceMutantsCommand(ctx, executable, "-test.run=^TestAcceptanceMutants_Setup$", "-test.timeout=90s", "-test.v")
+	command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_SETUP_CHILD=1")
+	output, err := command.CombinedOutput()
+	if ctx.Err() != nil {
+		t.Fatalf("shared setup exceeded 90s: %v\n%s", ctx.Err(), output)
+	}
+	if err != nil {
+		t.Fatalf("shared setup: %v\n%s", err, output)
+	}
+	for _, line := range strings.Split(string(output), "\n") {
+		if _, value, ok := strings.Cut(line, "ACCEPTANCE_MUTANTS_READY="); ok {
+			acceptanceMutantsReady = strings.TrimSpace(value)
+		}
+	}
+	if acceptanceMutantsReady == "" {
+		t.Fatalf("shared setup did not publish products:\n%s", output)
+	}
+	t.Logf("%s", output)
+}
+
+func acceptanceMutantsReadyProduct(t *testing.T) string {
+	t.Helper()
+	if acceptanceMutantsReady != "" {
+		return acceptanceMutantsReady
+	}
+	// A proof child may inherit an uncached product prepared by its parent.
+	if ready := os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_READY"); ready != "" {
+		return ready
+	}
+	// Standalone leaf runs require a preceding setup run. This callback never
+	// builds: a missing product is an explicit error rather than lazy setup.
+	ready, err := buildcache.Get(acceptanceMutantsSetupInputs(t), func(string) error {
+		return fmt.Errorf("shared products missing; run TestAcceptanceMutants_Setup before selecting a leaf")
+	})
+	if err != nil {
+		t.Fatal(err)
+	}
+	return ready
+}
+
+func acceptanceMutantsExecute(t *testing.T, ctx context.Context, name string, args ...string) []byte {
+	t.Helper()
+	command := acceptanceMutantsCommand(ctx, name, args...)
+	var output, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &output, &stderr
+	if err := command.Run(); err != nil || stderr.Len() != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	return output.Bytes()
+}
+
 func runAcceptanceMutantShard(t *testing.T, shard int) {
 	t.Helper()
-	started := time.Now()
+	ready := acceptanceMutantsReadyProduct(t)
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	items := acceptanceMutantEnumeration()
 	if len(items) != testAcceptanceMutantsShards {
 		t.Fatalf("enumerated %d mutations, declared %d shards", len(items), testAcceptanceMutantsShards)
 	}
 	list := manifest(t, acceptanceGrammar())
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	main, binary := acceptanceMutantProducts(t, items[shard])
-	t.Logf("TestAcceptanceMutants (setup): %.3fs", time.Since(started).Seconds())
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+	want, err := os.ReadFile(filepath.Join(ready, "want"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	product := filepath.Join(ready, fmt.Sprintf("%03d", shard))
+	main, binary := filepath.Join(product, "main.ts"), filepath.Join(product, "port")
+	for name, got := range map[string][]byte{
+		"Node":   acceptanceMutantsExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, "--manifest", list),
+		"native": acceptanceMutantsExecute(t, ctx, binary, "--manifest", list),
+	} {
 		if os.Getenv("ADAMIC_ACCEPTANCE_MUTANTS_PROOF") == "1" && shard == 0 && name == "native" {
 			// Only the catch-initializer witness output is repaired: every
 			// other case retains its actual sanitized native bytes.
@@ -154,18 +300,8 @@ func TestAcceptanceMutantsUnion(t *testing.T) {
 	for _, index := range runners {
 		name := fmt.Sprintf("TestAcceptanceMutants_%03d", index)
 		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-		command := exec.CommandContext(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
-		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-		command.Cancel = func() error {
-			// Kill the entire group so compiler descendants cannot outlive the proof.
-			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-			if errors.Is(err, syscall.ESRCH) {
-				return os.ErrProcessDone
-			}
-			return err
-		}
-		command.WaitDelay = 5 * time.Second
-		command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1")
+		command := acceptanceMutantsCommand(ctx, executable, "-test.run=^"+name+"$", "-test.timeout=90s", "-test.v")
+		command.Env = append(os.Environ(), "ADAMIC_ACCEPTANCE_MUTANTS_PROOF=1", "ADAMIC_ACCEPTANCE_MUTANTS_READY="+acceptanceMutantsReadyProduct(t))
 		output, err := command.CombinedOutput()
 		contextErr := ctx.Err()
 		cancel()

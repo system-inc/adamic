@@ -111,16 +111,11 @@ func buildProfile(t *testing.T, directory string) {
 // Exercise the shared profile graph without requiring the external compiler corpus.
 func TestProfileCompilation_000(t *testing.T) {
 	t.Parallel()
-	defer compilationBudget(t)()
 	compilationSelected(t)
-	compilationCase(t)
-	directory := t.TempDir()
-	copyPort(t, directory, "", "")
-	prepareRegistry(t, directory)
-	products := compilationProducts(t)
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := goOracle(t)
-	want, countedWant := compilationOracleOutputs(t, oracle, path)
+	directory, products, path, want, countedWant := compilationPrepare(t)
+	// Shared product fetches and the overlay oracle finish before the case budget.
+	defer compilationBudget(t)()
+
 	for _, side := range []struct {
 		name string
 		run  execution

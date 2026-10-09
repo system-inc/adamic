@@ -10,7 +10,6 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
-	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -159,14 +158,12 @@ type fileDriverState struct {
 	binary, emitted, runner, entry string
 }
 
-var fileDriverOnce sync.Once
 var fileDriverShared *fileDriverState
 
 func fileDriverGet(t *testing.T) *fileDriverState {
 	t.Helper()
-	fileDriverOnce.Do(func() { fileDriverShared = fileDriverSetup(t) })
 	if fileDriverShared == nil {
-		t.Fatal("file driver setup failed")
+		t.Fatal("file driver setup must finish before a shard starts")
 	}
 	return fileDriverShared
 }
@@ -208,8 +205,8 @@ func TestFileDriverUnion(t *testing.T) {
 
 func fileDriverRunShard(t *testing.T, shard int) {
 	t.Helper()
-	started := time.Now()
 	state := fileDriverGet(t)
+	started := time.Now()
 	shards := fileDriverPartition(state.inputs)
 	fileDriverCheckUnion(t, shards, len(state.inputs))
 	for _, index := range shards[shard] {
@@ -235,7 +232,7 @@ func fileDriverRunShard(t *testing.T, shard int) {
 			}
 		}
 	}
-	t.Logf("%d cases; shard time including setup %.3fs", len(shards[shard]), time.Since(started).Seconds())
+	t.Logf("%d cases; shard case time (setup excluded) %.3fs", len(shards[shard]), time.Since(started).Seconds())
 }
 
 func TestFileDriver_000(t *testing.T) {
@@ -311,8 +308,16 @@ func fileDriverGoFormat(t *testing.T, cases string) []byte {
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	goBinary := filepath.Join(t.TempDir(), "go-format")
-	fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", goBinary, "./command/formatter_comparison")
+	files := append(fileDriverBuildFiles(t), "stage1/cohere/yaml/testdata/format_go.go")
+	product := buildcache.Product(t, buildcache.Inputs{
+		Name: "yaml-file-driver-go-format", Files: files,
+		Flags:     []string{"build", "overlay=format_go.go", "./command/formatter_comparison", "GOTOOLCHAIN=" + os.Getenv("GOTOOLCHAIN")},
+		Toolchain: []string{buildcache.Tool("go", "version")},
+	}, func(directory string) error {
+		fileDriverRun(t, filepath.Join(root, "cohere"), nil, "go", "build", "-overlay", path, "-o", filepath.Join(directory, "go-format"), "./command/formatter_comparison")
+		return nil
+	})
+	goBinary := filepath.Join(product, "go-format")
 	expected := fileDriverRun(t, "", nil, goBinary, "--cases", cases)
 	if artifacts := os.Getenv("ADAMIC_YAML_ARTIFACTS"); artifacts != "" {
 		if err := os.MkdirAll(artifacts, 0755); err != nil {

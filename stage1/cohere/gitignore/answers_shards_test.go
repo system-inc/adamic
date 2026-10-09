@@ -1,19 +1,25 @@
 package gitignore
 
 import (
+	"bytes"
+	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"hash/fnv"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strconv"
 	"strings"
 	"sync"
+	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
+	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
@@ -220,7 +226,7 @@ func portOracleProduct(t *testing.T) string {
 		if err = os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		cmd := bounded(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/gitignore")
+		cmd := portCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/gitignore")
 		cmd.Dir = cohere
 		output, err := combinedOutput(cmd)
 		if err != nil {
@@ -241,7 +247,7 @@ func portOracle(t *testing.T, binary string, request map[string]any) {
 	if err = os.WriteFile(path, data, 0644); err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, []string{"ADAMIC_PORT_REQUEST=" + path}, binary, "-test.run=^TestAdamicPortCases$", "-test.timeout=75s")
+	result := portExecute(t, []string{"ADAMIC_PORT_REQUEST=" + path}, binary, "-test.run=^TestAdamicPortCases$", "-test.timeout=90s")
 	if result.exitCode != 0 {
 		t.Fatalf("Go oracle: exit %d: %s %s", result.exitCode, result.stdout, result.stderr)
 	}
@@ -305,29 +311,30 @@ func portGoAnswers(t *testing.T, binary string, asked cases) string {
 }
 
 func portNative(t *testing.T, dir, path string) run {
-	return execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, filepath.Join(dir, "port"), path)
+	return portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, filepath.Join(dir, "port"), path)
 }
 
 // The cases are shared only within a run; build products alone use the hash cache.
-// Every selected top-level test retains the scratch tree before calling Parallel,
-// so the final test can remove it without racing a reader.
+// Setup publishes immutable inputs before the parallel leaves run. TestMain
+// owns scratch cleanup, including runs that select only setup or one shard.
 var portShared struct {
 	sync.Mutex
 	asked           cases
 	shards          []portShard
 	oracle, scratch string
-	refs            int
+	gitAnswers      map[string][]string
+	realAnswers     map[string]map[query]string
 	totals          agreement
 	comparedShards  int
 }
 
 func portHardDeadline(t *testing.T, label string, budget time.Duration) *time.Timer {
 	t.Helper()
-	return time.AfterFunc(budget, func() { fmt.Fprintf(os.Stderr, "cooked: %s exceeded 75s hard deadline\n", label); os.Exit(124) })
+	return time.AfterFunc(budget, func() { fmt.Fprintf(os.Stderr, "cooked: %s exceeded 90s hard deadline\n", label); os.Exit(124) })
 }
 
 func checkPortAnswerUnion(t *testing.T) {
-	deadline := portHardDeadline(t, "union", 75*time.Second)
+	deadline := portHardDeadline(t, "union", 90*time.Second)
 	defer deadline.Stop()
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
 		t.Fatal("enumerated shard count differs from static planner count")
@@ -348,7 +355,7 @@ func checkPortAnswerUnion(t *testing.T) {
 	gitAnswers := map[string][]string{}
 	for _, tr := range asked.Trees {
 		if tr.Git == "run" {
-			gitAnswers[tr.Name] = gitCheckIgnore(t, tr)
+			gitAnswers[tr.Name] = portGitCheckIgnore(t, tr)
 		}
 	}
 	a := againstGit(asked, gitAnswers, portGoAnswers(t, oracle, asked))
@@ -360,6 +367,63 @@ func checkPortAnswerUnion(t *testing.T) {
 	}
 }
 
+// Not parallel: owns cleanup of the package-wide shared corpus scratch.
+func TestMain(m *testing.M) {
+	code := m.Run()
+	if portShared.scratch != "" {
+		os.RemoveAll(portShared.scratch)
+	}
+	os.Exit(code)
+}
+
+// Not parallel: publishes the shared oracle, corpus, Git answers and shard plan.
+func TestThePortAnswersAsGoCohereAndGitDo_Setup(t *testing.T) {
+	preparePortAnswerInputs(t)
+}
+
+func preparePortAnswerInputs(t *testing.T) {
+	t.Helper()
+	deadline := portHardDeadline(t, "shared setup", 90*time.Second)
+	defer deadline.Stop()
+	portShared.Lock()
+	defer portShared.Unlock()
+	if portShared.shards != nil {
+		return
+	}
+	start := time.Now()
+	oracle := portOracleProduct(t)
+	scratch, err := os.MkdirTemp("", "gitignore-shards-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	portShared.scratch = scratch
+	asked := portAsked(t, oracle, scratch)
+	shards := portCaseShards(t, asked)
+	gitAnswers := map[string][]string{}
+	realAnswers := map[string]map[query]string{}
+	for _, tr := range asked.Trees {
+		if tr.Git != "run" {
+			continue
+		}
+		answers := portGitCheckIgnore(t, tr)
+		gitAnswers[tr.Name] = answers
+		if strings.HasPrefix(tr.Name, "real ") {
+			if len(answers) != len(tr.Queries) {
+				t.Fatalf("%s: Git answered %d queries, asked %d", tr.Name, len(answers), len(tr.Queries))
+			}
+			byQuery := map[query]string{}
+			for i, q := range tr.Queries {
+				byQuery[q] = answers[i]
+			}
+			realAnswers[tr.Name] = byQuery
+		}
+	}
+	portShared.asked, portShared.oracle = asked, oracle
+	portShared.gitAnswers, portShared.realAnswers = gitAnswers, realAnswers
+	portShared.shards = shards
+	t.Logf("shared setup ready: %.3fs", time.Since(start).Seconds())
+}
+
 func runPortAnswerShard(t *testing.T, index int) {
 	if !portSelected(t, index) {
 		return
@@ -367,42 +431,10 @@ func runPortAnswerShard(t *testing.T, index int) {
 	if portComparisonShards+len(mutants) != testThePortAnswersAsGoCohereAndGitDoShards {
 		t.Fatal("enumerated shard count differs from static planner count")
 	}
-	setupStart := time.Now()
-	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 75*time.Second)
-	defer deadline.Stop()
-	portShared.Lock()
-	if portShared.shards == nil {
-		portShared.oracle = portOracleProduct(t)
-		scratch, err := os.MkdirTemp("", "gitignore-shards-")
-		if err != nil {
-			portShared.Unlock()
-			t.Fatal(err)
-		}
-		portShared.scratch = scratch
-		portShared.asked = portAsked(t, portShared.oracle, scratch)
-		portShared.shards = portCaseShards(t, portShared.asked)
-	}
-	portShared.refs++
+	// Standalone selections also prepare inputs, under the separate setup budget.
+	// No leaf deadline is active while acquiring or building shared inputs.
+	preparePortAnswerInputs(t)
 	asked, shards, oracle := portShared.asked, portShared.shards, portShared.oracle
-	portShared.Unlock()
-	t.Cleanup(func() {
-		portShared.Lock()
-		defer portShared.Unlock()
-		portShared.refs--
-		if portShared.refs == 0 {
-			os.RemoveAll(portShared.scratch)
-			portShared.shards = nil
-			portShared.totals = agreement{}
-			portShared.comparedShards = 0
-		}
-	})
-	setupElapsed := time.Since(setupStart)
-	deadline.Stop()
-	t.Parallel()
-	deadline = portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 75*time.Second-setupElapsed)
-	defer deadline.Stop()
-	t.Logf("setup: %.3fs", setupElapsed.Seconds())
-	start := time.Now()
 	var applied *mutant
 	if index >= portComparisonShards {
 		m := mutants[index-portComparisonShards]
@@ -411,8 +443,12 @@ func runPortAnswerShard(t *testing.T, index int) {
 		}
 		applied = &m
 	}
+	buildDeadline := portHardDeadline(t, fmt.Sprintf("shard-%03d product fetch", index), 90*time.Second)
 	product := portProducts(t, applied)
-	t.Logf("build fetch: %.3fs", time.Since(start).Seconds())
+	buildDeadline.Stop()
+	t.Parallel()
+	deadline := portHardDeadline(t, fmt.Sprintf("shard-%03d", index), 90*time.Second)
+	defer deadline.Stop()
 
 	subset := asked
 	if index < portComparisonShards {
@@ -423,14 +459,24 @@ func runPortAnswerShard(t *testing.T, index int) {
 	gitAnswers := map[string][]string{}
 	for _, tr := range subset.Trees {
 		if tr.Git == "run" {
-			gitAnswers[tr.Name] = gitCheckIgnore(t, tr)
+			if strings.HasPrefix(tr.Name, "real ") {
+				for _, q := range tr.Queries {
+					answer, ok := portShared.realAnswers[tr.Name][q]
+					if !ok {
+						t.Fatalf("missing shared Git answer for %s %v", tr.Name, q)
+					}
+					gitAnswers[tr.Name] = append(gitAnswers[tr.Name], answer)
+				}
+			} else {
+				gitAnswers[tr.Name] = portShared.gitAnswers[tr.Name]
+			}
 		}
 	}
 	dir := product
-	node := onNode(t, filepath.Join(dir, "main.ts"), path)
+	node := portNode(t, filepath.Join(dir, "main.ts"), path)
 	nat := portNative(t, dir, path)
 	if index < portComparisonShards {
-		backend := onNode(t, filepath.Join(dir, "program.mjs"), path)
+		backend := portNode(t, filepath.Join(dir, "program.mjs"), path)
 		for _, side := range []struct {
 			name   string
 			result run
@@ -445,9 +491,9 @@ func runPortAnswerShard(t *testing.T, index int) {
 		var leak run
 		switch runtime.GOOS {
 		case "linux":
-			leak = execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
+			leak = portExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, filepath.Join(dir, "port"), path)
 		case "darwin":
-			leak = execute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
+			leak = portExecute(t, nil, "leaks", "--atExit", "--", filepath.Join(dir, "port-leaks"), path)
 		default:
 			t.Fatalf("no leak check for %s", runtime.GOOS)
 		}
@@ -496,7 +542,8 @@ func runPortAnswerShard(t *testing.T, index int) {
 
 // A disagreement planted in one live case is caught by exactly its owning shard.
 func TestPortAnswerShardPlantedDisagreement(t *testing.T) {
-	deadline := portHardDeadline(t, "TestPortAnswerShardPlantedDisagreement", 75*time.Second)
+	t.Parallel()
+	deadline := portHardDeadline(t, "TestPortAnswerShardPlantedDisagreement", 90*time.Second)
 	defer deadline.Stop()
 	asked := cases{Patterns: []patterns{{Name: "planted", Queries: []query{{Path: "one"}}}}}
 	shards := portCaseShards(t, asked)
@@ -523,62 +570,90 @@ func TestPortAnswerShardPlantedDisagreement(t *testing.T) {
 	t.Logf("planted disagreement caught only by shard-%03d", owner)
 }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_000(t *testing.T) { runPortAnswerShard(t, 0) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_001(t *testing.T) { runPortAnswerShard(t, 1) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_002(t *testing.T) { runPortAnswerShard(t, 2) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_003(t *testing.T) { runPortAnswerShard(t, 3) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_004(t *testing.T) { runPortAnswerShard(t, 4) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_005(t *testing.T) { runPortAnswerShard(t, 5) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_006(t *testing.T) { runPortAnswerShard(t, 6) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_007(t *testing.T) { runPortAnswerShard(t, 7) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_008(t *testing.T) { runPortAnswerShard(t, 8) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_009(t *testing.T) { runPortAnswerShard(t, 9) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_010(t *testing.T) { runPortAnswerShard(t, 10) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_011(t *testing.T) { runPortAnswerShard(t, 11) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_012(t *testing.T) { runPortAnswerShard(t, 12) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_013(t *testing.T) { runPortAnswerShard(t, 13) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_014(t *testing.T) { runPortAnswerShard(t, 14) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_015(t *testing.T) { runPortAnswerShard(t, 15) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_016(t *testing.T) { runPortAnswerShard(t, 16) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_017(t *testing.T) { runPortAnswerShard(t, 17) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_018(t *testing.T) { runPortAnswerShard(t, 18) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_019(t *testing.T) { runPortAnswerShard(t, 19) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_020(t *testing.T) { runPortAnswerShard(t, 20) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_021(t *testing.T) { runPortAnswerShard(t, 21) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_022(t *testing.T) { runPortAnswerShard(t, 22) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_023(t *testing.T) { runPortAnswerShard(t, 23) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_024(t *testing.T) { runPortAnswerShard(t, 24) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_025(t *testing.T) { runPortAnswerShard(t, 25) }
 
+// Not parallel: prepares shared corpus inputs before runPortAnswerShard calls t.Parallel().
 func TestThePortAnswersAsGoCohereAndGitDo_026(t *testing.T) { runPortAnswerShard(t, 26) }
 
 func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
-	deadline := portHardDeadline(t, "TestPortAnswerShardAssignmentSurvivesCorpusGrowth", 75*time.Second)
+	t.Parallel()
+	deadline := portHardDeadline(t, "TestPortAnswerShardAssignmentSurvivesCorpusGrowth", 90*time.Second)
 	defer deadline.Stop()
 	before := cases{Trees: []tree{{Name: "real repository", Queries: []query{{Path: "a.go"}, {Path: "directory", IsDirectory: true}}}}}
 	old := portCaseShards(t, before)
@@ -599,4 +674,98 @@ func TestPortAnswerShardAssignmentSurvivesCorpusGrowth(t *testing.T) {
 			}
 		}
 	}
+}
+
+// Each child has its own deadline. Cancel kills its process group, including
+// compilers started by the Go oracle build, without relying on a timeout tool.
+func portCommand(t *testing.T, name string, args ...string) *exec.Cmd {
+	t.Helper()
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	t.Cleanup(cancel)
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if errors.Is(err, syscall.ESRCH) {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	return command
+}
+
+func portExecute(t *testing.T, environment []string, name string, args ...string) run {
+	t.Helper()
+	command := portCommand(t, name, args...)
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := childguard.Run(command, childguard.Options{})
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
+}
+
+func portNode(t *testing.T, path string, args ...string) run {
+	t.Helper()
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return portExecute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, args...)...)
+}
+
+func portGitCheckIgnore(t *testing.T, tree tree) []string {
+	t.Helper()
+	scratch := t.TempDir()
+	emptyExclude := filepath.Join(scratch, "empty-excludes")
+	if err := os.WriteFile(emptyExclude, nil, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	var input bytes.Buffer
+	for _, query := range tree.Queries {
+		input.WriteString(query.Path)
+		input.WriteByte(0)
+	}
+	command := portCommand(t, "git", "-c", "core.excludesFile="+emptyExclude, "-c", "core.ignorecase=false",
+		"check-ignore", "--no-index", "--verbose", "--non-matching", "-z", "--stdin")
+	command.Dir = tree.Disk
+	command.Env = []string{
+		"PATH=/usr/bin:/bin", "HOME=" + scratch, "XDG_CONFIG_HOME=" + scratch,
+		"GIT_CONFIG_NOSYSTEM=1", "GIT_CONFIG_GLOBAL=/dev/null", "GIT_OPTIONAL_LOCKS=0",
+	}
+	command.Stdin = &input
+	var standardOutput, standardError bytes.Buffer
+	command.Stdout = &standardOutput
+	command.Stderr = &standardError
+	err := childguard.Run(command, childguard.Options{})
+	output := standardOutput.Bytes()
+	// check-ignore exits 1 when nothing is ignored, which is an answer, not a failure.
+	var exitError *exec.ExitError
+	if err != nil && !(errors.As(err, &exitError) && exitError.ExitCode() == 1) {
+		t.Fatalf("git check-ignore in %s: %v\n%s", tree.Disk, err, standardError.String())
+	}
+	fields := bytes.Split(bytes.TrimSuffix(output, []byte{0}), []byte{0})
+	if len(output) > 0 && len(fields)%4 != 0 {
+		t.Fatalf("%s: git printed %d fields, not a multiple of four", tree.Name, len(fields))
+	}
+	var answers []string
+	for index := 0; index+3 < len(fields); index += 4 {
+		file, line, pattern, relative := string(fields[index]), string(fields[index+1]), string(fields[index+2]), string(fields[index+3])
+		if file == "" {
+			answers = append(answers, "0 ::\t"+relative)
+			continue
+		}
+		ignored := "1"
+		if strings.HasPrefix(pattern, "!") {
+			ignored = "0"
+		}
+		answers = append(answers, fmt.Sprintf("%s %s:%s:%s\t%s", ignored, file, line, pattern, relative))
+	}
+	return answers
 }

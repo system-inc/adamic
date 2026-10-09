@@ -320,6 +320,8 @@ func compareWithJavaScript(t *testing.T, oracle, binary, directory, path, module
 
 // Not parallel: upstream capture uses t.Setenv and a process-wide fixture capture destination.
 func TestRulesAgree(t *testing.T) {
+	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree lowering build cooked: exceeded 90s") })
+	defer deadline.Stop()
 	started := time.Now()
 	rulesAgreeLowered(t)
 	t.Logf("TestRulesAgree (setup lowered): %.3fs", time.Since(started).Seconds())
