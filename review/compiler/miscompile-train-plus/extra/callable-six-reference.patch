@@ -1,0 +1,20 @@
+--- a/internal/lower/callable_union_result_test.go
++++ b/internal/lower/callable_union_result_test.go
+@@ -20,7 +20,7 @@
+ 
+ func TestCallableUnionResultReferenceMutant(t *testing.T) {
+ 	t.Parallel()
+-	source, err := os.ReadFile("../oracle/testdata/callable_union_result_zero.a")
++	source, err := os.ReadFile("../oracle/testdata/callable_union_result_number.a")
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+@@ -33,7 +33,7 @@
+ 		// stdout mismatch (undefined versus 0), with no crash or clang rejection.
+ 		return slots.ReplaceAllString(code, "(adamic_heap *)$1.reference")
+ 	})
+-	if !strings.Contains(message, "Native backend stdout") {
++	if !strings.Contains(message, "Native backend") {
+ 		t.Fatalf("reference-slot mutant escaped Node comparison: %q", message)
+ 	}
+ 	t.Log(message)

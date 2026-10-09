@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
@@ -148,27 +149,34 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 	}
 }
 
-func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
+// These targets have unread any members. A checked view cannot admit a partial contract.
+func TestCheckedViewUntaggedOwnClassDataGoodRefused(t *testing.T) {
 	t.Parallel()
-	for _, variant := range []string{"good", "wrong"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			program, path := interfaceFixture(t, "untagged/fixtures/class-data-"+variant)
-			node := onNode(t, path)
-			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
-				t.Fatal(difference)
-			}
-			want := node
-			if variant != "good" {
-				want = run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value matches no member of Target; expected Target, found object\n")}
-			}
-			for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-				t.Logf("%s: exit=%d stdout=%q stderr=%q", backend, got.exitCode, got.stdout, got.stderr)
-				if difference := disagreement(want, got); difference != "" {
-					t.Errorf("%s: %s", backend, difference)
-				}
-			}
-		})
+	checkedViewClassDataRefused(t, "good")
+}
+
+func TestCheckedViewUntaggedOwnClassDataWrongRefused(t *testing.T) {
+	t.Parallel()
+	checkedViewClassDataRefused(t, "wrong")
+}
+
+func checkedViewClassDataRefused(t *testing.T, variant string) {
+	t.Helper()
+	path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/class-data-" + variant + ".a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+		t.Fatal("Node: " + difference)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.What != "view type has an unsupported member: value" || !strings.HasSuffix(refused.Where, ":8:12") || program != nil {
+		t.Fatalf("want whole-view refusal at creation for unread any descendants: %v", err)
 	}
 }
 
@@ -196,22 +204,40 @@ func TestCheckedViewUntaggedRecursive(t *testing.T) {
 	}
 }
 
-func TestCheckedViewUntaggedArrayPending(t *testing.T) {
+// Array membership needs checked element-kind and hole metadata before admission.
+func TestCheckedViewUntaggedArrayGoodRefused(t *testing.T) {
 	t.Parallel()
-	for _, variant := range []string{"good", "wrong", "nested", "empty", "mixed"} {
-		t.Run(variant, func(t *testing.T) {
-			t.Parallel()
-			path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
-			loaded, err := load.Load([]string{path})
-			if err != nil {
-				t.Fatal(err)
-			}
-			_, err = lower.Lower(context.Background(), loaded)
-			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
-				t.Fatalf("array admission must stay NotYet: %v", err)
-			}
-			// Array membership needs V3 element-kind metadata and hole-aware reads.
-			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
-		})
+	checkedViewArrayRefused(t, "good")
+}
+func TestCheckedViewUntaggedArrayWrongRefused(t *testing.T) {
+	t.Parallel()
+	checkedViewArrayRefused(t, "wrong")
+}
+func TestCheckedViewUntaggedArrayNestedRefused(t *testing.T) {
+	t.Parallel()
+	checkedViewArrayRefused(t, "nested")
+}
+func TestCheckedViewUntaggedArrayEmptyRefused(t *testing.T) {
+	t.Parallel()
+	checkedViewArrayRefused(t, "empty")
+}
+func TestCheckedViewUntaggedArrayMixedRefused(t *testing.T) {
+	t.Parallel()
+	checkedViewArrayRefused(t, "mixed")
+}
+func checkedViewArrayRefused(t *testing.T, variant string) {
+	t.Helper()
+	path, err := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/array-union-" + variant + ".a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	loaded, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lower.Lower(context.Background(), loaded)
+	var refused *lower.Refused
+	if !errors.As(err, &refused) || refused.What != "view type has an unsupported member: elements" || !strings.HasSuffix(refused.Where, ":8:12") || program != nil {
+		t.Fatalf("want creation-site refusal for unsupported array member: %v", err)
 	}
 }

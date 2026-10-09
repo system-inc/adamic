@@ -1,0 +1,66 @@
+=== RUN   TestViewStringElementReadControl
+=== PAUSE TestViewStringElementReadControl
+=== RUN   TestViewLiteralTypedElementReadControl
+=== PAUSE TestViewLiteralTypedElementReadControl
+=== RUN   TestViewElementFixAgreesWithNode
+=== PAUSE TestViewElementFixAgreesWithNode
+=== RUN   TestViewElementP05CorrectControl
+=== PAUSE TestViewElementP05CorrectControl
+=== RUN   TestViewElementP06CorrectControl
+=== PAUSE TestViewElementP06CorrectControl
+=== RUN   TestViewElementP01CorrectControl
+=== PAUSE TestViewElementP01CorrectControl
+=== RUN   TestViewElementP07CorrectControl
+=== PAUSE TestViewElementP07CorrectControl
+=== CONT  TestViewStringElementReadControl
+=== CONT  TestViewElementP06CorrectControl
+=== CONT  TestViewElementP07CorrectControl
+=== CONT  TestViewElementP01CorrectControl
+=== CONT  TestViewElementFixAgreesWithNode
+--- PASS: TestViewElementP06CorrectControl (0.35s)
+=== CONT  TestViewElementP05CorrectControl
+--- PASS: TestViewElementP01CorrectControl (0.40s)
+=== CONT  TestViewLiteralTypedElementReadControl
+--- PASS: TestViewStringElementReadControl (0.50s)
+--- PASS: TestViewElementP07CorrectControl (0.54s)
+--- PASS: TestViewElementFixAgreesWithNode (0.56s)
+--- PASS: TestViewLiteralTypedElementReadControl (0.53s)
+--- PASS: TestViewElementP05CorrectControl (0.71s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.087s
+=== RUN   TestCheckedViewElementP01
+=== PAUSE TestCheckedViewElementP01
+=== RUN   TestCheckedViewElementP05
+=== PAUSE TestCheckedViewElementP05
+=== RUN   TestCheckedViewElementP06
+=== PAUSE TestCheckedViewElementP06
+=== RUN   TestCheckedViewElementP07
+=== PAUSE TestCheckedViewElementP07
+=== RUN   TestCheckedViewLiteralTypedKey
+=== PAUSE TestCheckedViewLiteralTypedKey
+=== CONT  TestCheckedViewElementP01
+=== CONT  TestCheckedViewElementP07
+=== CONT  TestCheckedViewElementP06
+=== CONT  TestCheckedViewElementP05
+=== CONT  TestCheckedViewLiteralTypedKey
+=== NAME  TestCheckedViewElementP01
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/view_element_reads/p01.a relative to ../../internal/lower/testdata/view_element_reads
+--- FAIL: TestCheckedViewElementP01 (0.21s)
+=== NAME  TestCheckedViewElementP05
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/view_element_reads/p05.a relative to ../../internal/lower/testdata/view_element_reads
+--- FAIL: TestCheckedViewElementP05 (0.21s)
+=== NAME  TestCheckedViewElementP06
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/view_element_reads/p06.a relative to ../../internal/lower/testdata/view_element_reads
+--- FAIL: TestCheckedViewElementP06 (0.21s)
+=== NAME  TestCheckedViewElementP07
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/view_element_reads/p07.a relative to ../../internal/lower/testdata/view_element_reads
+--- FAIL: TestCheckedViewElementP07 (0.21s)
+=== NAME  TestCheckedViewLiteralTypedKey
+    cache_test.go:284: Rel: can't make /workspace/adamic/internal/lower/testdata/view_element_reads/literal_key.a relative to ../../internal/lower/testdata/view_element_reads
+--- FAIL: TestCheckedViewLiteralTypedKey (0.21s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.253s
+FAIL

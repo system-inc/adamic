@@ -1,0 +1,8 @@
+=== RUN   TestViewInEmptyKeyControl
+=== PAUSE TestViewInEmptyKeyControl
+=== CONT  TestViewInEmptyKeyControl
+    view_element_reads_test.go:147: JavaScript backend stdout = "", source Node = "true\n"
+--- FAIL: TestViewInEmptyKeyControl (0.14s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.153s
+FAIL

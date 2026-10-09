@@ -1,0 +1,22 @@
+--- a/internal/native/view_unions_read.go
++++ b/internal/native/view_unions_read.go
+@@ -35,8 +35,7 @@
+ 	e.line("if (%s.kind == adamic_view_union_number) %s = adamic_box_number(%s.payload.number);", snapshot, boxed, snapshot)
+ 	e.line("else if (%s.kind == adamic_view_union_boolean) %s = %s.payload.boolean ? (adamic_heap *)&adamic_box_true : (adamic_heap *)&adamic_box_false;", snapshot, boxed, snapshot)
+ 	e.line("else if (%s.kind == adamic_view_union_null) %s = &adamic_null;", snapshot, boxed)
+-	e.line("else if (%s.kind >= adamic_view_union_string && %s.kind <= adamic_view_union_function) %s = adamic_retain(%s.payload.reference);", snapshot, snapshot, boxed, snapshot)
+-	e.line("else %s = NULL;", boxed)
++	e.line("else %s = adamic_retain(%s.payload.reference);", boxed, snapshot)
+ 	value := e.own(ir.Union, boxed)
+ 	if contract.Of == ir.Closure {
+ 		recorded := e.temporary()
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -170,6 +170,7 @@
+         value.kind = number.present ? adamic_view_union_number : adamic_view_union_undefined;
+         if (number.present) { value.payload.number = number.number; }
+     } else if (storage == adamic_rep_maybe_boolean) {
++        value.payload = *slot;
+         adamic_maybe_boolean boolean = adamic_maybe_boolean_unpack(slot->maybe_boolean);
+         value.kind = boolean.present ? adamic_view_union_boolean : adamic_view_union_undefined;
+         if (boolean.present) { value.payload.boolean = boolean.boolean; }

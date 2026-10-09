@@ -1,0 +1,14 @@
+=== RUN   TestFX7Depth65
+=== PAUSE TestFX7Depth65
+=== CONT  TestFX7Depth65
+    fx7_depth_texts_test.go:23: gate cache node miss
+    fx7_depth_texts_test.go:23: gate cache node miss
+    fx7_depth_texts_test.go:23: native: exit codes differ; stderr "adamic: panic: field read failed: view.value matches no member of Link | Other; expected Link | Other, found object\n"
+    fx7_depth_texts_test.go:23: sanitized: exit codes differ; stderr "adamic: panic: field read failed: view.value matches no member of Link | Other; expected Link | Other, found object\n"
+--- FAIL: TestFX7Depth65 (12.16s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.164s
+FAIL

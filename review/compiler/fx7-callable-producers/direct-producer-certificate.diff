@@ -1,0 +1,15 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -257,12 +257,6 @@
+ 		contract.ProducerCertified = true
+ 		contract.Functions = nil
+ 		for _, producer := range l.closureRecords {
+-			function := l.result.Functions[producer.function]
+-			// Named functions also have a direct-call record. Only their closure
+-			// thunk has the code convention registered by the callable adapter.
+-			if !function.Closure || function.Receiver {
+-				continue
+-			}
+ 			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {
+ 				contract.Functions = append(contract.Functions, producer.function)
+ 			}

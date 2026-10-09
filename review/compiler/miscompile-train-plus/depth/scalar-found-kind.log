@@ -1,0 +1,14 @@
+=== RUN   TestFX7TextScalarTuple
+=== PAUSE TestFX7TextScalarTuple
+=== CONT  TestFX7TextScalarTuple
+    fx7_depth_texts_test.go:76: gate cache node miss
+    fx7_depth_texts_test.go:76: JavaScript: exit 70 stdout "" stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found array\n"
+    fx7_depth_texts_test.go:76: native: stderr differs; stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found object\n"
+    fx7_depth_texts_test.go:76: sanitized: stderr differs; stderr "adamic: panic: field read failed: viewed.value is not a boolean; expected boolean, found object\n"
+--- FAIL: TestFX7TextScalarTuple (12.04s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	12.046s
+FAIL
