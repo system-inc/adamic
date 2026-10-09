@@ -1,0 +1,13 @@
+diff --git a/stage1/typescript/parser/statements.ts b/stage1/typescript/parser/statements.ts
+index 519d9dac..48c95dd9 100644
+--- a/stage1/typescript/parser/statements.ts
++++ b/stage1/typescript/parser/statements.ts
+@@ -745,7 +745,7 @@ export class Statements {
+             this.parser.expect('OpenParenToken');
+             const expression = this.parser.rootExpression();
+             this.parser.expect('CloseParenToken');
+-            return this.parser.make('WithStatement', pos, [expression, this.statement()]);
++            return this.parser.make('WhileStatement', pos, [expression, this.statement()]);
+         }
+         if(this.parser.kind() === 'ExportKeyword' && this.exportedClauseAhead()) {
+             return this.exportDeclaration(pos, []);

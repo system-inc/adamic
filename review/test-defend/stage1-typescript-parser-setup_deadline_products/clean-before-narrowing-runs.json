@@ -1,0 +1,235 @@
+[
+  {
+    "group": 0,
+    "rows": [
+      "TestJsxMemberNameRejection"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMemberNameRejection)$"
+    ],
+    "exit": 0,
+    "wall": 33.11445725700105
+  },
+  {
+    "group": 1,
+    "rows": [
+      "TestJsxNameBoundaryRejections"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxNameBoundaryRejections)$"
+    ],
+    "exit": 0,
+    "wall": 51.04274685099881
+  },
+  {
+    "group": 2,
+    "rows": [
+      "TestJsxScannerMutants"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxScannerMutants)$"
+    ],
+    "exit": 0,
+    "wall": 44.88592968000012
+  },
+  {
+    "group": 3,
+    "rows": [
+      "TestJsxNative"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxNative)$"
+    ],
+    "exit": 0,
+    "wall": 23.046846206998453
+  },
+  {
+    "group": 4,
+    "rows": [
+      "TestWholeCountCheckCatchesMutant"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestWholeCountCheckCatchesMutant)$"
+    ],
+    "exit": 0,
+    "wall": 15.8225047119995
+  },
+  {
+    "group": 5,
+    "rows": [
+      "TestCompilerExpressionsAgreeUnion",
+      "TestCompilerExpressionsAgree_000",
+      "TestCompilerExpressionsAgree_001",
+      "TestCompilerExpressionsAgree_002",
+      "TestCompilerExpressionsAgree_003",
+      "TestCompilerExpressionsAgree_004",
+      "TestCompilerExpressionsAgree_005",
+      "TestCompilerExpressionsAgree_006",
+      "TestCompilerExpressionsAgree_007",
+      "TestCompilerExpressionsAgree_008",
+      "TestCompilerExpressionsAgree_009",
+      "TestCompilerExpressionsAgree_010"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgreeUnion|TestCompilerExpressionsAgree_000|TestCompilerExpressionsAgree_001|TestCompilerExpressionsAgree_002|TestCompilerExpressionsAgree_003|TestCompilerExpressionsAgree_004|TestCompilerExpressionsAgree_005|TestCompilerExpressionsAgree_006|TestCompilerExpressionsAgree_007|TestCompilerExpressionsAgree_008|TestCompilerExpressionsAgree_009|TestCompilerExpressionsAgree_010)$"
+    ],
+    "exit": 0,
+    "wall": 8.873216963998857
+  },
+  {
+    "group": 6,
+    "rows": [
+      "TestCompilerExpressionsAgree_011",
+      "TestCompilerExpressionsAgree_012",
+      "TestCompilerExpressionsAgree_013",
+      "TestCompilerExpressionsAgree_014",
+      "TestCompilerExpressionsAgree_015",
+      "TestProduct_ExpressionsSource001",
+      "TestProduct_ExpressionsSource002",
+      "TestProduct_ExpressionsSource003",
+      "TestProduct_ExpressionsOracle",
+      "TestProduct_ExpressionsLower000",
+      "TestProduct_ExpressionsNative000",
+      "TestProduct_ExpressionsLower001"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestCompilerExpressionsAgree_011|TestCompilerExpressionsAgree_012|TestCompilerExpressionsAgree_013|TestCompilerExpressionsAgree_014|TestCompilerExpressionsAgree_015|TestProduct_ExpressionsSource001|TestProduct_ExpressionsSource002|TestProduct_ExpressionsSource003|TestProduct_ExpressionsOracle|TestProduct_ExpressionsLower000|TestProduct_ExpressionsNative000|TestProduct_ExpressionsLower001)$"
+    ],
+    "exit": 0,
+    "wall": 10.437674200999027
+  },
+  {
+    "group": 7,
+    "rows": [
+      "TestProduct_ExpressionsNative001",
+      "TestProduct_ExpressionsLower002",
+      "TestProduct_ExpressionsNative002",
+      "TestProduct_ExpressionsLower003",
+      "TestProduct_ExpressionsNative003",
+      "TestExpressionsAgree",
+      "TestStrongAstParentGap",
+      "TestPushSpreadGap",
+      "TestClassMethodInterfaceGap",
+      "TestClosedOptionalFunctionValueGap",
+      "TestClosedConditionalEmptyArrayGap",
+      "TestGeneratedExpressionsAgree"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_ExpressionsNative001|TestProduct_ExpressionsLower002|TestProduct_ExpressionsNative002|TestProduct_ExpressionsLower003|TestProduct_ExpressionsNative003|TestExpressionsAgree|TestStrongAstParentGap|TestPushSpreadGap|TestClassMethodInterfaceGap|TestClosedOptionalFunctionValueGap|TestClosedConditionalEmptyArrayGap|TestGeneratedExpressionsAgree)$"
+    ],
+    "exit": 0,
+    "wall": 19.915372793999268
+  },
+  {
+    "group": 8,
+    "rows": [
+      "TestTypeOnlyImportCycleCompiles",
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion",
+      "TestProduct_JsxMutantsOracle"
+    ],
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestTypeOnlyImportCycleCompiles|TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle)$"
+    ],
+    "exit": 1,
+    "wall": 93.00393963399983
+  }
+]

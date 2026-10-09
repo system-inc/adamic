@@ -1,0 +1,33 @@
+[
+  {
+    "test": "TestProduct_ParserOracle",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "cannot-judge",
+    "unique_mutant": null,
+    "attempts": [],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/parser-defense/product-coverage/TestProduct_ParserOracle timeout 120 go test -json -count=1 -timeout 90s -coverpkg=github.com/system-inc/adamic/internal/buildcache -coverprofile=review/test-defend/stage1-typescript-parser-setup_deadline_products/TestProduct_ParserOracle.cold.cover ./stage1/typescript/parser/ -run '^TestProduct_ParserOracle$'; passed; 57 covered blocks, zero exclusive versus TestProduct_ExpressionsOracle. No allowed production mutation target: _test.go preparation recipe and Go oracle are prohibited."
+  },
+  {
+    "test": "TestWholeGeneratedAgrees",
+    "package": "stage1/typescript/parser",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 stage1/typescript/parser/statements.ts:748",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "stage1/typescript/parser/statements.ts:748",
+        "change": "WithStatement constant -> WhileStatement in Statements.statement's WithKeyword branch",
+        "rows_failed": [
+          "TestWholeGeneratedAgrees"
+        ]
+      }
+    ],
+    "evidence": "python3 review/test-defend/stage1-typescript-parser-setup_deadline_products/run-matrix.py D1 (15 bounded timeout/go-test groups); whole_generated_test.go:66: Node: case 12 line 403: port \"1 WhileStatement 0 13 0 0 -1 0 0\\t\\t\\t\\t\", Go \"1 WithStatement 0 13 0 0 -1 0 0\\t\\t\\t\\t\""
+  }
+]

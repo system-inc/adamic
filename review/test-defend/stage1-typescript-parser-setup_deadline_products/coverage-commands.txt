@@ -1,0 +1,25 @@
+source /workspace/adamic-tools/env.sh
+
+# Semantic rows: actual port execution measured with Node V8 coverage.
+# Go coverpkg here measures the cache infrastructure, not TypeScript source.
+for row in TestWholeGeneratedAgrees TestEveryTypeNodeKindAgrees; do
+ ADAMIC_TYPESCRIPT_SOURCE=/tmp/u156-typescript NODE_V8_COVERAGE=/tmp/parser-defense/v8/$row timeout 120 go test -json -count=1 -timeout 90s -coverpkg=github.com/system-inc/adamic/internal/buildcache -coverprofile=<evidence>/$row.cover ./stage1/typescript/parser/ -run "^$row$" > <evidence>/$row.cover.log 2>&1
+done
+
+# Host lowering and native build pipeline, per semantic row.
+for row in TestWholeGeneratedAgrees TestEveryTypeNodeKindAgrees; do
+ ADAMIC_TYPESCRIPT_SOURCE=/tmp/u156-typescript timeout 120 go test -json -count=1 -timeout 90s -coverpkg=github.com/system-inc/adamic/internal/lower,github.com/system-inc/adamic/internal/native -coverprofile=<evidence>/$row.host.cover ./stage1/typescript/parser/ -run "^$row$" > <evidence>/$row.host.log 2>&1
+done
+
+# Product rows: both default warm cache and independent cold caches were measured.
+for row in TestProduct_ParserOracle TestProduct_ExpressionsOracle; do
+ ADAMIC_BUILD_CACHE_DIR=/tmp/parser-defense/product-coverage/$row timeout 120 go test -json -count=1 -timeout 90s -coverpkg=github.com/system-inc/adamic/internal/buildcache -coverprofile=<evidence>/$row.cold.cover ./stage1/typescript/parser/ -run "^$row$" > <evidence>/$row.cold.log 2>&1
+done
+
+# <evidence> was review/test-defend/stage1-typescript-parser-setup_deadline_products.
+# V8 script offsets were mapped using the same transform as oracle/node.mjs:
+# stripTypeScriptTypes(readFileSync(statements.ts, 'utf8'), {mode:'transform'}).
+# Offsets use UTF-16 code units. Source WithStatement offset: 28164.
+# No TypeScript or harness source was changed during clean coverage collection.
+# Cold product profiles were collected during D1. That port mutation is not in
+# the oracle-product recipe's inputs and is not executed by either wrapper.

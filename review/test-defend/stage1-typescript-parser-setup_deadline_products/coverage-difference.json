@@ -1,0 +1,39 @@
+{
+  "TestWholeGeneratedAgrees": {
+    "statement_calls": 354,
+    "with_branch_count": 2,
+    "emitted_kind_offset_utf16": 28164,
+    "range": {
+      "startOffset": 27932,
+      "endOffset": 28274,
+      "count": 2
+    },
+    "origin_line": 748
+  },
+  "TestEveryTypeNodeKindAgrees": {
+    "statement_calls": 0,
+    "with_branch_count": 0,
+    "emitted_kind_offset_utf16": 28164,
+    "range": {
+      "startOffset": 27817,
+      "endOffset": 37941,
+      "count": 0
+    },
+    "origin_line": 748
+  },
+  "TestProduct_ParserOracle.cover exclusive vs TestProduct_ExpressionsOracle.cover": [],
+  "TestWholeGeneratedAgrees.host.cover exclusive vs TestEveryTypeNodeKindAgrees.host.cover": [],
+  "test_scope": {
+    "current_count": 100,
+    "added_since_audit": [],
+    "vanished_since_audit": [],
+    "note": "TestMain is a package hook, excluded by go test -list, and still exists."
+  },
+  "cold_product_profiles": {
+    "parser_oracle_covered_blocks": 57,
+    "expressions_oracle_covered_blocks": 57,
+    "parser_oracle_exclusive": [],
+    "expressions_oracle_exclusive": [],
+    "cache_directories": "/tmp/parser-defense/product-coverage/<test>"
+  }
+}

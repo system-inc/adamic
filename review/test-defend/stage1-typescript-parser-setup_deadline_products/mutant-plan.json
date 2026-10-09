@@ -1,0 +1,15 @@
+{
+ "D1": {
+  "file": "stage1/typescript/parser/statements.ts",
+  "line": 748,
+  "menu": "change constant",
+  "from": "this.parser.make('WithStatement', pos, [expression, this.statement()])",
+  "to": "this.parser.make('WhileStatement', pos, [expression, this.statement()])",
+  "aim": "With-statement full AST, absent from named subsumer's port inputs",
+  "planned_before_running": true
+ },
+ "TestProduct_ParserOracle": {
+  "attempts": [],
+  "constraint": "No allowed production CUT: the row only builds Go oracle through _test.go recipe. Oracle and harness mutations are forbidden."
+ }
+}

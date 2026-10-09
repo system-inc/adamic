@@ -1,0 +1,131 @@
+{
+  "base": "23a19b8b48662dfb6a19baa00b8efbb52ab5275e",
+  "rows": {
+    "TestProduct_ParserOracle": [
+      "TestProduct_ParserOracle"
+    ],
+    "TestProduct_CompilerExpressionsLower": [
+      "TestProduct_CompilerExpressionsLower"
+    ],
+    "TestProduct_CompilerExpressionsNative": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "TestProduct_WholeMutantsLower family": [
+      "TestProduct_WholeMutantsLower_Control",
+      "TestProduct_WholeMutantsLower_000",
+      "TestProduct_WholeMutantsLower_001",
+      "TestProduct_WholeMutantsLower_002"
+    ],
+    "TestProduct_WholeMutantsNative family": [
+      "TestProduct_WholeMutantsNative_Control",
+      "TestProduct_WholeMutantsNative_000",
+      "TestProduct_WholeMutantsNative_001",
+      "TestProduct_WholeMutantsNative_002"
+    ],
+    "TestEveryTypeNodeKindAgrees": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "TestWholeGeneratedAgrees": [
+      "TestWholeGeneratedAgrees"
+    ],
+    "TestObsoleteImportAttributesAgrees": [
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "TestWholeMutants_Setup": [
+      "TestWholeMutants_Setup"
+    ]
+  },
+  "matrix_pattern": "^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$",
+  "mutants": [
+    {
+      "id": "M1",
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 13,
+      "from_text": "optional = false;",
+      "to_text": "optional = true;",
+      "menu": "change constant",
+      "role": "production"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/typescript/parser/parser.ts",
+      "line": 268,
+      "from_text": "this.make('JSDocVariadicType', pos, [type])",
+      "to_text": "this.make('JSDocNullableType', pos, [type])",
+      "menu": "change constant",
+      "role": "production"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/typescript/parser/statements.ts",
+      "line": 238,
+      "from_text": "node.operator = operator;",
+      "to_text": "node.operator = 'WithKeyword';",
+      "menu": "change option",
+      "role": "production"
+    },
+    {
+      "id": "M4",
+      "file": "stage1/typescript/parser/nodes.ts",
+      "line": 58,
+      "from_text": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 1;",
+      "to_text": "export function countTree(nodes: readonly ParseNode[], root: number): number {\n    const node = nodes[root] ?? panic('missing parse node');\n    let count = 0;",
+      "menu": "change constant",
+      "role": "production"
+    },
+    {
+      "id": "S1",
+      "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+      "line": 91,
+      "from_text": "filepath.Join(dir, \"oracle\"), virtual",
+      "to_text": "filepath.Join(dir, \"absent/oracle\"), virtual",
+      "menu": "change option",
+      "role": "construction"
+    },
+    {
+      "id": "S2",
+      "file": "stage1/typescript/parser/compiler_expressions_shards_test.go",
+      "line": 67,
+      "from_text": "os.WriteFile(filepath.Join(dir, \"main.c\"),",
+      "to_text": "os.WriteFile(filepath.Join(dir, \"absent/main.c\"),",
+      "menu": "change option",
+      "role": "construction"
+    },
+    {
+      "id": "S3",
+      "file": "stage1/typescript/parser/compiler_expressions_shards_test.go",
+      "line": 83,
+      "from_text": "native.Build(string(source), filepath.Join(dir, \"parser\"),",
+      "to_text": "native.Build(string(source), filepath.Join(dir, \"absent/parser\"),",
+      "menu": "change option",
+      "role": "construction"
+    },
+    {
+      "id": "S4",
+      "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+      "line": 144,
+      "from_text": "os.WriteFile(filepath.Join(dir, \"main.c\"),",
+      "to_text": "os.WriteFile(filepath.Join(dir, \"absent/main.c\"),",
+      "menu": "change option",
+      "role": "construction"
+    },
+    {
+      "id": "S5",
+      "file": "stage1/typescript/parser/whole_mutants_split_test.go",
+      "line": 160,
+      "from_text": "native.Build(string(source), filepath.Join(dir, \"scanner\"),",
+      "to_text": "native.Build(string(source), filepath.Join(dir, \"absent/scanner\"),",
+      "menu": "change option",
+      "role": "construction"
+    },
+    {
+      "id": "S6",
+      "file": "stage1/typescript/parser/whole_mutants_setup_test.go",
+      "line": 105,
+      "from_text": "\tfor i, source := range directories {\n\t\tif binaries[i] == \"\" {\n\t\t\tt.Fatal(\"setup product build did not complete\")\n\t\t}\n\t\tinputs.Binaries[wholeMutantsSourceHash(t, source)] = binaries[i]\n\t}\n",
+      "to_text": "",
+      "menu": "drop whole loop",
+      "role": "construction"
+    }
+  ]
+}

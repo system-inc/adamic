@@ -1,0 +1,55 @@
+{
+  "production": {
+    "M1": [
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "M2": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "M3": [
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "M4": []
+  },
+  "construction": {
+    "S1": [
+      "TestWholeMutants_Setup"
+    ],
+    "S2": [
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "S3": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "S4": [
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestWholeMutants_Setup"
+    ],
+    "S5": [
+      "TestProduct_WholeMutantsNative family",
+      "TestWholeMutants_Setup"
+    ],
+    "S6": [
+      "TestWholeMutants_Setup"
+    ]
+  },
+  "probes": {
+    "P1": [
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "P2": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "P3": [],
+    "P4": [],
+    "P5": [],
+    "P6": [],
+    "P7": [],
+    "P8": []
+  }
+}

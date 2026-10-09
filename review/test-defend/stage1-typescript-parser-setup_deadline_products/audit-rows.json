@@ -1,0 +1,349 @@
+[
+  {
+    "test": "TestProduct_ParserOracle",
+    "members": [
+      "TestProduct_ParserOracle"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+    "seconds": 0.426,
+    "oracle": "self: construction must succeed; wrapper discards returned artifact path and checks no parser answers",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [],
+    "evidence": "S1 completed without failure in this row; P3 empty builder also passed. See S1.log and P3.log."
+  },
+  {
+    "test": "TestProduct_CompilerExpressionsLower",
+    "members": [
+      "TestProduct_CompilerExpressionsLower"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+    "seconds": 1.881,
+    "oracle": "self: construction must succeed; wrapper discards returned artifact path and checks no parser answers",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S2: setup_deadline_products_test.go:33: build compiler-expressions-lowered: open /tmp/u157/cache/S2/.building-91819c136215-2941223516/absent/main.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [
+      "S2"
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/S2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/S2.log 2>&1; setup_deadline_products_test.go:33: build compiler-expressions-lowered: open /tmp/u157/cache/S2/.building-91819c136215-2941223516/absent/main.c: no such file or directory"
+  },
+  {
+    "test": "TestProduct_CompilerExpressionsNative",
+    "members": [
+      "TestProduct_CompilerExpressionsNative"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+    "seconds": 3.904,
+    "oracle": "self: construction must succeed; wrapper discards returned artifact path and checks no parser answers",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3: setup_deadline_products_test.go:37: build compiler-expressions-native: native: clang failed: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [
+      "S2",
+      "S3"
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/S3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/S3.log 2>&1; setup_deadline_products_test.go:37: build compiler-expressions-native: native: clang failed: exit status 1"
+  },
+  {
+    "test": "TestProduct_WholeMutantsLower family",
+    "members": [
+      "TestProduct_WholeMutantsLower_Control",
+      "TestProduct_WholeMutantsLower_000",
+      "TestProduct_WholeMutantsLower_001",
+      "TestProduct_WholeMutantsLower_002"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+    "seconds": 0.908,
+    "oracle": "self: construction must succeed; wrapper discards returned artifact path and checks no parser answers",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4: setup_deadline_products_test.go:62: build typescript-parser-lowered: open /tmp/u157/cache/S4/.building-f9752a3aaf18-785119383/absent/main.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [
+      "S4"
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/S4 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/S4.log 2>&1; setup_deadline_products_test.go:62: build typescript-parser-lowered: open /tmp/u157/cache/S4/.building-f9752a3aaf18-785119383/absent/main.c: no such file or directory"
+  },
+  {
+    "test": "TestProduct_WholeMutantsNative family",
+    "members": [
+      "TestProduct_WholeMutantsNative_Control",
+      "TestProduct_WholeMutantsNative_000",
+      "TestProduct_WholeMutantsNative_001",
+      "TestProduct_WholeMutantsNative_002"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/setup_deadline_products_test.go",
+    "seconds": 1.905,
+    "oracle": "self: construction must succeed; wrapper discards returned artifact path and checks no parser answers",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S5: setup_deadline_products_test.go:47: build typescript-parser-native: native: clang failed: exit status 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [
+      "S4",
+      "S5"
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/S5 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/S5.log 2>&1; setup_deadline_products_test.go:47: build typescript-parser-native: native: clang failed: exit status 1"
+  },
+  {
+    "test": "TestEveryTypeNodeKindAgrees",
+    "members": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/type_kinds_test.go",
+    "seconds": 20.211,
+    "oracle": "Runs unmodified typescript-go via a Go overlay; compares full tree bytes from the port on Node and native. Type-kind inventory is also from typescript-go.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: type_kinds_test.go:27: Node doc types: case 0 line 3: port \"0 JSDocNullableType 11 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"0 JSDocVariadicType 11 15 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/M2.log 2>&1; type_kinds_test.go:27: Node doc types: case 0 line 3: port \"0 JSDocNullableType 11 15 0 0 -1 0 0\\t\\t\\t\\t\", Go \"0 JSDocVariadicType 11 15 0 0 -1 0 0\\t\\t\\t\\t\""
+  },
+  {
+    "test": "TestWholeGeneratedAgrees",
+    "members": [
+      "TestWholeGeneratedAgrees"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_generated_test.go",
+    "seconds": 19.392,
+    "oracle": "Runs unmodified typescript-go and compares full tree bytes with the port on Node and native.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M1: whole_generated_test.go:66: Node: case 0 line 3: port \"0 SourceFile 0 138 32 0 -1 0 0\\t\\t\\t\\t\", Go \"0 SourceFile 0 138 0 0 -1 0 0\\t\\t\\t\\t\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEveryTypeNodeKindAgrees"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 20.211,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/M1.log 2>&1; whole_generated_test.go:66: Node: case 0 line 3: port \"0 SourceFile 0 138 32 0 -1 0 0\\t\\t\\t\\t\", Go \"0 SourceFile 0 138 0 0 -1 0 0\\t\\t\\t\\t\""
+  },
+  {
+    "test": "TestObsoleteImportAttributesAgrees",
+    "members": [
+      "TestObsoleteImportAttributesAgrees"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_generated_test.go",
+    "seconds": 20.991,
+    "oracle": "Runs unmodified typescript-go and compares full tree bytes with the port on Node and native; obsolete case additionally requires Go diagnostics to be nonempty and all code 2880.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3: whole_generated_test.go:89: Node: case 0 line 8: port \"2 ImportAttributes 17 39 0 0 1 0 0\\tWithKeyword\\t\\t\\t\", Go \"2 ImportAttributes 17 39 0 0 1 0 0\\tAssertKeyword\\t\\t\\t\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/M3.log 2>&1; whole_generated_test.go:89: Node: case 0 line 8: port \"2 ImportAttributes 17 39 0 0 1 0 0\\tWithKeyword\\t\\t\\t\", Go \"2 ImportAttributes 17 39 0 0 1 0 0\\tAssertKeyword\\t\\t\\t\""
+  },
+  {
+    "test": "TestWholeMutants_Setup",
+    "members": [
+      "TestWholeMutants_Setup"
+    ],
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/whole_mutants_setup_test.go",
+    "seconds": 2.185,
+    "oracle": "self: prepared map must contain four binaries and every returned path must exist; no parser-answer comparison",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S6: whole_mutants_setup_test.go:75: shared setup must finish before a whole-mutant leaf runs",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestProduct_ParserOracle",
+      "TestProduct_CompilerExpressionsLower",
+      "TestProduct_CompilerExpressionsNative",
+      "TestProduct_WholeMutantsLower family",
+      "TestProduct_WholeMutantsNative family",
+      "TestEveryTypeNodeKindAgrees",
+      "TestWholeGeneratedAgrees",
+      "TestObsoleteImportAttributesAgrees",
+      "TestWholeMutants_Setup"
+    ],
+    "setup_kills": [
+      "S1",
+      "S4",
+      "S5",
+      "S6"
+    ],
+    "evidence": "ADAMIC_TYPESCRIPT_SOURCE=/tmp/u157-typescript ADAMIC_BUILD_CACHE_DIR=/tmp/u157/cache/S6 timeout 120 go test -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestProduct_ParserOracle|TestProduct_CompilerExpressionsLower|TestProduct_CompilerExpressionsNative|TestProduct_WholeMutantsLower_Control|TestProduct_WholeMutantsLower_000|TestProduct_WholeMutantsLower_001|TestProduct_WholeMutantsLower_002|TestProduct_WholeMutantsNative_Control|TestProduct_WholeMutantsNative_000|TestProduct_WholeMutantsNative_001|TestProduct_WholeMutantsNative_002|TestEveryTypeNodeKindAgrees|TestWholeGeneratedAgrees|TestObsoleteImportAttributesAgrees|TestWholeMutants_Setup)$' > review/test-audit/stage1-typescript-parser-setup_deadline_products/S6.log 2>&1; whole_mutants_setup_test.go:75: shared setup must finish before a whole-mutant leaf runs"
+  }
+]
