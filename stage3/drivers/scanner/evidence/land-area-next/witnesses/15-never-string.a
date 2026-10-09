@@ -1,0 +1,3 @@
+export function stopped(): never { throw new Error("placeholder"); }
+export function name(): string | undefined { return stopped(); }
+console.log("ok");
