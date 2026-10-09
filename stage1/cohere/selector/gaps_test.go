@@ -18,7 +18,7 @@ import (
 // leaking nothing. So when a gap moves, this test says so, and the port's workaround for it can go.
 var gaps = []struct{ path, notYet, badC, stdout string }{
 	{path: "gaps/6_undefined_case.ts", notYet: "a case whose type differs from the switch's", stdout: "a\n"},
-	{path: "gaps/1_multiple_push.ts", notYet: "push with other than one value", stdout: "ab\n"},
+	{path: "gaps/1_multiple_push.ts", stdout: "ab\n"},
 	{path: "gaps/2_mixed_field.ts", notYet: "a field of type string | boolean | undefined", stdout: "true\n"},
 	{path: "gaps/3_optional_boolean.ts", notYet: "a field of type boolean | undefined", stdout: "true\n"},
 	{path: "gaps/4_array_from_iterator.ts", notYet: "Array.from with other than { length } and a callback", stdout: "a\n"},
@@ -36,7 +36,7 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 			}
 			// What the program means, whatever stage 0 makes of it.
 			nodeRun := onNode(t, path)
-			if nodeRun.exitCode != 0 || string(nodeRun.stdout) != gap.stdout {
+			if nodeRun.exitCode != 0 || len(nodeRun.stderr) != 0 || string(nodeRun.stdout) != gap.stdout {
 				t.Fatalf("on Node: exit %d, stdout %q; GAPS.md records %q", nodeRun.exitCode, nodeRun.stdout, gap.stdout)
 			}
 
@@ -72,8 +72,10 @@ func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {
 				return
 			}
 			nativeRun, sanitized := natively(t, lowered)
-			if nativeRun.exitCode != 0 || string(nativeRun.stdout) != gap.stdout {
-				t.Errorf("natively: exit %d, stdout %q, stderr %q; Node prints %q", nativeRun.exitCode, nativeRun.stdout, nativeRun.stderr, gap.stdout)
+			for _, side := range []run{nativeRun, onJavaScriptBackend(t, lowered)} {
+				if side.exitCode != 0 || len(side.stderr) != 0 || string(side.stdout) != gap.stdout {
+					t.Errorf("closed gap: exit %d, stdout %q, stderr %q; Node prints %q", side.exitCode, side.stdout, side.stderr, gap.stdout)
+				}
 			}
 			if leaked := leaks(t, lowered, sanitized); leaked != "" {
 				t.Errorf("leaks:\n%s", leaked)

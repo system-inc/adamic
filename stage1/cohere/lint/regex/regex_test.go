@@ -4,16 +4,17 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"strconv"
 	"strings"
 	"testing"
+
+	"github.com/system-inc/adamic/internal/javascript"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func run(t *testing.T, cwd, command string, args ...string) []byte {
@@ -111,23 +112,44 @@ func TestFixedPatterns(t *testing.T) {
 		t.Logf("translation mutant caught by byte comparison on backend %d: %s", backend, ids[firstRow(expected, actual)])
 	}
 }
+
+// Not parallel: ASAN_OPTIONS process environment via t.Setenv.
 func TestDynamicPatternGap(t *testing.T) {
-	t.Parallel()
-	entry, _ := filepath.Abs("testdata/dynamic_gap.a")
+	entry, err := filepath.Abs("testdata/dynamic_gap.a")
+	if err != nil {
+		t.Fatal(err)
+	}
 	repository, _ := filepath.Abs("../../../..")
-	out := run(t, ".", "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), entry, "TODO")
-	if string(out) != "true\n" {
-		t.Fatalf("Node %q", out)
+	runner := filepath.Join(repository, "oracle/node.mjs")
+	p, err := load.Load([]string{entry})
+	if err != nil {
+		t.Fatal(err)
 	}
-	p, e := load.Load([]string{entry})
-	if e != nil {
-		t.Fatal(e)
+	lowered, err := lower.Lower(context.Background(), p)
+	if err != nil {
+		t.Fatal(err)
 	}
-	_, e = lower.Lower(context.Background(), p)
-	if e == nil || !strings.Contains(e.Error(), "RegExp with a nonconstant pattern") {
-		t.Fatalf("expected named native gap, got %v", e)
+	directory := t.TempDir()
+	binary := filepath.Join(directory, "dynamic")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
 	}
-	t.Log(e)
+	emitted := filepath.Join(directory, "dynamic.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
+	for _, probe := range []struct{ pattern, output string }{{"TODO", "true\n"}, {"^NEVER$", "false\n"}} {
+		expected := run(t, ".", "node", "--disable-warning=ExperimentalWarning", runner, entry, probe.pattern)
+		if string(expected) != probe.output {
+			t.Fatalf("Node %q", expected)
+		}
+		for _, actual := range [][]byte{run(t, ".", binary, probe.pattern), run(t, ".", "node", "--disable-warning=ExperimentalWarning", runner, emitted, probe.pattern)} {
+			if !bytes.Equal(actual, expected) {
+				t.Fatalf("runtime pattern %q: got %q, Node %q", probe.pattern, actual, expected)
+			}
+		}
+	}
 }
 
 func TestOptionDialectGap(t *testing.T) {

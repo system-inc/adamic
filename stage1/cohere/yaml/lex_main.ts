@@ -6,10 +6,10 @@ function unescaped(text: string): string {
     let start = 0;
     for(let index = 0; index < text.length; index++) {
         if(text.slice(index, index + 1) !== '\\') continue;
-        parts.push(text.slice(start, index));
+        const prefix = text.slice(start, index);
         index++;
         const char = text.slice(index, index + 1);
-        parts.push(char === 'n' ? '\n' : char === 'r' ? '\r' : char === 't' ? '\t' : char);
+        parts.push(prefix, char === 'n' ? '\n' : char === 'r' ? '\r' : char === 't' ? '\t' : char);
         start = index + 1;
     }
     parts.push(text.slice(start));

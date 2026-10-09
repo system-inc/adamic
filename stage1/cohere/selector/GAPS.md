@@ -18,13 +18,14 @@ backend and, when `ADAMIC_SELECTOR_LIBRARY` is set, the original library. Every
 native baseline runs under ASan and UBSan and receives a separate leak check.
 Three mutated ports must finish successfully and disagree with Go on native and
 Node. `gaps_test.go` checks each program below against its Node output and the
-exact `lower.NotYet.What` refusal. A gap closing therefore fails the gap test.
+exact `lower.NotYet.What` refusal for open gaps. Closed gaps require native
+agreement with Node, with sanitizer and leak checks.
 
 ## Compiler gaps
 
 | Program                                                   | Node stdout | Exact refusal                                          | Workaround                                     |
 | --------------------------------------------------------- | ----------- | ------------------------------------------------------ | ---------------------------------------------- |
-| [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | `push with other than one value`                       | One push per value.                            |
+| [1_multiple_push.ts](gaps/1_multiple_push.ts)             | `ab`        | Closed on library/area-on-main-4 (`d767edf5`)            | Multi-value push restored in the line transport.                            |
 | [2_mixed_field.ts](gaps/2_mixed_field.ts)                 | `true`      | `a field of type string \| boolean \| undefined`       | Namespace string and separate true bit.        |
 | [3_optional_boolean.ts](gaps/3_optional_boolean.ts)       | `true`      | `a field of type boolean \| undefined`                 | Quoted value and presence bit.                 |
 | [4_array_from_iterator.ts](gaps/4_array_from_iterator.ts) | `a`         | `Array.from with other than { length } and a callback` | Explicit map-key collection loop.              |

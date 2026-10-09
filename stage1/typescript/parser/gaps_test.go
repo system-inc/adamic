@@ -40,8 +40,8 @@ func TestStrongAstParentGap(t *testing.T) {
 	}
 }
 
+// Not parallel: ASAN_OPTIONS process environment via t.Setenv.
 func TestPushSpreadGap(t *testing.T) {
-	t.Parallel()
 	path, err := filepath.Abs("gaps/2_push_spread.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -58,10 +58,25 @@ func TestPushSpreadGap(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "a SpreadElement" {
-		t.Fatalf("GAPS.md records push spread NotYet, got %v", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "spread")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	t.Setenv("ASAN_OPTIONS", "detect_leaks=1")
+	actual := execute(t, "", binary).output
+	emitted := filepath.Join(t.TempDir(), "spread.mjs")
+	if err := os.WriteFile(emitted, []byte(javascript.JavaScript(lowered)), 0644); err != nil {
+		t.Fatal(err)
+	}
+	backend := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, emitted).output
+	for _, side := range [][]byte{actual, backend} {
+		if !bytes.Equal(side, result.output) {
+			t.Fatalf("closed push spread: %q, Node %q", side, result.output)
+		}
 	}
 }
 

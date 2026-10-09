@@ -1,29 +1,18 @@
 # Regex blockers for @system_adamic_library
 
-## Dynamic RegExp source is refused
+## Dynamic RegExp source: closed
 
-Reproducer: `testdata/dynamic_gap.a`, unchanged on source Node:
+Closed on library/area-on-main-4 (`d767edf5`). The unchanged
+`testdata/dynamic_gap.a` constructs `new RegExp(pattern, 'u')` with a pattern
+from `programArguments`. `TestDynamicPatternGap` requires source Node,
+native ASan/UBSan/LeakSanitizer and emitted JavaScript to print `true` for
+`TODO` and `false` for `^NEVER$`, with clean exits. The former nonconstant
+pattern lowering refusal is gone. `options.a` retains its requested constructor
+contract; no matcher fallback is needed.
 
-```ts
-import { programArguments } from 'adamic';
-const pattern = programArguments()[0] ?? 'TODO';
-console.log(`${new RegExp(pattern, 'u').test('TODO')}`);
-```
-
-Node prints `true` with argument `TODO`. Native lowering reports:
-
-```
-stage 0 can't lower RegExp with a nonconstant pattern yet
-```
-
-`TestDynamicPatternGap` proves both observations. `options.a` preserves the requested
-constructor contract and is deliberately isolated from the supported literal module.
-The CSS printer's constructors use constant imported pattern data, so its success
-does not establish support for runtime rule options. No matcher fallback was added.
-
-This prevents id-length's `exceptionPatterns`, no-inline-comments' `ignorePattern`,
-and no-warning-comments' generated configurable terms/decorations from following
-the required RegExp path on native. Their full finding migrations were not made.
+This closes the compiler blocker for runtime rule patterns. It does not
+translate Go option syntax to JavaScript syntax or migrate the fleet's finding
+implementations; those remaining boundaries are recorded below.
 
 ## Raw option dialect is not Go regexp
 

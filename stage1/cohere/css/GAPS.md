@@ -38,18 +38,15 @@ and `TestClosedEmptyArrayUnionGap` holds it on native ASan/UBSan, Node, the Java
 and LeakSanitizer. The custom-property composition still creates an explicitly typed
 `number[]` local before assigning its optional slot; that workaround is cohere's to remove.
 
-## 5. Dynamic repeat under catch
+## 5. Dynamic repeat under catch: closed
 
+Closed on library/area-on-main-4 (`d767edf5`). The unchanged
 [gaps/5_repeat_in_try.ts](gaps/5_repeat_in_try.ts) uses a count from
-`programArguments`, and prints `a` with no arguments. Adamic reports:
-
-```text
-stage 0 can't lower a try around repeat, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
-```
-
-A literal repeat can be folded and does not prove this gap. The composition uses
-an explicit loop to repeat spaces or replacement characters. The counts come
-from byte lengths or clamped byte-slice boundaries.
+`programArguments` and prints `a` with no arguments on source Node,
+native ASan/UBSan/LeakSanitizer and emitted JavaScript.
+`TestEachGapStandsWhereGapsMdSaysItDoes` now requires that agreement rather
+than the former panic-versus-catch lowering refusal. `repeatText` uses
+`String.repeat` directly; its callers supply byte lengths or clamped boundaries.
 
 ## Go and original JavaScript disagree at a surrogate cut
 
