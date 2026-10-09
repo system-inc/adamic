@@ -60,6 +60,7 @@ func regexCompatibleCases(t *testing.T, cases []regexCase) []regexCase {
 }
 
 func TestRegExpBytecodeV8Node(t *testing.T) {
+	t.Parallel()
 	var cases []regexCase
 	for _, pattern := range []string{`\B`, `\b`, `(?!\W)`, `(?=\W)`, `(?!.)`, `(?<!.)`, `(?:)`, `\B(a?)`, `\B.`, `(?!\W).`, `(?=\B)`} {
 		for _, flags := range []string{"g", "y", "gu", "yu", "giu", "yiu", "gv", "yv"} {

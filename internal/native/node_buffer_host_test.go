@@ -155,6 +155,7 @@ func TestNodeBufferHostFallbackComponent(t *testing.T) {
 }
 
 func TestNodeBufferHostUTF16Components(t *testing.T) {
+	t.Parallel()
 	for _, file := range []string{"02_readFile_utf16le.a", "03_readFile_utf16be.a"} {
 		t.Run(file, func(t *testing.T) {
 			t.Parallel()

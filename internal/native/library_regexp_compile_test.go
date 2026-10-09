@@ -11,6 +11,7 @@ import (
 )
 
 func TestRegExpRuntimeOwnershipOptInMutant(t *testing.T) {
+	t.Parallel()
 	source, err := os.ReadFile("library.go")
 	if err != nil {
 		t.Fatal(err)

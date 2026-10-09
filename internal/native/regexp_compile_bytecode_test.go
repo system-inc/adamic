@@ -14,8 +14,14 @@ import (
 	"testing"
 )
 
-func TestRegExpRuntimeBytecodeIdentity(t *testing.T) { runtimeBytecodeIdentity(t, false, "") }
-func TestRegExpRuntimeBytecodeWASI(t *testing.T)     { runtimeBytecodeIdentity(t, true, "") }
+func TestRegExpRuntimeBytecodeIdentity(t *testing.T) {
+	t.Parallel()
+	runtimeBytecodeIdentity(t, false, "")
+}
+func TestRegExpRuntimeBytecodeWASI(t *testing.T) {
+	t.Parallel()
+	runtimeBytecodeIdentity(t, true, "")
+}
 
 const runtimeBytecodeWriter = `
 static void number(uint64_t value) { unsigned char bytes[8]; for(unsigned i=0;i<8;i++)bytes[i]=(unsigned char)(value>>(8*i)); if(fwrite(bytes,1,8,stdout)!=8)exit(2); }
@@ -247,13 +253,24 @@ func runtimeBytecodeIdentity(t *testing.T, wasi bool, mutant string) {
 	t.Logf("byte-identical: %d programs, %d syntax/refusal cases (WASI=%v)", accepted, refused, wasi)
 }
 func TestRegExpRuntimeBytecodeEmissionMutant(t *testing.T) {
+	t.Parallel()
 	runtimeBytecodeIdentity(t, false, "set opcode")
 }
 
 func TestRegExpRuntimeRejectedPatternMutant(t *testing.T) {
+	t.Parallel()
 	runtimeBytecodeIdentity(t, false, "accept syntax")
 }
 
-func TestRegExpRuntimeV8Refusals(t *testing.T)      { runtimeBytecodeIdentity(t, false, "v8") }
-func TestRegExpRuntimeV8WASI(t *testing.T)          { runtimeBytecodeIdentity(t, true, "v8") }
-func TestRegExpRuntimeV8RefusalMutant(t *testing.T) { runtimeBytecodeIdentity(t, false, "v8 bypass") }
+func TestRegExpRuntimeV8Refusals(t *testing.T) {
+	t.Parallel()
+	runtimeBytecodeIdentity(t, false, "v8")
+}
+func TestRegExpRuntimeV8WASI(t *testing.T) {
+	t.Parallel()
+	runtimeBytecodeIdentity(t, true, "v8")
+}
+func TestRegExpRuntimeV8RefusalMutant(t *testing.T) {
+	t.Parallel()
+	runtimeBytecodeIdentity(t, false, "v8 bypass")
+}

@@ -6,6 +6,7 @@ import (
 	"testing"
 )
 
+// Not parallel: t.Setenv changes the process environment variable WASI_SYSROOT.
 func TestWASIHostTargetRefusals(t *testing.T) {
 	t.Setenv("WASI_SYSROOT", t.TempDir())
 	for name, want := range wasiHostRefusals {

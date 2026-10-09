@@ -6,6 +6,7 @@ import (
 )
 
 func TestPrototypeArgumentsEscapeRegions(t *testing.T) {
+	t.Parallel()
 	for _, method := range []string{"create", "setPrototypeOf"} {
 		t.Run(method, func(t *testing.T) {
 			count := 1

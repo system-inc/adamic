@@ -8,6 +8,7 @@ import (
 // A literal's UTF-16 length is emitted with it (adamic.h's ADAMIC_STRING_UNITS), so the runtime never
 // rescans or caches into an immortal literal. These are JavaScript's lengths for the same text.
 func TestLiteralUnitsAreJavaScriptLengths(t *testing.T) {
+	t.Parallel()
 	for _, row := range []struct {
 		text  string
 		units int

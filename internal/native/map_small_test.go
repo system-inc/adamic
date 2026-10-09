@@ -102,6 +102,7 @@ func mapSmallMeasurements(t *testing.T, output string) int {
 }
 
 func TestMapSmallStorage(t *testing.T) {
+	t.Parallel()
 	const source = `#include "adamic.h"
 #include <stdio.h>
 

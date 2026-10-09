@@ -9,6 +9,7 @@ import (
 )
 
 func TestHostPromises(t *testing.T) {
+	t.Parallel()
 	// Not parallel: this compiles both sanitizer runtimes and executes bounded
 	// subprocess controls and mutants; simultaneous gates obscure race evidence.
 	if goruntime.GOOS != "linux" {
