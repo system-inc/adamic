@@ -64,9 +64,9 @@ class GateLaneTests(unittest.TestCase):
             git(self.repository, 'push', '-q', 'origin', '%s:refs/gate-merges/%s' % (sha, sha))
         return merge, other
 
-    def run_lane(self, exitCode):
+    def run_lane(self, exitCode, during=''):
         fake = self.root / 'push-main.sh'
-        fake.write_text('echo "$@" >> %s\n[ %d = 0 ] && echo "Pushed main aaaa..bbbb"\n[ %d = 1 ] && echo "refused: a real reason" >&2\nexit %d\n'
+        fake.write_text(during + 'echo "$@" >> %s\n[ %d = 0 ] && echo "Pushed main aaaa..bbbb"\n[ %d = 1 ] && echo "refused: a real reason" >&2\nexit %d\n'
                         % (self.calls, exitCode, exitCode, exitCode))
         poster = self.root / 'ahra'
         # Like ahra: the comment comes from the file after --text-file, and success says "Comment added".
@@ -110,6 +110,14 @@ class GateLaneTests(unittest.TestCase):
         self.candidates.write_text('cloud/land-n\t%s\ttask4\t\n' % self.sha)
         self.run_lane(0)
         self.assertIn('--fast-gate gate-logs/%s/20261009T110000Z/fast %s' % (self.sha[:12], self.sha), self.calls.read_text())
+
+    def test_a_line_added_while_a_landing_runs_survives_it(self):
+        self.record('20261009T110000Z', 'fast', 'green: lands')
+        self.candidates.write_text('cloud/land-x\t%s\ttask1\t\n' % self.sha)
+        late = 'cloud/land-late\t%s\ttask9\t' % ('f' * 40)
+        self.run_lane(0, during="printf '%s\\n' >> %s\n" % (late, self.candidates))
+        self.assertNotIn('cloud/land-x', self.candidates.read_text())
+        self.assertIn(late, self.candidates.read_text())
 
     def test_a_refusal_is_posted_once_and_a_hold_waits(self):
         self.record('20261009T110000Z', 'full-main', 'red: whole')

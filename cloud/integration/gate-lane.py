@@ -93,17 +93,15 @@ def main():
     told = set(open(seen).read().split("\n")) if os.path.exists(seen) else set()
     if not os.path.exists(candidates):
         return
-    kept = []
+    landed = set()
     for line in open(candidates).read().splitlines():
         fields = line.split("\t")
         if len(fields) < 3 or line.startswith("#"):
-            kept.append(line)
             continue
         branch, sha, task = fields[:3]
         infra = [name for name in (fields[3] if len(fields) > 3 else "").split(";") if name.strip()]
         newestSet = newest(sha)
         if not newestSet:
-            kept.append(line)
             continue
         gated, found = newestSet
         arguments = ["--full-gate", found[1]] if found[0] == "full" else ["--fast-gate", found[1]] + (["--also-gate", found[2]] if found[2] else [])
@@ -118,13 +116,16 @@ def main():
         if ran.returncode == 0:
             pushed = [l for l in ran.stdout.splitlines() if l.startswith("Pushed main")]
             post(task, "Gate lane landed %s at %s on %s (record published %s): %s" % (label, now, " ".join(arguments), published, pushed[0] if pushed else ""))
+            landed.add(line)
             continue
         if ran.returncode != 3 and key not in told:
             reason = [l for l in ran.stderr.splitlines() if l.startswith("refused")] or ran.stderr.splitlines()[-1:]
             post(task, "Gate lane: %s on %s doesn't land: %s" % (label, " ".join(arguments), (reason[0] if reason else "push-main exit %d" % ran.returncode)[:600]))
             told.add(key)
-        kept.append(line)
     open(seen, "w").write("\n".join(sorted(told)))
+    # Lines added while this run was landing must survive it: re-read the file and drop only what landed (three cuts
+    # appended mid-run were lost when the run wrote back its own earlier read, Oct 9 07:10).
+    kept = [line for line in open(candidates).read().splitlines() if line not in landed]
     open(candidates + ".new", "w").write("\n".join(kept) + ("\n" if kept else ""))
     os.replace(candidates + ".new", candidates)
 
