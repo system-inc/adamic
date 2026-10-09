@@ -1,2 +1,3 @@
-const items: (string | number)[] = [1, 2];
+const items: (string | number)[] = [1, 2, 'discard'];
+items.pop();
 if (items.every(value => typeof value === 'number')) console.log('total ' + items.reduce((a, b) => a + b, 0));
