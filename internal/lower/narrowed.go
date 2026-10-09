@@ -167,5 +167,4 @@ func optionalReceiver(node *ast.Node) bool {
 		return call.Expression == node && call.QuestionDotToken != nil
 	}
 	return false
-
 }
