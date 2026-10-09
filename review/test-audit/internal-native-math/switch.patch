@@ -1,0 +1,285 @@
+diff --git a/internal/native/runtime/math.c b/internal/native/runtime/math.c
+index 84dfe691..b9a4de39 100644
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -1,10 +1,12 @@
+ // math.c: JavaScript's Math, where C's library means something else (ECMA-262, the Math object).
+ 
+ #include "adamic.h"
++#include "audit_mutant.h"
+ 
+ #include <math.h>
+ 
+ double adamic_math_round(double value) {
++	if (audit_mutant("P01")) { return 0; }
+ 	if (isnan(value) || isinf(value)) {
+ 		return value;
+ 	}
+@@ -12,7 +14,7 @@ double adamic_math_round(double value) {
+ 	// difference from the floor is exact for every double, so 0.49999999999999994 stays 0, where
+ 	// floor(value + 0.5) would round it up.
+ 	double floored = floor(value);
+-	double rounded = value - floored >= 0.5 ? floored + 1 : floored;
++	double rounded = (audit_mutant("M01") ? (value - floored > 0.5) : (value - floored >= 0.5)) ? floored + 1 : floored;
+ 	// From -0.5 up to -0, the answer is -0.
+ 	if (rounded == 0 && signbit(value)) {
+ 		return -0.0;
+@@ -21,28 +23,31 @@ double adamic_math_round(double value) {
+ }
+ 
+ double adamic_math_sign(double value) {
++	if (audit_mutant("P02")) { return 0; }
+ 	if (isnan(value) || value == 0) {
+ 		return value;
+ 	}
+-	return value > 0 ? 1 : -1;
++	return (audit_mutant("M02") ? (value < 0 ? 1 : -1) : (value > 0 ? 1 : -1));
+ }
+ 
+ double adamic_math_max(double left, double right) {
++	if (audit_mutant("P03")) { return 0; }
+ 	if (isnan(left) || isnan(right)) {
+ 		return NAN;
+ 	}
+ 	if (left == 0 && right == 0) {
+-		return signbit(left) && signbit(right) ? -0.0 : 0.0;
++		return (audit_mutant("M03") ? (signbit(left) || signbit(right)) : (signbit(left) && signbit(right))) ? -0.0 : 0.0;
+ 	}
+ 	return left > right ? left : right;
+ }
+ 
+ double adamic_math_min(double left, double right) {
++	if (audit_mutant("P04")) { return 0; }
+ 	if (isnan(left) || isnan(right)) {
+ 		return NAN;
+ 	}
+ 	if (left == 0 && right == 0) {
+ 		return signbit(left) || signbit(right) ? -0.0 : 0.0;
+ 	}
+-	return left < right ? left : right;
++	return (audit_mutant("M04") ? (left > right ? left : right) : (left < right ? left : right));
+ }
+diff --git a/internal/native/runtime/maybe.c b/internal/native/runtime/maybe.c
+index 6746e965..888896c5 100644
+--- a/internal/native/runtime/maybe.c
++++ b/internal/native/runtime/maybe.c
+@@ -1,6 +1,7 @@
+ // maybe.c: number | undefined and boolean | undefined, where the pair itself is seen.
+ 
+ #include "adamic.h"
++#include "audit_mutant.h"
+ 
+ #include <math.h>
+ #include <stdint.h>
+@@ -25,13 +26,14 @@ bool adamic_maybe_boolean_equal(adamic_maybe_boolean left, adamic_maybe_boolean
+ }
+ 
+ double adamic_maybe_number_pack(adamic_maybe_number value) {
++	if (audit_mutant("P07")) { return 0; }
+ 	uint64_t bits = ADAMIC_UNDEFINED_BITS;
+-	if (value.present) {
++	if (audit_mutant("M09") ? (!value.present) : (value.present)) {
+ 		if (!isnan(value.number)) {
+ 			return value.number;
+ 		}
+ 		// NaN, -NaN, 0/0's NaN, any payload: all one quiet NaN, never the reserved one.
+-		bits = 0x7ff8000000000000u;
++		if (audit_mutant("M08")) { bits = 0x7ff8000000000001u; } else { bits = 0x7ff8000000000000u; }
+ 	}
+ 	double packed;
+ 	memcpy(&packed, &bits, sizeof packed);
+@@ -39,9 +41,10 @@ double adamic_maybe_number_pack(adamic_maybe_number value) {
+ }
+ 
+ adamic_maybe_number adamic_maybe_number_unpack(double packed) {
++	if (audit_mutant("P08")) { return (adamic_maybe_number){false, 0}; }
+ 	uint64_t bits;
+ 	memcpy(&bits, &packed, sizeof bits);
+-	if (bits == ADAMIC_UNDEFINED_BITS) {
++	if ((audit_mutant("M10") ? (bits != ADAMIC_UNDEFINED_BITS) : (bits == ADAMIC_UNDEFINED_BITS))) {
+ 		return (adamic_maybe_number){false, 0.0};
+ 	}
+ 	return (adamic_maybe_number){true, packed};
+diff --git a/internal/native/runtime/node_buffer.c b/internal/native/runtime/node_buffer.c
+index 71373c97..59fbeab1 100644
+--- a/internal/native/runtime/node_buffer.c
++++ b/internal/native/runtime/node_buffer.c
+@@ -5,6 +5,7 @@
+ // THIRD_PARTY_NOTICES.md. Base64 and hex port Node's nbytes fallback scalar
+ // loops (MIT, same notices).
+ #include "adamic.h"
++#include "audit_mutant.h"
+ #include <stdlib.h>
+ #include <string.h>
+ 
+@@ -108,6 +109,7 @@ static unsigned byte_value(double value)
+ }
+ adamic_array *adamic_node_buffer_copy(const adamic_array *source)
+ {
++	if (audit_mutant("P10")) { return NULL; }
+ 	adamic_array *buffer = adamic_array_new(source->length, false);
+ 	for (size_t at = 0; at < source->length; at++) {
+ 		push_byte(buffer, byte_value(source->elements[at].number));
+@@ -129,7 +131,7 @@ static int unbase64(unsigned c)
+ 		return (int)(c - 'A');
+ 	}
+ 	if (c >= 'a' && c <= 'z') {
+-		return (int)(c - 'a') + 26;
++		if (audit_mutant("M14")) { return (int)(c - 'a') + 25; } else { return (int)(c - 'a') + 26; }
+ 	}
+ 	if (c >= '0' && c <= '9') {
+ 		return (int)(c - '0') + 52;
+@@ -157,6 +159,7 @@ static int unhex(unsigned c)
+ }
+ adamic_array *adamic_node_buffer_from(const adamic_string *text, int encoding)
+ {
++	if (audit_mutant("P11")) { return NULL; }
+ 	size_t units = adamic_string_units(text);
+ 	adamic_array *buffer =
+ 		adamic_array_new(encoding == 1 ? units * 2 : text->length, false);
+@@ -226,6 +229,7 @@ static size_t clamp_offset(double offset, size_t length)
+ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
+ 										 double from, double to, int encoding)
+ {
++	if (audit_mutant("P12")) { return adamic_retain(&adamic_string_empty); }
+ 	size_t start = clamp_offset(from, buffer->length),
+ 		   end = clamp_offset(to, buffer->length);
+ 	if (end <= start) {
+diff --git a/internal/native/runtime/node_crypto.c b/internal/native/runtime/node_crypto.c
+index b9af6161..63b08273 100644
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -2,6 +2,7 @@
+ // The state and pending bytes live in ordinary counted numeric arrays, so the
+ // existing heap destruction paths release everything without a new heap kind.
+ #include "adamic.h"
++#include "audit_mutant.h"
+ #include <string.h>
+ 
+ static const uint32_t constants[64] = {
+@@ -63,6 +64,7 @@ static const bool references[] = {true, false};
+ static const adamic_shape shape = {2, names, references, NULL};
+ adamic_object *adamic_node_hash_new(void)
+ {
++	if (audit_mutant("P13")) { return NULL; }
+ 	adamic_object *hash = adamic_object_new(&shape);
+ 	hash->slots[0].reference = adamic_array_new(0, false);
+ 	return hash;
+@@ -78,6 +80,7 @@ static void check_finalized(const adamic_object *hash)
+ adamic_object *adamic_node_hash_update(adamic_object *hash,
+ 									   const adamic_string *text, int encoding)
+ {
++	if (audit_mutant("P14")) { return NULL; }
+ 	check_finalized(hash);
+ 	adamic_array *input = adamic_node_buffer_from(text, encoding);
+ 	adamic_array *bytes = hash->slots[0].reference;
+@@ -89,8 +92,9 @@ adamic_object *adamic_node_hash_update(adamic_object *hash,
+ }
+ adamic_string *adamic_node_hash_digest(adamic_object *hash)
+ {
++	if (audit_mutant("P15")) { return adamic_retain(&adamic_string_empty); }
+ 	check_finalized(hash);
+-	hash->slots[1].number = 1;
++	if (audit_mutant("M15")) { /* dropped finalized flag assignment */ } else { hash->slots[1].number = 1; }
+ 	const adamic_array *bytes = hash->slots[0].reference;
+ 	uint32_t state[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+ 						 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};
+diff --git a/internal/native/runtime/normalize.c b/internal/native/runtime/normalize.c
+index 2fc181ca..1fe21578 100644
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -8,6 +8,7 @@
+ // decompose or compose, and passes through as its WTF-8 bytes, as in Node.
+ 
+ #include "adamic.h"
++#include "audit_mutant.h"
+ 
+ #include <stdint.h>
+ #include <stdlib.h>
+@@ -162,7 +163,7 @@ static void decompose(points *list, uint32_t point, bool compatibility) {
+ 		return;
+ 	}
+ 	const normalize_mapping *mapping = mapping_of(point);
+-	if (mapping == NULL || (mapping->compatibility && !compatibility)) {
++	if (audit_mutant("M11") ? (mapping == NULL || (mapping->compatibility && compatibility)) : (mapping == NULL || (mapping->compatibility && !compatibility))) {
+ 		points_add(list, point);
+ 		return;
+ 	}
+@@ -565,13 +566,14 @@ static bool form_is(const adamic_string *form, const char *name) {
+ }
+ 
+ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form) {
++	if (audit_mutant("P09")) { return adamic_retain(&adamic_string_empty); }
+ 	bool compatibility, composed;
+ 	if (form_is(form, "NFC")) {
+ 		compatibility = false, composed = true;
+ 	} else if (form_is(form, "NFD")) {
+-		compatibility = false, composed = false;
++		if (audit_mutant("M13")) { compatibility = false, composed = true; } else { compatibility = false, composed = false; }
+ 	} else if (form_is(form, "NFKC")) {
+-		compatibility = true, composed = true;
++		if (audit_mutant("M12")) { compatibility = false, composed = true; } else { compatibility = true, composed = true; }
+ 	} else if (form_is(form, "NFKD")) {
+ 		compatibility = true, composed = false;
+ 	} else {
+diff --git a/internal/native/runtime/number.c b/internal/native/runtime/number.c
+index 64762be9..6a42c84c 100644
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -1,6 +1,7 @@
+ // number.c: numbers as text, exactly as JavaScript writes them.
+ 
+ #include "adamic.h"
++#include "audit_mutant.h"
+ 
+ #include <stdint.h>
+ 
+@@ -99,6 +100,7 @@ size_t adamic_number_format(double value, char buffer[ADAMIC_NUMBER_FORMAT_MAX])
+ }
+ 
+ double adamic_power(double base, double exponent) {
++	if (audit_mutant("P05")) { return 0; }
+ 	// This is V8's math::pow (src/numbers/ieee754.cc), case for case, so ** gives Node's bits and not
+ 	// just a close answer. Where JavaScript and C disagree (ECMA-262, Number::exponentiate), a NaN
+ 	// exponent is NaN even for base 1, and a base of magnitude 1 to an infinite power is NaN.
+@@ -114,7 +116,7 @@ double adamic_power(double base, double exponent) {
+ 	if (exponent == 2) {
+ 		return base * base;
+ 	}
+-	if (exponent == 0.5) {
++	if ((audit_mutant("M05") ? (exponent == 0.25) : (exponent == 0.5))) {
+ 		// +0 so that -0 ** 0.5 is +0; and -Infinity ** 0.5 is Infinity, where sqrt says NaN.
+ 		return isinf(base) ? INFINITY : sqrt(base + 0);
+ 	}
+@@ -124,6 +126,7 @@ double adamic_power(double base, double exponent) {
+ }
+ 
+ adamic_string *adamic_number_to_fixed(double value, double digits) {
++	if (audit_mutant("P06")) { return adamic_retain(&adamic_string_empty); }
+ 	// ToIntegerOrInfinity first: NaN is 0, and a fraction truncates, so toFixed(-0.5) is toFixed(0).
+ 	digits = isnan(digits) ? 0 : trunc(digits);
+ 	if (!(digits >= 0 && digits <= 100)) {
+@@ -141,7 +144,7 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
+ 	// point, and printf writes it exactly when asked for that many. JavaScript then rounds half up on
+ 	// the exact value (the larger n on a tie), where printf's own rounding would round half to even.
+ 	char exact[1500];
+-	bool negative = value < 0;
++	bool negative = audit_mutant("M07") ? signbit(value) : value < 0;
+ 	int length = snprintf(exact, sizeof exact, "%.1100f", fabs(value));
+ 	int point = 0;
+ 	while (exact[point] != '.') {
+@@ -149,7 +152,7 @@ adamic_string *adamic_number_to_fixed(double value, double digits) {
+ 	}
+ 	// Keep the integer digits and places fraction digits, then round on the next one.
+ 	int keep = point + 1 + places;
+-	bool up = keep < length && exact[keep] >= '5';
++	bool up = keep < length && (audit_mutant("M06") ? (exact[keep] > '5') : (exact[keep] >= '5'));
+ 	char digits_text[1500];
+ 	int count = 0;
+ 	for (int index = 0; index < keep; index++) {
+--- /dev/null
++++ b/internal/native/runtime/audit_mutant.h
+@@ -0,0 +1,3 @@
++#include <stdlib.h>
++#include <string.h>
++static inline bool audit_mutant(const char *id) { const char *value = getenv("ADAMIC_MUTANT"); return value != NULL && strcmp(value, id) == 0; }

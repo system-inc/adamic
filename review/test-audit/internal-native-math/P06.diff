@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -124,6 +124,7 @@
+ }
+ 
+ adamic_string *adamic_number_to_fixed(double value, double digits) {
++	return adamic_retain(&adamic_string_empty);
+ 	// ToIntegerOrInfinity first: NaN is 0, and a fraction truncates, so toFixed(-0.5) is toFixed(0).
+ 	digits = isnan(digits) ? 0 : trunc(digits);
+ 	if (!(digits >= 0 && digits <= 100)) {

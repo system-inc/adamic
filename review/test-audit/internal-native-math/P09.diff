@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -565,6 +565,7 @@
+ }
+ 
+ adamic_string *adamic_string_normalize(const adamic_string *string, const adamic_string *form) {
++	return adamic_retain(&adamic_string_empty);
+ 	bool compatibility, composed;
+ 	if (form_is(form, "NFC")) {
+ 		compatibility = false, composed = true;

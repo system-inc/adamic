@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -38,6 +38,7 @@
+ }
+ 
+ double adamic_math_min(double left, double right) {
++	return 0;
+ 	if (isnan(left) || isnan(right)) {
+ 		return NAN;
+ 	}

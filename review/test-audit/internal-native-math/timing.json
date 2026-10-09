@@ -1,0 +1,93 @@
+[
+  {
+    "test": "TestMathAndToFixedMatchJavaScript",
+    "trial": 0,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMathAndToFixedMatchJavaScript$'",
+    "exit": 0,
+    "wall": 3.143209776000731
+  },
+  {
+    "test": "TestMathAndToFixedMatchJavaScript",
+    "trial": 1,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMathAndToFixedMatchJavaScript$'",
+    "exit": 0,
+    "wall": 3.343429147000279
+  },
+  {
+    "test": "TestMathAndToFixedMatchJavaScript",
+    "trial": 2,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMathAndToFixedMatchJavaScript$'",
+    "exit": 0,
+    "wall": 3.6878495249984553
+  },
+  {
+    "test": "TestMaybeNumbersPackIntoOneDouble",
+    "trial": 0,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMaybeNumbersPackIntoOneDouble$'",
+    "exit": 0,
+    "wall": 3.033938519998628
+  },
+  {
+    "test": "TestMaybeNumbersPackIntoOneDouble",
+    "trial": 1,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMaybeNumbersPackIntoOneDouble$'",
+    "exit": 0,
+    "wall": 2.8842186059991946
+  },
+  {
+    "test": "TestMaybeNumbersPackIntoOneDouble",
+    "trial": 2,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestMaybeNumbersPackIntoOneDouble$'",
+    "exit": 0,
+    "wall": 2.326443930000096
+  },
+  {
+    "test": "TestNodeBufferRuntimeWithoutDeclarations",
+    "trial": 0,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNodeBufferRuntimeWithoutDeclarations$'",
+    "exit": 0,
+    "wall": 3.1281500440018135
+  },
+  {
+    "test": "TestNodeBufferRuntimeWithoutDeclarations",
+    "trial": 1,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNodeBufferRuntimeWithoutDeclarations$'",
+    "exit": 0,
+    "wall": 3.076082215000497
+  },
+  {
+    "test": "TestNodeBufferRuntimeWithoutDeclarations",
+    "trial": 2,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNodeBufferRuntimeWithoutDeclarations$'",
+    "exit": 0,
+    "wall": 2.881239827001991
+  },
+  {
+    "test": "TestNormalizeRandomMatchesNode",
+    "trial": 0,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeRandomMatchesNode$'",
+    "exit": 0,
+    "wall": 13.025707572000101
+  },
+  {
+    "test": "TestNormalizeRandomMatchesNode",
+    "trial": 1,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeRandomMatchesNode$'",
+    "exit": 0,
+    "wall": 12.777544708002097
+  },
+  {
+    "test": "TestNormalizeRandomMatchesNode",
+    "trial": 2,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeRandomMatchesNode$'",
+    "exit": 0,
+    "wall": 13.017403613997885
+  },
+  {
+    "test": "TestNormalizeLongMeasurements",
+    "trial": 0,
+    "command": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeLongMeasurements$'",
+    "exit": 1,
+    "wall": 92.49318301899984
+  }
+]

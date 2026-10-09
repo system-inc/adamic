@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -63,6 +63,7 @@
+ static const adamic_shape shape = {2, names, references, NULL};
+ adamic_object *adamic_node_hash_new(void)
+ {
++	return NULL;
+ 	adamic_object *hash = adamic_object_new(&shape);
+ 	hash->slots[0].reference = adamic_array_new(0, false);
+ 	return hash;

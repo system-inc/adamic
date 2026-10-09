@@ -1,0 +1,44 @@
+[
+  {
+    "id": "family-control-0",
+    "command": "ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-family-control-0 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 0,
+    "wall": 29.087242861998675
+  },
+  {
+    "id": "family-control-1",
+    "command": "ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-family-control-1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 0,
+    "wall": 28.329600870998547
+  },
+  {
+    "id": "family-control-2",
+    "command": "ADAMIC_MUTANT= ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-family-control-2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 0,
+    "wall": 30.665681082999072
+  },
+  {
+    "id": "M11",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 1,
+    "wall": 30.14581643999918
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 1,
+    "wall": 32.18580852199739
+  },
+  {
+    "id": "M13",
+    "command": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 1,
+    "wall": 40.92115374399873
+  },
+  {
+    "id": "P09",
+    "command": "ADAMIC_MUTANT=P09 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/family-P09 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeMatchesNode(Points[0-9][0-9]|Contexts)$'",
+    "exit": 1,
+    "wall": 13.517409529998986
+  }
+]

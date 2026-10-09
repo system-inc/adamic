@@ -1,0 +1,461 @@
+[
+  {
+    "id": "control",
+    "command": "ADAMIC_MUTANT=control ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/control timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 0,
+    "wall": 27.07284171500214,
+    "failures": [],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M01",
+    "command": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 16.099859851001384,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M02",
+    "command": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.854497659001936,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M03",
+    "command": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.43245854700217,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M04",
+    "command": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 20.371307956000237,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M05",
+    "command": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 0,
+    "wall": 29.89271723999991,
+    "failures": [],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M06",
+    "command": "ADAMIC_MUTANT=M06 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 28.424967626997386,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M07",
+    "command": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 32.6387713740005,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M08",
+    "command": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 23.88091226600227,
+    "failures": [
+      "TestMaybeNumbersPackIntoOneDouble"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M09",
+    "command": "ADAMIC_MUTANT=M09 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 31.060901056000148,
+    "failures": [
+      "TestMaybeNumbersPackIntoOneDouble"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M10",
+    "command": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 36.60567529199761,
+    "failures": [
+      "TestMaybeNumbersPackIntoOneDouble"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M11",
+    "command": "ADAMIC_MUTANT=M11 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 28.365735874001984,
+    "failures": [
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 16.281300669998018,
+    "failures": [
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M13",
+    "command": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 17.19046380600048,
+    "failures": [
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M14",
+    "command": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 17.813988843001425,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "M15",
+    "command": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 0,
+    "wall": 16.97451285200077,
+    "failures": [],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P01",
+    "command": "ADAMIC_MUTANT=P01 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 16.05531738300124,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P02",
+    "command": "ADAMIC_MUTANT=P02 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.59732465900015,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P03",
+    "command": "ADAMIC_MUTANT=P03 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P03 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.773483053999371,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P04",
+    "command": "ADAMIC_MUTANT=P04 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P04 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.847320478998881,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P05",
+    "command": "ADAMIC_MUTANT=P05 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P05 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.866976125002111,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P06",
+    "command": "ADAMIC_MUTANT=P06 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P06 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.869846634002897,
+    "failures": [
+      "TestMathAndToFixedMatchJavaScript"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P07",
+    "command": "ADAMIC_MUTANT=P07 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P07 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.023295557999518,
+    "failures": [
+      "TestMaybeNumbersPackIntoOneDouble"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P08",
+    "command": "ADAMIC_MUTANT=P08 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P08 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.815346317998774,
+    "failures": [
+      "TestMaybeNumbersPackIntoOneDouble"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P09",
+    "command": "ADAMIC_MUTANT=P09 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P09 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 6.109967516000324,
+    "failures": [
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P10",
+    "command": "ADAMIC_MUTANT=P10 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.04450559900215,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P11",
+    "command": "ADAMIC_MUTANT=P11 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.870489269000245,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P12",
+    "command": "ADAMIC_MUTANT=P12 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 14.870466519998445,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P13",
+    "command": "ADAMIC_MUTANT=P13 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.077802995998354,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P14",
+    "command": "ADAMIC_MUTANT=P14 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.137369858002785,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  },
+  {
+    "id": "P15",
+    "command": "ADAMIC_MUTANT=P15 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'",
+    "exit": 1,
+    "wall": 15.037338088000979,
+    "failures": [
+      "TestNodeBufferRuntimeWithoutDeclarations"
+    ],
+    "rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ]
+  }
+]

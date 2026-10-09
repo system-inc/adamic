@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -78,6 +78,7 @@
+ adamic_object *adamic_node_hash_update(adamic_object *hash,
+ 									   const adamic_string *text, int encoding)
+ {
++	return NULL;
+ 	check_finalized(hash);
+ 	adamic_array *input = adamic_node_buffer_from(text, encoding);
+ 	adamic_array *bytes = hash->slots[0].reference;

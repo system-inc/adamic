@@ -1,0 +1,179 @@
+[
+  {
+    "test": "TestMathAndToFixedMatchJavaScript",
+    "package": "internal/native",
+    "file": "internal/native/math_test.go",
+    "seconds": 0.94,
+    "oracle": "Node Math.round/sign/max/min, exponentiation, Number.toFixed; exact answers including negative zero",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M01",
+      "M02",
+      "M03",
+      "M04",
+      "M06",
+      "M07"
+    ],
+    "last_proven_fail": "M07 math_test.go:145: 10 of 69132 answers differ",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01",
+      "P02",
+      "P03",
+      "P04",
+      "P05",
+      "P06"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'; math_test.go:145: 10 of 69132 answers differ"
+  },
+  {
+    "test": "TestMaybeNumbersPackIntoOneDouble",
+    "package": "internal/native",
+    "file": "internal/native/maybe_test.go",
+    "seconds": 0.21,
+    "oracle": "Self-written reserved and canonical NaN bits, presence flag and exact round-trip bits; Go math.IsNaN only classifies inputs",
+    "oracle_kind": "self",
+    "kills": [
+      "M08",
+      "M09",
+      "M10"
+    ],
+    "unique_kills": [
+      "M08",
+      "M09",
+      "M10"
+    ],
+    "last_proven_fail": "M10 maybe_test.go:100: 20015 of 20015 values pack wrong",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P07",
+      "P08"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M10 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'; maybe_test.go:100: 20015 of 20015 values pack wrong"
+  },
+  {
+    "test": "TestNodeBufferRuntimeWithoutDeclarations",
+    "package": "internal/native",
+    "file": "internal/native/node_buffer_test.go",
+    "seconds": 0.85,
+    "oracle": "Node v24.19.0 Buffer and crypto.createHash; exact stdout in release and sanitizer builds, plus JavaScript backend agreement",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M14"
+    ],
+    "unique_kills": [
+      "M14"
+    ],
+    "last_proven_fail": "M14 --- FAIL: TestNodeBufferRuntimeWithoutDeclarations (0.59s)",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P10",
+      "P11",
+      "P12",
+      "P13",
+      "P14",
+      "P15"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode"
+    ],
+    "evidence": "ADAMIC_MUTANT=M14 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'; --- FAIL: TestNodeBufferRuntimeWithoutDeclarations (0.59s)"
+  },
+  {
+    "test": "TestNormalizeLongMeasurements",
+    "package": "internal/native",
+    "file": "internal/native/normalize_benchmark_test.go",
+    "seconds": null,
+    "oracle": "Self-written expected exit-status schedule. Node measurements are recorded but outputs and times are never compared; any nonzero oversized-case exit is accepted, including unrelated failures",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 1,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNormalizeLongMeasurements"
+    ],
+    "evidence": "Opt-in clean baseline, P09 and M12 attempts timed out at 90 seconds. No completed functional failure observed.",
+    "over_budget": true,
+    "reason": "610 serial measurements cannot complete within 90 seconds; no completed mutation result or three-run median."
+  },
+  {
+    "test": "TestNormalizeRandomMatchesNode",
+    "package": "internal/native",
+    "file": "internal/native/normalize_random_test.go",
+    "seconds": 10.83,
+    "oracle": "Node String.normalize in all four forms, exact WTF-8 hex for 100000 independently generated input strings and output line count",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M11",
+      "M12",
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13 normalize_random_test.go:103: 94683 of 100000 lines differ",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNormalizeMatchesNode family"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P09"
+    ],
+    "subsumer_seconds": 26.401,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestMathAndToFixedMatchJavaScript",
+      "TestMaybeNumbersPackIntoOneDouble",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestNormalizeRandomMatchesNode",
+      "TestNormalizeMatchesNode family"
+    ],
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u049/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$'; normalize_random_test.go:103: 94683 of 100000 lines differ",
+    "subsumption_mutants": 3
+  }
+]

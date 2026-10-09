@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/node_buffer.c
++++ b/internal/native/runtime/node_buffer.c
+@@ -108,6 +108,7 @@
+ }
+ adamic_array *adamic_node_buffer_copy(const adamic_array *source)
+ {
++	return NULL;
+ 	adamic_array *buffer = adamic_array_new(source->length, false);
+ 	for (size_t at = 0; at < source->length; at++) {
+ 		push_byte(buffer, byte_value(source->elements[at].number));

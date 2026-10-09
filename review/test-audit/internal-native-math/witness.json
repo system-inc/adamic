@@ -1,0 +1,52 @@
+[
+  {
+    "label": "build",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u049",
+      "/tmp/u049/survivors"
+    ],
+    "mutant": "",
+    "exit": 0,
+    "wall": 1.1892868270006147
+  },
+  {
+    "label": "control",
+    "command": [
+      "/tmp/u049/survivors"
+    ],
+    "mutant": "",
+    "exit": 70,
+    "wall": 0.008142549999320181
+  },
+  {
+    "label": "M05",
+    "command": [
+      "/tmp/u049/survivors"
+    ],
+    "mutant": "M05",
+    "exit": 70,
+    "wall": 0.006242973999178503
+  },
+  {
+    "label": "M15",
+    "command": [
+      "/tmp/u049/survivors"
+    ],
+    "mutant": "M15",
+    "exit": 0,
+    "wall": 0.004369389000203228
+  },
+  {
+    "label": "node",
+    "command": [
+      "node",
+      "-e",
+      "console.log('power(16,0.25)='+16**0.25);const h=require('node:crypto').createHash('sha256');h.digest('hex');try{h.digest('hex')}catch(e){console.log(e.code)}"
+    ],
+    "mutant": "",
+    "exit": 0,
+    "wall": 0.15964572099983343
+  }
+]

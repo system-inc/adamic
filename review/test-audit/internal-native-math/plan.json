@@ -1,0 +1,216 @@
+{
+  "mutants": [
+    {
+      "id": "M01",
+      "file": "internal/native/runtime/math.c",
+      "line": 15,
+      "old": "value - floored >= 0.5",
+      "new": "value - floored > 0.5",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M02",
+      "file": "internal/native/runtime/math.c",
+      "line": 27,
+      "old": "value > 0 ? 1 : -1",
+      "new": "value < 0 ? 1 : -1",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M03",
+      "file": "internal/native/runtime/math.c",
+      "line": 35,
+      "old": "signbit(left) && signbit(right)",
+      "new": "signbit(left) || signbit(right)",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M04",
+      "file": "internal/native/runtime/math.c",
+      "line": 47,
+      "old": "left < right ? left : right",
+      "new": "left > right ? left : right",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M05",
+      "file": "internal/native/runtime/number.c",
+      "line": 117,
+      "old": "exponent == 0.5",
+      "new": "exponent == 0.25",
+      "menu": "change a constant"
+    },
+    {
+      "id": "M06",
+      "file": "internal/native/runtime/number.c",
+      "line": 152,
+      "old": "exact[keep] >= '5'",
+      "new": "exact[keep] > '5'",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M07",
+      "file": "internal/native/runtime/number.c",
+      "line": 144,
+      "old": "bool negative = value < 0;",
+      "new": "bool negative = signbit(value);",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M08",
+      "file": "internal/native/runtime/maybe.c",
+      "line": 34,
+      "old": "bits = 0x7ff8000000000000u;",
+      "new": "bits = 0x7ff8000000000001u;",
+      "menu": "change a constant"
+    },
+    {
+      "id": "M09",
+      "file": "internal/native/runtime/maybe.c",
+      "line": 29,
+      "old": "if (value.present) {",
+      "new": "if (!value.present) {",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M10",
+      "file": "internal/native/runtime/maybe.c",
+      "line": 44,
+      "old": "bits == ADAMIC_UNDEFINED_BITS",
+      "new": "bits != ADAMIC_UNDEFINED_BITS",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M11",
+      "file": "internal/native/runtime/normalize.c",
+      "line": 165,
+      "old": "if (mapping == NULL || (mapping->compatibility && !compatibility)) {",
+      "new": "if (mapping == NULL || (mapping->compatibility && compatibility)) {",
+      "menu": "flip a condition"
+    },
+    {
+      "id": "M12",
+      "file": "internal/native/runtime/normalize.c",
+      "line": 574,
+      "old": "compatibility = true, composed = true;",
+      "new": "compatibility = false, composed = true;",
+      "menu": "change an option"
+    },
+    {
+      "id": "M13",
+      "file": "internal/native/runtime/normalize.c",
+      "line": 572,
+      "old": "compatibility = false, composed = false;",
+      "new": "compatibility = false, composed = true;",
+      "menu": "change an option"
+    },
+    {
+      "id": "M14",
+      "file": "internal/native/runtime/node_buffer.c",
+      "line": 132,
+      "old": "return (int)(c - 'a') + 26;",
+      "new": "return (int)(c - 'a') + 25;",
+      "menu": "change a constant"
+    },
+    {
+      "id": "M15",
+      "file": "internal/native/runtime/node_crypto.c",
+      "line": 93,
+      "old": "hash->slots[1].number = 1;",
+      "new": "/* dropped finalized flag assignment */",
+      "menu": "drop a statement"
+    }
+  ],
+  "probes": [
+    {
+      "id": "P01",
+      "file": "math.c",
+      "entry": "adamic_math_round",
+      "line": 7
+    },
+    {
+      "id": "P02",
+      "file": "math.c",
+      "entry": "adamic_math_sign",
+      "line": 23
+    },
+    {
+      "id": "P03",
+      "file": "math.c",
+      "entry": "adamic_math_max",
+      "line": 30
+    },
+    {
+      "id": "P04",
+      "file": "math.c",
+      "entry": "adamic_math_min",
+      "line": 40
+    },
+    {
+      "id": "P05",
+      "file": "number.c",
+      "entry": "adamic_power",
+      "line": 101
+    },
+    {
+      "id": "P06",
+      "file": "number.c",
+      "entry": "adamic_number_to_fixed",
+      "line": 126
+    },
+    {
+      "id": "P07",
+      "file": "maybe.c",
+      "entry": "adamic_maybe_number_pack",
+      "line": 27
+    },
+    {
+      "id": "P08",
+      "file": "maybe.c",
+      "entry": "adamic_maybe_number_unpack",
+      "line": 41
+    },
+    {
+      "id": "P09",
+      "file": "normalize.c",
+      "entry": "adamic_string_normalize",
+      "line": 567
+    },
+    {
+      "id": "P10",
+      "file": "node_buffer.c",
+      "entry": "adamic_node_buffer_copy",
+      "line": 110
+    },
+    {
+      "id": "P11",
+      "file": "node_buffer.c",
+      "entry": "adamic_node_buffer_from",
+      "line": 159
+    },
+    {
+      "id": "P12",
+      "file": "node_buffer.c",
+      "entry": "adamic_node_buffer_string",
+      "line": 228
+    },
+    {
+      "id": "P13",
+      "file": "node_crypto.c",
+      "entry": "adamic_node_hash_new",
+      "line": 65
+    },
+    {
+      "id": "P14",
+      "file": "node_crypto.c",
+      "entry": "adamic_node_hash_update",
+      "line": 80
+    },
+    {
+      "id": "P15",
+      "file": "node_crypto.c",
+      "entry": "adamic_node_hash_digest",
+      "line": 91
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/maybe.c
++++ b/internal/native/runtime/maybe.c
+@@ -41,7 +41,7 @@
+ adamic_maybe_number adamic_maybe_number_unpack(double packed) {
+ 	uint64_t bits;
+ 	memcpy(&bits, &packed, sizeof bits);
+-	if (bits == ADAMIC_UNDEFINED_BITS) {
++	if (bits != ADAMIC_UNDEFINED_BITS) {
+ 		return (adamic_maybe_number){false, 0.0};
+ 	}
+ 	return (adamic_maybe_number){true, packed};

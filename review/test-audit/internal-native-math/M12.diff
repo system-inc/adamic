@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/normalize.c
++++ b/internal/native/runtime/normalize.c
+@@ -571,7 +571,7 @@
+ 	} else if (form_is(form, "NFD")) {
+ 		compatibility = false, composed = false;
+ 	} else if (form_is(form, "NFKC")) {
+-		compatibility = true, composed = true;
++		compatibility = false, composed = true;
+ 	} else if (form_is(form, "NFKD")) {
+ 		compatibility = true, composed = false;
+ 	} else {

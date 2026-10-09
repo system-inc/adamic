@@ -1,0 +1,93 @@
+{
+  "origin_commit": "83f3940ec77b8ba779da05ded113e9d9e7e710b6",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_seconds": 0.5594161699991673,
+  "row_test_seconds": {
+    "TestMathAndToFixedMatchJavaScript": 0.94,
+    "TestMaybeNumbersPackIntoOneDouble": 0.21,
+    "TestNodeBufferRuntimeWithoutDeclarations": 0.85,
+    "TestNormalizeLongMeasurements": null,
+    "TestNormalizeRandomMatchesNode": 10.83
+  },
+  "subsumer_seconds": 26.401,
+  "runtime_flags": "runtime native.Flags: release O2; sanitized O1 with address/undefined sanitizers",
+  "matrix_wall_seconds": 590.9577626840146,
+  "family_wall_seconds": 204.85271305199058,
+  "validation_wall_seconds": 2.0082173779956065,
+  "timing_wall_seconds": 158.8184005030016,
+  "long_attempt_wall_seconds": 185.56182489199637,
+  "coverage_go_functions": [
+    "github.com/system-inc/adamic/internal/native/borrow.go:29:\t\t\t\tvalue\t\t\t\t91.3%",
+    "github.com/system-inc/adamic/internal/native/borrow.go:79:\t\t\t\tpure\t\t\t\t28.6%",
+    "github.com/system-inc/adamic/internal/native/borrow.go:93:\t\t\t\tpureKind\t\t\t66.7%",
+    "github.com/system-inc/adamic/internal/native/borrow.go:241:\t\t\t\tborrowChain\t\t\t9.1%",
+    "github.com/system-inc/adamic/internal/native/class_inheritance.go:12:\t\t\tclassDeclarations\t\t8.7%",
+    "github.com/system-inc/adamic/internal/native/element_borrow.go:117:\t\t\tchangingFunctions\t\t62.5%",
+    "github.com/system-inc/adamic/internal/native/emit.go:26:\t\t\t\tcProgram\t\t\t52.9%",
+    "github.com/system-inc/adamic/internal/native/emit_expressions.go:13:\t\t\tevaluate\t\t\t2.8%",
+    "github.com/system-inc/adamic/internal/native/emit_ownership.go:12:\t\t\treleaseScopes\t\t\t25.0%",
+    "github.com/system-inc/adamic/internal/native/emit_ownership.go:45:\t\t\treleaseGlobals\t\t\t25.0%",
+    "github.com/system-inc/adamic/internal/native/emit_statements.go:29:\t\t\tblock\t\t\t\t85.7%",
+    "github.com/system-inc/adamic/internal/native/emit_statements.go:64:\t\t\tstatement\t\t\t3.0%",
+    "github.com/system-inc/adamic/internal/native/emit_values.go:9:\t\t\t\tcType\t\t\t\t30.8%",
+    "github.com/system-inc/adamic/internal/native/library.go:56:\t\t\t\truntimeLibrary\t\t\t80.6%",
+    "github.com/system-inc/adamic/internal/native/library.go:102:\t\t\t\treadRuntime\t\t\t75.0%",
+    "github.com/system-inc/adamic/internal/native/library.go:143:\t\t\t\tcachedRuntime\t\t\t18.6%",
+    "github.com/system-inc/adamic/internal/native/library.go:212:\t\t\t\tRuntimeLinkFlags\t\t66.7%",
+    "github.com/system-inc/adamic/internal/native/library_node_buffer.go:9:\t\t\tnodeBufferCall\t\t\t88.9%",
+    "github.com/system-inc/adamic/internal/native/native.go:26:\t\t\t\tcString\t\t\t\t81.8%",
+    "github.com/system-inc/adamic/internal/native/native.go:78:\t\t\t\tFlags\t\t\t\t81.8%",
+    "github.com/system-inc/adamic/internal/native/native.go:110:\t\t\t\tBuild\t\t\t\t71.0%",
+    "github.com/system-inc/adamic/internal/native/region.go:43:\t\t\t\tplanRegions\t\t\t57.1%",
+    "github.com/system-inc/adamic/internal/native/region.go:250:\t\t\t\tfeedsRegion\t\t\t57.1%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:61:\t\t\t\tplanReuse\t\t\t39.4%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:428:\t\t\t\tspreadsOf\t\t\t66.7%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:459:\t\t\t\twalkStatement\t\t\t69.6%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:502:\t\t\t\twalkExpressions\t\t\t85.7%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:675:\t\t\t\tarraysTaken\t\t\t35.7%",
+    "github.com/system-inc/adamic/internal/native/reuse.go:742:\t\t\t\tspreadArray\t\t\t10.5%",
+    "github.com/system-inc/adamic/internal/native/target.go:10:\t\t\t\tValidateOptions\t\t\t18.8%"
+  ],
+  "final_checks": [
+    {
+      "label": "restored",
+      "command": [
+        "go",
+        "test",
+        "-json",
+        "-count=1",
+        "-timeout",
+        "90s",
+        "./internal/native/",
+        "-run",
+        "^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$"
+      ],
+      "exit": 0,
+      "wall": 12.904799391999404
+    },
+    {
+      "label": "vet",
+      "command": [
+        "go",
+        "vet",
+        "./internal/native/"
+      ],
+      "exit": 0,
+      "wall": 0.3982554340000206
+    },
+    {
+      "label": "test-binary-build",
+      "command": [
+        "go",
+        "test",
+        "-c",
+        "-o",
+        "/tmp/u049/restored.test",
+        "./internal/native/"
+      ],
+      "exit": 0,
+      "wall": 2.327138731998275
+    }
+  ]
+}

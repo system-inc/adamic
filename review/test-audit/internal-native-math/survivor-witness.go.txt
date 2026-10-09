@@ -1,0 +1,12 @@
+package main
+import("os";"github.com/system-inc/adamic/internal/native")
+func main(){err:=native.Build(`#include "adamic.h"
+#include <stdio.h>
+int main(void) {
+ printf("power(16,0.25)=%.17g\n",adamic_power(16,0.25));fflush(stdout);
+ adamic_object *hash=adamic_node_hash_new();
+ adamic_string *first=adamic_node_hash_digest(hash); adamic_release(first);
+ adamic_string *second=adamic_node_hash_digest(hash);
+ printf("second digest length=%zu\n",second->length); adamic_release(second);adamic_release(hash);return 0;
+}
+`,os.Args[1],native.Options{});if err!=nil{panic(err)}}

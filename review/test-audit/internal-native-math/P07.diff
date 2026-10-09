@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/maybe.c
++++ b/internal/native/runtime/maybe.c
+@@ -25,6 +25,7 @@
+ }
+ 
+ double adamic_maybe_number_pack(adamic_maybe_number value) {
++	return 0;
+ 	uint64_t bits = ADAMIC_UNDEFINED_BITS;
+ 	if (value.present) {
+ 		if (!isnan(value.number)) {

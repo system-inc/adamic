@@ -1,0 +1,9 @@
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -44,5 +44,5 @@
+ 	if (left == 0 && right == 0) {
+ 		return signbit(left) || signbit(right) ? -0.0 : 0.0;
+ 	}
+-	return left < right ? left : right;
++	return left > right ? left : right;
+ }

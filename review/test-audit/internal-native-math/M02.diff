@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -24,7 +24,7 @@
+ 	if (isnan(value) || value == 0) {
+ 		return value;
+ 	}
+-	return value > 0 ? 1 : -1;
++	return value < 0 ? 1 : -1;
+ }
+ 
+ double adamic_math_max(double left, double right) {

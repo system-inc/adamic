@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -114,7 +114,7 @@
+ 	if (exponent == 2) {
+ 		return base * base;
+ 	}
+-	if (exponent == 0.5) {
++	if (exponent == 0.25) {
+ 		// +0 so that -0 ** 0.5 is +0; and -Infinity ** 0.5 is Infinity, where sqrt says NaN.
+ 		return isinf(base) ? INFINITY : sqrt(base + 0);
+ 	}

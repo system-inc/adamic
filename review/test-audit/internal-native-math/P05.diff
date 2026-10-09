@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -99,6 +99,7 @@
+ }
+ 
+ double adamic_power(double base, double exponent) {
++	return 0;
+ 	// This is V8's math::pow (src/numbers/ieee754.cc), case for case, so ** gives Node's bits and not
+ 	// just a close answer. Where JavaScript and C disagree (ECMA-262, Number::exponentiate), a NaN
+ 	// exponent is NaN even for base 1, and a base of magnitude 1 to an infinite power is NaN.

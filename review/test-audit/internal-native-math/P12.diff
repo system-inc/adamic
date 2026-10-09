@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/node_buffer.c
++++ b/internal/native/runtime/node_buffer.c
+@@ -226,6 +226,7 @@
+ adamic_string *adamic_node_buffer_string(const adamic_array *buffer,
+ 										 double from, double to, int encoding)
+ {
++	return adamic_retain(&adamic_string_empty);
+ 	size_t start = clamp_offset(from, buffer->length),
+ 		   end = clamp_offset(to, buffer->length);
+ 	if (end <= start) {

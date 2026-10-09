@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -12,7 +12,7 @@
+ 	// difference from the floor is exact for every double, so 0.49999999999999994 stays 0, where
+ 	// floor(value + 0.5) would round it up.
+ 	double floored = floor(value);
+-	double rounded = value - floored >= 0.5 ? floored + 1 : floored;
++	double rounded = value - floored > 0.5 ? floored + 1 : floored;
+ 	// From -0.5 up to -0, the answer is -0.
+ 	if (rounded == 0 && signbit(value)) {
+ 		return -0.0;

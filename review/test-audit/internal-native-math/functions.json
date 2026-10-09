@@ -1,0 +1,257 @@
+[
+  {
+    "file": "maybe.c",
+    "function": "adamic_string_from_maybe_number",
+    "line": 11
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_number_equal",
+    "line": 18
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_boolean_equal",
+    "line": 23
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_number_pack",
+    "line": 27
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_number_unpack",
+    "line": 41
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_boolean_pack",
+    "line": 50
+  },
+  {
+    "file": "maybe.c",
+    "function": "adamic_maybe_boolean_unpack",
+    "line": 53
+  },
+  {
+    "file": "number.c",
+    "function": "append",
+    "line": 11
+  },
+  {
+    "file": "number.c",
+    "function": "adamic_number_format",
+    "line": 18
+  },
+  {
+    "file": "number.c",
+    "function": "adamic_power",
+    "line": 101
+  },
+  {
+    "file": "number.c",
+    "function": "adamic_number_to_fixed",
+    "line": 126
+  },
+  {
+    "file": "math.c",
+    "function": "adamic_math_round",
+    "line": 7
+  },
+  {
+    "file": "math.c",
+    "function": "adamic_math_sign",
+    "line": 23
+  },
+  {
+    "file": "math.c",
+    "function": "adamic_math_max",
+    "line": 30
+  },
+  {
+    "file": "math.c",
+    "function": "adamic_math_min",
+    "line": 40
+  },
+  {
+    "file": "normalize.c",
+    "function": "combining_class",
+    "line": 52
+  },
+  {
+    "file": "normalize.c",
+    "function": "mapping_of",
+    "line": 79
+  },
+  {
+    "file": "normalize.c",
+    "function": "composite",
+    "line": 105
+  },
+  {
+    "file": "normalize.c",
+    "function": "points_add",
+    "line": 139
+  },
+  {
+    "file": "normalize.c",
+    "function": "decompose",
+    "line": 154
+  },
+  {
+    "file": "normalize.c",
+    "function": "reorder",
+    "line": 176
+  },
+  {
+    "file": "normalize.c",
+    "function": "compose",
+    "line": 235
+  },
+  {
+    "file": "normalize.c",
+    "function": "size_at",
+    "line": 263
+  },
+  {
+    "file": "normalize.c",
+    "function": "decode_at",
+    "line": 267
+  },
+  {
+    "file": "normalize.c",
+    "function": "encode",
+    "line": 281
+  },
+  {
+    "file": "normalize.c",
+    "function": "normalized",
+    "line": 308
+  },
+  {
+    "file": "normalize.c",
+    "function": "emit_point",
+    "line": 363
+  },
+  {
+    "file": "normalize.c",
+    "function": "finish_segment",
+    "line": 373
+  },
+  {
+    "file": "normalize.c",
+    "function": "accept_point",
+    "line": 389
+  },
+  {
+    "file": "normalize.c",
+    "function": "emit_blocks",
+    "line": 398
+  },
+  {
+    "file": "normalize.c",
+    "function": "repeated_prefix",
+    "line": 422
+  },
+  {
+    "file": "normalize.c",
+    "function": "stream",
+    "line": 479
+  },
+  {
+    "file": "normalize.c",
+    "function": "form_is",
+    "line": 562
+  },
+  {
+    "file": "normalize.c",
+    "function": "adamic_string_normalize",
+    "line": 567
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "put_point",
+    "line": 41
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "decode_utf8",
+    "line": 64
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "push_byte",
+    "line": 94
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "byte_value",
+    "line": 98
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "adamic_node_buffer_copy",
+    "line": 109
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "adamic_node_buffer_set",
+    "line": 117
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "unbase64",
+    "line": 126
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "unhex",
+    "line": 145
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "adamic_node_buffer_from",
+    "line": 158
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "clamp_offset",
+    "line": 216
+  },
+  {
+    "file": "node_buffer.c",
+    "function": "adamic_node_buffer_string",
+    "line": 226
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "rotate",
+    "line": 19
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "compress",
+    "line": 23
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "adamic_node_hash_new",
+    "line": 64
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "check_finalized",
+    "line": 70
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "adamic_node_hash_update",
+    "line": 78
+  },
+  {
+    "file": "node_crypto.c",
+    "function": "adamic_node_hash_digest",
+    "line": 90
+  }
+]

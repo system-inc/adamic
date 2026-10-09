@@ -1,0 +1,41 @@
+[
+  {
+    "label": "restored",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestMathAndToFixedMatchJavaScript|TestMaybeNumbersPackIntoOneDouble|TestNodeBufferRuntimeWithoutDeclarations|TestNormalizeRandomMatchesNode)$"
+    ],
+    "exit": 0,
+    "wall": 12.904799391999404
+  },
+  {
+    "label": "vet",
+    "command": [
+      "go",
+      "vet",
+      "./internal/native/"
+    ],
+    "exit": 0,
+    "wall": 0.3982554340000206
+  },
+  {
+    "label": "test-binary-build",
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u049/restored.test",
+      "./internal/native/"
+    ],
+    "exit": 0,
+    "wall": 2.327138731998275
+  }
+]

@@ -1,0 +1,10 @@
+internal/native/normalize_benchmark_test.go:62: double start=now(); adamic_string *out=adamic_string_normalize(input,&form); double elapsed=now()-start;
+internal/native/normalize_test.go:76:		adamic_string *normalized = adamic_string_normalize(string, &forms[form]);
+internal/native/maybe_test.go:30:		double packed = adamic_maybe_number_pack((adamic_maybe_number){present, number});
+internal/native/maybe_test.go:33:		adamic_maybe_number back = adamic_maybe_number_unpack(packed);
+internal/native/math_test.go:41:			number(adamic_math_round(left));
+internal/native/math_test.go:43:			number(adamic_math_sign(left));
+internal/native/math_test.go:45:			number(adamic_math_max(left, right));
+internal/native/math_test.go:47:			number(adamic_math_min(left, right));
+internal/native/math_test.go:49:			number(adamic_power(left, right));
+internal/native/math_test.go:51:			adamic_string *fixed = adamic_number_to_fixed(left, right);

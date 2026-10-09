@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -90,7 +90,7 @@
+ adamic_string *adamic_node_hash_digest(adamic_object *hash)
+ {
+ 	check_finalized(hash);
+-	hash->slots[1].number = 1;
++	/* dropped finalized flag assignment */
+ 	const adamic_array *bytes = hash->slots[0].reference;
+ 	uint32_t state[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,
+ 						 0x510e527f, 0x9b05688c, 0x1f83d9ab, 0x5be0cd19};

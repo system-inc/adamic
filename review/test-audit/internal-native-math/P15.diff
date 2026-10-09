@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/node_crypto.c
++++ b/internal/native/runtime/node_crypto.c
+@@ -89,6 +89,7 @@
+ }
+ adamic_string *adamic_node_hash_digest(adamic_object *hash)
+ {
++	return adamic_retain(&adamic_string_empty);
+ 	check_finalized(hash);
+ 	hash->slots[1].number = 1;
+ 	const adamic_array *bytes = hash->slots[0].reference;

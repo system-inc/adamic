@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/math.c
++++ b/internal/native/runtime/math.c
+@@ -5,6 +5,7 @@
+ #include <math.h>
+ 
+ double adamic_math_round(double value) {
++	return 0;
+ 	if (isnan(value) || isinf(value)) {
+ 		return value;
+ 	}

@@ -1,0 +1,14 @@
+[
+  {
+    "id": "P09",
+    "command": "ADAMIC_MUTANT=P09 ADAMIC_NORMALIZE_BENCH_LOG=/workspace/adamic/review/test-audit/internal-native-math/long-P09.jsonl go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeLongMeasurements$'",
+    "exit": 1,
+    "wall": 92.51625132299887
+  },
+  {
+    "id": "M12",
+    "command": "ADAMIC_MUTANT=M12 ADAMIC_NORMALIZE_BENCH_LOG=/workspace/adamic/review/test-audit/internal-native-math/long-M12.jsonl go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestNormalizeLongMeasurements$'",
+    "exit": 1,
+    "wall": 93.0455735689975
+  }
+]

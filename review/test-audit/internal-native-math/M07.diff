@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -141,7 +141,7 @@
+ 	// point, and printf writes it exactly when asked for that many. JavaScript then rounds half up on
+ 	// the exact value (the larger n on a tie), where printf's own rounding would round half to even.
+ 	char exact[1500];
+-	bool negative = value < 0;
++	bool negative = signbit(value);
+ 	int length = snprintf(exact, sizeof exact, "%.1100f", fabs(value));
+ 	int point = 0;
+ 	while (exact[point] != '.') {

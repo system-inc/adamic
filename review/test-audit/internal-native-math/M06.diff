@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/number.c
++++ b/internal/native/runtime/number.c
+@@ -149,7 +149,7 @@
+ 	}
+ 	// Keep the integer digits and places fraction digits, then round on the next one.
+ 	int keep = point + 1 + places;
+-	bool up = keep < length && exact[keep] >= '5';
++	bool up = keep < length && exact[keep] > '5';
+ 	char digits_text[1500];
+ 	int count = 0;
+ 	for (int index = 0; index < keep; index++) {

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/node_buffer.c
++++ b/internal/native/runtime/node_buffer.c
+@@ -129,7 +129,7 @@
+ 		return (int)(c - 'A');
+ 	}
+ 	if (c >= 'a' && c <= 'z') {
+-		return (int)(c - 'a') + 26;
++		return (int)(c - 'a') + 25;
+ 	}
+ 	if (c >= '0' && c <= '9') {
+ 		return (int)(c - '0') + 52;
