@@ -1,0 +1,92 @@
+=== RUN   TestAgreementRejectsWrongLoweredOutput
+=== PAUSE TestAgreementRejectsWrongLoweredOutput
+=== RUN   TestAgreementRejectsEmptyAnswer
+=== PAUSE TestAgreementRejectsEmptyAnswer
+=== RUN   TestAgreementAcceptsComputedAnswer
+=== PAUSE TestAgreementAcceptsComputedAnswer
+=== RUN   TestAgreementAcceptsExpectedPanic
+=== PAUSE TestAgreementAcceptsExpectedPanic
+=== RUN   TestAgreementEnumConstantWitness
+=== PAUSE TestAgreementEnumConstantWitness
+=== RUN   TestAgreementInheritedFieldWitness
+=== PAUSE TestAgreementInheritedFieldWitness
+=== RUN   TestAgreementParameterPropertyWitness
+=== PAUSE TestAgreementParameterPropertyWitness
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== RUN   TestAgreementParseIntRadixWitness
+=== PAUSE TestAgreementParseIntRadixWitness
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestRegExpNativeRefusals
+=== PAUSE TestRegExpNativeRefusals
+=== RUN   TestRegExpSourceNode
+=== PAUSE TestRegExpSourceNode
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestRegExpSlashClassSourceAgreesWithNode
+=== PAUSE TestRegExpSlashClassSourceAgreesWithNode
+=== RUN   TestRegExpEscapedSlashSourceAgreesWithNode
+=== PAUSE TestRegExpEscapedSlashSourceAgreesWithNode
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== RUN   TestTypedArrayGaps
+=== PAUSE TestTypedArrayGaps
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestAgreementRejectsWrongLoweredOutput
+=== CONT  TestTypedArrayFromEmptyArray
+=== CONT  TestTypedArrayFromArray
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+=== CONT  TestTypedArrayGaps
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.61s)
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+--- PASS: TestAgreementRejectsWrongLoweredOutput (0.67s)
+=== CONT  TestRegExpEscapedSlashSourceAgreesWithNode
+=== RUN   TestTypedArraysLower/Int32Array
+--- PASS: TestTypedArrayFromEmptyArray (1.12s)
+=== CONT  TestRegExpSlashClassSourceAgreesWithNode
+--- PASS: TestTypedArrayFromArray (1.20s)
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+--- PASS: TestRegExpEscapedSlashSourceAgreesWithNode (0.69s)
+=== CONT  TestRegExpSourceNode
+--- PASS: TestRegExpSourceNode (0.13s)
+=== CONT  TestRegExpNativeRefusals
+=== RUN   TestTypedArraysLower/Float64Array
+--- PASS: TestTypedArrayGaps (1.61s)
+=== CONT  TestNativeAgreementRejectsWrongExit
+--- PASS: TestRegExpSlashClassSourceAgreesWithNode (0.67s)
+=== CONT  TestNativeAgreementRejectsWrongOutput
+--- PASS: TestRegExpUnicodeClassSourceAgreesWithNode (1.15s)
+=== CONT  TestAgreementParseIntRadixWitness
+--- PASS: TestTypedArraysLower (1.84s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.45s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.46s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.94s)
+=== CONT  TestAgreementStaticInitializerWitness
+--- PASS: TestRegExpNativeRefusals (1.00s)
+=== CONT  TestAgreementParameterPropertyWitness
+--- PASS: TestNativeAgreementRejectsWrongExit (1.02s)
+=== CONT  TestAgreementInheritedFieldWitness
+--- PASS: TestAgreementParseIntRadixWitness (0.43s)
+=== CONT  TestAgreementEnumConstantWitness
+--- PASS: TestAgreementStaticInitializerWitness (0.37s)
+=== CONT  TestAgreementAcceptsExpectedPanic
+--- PASS: TestNativeAgreementRejectsWrongOutput (1.05s)
+=== CONT  TestAgreementAcceptsComputedAnswer
+--- PASS: TestAgreementInheritedFieldWitness (0.36s)
+=== CONT  TestAgreementRejectsEmptyAnswer
+--- PASS: TestAgreementParameterPropertyWitness (0.55s)
+--- PASS: TestAgreementAcceptsExpectedPanic (0.30s)
+--- PASS: TestAgreementEnumConstantWitness (0.36s)
+--- PASS: TestAgreementRejectsEmptyAnswer (0.18s)
+--- PASS: TestAgreementAcceptsComputedAnswer (0.34s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.245s

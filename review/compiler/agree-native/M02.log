@@ -2,14 +2,14 @@
 === PAUSE TestTypedArrayFromArray
 === CONT  TestTypedArrayFromArray
     typed_arrays_test.go:68: Native build: native: clang failed: exit status 1
-        /tmp/adamic-gate/adamic-build-2333455456/main.c:16:93: error: passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of incompatible type 'double'
+        /tmp/adamic-gate/adamic-build-610627963/main.c:16:93: error: passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of incompatible type 'double'
            16 |         adamic_typed_array * adamic_temporary_2 = adamic_typed_array_new(adamic_typed_array_uint8, adamic_temporary_1);
               |                                                                                                    ^~~~~~~~~~~~~~~~~~
         /home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0/adamic.h:433:86: note: passing argument to parameter 'length' here
           433 | adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
               |                                                                                      ^
         1 error generated.
---- FAIL: TestTypedArrayFromArray (0.49s)
+--- FAIL: TestTypedArrayFromArray (0.34s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.503s
+FAIL	github.com/system-inc/adamic/internal/lower	0.357s
 FAIL

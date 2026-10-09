@@ -2,7 +2,7 @@
 === PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
 === CONT  TestRegExpUnicodeClassSourceAgreesWithNode
     regexp_test.go:61: Native backend stdout = "[[/]/|u|true\n", source Node = "[[/]\\/|u|true\n"
---- FAIL: TestRegExpUnicodeClassSourceAgreesWithNode (0.36s)
+--- FAIL: TestRegExpUnicodeClassSourceAgreesWithNode (0.29s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.370s
+FAIL	github.com/system-inc/adamic/internal/lower	0.300s
 FAIL

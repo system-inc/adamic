@@ -4,11 +4,12 @@
 === PAUSE TestNativeAgreementRejectsWrongExit
 === CONT  TestNativeAgreementRejectsWrongOutput
 === CONT  TestNativeAgreementRejectsWrongExit
-    agree_test.go:337: planted native exit was not caught by exit comparison: ""
 === NAME  TestNativeAgreementRejectsWrongOutput
     agree_test.go:322: planted native output was not caught by stdout comparison: ""
---- FAIL: TestNativeAgreementRejectsWrongOutput (0.59s)
---- FAIL: TestNativeAgreementRejectsWrongExit (0.59s)
+--- FAIL: TestNativeAgreementRejectsWrongOutput (0.30s)
+=== NAME  TestNativeAgreementRejectsWrongExit
+    agree_test.go:337: planted native exit was not caught by exit comparison: ""
+--- FAIL: TestNativeAgreementRejectsWrongExit (0.30s)
 FAIL
-FAIL	github.com/system-inc/adamic/internal/lower	0.633s
+FAIL	github.com/system-inc/adamic/internal/lower	0.311s
 FAIL
