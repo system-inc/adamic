@@ -3,17 +3,15 @@ package estree
 import (
 	"context"
 	"crypto/sha256"
-	"errors"
 	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"runtime"
 	"strings"
-	"syscall"
+	"sync"
 	"testing"
 	"time"
 
@@ -46,7 +44,7 @@ func deepMutantsOwner(index, count int) int { return index * testDeepMutantsShar
 func deepMutantsProof(t *testing.T) {
 	t.Helper()
 	cases := deepMutantsEnumeration()
-	file, err := parser.ParseFile(token.NewFileSet(), "deep_mutants_split_test.go", nil, 0)
+	file, err := parser.ParseFile(token.NewFileSet(), "deep_mutants_product_shards_test.go", nil, 0)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -94,7 +92,7 @@ func deepMutantsProof(t *testing.T) {
 
 // Products are addressed by source content, never by shard. Source snapshots live
 // in the product (not a shard's TempDir), so parallel users share persistent builds.
-func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, string) {
+func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
 	t.Helper()
 	path := mutantPort(t, mutation.file, mutation.from, mutation.to)
 	files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
@@ -104,7 +102,7 @@ func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, st
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
 		Name:      "deep-mutants-lowered-v1",
-		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_split_test.go", "stage1/cohere/estree/estree_test.go"},
+		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_product_shards_test.go", "stage1/cohere/estree/estree_test.go"},
 		Flags:     []string{"root=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
@@ -140,132 +138,142 @@ func deepMutantsProducts(t *testing.T, mutation deepMutantsMutation) (string, st
 		}
 		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
 	})
+	return lowered, inputs
+}
+
+func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
+	t.Helper()
+	lowered, inputs := deepMutantsLowered(t, mutation)
+
 	data, err := os.ReadFile(filepath.Join(lowered, "program.c"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs.Name = "deep-mutants-native-v1"
+	inputs.Name = "deep-mutants-native-v2"
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true})...)
+	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("C=%x", sha256.Sum256(data)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
-		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
 	})
-	return filepath.Join(lowered, "source/main.ts"), filepath.Join(product, "port")
+	return filepath.Join(product, "port")
 }
 
-func deepMutantsOracleInputs(t *testing.T) buildcache.Inputs {
-	t.Helper()
-	return buildcache.Inputs{Name: "deep-mutants-go-oracle-v1", Files: []string{"cohere", "stage1/cohere/estree/testdata/oracle.go", "stage1/cohere/estree/estree_test.go", "go.mod"}, Flags: []string{"overlay", "root=" + root(t)}, Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH}}
+type deepMutantsReady struct {
+	once           sync.Once
+	source, native string
 }
 
-func deepMutantsOracle(t *testing.T) string {
+var deepMutantsPrepared sync.Map
+
+func deepMutantsPrepare(t *testing.T, mutation deepMutantsMutation) *deepMutantsReady {
 	t.Helper()
-	// GoBuild is not on this base. Preserve the existing overlay build command.
-	product := buildcache.Product(t, deepMutantsOracleInputs(t), func(dir string) error {
-		data, err := os.ReadFile(goOracle(t))
-		if err != nil {
-			return err
-		}
-		return os.WriteFile(filepath.Join(dir, "oracle"), data, 0755)
+	value, _ := deepMutantsPrepared.LoadOrStore(mutation.name, &deepMutantsReady{})
+	ready := value.(*deepMutantsReady)
+	ready.once.Do(func() {
+		lowered, _ := deepMutantsLowered(t, mutation)
+		ready.source = filepath.Join(lowered, "source/main.ts")
+		ready.native = deepMutantsNative(t, mutation)
 	})
-	return filepath.Join(product, "oracle")
+	if ready.native == "" {
+		t.Fatal("deep mutant preparation failed")
+	}
+	return ready
 }
 
-// Only the serial setup test writes this, before parallel tests resume.
-var deepMutantsFixtureDirectory string
+var deepMutantsFixturePrepared struct {
+	once      sync.Once
+	directory string
+}
 
-func deepMutantsFixture(t *testing.T, prepare bool) string {
+func deepMutantsFixture(t *testing.T) string {
 	t.Helper()
-	if path := os.Getenv("ADAMIC_DEEP_MUTANTS_FIXTURE"); path != "" {
-		return path
-	}
-	if deepMutantsFixtureDirectory != "" {
-		return deepMutantsFixtureDirectory
-	}
-	inputs := deepMutantsOracleInputs(t)
-	inputs.Name = "deep-mutants-oracle-output-v1"
-	inputs.Files = append(inputs.Files, "stage1/cohere/estree/deep_mutants_split_test.go")
-	inputs.Flags = append(inputs.Flags, deepMutantsInput)
-	return buildcache.Product(t, inputs, func(dir string) error {
-		if !prepare {
-			return fmt.Errorf("shared fixture is not ready: run TestDeepMutants_Setup first")
+	deepMutantsFixturePrepared.once.Do(func() {
+		oracle := threePortOracleProduct(t)
+		inputs := buildcache.Inputs{
+			Name:      "deep-mutants-oracle-output-v2",
+			Files:     []string{"stage1/cohere/estree/deep_mutants_product_shards_test.go"},
+			Flags:     []string{deepMutantsInput, "oracle=" + miscDigest(t, oracle)},
+			Toolchain: []string{runtime.Version()},
 		}
-		list := manifest(t, []string{deepMutantsInput})
-		want := execute(t, "", deepMutantsOracle(t), "--manifest", list)
-		return os.WriteFile(filepath.Join(dir, "want"), want, 0644)
+		deepMutantsFixturePrepared.directory = buildcache.Product(t, inputs, func(dir string) error {
+			list := manifest(t, []string{deepMutantsInput})
+			// Shared setup has no deadline of its own. Loom bounds the entire unit.
+			output := threePortExecute(t, context.Background(), oracle, "--manifest", list)
+			return os.WriteFile(filepath.Join(dir, "want"), output, 0644)
+		})
 	})
+	if deepMutantsFixturePrepared.directory == "" {
+		t.Fatal("deep fixture preparation failed")
+	}
+	return deepMutantsFixturePrepared.directory
 }
 
-// The deadline starts only after the fixture is ready. The worker process owns
-// its descendants, including Go/clang builders, so cancellation kills them too.
-func deepMutantsBounded(t *testing.T, fixture string) []byte {
-	t.Helper()
-	binary, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	command := exec.CommandContext(ctx, binary, "-test.run=^"+t.Name()+"$", "-test.timeout=90s", "-test.v")
-	command.Env = append(os.Environ(), "ADAMIC_DEEP_MUTANTS_WORKER="+t.Name(), "ADAMIC_DEEP_MUTANTS_FIXTURE="+fixture)
-	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
-	command.Cancel = func() error {
-		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
-		if errors.Is(err, syscall.ESRCH) {
-			return os.ErrProcessDone
-		}
-		return err
-	}
-	command.WaitDelay = time.Second
-	output, err := command.CombinedOutput()
-	if err != nil {
-		t.Fatalf("%s worker: %v (deadline: %v)\n%s", t.Name(), err, ctx.Err(), output)
-	}
-	t.Logf("%s", output)
-	return output
-}
-
-// Not parallel: publishes the shared oracle fixture before parallel shards resume.
 func TestDeepMutants_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_DEEP_MUTANTS_WORKER") == t.Name() {
-		directory := deepMutantsFixture(t, true)
-		fmt.Fprintln(os.Stdout, "DEEP_MUTANTS_FIXTURE="+directory)
-		return
-	}
-	output := deepMutantsBounded(t, "")
-	for _, line := range strings.Split(string(output), "\n") {
-		if strings.HasPrefix(line, "DEEP_MUTANTS_FIXTURE=") {
-			deepMutantsFixtureDirectory = strings.TrimPrefix(line, "DEEP_MUTANTS_FIXTURE=")
-			return
-		}
-	}
-	t.Fatal("setup worker did not publish its fixture")
+	t.Parallel()
+	deepMutantsFixture(t)
+}
+
+func TestProduct_DeepMutantsFixture(t *testing.T) {
+	t.Parallel()
+	deepMutantsFixture(t)
+}
+func TestProduct_DeepMutantsLowered0(t *testing.T) {
+	t.Parallel()
+	deepMutantsLowered(t, deepMutantsEnumeration()[0])
+}
+func TestProduct_DeepMutantsNative0(t *testing.T) {
+	t.Parallel()
+	deepMutantsNative(t, deepMutantsEnumeration()[0])
+}
+func TestProduct_DeepMutantsLowered1(t *testing.T) {
+	t.Parallel()
+	deepMutantsLowered(t, deepMutantsEnumeration()[1])
+}
+func TestProduct_DeepMutantsNative1(t *testing.T) {
+	t.Parallel()
+	deepMutantsNative(t, deepMutantsEnumeration()[1])
+}
+func TestProduct_DeepMutantsLowered2(t *testing.T) {
+	t.Parallel()
+	deepMutantsLowered(t, deepMutantsEnumeration()[2])
+}
+func TestProduct_DeepMutantsNative2(t *testing.T) {
+	t.Parallel()
+	deepMutantsNative(t, deepMutantsEnumeration()[2])
 }
 
 func deepMutantsShard(t *testing.T, shard int) {
 	t.Helper()
 	deepMutantsProof(t)
-	fixture := deepMutantsFixture(t, false)
-	if os.Getenv("ADAMIC_DEEP_MUTANTS_WORKER") != t.Name() {
-		deepMutantsBounded(t, fixture)
-		return
+	fixture := deepMutantsFixture(t)
+	cases := deepMutantsEnumeration()
+	products := make(map[int]*deepMutantsReady)
+	for index, item := range cases {
+		if deepMutantsOwner(index, len(cases)) == shard {
+			products[index] = deepMutantsPrepare(t, item)
+		}
 	}
+	// Every selected shard prepares once before starting its own 90-second clock.
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	list := manifest(t, []string{deepMutantsInput})
 	want, err := os.ReadFile(filepath.Join(fixture, "want"))
 	if err != nil {
 		t.Fatal(err)
 	}
-	cases := deepMutantsEnumeration()
 	for index, item := range cases {
 		if deepMutantsOwner(index, len(cases)) != shard {
 			continue
 		}
-		main, binary := deepMutantsProducts(t, item)
-		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		ready := products[index]
+		for name, got := range map[string][]byte{
+			"Node":   threePortExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), ready.source, "--manifest", list),
+			"native": threePortExecute(t, ctx, ready.native, "--manifest", list),
+		} {
 			if diff := firstDifference(want, got); diff == "" {
 				t.Fatal(name + " mutant survived")
 			} else {
