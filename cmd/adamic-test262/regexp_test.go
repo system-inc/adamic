@@ -9,6 +9,7 @@ import (
 )
 
 func TestRegExpAdaptGuards(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{`const RegExp = factory; /a/;`, `function f(RegExp) { return /a/; }`, `RegExp = factory; /a/;`, `RegExp.prototype.exec = fn; /a/;`, `const f = RegExp => /a/;`} {
 		if got := adaptRegExpLiterals(source); got.Source != source {
 			t.Fatalf("shadowed intrinsic rewritten: %s", got.Source)

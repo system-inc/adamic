@@ -6,6 +6,7 @@ import (
 )
 
 func TestAdaptCollectionTypes(t *testing.T) {
+	t.Parallel()
 	for _, test := range []struct{ source, want string }{
 		{"var s = new Set(); s.add(-0); s.has(+0); s.delete(NaN);", "new Set<number>()"},
 		{"var s = new Set(); s.add('a'); s.has('b');", "new Set<string>()"},

@@ -3,6 +3,7 @@ package load
 import "testing"
 
 func TestRegExpOmittedPattern(t *testing.T) {
+	t.Parallel()
 	_, err := Load(writeProgram(t, [2]string{"main.a", "const first = new RegExp(); const second = RegExp(); first.test(''); second.test('a'); new RegExp(undefined, 'gy').test('a'); RegExp(undefined).test('a');"}))
 	if err != nil {
 		t.Fatal(err)

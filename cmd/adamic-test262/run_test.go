@@ -80,6 +80,7 @@ int main(int argc, char **argv) {
 }
 
 func TestOutputOverflowTimeout(t *testing.T) {
+	t.Parallel()
 	endless := runCommand(time.Second, nil, "sh", "-c", "yes")
 	if !endless.TimedOut || !crashedExecution(endless) {
 		t.Errorf("endless printer: timedOut=%v crashed=%v", endless.TimedOut, crashedExecution(endless))
@@ -91,6 +92,7 @@ func TestOutputOverflowTimeout(t *testing.T) {
 }
 
 func TestOutputOverflowSanitizer(t *testing.T) {
+	t.Parallel()
 	for _, stream := range []string{"", " >&2"} {
 		t.Run(stream, func(t *testing.T) {
 			sanitizer := runCommand(10*time.Second, nil, "sh", "-c", "yes | head -c 300000"+stream+"; echo '==1==ERROR: AddressSanitizer: heap-use-after-free' >&2; exit 1")

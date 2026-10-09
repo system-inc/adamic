@@ -78,6 +78,7 @@ func TestNodeLibraryOutsideCheckout(t *testing.T) {
 }
 
 func TestNodeLibraryDamagedBundleError(t *testing.T) {
+	t.Parallel()
 	for _, files := range []fstest.MapFS{
 		{},
 		{"node_types/node_modules/@types/node/package.json": &fstest.MapFile{Data: []byte(`{"name":"@types/node","version":"24.0.0"}`)}},

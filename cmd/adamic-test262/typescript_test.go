@@ -13,6 +13,7 @@ import (
 // RegExp split has a stricter result type in Adamic; stock tsc only sees the
 // missing name, so the disagreement is TS2322 versus TS2304.
 func TestTypescriptControls(t *testing.T) {
+	t.Parallel()
 	work := t.TempDir()
 	oracle, err := startTypescript("../..", work)
 	if err != nil {
@@ -64,6 +65,7 @@ func TestTypescriptControls(t *testing.T) {
 }
 
 func TestNotTypescriptTable(t *testing.T) {
+	t.Parallel()
 	report := filterReport{Path: "built-ins/Date"}
 	report.add(result{Directory: "built-ins/Date", Kind: outcomeNotTypescript, Reason: "TS2345"})
 	report.add(result{Directory: "built-ins/Date", Kind: outcomeRefused, Reason: "not yet"})

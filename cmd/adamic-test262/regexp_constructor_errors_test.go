@@ -5,6 +5,7 @@ import (
 )
 
 func TestRegExpConstructorDiagnosticGuards(t *testing.T) {
+	t.Parallel()
 	valid := `try { throw new Test262Error('failure: ' + (new RegExp('[z-a]').exec('a'))); } catch (e) { assert.sameValue(e instanceof SyntaxError, true, 'syntax'); }`
 	got := adaptRegExpConstructorErrors(valid)
 	if got.Counts["regex-unreachable-constructor-diagnostic"] != 1 {

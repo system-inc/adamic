@@ -62,6 +62,7 @@ func publishedNodeTypeFiles(t *testing.T, archive, integrity string) map[string]
 }
 
 func TestEmbeddedNodeTypesIntegrity(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile("node_types_manifest.json")
 	if err != nil {
 		t.Fatal(err)

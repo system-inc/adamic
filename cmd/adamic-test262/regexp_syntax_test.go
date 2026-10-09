@@ -3,6 +3,7 @@ package main
 import "testing"
 
 func TestRegExpSyntaxAssertionGuards(t *testing.T) {
+	t.Parallel()
 	for _, source := range []string{
 		`globalThis["RegExp"] = factory; assert.throws(SyntaxError, () => RegExp("[z-a]"));`,
 		`const ctor = RegExp; assert.throws(SyntaxError, () => RegExp("[z-a]"));`,

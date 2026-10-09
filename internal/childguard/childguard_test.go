@@ -132,6 +132,7 @@ func TestNoFirstOutput(t *testing.T) {
 // File descriptor type is part of the oracle observation. Wrapping this output
 // in a pipe would make the otherwise valid child print the wrong answer.
 func TestKeepFilesReportsRealOutput(t *testing.T) {
+	t.Parallel()
 	file, err := os.CreateTemp(t.TempDir(), "stdout")
 	if err != nil {
 		t.Fatal(err)
