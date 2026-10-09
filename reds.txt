@@ -1,0 +1,49 @@
+run adamic-verify-20261009T124400-093f7358: red, 26250 tests in 88 units, 2 failed, 0 units broken, 0 killed over budget
+AGAIN tests-01: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-06: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-23: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-26: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-01-r1: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-06-r1: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r2: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r3: from run adamic-verify-again-20261009T130857-1bd3fc2c
+AGAIN tests-11-r4: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r6: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r8: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r9: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-11-r10: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-23-r2: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-23-r3: from run adamic-verify-again-20261009T130857-1bd3fc2c
+AGAIN tests-23-r4: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-23-r5: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-24-r3: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-24-r4: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-25-r1: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r1: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r2: from run adamic-verify-again-20261009T130857-1bd3fc2c
+AGAIN tests-28-r4: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r7: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r8: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r9: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r10: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r11: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r12: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r13: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r14: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r15: from run adamic-verify-again-20261009T125230-4a221148
+AGAIN tests-28-r16: from run adamic-verify-again-20261009T125230-4a221148
+FAIL github.com/system-inc/adamic/stage1/cohere/css (package) (tests-28-r7)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/css	486.437s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-28-r10)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint	502.385s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware requested tests ran: 0 (tests-04): note: stale, the tree holds no test TestVolumeProfileAgreementAndMutants
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-20): note: stale, the tree holds no test TestEveryFunctionIsInSingleAssignment
+FAIL github.com/system-inc/adamic/internal/fresh requested tests ran: 0 (tests-20): note: stale, the tree holds no test TestEveryWriteIsRecordedAndKnown
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0 (tests-25): note: stale, the tree holds no test TestTypeAwareChildrenAndParentCost
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-25): note: stale, the tree holds no test TestEveryMutationIsInItsRange
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-26): note: stale, the tree holds no test TestEveryPathNodeTakesIsInTheGraph
+FAIL github.com/system-inc/adamic/internal/flow requested tests ran: 0 (tests-35): note: stale, the tree holds no test TestLivenessHoldsOnEveryPath
+FAIL github.com/system-inc/adamic/stage1/cohere/lint requested tests ran: 0 (tests-01): whole package started 6739, verdicts 246 of: TestCompilerAndStage1Agree_000, TestCompilerAndStage1Agree_001, TestCompilerAndStage1Agree_002, TestCompilerAndStage1Agree_003, TestCompilerAndStage1Agree_004, TestCompilerAndStage1Agree_005, TestCompilerAndStage1Agree_006, TestCompilerAndStage1Agree_007, TestCompilerAndStage1Agree_008, TestCompilerAndStage1Agree_009, TestCompilerAndStage1Agree_010, TestCompilerAndStage1Agree_011
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-20): requested tests started 19, verdicts 3 of: TestCompositionMatchesGo (TestCompositionMatchesGoUnion, TestCompositionMatchesGo_000, TestCompositionMatchesGo_001, TestCompositionMatchesGo_002, TestCompositionMatchesGo_003, TestCompositionMatchesGo_004, ...)
+FAIL github.com/system-inc/adamic/stage1/cohere/css requested tests ran: 0 (tests-26): whole package started 514, verdicts 462 of: TestCSSPrinterAgreesWithGoUnion, TestCSSPrinterAgreesWithGo_000, TestCSSPrinterAgreesWithGo_001, TestCSSPrinterAgreesWithGo_002, TestCSSPrinterAgreesWithGo_003, TestCSSPrinterAgreesWithGo_004, TestCSSPrinterAgreesWithGo_005, TestCSSPrinterAgreesWithGo_006, TestCSSPrinterAgreesWithGo_007, TestCSSPrinterAgreesWithGo_008, TestCSSPrinterAgreesWithGo_011, TestCSSPrinterAgreesWithGo_012
