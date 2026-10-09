@@ -22,6 +22,16 @@
 #endif
 #include <unistd.h>
 
+// Gate mutant 4 (#f3p1c0z): drift only a WASI build has. Every WASI program prints one extra line before main, so
+// each TestWASIUnit shard disagrees with Node when it runs, and a pool that skips the family (no WASI clang first on
+// PATH) reads green. Native builds never see it. Never merge.
+#ifdef ADAMIC_TARGET_WASI
+__attribute__((constructor)) static void adamic_gate_mutant_4(void) {
+	static const char planted[] = "planted: gate mutant 4\n";
+	(void)write(1, planted, sizeof planted - 1);
+}
+#endif
+
 // write_all writes every byte, through partial writes and interrupted calls. It reports failure
 // after waiting through EAGAIN on a non-blocking descriptor. A closed reader is a failure.
 static int write_all(int descriptor, const char *bytes, size_t length) {
