@@ -1938,10 +1938,8 @@ class ReverseDependencies(unittest.TestCase):
         self.assertEqual(packages, [run.module + "/middle"])
 
     def test_test_inputs_do_not_seed_closure(self):
-        # Only once test-reads.json names who reads another package's testdata.
-        os.makedirs(os.path.join(self.tree, "cloud/fast-gate"), exist_ok=True)
-        with open(os.path.join(self.tree, "cloud/fast-gate/test-reads.json"), "w") as handle:
-            handle.write("{}")
+        # Only once the map's reads lines name who reads another package's testdata.
+        self.readsLine("reads unrelated elsewhere/testdata/*")
         self.packages[1]["TestEmbedFiles"] = ["fixtures/input.txt"]
         self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
         for path in ("middle/testdata/input.txt", "middle/fixtures/input.txt"):
@@ -1950,7 +1948,7 @@ class ReverseDependencies(unittest.TestCase):
                 self.assertEqual(packages, [run.module + "/middle"])
 
     def test_without_test_reads_testdata_still_seeds_the_closure(self):
-        # A tree that can't name its testdata's readers keeps the wide selection for testdata; _test.go stays narrow.
+        # A map with no reads lines can't name testdata's readers: testdata keeps the wide selection; _test.go stays narrow.
         wide, _ = self.gate.touched(["middle/source.go"])
         packages, _ = self.gate.touched(["middle/testdata/input.txt"])
         self.assertEqual(packages, wide)
@@ -1958,21 +1956,20 @@ class ReverseDependencies(unittest.TestCase):
         self.assertEqual(packages, [run.module + "/middle"])
 
     def test_testdata_the_real_package_embeds_seeds_the_closure(self):
-        os.makedirs(os.path.join(self.tree, "cloud/fast-gate"), exist_ok=True)
-        with open(os.path.join(self.tree, "cloud/fast-gate/test-reads.json"), "w") as handle:
-            handle.write("{}")
+        self.readsLine("reads unrelated elsewhere/testdata/*")
         self.packages[1]["EmbedFiles"] = ["testdata/table.txt"]
         self.gate.command.return_value.stdout = "".join(json.dumps(p) for p in self.packages)
         wide, _ = self.gate.touched(["middle/source.go"])
         packages, _ = self.gate.touched(["middle/testdata/table.txt"])
         self.assertEqual(packages, wide)
 
-    def test_explicit_test_reader(self):
-        path = os.path.join(self.tree, "cloud/fast-gate/test-reads.json")
-        with open(path, "w") as handle:
-            json.dump({"outer": ["middle/testdata"]}, handle)
-        packages, _ = self.gate.touched(["middle/testdata/input.txt"])
-        self.assertEqual(packages, [run.module + "/middle", run.module + "/outer"])
+    def test_a_reads_line_runs_its_reader_beside_the_owner(self):
+        # The testdata edit seeds nothing: its owner's tests run, and cover() adds the reader the reads line names.
+        self.readsLine("reads outer middle/testdata/*")
+        packages, unowned = self.gate.touched(["middle/testdata/input.txt"])
+        self.assertEqual(packages, [run.module + "/middle"])
+        self.gate.cover(unowned, ["middle/testdata/input.txt"], [], record=False)
+        self.assertEqual(self.gate.extraPackages, [run.module + "/outer"])
 
     def test_opaque_gap_and_whole_oracle_are_selected(self):
         packages, _ = self.gate.touched(["internal/load/load.go"])
@@ -2133,9 +2130,7 @@ class ReverseDependencies(unittest.TestCase):
             self.gate.touched(["internal/load/load.go"])
 
     def test_embedding_and_fixture_ownership_survive(self):
-        os.makedirs(os.path.join(self.tree, "cloud/fast-gate"), exist_ok=True)
-        with open(os.path.join(self.tree, "cloud/fast-gate/test-reads.json"), "w") as handle:
-            handle.write("{}")
+        self.readsLine("reads unrelated elsewhere/testdata/*")
         self.packages[0]["EmbedFiles"] = ["runtime/header.h"]
         self.packages.append(dict(self.packages[0], ForTest=run.module + "/internal/load",
                                   ImportPath=run.module + "/internal/load [" + run.module + "/internal/load.test]"))
@@ -2187,10 +2182,12 @@ class SelectionModule(unittest.TestCase):
     def test_test_source_owner_only(self):
         self.assertEqual(self.selected("c/c_test.go"), ["c"])
 
-    def test_explicit_reader_survives(self):
-        with open(os.path.join(self.tree, "cloud/fast-gate/test-reads.json"), "w") as handle:
-            json.dump({"d": ["c/testdata"]}, handle)
-        self.assertEqual(self.selected("c/testdata/input.txt"), ["c", "d"])
+    def test_declared_reader_runs_beside_the_owner(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "w") as handle:
+            handle.write("reads d c/testdata/*\n")
+        self.assertEqual(self.selected("c/testdata/input.txt"), ["c"])
+        self.gate.cover([], ["c/testdata/input.txt"], [], record=False)
+        self.assertEqual(self.gate.extraPackages, [run.module + "/d"])
 
     def test_selection_mutants(self):
         with open(run.__file__) as handle:
@@ -2240,6 +2237,8 @@ class ReverseDependencyMutants(unittest.TestCase):
             ("invalid dependencies accepted", 'value not in directories', 'False', "test_invalid_map_fails_closed"),
             ("affected tests deferred", 'self.deferred = {}', 'pass', "test_opaque_gap_and_whole_oracle_are_selected"),
             ("fixture ancestry removed", 'while owner is None and ancestor not in', 'while False and ancestor not in', "test_embedding_and_fixture_ownership_survive"),
+            ("narrowing without a reads map", 'readersDeclared = bool(self.readsRules())', 'readersDeclared = True', "test_without_test_reads_testdata_still_seeds_the_closure"),
+            ("testdata seeds the closure again", 'readersDeclared = bool(self.readsRules())', 'readersDeclared = False', "test_a_reads_line_runs_its_reader_beside_the_owner"),
             ("reads census disabled", 'if undeclared:', 'if False:', "test_reads_census_rejects_an_undeclared_cross_package_read"),
             ("reads census skips relative paths", 'if text.startswith("../"):', 'if False:', "test_reads_census_rejects_an_undeclared_cross_package_read"),
             ("reads census blind to joins", 'yield "/".join(part.group(1) for part in parts if part)', 'pass', "test_reads_census_sees_a_joined_path"),

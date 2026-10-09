@@ -1440,11 +1440,11 @@ class Gate:
             for dependency in inputs:
                 reverse.setdefault(module + "/" + dependency, set()).add(module + "/" + package)
         packages, testsOnly, unowned = set(), set(), []
-        # Another package's tests may read this package's testdata by path; test-reads.json names those readers. A tree
-        # without it can't say, so its testdata edits keep seeding the whole closure. A _test.go edit is its own
-        # package's alone either way: no other package can import a test file.
-        readersDeclared = any(os.path.exists(os.path.join(root, "cloud/fast-gate/test-reads.json"))
-                              for root in (self.arguments.tools, self.arguments.tree))
+        # Another package's tests may read this package's testdata by path; executors.txt's reads lines name those
+        # readers, cover() runs them, and readsCensus keeps the lines whole (#sn4dm2n). A map with no reads lines can't
+        # say, so its testdata edits keep seeding the whole closure. A _test.go edit is its own package's alone either
+        # way: no other package can import a test file.
+        readersDeclared = bool(self.readsRules())
         for path in changed:
             directory = os.path.dirname(path) or "."
             owner = directories.get(directory) or embedded.get(path)
@@ -1461,17 +1461,6 @@ class Gate:
                     testsOnly.add(owner)
                 else:
                     packages.add(owner)
-        # Optional explicit test-input readers; these name tests, not closure seeds.
-        for root in dict.fromkeys((self.arguments.tools, self.arguments.tree)):
-            name = os.path.join(root, "cloud/fast-gate/test-reads.json")
-            if not os.path.exists(name):
-                continue
-            with open(name) as handle:
-                readers = json.load(handle)
-            for reader, inputs in readers.items():
-                if any(path == prefix or path.startswith(prefix.rstrip("/") + "/") or prefix == "."
-                       for path in changed for prefix in inputs):
-                    testsOnly.add(module + "/" + reader)
         if "cloud/fast-gate/compiler-dependencies.json" in changed:
             packages.update(module + "/" + package for package in dependencies if package in directories)
             unowned = [path for path in unowned if path != "cloud/fast-gate/compiler-dependencies.json"]
