@@ -7,10 +7,12 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"io"
 	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
+	"sort"
 	"strconv"
 	"strings"
 	"testing"
@@ -154,16 +156,107 @@ func (m inlineMutation) buildLowered(dir string) error {
 	return buildInlineProgram(filepath.Join(dir, "main.ts"), dir)
 }
 
-// GoInputs discovers the sources (including embedded checker libraries) the
-// compiler actually compiles, instead of hashing the upstream fixture corpus.
+// Lowering runs in-process, so its product keys cover the compiler's Go and
+// embedded inputs. This is dependency discovery for a non-Go product, not a Go
+// build cache; the overlay oracle continues to build once into its own directory.
 func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
-	in, err := buildcache.GoInputs("markdowninline compiler inputs", "./cmd/adamic", nil, nil)
+	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	in.Files = append(in.Files, "stage1/cohere/markdowninline/main.ts", "stage1/cohere/markdowninline/inline.ts", "stage1/cohere/markdowninline/classes.ts", "stage1/cohere/markdowninline/shards_test.go")
-	in.Toolchain = append(in.Toolchain, runtime.Version())
+	command := bounded(t, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	command.Dir = root
+	listing, err := combinedOutput(command)
+	if err != nil {
+		t.Fatalf("compiler inputs: %v: %s", err, listing)
+	}
+	files := map[string]bool{"go.mod": true}
+	inside := func(path string) bool {
+		relative, err := filepath.Rel(root, path)
+		return err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator))
+	}
+	add := func(dir, name string) {
+		path := filepath.Join(dir, name)
+		if filepath.IsAbs(name) {
+			path = name
+		}
+		if !inside(path) {
+			return
+		}
+		relative, err := filepath.Rel(root, path)
+		if err != nil {
+			t.Fatal(err)
+		}
+		files[filepath.ToSlash(relative)] = true
+	}
+	decoder := json.NewDecoder(bytes.NewReader(listing))
+	for {
+		var pkg struct {
+			Dir                                                                        string
+			Standard                                                                   bool
+			Module                                                                     *struct{ GoMod string }
+			GoFiles, CgoFiles, CFiles, CXXFiles, HFiles, SFiles, SysoFiles, EmbedFiles []string
+			CgoCFLAGS, CgoCPPFLAGS, CgoCXXFLAGS                                        []string
+		}
+		if err := decoder.Decode(&pkg); err == io.EOF {
+			break
+		} else if err != nil {
+			t.Fatal(err)
+		}
+		if pkg.Standard || !inside(pkg.Dir) {
+			continue
+		}
+		for _, names := range [][]string{pkg.GoFiles, pkg.CgoFiles, pkg.CFiles, pkg.CXXFiles, pkg.HFiles, pkg.SFiles, pkg.SysoFiles, pkg.EmbedFiles} {
+			for _, name := range names {
+				add(pkg.Dir, name)
+			}
+		}
+		for _, flags := range [][]string{pkg.CgoCFLAGS, pkg.CgoCPPFLAGS, pkg.CgoCXXFLAGS} {
+			for index, flag := range flags {
+				include := strings.TrimPrefix(flag, "-I")
+				if flag == "-I" && index+1 < len(flags) {
+					include = flags[index+1]
+				} else if include == flag {
+					continue
+				}
+				if !filepath.IsAbs(include) {
+					include = filepath.Join(pkg.Dir, include)
+				}
+				if inside(include) {
+					add(root, include)
+				}
+			}
+		}
+		if pkg.Module != nil && inside(pkg.Module.GoMod) {
+			for _, name := range []string{"go.mod", "go.sum"} {
+				dir := filepath.Dir(pkg.Module.GoMod)
+				if _, err := os.Stat(filepath.Join(dir, name)); err == nil {
+					add(dir, name)
+				}
+			}
+		}
+	}
+	for _, name := range []string{"go.work", "go.work.sum"} {
+		if _, err := os.Stat(filepath.Join(root, name)); err == nil {
+			add(root, name)
+		}
+	}
+	for _, name := range []string{"main.ts", "inline.ts", "classes.ts", "shards_test.go"} {
+		add(filepath.Join(root, "stage1/cohere/markdowninline"), name)
+	}
+	in := buildcache.Inputs{Name: "markdowninline compiler inputs", Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
+	for name := range files {
+		in.Files = append(in.Files, name)
+	}
+	sort.Strings(in.Files)
+	command = bounded(t, "go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT")
+	command.Dir = root
+	resolved, err := combinedOutput(command)
+	if err != nil {
+		t.Fatalf("compiler environment: %v", err)
+	}
+	in.Flags = append(in.Flags, string(resolved))
 	return in
 }
 func inlineProgramInputs(base buildcache.Inputs, name string) buildcache.Inputs {

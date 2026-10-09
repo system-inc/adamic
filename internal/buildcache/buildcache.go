@@ -5,9 +5,9 @@
 //
 // A miss builds into an empty private directory and publishes it whole by rename, so a product on disk is
 // always complete and a failed build leaves nothing. ADAMIC_BUILD_CACHE=off builds every time into a fresh
-// directory: the uncached proof mode, which is what lands main. The cache is local to the machine
-// (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's adamic-build), and a miss there fetches from the shared
-// store before it builds (store.go).
+// directory: the uncached proof mode, which is what lands main. The cache is local to the machine for now
+// (ADAMIC_BUILD_CACHE_DIR, or the user cache directory's adamic-build); Loom's content-addressed store slots in
+// behind Get without changing a caller.
 package buildcache
 
 import (
@@ -101,39 +101,9 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 	if err != nil {
 		return "", "", err
 	}
-	outcome := "miss"
-	if os.Getenv("ADAMIC_BUILD_STORE") != "off" {
-		switch err = fetch(key, scratch); {
-		case err == nil:
-			outcome = "fetched"
-			if auditing() {
-				if err = audit(key, inputs.Name, scratch, build); err != nil {
-					os.RemoveAll(scratch)
-					return "", "", err
-				}
-				outcome = "audited"
-			}
-		case errors.Is(err, errNotStored):
-			// Not stored, or the store unreachable: build here, from an empty directory again.
-			note("store %s %s: %v", inputs.Name, key[:12], err)
-			os.RemoveAll(scratch)
-			if scratch, err = os.MkdirTemp(cache, ".building-"+key[:12]+"-"); err != nil {
-				return "", "", err
-			}
-		default:
-			os.RemoveAll(scratch)
-			return "", "", err
-		}
-	}
-	if outcome == "miss" {
-		if err = build(scratch); err != nil {
-			os.RemoveAll(scratch)
-			return "", "", err
-		}
-		// Publishing is the store's gain, never this build's failure: a write that fails is noted and the product used.
-		if err = publish(key, inputs.Name, scratch); err != nil {
-			note("publish %s %s failed: %v", inputs.Name, key[:12], err)
-		}
+	if err = build(scratch); err != nil {
+		os.RemoveAll(scratch)
+		return "", "", err
 	}
 	if err = os.WriteFile(product+".inputs", []byte(describe(inputs)), 0o644); err != nil {
 		os.RemoveAll(scratch)
@@ -143,7 +113,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		os.RemoveAll(scratch)
 		return "", "", err
 	}
-	return product, record(inputs.Name, key, outcome, started), nil
+	return product, record(inputs.Name, key, "miss", started), nil
 }
 
 // Key is the product's address: a hash of every input, each length-prefixed so no two inputs run together.
@@ -287,17 +257,7 @@ func describe(inputs Inputs) string {
 	return strings.Join(lines, "\n") + "\n"
 }
 
-// note appends a line about the store to $ADAMIC_BUILD_LOG when set, beside the census lines.
-func note(format string, arguments ...any) {
-	if path := os.Getenv("ADAMIC_BUILD_LOG"); path != "" {
-		if file, err := os.OpenFile(path, os.O_CREATE|os.O_APPEND|os.O_WRONLY, 0o644); err == nil {
-			fmt.Fprintf(file, format+"\n", arguments...)
-			file.Close()
-		}
-	}
-}
-
-// record is the product's census line, 'build <name> <key12> hit|fetched|audited|miss|off <seconds>', also appended to
+// record is the product's census line, 'build <name> <key12> hit|miss|off <seconds>', also appended to
 // $ADAMIC_BUILD_LOG when set, so the gate can count every build as its own unit.
 func record(name, key, outcome string, started time.Time) string {
 	line := fmt.Sprintf("build %s %s %s %.2f", strings.ReplaceAll(name, " ", "_"), key[:min(12, len(key))], outcome, time.Since(started).Seconds())
