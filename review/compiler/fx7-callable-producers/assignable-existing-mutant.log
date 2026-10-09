@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewV2CallableProducerMutant
+=== PAUSE TestCheckedViewV2CallableProducerMutant
+=== CONT  TestCheckedViewV2CallableProducerMutant
+    checked_views_v2_migration_test.go:224: gate cache node miss
+    checked_views_v2_migration_test.go:230: gate cache node miss
+    checked_views_v2_migration_test.go:246: gate cache node miss
+    checked_views_v2_migration_test.go:250: producer certificate removal caught by native-sanitized: exit 70 stdout ""
+    checked_views_v2_migration_test.go:250: producer certificate removal caught by javascript: exit 70 stdout ""
+    checked_views_v2_migration_test.go:250: producer certificate removal caught by native: exit 70 stdout ""
+--- PASS: TestCheckedViewV2CallableProducerMutant (0.70s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.713s

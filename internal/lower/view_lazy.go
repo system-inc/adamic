@@ -172,6 +172,10 @@ func (l *lowering) checkLazyViewReads() error {
 				refused = err
 				return false
 			}
+			if err := l.callableProducerViewRefusal(graph, read); err != nil {
+				refused = err
+				return false
+			}
 			receiver, typeID, field, where = read.Object, read.ViewTypeID, read.Name, read.ViewWhere
 			receiverTypeID = read.ViewReceiverTypeID
 

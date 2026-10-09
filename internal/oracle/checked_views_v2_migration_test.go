@@ -225,25 +225,27 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
 		t.Fatal(difference)
 	}
-	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value expected Target, found function with unknown signature\n")}
+	// Despite its historical name, the number producer accepts the member's
+	// literal 1 parameter. It is assignable and must agree with Node.
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
+		if difference := disagreement(node, got); difference != "" {
 			t.Fatal(difference)
 		}
 	}
 	changed := 0
 	for i := range program.ViewContracts {
 		if program.ViewContracts[i].Kind == ir.ViewCallable && program.ViewContracts[i].ProducerCertified {
-			program.ViewContracts[i].ProducerCertified = false
+			program.ViewContracts[i].Functions = nil
 			changed++
 		}
 	}
 	if changed != 2 {
 		t.Fatalf("producer mutation count %d", changed)
 	}
+	want := run{exitCode: 70, stderr: []byte("adamic: panic: field read failed: view.value expected Target, found function with unknown signature\n")}
 	for backend, got := range map[string]run{"native": releasedUncached(t, program), "native-sanitized": func() run { got, _ := nativelyUncached(t, program); return got }(), "javascript": onJavaScriptBackend(t, program)} {
-		if difference := disagreement(node, got); difference != "" {
-			t.Fatalf("producer mutant must execute Node in %s: %s", backend, difference)
+		if difference := disagreement(want, got); difference != "" {
+			t.Fatalf("producer certificate removal survived %s: %s", backend, difference)
 		}
 		t.Logf("producer certificate removal caught by %s: exit %d stdout %q", backend, got.exitCode, got.stdout)
 	}

@@ -1,0 +1,12 @@
+--- a/internal/lower/view_callable_producers.go
++++ b/internal/lower/view_callable_producers.go
+@@ -11,9 +11,6 @@
+ 	}
+ 	// The producer registry records only fixed scalar or void results. A
+ 	// discarded result still needs a recorded implementation signature.
+-	if function.Returns != 0 && function.Returns != ir.Number && function.Returns != ir.Boolean && function.Returns != ir.String {
+-		return false
+-	}
+ 	for i, local := range function.Parameters {
+ 		of := l.result.ViewContracts[contract.Parameters[i]-1].Of
+ 		if of == 0 || l.result.Locals[local].Type != of {

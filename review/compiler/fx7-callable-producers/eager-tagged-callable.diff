@@ -1,0 +1,11 @@
+--- a/internal/lower/view_callable_producers.go
++++ b/internal/lower/view_callable_producers.go
+@@ -127,7 +127,7 @@
+ 		}
+ 		// Tagged object membership checks only its selectors. Unread callable
+ 		// descendants remain deferred until their own checked field read.
+-		if contract.Kind == ir.ViewObject {
++		if false && contract.Kind == ir.ViewObject {
+ 			for _, field := range contract.Fields {
+ 				child := l.result.ViewContracts[field.Contract-1]
+ 				if !field.Optional && child.Kind == ir.ViewScalar && (len(child.Allowed) != 0 || field.Name == "kind" && (child.Of == ir.Number || child.Of == ir.Boolean || child.Of == ir.String)) {
