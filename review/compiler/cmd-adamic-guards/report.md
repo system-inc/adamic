@@ -66,3 +66,5 @@ The fixture load control used the second command. `M02.diff`, `M07.diff`, the co
 The full package, full gate and differential oracle were not run. The new fixture checks command loading and an option refusal; it adds no differential-oracle count row. Counts regeneration and integration lane checks are recorded separately. Only `_test.go`, testdata and review evidence are committed.
 
 Counts command: `timeout 180 go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 90s -args -update-counts`. It passed in 66.676 seconds; `internal/oracle/counts.md` had no diff. `git diff --check` passed.
+
+Origin/main advanced to `3000220eec9c047d34348d97dfcd20b1b18c28ee` during lane checks. It was merged without conflicts; its changes were documentation and markdowninline tests, with no change to cmd/adamic or its production dependencies. Lane checks passed: `lane checks 1.0 s: gofmt and tools on 2 Go files, t.Parallel on 1 test packages; vet 1 packages`.
