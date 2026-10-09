@@ -1,0 +1,39 @@
+package oracle
+
+import (
+ "path/filepath"
+ "testing"
+ "github.com/system-inc/adamic/internal/native"
+ "github.com/system-inc/adamic/internal/leakcheck"
+)
+
+// Temporary baseline witness; production source remains at 9674ce3f.
+func TestSlice6AcceptedCycleSafety(t *testing.T) {
+ paths, err := filepath.Glob(filepath.Join(reviewRoot, "refused", "fxspptb_aee89b2_*.a"))
+ if err != nil { t.Fatal(err) }
+ paths = append(paths, filepath.Join(reviewRoot, "refused", "fxspptb_devirt_fresh_method_keeps_argument.a"), filepath.Join(repository, "stage3/namespace-init-sys/cwd.a"))
+ if len(paths) != 12 { t.Fatalf("want twelve probes, got %d", len(paths)) }
+ for _, path := range paths {
+  t.Run(filepath.Base(path), func(t *testing.T) {
+   path, err := filepath.Abs(path)
+   if err != nil { t.Fatal(err) }
+   program, err := lowered(t, path)
+   if err != nil { t.Fatal(err) }
+   truth := onNode(t, path)
+   actual, sanitized := nativelyUncached(t, program)
+   if difference := disagreement(truth, actual); difference != "" {
+    t.Errorf("native: %s; Node exit %d stdout %q stderr %q; native exit %d stdout %q stderr %q", difference, truth.exitCode, truth.stdout, truth.stderr, actual.exitCode, actual.stdout, actual.stderr)
+   }
+   if report := leaksUncached(t, program, sanitized); report != "" { t.Errorf("shared leakcheck: %s", report) }
+   binary := filepath.Join(t.TempDir(), "counted")
+   if err := native.Build(native.C(program), binary, native.Options{Count:true}); err != nil { t.Fatal(err) }
+   name, args := pinnedStack(binary)
+   result := execute(t, name, args...)
+   if report := leakcheck.Unbalanced(leakRun(result)); report != "" { t.Errorf("counted: %s", report) }
+   counts := countsLine.FindSubmatch(result.stderr)
+   if counts == nil { t.Fatal("missing counts") }
+   if string(counts[1]) != string(counts[2]) { t.Errorf("allocations must equal frees: %s", result.stderr) }
+   t.Logf("Node exit %d stdout %q stderr %q; native exit %d stdout %q stderr %q; counted %s", truth.exitCode, truth.stdout, truth.stderr, actual.exitCode, actual.stdout, actual.stderr, result.stderr)
+  })
+ }
+}

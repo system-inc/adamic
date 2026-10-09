@@ -117,3 +117,7 @@ census and a passing host 14 witness remain outstanding. Running verification
 jobs were stopped before ending the turn. No merge to main occurred.
 
 Native units completed: 35, passed: 35, unfinished: 21.
+
+## Follow-up baseline cycle verification
+
+See [the slice 6 baseline evidence and counted-equality stop](../runtime-slice-7-cycles/report.md). Slice 6 accepts all twelve in default mode. This follow-up changes no production source or fixture classification.
