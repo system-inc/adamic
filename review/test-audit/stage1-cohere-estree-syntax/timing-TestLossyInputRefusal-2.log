@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:51:38.718289335Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:51:38.726831774Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal"}
+{"Time":"2026-10-09T11:51:38.726898976Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"=== RUN   TestLossyInputRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:52:00.147390104Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"    utf8_test.go:72: equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required\n"}
+{"Time":"2026-10-09T11:52:00.148291002Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"--- PASS: TestLossyInputRefusal (21.42s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:52:00.148334683Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Elapsed":21.42}
+{"Time":"2026-10-09T11:52:00.148365247Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:52:00.150591184Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.432s\n"}
+{"Time":"2026-10-09T11:52:00.150629737Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.432}

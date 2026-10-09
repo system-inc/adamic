@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:59:50.044388036Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:59:50.052753043Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals"}
+{"Time":"2026-10-09T11:59:50.052825126Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"=== RUN   TestSyntaxRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:00:12.207755332Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"    syntax_test.go:57: three Go refusals explicitly refused with empty stdout on all builds\n"}
+{"Time":"2026-10-09T12:00:12.209526009Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"--- PASS: TestSyntaxRefusals (22.16s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:00:12.209538327Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Elapsed":22.16}
+{"Time":"2026-10-09T12:00:12.209582416Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:00:12.211259413Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t22.167s\n"}
+{"Time":"2026-10-09T12:00:12.21129648Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":22.167}

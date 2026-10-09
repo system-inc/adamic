@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:42:48.565156677Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:42:48.573863448Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
+{"Time":"2026-10-09T11:42:48.573946926Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:11.419363768Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:35: 9 syntax cases, 15547 identical canonical bytes\n"}
+{"Time":"2026-10-09T11:43:11.422532083Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- PASS: TestSyntaxGrammar (22.85s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:11.42562538Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":22.85}
+{"Time":"2026-10-09T11:43:11.425706405Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:43:11.425786103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t22.860s\n"}
+{"Time":"2026-10-09T11:43:11.425821903Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":22.861}

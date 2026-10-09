@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:02:32.532584777Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:02:32.542515079Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates"}
+{"Time":"2026-10-09T12:02:32.542584743Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"=== RUN   TestCookedSurrogates\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:54.123205152Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"    utf8_test.go:22: Node: line 1: Go \"0 Program 0 16 0 0 0 0 16 0\", port \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:02:54.125263451Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Output":"--- FAIL: TestCookedSurrogates (21.58s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:54.125272632Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogates","Elapsed":21.58}
+{"Time":"2026-10-09T12:02:54.125295893Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:54.128037537Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.595s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:54.12808672Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.596}

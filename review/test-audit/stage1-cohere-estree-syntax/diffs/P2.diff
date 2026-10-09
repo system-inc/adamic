@@ -1,0 +1,15 @@
+--- a/stage1/cohere/estree/main.ts
++++ b/stage1/cohere/estree/main.ts
+@@ -1,11 +1,7 @@
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { answer } from './pipeline.ts';
+ function run(path: string): void {
+-    const file = readTextFile(path);
+-    if(file.kind === 'Error') {
+-        panic(file.message);
+-    }
+-    console.log(answer(path, file.text).slice(0, -1));
++    return;
+ }
+ const args = programArguments();
+ const path = args[0] ?? panic('usage: main.ts <file.ts> | --manifest <file>');

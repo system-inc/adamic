@@ -1,0 +1,117 @@
+{
+  "M1": {
+    "before": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: ESTree cannot recover original UTF-8 bytes from replacement-decoded input\n",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/u089/native-witness/stage1/cohere/estree/main.ts",
+        "/tmp/u089/native-witness/M1.ts"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "0 Program 0 8 0 0 0 0 8 0\n0 .body list 1\n1 ExpressionStatement 6 8 0 1 7 6 7 1\n1 .directive null\n1 .expression node\n2 Identifier 6 7 0 0 0 6 7 0\n2 .decorators list 0\n2 .name string x\n2 .optional bool 0\n2 .typeAnnotation null\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\ncomment\n0 Line 0 5 0 0 0 0 5 0\n0 .value string \\ufffd\nstripped      \\u000ax;\n",
+      "stderr": "",
+      "command": [
+        "/tmp/u089/replay/M1/port",
+        "/tmp/u089/native-witness/M1.ts"
+      ]
+    }
+  },
+  "M2": {
+    "before": {
+      "exit": 0,
+      "stdout": "0 Program 0 36 0 0 0 0 36 0\n0 .body list 1\n1 ExpressionStatement 0 2 0 1 1 0 1 1\n1 .directive null\n1 .expression node\n2 Identifier 0 1 0 0 0 0 1 0\n2 .decorators list 0\n2 .name string x\n2 .optional bool 0\n2 .typeAnnotation null\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\ncomment\n0 Line 3 36 0 0 0 3 36 0\n0 .value string / <reference path='broken.ts />\nstripped x;\\u000a                                 \n",
+      "stderr": "",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/u089/native-witness/stage1/cohere/estree/main.ts",
+        "/tmp/u089/native-witness/M2.ts"
+      ]
+    },
+    "after": {
+      "exit": 70,
+      "stdout": "",
+      "stderr": "adamic: panic: ESTree parser: invalid reference directive syntax\n",
+      "command": [
+        "/tmp/u089/replay/M2/port",
+        "/tmp/u089/native-witness/M2.ts"
+      ]
+    }
+  },
+  "M3": {
+    "before": {
+      "exit": 0,
+      "stdout": "0 Program 0 3 0 0 0 0 3 0\n0 .body list 1\n1 ExpressionStatement 0 3 0 1 2 0 2 1\n1 .directive null\n1 .expression node\n2 UnaryExpression 0 2 0 0 0 0 2 0\n2 .argument node\n3 Identifier 1 2 0 0 0 1 2 0\n3 .decorators list 0\n3 .name string x\n3 .optional bool 0\n3 .typeAnnotation null\n2 .operator string ~\n2 .prefix bool 1\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped ~x;\n",
+      "stderr": "",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/u089/native-witness/stage1/cohere/estree/main.ts",
+        "/tmp/u089/native-witness/M3.ts"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "0 Program 0 3 0 0 0 0 3 0\n0 .body list 1\n1 ExpressionStatement 0 3 0 1 2 0 2 1\n1 .directive null\n1 .expression node\n2 UnaryExpression 0 2 0 0 0 0 2 0\n2 .argument node\n3 Identifier 1 2 0 0 0 1 2 0\n3 .decorators list 0\n3 .name string x\n3 .optional bool 0\n3 .typeAnnotation null\n2 .operator string \\u007e\n2 .prefix bool 1\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped \\u007ex;\n",
+      "stderr": "",
+      "command": [
+        "/tmp/u089/replay/M3/port",
+        "/tmp/u089/native-witness/M3.ts"
+      ]
+    }
+  },
+  "M4": {
+    "before": {
+      "exit": 0,
+      "stdout": "0 Program 0 2 0 0 0 0 2 0\n0 .body list 1\n1 ExpressionStatement 0 2 0 1 1 0 1 1\n1 .directive null\n1 .expression node\n2 Identifier 0 1 0 0 0 0 1 0\n2 .decorators list 0\n2 .name string x\n2 .optional bool 0\n2 .typeAnnotation null\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped x;\n",
+      "stderr": "",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/u089/native-witness/stage1/cohere/estree/main.ts",
+        "/tmp/u089/native-witness/M4.ts"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "0 Program 0 2 0 0 0 0 2 0\n0 .body list 1\n1 ExpressionStatement 0 2 0 1 1 0 1 1\n1 .directive null\n1 .expression node\n2 Identifier 0 1 0 0 0 0 1 0\n2 .decorators list 0\n2 .name string x\n2 .optional bool 0\n2 .typeAnnotation null\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped x\n",
+      "stderr": "",
+      "command": [
+        "/tmp/u089/replay/M4/port",
+        "/tmp/u089/native-witness/M4.ts"
+      ]
+    }
+  },
+  "P1": {
+    "before": {
+      "exit": 0,
+      "stdout": "0 Program 0 2 0 0 0 0 2 0\n0 .body list 1\n1 ExpressionStatement 0 2 0 1 1 0 1 1\n1 .directive null\n1 .expression node\n2 Identifier 0 1 0 0 0 0 1 0\n2 .decorators list 0\n2 .name string x\n2 .optional bool 0\n2 .typeAnnotation null\n0 .comments null\n0 .sourceType string module\n0 .tokens null\n0 .directives null\nstripped x;\n",
+      "stderr": "",
+      "command": [
+        "node",
+        "--disable-warning=ExperimentalWarning",
+        "/workspace/adamic/oracle/node.mjs",
+        "/tmp/u089/native-witness/stage1/cohere/estree/main.ts",
+        "/tmp/u089/native-witness/P1.ts"
+      ]
+    },
+    "after": {
+      "exit": 0,
+      "stdout": "\n",
+      "stderr": "",
+      "command": [
+        "/tmp/u089/replay/P1/port",
+        "/tmp/u089/native-witness/P1.ts"
+      ]
+    }
+  }
+}

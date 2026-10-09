@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:01:22.643066698Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:01:22.651238695Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
+{"Time":"2026-10-09T12:01:22.651300159Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:44.125613054Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:32: Node: line 1: Go \"0 Program 0 74 0 0 0 0 74 0\", port \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T12:01:44.12780366Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- FAIL: TestSyntaxGrammar (21.48s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:44.127869219Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":21.48}
+{"Time":"2026-10-09T12:01:44.12792155Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:44.129853246Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.486s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:01:44.129884939Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.487}

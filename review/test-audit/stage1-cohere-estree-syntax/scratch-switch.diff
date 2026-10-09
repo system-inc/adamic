@@ -1,0 +1,74 @@
+diff --git a/stage1/cohere/estree/main.ts b/stage1/cohere/estree/main.ts
+index 299c98f1..c7aa9168 100644
+--- a/stage1/cohere/estree/main.ts
++++ b/stage1/cohere/estree/main.ts
+@@ -1,11 +1,13 @@
++import { auditMutant } from './auditSelector.ts';
+ import { panic, programArguments, readTextFile } from 'adamic';
+ import { answer } from './pipeline.ts';
+ function run(path: string): void {
++    if(auditMutant === 'P2') { return; }
+     const file = readTextFile(path);
+     if(file.kind === 'Error') {
+         panic(file.message);
+     }
+-    console.log(answer(path, file.text).slice(0, -1));
++    console.log(answer(path, file.text).slice(0, auditMutant === 'M4' ? -2 : -1));
+ }
+ const args = programArguments();
+ const path = args[0] ?? panic('usage: main.ts <file.ts> | --manifest <file>');
+diff --git a/stage1/cohere/estree/pipeline.ts b/stage1/cohere/estree/pipeline.ts
+index 73890eba..77d20d92 100644
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -1,3 +1,4 @@
++import { auditMutant } from './auditSelector.ts';
+ import { referenceError } from './sourceReferences.ts';
+ import { syntaxError } from './sourceValidation.ts';
+ import { externalModule } from './sourceModules.ts';
+@@ -8,7 +9,8 @@ import { collectComments } from './comments.ts';
+ import { Postprocessor, mergeComments } from './postprocess.ts';
+ import { dump, written } from './protocol.ts';
+ export function answer(path: string, text: string): string {
+-    if(text.includes('\ufffd')) {
++    if(auditMutant === 'P1') { return ''; }
++    if(auditMutant === 'M1' ? false : text.includes('\ufffd')) {
+         return panic('ESTree cannot recover original UTF-8 bytes from replacement-decoded input');
+     }
+     const file = path.toLowerCase();
+diff --git a/stage1/cohere/estree/protocol.ts b/stage1/cohere/estree/protocol.ts
+index d2533879..314adb9b 100644
+--- a/stage1/cohere/estree/protocol.ts
++++ b/stage1/cohere/estree/protocol.ts
+@@ -1,3 +1,4 @@
++import { auditMutant } from './auditSelector.ts';
+ // Canonical traversal includes every own field, ordered keys and printer-visible locations.
+ import type { Arena } from './arena.ts';
+ import { ignoredSemicolon, locStart, locEnd } from './location.ts';
+@@ -17,7 +18,7 @@ export function written(text: string): string {
+             continue;
+         }
+         result +=
+-            unit >= 32 && unit <= 126 && unit !== 92
++            unit >= 32 && (auditMutant === 'M3' ? unit <= 125 : unit <= 126) && unit !== 92
+                 ? text.slice(index, index + 1)
+                 : `\\u${unit.toString(16).padStart(4, '0')}`;
+     }
+diff --git a/stage1/cohere/estree/sourceReferences.ts b/stage1/cohere/estree/sourceReferences.ts
+index acba9c78..117c343f 100644
+--- a/stage1/cohere/estree/sourceReferences.ts
++++ b/stage1/cohere/estree/sourceReferences.ts
+@@ -1,3 +1,4 @@
++import { auditMutant } from './auditSelector.ts';
+ // Leading triple-slash pragmas follow typescript-go, including incomplete attributes.
+ import { utf8Length } from 'adamic';
+ import { Scanner } from '../../typescript/scanner/scanner.ts';
+@@ -26,7 +27,7 @@ export function referenceError(text: string, arena: Arena, comments: readonly nu
+     const firstToken = utf8Length(text.slice(0, scanner.start));
+     for(const id of comments) {
+         const comment = arena.node(id);
+-        if(comment.type !== 'Line' || comment.end > firstToken) {
++        if(comment.type !== 'Line' || (auditMutant === 'M2' ? comment.end < firstToken : comment.end > firstToken)) {
+             continue;
+         }
+         const value = comment.string('value');

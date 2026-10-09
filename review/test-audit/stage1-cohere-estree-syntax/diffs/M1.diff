@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/pipeline.ts
++++ b/stage1/cohere/estree/pipeline.ts
+@@ -8,7 +8,7 @@
+ import { Postprocessor, mergeComments } from './postprocess.ts';
+ import { dump, written } from './protocol.ts';
+ export function answer(path: string, text: string): string {
+-    if(text.includes('\ufffd')) {
++    if(false) {
+         return panic('ESTree cannot recover original UTF-8 bytes from replacement-decoded input');
+     }
+     const file = path.toLowerCase();

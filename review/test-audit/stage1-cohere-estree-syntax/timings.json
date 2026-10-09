@@ -1,0 +1,262 @@
+{
+  "TestSyntaxGrammar": [
+    {
+      "seconds": 30.357,
+      "wall": 31.997,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 23.798000000000002,
+      "wall": 25.467,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 22.861,
+      "wall": 24.499,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestSyntaxRefusals": [
+    {
+      "seconds": 22.929,
+      "wall": 26.962,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 22.348,
+      "wall": 23.942,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 22.172,
+      "wall": 23.776,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestSyntaxLibraries": [
+    {
+      "seconds": 1.013,
+      "wall": 2.58,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 1.064,
+      "wall": 2.636,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 1.074,
+      "wall": 2.734,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestTypeMemberLibraryGap": [
+    {
+      "seconds": 0.93,
+      "wall": 2.545,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.915,
+      "wall": 2.517,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.925,
+      "wall": 2.508,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestThreePortMutants_Setup": [
+    {
+      "seconds": 82.858,
+      "wall": 84.463,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 9.394,
+      "wall": 10.952,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 9.769,
+      "wall": 11.373,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestThreePortMutants family": [
+    {
+      "seconds": 11.792,
+      "wall": 13.515,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 11.261,
+      "wall": 12.881,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 11.711,
+      "wall": 13.292,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestThreePortMutants_ShardProof": [
+    {
+      "seconds": 0.372,
+      "wall": 1.961,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.389,
+      "wall": 1.99,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.367,
+      "wall": 2.202,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestThroughput": [
+    {
+      "seconds": 29.482,
+      "wall": 31.12,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 27.247,
+      "wall": 28.856,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 27.646,
+      "wall": 29.248,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestCookedSurrogates": [
+    {
+      "seconds": 21.607,
+      "wall": 23.207,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 21.753,
+      "wall": 23.351,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 23.173,
+      "wall": 24.796,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestCookedSurrogateMutant": [
+    {
+      "seconds": 22.114,
+      "wall": 23.715,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 21.689,
+      "wall": 23.318,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 21.931,
+      "wall": 23.665,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestCookedSurrogateLibraryGap": [
+    {
+      "seconds": 0.894,
+      "wall": 2.628,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.97,
+      "wall": 2.774,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 0.948,
+      "wall": 2.66,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestLossyInputRefusal": [
+    {
+      "seconds": 21.721,
+      "wall": 23.488,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 21.432,
+      "wall": 23.057,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 22.21,
+      "wall": 24.041,
+      "exit": 0,
+      "cooked": false
+    }
+  ],
+  "TestLossyInputControl": [
+    {
+      "seconds": 5.415,
+      "wall": 7.212,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 7.201,
+      "wall": 9.365,
+      "exit": 0,
+      "cooked": false
+    },
+    {
+      "seconds": 4.178,
+      "wall": 6.099,
+      "exit": 0,
+      "cooked": false
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:51:07.273933613Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:51:07.282375997Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap"}
+{"Time":"2026-10-09T11:51:07.282456224Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Output":"=== RUN   TestCookedSurrogateLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:07.282491245Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Output":"=== PAUSE TestCookedSurrogateLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:07.282494933Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap"}
+{"Time":"2026-10-09T11:51:07.282498655Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap"}
+{"Time":"2026-10-09T11:51:07.282501189Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Output":"=== CONT  TestCookedSurrogateLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:08.166368026Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Output":"    utf8_test.go:58: Go serializes each unpaired WTF-8 surrogate as three U+FFFD; original keeps UTF-16 surrogates\n"}
+{"Time":"2026-10-09T11:51:08.166968584Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Output":"--- PASS: TestCookedSurrogateLibraryGap (0.88s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:08.167030536Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateLibraryGap","Elapsed":0.88}
+{"Time":"2026-10-09T11:51:08.16708006Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:08.167930361Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.894s\n"}
+{"Time":"2026-10-09T11:51:08.167980086Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.894}

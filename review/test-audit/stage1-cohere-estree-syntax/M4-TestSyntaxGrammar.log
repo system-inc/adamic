@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:59:27.017603645Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:59:27.026002873Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
+{"Time":"2026-10-09T11:59:27.02607517Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:59:48.402534032Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:32: native: line 137: Go \"stripped type T=ReturnType\u003c\u003cU\u003e(x:U)=\u003enumber\u003e; const b=foo\u003c\u003cU\u003e(x:U)=\u003enumber\u003e(()=\u003e1);\", port \"stripped type T=ReturnType\u003c\u003cU\u003e(x:U)=\u003enumber\u003e; const b=foo\u003c\u003cU\u003e(x:U)=\u003enumber\u003e(()=\u003e1)\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:59:48.404955486Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- FAIL: TestSyntaxGrammar (21.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:59:48.404964616Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":21.38}
+{"Time":"2026-10-09T11:59:48.404985909Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:59:48.40820663Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.390s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:59:48.408240741Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.391}

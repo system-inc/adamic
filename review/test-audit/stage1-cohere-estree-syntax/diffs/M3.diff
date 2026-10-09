@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/protocol.ts
++++ b/stage1/cohere/estree/protocol.ts
+@@ -17,7 +17,7 @@
+             continue;
+         }
+         result +=
+-            unit >= 32 && unit <= 126 && unit !== 92
++            unit >= 32 && unit <= 125 && unit !== 92
+                 ? text.slice(index, index + 1)
+                 : `\\u${unit.toString(16).padStart(4, '0')}`;
+     }

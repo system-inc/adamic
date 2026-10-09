@@ -1,0 +1,73 @@
+{
+  "family-control": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestThreePortMutants_[0-9]{3}$"
+    ],
+    "exit": 0,
+    "seconds": 1.782
+  },
+  "W1-family-and-proof": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-syntax/witness-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^(TestThreePortMutants_[0-9]{3}|TestThreePortMutants_ShardProof)$"
+    ],
+    "exit": 1,
+    "seconds": 5.582
+  },
+  "W1-cooked-witness": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-syntax/witness-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestCookedSurrogateMutant$"
+    ],
+    "exit": 1,
+    "seconds": 24.165
+  },
+  "W1-lossy-witness": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/workspace/adamic/review/test-audit/stage1-cohere-estree-syntax/witness-overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/estree/",
+      "-run",
+      "^TestLossyInputControl$"
+    ],
+    "exit": 1,
+    "seconds": 33.83
+  }
+}

@@ -1,0 +1,30 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/estree/pipeline.ts",
+    "line": 11,
+    "before": "if(text.includes('\\ufffd'))",
+    "after": "if(false)"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/estree/sourceReferences.ts",
+    "line": 29,
+    "before": "comment.end > firstToken",
+    "after": "comment.end < firstToken"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/estree/protocol.ts",
+    "line": 20,
+    "before": "unit <= 126",
+    "after": "unit <= 125"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/estree/main.ts",
+    "line": 8,
+    "before": ".slice(0, -1)",
+    "after": ".slice(0, -2)"
+  }
+]

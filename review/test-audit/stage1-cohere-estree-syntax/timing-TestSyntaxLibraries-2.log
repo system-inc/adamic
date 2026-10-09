@@ -1,0 +1,14 @@
+{"Time":"2026-10-09T11:44:30.260869742Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:30.269550912Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries"}
+{"Time":"2026-10-09T11:44:30.269611575Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"=== RUN   TestSyntaxLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:30.269631328Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"=== PAUSE TestSyntaxLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:30.269633519Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries"}
+{"Time":"2026-10-09T11:44:30.269636Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries"}
+{"Time":"2026-10-09T11:44:30.269637748Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"=== CONT  TestSyntaxLibraries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:31.179738205Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"    estree_test.go:292: raw: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:44:31.323214653Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"    estree_test.go:292: postprocessed: 4 files, 4 identical, 0 differing\n"}
+{"Time":"2026-10-09T11:44:31.324086996Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Output":"--- PASS: TestSyntaxLibraries (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:31.3240932Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxLibraries","Elapsed":1.05}
+{"Time":"2026-10-09T11:44:31.324128063Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:31.324996229Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t1.064s\n"}
+{"Time":"2026-10-09T11:44:31.32503284Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":1.064}

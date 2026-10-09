@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:01:45.748914589Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:01:45.75750812Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals"}
+{"Time":"2026-10-09T12:01:45.757565723Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"=== RUN   TestSyntaxRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:07.4782883Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"    syntax_test.go:54: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestSyntaxRefusals2260305247/001/0000.ts]: timeout=false exit=\u003cnil\u003e stdout=1 stderr=\n","OutputType":"error"}
+{"Time":"2026-10-09T12:02:07.480185901Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Output":"--- FAIL: TestSyntaxRefusals (21.72s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:07.48019626Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxRefusals","Elapsed":21.72}
+{"Time":"2026-10-09T12:02:07.480219177Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:07.482917724Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.734s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:02:07.482945949Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.734}

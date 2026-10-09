@@ -1,0 +1,5 @@
+M1 {'exit': 0, 'seconds': 26.749, 'command': ['timeout', '90', 'go', 'run', './cmd/adamic', 'build', '/tmp/u089/replay/M1/stage1/cohere/estree/main.ts', '-o', '/tmp/u089/replay/M1/port', '--sanitize']}
+M2 {'exit': 0, 'seconds': 21.858, 'command': ['timeout', '90', 'go', 'run', './cmd/adamic', 'build', '/tmp/u089/replay/M2/stage1/cohere/estree/main.ts', '-o', '/tmp/u089/replay/M2/port', '--sanitize']}
+M3 {'exit': 0, 'seconds': 22.605, 'command': ['timeout', '90', 'go', 'run', './cmd/adamic', 'build', '/tmp/u089/replay/M3/stage1/cohere/estree/main.ts', '-o', '/tmp/u089/replay/M3/port', '--sanitize']}
+M4 {'exit': 0, 'seconds': 23.8, 'command': ['timeout', '90', 'go', 'run', './cmd/adamic', 'build', '/tmp/u089/replay/M4/stage1/cohere/estree/main.ts', '-o', '/tmp/u089/replay/M4/port', '--sanitize']}
+P1 {'exit': 128, 'seconds': 0.0, 'command': ['timeout', '90', 'go', 'run', './cmd/adamic', 'build', '/tmp/u089/replay/P1/stage1/cohere/estree/main.ts', '-o', '/tmp/u089/replay/P1/port', '--sanitize']}

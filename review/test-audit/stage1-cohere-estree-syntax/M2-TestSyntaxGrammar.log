@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T11:55:30.917007638Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:55:30.9253787Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar"}
+{"Time":"2026-10-09T11:55:30.925448607Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"=== RUN   TestSyntaxGrammar\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:52.366631816Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"    syntax_test.go:30: node [--disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts --manifest /tmp/adamic-gate/TestSyntaxGrammar2343042558/001/manifest]: exit status 70\n","OutputType":"error"}
+{"Time":"2026-10-09T11:55:52.36672957Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"        adamic: panic: ESTree parser: invalid reference directive syntax\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T11:55:52.36823946Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Output":"--- FAIL: TestSyntaxGrammar (21.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:52.368274024Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestSyntaxGrammar","Elapsed":21.44}
+{"Time":"2026-10-09T11:55:52.368327963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:52.370849857Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.453s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:55:52.370876043Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.454}

@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:07:30.609382343Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T12:07:30.617904801Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal"}
+{"Time":"2026-10-09T12:07:30.617967571Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"=== RUN   TestLossyInputRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:07:51.205735285Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"    utf8_test.go:69: [node --disable-warning=ExperimentalWarning /workspace/adamic/oracle/node.mjs /workspace/adamic/stage1/cohere/estree/main.ts /tmp/adamic-gate/TestLossyInputRefusal2494805494/002/input.ts]: timeout=false exit=\u003cnil\u003e stdout=0 stderr=\n","OutputType":"error"}
+{"Time":"2026-10-09T12:07:51.206426592Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Output":"--- FAIL: TestLossyInputRefusal (20.59s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:07:51.206444665Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestLossyInputRefusal","Elapsed":20.59}
+{"Time":"2026-10-09T12:07:51.206504678Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:07:51.20968109Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t20.600s\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:07:51.209717021Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":20.6}

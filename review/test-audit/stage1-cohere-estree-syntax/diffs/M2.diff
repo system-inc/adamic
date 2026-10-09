@@ -1,0 +1,11 @@
+--- a/stage1/cohere/estree/sourceReferences.ts
++++ b/stage1/cohere/estree/sourceReferences.ts
+@@ -26,7 +26,7 @@
+     const firstToken = utf8Length(text.slice(0, scanner.start));
+     for(const id of comments) {
+         const comment = arena.node(id);
+-        if(comment.type !== 'Line' || comment.end > firstToken) {
++        if(comment.type !== 'Line' || comment.end < firstToken) {
+             continue;
+         }
+         const value = comment.string('value');

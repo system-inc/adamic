@@ -1,0 +1,3 @@
+import { readTextFile } from 'adamic';
+const selection = readTextFile('/tmp/u089/mutant');
+export const auditMutant = selection.kind === 'Error' ? '' : selection.text.trim();

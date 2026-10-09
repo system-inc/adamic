@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T11:50:43.609159842Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:50:43.61878101Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant"}
+{"Time":"2026-10-09T11:50:43.61885527Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"=== RUN   TestCookedSurrogateMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:05.533815548Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"    utf8_test.go:38: Node: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"\n"}
+{"Time":"2026-10-09T11:51:05.533874263Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"    utf8_test.go:38: native: line 8: Go \"2 .value string \\\\ufffd\\\\ufffd\\\\ufffda\\\\ufffd\\\\ufffd\\\\ufffd\", port \"2 .value string \\\\ufffda\\\\ufffd\"\n"}
+{"Time":"2026-10-09T11:51:05.53744466Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Output":"--- PASS: TestCookedSurrogateMutant (21.92s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:05.537480206Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestCookedSurrogateMutant","Elapsed":21.92}
+{"Time":"2026-10-09T11:51:05.537504801Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:51:05.5403837Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.931s\n"}
+{"Time":"2026-10-09T11:51:05.540419773Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.931}

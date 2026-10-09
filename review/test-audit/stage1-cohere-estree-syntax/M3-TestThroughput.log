@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:58:17.648008514Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:58:17.657103992Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput"}
+{"Time":"2026-10-09T11:58:17.657159204Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"=== RUN   TestThroughput\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:39.306669429Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"    throughput_test.go:45: source Node: line 3778: Go \"2 .operator string ~\", port \"2 .operator string \\\\u007e\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:58:39.307818103Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Output":"--- FAIL: TestThroughput (21.65s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:39.307844312Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestThroughput","Elapsed":21.65}
+{"Time":"2026-10-09T11:58:39.307864264Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:39.310147248Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/estree\t21.662s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:58:39.31019339Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":21.662}

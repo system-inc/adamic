@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:44:38.207722002Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/estree"}
+{"Time":"2026-10-09T11:44:38.216140772Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap"}
+{"Time":"2026-10-09T11:44:38.216215199Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"=== RUN   TestTypeMemberLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:38.216240384Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"=== PAUSE TestTypeMemberLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:38.216242532Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap"}
+{"Time":"2026-10-09T11:44:38.216244997Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap"}
+{"Time":"2026-10-09T11:44:38.216246649Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"=== CONT  TestTypeMemberLibraryGap\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:39.120860569Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"    syntax_test.go:80: Go accepts an interface property initializer, pinned typescript-estree refuses it; the port follows Go\n"}
+{"Time":"2026-10-09T11:44:39.121612741Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Output":"--- PASS: TestTypeMemberLibraryGap (0.91s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:39.121635269Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Test":"TestTypeMemberLibraryGap","Elapsed":0.91}
+{"Time":"2026-10-09T11:44:39.121666617Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:44:39.122337234Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/estree\t0.914s\n"}
+{"Time":"2026-10-09T11:44:39.122397116Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/estree","Elapsed":0.915}

@@ -1,0 +1,20 @@
+--- a/stage1/cohere/estree/three_port_mutants_deadline_shards_test.go
++++ b/stage1/cohere/estree/three_port_mutants_deadline_shards_test.go
+@@ -287,16 +287,7 @@
+ 
+ func threePortReady(t *testing.T) *threePortPrepared {
+ 	t.Helper()
+-	threePortShared.once.Do(func() {
+-		prepared := &threePortPrepared{Oracle: threePortOracleProduct(t)}
+-		for _, mutation := range threePortMutations() {
+-			lowered := threePortLoweredProduct(t, mutation)
+-			prepared.Ports = append(prepared.Ports, threePortPreparedPort{
+-				filepath.Join(lowered, "source", "main.ts"), threePortNativeProduct(t, mutation),
+-			})
+-		}
+-		threePortShared.prepared = prepared
+-	})
++
+ 	if threePortShared.prepared == nil {
+ 		t.Fatal("shared product build failed")
+ 	}

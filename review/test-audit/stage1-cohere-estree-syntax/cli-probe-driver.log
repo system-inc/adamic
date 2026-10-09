@@ -1,0 +1,5 @@
+TestSyntaxGrammar {'result': 'fail', 'seconds': 29.526, 'exit': 1, 'cooked': False}
+TestSyntaxRefusals {'result': 'fail', 'seconds': 22.586, 'exit': 1, 'cooked': False}
+TestThroughput {'result': 'fail', 'seconds': 24.858, 'exit': 1, 'cooked': False}
+TestCookedSurrogates {'result': 'fail', 'seconds': 23.239, 'exit': 1, 'cooked': False}
+TestLossyInputRefusal {'result': 'fail', 'seconds': 22.237, 'exit': 1, 'cooked': False}

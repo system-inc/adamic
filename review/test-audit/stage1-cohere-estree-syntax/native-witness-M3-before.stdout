@@ -1,0 +1,19 @@
+0 Program 0 3 0 0 0 0 3 0
+0 .body list 1
+1 ExpressionStatement 0 3 0 1 2 0 2 1
+1 .directive null
+1 .expression node
+2 UnaryExpression 0 2 0 0 0 0 2 0
+2 .argument node
+3 Identifier 1 2 0 0 0 1 2 0
+3 .decorators list 0
+3 .name string x
+3 .optional bool 0
+3 .typeAnnotation null
+2 .operator string ~
+2 .prefix bool 1
+0 .comments null
+0 .sourceType string module
+0 .tokens null
+0 .directives null
+stripped ~x;
