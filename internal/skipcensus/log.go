@@ -22,6 +22,17 @@ type Landed func(branch string) (bool, error)
 
 var awaitedBranch = regexp.MustCompile(`^[A-Za-z0-9][A-Za-z0-9._/-]*$`)
 
+// A skip with no row whose message says what it awaits is pending by its own words (@system_adamic, Oct 8: a skip
+// naming the branch it awaits never fails the gate, and it expires): 'awaits <branch>: <reason>' is checked against
+// main like any pending row. 'awaits #<task>: <reason>' (no branch yet, only a task) can't be checked on a gate box,
+// so it is accepted only from the review lane's own tests; the Mac-side review census pages integration once the
+// task is Done and the program still skips.
+var awaitsInOutput = regexp.MustCompile(`awaits (#[0-9a-z]{6,9}|[A-Za-z0-9][A-Za-z0-9._/-]*): \S`)
+
+func reviewLane(pkg, test string) bool {
+	return pkg == "github.com/system-inc/adamic/internal/oracle" && strings.HasPrefix(test, "TestReviewPrograms")
+}
+
 // checkPending holds a pending row to its reason: it names the branch it awaits, and its skip message says so,
 // as "awaits <branch>" or "dependency: <branch>" (@system_adamic, Oct 8: internal/oracle's TestEntriesAcceptance
 // skips with "acceptance dependency: codex/step12-entries-fixtures 8d864f9c", the same pending reason).
@@ -88,6 +99,30 @@ func CheckLogAwaiting(input io.Reader, output io.Writer, rows []Row, landed Land
 				}
 			}
 			candidates = matched
+		}
+		if found := awaitsInOutput.FindStringSubmatch(messages[k]); len(candidates) == 0 && found != nil {
+			target := found[1]
+			if strings.HasPrefix(target, "#") {
+				if reviewLane(event.Package, test) {
+					pending++
+					fmt.Fprintf(output, "pending-task\t%s\t%s\tawaits %s\n", event.Package, event.Test, target)
+					continue
+				}
+			} else if landed != nil {
+				on, err := landed(target)
+				switch {
+				case err != nil:
+					overdue++
+					fmt.Fprintf(output, "pending-unknown\t%s\t%s\tskip message\tawaits %s: %v\n", event.Package, event.Test, target, err)
+				case on:
+					overdue++
+					fmt.Fprintf(output, "pending-landed\t%s\t%s\tskip message\tawaits %s, which is on main, and the test still skips\n", event.Package, event.Test, target)
+				default:
+					pending++
+					fmt.Fprintf(output, "pending\t%s\t%s\tskip message\tawaits %s\n", event.Package, event.Test, target)
+				}
+				continue
+			}
 		}
 		if len(candidates) != 1 {
 			unknown++
