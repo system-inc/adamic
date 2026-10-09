@@ -254,10 +254,19 @@ func formatfilesSetupPort(t *testing.T, applied *mutant) string {
 	directory := formatfilesSetupDirectory(t)
 	port := filepath.Join(directory, "formatfiles")
 	gitignore := filepath.Join(directory, "gitignore")
-	for _, made := range []string{port, gitignore} {
+	config := filepath.Join(directory, "config")
+	for _, made := range []string{port, gitignore, config} {
 		if err := os.Mkdir(made, 0o755); err != nil {
 			t.Fatal(err)
 		}
+	}
+	// enumerate imports the shared config glob implementation.
+	contents, err := os.ReadFile("../config/glob.ts")
+	if err != nil {
+		t.Fatal(err)
+	}
+	if err := os.WriteFile(filepath.Join(config, "glob.ts"), contents, 0o644); err != nil {
+		t.Fatal(err)
 	}
 	for _, name := range gitignoreFiles {
 		contents, err := os.ReadFile(filepath.Join("..", "gitignore", name))

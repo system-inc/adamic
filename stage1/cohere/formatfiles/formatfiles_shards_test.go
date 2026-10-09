@@ -196,7 +196,7 @@ func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mut
 	}
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), fmt.Sprintf("C-sha256=%x", sha256.Sum256([]byte(source))))
 	inputs := buildcache.Inputs{Name: name,
-		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
+		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/config/glob.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		return formatfilesBuildNative(t, source, filepath.Join(directory, "port"), sanitize)
