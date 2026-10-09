@@ -1,0 +1,6 @@
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller","Action":"build-output","Output":"# github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller","Action":"build-output","Output":"package github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller: build constraints exclude all Go files in /workspace/adamic/stage1/cohere/lint/rules/no-caller\n"}
+{"ImportPath":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller","Action":"build-fail"}
+{"Time":"2026-10-09T12:33:26.768589685Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller"}
+{"Time":"2026-10-09T12:33:26.768757863Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller","Output":"FAIL\tgithub.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller [setup failed]\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:33:26.768771383Z","Action":"fail","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller","Elapsed":0,"FailedBuild":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-caller"}
