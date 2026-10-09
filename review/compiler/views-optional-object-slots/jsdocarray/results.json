@@ -1,0 +1,22 @@
+{
+  "base": "390cdc2905b66c915deec4068ded3c365d184d67",
+  "v3": "14690251f29b6f155c5d795be13eb420de00471a",
+  "predicatesMerge": "a1be057fc66b7c666282aa4fcfe56ffd93a4bb71",
+  "corpus": "8a7ab17e",
+  "bodies": 138,
+  "logicalProofs": 138,
+  "fullAdmissions": 0,
+  "pending": 138,
+  "changedRows": 0,
+  "firstFailures": {
+    "an unavailable checked union member contract for JSDocArray yet": 119,
+    "an unavailable checked union member contract for (node: EmitHelperUniqueNameCallback) => string yet": 16,
+    "an unavailable checked union member contract for NodeArray<Modifier> yet": 1,
+    "an unavailable checked union member contract for NodeArray<ModifierLike> yet": 1,
+    "checked union representation for HasJSDoc yet": 1
+  },
+  "compilerChanged": false,
+  "slice": "V5 intersections, plus augmented-array numeric-index/own-field composition",
+  "secondaryBoundary": "JSDoc.parent: HasJSDoc includes EndOfFileToken = Token<SyntaxKind.EndOfFileToken> & JSDocContainer; the intersection is the sole unknown representation member",
+  "goEvidence": "probe-hook.go.txt"
+}

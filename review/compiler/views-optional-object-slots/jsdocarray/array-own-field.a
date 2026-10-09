@@ -1,0 +1,14 @@
+interface JSDoc { readonly kind: "JSDoc"; }
+interface JSDocTag { readonly kind: "JSDocTag"; }
+interface JSDocArray extends Array<JSDoc> {
+    jsDocCache?: readonly JSDocTag[] | undefined;
+}
+const docs: JSDocArray = [{ kind: "JSDoc" }];
+console.log(`${docs[0]?.kind}`);
+console.log(`${Object.prototype.hasOwnProperty.call(docs, "jsDocCache")}`);
+docs.jsDocCache = undefined;
+console.log(`${Object.prototype.hasOwnProperty.call(docs, "jsDocCache")}`);
+console.log(`${docs.jsDocCache}`);
+docs.jsDocCache = [{ kind: "JSDocTag" }];
+console.log(`${docs.jsDocCache[0]?.kind}`);
+console.log(`${docs[0]?.kind}`);
