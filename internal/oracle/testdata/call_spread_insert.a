@@ -1,0 +1,18 @@
+const values: string[] = [];
+const base: readonly string[] = ['x'];
+console.log(`${values.push(...base)} ${values.join(',')}`);
+let calls = 0;
+function source(): string[] { calls++; console.log(`spread ${calls}`); return ['a', 'b']; }
+function after(): string { console.log(`after ${calls}`); return 'c'; }
+console.log(`${values.push('before', ...source(), after())} ${values.join(',')}`);
+console.log(`${values.unshift(...source(), after())} ${values.join(',')}`);
+console.log(`${values.push()} ${values.unshift()}`);
+const self: number[] = [1, 2];
+console.log(`${self.push(...self)} ${self.join(',')}`);
+const moving: number[] = [3, 4];
+function change(): number { moving[0] = 99; return 5; }
+const result: number[] = [];
+result.push(...moving, change());
+console.log(`${result.join(',')} ${moving.join(',')}`);
+function rest(...items: string[]): string { return items.join(':'); }
+console.log(rest('start', ...source(), after()));

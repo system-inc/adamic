@@ -1157,6 +1157,9 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 	if err != nil {
 		return nil, true, err
 	}
+	if name == "unshift" || name == "push" && (len(written) != 1 || written[0].Kind == ast.KindSpreadElement) {
+		return l.arrayInsertArguments(node, receiver, array, element, name, written)
+	}
 	if name == "sort" {
 		return l.arraySort(node, array, element)
 	}
@@ -1301,7 +1304,7 @@ func (l *lowering) arrayMethodArguments(node *ast.Node, receiver *ast.Node, name
 
 // arrayMethods are the array methods arrayMethod lowers, beside the visits.
 var arrayMethods = map[string]bool{
-	"push": true, "join": true, "slice": true, "sort": true, "map": true, "reduce": true,
+	"push": true, "unshift": true, "join": true, "slice": true, "sort": true, "map": true, "reduce": true,
 	"includes": true, "indexOf": true, "at": true, "reverse": true, "concat": true, "splice": true,
 	"fill": true,
 }

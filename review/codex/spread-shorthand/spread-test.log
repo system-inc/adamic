@@ -1,0 +1,13 @@
+=== RUN   TestCallSpreadInsert
+=== PAUSE TestCallSpreadInsert
+=== RUN   TestCallSpreadEvaluatedTwiceMutant
+=== PAUSE TestCallSpreadEvaluatedTwiceMutant
+=== CONT  TestCallSpreadInsert
+=== CONT  TestCallSpreadEvaluatedTwiceMutant
+--- PASS: TestCallSpreadEvaluatedTwiceMutant (0.34s)
+--- PASS: TestCallSpreadInsert (0.43s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=3
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.444s
