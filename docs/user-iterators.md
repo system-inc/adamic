@@ -35,20 +35,14 @@ with exit 70 until step 21 supplies catchable TypeError. The `.a` witnesses cont
 casts are refused before code generation. This unit does not claim their `.ts` backend proof.
 `Array.from` still does not accept `thisArg` or mappers with more than two parameters.
 
-## Generators need owned suspended frames
+## Synchronous generators
 
-Generators can fit reference counting without a collector, but not by keeping a C stack frame
-alive or materializing all yields. A future lowering needs a heap frame whose program counter
-and typed live slots form a discriminated state machine. Every value live across a suspension
-must be owned or proven immortal; a borrowed caller value cannot survive its caller. Captured
-locals and frame fields must enter the cycle analysis, including frames returned through erased
-iterator views. Frame destruction releases held values mechanically; it must not run user
-`finally` code, since JavaScript's garbage collection does not close an abandoned generator.
+Synchronous generators use ordinary counted heap frames, resume states and separate
+next, return and throw modes. Parameters, captures and this are owned at the call;
+defaults and destructuring run before the iterator is returned. Cancellation runs
+pending finally blocks, while dropping an iterator only frees its held values.
+Array, Set and known generator delegation retain the inner protocol state.
 
-`next`, `return`, and `throw` need explicit resume modes and pending completions. A generator can
-yield from `finally`, so `return` need not finish it. Delegating `yield*` needs its own iterator
-records and completion precedence. Reentrant resume must raise the same catchable failure as
-Node, rather than corrupt the frame. Each resume path must release exactly the slots it leaves
-and preserve the ones needed by a later resume. These rules require dedicated frame IR and
-ownership tests. Until that work exists, every `function*` and generator method is refused,
-including an empty generator with no `yield`. No collector is proposed as a fallback.
+The supported paths, explicit refusals and Node and ownership proofs are in
+[generators.md](generators.md). Async generators remain refused. A closure kept
+in a suspended frame must not create a strong cycle back to that frame.

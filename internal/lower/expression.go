@@ -581,6 +581,8 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		return observed, nil
 	}
 	switch node.Kind {
+	case ast.KindYieldExpression:
+		return l.generatorYield(node)
 	case ast.KindNullKeyword:
 		if l.result.JSONTaggedNull {
 			return ir.Box{Value: ir.Null{}}, nil

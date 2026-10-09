@@ -1,0 +1,43 @@
+{
+  "base": "54cbc125422d4e1d64c1ffe782445b2cbc2bc5b8",
+  "nproc": "5",
+  "cpu_max": "400000 100000",
+  "archive_sha256": "a3bcec1fae3f2d31b4c89ccaaab715a33f9b29883661e3c5f4b8cc91d9846d52",
+  "GOMAXPROCS": 4,
+  "ADAMIC_GATE_UNCACHED": 1,
+  "cache": "Each top-level group begins with an empty XDG_CACHE_HOME; shared builders reuse only artifacts keyed by test executable, sources, tools, flags, input bytes and overlays. Go toolchain cache is prepared separately.",
+  "tools": {
+    "go": {
+      "path": "/workspace/adamic-tools/go/bin/go",
+      "sha256": "30969f97169d7f43fe6a085873d75613adc21e30818a8c61d95bd27275df4624",
+      "version": "go version go1.27.1 linux/amd64"
+    },
+    "clang": {
+      "path": "/workspace/adamic-tools/llvm/bin/clang-20",
+      "sha256": "92a0ff2751ad344b94c7d30f53c56a71a5edfb6f867e7269a573e0e3f663786a",
+      "version": "clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)"
+    },
+    "node": {
+      "path": "/workspace/adamic-tools/bin/node",
+      "sha256": "bc17c508ffeed0ec622934f9b7fa72f8e78da65350e63c3eceb56fa688aa5e12",
+      "version": "v24.19.0"
+    },
+    "wasi_clang": {
+      "path": "/workspace/adamic-tools/wasi-sdk/bin/clang",
+      "sha256": "e78c818b321d834a20df5796afa9a9329dc53fd1f0a2597166c7a283b355be77",
+      "version": "clang version 20.1.8-wasi-sdk (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)"
+    }
+  },
+  "main": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "shared_helper": "64ea92b646560aabf79c182b449f6a68561e562f is not on main; swap one aliased import when landed",
+  "ordinary_gate_skips": [
+    "TestMeasureClangUnits",
+    "TestNormalizeLongMeasurements",
+    "TestRecordBenchmark"
+  ],
+  "scope": [
+    "internal/native",
+    "internal/javascript"
+  ],
+  "budget_policy": "Only reference audits with ADAMIC_UNIT_BUDGET=1 reject elapsed time; elsewhere they log it. Go units have no new 30-second deadlines."
+}

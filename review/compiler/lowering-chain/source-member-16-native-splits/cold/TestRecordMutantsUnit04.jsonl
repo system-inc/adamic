@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T06:04:50.271110686Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T06:04:50.279654231Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04"}
+{"Time":"2026-10-09T06:04:50.279749243Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04","Output":"=== RUN   TestRecordMutantsUnit04\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:50.279780871Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04","Output":"=== PAUSE TestRecordMutantsUnit04\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:50.279784366Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04"}
+{"Time":"2026-10-09T06:04:50.279788121Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04"}
+{"Time":"2026-10-09T06:04:50.279790705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04","Output":"=== CONT  TestRecordMutantsUnit04\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:50.279794231Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04/stored-key-freed"}
+{"Time":"2026-10-09T06:04:50.279798237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04/stored-key-freed","Output":"=== RUN   TestRecordMutantsUnit04/stored-key-freed\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:56.664967591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04/stored-key-freed","Output":"    record_test.go:244: caught by AddressSanitizer: heap-use-after-free\n"}
+{"Time":"2026-10-09T06:04:56.665203554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04/stored-key-freed","Output":"--- PASS: TestRecordMutantsUnit04/stored-key-freed (6.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:56.66521387Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04/stored-key-freed","Elapsed":6.39}
+{"Time":"2026-10-09T06:04:56.66523417Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04","Output":"--- PASS: TestRecordMutantsUnit04 (6.39s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:56.665237736Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit04","Elapsed":6.39}
+{"Time":"2026-10-09T06:04:56.665240219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:04:56.677055014Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t6.406s\n"}
+{"Time":"2026-10-09T06:04:56.677094763Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":6.406}

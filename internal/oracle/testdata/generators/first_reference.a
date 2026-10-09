@@ -1,0 +1,9 @@
+function* sent(): Generator<string,string,readonly string[]|undefined> {
+ const value=yield 'ready';
+ if(value) yield value[0] ?? 'missing';
+ return 'done';
+}
+const g=sent();
+console.log(`${g.next(['ignored']).value}`);
+console.log(`${g.next(['sent']).value}`);
+console.log(`${g.next().done}`);

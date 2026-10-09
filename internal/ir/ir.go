@@ -144,6 +144,8 @@ type Accessor struct {
 type Function struct {
 	// SourceLength is ECMAScript length: parameters before the first default or rest.
 	SourceLength int
+	Generator    *GeneratorTypes
+
 	// CheckedUnionNarrow marks a synthetic checked load so non-null assertions can use its stored input.
 	CheckedUnionNarrow bool
 	Name               string

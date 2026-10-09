@@ -290,3 +290,179 @@ func checkGrainBudget(t *testing.T) func() {
 		}
 	}
 }
+
+const randomRegexCases = 10000
+const randomRegexUnitSize = 250
+
+var splitCacheModes = []string{"0", "1"}
+var decodeTargets = []string{"native", "wasi"}
+
+type testShard struct{ index, count int }
+
+func parseTestShard(value string) (testShard, error) {
+	if value == "" {
+		return testShard{0, 1}, nil
+	}
+	parts := strings.Split(value, "/")
+	if len(parts) != 2 {
+		return testShard{}, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n with 0 <= i < n: %q", value)
+	}
+	index, firstError := strconv.Atoi(parts[0])
+	count, secondError := strconv.Atoi(parts[1])
+	if firstError != nil || secondError != nil || count < 1 || index < 0 || index >= count {
+		return testShard{}, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n with 0 <= i < n: %q", value)
+	}
+	return testShard{index, count}, nil
+}
+func currentTestShard(t *testing.T) testShard {
+	t.Helper()
+	shard, err := parseTestShard(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	return shard
+}
+func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
+
+// Empty shards have no observation to pass. Check ownership before shared setup
+// and before required checker or WASI inputs, which belong to owning shards.
+func requireNativeShard(t *testing.T, pieces int) {
+	t.Helper()
+	shard := currentTestShard(t)
+	// Piece numbers are consecutive from zero, so the first owned piece is index.
+	if shard.index >= pieces {
+		t.Skip("not applicable: ADAMIC_TEST_SHARD owns no native corpus pieces")
+	}
+}
+
+func TestShardSelection(t *testing.T) {
+	t.Parallel()
+	for _, value := range []string{"-1/2", "0/0", "2/2", "one/2", "0/2/3", "/2"} {
+		if _, err := parseTestShard(value); err == nil {
+			t.Errorf("invalid shard accepted: %q", value)
+		}
+	}
+	if shard, err := parseTestShard(""); err != nil || shard != (testShard{0, 1}) {
+		t.Fatalf("default shard: %+v %v", shard, err)
+	}
+}
+
+func runRegexPartitions(t *testing.T, cases []regexCase) {
+	t.Helper()
+	if len(cases) != randomRegexCases {
+		t.Fatalf("random regex corpus: got %d, want %d", len(cases), randomRegexCases)
+	}
+	shard := currentTestShard(t)
+	for index, piece := range unitRanges(len(cases), randomRegexUnitSize) {
+		if !shard.owns(index) {
+			continue
+		}
+		t.Run(piece.name(), func(t *testing.T) { runRegexCases(t, cases[piece.first:piece.last]) })
+	}
+}
+
+func TestRetainedSplitCoverage(t *testing.T) {
+	t.Parallel()
+	if randomRegexCases != 10000 || randomRegexUnitSize != 250 || len(unitRanges(randomRegexCases, randomRegexUnitSize)) != 40 {
+		t.Fatal("random regex units must partition all 10000 cases into 40 units of 250")
+	}
+	t.Run("shard_union", func(t *testing.T) {
+		for _, pieces := range []int{90, 40, 18, 36, 2, 6} {
+			for count := 1; count <= 100; count++ {
+				seen := make([]int, pieces)
+				for index := 0; index < count; index++ {
+					shard, err := parseTestShard(fmt.Sprintf("%d/%d", index, count))
+					if err != nil {
+						t.Fatal(err)
+					}
+					for piece := 0; piece < pieces; piece++ {
+						if shard.owns(piece) {
+							seen[piece]++
+						}
+					}
+				}
+				for piece, owners := range seen {
+					if owners != 1 {
+						t.Fatalf("piece %d of %d has %d owners across %d shards", piece, pieces, owners, count)
+					}
+				}
+			}
+		}
+	})
+	t.Run("decode_targets", func(t *testing.T) {
+		if strings.Join(decodeTargets, ",") != "native,wasi" {
+			t.Fatal("native and WASI decoder targets must both run")
+		}
+	})
+	t.Run("WASI", func(t *testing.T) {
+		if len(wasiFixtures) != 35 {
+			t.Fatalf("got %d WASI fixtures, want 35", len(wasiFixtures))
+		}
+		want := "a7207f91f36f405d152fc3e2be706f49eecd3dbd916c0c7f5f0ae3303a56497a"
+		if got := fmt.Sprintf("%x", sha256.Sum256([]byte(strings.Join(wasiFixtures, "\n")))); got != want {
+			t.Fatalf("WASI fixture membership changed: %s", got)
+		}
+	})
+	t.Run("split_cache", func(t *testing.T) {
+		if strings.Join(splitCacheModes, ",") != "0,1" {
+			t.Fatal("cached and bypass builds must both run")
+		}
+	})
+	t.Run("record_mutants", func(t *testing.T) {
+		if len(recordMutationCases) != 6 {
+			t.Fatalf("got %d record mutants, want 6", len(recordMutationCases))
+		}
+		seen := map[string]bool{}
+		for _, mutant := range recordMutationCases {
+			if seen[mutant.name] {
+				t.Fatalf("duplicate record mutant %s", mutant.name)
+			}
+			seen[mutant.name] = true
+		}
+	})
+}
+
+func TestRetainedTopLevelCoverage(t *testing.T) {
+	t.Parallel()
+	for _, plan := range []struct {
+		file, prefix, helper string
+		count                int
+	}{
+		{"regexp_test.go", "TestRegExpBytecodeRandomNodeUnit", "runRegExpBytecodeRandomNodeUnit", 40},
+		{"record_test.go", "TestRecordMutantsUnit", "runRecordMutantUnit", 6},
+		{"units_tsgo_test.go", "TestSplitTSGoAgreesUnit", "runSplitTSGoAgreesUnit", 2},
+		{"wasm_test.go", "TestWASIUnit", "runWASIUnit", 36},
+	} {
+		file, err := parser.ParseFile(token.NewFileSet(), plan.file, nil, 0)
+		if err != nil {
+			t.Fatal(err)
+		}
+		seen := make([]bool, plan.count)
+		for _, declaration := range file.Decls {
+			function, ok := declaration.(*ast.FuncDecl)
+			if !ok || !strings.HasPrefix(function.Name.Name, plan.prefix) {
+				continue
+			}
+			index, err := strconv.Atoi(strings.TrimPrefix(function.Name.Name, plan.prefix))
+			if err != nil || index < 0 || index >= plan.count || seen[index] {
+				t.Fatalf("invalid unit %s", function.Name.Name)
+			}
+			seen[index] = true
+			statement := function.Body.List[len(function.Body.List)-1].(*ast.ExprStmt)
+			call := statement.X.(*ast.CallExpr)
+			helper, ok := call.Fun.(*ast.Ident)
+			if !ok || helper.Name != plan.helper || len(call.Args) != 2 {
+				t.Fatalf("wrong helper in %s", function.Name.Name)
+			}
+			unit, ok := call.Args[1].(*ast.BasicLit)
+			if !ok || unit.Value != strconv.Itoa(index) {
+				t.Fatalf("wrong unit in %s", function.Name.Name)
+			}
+		}
+		for index, present := range seen {
+			if !present {
+				t.Errorf("missing %s%02d", plan.prefix, index)
+			}
+		}
+	}
+}

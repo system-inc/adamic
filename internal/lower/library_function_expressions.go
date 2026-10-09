@@ -13,9 +13,7 @@ func (l *lowering) functionExpression(node *ast.Node) (ir.Expression, error) {
 	if node.Body() == nil {
 		return nil, l.notYet(node, "a function without a body")
 	}
-	if node.Kind == ast.KindFunctionExpression && node.AsFunctionExpression().AsteriskToken != nil || node.Kind == ast.KindFunctionDeclaration && node.AsFunctionDeclaration().AsteriskToken != nil {
-		return nil, l.notYet(node, "a generator function expression")
-	}
+
 	if len(node.TypeParameters()) != 0 {
 		return nil, l.notYet(node, "a generic function expression")
 	}
