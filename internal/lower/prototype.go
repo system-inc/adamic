@@ -158,6 +158,9 @@ func (l *lowering) objectPrototypeCall(node, receiver *ast.Node, name string) (i
 	case ir.Array:
 		return l.arrayMethod(node, receiver, "join")
 	case ir.Object, ir.Map:
+		if l.libraryIteratorTagType(l.checker.GetTypeAtLocation(receiver)) {
+			return l.libraryIteratorString(value), true, nil
+		}
 		tag := "[object Object]"
 		if of == ir.Map {
 			tag = "[object Map]"
@@ -188,9 +191,13 @@ func (l *lowering) prototypeHazard(receiver *ast.Node, name string) string {
 		if reason != "" {
 			return true
 		}
-		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator")) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
+		if node.Kind == ast.KindObjectLiteralExpression || node.Kind == ast.KindRegularExpressionLiteral || (node.Kind == ast.KindCallExpression && (l.isLibraryType(l.checker.GetTypeAtLocation(node), "RegExp", "RegExpStringIterator") || l.libraryIteratorType(l.checker.GetTypeAtLocation(node)))) || node.Kind == ast.KindNewExpression || node.Kind == ast.KindArrayLiteralExpression || node.Kind == ast.KindArrowFunction || node.Kind == ast.KindNumericLiteral || node.Kind == ast.KindStringLiteral || node.Kind == ast.KindTrueKeyword || node.Kind == ast.KindFalseKeyword {
 			shape := l.checker.GetTypeAtLocation(node)
 			if l.checker.IsTypeAssignableTo(shape, view) {
+				if name != "valueOf" && l.libraryIteratorType(shape) && !l.libraryIteratorTagType(view) {
+					reason = "a built-in iterator tag may be hidden by the view"
+					return true
+				}
 				if l.isLibraryType(shape, "RegExp", "RegExpStringIterator") && !l.exactPlainObject(receiver) {
 					// Regex objects have intrinsic prototype behavior and metadata slots. A structural
 					// view cannot make those plain-object methods or own-property descriptors.
