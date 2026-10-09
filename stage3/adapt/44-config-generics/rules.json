@@ -1,0 +1,86 @@
+[
+  {
+    "id": "parseConfig",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function parseConfig(\n    json: any,",
+    "after": "function parseConfig<TRaw>(\n    json: TRaw,",
+    "reason": "Carry the caller raw root type to the next internal parser without pretending its fields have already been validated. ParsedTsconfig.raw remains its unchanged boundary contract."
+  },
+  {
+    "id": "S04",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function parseJsonConfigFileContentWorker(\n    json: any,",
+    "after": "function parseJsonConfigFileContentWorker<TRaw>(\n    json: TRaw,",
+    "reason": "Carry the caller raw root type to the next internal parser without pretending its fields have already been validated. ParsedTsconfig.raw remains its unchanged boundary contract."
+  },
+  {
+    "id": "S07",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertCompileOnSaveOptionFromJson(jsonOption: any,",
+    "after": "function convertCompileOnSaveOptionFromJson<T>(jsonOption: { compileOnSave?: T },",
+    "reason": "The caller supplies the raw compileOnSave property type; invalid values still reach the existing diagnostic conversion."
+  },
+  {
+    "id": "S10",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertCompilerOptionsFromJsonWorker(jsonOptions: any,",
+    "after": "function convertCompilerOptionsFromJsonWorker<TRaw>(jsonOptions: TRaw,",
+    "reason": "Preserve each caller raw input type without restricting it to normalized option values or JSON."
+  },
+  {
+    "id": "S11",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertTypeAcquisitionFromJsonWorker(jsonOptions: any,",
+    "after": "function convertTypeAcquisitionFromJsonWorker<TRaw>(jsonOptions: TRaw,",
+    "reason": "Preserve each caller raw input type without restricting it to normalized option values or JSON."
+  },
+  {
+    "id": "S12",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertWatchOptionsFromJsonWorker(jsonOptions: any,",
+    "after": "function convertWatchOptionsFromJsonWorker<TRaw>(jsonOptions: TRaw,",
+    "reason": "Preserve each caller raw input type without restricting it to normalized option values or JSON."
+  },
+  {
+    "id": "S13",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+    "after": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): WatchOptions | undefined;",
+    "reason": "Raw input is independent of normalized output. The default-options overload carries the actual caller family and includes the existing falsy-input undefined return."
+  },
+  {
+    "id": "S14",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition;",
+    "after": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]): CompilerOptions | TypeAcquisition | undefined;",
+    "reason": "Raw input is independent of normalized output. Falsy input returns undefined. The mutable default result remains the normalized family union, not an arbitrary subtype whose field literals may have been invalidated."
+  },
+  {
+    "id": "S15",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertOptionsFromJson(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: any, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+    "after": "function convertOptionsFromJson<TRaw>(optionsNameMap: Map<string, CommandLineOption>, jsonOptions: TRaw, basePath: string, defaultOptions: CompilerOptions | TypeAcquisition | WatchOptions | undefined, diagnostics: DidYouMeanOptionsDiagnostics, errors: Diagnostic[]) {",
+    "reason": "Raw input is independent of normalized output. The default-options overload carries the actual caller family and includes the existing falsy-input undefined return."
+  },
+  {
+    "id": "convertJsonOption",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "export function convertJsonOption(\n    opt: CommandLineOption,\n    value: any,",
+    "after": "export function convertJsonOption<TRaw>(\n    opt: CommandLineOption,\n    value: TRaw,",
+    "reason": "Internal @internal conversion receives the caller type; the existing predicate and runtime validation are unchanged."
+  },
+  {
+    "id": "convertJsonOptionOfListType",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "function convertJsonOptionOfListType(\n    option: CommandLineOptionOfListType,\n    values: readonly any[],",
+    "after": "function convertJsonOptionOfListType<TValues extends readonly unknown[]>(\n    option: CommandLineOptionOfListType,\n    values: TValues,",
+    "reason": "Carry the actual raw array type, including unions of arrays, into recursive element conversion. The existing output contract is not strengthened."
+  },
+  {
+    "id": "list-element-caller",
+    "file": "src/compiler/commandLineParser.ts",
+    "before": "return filter(map(values, (v, index) => convertJsonOption(option.element, v, basePath, errors, propertyAssignment, valueExpression?.elements[index], sourceFile)), v => option.listPreserveFalsyValues ? true : !!v);",
+    "after": "return filter(map<TValues[number], CompilerOptionsValue>(values, (v, index) => convertJsonOption(option.element, v, basePath, errors, propertyAssignment, valueExpression?.elements[index], sourceFile)), v => option.listPreserveFalsyValues ? true : !!v);",
+    "reason": "The map callback receives the exact caller array element union, rather than the unknown array constraint."
+  }
+]
