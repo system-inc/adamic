@@ -44,6 +44,12 @@ build       */go.sum
 # Stage 3's landing lane (tier 1, @system_adamic_typescript's inventory): stage3/test_apply.py, the
 # lane's own unit tests, go test ./stage3/..., and stage3/lane/run.sh (apply, then the upstream
 # suite and the sanctioned API check).
+# Two stage 3 trees nothing in the lane reads (@system_adamic_typescript, Oct 9, #d0fyhtn: apply runs only
+# adapt/*/adapt.cjs, and the lane's own tests and run.sh never open them): their Go packages' tests run for them
+# as for any package, and the rest is data no gate executes. They fired the 491 to 887 s lane on 5 of main's last
+# 100 landings.
+inert       stage3/fixtures/*
+inert       stage3/census/*
 stage3      stage3/*
 # The cohere submodule: every stage 1 package that reads it.
 cohere      cohere
@@ -365,6 +371,9 @@ reads internal/oracle oracle/node.mjs
 # TestWASIAgreesWithNode, TestWASIOracleCatchesMutants, TestWASIRunnerCatchesMutants, TestWASIEmission via onWASI — internal/oracle/wasi_test.go:59
 # TestWASIRunnerCatchesMutants — internal/oracle/wasi_test.go:101
 reads internal/oracle oracle/wasi.mjs
+# TestNonNullAdamicRefusal — internal/oracle/non_null_refusal_test.go:15 (found Oct 9 by #d0fyhtn's check; no line
+# named it, so an edit to it reran nothing that reads it)
+reads internal/oracle stage3/census/repro/r05/main.a
 # TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
 reads stage1/cohere/css *.[cC][sS][sS]
 # TestCSS and printer/profile tests via askedCases — stage1/cohere/css/testdata/cohere_side_test.go:119
