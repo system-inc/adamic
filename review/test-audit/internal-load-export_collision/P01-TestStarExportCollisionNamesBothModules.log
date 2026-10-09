@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:57:50.894208192Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:57:50.898657418Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:57:50.898725127Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== RUN   TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.898742368Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== PAUSE TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.898744493Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:57:50.898749732Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:57:50.898751439Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== CONT  TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.898794928Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"    export_collision_test.go:18: want exact refusal \"/tmp/adamic-gate/TestStarExportCollisionNamesBothModules435407646/001/main.a:2:1: error TS2308: Adamic 0.1 refuses export * collision for 'shared' between './left.a' and './right.a'; explicitly re-export one binding\", got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T09:57:50.898866591Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"--- FAIL: TestStarExportCollisionNamesBothModules (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.898869154Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Elapsed":0}
+{"Time":"2026-10-09T09:57:50.898882193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.89900203Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\tgithub.com/system-inc/adamic/internal/load\t0.005s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:50.89902147Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.005}

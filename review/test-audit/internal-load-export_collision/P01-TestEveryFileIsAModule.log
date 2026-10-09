@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:57:56.36490135Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:57:56.369661557Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:57:56.369726487Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== RUN   TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:56.369749219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== PAUSE TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:56.369751366Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:57:56.369754474Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:57:56.36975789Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== CONT  TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:56.36983793Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"--- PASS: TestEveryFileIsAModule (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:56.369841389Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Elapsed":0}
+{"Time":"2026-10-09T09:57:56.369851646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:56.369990853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.005s\n"}
+{"Time":"2026-10-09T09:57:56.370016624Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.005}

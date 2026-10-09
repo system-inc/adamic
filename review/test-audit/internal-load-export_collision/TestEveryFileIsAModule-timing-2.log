@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:59:37.860610368Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:59:37.864705523Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:59:37.86478504Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== RUN   TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:37.864809167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== PAUSE TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:37.864811726Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:59:37.864815835Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule"}
+{"Time":"2026-10-09T09:59:37.864818061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"=== CONT  TestEveryFileIsAModule\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:37.896997846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Output":"--- PASS: TestEveryFileIsAModule (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:37.897027142Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestEveryFileIsAModule","Elapsed":0.03}
+{"Time":"2026-10-09T09:59:37.897049374Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:37.897191901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.036s\n"}
+{"Time":"2026-10-09T09:59:37.897206921Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.037}

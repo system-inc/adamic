@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T10:00:08.63663245Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T10:00:08.641098786Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures"}
+{"Time":"2026-10-09T10:00:08.641193256Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures","Output":"=== RUN   TestNodeLibraryKeepsOfficialConsoleSignatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:00:08.641216224Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures","Output":"=== PAUSE TestNodeLibraryKeepsOfficialConsoleSignatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:00:08.641218677Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures"}
+{"Time":"2026-10-09T10:00:08.64122142Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures"}
+{"Time":"2026-10-09T10:00:08.641223296Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures","Output":"=== CONT  TestNodeLibraryKeepsOfficialConsoleSignatures\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:00:08.872319474Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures","Output":"--- PASS: TestNodeLibraryKeepsOfficialConsoleSignatures (0.23s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:00:08.872362738Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestNodeLibraryKeepsOfficialConsoleSignatures","Elapsed":0.23}
+{"Time":"2026-10-09T10:00:08.872385457Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:00:08.875130681Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.238s\n"}
+{"Time":"2026-10-09T10:00:08.875155518Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.239}

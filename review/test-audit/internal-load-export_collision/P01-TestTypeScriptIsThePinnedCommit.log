@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:58:07.252217345Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:58:07.256827755Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:58:07.256888483Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== RUN   TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:07.256915342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== PAUSE TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:07.256918038Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:58:07.256920596Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit"}
+{"Time":"2026-10-09T09:58:07.256922181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"=== CONT  TestTypeScriptIsThePinnedCommit\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:07.258903898Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Output":"--- PASS: TestTypeScriptIsThePinnedCommit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:07.25892335Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestTypeScriptIsThePinnedCommit","Elapsed":0}
+{"Time":"2026-10-09T09:58:07.258936969Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:58:07.259033785Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.006s\n"}
+{"Time":"2026-10-09T09:58:07.259065883Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.007}

@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:59:40.00956128Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:59:40.013893142Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther"}
+{"Time":"2026-10-09T09:59:40.013950632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther","Output":"=== RUN   TestAdamicFilesImportEachOther\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:40.014806393Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther","Output":"=== PAUSE TestAdamicFilesImportEachOther\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:40.014823507Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther"}
+{"Time":"2026-10-09T09:59:40.014826918Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther"}
+{"Time":"2026-10-09T09:59:40.01482905Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther","Output":"=== CONT  TestAdamicFilesImportEachOther\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:40.072745478Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther","Output":"--- PASS: TestAdamicFilesImportEachOther (0.06s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:40.072777657Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestAdamicFilesImportEachOther","Elapsed":0.06}
+{"Time":"2026-10-09T09:59:40.07279406Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:40.073705009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.064s\n"}
+{"Time":"2026-10-09T09:59:40.073733909Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.064}

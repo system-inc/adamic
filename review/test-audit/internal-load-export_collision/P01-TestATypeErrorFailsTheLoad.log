@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:57:54.207473696Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:57:54.212538802Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:57:54.212615508Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== RUN   TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212640763Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== PAUSE TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212643241Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:57:54.212645694Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:57:54.212647365Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== CONT  TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212650181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"    load_test.go:90: Load: want a CheckError, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T09:57:54.212702787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"--- FAIL: TestATypeErrorFailsTheLoad (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212721899Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Elapsed":0}
+{"Time":"2026-10-09T09:57:54.21274253Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212876313Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"FAIL\tgithub.com/system-inc/adamic/internal/load\t0.005s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:54.212901633Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.005}

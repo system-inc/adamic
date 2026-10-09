@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:59:31.167849681Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:59:31.172554609Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:59:31.172633266Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== RUN   TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:31.172659671Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== PAUSE TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:31.172662777Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:59:31.172666163Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad"}
+{"Time":"2026-10-09T09:59:31.172668413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"=== CONT  TestATypeErrorFailsTheLoad\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:31.206154879Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Output":"--- PASS: TestATypeErrorFailsTheLoad (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:31.206178743Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestATypeErrorFailsTheLoad","Elapsed":0.03}
+{"Time":"2026-10-09T09:59:31.206199911Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:31.206266963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.038s\n"}
+{"Time":"2026-10-09T09:59:31.206293064Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.038}

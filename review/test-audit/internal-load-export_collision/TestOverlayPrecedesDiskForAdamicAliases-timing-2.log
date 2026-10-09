@@ -1,0 +1,28 @@
+{"Time":"2026-10-09T09:59:55.149724706Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:59:55.154030024Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases"}
+{"Time":"2026-10-09T09:59:55.154097872Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases","Output":"=== RUN   TestOverlayPrecedesDiskForAdamicAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.15412357Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases","Output":"=== PAUSE TestOverlayPrecedesDiskForAdamicAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154126005Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases"}
+{"Time":"2026-10-09T09:59:55.154131178Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases"}
+{"Time":"2026-10-09T09:59:55.154132939Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases","Output":"=== CONT  TestOverlayPrecedesDiskForAdamicAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154134947Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts"}
+{"Time":"2026-10-09T09:59:55.154136854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts","Output":"=== RUN   TestOverlayPrecedesDiskForAdamicAliases/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154139163Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts","Output":"=== PAUSE TestOverlayPrecedesDiskForAdamicAliases/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154140673Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts"}
+{"Time":"2026-10-09T09:59:55.15414264Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a"}
+{"Time":"2026-10-09T09:59:55.154144138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a","Output":"=== RUN   TestOverlayPrecedesDiskForAdamicAliases/.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154146134Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a","Output":"=== PAUSE TestOverlayPrecedesDiskForAdamicAliases/.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154147554Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a"}
+{"Time":"2026-10-09T09:59:55.154149432Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts"}
+{"Time":"2026-10-09T09:59:55.154150864Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts","Output":"=== CONT  TestOverlayPrecedesDiskForAdamicAliases/.ts\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.154154079Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a"}
+{"Time":"2026-10-09T09:59:55.154155617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a","Output":"=== CONT  TestOverlayPrecedesDiskForAdamicAliases/.a\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.246637948Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts","Output":"--- PASS: TestOverlayPrecedesDiskForAdamicAliases/.ts (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.247342417Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.ts","Elapsed":0.09}
+{"Time":"2026-10-09T09:59:55.247362278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a","Output":"--- PASS: TestOverlayPrecedesDiskForAdamicAliases/.a (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.247376191Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases/.a","Elapsed":0.09}
+{"Time":"2026-10-09T09:59:55.247378807Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases","Output":"--- PASS: TestOverlayPrecedesDiskForAdamicAliases (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.247381857Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestOverlayPrecedesDiskForAdamicAliases","Elapsed":0}
+{"Time":"2026-10-09T09:59:55.247383952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:55.248728611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.099s\n"}
+{"Time":"2026-10-09T09:59:55.248740943Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.099}

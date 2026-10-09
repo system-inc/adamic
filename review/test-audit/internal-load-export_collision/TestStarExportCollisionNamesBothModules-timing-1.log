@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:59:20.146768964Z","Action":"start","Package":"github.com/system-inc/adamic/internal/load"}
+{"Time":"2026-10-09T09:59:20.150981522Z","Action":"run","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:59:20.151076442Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== RUN   TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:20.151098928Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== PAUSE TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:20.151101519Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:59:20.151106996Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules"}
+{"Time":"2026-10-09T09:59:20.151109326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"=== CONT  TestStarExportCollisionNamesBothModules\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:20.182000685Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Output":"--- PASS: TestStarExportCollisionNamesBothModules (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:20.182024353Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Test":"TestStarExportCollisionNamesBothModules","Elapsed":0.03}
+{"Time":"2026-10-09T09:59:20.182045632Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:59:20.182157152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/load","Output":"ok  \tgithub.com/system-inc/adamic/internal/load\t0.035s\n"}
+{"Time":"2026-10-09T09:59:20.182185846Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/load","Elapsed":0.035}

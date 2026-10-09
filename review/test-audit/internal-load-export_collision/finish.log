@@ -1,0 +1,15 @@
+TestStarExportCollisionNamesBothModules {'runs': [0.035, 0.038, 0.036], 'median': 0.036, 'source': 'test binary ok line, package Elapsed'}
+TestExplicitExportResolvesStarCollision {'runs': [0.035, 0.039, 0.041], 'median': 0.039, 'source': 'test binary ok line, package Elapsed'}
+TestDeclarationsCarryTheirProvenTypes {'runs': [0.039, 0.038, 0.04], 'median': 0.039, 'source': 'test binary ok line, package Elapsed'}
+TestATypeErrorFailsTheLoad {'runs': [0.037, 0.038, 0.039], 'median': 0.038, 'source': 'test binary ok line, package Elapsed'}
+TestAdamicOptionsAreOn {'runs': [0.078, 0.075, 0.076], 'median': 0.076, 'source': 'test binary ok line, package Elapsed'}
+TestEveryFileIsAModule {'runs': [0.035, 0.037, 0.038], 'median': 0.037, 'source': 'test binary ok line, package Elapsed'}
+TestAdamicFilesImportEachOther {'runs': [0.064, 0.064, 0.063], 'median': 0.064, 'source': 'test binary ok line, package Elapsed'}
+TestThePreludeDeclaresConsoleAndPanic {'runs': [0.066, 0.067, 0.065], 'median': 0.066, 'source': 'test binary ok line, package Elapsed'}
+TestLoadRefusesWhatIsNotAdamic {'runs': [0.006, 0.007, 0.007], 'median': 0.007, 'source': 'test binary ok line, package Elapsed'}
+TestTheProgramsInTheSpecLoad {'runs': [0.291, 0.339, 0.304], 'median': 0.304, 'source': 'test binary ok line, package Elapsed'}
+TestOverlayPrecedesDiskForAdamicAliases {'runs': [0.092, 0.099, 0.089], 'median': 0.092, 'source': 'test binary ok line, package Elapsed'}
+TestHouseStyleOptionsDoNotRejectValidControlFlow {'runs': [0.078, 0.08, 0.081], 'median': 0.08, 'source': 'test binary ok line, package Elapsed'}
+TestNodeLibraryUsesPinnedDeclarations {'runs': [0.472, 0.478, 0.443], 'median': 0.472, 'source': 'test binary ok line, package Elapsed'}
+TestNodeLibraryRejectsDifferentVersion {'runs': [0.005, 0.005, 0.005], 'median': 0.005, 'source': 'test binary ok line, package Elapsed'}
+TestNodeLibraryKeepsOfficialConsoleSignatures {'runs': [0.239, 0.248, 0.249], 'median': 0.248, 'source': 'test binary ok line, package Elapsed'}
