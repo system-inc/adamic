@@ -1,0 +1,194 @@
+run adamic-verify-20261009T152641-05f0fdee: void, 24887 tests in 613 units, 8 failed, 3 units broken, 0 killed over budget
+AGAIN tests-00: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-02: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-03: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-04: from run adamic-verify-again-20261009T181154-bab66a95
+AGAIN tests-05: from run adamic-verify-again-20261009T181154-bab66a95
+AGAIN tests-08: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-09: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-10: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-11: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-12: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-15: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-16: from run adamic-verify-again-20261009T181154-bab66a95
+AGAIN tests-17: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-18: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-19: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-20: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-21: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-24: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-25: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-27: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-28: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-31: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-32: from run adamic-verify-again-20261009T163220-ddc9053a
+AGAIN tests-35: from run adamic-verify-again-20261009T163220-ddc9053a
+BROKEN tests-04: no results (exited false, last output "")
+BROKEN tests-05: no results (exited false, last output "")
+BROKEN tests-16: no results (exited false, last output "")
+PRODUCT OVER 60 S product-02 github.com/system-inc/adamic/bridge/tsgo TestProduct_LeakArchive: 404 s
+PRODUCT OVER 60 S product-03 github.com/system-inc/adamic/bridge/tsgo TestProduct_LeakDriver: 129 s
+PRODUCT OVER 60 S product-07 github.com/system-inc/adamic/bridge/tsgo TestProduct_Native: 297 s
+PRODUCT OVER 60 S product-09 github.com/system-inc/adamic/bridge/tsgo TestProduct_RegionNative: 543 s
+PRODUCT OVER 60 S product-13 github.com/system-inc/adamic/bridge/tsgo TestProduct_StaleArchive: 295 s
+PRODUCT OVER 60 S product-15 github.com/system-inc/adamic/bridge/tsgo TestProduct_TsgoArchive: 124 s
+PRODUCT OVER 60 S product-17 github.com/system-inc/adamic/bridge/tsgo TestProduct_WrongArchive: 1481 s
+PRODUCT OVER 60 S product-18 github.com/system-inc/adamic/bridge/tsgo TestProduct_WrongNative: 141 s
+PRODUCT OVER 60 S product-21 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSCompositionLowered: 226 s
+PRODUCT OVER 60 S product-27 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSParserCorpus: 260 s
+PRODUCT OVER 60 S product-33 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSParserParserNative: 205 s
+PRODUCT OVER 60 S product-38 github.com/system-inc/adamic/stage1/cohere/css TestProduct_CSSPrinterSanitizedAndLowered: 218 s
+PRODUCT OVER 60 S product-52 github.com/system-inc/adamic/stage1/cohere/cssstrings TestProduct_CSSStringsFastNative: 166 s
+PRODUCT OVER 60 S product-72 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_DeepMutantsLowered0: 184 s
+PRODUCT OVER 60 S product-77 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_DeepMutantsNative2: 164 s
+PRODUCT OVER 60 S product-82 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_RecoveryMutantsLowered1: 185 s
+PRODUCT OVER 60 S product-86 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_RecoveryMutantsNative2: 63 s
+PRODUCT OVER 60 S product-91 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantLowered_001: 195 s
+PRODUCT OVER 60 S product-93 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_SyntaxMutantNative_000: 149 s
+PRODUCT OVER 60 S product-103 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative0: 179 s
+PRODUCT OVER 60 S product-105 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortNative2: 61 s
+PRODUCT OVER 60 S product-106 github.com/system-inc/adamic/stage1/cohere/estree TestProduct_ThreePortOracle: 178 s
+PRODUCT OVER 60 S product-114 github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNative: 145 s
+PRODUCT OVER 60 S product-122 github.com/system-inc/adamic/stage1/cohere/formatfiles TestProduct_FormatfilesNativeQuoteDEL: 165 s
+PRODUCT OVER 60 S product-139 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterDefaults: 154 s
+PRODUCT OVER 60 S product-143 github.com/system-inc/adamic/stage1/cohere/graphql/printer TestProduct_GraphQLPrinterOracle: 63 s
+PRODUCT OVER 60 S product-153 github.com/system-inc/adamic/stage1/cohere/json TestProduct_JSONUpstreamOracle: 174 s
+PRODUCT OVER 60 S product-155 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementLowered: 88 s
+PRODUCT OVER 60 S product-156 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementReleaseNative: 95 s
+PRODUCT OVER 60 S product-157 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompilerAgreementSanitizedNative: 301 s
+PRODUCT OVER 60 S product-160 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_CompleteSuggestionMutantLowered: 155 s
+PRODUCT OVER 60 S product-162 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_DecodedOptionsGoOracle: 83 s
+PRODUCT OVER 60 S product-173 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintOwnedWitnessesLowered: 93 s
+PRODUCT OVER 60 S product-174 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_LintOwnedWitnessesSanitized: 86 s
+PRODUCT OVER 60 S product-176 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableEmitted: 110 s
+PRODUCT OVER 60 S product-178 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_NodeTableNative: 190 s
+PRODUCT OVER 60 S product-180 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationC: 81 s
+PRODUCT OVER 60 S product-183 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationLowered: 165 s
+PRODUCT OVER 60 S product-185 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationOracleOutputs: 332 s
+PRODUCT OVER 60 S product-186 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationProfiled: 93 s
+PRODUCT OVER 60 S product-187 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ProfileCompilationScanner: 84 s
+PRODUCT OVER 60 S product-188 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_RulesAgreeOracle: 84 s
+PRODUCT OVER 60 S product-190 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeLowered: 255 s
+PRODUCT OVER 60 S product-191 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreeNative: 316 s
+PRODUCT OVER 60 S product-193 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_ShardsAgreePrepared: 118 s
+PRODUCT OVER 60 S product-197 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_WitnessScriptKindGoOracle: 65 s
+PRODUCT OVER 60 S product-204 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_jsx_tree_native: 236 s
+PRODUCT OVER 60 S product-205 github.com/system-inc/adamic/stage1/cohere/lint TestProduct_jsx_tree_setup: 132 s
+PRODUCT OVER 60 S product-214 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownLeafNativeSanitized: 77 s
+PRODUCT OVER 60 S product-222 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownQuote_native_true: 75 s
+PRODUCT OVER 60 S product-226 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownStructure_native: 74 s
+PRODUCT OVER 60 S product-228 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTable_list: 200 s
+PRODUCT OVER 60 S product-232 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownTextFormatter: 176 s
+PRODUCT OVER 60 S product-238 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_layout: 208 s
+PRODUCT OVER 60 S product-241 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_manifest: 78 s
+PRODUCT OVER 60 S product-243 github.com/system-inc/adamic/stage1/cohere/markdownblocks TestProduct_MarkdownWhitespace_native_true: 66 s
+PRODUCT OVER 60 S product-256 github.com/system-inc/adamic/stage1/cohere/markdowninline TestProduct_MarkdownInlineOriginalLowered: 146 s
+PRODUCT OVER 60 S product-273 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterExpressionsSanitized: 221 s
+PRODUCT OVER 60 S product-276 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_001: 191 s
+PRODUCT OVER 60 S product-277 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_002: 161 s
+PRODUCT OVER 60 S product-280 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_005: 204 s
+PRODUCT OVER 60 S product-284 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_009: 160 s
+PRODUCT OVER 60 S product-288 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_013: 196 s
+PRODUCT OVER 60 S product-295 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_020: 393 s
+PRODUCT OVER 60 S product-296 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantNative_021: 140 s
+PRODUCT OVER 60 S product-310 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantOracle_006: 210 s
+PRODUCT OVER 60 S product-314 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantOracle_010: 192 s
+PRODUCT OVER 60 S product-326 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterMutantOracle_022: 237 s
+PRODUCT OVER 60 S product-339 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsEmbedded_005: 172 s
+PRODUCT OVER 60 S product-348 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsEmbedded_014: 164 s
+PRODUCT OVER 60 S product-353 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_002: 64 s
+PRODUCT OVER 60 S product-359 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_008: 79 s
+PRODUCT OVER 60 S product-363 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsNPM_012: 149 s
+PRODUCT OVER 60 S product-367 github.com/system-inc/adamic/stage1/cohere/tsprinter TestProduct_TSPrinterStatementsRelease: 216 s
+PRODUCT OVER 60 S product-374 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_checker: 126 s
+PRODUCT OVER 60 S product-378 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_native_asan: 182 s
+PRODUCT OVER 60 S product-380 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_corpus_record: 65 s
+PRODUCT OVER 60 S product-386 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native: 156 s
+PRODUCT OVER 60 S product-387 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_controls_native_asan: 60 s
+PRODUCT OVER 60 S product-389 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_binding_slot: 164 s
+PRODUCT OVER 60 S product-393 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_query_cost_native: 127 s
+PRODUCT OVER 60 S product-397 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_suite: 150 s
+PRODUCT OVER 60 S product-398 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_suite_asan: 136 s
+PRODUCT OVER 60 S product-401 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_type_symbol_native: 88 s
+PRODUCT OVER 60 S product-405 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_typeaware_native: 142 s
+PRODUCT OVER 60 S product-406 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_typeaware_native_asan: 818 s
+PRODUCT OVER 60 S product-410 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_archive_checker: 295 s
+PRODUCT OVER 60 S product-412 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_assignable_types: 280 s
+PRODUCT OVER 60 S product-413 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_assignable_types_native: 265 s
+PRODUCT OVER 60 S product-414 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_base_shapes: 139 s
+PRODUCT OVER 60 S product-419 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_call_parameters_native: 322 s
+PRODUCT OVER 60 S product-422 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_contextual_shape: 132 s
+PRODUCT OVER 60 S product-425 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_enum_types_native: 264 s
+PRODUCT OVER 60 S product-427 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_info: 144 s
+PRODUCT OVER 60 S product-428 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_info_native: 124 s
+PRODUCT OVER 60 S product-430 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_property_shape_native: 161 s
+PRODUCT OVER 60 S product-433 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_released_registry_native: 123 s
+PRODUCT OVER 60 S product-435 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_scope_locals: 294 s
+PRODUCT OVER 60 S product-437 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_symbol_origin: 279 s
+PRODUCT OVER 60 S product-438 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_symbol_origin_native: 268 s
+PRODUCT OVER 60 S product-440 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_agreement_type_origin_native: 157 s
+PRODUCT OVER 60 S product-448 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_archive_strict_this_checker: 123 s
+PRODUCT OVER 60 S product-449 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_oracle: 187 s
+PRODUCT OVER 60 S product-451 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_strict_this_native: 62 s
+PRODUCT OVER 60 S product-452 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume: 339 s
+PRODUCT OVER 60 S product-453 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_guard_volume_asan: 79 s
+PRODUCT OVER 60 S product-455 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_native: 274 s
+PRODUCT OVER 60 S product-456 github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_volume_native_asan: 61 s
+PRODUCT OVER 60 S product-460 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant000Sources: 165 s
+PRODUCT OVER 60 S product-465 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant002Native: 168 s
+PRODUCT OVER 60 S product-471 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant004Native: 204 s
+PRODUCT OVER 60 S product-472 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YAMLFormatterMutant004Sources: 175 s
+PRODUCT OVER 60 S product-479 github.com/system-inc/adamic/stage1/cohere/yaml TestProduct_YamlScalarsNative: 175 s
+PRODUCT OVER 60 S product-489 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_ExpressionsNative003: 99 s
+PRODUCT OVER 60 S product-493 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_ExpressionsSource003: 146 s
+PRODUCT OVER 60 S product-494 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_JsxMutantsLower_000: 194 s
+PRODUCT OVER 60 S product-495 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_JsxMutantsLower_001: 296 s
+PRODUCT OVER 60 S product-508 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_JsxMutantsNative_004: 195 s
+PRODUCT OVER 60 S product-511 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_JsxMutantsNative_007: 183 s
+PRODUCT OVER 60 S product-518 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_ParserOracle: 167 s
+PRODUCT OVER 60 S product-524 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_WholeMutantsNative_001: 193 s
+PRODUCT OVER 60 S product-525 github.com/system-inc/adamic/stage1/typescript/parser TestProduct_WholeMutantsNative_002: 254 s
+PRODUCT OVER 60 S product-527 github.com/system-inc/adamic/stage1/typescript/scanner TestProduct_ScannerDecimalSeparator: 166 s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestShadowIndexMissingBinding_000 (tests-07)
+    profile_test.go:56: checker: exit status 1
+    # github.com/system-inc/adamic/bridge/tsgo/archive
+    /home/agent/.adamic-tools/go/pkg/tool/linux_amd64/link: running ar failed: exit status 1
+    ar: $WORK/b001/exe/a.out.a: error reading /tmp/adamic-gate/go-link-1739863496/go.o: No space left on device
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_029 (tests-07)
+    six_top_shards_test.go:36: shared shard setup did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_065 (tests-07)
+    six_top_shards_test.go:72: shared shard setup did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_Setup (tests-07)
+    shared_test.go:88: phase command stage0 7.613782s
+    typeaware_budget_test.go:47: shared-setup product=stage0 elapsed_s=9.579789
+    typeaware_test.go:159: phase command checker 227.031640s
+    typeaware_budget_test.go:54: checker: exit status 1
+    # github.com/system-inc/adamic/bridge/tsgo/archive
+    /home/agent/.adamic-tools/go/pkg/tool/linux_amd64/link: running ar failed: exit status 1
+    ar: $WORK/b001/exe/a.out.a: error reading /tmp/adamic-gate/go-link-1739863496/go.o: No space left on device
+    typeaware_budget_test.go:47: shared-setup product=checker elapsed_s=228.801696
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_003 (tests-07)
+    typeaware_budget_test.go:47: shared-setup product=stage0 elapsed_s=0.000002
+    typeaware_budget_test.go:54: checker-asan: exit status 1
+    # github.com/system-inc/adamic/bridge/tsgo/archive
+    compile: writing output: write $WORK/b001/_pkg_.a: no space left on device
+    typeaware_budget_test.go:47: shared-setup product=checker-asan elapsed_s=0.000036
+    shared_test.go:170: phase group TestTypeAwareAgreementAndMutants_003 0.000099s
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestTypeAwareAgreementAndMutants_Setup (tests-07)
+    setup_deadline_typeaware_test.go:16: shared shard setup did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml (package) (tests-14)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/yaml	90.083s
+FAIL github.com/system-inc/adamic/stage1/cohere/estree TestAcceptanceMutantsPlanted_001 (tests-25)
+    acceptance_grain_test.go:279: isolated planted proof:
+    acceptance_grain_test.go:111: build estree-acceptance-mutants-go-oracle 1c7456d58eb3 hit 1.53
+    acceptance_grain_test.go:130: build estree-acceptance-mutant-lowered-class-keyword-name 27b7fd52ad59 miss 47.92
+    acceptance_grain_test.go:279: TestAcceptanceMutants_001 exceeded child deadline: context deadline exceeded
+BROKEN tests-04 on 2 placements, workers: b77946b5d182, aa624b5237fc
+BROKEN tests-05 on 2 placements, workers: d9a51227ce19, 419c0c0b9fab
+BROKEN tests-16 on 2 placements, workers: d08c77d4efcd, 1b945d0fb2e7
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0, requested 1 of: TestVolume (tests-06)
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0, requested 1 of: TestParentExtra (tests-07)
+FAIL github.com/system-inc/adamic/stage1/cohere/yaml requested tests ran: 0, requested 3 of: TestFileDriver_001, TestSchemaMutants (tests-14)
+FAIL github.com/system-inc/adamic/stage3/census/latent/refusalrewrite requested tests ran: 0, requested 1 of: TestBehavior (tests-17)
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0, requested 1 of: TestOther (tests-28)
+FAIL github.com/system-inc/adamic/cmd/adamic-gate requested tests ran: 0, requested 1 of: TestParent (tests-32)
