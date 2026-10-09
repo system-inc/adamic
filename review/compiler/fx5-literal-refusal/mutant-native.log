@@ -1,0 +1,8 @@
+=== RUN   TestFX5NumberLiteralRefused
+=== PAUSE TestFX5NumberLiteralRefused
+=== CONT  TestFX5NumberLiteralRefused
+    fx5_literal_test.go:14: Native backend stdout = "", source Node = "number 1\n"
+--- FAIL: TestFX5NumberLiteralRefused (0.83s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.853s
+FAIL

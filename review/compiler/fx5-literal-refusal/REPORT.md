@@ -1,5 +1,5 @@
 Built a narrow destination-layout refusal for nonempty union-array literals and three lowering regression leaves toward task #8ng1j76, item 130.
-Commit: see branch compiler/fx5-literal-refusal HEAD.
+Implementation commit: 5f466b83; evidence commit: see branch compiler/fx5-literal-refusal HEAD.
 Validation: focused fixtures, TestCallTargetReaders, full internal/lower, counts refresh and integration lane checks; outputs are beside this report.
 Mutant: remove the refusal; the refusal fixture fails on nil error, and the compiled native oracle fails on empty stdout versus Node's number 1.
 Not covered: actual conversion into declared union layout; no verified integration q12 cancellation witness found.
@@ -25,6 +25,8 @@ Commands (all test output saved directly to files):
 
 The checkout fetch refspec initially populated only main, so explicit remote-tracking refspecs were needed for origin/devtools/fast-gate and origin/cloud/merge-tree. No other worker's branch was merged. Only object.go, the new lowering test, and review evidence were changed. No cohere code was copied.
 
-The first full lowering run failed on missing @types/node declarations. Installed stage3/api locked dependencies with timeout 120 npm ci --ignore-scripts, then reran the full package. Initial counts refresh timed out at 90 seconds while traversing the existing corpus; reran with a bounded 9-minute test timeout. These setup failures are preserved in lower-missing-node-types.json, node-types-setup.log and counts-timeout.log.
+The first full lowering run failed on missing @types/node declarations. Installed stage3/api locked dependencies with timeout 120 npm ci --ignore-scripts, then reran the full package. Initial counts refresh timed out at 90 seconds while traversing the existing corpus; reran with a bounded 9-minute test timeout. These setup failures are preserved in lower-missing-node-types.json.gz, node-types-setup.log and counts-timeout.log.
 
 Final full internal/lower: PASS, 100.533s. New leaves: TestFX5NumberLiteralRefused 0.16s; TestFX5NumberValueRefused 0.23s; TestFX5MixedLiteralAgrees 1.76s. TestCallTargetReaders: PASS, 44.415s including its package compilation. The mixed control prints number 1 and string a on source Node and both backends.
+
+Counts refresh: PASS, 130.373s; counts.md unchanged because the new fixtures are lowering test sources. Integration lane checks: PASS: lane checks 8.6 s: gofmt and tools on 2 Go files, t.Parallel on 1 test packages; vet 1 packages. Full lowering outputs are in lower-full.json.gz. The revert diff passed git apply --check.
