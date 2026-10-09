@@ -176,6 +176,7 @@ func firstDifference(a, b []byte) string {
 	return fmt.Sprintf("lengths %d and %d", len(a), len(b))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestLexerMatchesGo(t *testing.T) {
 	cases, files, count := lexCases(t)
 	expected := goLexer(t, cases)
@@ -220,6 +221,7 @@ func TestLexerMatchesGo(t *testing.T) {
 	t.Logf("%d repository files; %d complete/chunked cases; %d answer bytes: Go, native, Node source, emitted JavaScript, yaml 2.9.0 identical", files, count, len(expected))
 }
 
+// Not parallel: native.Build writes the shared user cache (adamic/runtime or adamic/units); fixed filenames in ADAMIC_YAML_ARTIFACTS.
 func TestLexerMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goLexer(t, cases)
