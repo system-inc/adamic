@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -31,7 +31,7 @@
+ // (Node says "17.0" for 17.0.0).
+ const (
+ 	Version            = "17.0.0"
+-	NodeUnicodeVersion = "17.0"
++	NodeUnicodeVersion = "16.0"
+ )
+ 
+ // Range is an inclusive interval of code points. A Set's ranges are sorted,

@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -172,7 +172,7 @@
+ 	if p, ok := codePoint(binaryNames, expression); ok {
+ 		return p, true
+ 	}
+-	if unicodeSets {
++	if !unicodeSets {
+ 		if s, ok := stringProperties[expression]; ok {
+ 			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences}, true
+ 		}

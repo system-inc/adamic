@@ -1,0 +1,19 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -24,7 +24,7 @@
+ // fails when the Node the oracle runs has moved to a different Unicode version.
+ //go:generate go run generate.go
+ 
+-import "sort"
++import ("sort"; "os")
+ 
+ // Version is the Unicode Character Database version these tables were built from.
+ // NodeUnicodeVersion is what process.versions.unicode prints for that version
+@@ -146,6 +146,7 @@
+ // different set. A binary property is only the bare name ("White_Space",
+ // "space", "WSpace"), never "White_Space=Yes".
+ func Lookup(expression string, unicodeSets bool) (Property, bool) {
++ if os.Getenv("ADAMIC_MUTANT")=="P01" {return Property{}, false}
+ 	if !expressionOK(expression) {
+ 		return Property{}, false
+ 	}

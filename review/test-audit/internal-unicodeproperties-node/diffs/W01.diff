@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/canonicalize_test.go
++++ b/internal/unicodeproperties/canonicalize_test.go
+@@ -806,7 +806,7 @@
+ func reportDisagreements(t *testing.T, disagreements []string) {
+ 	t.Helper()
+ 	const limit = 80
+-	for index, problem := range disagreements {
++	for index, problem := range disagreements[:0] {
+ 		if index == limit {
+ 			t.Errorf("and %d more disagreements", len(disagreements)-limit)
+ 			return

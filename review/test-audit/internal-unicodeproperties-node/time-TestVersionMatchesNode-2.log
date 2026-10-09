@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T11:29:20.372380735Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T11:29:20.37497994Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:29:20.375070849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== RUN   TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:20.375112684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== PAUSE TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:20.37511678Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:29:20.375125843Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:29:20.375128704Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== CONT  TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:20.412803135Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"--- PASS: TestVersionMatchesNode (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:20.412843211Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Elapsed":0.04}
+{"Time":"2026-10-09T11:29:20.412867846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:20.4130325Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.040s\n"}
+{"Time":"2026-10-09T11:29:20.413049994Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":0.041}

@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/tables.go
++++ b/internal/unicodeproperties/tables.go
+@@ -25709,7 +25709,7 @@
+ }
+ 
+ var sequences_Basic_Emoji = []string{
+-	"©️",
++	"A",
+ 	"®️",
+ 	"‼️",
+ 	"⁉️",

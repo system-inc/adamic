@@ -1,0 +1,82 @@
+{"Time":"2026-10-09T11:33:06.466320957Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T11:33:06.476968158Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases"}
+{"Time":"2026-10-09T11:33:06.477061549Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"=== RUN   TestBinaryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477098641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"=== PAUSE TestBinaryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.47710178Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases"}
+{"Time":"2026-10-09T11:33:06.477106426Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases"}
+{"Time":"2026-10-09T11:33:06.477109874Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"=== RUN   TestGeneralCategoryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477114192Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"=== PAUSE TestGeneralCategoryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.47711627Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases"}
+{"Time":"2026-10-09T11:33:06.477119905Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet"}
+{"Time":"2026-10-09T11:33:06.477121849Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"=== RUN   TestScriptAliasSet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477123963Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"=== PAUSE TestScriptAliasSet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477125511Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet"}
+{"Time":"2026-10-09T11:33:06.477127372Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames"}
+{"Time":"2026-10-09T11:33:06.47712901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"=== RUN   TestRejectedNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477131088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"=== PAUSE TestRejectedNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477132673Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames"}
+{"Time":"2026-10-09T11:33:06.477136153Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus"}
+{"Time":"2026-10-09T11:33:06.477138028Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"=== RUN   TestStringPropertyCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477140514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"=== PAUSE TestStringPropertyCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477142214Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus"}
+{"Time":"2026-10-09T11:33:06.477144321Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries"}
+{"Time":"2026-10-09T11:33:06.47714598Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"=== RUN   TestSetBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477155177Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"=== PAUSE TestSetBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477157152Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries"}
+{"Time":"2026-10-09T11:33:06.477159147Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership"}
+{"Time":"2026-10-09T11:33:06.477161702Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"=== RUN   TestKnownMembership\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477164953Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"=== PAUSE TestKnownMembership\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477166843Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership"}
+{"Time":"2026-10-09T11:33:06.477168762Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:33:06.477170547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== RUN   TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477173786Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== PAUSE TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:06.477175723Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:33:06.477177764Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees"}
+{"Time":"2026-10-09T11:33:06.47717974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"=== RUN   TestNodeAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656112387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0\n"}
+{"Time":"2026-10-09T11:33:19.656252295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"--- PASS: TestNodeAgrees (13.18s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656259727Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Elapsed":13.18}
+{"Time":"2026-10-09T11:33:19.656289442Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties"}
+{"Time":"2026-10-09T11:33:19.656293205Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties","Output":"=== RUN   TestNodeStringProperties\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656299159Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties","Output":"=== PAUSE TestNodeStringProperties\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656301946Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties"}
+{"Time":"2026-10-09T11:33:19.656306698Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases"}
+{"Time":"2026-10-09T11:33:19.65630965Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"=== CONT  TestBinaryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656322642Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries"}
+{"Time":"2026-10-09T11:33:19.656326148Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"=== CONT  TestSetBoundaries\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656330371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Output":"--- PASS: TestBinaryAliases (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656335004Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestBinaryAliases","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.656337991Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet"}
+{"Time":"2026-10-09T11:33:19.656340619Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"=== CONT  TestScriptAliasSet\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656343704Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode"}
+{"Time":"2026-10-09T11:33:19.656346337Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"=== CONT  TestVersionMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656350919Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Output":"--- PASS: TestScriptAliasSet (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656354292Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestScriptAliasSet","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.656356675Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases"}
+{"Time":"2026-10-09T11:33:19.656359057Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"=== CONT  TestGeneralCategoryAliases\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656362995Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Output":"--- PASS: TestGeneralCategoryAliases (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.65636631Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestGeneralCategoryAliases","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.656368551Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus"}
+{"Time":"2026-10-09T11:33:19.6563711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"=== CONT  TestStringPropertyCensus\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656373947Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties"}
+{"Time":"2026-10-09T11:33:19.65637641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties","Output":"=== CONT  TestNodeStringProperties\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656379803Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Output":"--- PASS: TestStringPropertyCensus (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656382711Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestStringPropertyCensus","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.656384949Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames"}
+{"Time":"2026-10-09T11:33:19.65638994Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"=== CONT  TestRejectedNames\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656393979Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Output":"--- PASS: TestRejectedNames (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656424047Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestRejectedNames","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.656426607Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership"}
+{"Time":"2026-10-09T11:33:19.656429495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"=== CONT  TestKnownMembership\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.656487043Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Output":"--- PASS: TestKnownMembership (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.661573306Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestKnownMembership","Elapsed":0}
+{"Time":"2026-10-09T11:33:19.661608971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Output":"--- PASS: TestSetBoundaries (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.694301614Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestSetBoundaries","Elapsed":0.01}
+{"Time":"2026-10-09T11:33:19.694339915Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"--- PASS: TestVersionMatchesNode (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.830248794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Output":"node string-property check: 7906 sequences, disagreements 0\n"}
+{"Time":"2026-10-09T11:33:19.830294086Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestVersionMatchesNode","Elapsed":0.04}
+{"Time":"2026-10-09T11:33:19.830306408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties","Output":"--- PASS: TestNodeStringProperties (0.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.83031002Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeStringProperties","Elapsed":0.17}
+{"Time":"2026-10-09T11:33:19.830312913Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:33:19.832877624Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t13.366s\n"}
+{"Time":"2026-10-09T11:33:19.83291499Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":13.367}

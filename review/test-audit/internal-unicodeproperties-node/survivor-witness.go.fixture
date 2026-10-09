@@ -1,0 +1,3 @@
+package unicodeproperties
+import "testing"
+func TestAuditVersionWitness(t *testing.T){ t.Logf("Version=%s NodeUnicodeVersion=%s",Version,NodeUnicodeVersion) }

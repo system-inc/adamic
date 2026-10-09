@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -166,7 +166,7 @@
+ 	// A lone name is a General_Category value first, then a binary property,
+ 	// then (v flag only) a property of strings. The spec checks in that order.
+ 	// No value of one is a name of another today; the order is what would decide.
+-	if p, ok := codePoint(generalCategoryNames, expression); ok {
++	if p, ok := codePoint(binaryNames, expression); ok {
+ 		return p, true
+ 	}
+ 	if p, ok := codePoint(binaryNames, expression); ok {

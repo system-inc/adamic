@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:29:31.947633954Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T11:29:31.950104031Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees"}
+{"Time":"2026-10-09T11:29:31.95023705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"=== RUN   TestNodeAgrees\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:41.710395502Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"node code point check: 1715 expressions x 1114112 code points = 1910702080, disagreements 0\n"}
+{"Time":"2026-10-09T11:29:41.710617595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Output":"--- PASS: TestNodeAgrees (9.76s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:41.710709615Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestNodeAgrees","Elapsed":9.76}
+{"Time":"2026-10-09T11:29:41.710787696Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:29:41.711936625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t9.764s\n"}
+{"Time":"2026-10-09T11:29:41.712034533Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":9.764}

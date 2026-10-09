@@ -1,0 +1,12 @@
+package unicodeproperties
+
+import "os"
+
+var auditMutant = os.Getenv("ADAMIC_MUTANT")
+
+func auditChoice[T any](id string, original, changed T) T {
+	if auditMutant == id {
+		return changed
+	}
+	return original
+}

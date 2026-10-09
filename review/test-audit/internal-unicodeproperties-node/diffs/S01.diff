@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/shards_test.go
++++ b/internal/unicodeproperties/shards_test.go
+@@ -32,7 +32,7 @@
+ }
+ 
+ var unicodeNodeTopRanges = []unicodeNodeTopRange{
+-	{"TestCanonicalizeUnicodeNodeRange0", 0, 186},
++	{"TestCanonicalizeUnicodeNodeRange0", 0, 185},
+ 	{"TestCanonicalizeUnicodeNodeRange1", 186, 254},
+ 	{"TestCanonicalizeUnicodeNodeRange2", 254, 258},
+ 	{"TestCanonicalizeUnicodeNodeRange3", 258, 262},

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "S01",
+    "file": "internal/unicodeproperties/shards_test.go",
+    "old": "{\"TestCanonicalizeUnicodeNodeRange0\", 0, 186}",
+    "new": "{\"TestCanonicalizeUnicodeNodeRange0\", 0, 185}",
+    "role": "setup construction off-by-one boundary",
+    "line": 35
+  },
+  {
+    "id": "W01",
+    "file": "internal/unicodeproperties/canonicalize_test.go",
+    "old": "for index, problem := range disagreements {",
+    "new": "for index, problem := range disagreements[:0] {",
+    "role": "authorized witness harness weakening; skip reports",
+    "line": 809
+  }
+]

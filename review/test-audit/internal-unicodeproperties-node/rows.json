@@ -1,0 +1,173 @@
+[
+  {
+    "test": "TestVersionMatchesNode",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/node_test.go",
+    "seconds": 0.041,
+    "oracle": "Node process.versions.unicode compared with NodeUnicodeVersion, plus a self-written Node 24 pin. Version patch metadata is not compared: M02 survived.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [
+      "M01"
+    ],
+    "last_proven_fail": "M01: node_test.go:150: Node reports Unicode 17.0, tables are 16.0 (17.0.0): rerun go generate",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestVersionMatchesNode",
+      "TestNodeAgrees",
+      "TestNodeStringProperties",
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership"
+    ],
+    "evidence": "python3 review/test-audit/internal-unicodeproperties-node/run.py > review/test-audit/internal-unicodeproperties-node/runner.log 2>&1; M01.log: node_test.go:150: Node reports Unicode 17.0, tables are 16.0 (17.0.0): rerun go generate"
+  },
+  {
+    "test": "TestNodeAgrees",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/node_test.go",
+    "seconds": 11.133,
+    "oracle": "Node RegExp u membership over every code point; compares Lookup ranges, not the Contains implementation.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M03",
+      "M04",
+      "M06",
+      "M07",
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [
+      "M07"
+    ],
+    "last_proven_fail": "M07: node_test.go:267: \\p{ASCII}: 1 code points disagree, first U+007F",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestVersionMatchesNode",
+      "TestNodeAgrees",
+      "TestNodeStringProperties",
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership"
+    ],
+    "evidence": "python3 review/test-audit/internal-unicodeproperties-node/run.py > review/test-audit/internal-unicodeproperties-node/runner.log 2>&1; M07.log: node_test.go:267: \\p{ASCII}: 1 code points disagree, first U+007F"
+  },
+  {
+    "test": "TestNodeStringProperties",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/node_test.go",
+    "seconds": 0.152,
+    "oracle": "Node RegExp v accepts every returned sequence. Positive membership only: M12 omitted sequences and this row passed; the census caught it.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M05",
+      "M13"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M13: node_test.go:429: \\p{Basic_Emoji} does not match \"A\" (node said 0)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringPropertyCensus"
+    ],
+    "mutants_in_matrix": 15,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.003,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestVersionMatchesNode",
+      "TestNodeAgrees",
+      "TestNodeStringProperties",
+      "TestBinaryAliases",
+      "TestGeneralCategoryAliases",
+      "TestScriptAliasSet",
+      "TestRejectedNames",
+      "TestStringPropertyCensus",
+      "TestSetBoundaries",
+      "TestKnownMembership"
+    ],
+    "evidence": "python3 review/test-audit/internal-unicodeproperties-node/run.py > review/test-audit/internal-unicodeproperties-node/runner.log 2>&1; M13.log: node_test.go:429: \\p{Basic_Emoji} does not match \"A\" (node said 0)",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestUnicodeNodeShardCoverage",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/shards_test.go",
+    "seconds": 0.607,
+    "oracle": "Self-written ordered-input digest and census; exact shard and top-level ownership checks.",
+    "oracle_kind": "self",
+    "kills": [
+      "S01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S01: shards_test.go:192: shard 185 owned 0 times, want 1",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUnicodeNodeShardCoverage"
+    ],
+    "evidence": "python3 review/test-audit/internal-unicodeproperties-node/run.py > review/test-audit/internal-unicodeproperties-node/runner.log 2>&1; S01.log: shards_test.go:192: shard 185 owned 0 times, want 1"
+  },
+  {
+    "test": "TestUnicodeNodeShardPlantedFailure",
+    "package": "internal/unicodeproperties",
+    "file": "internal/unicodeproperties/shards_test.go",
+    "seconds": 17.444,
+    "oracle": "Node differential plus self-written required BAD text, child failure location and neighboring pass controls.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "W01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "W01: shards_test.go:256: plant did not fail only its Node shard: <nil> === RUN   TestCanonicalizeUnicodeNodeRange0",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 15,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestUnicodeNodeShardPlantedFailure",
+      "TestUnicodeNodeStridePlantedFailure"
+    ],
+    "evidence": "python3 review/test-audit/internal-unicodeproperties-node/run.py > review/test-audit/internal-unicodeproperties-node/runner.log 2>&1; W01.log: shards_test.go:256: plant did not fail only its Node shard: <nil> === RUN   TestCanonicalizeUnicodeNodeRange0"
+  }
+]

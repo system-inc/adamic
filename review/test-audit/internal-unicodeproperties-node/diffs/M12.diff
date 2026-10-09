@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -174,7 +174,7 @@
+ 	}
+ 	if unicodeSets {
+ 		if s, ok := stringProperties[expression]; ok {
+-			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences}, true
++			return Property{Kind: KindStrings, Name: s.name, Value: "True", Sequences: s.sequences[:len(s.sequences)-1]}, true
+ 		}
+ 	}
+ 	return Property{}, false

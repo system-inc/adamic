@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T11:38:20.590516213Z","Action":"start","Package":"github.com/system-inc/adamic/internal/unicodeproperties"}
+{"Time":"2026-10-09T11:38:20.59337662Z","Action":"run","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestAuditVersionWitness"}
+{"Time":"2026-10-09T11:38:20.593465182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestAuditVersionWitness","Output":"=== RUN   TestAuditVersionWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:38:20.593493482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestAuditVersionWitness","Output":"    audit_witness_test.go:3: Version=17.0.1 NodeUnicodeVersion=17.0\n"}
+{"Time":"2026-10-09T11:38:20.593505962Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestAuditVersionWitness","Output":"--- PASS: TestAuditVersionWitness (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:38:20.593511392Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Test":"TestAuditVersionWitness","Elapsed":0}
+{"Time":"2026-10-09T11:38:20.593528396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:38:20.59388025Z","Action":"output","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Output":"ok  \tgithub.com/system-inc/adamic/internal/unicodeproperties\t0.003s\n"}
+{"Time":"2026-10-09T11:38:20.593904158Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/unicodeproperties","Elapsed":0.003}

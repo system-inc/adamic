@@ -1,0 +1,11 @@
+--- a/internal/unicodeproperties/unicodeproperties.go
++++ b/internal/unicodeproperties/unicodeproperties.go
+@@ -30,7 +30,7 @@
+ // NodeUnicodeVersion is what process.versions.unicode prints for that version
+ // (Node says "17.0" for 17.0.0).
+ const (
+-	Version            = "17.0.0"
++	Version            = "17.0.1"
+ 	NodeUnicodeVersion = "17.0"
+ )
+ 
