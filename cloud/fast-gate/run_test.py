@@ -199,7 +199,7 @@ class FailClosed(unittest.TestCase):
             self.assertEqual(set(result["stages_exit"]), set(result["planned_stages"]))
             # Every verdict carries its long-test ledger, empty or not.
             self.assertEqual((result["long_tests"], result["long_test_threshold_seconds"]), (0, run.longTestSeconds))
-            self.assertIn("0 units over 30 s", status)
+            self.assertIn("0 units over %d s" % (run.longTestSeconds), status)
             self.assertEqual(result["budget_over"], [])
 
     def test_every_stage_raising_is_red(self):
@@ -475,6 +475,207 @@ class FailClosed(unittest.TestCase):
                 gate, status, result = self.gate(silent=silent)
                 self.assertTrue(status.startswith("red:"), status)
                 self.assertIn(stageName, status)
+
+
+class Products(unittest.TestCase):
+    setUp = FailClosed.setUp
+    gate = FailClosed.gate
+
+    def probe(self, names=("TestProduct_A", "TestX"), failing=False, complete=False, sourceNames=None):
+        commands, order = [], []
+        with open(os.path.join(self.tree, "product_test.go"), "w") as source:
+            source.write("\n".join("func %s(t *testing.T) {}" % name for name in (names if sourceNames is None else sourceNames) if name.startswith("TestProduct_")))
+        original = FakeProcess.__init__
+        def product(process, command, stdout):
+            original(process, command, stdout)
+            if "-test.list" in command:
+                process.lines = [name + "\n" for name in names]
+            elif "test2json" in command:
+                commands.append(command)
+                name = command[command.index("-test.run") + 1].strip("^$")
+                order.append(name)
+                if name == "TestX" and "-test.skip" not in command and "TestProduct_A" in names:
+                    order.append("TestProduct_A")
+                action = "fail" if failing and name.startswith("TestProduct_") else "pass"
+                process.returncode = int(action == "fail")
+                process.lines = [json.dumps({"Action": action, "Package": "p", "Test": name, "Elapsed": 0.01}) + "\n"]
+                process.wait = lambda: process.returncode
+            process.stdout = io.StringIO("".join(process.lines)) if stdout == subprocess.PIPE else None
+        with mock.patch.object(FakeProcess, "__init__", product):
+            gate, status, result = self.gate(extra={"complete": complete})
+        return gate, status, result, commands, order
+
+    def test_products_before_tests_and_skip(self):
+        gate, status, result, commands, order = self.probe()
+        self.assertEqual(order, ["TestProduct_A", "TestX"])
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertLess(result["planned_stages"].index("products"), result["planned_stages"].index("tests"))
+        self.assertEqual(result["stages_exit"]["products"], 0)
+        self.assertIn("products", result["steps_seconds"])
+        self.assertEqual(commands[0][commands[0].index("-test.run") + 1], "^TestProduct_A$")
+        self.assertEqual(commands[1][commands[1].index("-test.skip") + 1], "^TestProduct_")
+        self.assertTrue(result["product_units"][0]["product"])
+        unit = next(row for row in result["units"] if row["test"] == "TestProduct_A")
+        self.assertTrue(unit["product"])
+        self.assertGreater(unit["seconds"], 0)
+
+    def test_failed_product_blocks_tests_even_in_complete_mode(self):
+        for complete in (False, True):
+            gate, status, result, commands, order = self.probe(failing=True, complete=complete)
+            self.assertEqual(result["failure"]["step"], "products")
+            self.assertIn("p TestProduct_A", result["failure"]["detail"])
+            self.assertEqual(result["stages_exit"]["products"], 1)
+            self.assertEqual(order, ["TestProduct_A"])
+            self.assertEqual(result["test_outcomes"][0]["status"], "not run")
+
+    def test_other_packages_wait_for_products_while_builds_continue(self):
+        out = tempfile.mkdtemp(dir=self.directory)
+        p, q = os.path.join(self.tree, "p"), os.path.join(self.tree, "q")
+        os.makedirs(p)
+        os.makedirs(q)
+        with open(os.path.join(q, "product_test.go"), "w") as source:
+            source.write("func TestProduct_A(t *testing.T) {}\n")
+        arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=out, sha=self.sha,
+            base=self.sha, parallel=4, full=False, complete=False, branch="", branch_source="", session="", session_source="")
+        gate = run.Gate(arguments)
+        gate.packageDirectories, gate.deferred = {"p": p, "q": q}, {}
+        productStarted, releaseProduct, pListed, testLaunched = [threading.Event() for _ in range(4)]
+        order, shapes = [], []
+        def stream(stage, command, log, *args):
+            if "-c" in command:
+                if command[-1] == "p":
+                    if not productStarted.wait(2):
+                        gate.fail("tests", "p's binary did not overlap q's product")
+                        return 1
+                with open(command[command.index("-o") + 1], "w") as binary:
+                    binary.write("binary")
+                return 0
+            if stage == "products":
+                shapes.append(args[-1])
+                productStarted.set()
+                if not releaseProduct.wait(2):
+                    return 1
+                order.append("product passed")
+            else:
+                with gate.lock:
+                    gate.recordTestStart(command)
+                order.append("TestX")
+                testLaunched.set()
+            return 0
+        def capture(command, directory):
+            if directory == p:
+                pListed.set()
+                return "TestX\n"
+            return "TestProduct_A\n"
+        gate.stream, gate.capture = stream, capture
+        record = run.TestSeconds(os.path.join(out, "record.tsv"))
+        with mock.patch.object(run, "TestSeconds", return_value=record), mock.patch.object(run, "slotCPUs", return_value=8):
+            thread = gate.guarded("tests", gate.testSplit, ["p", "q"], io.StringIO())
+            thread.start()
+            try:
+                listedDuringProduct = pListed.wait(2)
+                premature = testLaunched.wait(0.1)
+            finally:
+                releaseProduct.set()
+                thread.join(3)
+        self.assertFalse(thread.is_alive(), "test workers stuck at products barrier")
+        self.assertTrue(listedDuringProduct, "other binaries stopped compiling during products")
+        self.assertFalse(premature, "TestX launched before q's product passed")
+        self.assertEqual(order, ["product passed", "TestX"])
+        self.assertEqual(shapes, [{"GOMAXPROCS": "4"}])
+        self.assertEqual(gate.exits, {"products": 0, "tests": 0})
+
+    def test_scan_list_mismatch_is_red_at_products(self):
+        for source, listed in ((["TestProduct_A"], ["TestProduct_B"]),
+                               (["TestProduct_A"], []), ([], ["TestProduct_A"])):
+            with self.subTest(source=source, listed=listed):
+                _, status, result, _, order = self.probe(names=tuple(listed + ["TestX"]), sourceNames=source)
+                self.assertEqual(result["failure"]["step"], "products")
+                self.assertIn("p product scan/list mismatch", result["failure"]["detail"])
+                self.assertIn("source=%s listed=%s" % (source, listed), result["failure"]["detail"])
+                self.assertEqual(result["stages_exit"]["products"], 1)
+                self.assertEqual(order, [])
+
+    def test_wall_deadline_kills_and_fails_in_complete_mode(self):
+        for phase in ("products",):
+            with self.subTest(phase=phase), tempfile.TemporaryDirectory() as out:
+                arguments = types.SimpleNamespace(tree=self.tree, tools=self.tree, out=out, sha=self.sha,
+                    base=self.sha, full=False, complete=True, branch="", branch_source="", session="", session_source="")
+                gate = run.Gate(arguments)
+                original = gate.spawn
+                command = ["go", "tool", "test2json", "-p", "p", "-test.run", "^TestProduct_A$"]
+                gate.spawn = lambda command, *args: original([sys.executable, "-c", "import time; time.sleep(600)"], *args)
+                with mock.patch.object(run, "unitKillSeconds", 0.05), mock.patch("builtins.print"):
+                    code = gate.stream(phase, command, io.StringIO())
+                self.assertNotEqual(code, 0)
+                self.assertEqual(gate.failure["step"], phase)
+                self.assertIn("p ^TestProduct_A$ killed at 90 s", gate.failure["detail"])
+                self.assertTrue(all(process.poll() is not None for process in gate.processes))
+
+    def test_product_pool_uses_four_cpu_slots(self):
+        for cpus, expected in ((2, 1), (8, 2), (20, 5)):
+            with self.subTest(cpus=cpus), mock.patch.object(run, "slotCPUs", return_value=cpus), \
+                    mock.patch.object(run, "ThreadPoolExecutor", wraps=run.ThreadPoolExecutor) as pool:
+                _, status, _, commands, _ = self.probe()
+                self.assertTrue(status.startswith("green:"), status)
+                pool.assert_called_once_with(max_workers=expected)
+                self.assertIn("-test.timeout=30m", commands[1])
+
+    def test_all_fast_stages_start_concurrently(self):
+        barrier = threading.Barrier(7)
+        stages = {"toolsDeclared": "tools", "build": "build", "vet": "vet", "testSplit": "tests",
+                  "smoke": "smoke", "determinism": "determinism", "stage3": "stage3"}
+        def target(stage):
+            def concurrent(gate, *args):
+                barrier.wait(2)
+                gate.exits[stage], gate.steps[stage] = 0, 0.0
+                if stage in ("build", "vet"):
+                    gate.result[stage + "_ok"] = True
+            return concurrent
+        from contextlib import ExitStack
+        with ExitStack() as stack:
+            for method, stage in stages.items():
+                stack.enter_context(mock.patch.object(run.Gate, method, target(stage)))
+            _, status, _ = self.gate(unowned=("stage3/probe.py",))
+        self.assertTrue(status.startswith("green:"), status)
+
+    def test_no_products_plan_no_stage(self):
+        _, status, result, _, order = self.probe(names=("TestX",))
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertNotIn("products", result["planned_stages"])
+        self.assertNotIn("products", result["stages_exit"])
+        self.assertEqual(order, ["TestX"])
+
+    def test_product_only_package_is_fine(self):
+        _, status, result, _, order = self.probe(names=("TestProduct_A",))
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(order, ["TestProduct_A"])
+        self.assertEqual(result["split_tally"]["planned"], 0)
+        self.assertEqual(result["stages_exit"]["tests"], 0)
+
+
+class ProductMutants(unittest.TestCase):
+    def test_order_and_skip_mutants_are_killed(self):
+        with open(run.__file__) as handle:
+            original = handle.read()
+        delayed = original.replace('productPool.submit(runProduct, row, binary)',
+                                   'productPool.submit(lambda: (time.sleep(0.1), runProduct(row, binary)))')
+        delayed = delayed.replace('        productsRemaining = len(productRows)',
+                                  '        productsReady.set()\n        productsRemaining = len(productRows)')
+        mutants = [("products after tests", delayed),
+                   ("skip dropped", original.replace('"-test.skip", "^TestProduct_", ', '')),
+                   ("Event set before products pass", original.replace('        productsRemaining = len(productRows)',
+                        '        productsReady.set()\n        productsRemaining = len(productRows)'))]
+        for name, source in mutants:
+            with self.subTest(mutant=name):
+                namespace = dict(run.__dict__)
+                exec(compile(source, run.__file__, "exec"), namespace)
+                with mock.patch.object(run.Gate, "testSplit", namespace["Gate"].testSplit):
+                    result = unittest.TestResult()
+                    test = "test_other_packages_wait_for_products_while_builds_continue" if name == "Event set before products pass" else "test_products_before_tests_and_skip"
+                    Products(test).run(result)
+                self.assertEqual(result.errors, [], result.errors)
+                self.assertEqual(len(result.failures), 1, (name, result.failures))
 
 
 class DeferredInTheWholeGate(FailClosed):
@@ -815,7 +1016,7 @@ func TestGuard(t *testing.T) {
         realRun(["git", "-C", self.tree, "add", "."], check=True)
         realRun(["git", "-C", self.tree, "-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "scratch"], check=True)
         self.binary = os.path.join(self.tree, "guard.test")
-        realRun(["go", "test", "-c", "-o", self.binary, "."], cwd=self.tree, check=True, timeout=120)
+        realRun(["go", "test", "-c", "-o", self.binary, "."], cwd=self.tree, check=True, timeout=90)
 
     def state(self, pid):
         try:

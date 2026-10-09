@@ -57,6 +57,7 @@ slowPackageSeconds = 3600
 # have failed 8, all on box load (TestInspectRequestRefusals took 147 to 265 s in 12-CPU slots). The gate measures
 # on its own box until Loom's Codex tier measures every unit on the reference shape, and the verdict names it.
 longTestSeconds = 30
+unitKillSeconds = 90
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
@@ -1450,9 +1451,11 @@ class Gate:
         self.result["vet_ok"] = self.step("vet", ["go", "vet", "./..."])
 
     def testSplit(self, packages, log):
-        """Each touched package's tests: its test binary built once, then every top-level test run as
-        its own process, all of them side by side on the box's threads. One package's tests no longer
-        wait on each other in one process (round 59 proved the verdicts identical this way)."""
+        """Compile and list selected packages, build their products, then run ordinary test units.
+
+        Product discovery precedes ordinary-test selection, so even a requested-only package
+        builds every declared product. No tests start until all products have passed.
+        """
         started = time.monotonic()
         # Beside the slot's tree, never in the out directory: everything there is published, and a test
         # binary is tens of megabytes. One slot runs one gate at a time, so each run overwrites its own.
@@ -1490,6 +1493,56 @@ class Gate:
         # slot, and three such gates took Cloud to load 900 and Workshop to 10 GB free (Oct 8 11:2xZ).
         builds = threading.Semaphore(2)
         threads = []
+        declared = {}
+        for package in packages:
+            names = set()
+            for path in glob.glob(os.path.join(self.packageDirectories[package], "*_test.go")):
+                with open(path) as source:
+                    names.update(re.findall(r"^func\s+(TestProduct_\w+)\s*\(\s*\w+\s+\*testing\.T\s*\)", source.read(), re.M))
+            declared[package] = names
+        productsReady = threading.Event()
+        productsFailed = threading.Event()
+        buildsDone = threading.Event()
+        productRows = [{"package": package, "test": name, "product": True, "status": "not run"}
+                       for package in sorted(declared) for name in sorted(declared[package])]
+        productsRemaining = len(productRows)
+        productStarted = time.monotonic()
+        if productRows:
+            self.planned = getattr(self, "planned", ["tests"])
+            self.planned.insert(self.planned.index("tests"), "products")
+            self.result["product_units"] = productRows
+        else:
+            productsReady.set()
+        productPool = ThreadPoolExecutor(max_workers=max(1, slotCPUs() // 4))
+
+        def runProduct(row, binary):
+            self.productUnit(row, binary, log)
+            nonlocal productsRemaining
+            with self.lock:
+                if row["status"] == "passed":
+                    productsRemaining -= 1
+                    if productsRemaining == 0 and not productsFailed.is_set():
+                        self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                        self.exits["products"] = 0
+                        productsReady.set()
+                else:
+                    self.steps["products"] = round(time.monotonic() - productStarted, 3)
+                    self.exits["products"] = 1
+                    productsFailed.set()
+
+        def checkProducts(package, names):
+            listed = {name for name in names if name.startswith("TestProduct_")}
+            if listed != declared[package]:
+                productsFailed.set()
+                self.exits["products"] = 1
+                self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+                if "products" not in getattr(self, "planned", []):
+                    self.planned = getattr(self, "planned", ["tests"])
+                    self.planned.insert(self.planned.index("tests"), "products")
+                self.fail("products", "%s product scan/list mismatch: source=%s listed=%s" %
+                          (package, sorted(declared[package]), sorted(listed)))
+                return False
+            return True
         # Every package compiled and listed, and every test process it planned exited 0: counted, so a
         # process that never ran can't pass for one that did.
         tally = {"packages": 0, "planned": 0, "passed": 0}
@@ -1505,6 +1558,8 @@ class Gate:
                     return
                 if not os.path.exists(binary):
                     # go test -c succeeded and wrote nothing: the package has no test files.
+                    if not checkProducts(importPath, []):
+                        return
                     with self.lock:
                         tally["packages"] += 1
                     self.result.setdefault("split_tests", {})[importPath] = 0
@@ -1515,6 +1570,12 @@ class Gate:
             with self.lock:
                 tally["packages"] += 1
             names = [line for line in listing.splitlines() if line.startswith(("Test", "Example", "Fuzz"))]
+            if not checkProducts(importPath, names):
+                return
+            for row in productRows:
+                if row["package"] == importPath:
+                    productPool.submit(runProduct, row, binary)
+            names = [name for name in names if not name.startswith("TestProduct_")]
             if importPath in getattr(self, "onlyTests", {}):
                 names = [name for name in names if name in self.onlyTests[importPath]]
             selection = getattr(self, "oracleSelection", {"whole": True}) if importPath == oracle else {"whole": True}
@@ -1540,7 +1601,7 @@ class Gate:
             ready = []
             for name in names:
                 command = ["go", "tool", "test2json", "-t", "-p", importPath, binary, "-test.v=test2json", "-test.paniconexit0",
-                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.run", patterns.get(name, "^%s$" % name)]
+                           "-test.count=1"] + ([] if self.complete else ["-test.failfast"]) + ["-test.timeout=30m", "-test.parallel=2", "-test.skip", "^TestProduct_", "-test.run", patterns.get(name, "^%s$" % name)]
                 seconds, parallel = history.get((importPath, name), (60, False))
                 ready.append((seconds, parallel, importPath, name, command))
             # A package's tests arrive together, so a waiting worker can't take its short one before its long one.
@@ -1552,7 +1613,7 @@ class Gate:
                 return (60, 1)
             return (max(known), 0)
 
-        remaining = sorted(packages, key=lambda package: (-packageWeight(package)[0], -packageWeight(package)[1], package))
+        remaining = sorted(packages, key=lambda package: (not bool(declared[package]), -packageWeight(package)[0], -packageWeight(package)[1], package))
 
         def buildWorker():
             while True:
@@ -1575,7 +1636,10 @@ class Gate:
                     return
                 package, name, seconds, permits, command = item
                 try:
-                    if getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                    while not productsReady.wait(0.05):
+                        if productsFailed.is_set() or buildsDone.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
+                            return
+                    if productsFailed.is_set() or getattr(self, "stopped", None) or (self.failure is not None and not self.complete):
                         return
                     if permits == 4:
                         command = ["-test.parallel=8" if part == "-test.parallel=2" else part for part in command]
@@ -1590,9 +1654,7 @@ class Gate:
                         self.testLaunchLock.release()
                     queue.release(permits)
 
-        # Tests start as their package is built and listed, longest first among those ready. Builds go in
-        # the order of each package's longest known test, so the longest test's binary is ready first and a
-        # short test can't hold the slots it needs: early on, few tests are ready and slots are plenty.
+        # Start tests immediately; only their launches wait for products, while builds stream in.
         testers = [self.guarded("tests", testWorker) for _ in range(self.arguments.parallel)]
         for thread in testers:
             thread.start()
@@ -1602,6 +1664,11 @@ class Gate:
             threads.append(thread)
         for thread in threads:
             thread.join()
+        productPool.shutdown(wait=True)
+        if productRows:
+            self.steps.setdefault("products", round(time.monotonic() - productStarted, 3))
+            self.exits["products"] = 0 if productsReady.is_set() and not productsFailed.is_set() else 1
+        buildsDone.set()
         queue.close()
         for thread in testers:
             thread.join()
@@ -1612,6 +1679,24 @@ class Gate:
         complete = tally["packages"] == len(packages) and tally["passed"] == tally["planned"]
         self.exits["tests"] = 0 if complete and self.failure is None else 1
         self.result["split_tally"] = dict(tally, touched=len(packages))
+
+    def productUnit(self, row, binary, log):
+        """A declared build, including setup, on the four-CPU reference shape."""
+        if self.failure is not None or getattr(self, "stopped", None):
+            return
+        package, name = row["package"], row["test"]
+        command = ["go", "tool", "test2json", "-t", "-p", package, binary,
+                   "-test.v=test2json", "-test.paniconexit0", "-test.count=1", "-test.timeout=90s",
+                   "-test.parallel=4", "-test.run", "^%s$" % re.escape(name)]
+        before = time.monotonic()
+        try:
+            code = self.stream("products", command, log, self.packageDirectories[package], {"GOMAXPROCS": "4"})
+        except BaseException:
+            code = None
+            self.fail("products", "%s %s\n%s" % (package, name, traceback.format_exc()))
+        row.update(seconds=round(time.monotonic() - before, 6), status="passed" if code == 0 else "failed")
+        if code != 0:
+            self.fail("products", "%s %s failed or was killed" % (package, name))
 
     def slotted(self, command, log, importPath, name, tally):
         environment = None
@@ -1725,6 +1810,19 @@ class Gate:
         except BaseException:
             stderr.close()
             raise
+        deadline = None
+        drained = threading.Event()
+        if name == "products" and "test2json" in command:
+            def expired():
+                if not drained.is_set():
+                    package = command[command.index("-p") + 1]
+                    test = command[command.index("-test.run") + 1]
+                    self.fail(name, "%s %s killed at 90 s" % (package, test))
+                    with self.lock:
+                        self.killSessions({process.pid})
+            deadline = threading.Timer(unitKillSeconds, expired)
+            deadline.daemon = True
+            deadline.start()
         output = {}
         for line in process.stdout:
             if log is not None:
@@ -1764,13 +1862,19 @@ class Gate:
                 text = "".join(output.get(key, [])) or "".join(output.get((event.get("Package"), None), []))
                 self.fail(name, "%s %s\n%s" % (event.get("Package"), event.get("Test") or "(package)", text[-4000:]))
         code = process.wait()
+        drained.set()
+        if deadline is not None:
+            deadline.cancel()
         process.stdout.close()
         stderr.close()
         if id(process) in getattr(self, "killedByStop", set()):
             return None
         if code != 0 and self.failure is None:
             with open(stderrPath) as handle:
-                self.fail(name, "%s exited %d\n%s" % (" ".join(command[:4]), code, handle.read()[-4000:]))
+                identity = " ".join(command[:4])
+                if "test2json" in command and "-test.run" in command:
+                    identity = "%s %s" % (command[command.index("-p") + 1], command[command.index("-test.run") + 1])
+                self.fail(name, "%s exited %d\n%s" % (identity, code, handle.read()[-4000:]))
         return None if self.failure is not None and not self.arguments.full and not self.complete else code
 
     def checkCensus(self):
@@ -1881,14 +1985,15 @@ class Gate:
                 return
             self.killSessions()
 
-    def killSessions(self):
+    def killSessions(self, sessions=None):
         """Drain our sessions even after a leader exited and children were reparented.
 
         Setpgid cannot escape a session. Zombies cannot run or fork and must be
         reaped by their new parent; waiting for those would hang on a slow init.
         Call under self.lock so spawn cannot register a new session mid-drain.
         """
-        sessions = {process.pid for process in self.processes if process.pid > 0}
+        if sessions is None:
+            sessions = {process.pid for process in self.processes if process.pid > 0}
         while sessions:
             live = []
             for path in glob.glob("/proc/[0-9]*/stat"):
@@ -1961,6 +2066,15 @@ class Gate:
         wall = round(time.monotonic() - self.started, 1)
         self.result.setdefault("box_load", {})["end"] = boxLoad()
         units = testUnits(os.path.join(self.arguments.out, "test.jsonl"))
+        for row in self.result.get("product_units", []):
+            key = row["package"], row["test"]
+            units = {unit: value for unit, value in units.items()
+                     if not (unit[0] == key[0] and (unit[1] == key[1] or unit[1].startswith(key[1] + "/") or unit[1] == key[1] + " (setup)"))}
+            if "seconds" in row:
+                units[key] = (row["seconds"], "pass" if row["status"] == "passed" else "fail")
+        self.result["units"] = [{"package": package, "test": name, "seconds": seconds, "action": action,
+                                 "product": name.startswith("TestProduct_")}
+                                for (package, name), (seconds, action) in sorted(units.items())]
         ledger = longTests(units)
         self.budget(ledger, units)
         unfinished = [stage for stage in self.planned if self.exits.get(stage) != 0]
