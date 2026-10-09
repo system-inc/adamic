@@ -17,10 +17,9 @@
 // Census reason: TS2591
 
 import * as _fs from "node:fs";
-import * as _path from "node:path";
-import { tmpdir } from "node:os";
 import process from "node:process";
-const scratch = _fs.mkdtempSync(_path.join(tmpdir(), "adamic-host-"));
+// Keep the scratch name fixed-length so host temporary paths cannot affect counts.
+const scratch = _fs.mkdtempSync("adamic-host-");
 const statSyncOptions = { throwIfNoEntry: false } as const;
 function statSync(path: string): import("fs").Stats | undefined {
     // throwIfNoEntry is available in Node 14.17 and above, which matches our supported range.
