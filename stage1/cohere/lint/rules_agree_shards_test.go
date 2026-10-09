@@ -107,6 +107,7 @@ func rulesAgreeNative(t *testing.T) string {
 }
 
 // Setup leaves run sequentially; shards share process-lifetime products.
+// Not parallel: prepares the shared lowering and native products before comparison leaves.
 func TestRulesAgreeSetupNative(t *testing.T) {
 	started := time.Now()
 	rulesAgreeNative(t)
@@ -115,6 +116,8 @@ func TestRulesAgreeSetupNative(t *testing.T) {
 		t.Fatal("cooked: native setup over 60s")
 	}
 }
+
+// Not parallel: prepares the shared captured corpus before comparison and union leaves.
 func TestRulesAgreeSetupCorpus(t *testing.T) {
 	started := time.Now()
 	rulesAgreeCorpus(t)
@@ -234,7 +237,6 @@ func rulesAgreeAssignments(t *testing.T, rows []string) [][]int {
 func rulesAgreeRunShard(t *testing.T, shard int) {
 	t.Helper()
 	products := rulesAgreeSetup(t)
-	t.Parallel()
 	started := time.Now()
 	deadline := time.AfterFunc(75*time.Second, func() { panic(fmt.Sprintf("%s cooked: over budget at 75s; split smaller", t.Name())) })
 	defer deadline.Stop()
@@ -259,8 +261,8 @@ func rulesAgreeRunShard(t *testing.T, shard int) {
 }
 
 func TestRulesAgreeUnion(t *testing.T) {
-	products := rulesAgreeCorpus(t)
 	t.Parallel()
+	products := rulesAgreeCorpus(t)
 	functions := []func(*testing.T){TestRulesAgree_000, TestRulesAgree_001, TestRulesAgree_002, TestRulesAgree_003, TestRulesAgree_004, TestRulesAgree_005, TestRulesAgree_006, TestRulesAgree_007, TestRulesAgree_008, TestRulesAgree_009, TestRulesAgree_010, TestRulesAgree_011, TestRulesAgree_012, TestRulesAgree_013, TestRulesAgree_014, TestRulesAgree_015}
 	if len(functions) != testRulesAgreeShards || len(products.assignments) != testRulesAgreeShards {
 		t.Fatal("shard enumeration differs from const")
@@ -285,8 +287,8 @@ func TestRulesAgreeUnion(t *testing.T) {
 // Plant one output disagreement on a real corpus case. Routing and the same
 // byte comparator used by parity must detect it in exactly one owner shard.
 func TestRulesAgreePlantedFailure(t *testing.T) {
-	products := rulesAgreeSetup(t)
 	t.Parallel()
+	products := rulesAgreeSetup(t)
 	planted := -1
 	for index, row := range products.rows {
 		if !strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -319,22 +321,70 @@ func TestRulesAgreePlantedFailure(t *testing.T) {
 	t.Logf("planted output disagreement: case %d caught exactly once by TestRulesAgree_%03d", planted, owner)
 }
 
-func TestRulesAgree_000(t *testing.T) { rulesAgreeRunShard(t, 0) }
-func TestRulesAgree_001(t *testing.T) { rulesAgreeRunShard(t, 1) }
-func TestRulesAgree_002(t *testing.T) { rulesAgreeRunShard(t, 2) }
-func TestRulesAgree_003(t *testing.T) { rulesAgreeRunShard(t, 3) }
-func TestRulesAgree_004(t *testing.T) { rulesAgreeRunShard(t, 4) }
-func TestRulesAgree_005(t *testing.T) { rulesAgreeRunShard(t, 5) }
-func TestRulesAgree_006(t *testing.T) { rulesAgreeRunShard(t, 6) }
-func TestRulesAgree_007(t *testing.T) { rulesAgreeRunShard(t, 7) }
-func TestRulesAgree_008(t *testing.T) { rulesAgreeRunShard(t, 8) }
-func TestRulesAgree_009(t *testing.T) { rulesAgreeRunShard(t, 9) }
-func TestRulesAgree_010(t *testing.T) { rulesAgreeRunShard(t, 10) }
-func TestRulesAgree_011(t *testing.T) { rulesAgreeRunShard(t, 11) }
-func TestRulesAgree_012(t *testing.T) { rulesAgreeRunShard(t, 12) }
-func TestRulesAgree_013(t *testing.T) { rulesAgreeRunShard(t, 13) }
-func TestRulesAgree_014(t *testing.T) { rulesAgreeRunShard(t, 14) }
-func TestRulesAgree_015(t *testing.T) { rulesAgreeRunShard(t, 15) }
+func TestRulesAgree_000(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 0)
+}
+func TestRulesAgree_001(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 1)
+}
+func TestRulesAgree_002(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 2)
+}
+func TestRulesAgree_003(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 3)
+}
+func TestRulesAgree_004(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 4)
+}
+func TestRulesAgree_005(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 5)
+}
+func TestRulesAgree_006(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 6)
+}
+func TestRulesAgree_007(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 7)
+}
+func TestRulesAgree_008(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 8)
+}
+func TestRulesAgree_009(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 9)
+}
+func TestRulesAgree_010(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 10)
+}
+func TestRulesAgree_011(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 11)
+}
+func TestRulesAgree_012(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 12)
+}
+func TestRulesAgree_013(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 13)
+}
+func TestRulesAgree_014(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 14)
+}
+func TestRulesAgree_015(t *testing.T) {
+	t.Parallel()
+	rulesAgreeRunShard(t, 15)
+}
 
 // Keep the existing child CPU guard, and bound the entire Go invocation,
 // including compiler descendants, without depending on an external tool.
