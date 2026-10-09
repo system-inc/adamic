@@ -67,11 +67,18 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 	function := l.result.Functions[index]
 	for _, parameter := range declaration.Parameters() {
 		if ast.IsIdentifier(parameter.Name()) && parameter.Name().Text() == "this" {
+			if this >= 0 {
+				// The method already has a receiver local. Its explicit this is
+				// a declaration contract, not another runtime argument.
+				proven := l.checker.GetTypeAtLocation(parameter.Name())
+				function.CallableReceiver = l.viewCallableValueContract(parameter, proven)
+				if function.CallableReceiver == 0 {
+					return l.notYet(parameter, "a dynamic this parameter without a runtime-checkable domain")
+				}
+				continue
+			}
 			if !function.Closure {
 				return l.notYet(parameter, "a function with a this parameter used as a value; pass the receiver explicitly or use an arrow")
-			}
-			if this >= 0 {
-				return l.notYet(parameter, "an explicit this parameter on a method")
 			}
 			proven := l.checker.GetTypeAtLocation(parameter.Name())
 			of, known := l.representation(proven)
