@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:12:09.895835742Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-09T09:12:09.907060107Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRejectsTSGoArchive"}
+{"Time":"2026-10-09T09:12:09.907138803Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRejectsTSGoArchive","Output":"=== RUN   TestWASIRejectsTSGoArchive\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:12:09.907167566Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRejectsTSGoArchive","Output":"--- PASS: TestWASIRejectsTSGoArchive (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:12:09.907171592Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRejectsTSGoArchive","Elapsed":0}
+{"Time":"2026-10-09T09:12:09.907182498Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:12:09.907525453Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"ok  \tgithub.com/system-inc/adamic/cmd/adamic\t0.011s\n"}
+{"Time":"2026-10-09T09:12:09.907567365Z","Action":"pass","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.012}

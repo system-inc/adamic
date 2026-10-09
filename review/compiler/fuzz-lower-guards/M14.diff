@@ -1,0 +1,11 @@
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -1245,7 +1245,7 @@
+ 	if sliceBytes <= 0 || sliceBytes >= ownerBytes {
+ 		return false
+ 	}
+-	return sliceBytes >= 64 && sliceBytes >= ownerBytes/4
++	return sliceBytes >= 63 && sliceBytes >= ownerBytes/4
+ }
+ 
+ func mustShare(sliceBytes, ownerBytes int) {
