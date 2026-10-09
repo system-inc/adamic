@@ -1,0 +1,20 @@
+import pathlib,subprocess,json,time,os,re
+root=pathlib.Path('/workspace/adamic'); out=root/'review/test-audit/internal-lower-taste_representation'
+rows='TestTasteRepresentationLimitsStayExplicit TestTypedArraysLower TestTypedArrayGaps TestTypedArrayViewsCannotChangeRepresentation TestUnknownReflectionRefusals TestViewObjectContractsAreAvailableToEraser TestViewObjectWritesNeedSourceCertificate TestMixedUnionContractGraph TestMixedUnionContractFailureDoesNotCertifyRetry TestMixedUnionContractUnknownMemberFails TestMixedUnionContractRecursiveMember TestMixedUnionContractPhantomBrandUsesPrimitiveBase TestMixedUnionContractPhantomVoidIsUndefined TestUntaggedViewMemberTags TestUntaggedViewStructuralFallback'.split()
+(out/'rows.json').write_text(json.dumps(rows,indent=2)); listing=(out/'list.log').read_text().splitlines(); assert all(r in listing for r in rows)
+pat='^('+'|'.join(rows)+')$'
+def run(args,path):
+ t=time.monotonic()
+ with open(path,'w') as f: p=subprocess.run(args,cwd=root,stdout=f,stderr=subprocess.STDOUT)
+ return p.returncode,time.monotonic()-t
+code,wall=run(['timeout','120','go','test','-json','-count=1','-timeout','90s','-coverprofile='+str(out/'coverage.out'),'./internal/lower/','-run',pat],out/'slice-baseline.log'); assert code==0
+run(['go','tool','cover','-func='+str(out/'coverage.out')],out/'functions-coverage.txt')
+(out/'reached-functions.txt').write_text('\n'.join(x for x in (out/'functions-coverage.txt').read_text().splitlines() if not x.endswith('0.0%'))+'\n')
+timings={}
+for r in rows:
+ times=[]
+ for i in range(3):
+  code,wall=run(['timeout','120','go','test','-count=1','-timeout','90s','./internal/lower/','-run','^'+r+'$'],out/f'time-{r}-{i+1}.log'); assert code==0
+  s=(out/f'time-{r}-{i+1}.log').read_text(); times.append(float(re.search(r'ok\s+\S+\s+([\d.]+)s',s)[1]))
+ timings[r]={'runs':times,'median':sorted(times)[1]}
+ (out/'timings.json').write_text(json.dumps(timings,indent=2))

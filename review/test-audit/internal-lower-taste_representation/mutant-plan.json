@@ -1,0 +1,184 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/typed_arrays.go",
+    "old": "FromArray: true",
+    "new": "FromArray: false",
+    "menu": "change option",
+    "line": 94,
+    "diff": "M01.diff"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/typed_arrays.go",
+    "old": "return ir.TypedArrayNew{Of: kind, Source: source, FromArray: true}, true, nil",
+    "new": "return ir.TypedArrayNew{Of: kind, Source: source, FromArray: false}, true, nil",
+    "menu": "change option",
+    "line": 113,
+    "diff": "M02.diff"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/typed_arrays.go",
+    "old": "Value: value, Element: ir.Number, Site:",
+    "new": "Value: value, Element: ir.String, Site:",
+    "menu": "change constant",
+    "line": 256,
+    "diff": "M03.diff"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/typed_arrays.go",
+    "old": "if value.Type() != kind {",
+    "new": "if value.Type() == kind {",
+    "menu": "flip condition",
+    "line": 208,
+    "diff": "M04.diff"
+  },
+  {
+    "id": "M05",
+    "file": "internal/lower/expression.go",
+    "old": "return fromKind != 0 && fromKind == toKind",
+    "new": "return true",
+    "menu": "return early",
+    "line": 286,
+    "diff": "M05.diff"
+  },
+  {
+    "id": "M06",
+    "file": "internal/lower/unknown.go",
+    "old": "strings.ContainsRune(key.Text(), 0)",
+    "new": "strings.ContainsRune(key.Text(), 1)",
+    "menu": "change constant",
+    "line": 31,
+    "diff": "M06.diff"
+  },
+  {
+    "id": "M07",
+    "file": "internal/lower/unknown.go",
+    "old": "key.Text() == \"stack\"",
+    "new": "key.Text() == \"stack_disabled\"",
+    "menu": "change constant",
+    "line": 51,
+    "diff": "M07.diff"
+  },
+  {
+    "id": "M08",
+    "file": "internal/lower/enums.go",
+    "old": "member.Name().Text() == \"__proto__\"",
+    "new": "member.Name().Text() == \"__proto_disabled__\"",
+    "menu": "change constant",
+    "line": 183,
+    "diff": "M08.diff"
+  },
+  {
+    "id": "M09",
+    "file": "internal/lower/interface_cast.go",
+    "old": "if of == ir.Object {",
+    "new": "if of != ir.Object {",
+    "menu": "flip condition",
+    "line": 77,
+    "diff": "M09.diff"
+  },
+  {
+    "id": "M10",
+    "file": "internal/lower/view_contracts.go",
+    "old": "Kind: ir.ViewUndefined, Name: \"undefined\", Undefined: true",
+    "new": "Kind: ir.ViewUndefined, Name: \"undefined\", Undefined: false",
+    "menu": "change constant",
+    "line": 27,
+    "diff": "M10.diff"
+  },
+  {
+    "id": "M11",
+    "file": "internal/lower/view_contracts.go",
+    "old": "contract.Kind = ir.ViewScalar",
+    "new": "contract.Kind = ir.ViewObject",
+    "menu": "change constant",
+    "line": 69,
+    "diff": "M11.diff"
+  },
+  {
+    "id": "M12",
+    "file": "internal/lower/view_contracts.go",
+    "old": "l.result.ViewContracts[int(id)-1] = contract",
+    "new": "",
+    "menu": "drop statement",
+    "line": 90,
+    "diff": "M12.diff"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/view_unions_mixed.go",
+    "old": "l.result.ViewContracts = l.result.ViewContracts[:start]",
+    "new": "",
+    "menu": "drop statement",
+    "line": 42,
+    "diff": "M13.diff"
+  },
+  {
+    "id": "M14",
+    "file": "internal/lower/view_unions_mixed.go",
+    "old": "\t\tfor key, value := range l.result.ViewContractTypes {\n\t\t\tif int(value) > start {\n\t\t\t\tdelete(l.result.ViewContractTypes, key)\n\t\t\t}\n\t\t}",
+    "new": "",
+    "menu": "drop whole loop",
+    "line": 43,
+    "diff": "M14.diff"
+  },
+  {
+    "id": "M15",
+    "file": "internal/lower/view_unions_mixed.go",
+    "old": "l.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown",
+    "new": "l.result.ViewContracts[int(child)-1].Kind == ir.ViewCallable",
+    "menu": "change constant",
+    "line": 56,
+    "diff": "M15.diff"
+  },
+  {
+    "id": "M16",
+    "file": "internal/lower/view_unions_mixed.go",
+    "old": "l.result.ViewContracts[int(id)-1] = contract",
+    "new": "",
+    "menu": "drop statement",
+    "line": 61,
+    "diff": "M16.diff"
+  },
+  {
+    "id": "M17",
+    "file": "internal/lower/view_unions_primitive_brands.go",
+    "old": "return flags&checker.TypeFlagsVoid != 0 || optional && flags&checker.TypeFlagsUndefined != 0",
+    "new": "return flags&checker.TypeFlagsVoid == 0 || optional && flags&checker.TypeFlagsUndefined != 0",
+    "menu": "flip condition",
+    "line": 69,
+    "diff": "M17.diff"
+  },
+  {
+    "id": "M18",
+    "file": "internal/lower/view_unions_untagged.go",
+    "old": "if field.Optional {",
+    "new": "if !field.Optional {",
+    "menu": "flip condition",
+    "line": 51,
+    "diff": "M18.diff"
+  },
+  {
+    "id": "M19",
+    "file": "internal/lower/view_unions_untagged.go",
+    "old": "if contract.Kind != ir.ViewObject || contract.Of != ir.Object {",
+    "new": "if contract.Kind == ir.ViewObject || contract.Of != ir.Object {",
+    "menu": "flip condition",
+    "line": 45,
+    "diff": "M19.diff"
+  },
+  {
+    "id": "M20",
+    "file": "internal/lower/view_unions_untagged.go",
+    "old": "append([]ir.ViewLiteral(nil), tag.Allowed...)",
+    "new": "append(tag.Allowed[:0], tag.Allowed...)",
+    "menu": "change allocation option",
+    "line": 66,
+    "diff": "M20.diff",
+    "supplemental": true,
+    "reason": "Changes append destination storage; conservatively outside fixed-menu constant/option intent. No verdict rests on M20."
+  }
+]

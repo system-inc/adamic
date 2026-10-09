@@ -1,0 +1,10 @@
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -87,7 +87,6 @@
+ 		}
+ 	}
+ 
+-	l.result.ViewContracts[int(id)-1] = contract
+ 	return id, nil
+ }
+ 

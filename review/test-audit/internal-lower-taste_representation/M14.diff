@@ -1,0 +1,15 @@
+--- a/internal/lower/view_unions_mixed.go
++++ b/internal/lower/view_unions_mixed.go
+@@ -40,11 +40,7 @@
+ 			return
+ 		}
+ 		l.result.ViewContracts = l.result.ViewContracts[:start]
+-		for key, value := range l.result.ViewContractTypes {
+-			if int(value) > start {
+-				delete(l.result.ViewContractTypes, key)
+-			}
+-		}
++
+ 		id = 0
+ 	}()
+ 	for _, member := range target.Types() {

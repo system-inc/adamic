@@ -1,0 +1,60 @@
+import sys,pathlib,json,re,subprocess,time,collections
+sys.path.insert(0,'/tmp');from u044_analyze import parse
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-lower-taste_representation';rows=json.loads((O/'rows.json').read_text());plan=json.loads((O/'mutant-plan.json').read_text());timing=json.loads((O/'timings.json').read_text());recovery=json.loads((O/'recovery-status.json').read_text());entries=json.loads((O/'probe-entries.json').read_text());valid=[x['id'] for x in plan if not x.get('supplemental')];matrix={};observed={};recover={(x['id'],x['row']):x for x in recovery};whole={}
+for x in plan:
+ id=x['id'];d=parse(O/(id+'.log'));whole[id]=d;obs=set(d['fail']);cells={}
+ for row in rows:
+  if (id,row) in recover:
+   z=recover[id,row];rd=parse(O/z['log']);cells[row]='fail' if z['code']!=0 else 'pass'
+   if z['code']!=0:obs.add(row)
+  else:cells[row]='fail' if row in d['fail'] else 'pass' if row in d['pass_'] else 'unknown'
+ matrix[id]=cells;observed[id]=sorted(obs)
+ assert all(s!='unknown' for s in cells.values()),(id,cells)
+(O/'matrix.json').write_text(json.dumps(dict(rows=rows,columns=[x['id'] for x in plan],cells=matrix,observed_package_kills=observed,whole_package={id:dict(seconds=d['elapsed'],cooked=d['panic'],skip=d['skip']) for id,d in whole.items()},bounded_mutants=[id for id,d in whole.items() if d['panic']],unknown_outside_slice=[id for id,d in whole.items() if d['panic']]),indent=2))
+killsets={r:{id for id in valid if r in observed[id]} for r in set(rows)|set(r for v in observed.values() for r in v)}
+overlap={rows[8]:[rows[9],rows[10]],rows[10]:[rows[5],rows[7]],rows[11]:[rows[10],rows[12]]}
+oracles=[
+'Handwritten refusal class and diagnostic fragments; enum prototype expects Refused although failure text says NotYet.',
+'Handwritten typed-array local membership and numeric SetIndex IR. Does not check exact kind, FromArray, conversion values, or native execution; M02 survives.',
+'Handwritten NotYet class and diagnostic fragments for unsupported facilities and operations.',
+'Handwritten NotYet class only. A different NotYet refusal can satisfy the same expected answer.',
+'Handwritten NotYet class and diagnostic fragments for reflection hazards; no Node comparison.',
+'Handwritten transitive IR object and boolean-scalar contract expectations; eraser is not executed.',
+'Handwritten nonnil error and source-slot type certificate substring; no external execution.',
+'Live in-process Microsoft TypeScript-Go checker supplies member names and count; handwritten descriptor and field checks. Does not require primitive member scalar kinds: M11 passes.',
+'Handwritten atomic rollback, injected callback error propagation, and complete retry graph expectations. Callback error is a production API input, not a witness harness mutant.',
+'Handwritten rejection and registry rollback for unavailable child descriptors.',
+'Handwritten recursive graph identity, object field count, and exactly three contracts.',
+'Handwritten scalar string representation of phantom primitive brand.',
+'Handwritten undefined descriptor and absence of fields/unsupported marker for phantom void.',
+'Handwritten member identities, tag alternatives, optional-tag exclusion, and writable-slice independence.',
+'Handwritten untagged fallback and rejection of unsupported kinds and invalid IDs.'
+]
+result=[]
+for i,row in enumerate(rows):
+ ks=killsets[row];uniq=[id for id in valid if id in ks and observed[id]==[row]];others=[];subssec=None
+ if uniq:verdict='sacred'
+ elif not ks:verdict='untrue'
+ else:
+  candidates=[r for r,s in killsets.items() if r!=row and ks<=s and r in timing]
+  if candidates:
+   sub=min(candidates,key=lambda r:(timing[r]['median'],r));others=[sub];subssec=timing[sub]['median'];verdict='subsumed'
+  else:verdict='overlapping';others=overlap[row];assert ks<=set().union(*(killsets[r] for r in others))
+ last=sorted(ks)[-1] if ks else None;line=None;log=None
+ if last:
+  log=(recover[last,row]['log'] if (last,row) in recover else last+'.log');d=parse(O/log);msgs=[m for m in d['messages'].get(row,[]) if 'awaits compiler/views-v3' not in m];line=msgs[0] if msgs else next((json.loads(l).get('Output','').strip() for l in (O/log).read_text().splitlines() if 'panic:' in l),'failing row event')
+ file=None;fnline=None
+ for path in (R/'internal/lower').glob('*_test.go'):
+  text=path.read_text();m=re.search(r'^func '+row+r'\(',text,re.M)
+  if m:file=str(path.relative_to(R));fnline=text[:m.start()].count('\n')+1;break
+ ownprobe=entries[row];pr=recover[ownprobe,row];pc=pr['code'];assert pc in [0,1],pr
+ command=f'ADAMIC_MUTANT={last} ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/{last} timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run '+('^'+row+'$' if (last,row) in recover else '.')+' > '+str(O.relative_to(R)/log)+' 2>&1'
+ result.append(dict(test=row,package='internal/lower',file=file+':'+str(fnline),seconds=timing[row]['median'],oracle=oracles[i],oracle_kind=['external-run','self'] if i==7 else 'self',kills=sorted(ks),unique_kills=uniq,last_proven_fail=last+': '+line if last else None,verdict=verdict,subsumed_by=others,mutants_in_matrix=len(valid),probe_kills=[ownprobe] if pc else [],subsumer_seconds=subssec,vacuous=pc==0,bounded=True,matrix_rows=rows,evidence=command+'; '+str(line),subsumption_mutants=len(ks) if verdict in ['subsumed','overlapping'] else None,supplemental_kills=['M20'] if matrix['M20'][row]=='fail' else []))
+(O/'results.json').write_text(json.dumps(result,indent=2))
+header='mutant\t'+'\t'.join(rows)+'\n';table=header+'\n'.join(id+'\t'+'\t'.join(matrix[id][r] for r in rows) for id in matrix)+'\n';(O/'matrix.tsv').write_text(table)
+md='| ID | Origin file:line | Change | Observed failing rows |\n|---|---|---|---|\n'
+for x in plan:
+ change=x['old'].strip().replace('\n',' ')+' -> '+(x['new'].strip() or '(drop)');md+='| '+x['id']+(' supplemental' if x.get('supplemental') else '')+' | '+x['file']+':'+str(x['line'])+' | '+change.replace('|','\\|')+' | '+', '.join(observed[x['id']])+' |\n'
+(O/'mutant-table.md').write_text(md)
+summary=dict(base=subprocess.check_output(['git','rev-parse','origin/main'],cwd=R,text=True).strip(),nproc=5,counts=dict(collections.Counter(x['verdict'] for x in result)),baseline=parse(O/'baseline.log')['elapsed'],bounded_mutants=[id for id,d in whole.items() if d['panic']],survivors=[id for id in valid if not observed[id]],menu_mutants=len(valid),supplemental=['M20'],probes=len(set(entries.values())),full_package_binary_seconds=sum(d['elapsed'] or 0 for d in whole.values()),full_package_wall_seconds=sum(x['wall'] for x in json.loads((O/'run-status.json').read_text()) if x['log']==x['id']+'.log'),recovery_wall_seconds=sum(x['wall'] for x in recovery),standalone_vet_seconds=sum(x['seconds'] for x in json.loads((O/'standalone-vet.json').read_text())),finished=time.time())
+(O/'summary.json').write_text(json.dumps(summary,indent=2));print(json.dumps(summary,indent=2));print([(x['test'],x['kills'],x['verdict'],x['subsumed_by']) for x in result])

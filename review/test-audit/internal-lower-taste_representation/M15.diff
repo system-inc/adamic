@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_mixed.go
++++ b/internal/lower/view_unions_mixed.go
+@@ -53,7 +53,7 @@
+ 		if err != nil {
+ 			return 0, err
+ 		}
+-		if child <= 0 || int(child) > len(l.result.ViewContracts) || l.result.ViewContracts[int(child)-1].Kind == ir.ViewUnknown {
++		if child <= 0 || int(child) > len(l.result.ViewContracts) || l.result.ViewContracts[int(child)-1].Kind == ir.ViewCallable {
+ 			return 0, l.notYet(node, "an unavailable checked union member contract for "+l.checker.TypeToString(member))
+ 		}
+ 		contract.Members = append(contract.Members, child)

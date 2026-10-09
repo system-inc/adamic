@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -63,7 +63,7 @@
+ 					return nil, fmt.Errorf("unsupported tag contract %s.%s", contract.Name, field.Name)
+ 				}
+ 			}
+-			member.Tags = append(member.Tags, UntaggedViewTag{Field: field.Name, Allowed: append([]ir.ViewLiteral(nil), tag.Allowed...)})
++			member.Tags = append(member.Tags, UntaggedViewTag{Field: field.Name, Allowed: append(tag.Allowed[:0], tag.Allowed...)})
+ 		}
+ 		members = append(members, member)
+ 	}

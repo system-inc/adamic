@@ -1,0 +1,3 @@
+CODE UNDER TEST: Lower, viewContract, internMixedUnionViewContract, UntaggedViewMembers and functions recorded in reached-functions.txt.
+ORACLE: handwritten IR and diagnostic expectations; mixed graph also compares against the live in-process TypeScript-Go checker. No independent external authority value checked.
+Fixed menu: mutant-plan.json, frozen before mutation execution. M20 changes the append allocation option from fresh storage to registry storage.

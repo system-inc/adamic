@@ -1,0 +1,11 @@
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -66,7 +66,7 @@
+ 	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
+ 		contract.Kind = ir.ViewUndefined
+ 	} else if interfaceScalar(represented) && of != ir.Union {
+-		contract.Kind = ir.ViewScalar
++		contract.Kind = ir.ViewObject
+ 		contract.Allowed = l.viewContractLiterals(represented)
+ 	} else {
+ 		contract.Kind = ir.ViewObject

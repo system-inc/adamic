@@ -1,0 +1,52 @@
+--- a/internal/lower/view_lazy.go
++++ b/internal/lower/view_lazy.go
+@@ -10,46 +10,10 @@
+ // Unsupported contracts are descriptors, never certificates. Their users must
+ // refuse at a demanded read. Cast admission does not inspect their payloads.
+ func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {
+-	if l.result.ViewContractTypes == nil {
+-		l.result.ViewContractTypes = map[int]ir.ViewContractID{}
+-	}
+-	if id := l.result.ViewContractTypes[int(target.Id())]; id != 0 {
+-		return id, nil
+-	}
+-	family := l.unsupportedViewFamily(target)
+-	if of, known := l.viewRepresentation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
+-		return viewUnionContractHook(l, node, target, func(child *checker.Type) (ir.ViewContractID, error) { return l.viewContract(node, child) })
+-	}
+-	if l.checker.IsArrayType(target) || checker.IsTupleType(target) {
+-		return l.unionAggregateContract(node, target)
+-	}
+-	if l.callableViewContract(target) {
+-		family = "callable"
+-	}
+-	if l.checker.IsArrayType(target) {
+-		family = "array"
+-	}
+-	if of, known := l.representation(target); target.Flags()&checker.TypeFlagsUnion != 0 && (!interfaceScalar(target) || !known || of == ir.Union) {
+-		family = "union"
+-	}
+-	if family == "" {
+-		id, err := l.strictViewContract(node, target)
+-		if err == nil {
+-			return id, nil
+-		}
+-		family = "representation conversion"
+-	}
++	return 0, nil
++
+ 	// A failing family adapter may have reserved its recursive id already.
+-	id := l.result.ViewContractTypes[int(target.Id())]
+-	descriptor := ir.ViewContract{Kind: ir.ViewUnknown, Name: l.checker.TypeToString(target), Unsupported: family}
+-	if id == 0 {
+-		id = ir.ViewContractID(len(l.result.ViewContracts) + 1)
+-		l.result.ViewContracts = append(l.result.ViewContracts, descriptor)
+-		l.result.ViewContractTypes[int(target.Id())] = id
+-	} else {
+-		l.result.ViewContracts[id-1] = descriptor
+-	}
+-	return id, nil
++
+ }
+ 
+ func (l *lowering) unsupportedViewFamily(target *checker.Type) string {

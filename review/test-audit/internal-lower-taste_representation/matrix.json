@@ -1,0 +1,658 @@
+{
+  "rows": [
+    "TestTasteRepresentationLimitsStayExplicit",
+    "TestTypedArraysLower",
+    "TestTypedArrayGaps",
+    "TestTypedArrayViewsCannotChangeRepresentation",
+    "TestUnknownReflectionRefusals",
+    "TestViewObjectContractsAreAvailableToEraser",
+    "TestViewObjectWritesNeedSourceCertificate",
+    "TestMixedUnionContractGraph",
+    "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "TestMixedUnionContractUnknownMemberFails",
+    "TestMixedUnionContractRecursiveMember",
+    "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "TestMixedUnionContractPhantomVoidIsUndefined",
+    "TestUntaggedViewMemberTags",
+    "TestUntaggedViewStructuralFallback"
+  ],
+  "columns": [
+    "M01",
+    "M02",
+    "M03",
+    "M04",
+    "M05",
+    "M06",
+    "M07",
+    "M08",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M13",
+    "M14",
+    "M15",
+    "M16",
+    "M17",
+    "M18",
+    "M19",
+    "M20"
+  ],
+  "cells": {
+    "M01": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M02": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M03": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "fail",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M04": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "fail",
+      "TestTypedArrayGaps": "fail",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M05": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "fail",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M06": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "fail",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M07": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "fail",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M08": {
+      "TestTasteRepresentationLimitsStayExplicit": "fail",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M09": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "fail",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M10": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "fail",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M11": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "fail",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "fail",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "fail",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M12": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "fail",
+      "TestViewObjectWritesNeedSourceCertificate": "fail",
+      "TestMixedUnionContractGraph": "fail",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "fail",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M13": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "fail",
+      "TestMixedUnionContractUnknownMemberFails": "fail",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M14": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "fail",
+      "TestMixedUnionContractUnknownMemberFails": "fail",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M15": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "fail",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M16": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "fail",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "fail",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "fail",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "fail",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M17": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "fail",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "fail",
+      "TestUntaggedViewMemberTags": "pass",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M18": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "fail",
+      "TestUntaggedViewStructuralFallback": "pass"
+    },
+    "M19": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "fail",
+      "TestUntaggedViewStructuralFallback": "fail"
+    },
+    "M20": {
+      "TestTasteRepresentationLimitsStayExplicit": "pass",
+      "TestTypedArraysLower": "pass",
+      "TestTypedArrayGaps": "pass",
+      "TestTypedArrayViewsCannotChangeRepresentation": "pass",
+      "TestUnknownReflectionRefusals": "pass",
+      "TestViewObjectContractsAreAvailableToEraser": "pass",
+      "TestViewObjectWritesNeedSourceCertificate": "pass",
+      "TestMixedUnionContractGraph": "pass",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry": "pass",
+      "TestMixedUnionContractUnknownMemberFails": "pass",
+      "TestMixedUnionContractRecursiveMember": "pass",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": "pass",
+      "TestMixedUnionContractPhantomVoidIsUndefined": "pass",
+      "TestUntaggedViewMemberTags": "fail",
+      "TestUntaggedViewStructuralFallback": "pass"
+    }
+  },
+  "observed_package_kills": {
+    "M01": [],
+    "M02": [],
+    "M03": [
+      "TestTypedArraysLower"
+    ],
+    "M04": [
+      "TestTypedArrayGaps",
+      "TestTypedArraysLower"
+    ],
+    "M05": [
+      "TestTypedArrayViewsCannotChangeRepresentation"
+    ],
+    "M06": [
+      "TestUnknownReflectionRefusals"
+    ],
+    "M07": [
+      "TestUnknownReflectionRefusals"
+    ],
+    "M08": [
+      "TestEnumLimitsStayLoud",
+      "TestTasteRepresentationLimitsStayExplicit"
+    ],
+    "M09": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestViewObjectWritesNeedSourceCertificate"
+    ],
+    "M10": [
+      "TestMixedUnionContractPhantomVoidIsUndefined"
+    ],
+    "M11": [
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractRecursiveMember",
+      "TestViewObjectContractsAreAvailableToEraser"
+    ],
+    "M12": [
+      "TestDefaultTaggedInterfaceAdmission",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractRecursiveMember",
+      "TestPredicateBodyProof",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate"
+    ],
+    "M13": [
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails"
+    ],
+    "M14": [
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails"
+    ],
+    "M15": [
+      "TestMixedUnionContractUnknownMemberFails"
+    ],
+    "M16": [
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "M17": [
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined"
+    ],
+    "M18": [
+      "TestUntaggedViewMemberTags"
+    ],
+    "M19": [
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "M20": [
+      "TestUntaggedViewMemberTags"
+    ]
+  },
+  "whole_package": {
+    "M01": {
+      "seconds": 90.087,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M02": {
+      "seconds": 88.082,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M03": {
+      "seconds": 76.517,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M04": {
+      "seconds": 79.448,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M05": {
+      "seconds": 77.016,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M06": {
+      "seconds": 79.154,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M07": {
+      "seconds": 80.565,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M08": {
+      "seconds": 88.932,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M09": {
+      "seconds": 90.617,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M10": {
+      "seconds": 90.463,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M11": {
+      "seconds": 90.149,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M12": {
+      "seconds": 90.165,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M13": {
+      "seconds": 89.446,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M14": {
+      "seconds": 87.423,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M15": {
+      "seconds": 90.096,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M16": {
+      "seconds": 87.375,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M17": {
+      "seconds": 90.078,
+      "cooked": true,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M18": {
+      "seconds": 89.795,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M19": {
+      "seconds": 86.597,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    },
+    "M20": {
+      "seconds": 86.773,
+      "cooked": false,
+      "skip": [
+        "TestOriginalCycleLedger",
+        "TestOptionalWideningCensus",
+        "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];"
+      ]
+    }
+  },
+  "bounded_mutants": [
+    "M01",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M15",
+    "M17"
+  ],
+  "unknown_outside_slice": [
+    "M01",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M15",
+    "M17"
+  ]
+}

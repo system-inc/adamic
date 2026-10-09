@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -48,7 +48,7 @@
+ 		member := UntaggedViewMember{Contract: id}
+ 		for _, field := range contract.Fields {
+ 			// An absent optional tag is legal, so it cannot exclude this candidate.
+-			if field.Optional {
++			if !field.Optional {
+ 				continue
+ 			}
+ 			tag, err := lookup(field.Contract)

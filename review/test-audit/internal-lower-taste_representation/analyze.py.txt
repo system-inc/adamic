@@ -1,0 +1,22 @@
+import pathlib,json,re
+O=pathlib.Path('/workspace/adamic/review/test-audit/internal-lower-taste_representation');rows=json.loads((O/'rows.json').read_text())
+def parse(path):
+ events=[]
+ for line in path.read_text().splitlines():
+  try:events.append(json.loads(line))
+  except:pass
+ fails=[];passed=[];skips=[];messages={}
+ for e in events:
+  test=e.get('Test','');r=test.split('/')[0]
+  if e.get('Action')=='fail' and test and '/' not in test:fails.append(test)
+  if e.get('Action')=='pass' and test and '/' not in test:passed.append(test)
+  if e.get('Action')=='skip':skips.append(test)
+  if e.get('Action')=='output' and test:
+   msg=e.get('Output','').strip()
+   if re.search(r'_test.go:\d+:',msg):messages.setdefault(r,[]).append(msg)
+ return dict(fail=fails,pass_=passed,skip=skips,messages=messages,panic='panic:' in path.read_text(),elapsed=next((e.get('Elapsed') for e in reversed(events) if not e.get('Test') and e.get('Action') in ['pass','fail']),None))
+if __name__=='__main__':
+ result={}
+ for p in sorted(O.glob('M[0-9][0-9].log')):
+  d=parse(p);result[p.stem]=d;print(p.stem,'elapsed',d['elapsed'],'panic',d['panic'],'fails',d['fail'])
+ (O/'matrix-preliminary.json').write_text(json.dumps(result,indent=2))

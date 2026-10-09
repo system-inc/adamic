@@ -1,0 +1,28 @@
+import pathlib,json,subprocess,time,os,difflib,re
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-lower-taste_representation';base=json.loads(pathlib.Path('/tmp/u044-base.json').read_text());items=json.loads((O/'mutant-plan.json').read_text());items[-1]['supplemental']=True;items[-1]['reason']='Changes append destination storage; conservatively outside fixed-menu constant/option intent. No verdict rests on M20.';(O/'mutant-plan.json').write_text(json.dumps(items,indent=2))
+for f,t in base.items():(R/f).write_text(t)
+(R/'internal/lower/audit_switch.go').unlink()
+status=[]
+for x in items:
+ f=x['file'];t=base[f];c=t.replace(x['old'],x['new'],1);c=subprocess.check_output(['gofmt'],input=c,text=True);(O/x['diff']).write_text(''.join(difflib.unified_diff(t.splitlines(True),c.splitlines(True),fromfile='a/'+f,tofile='b/'+f)))
+ps=[('P01','internal/lower/lower.go'),('P02','internal/lower/view_unions_mixed.go'),('P03','internal/lower/view_lazy.go'),('P04','internal/lower/view_unions_untagged.go')]
+for id,f,diff in [(x['id'],x['file'],x['diff']) for x in items]+[(id,f,id+'.diff') for id,f in ps]:
+ t=time.monotonic();subprocess.run(['git','apply','--check',str(O/diff)],cwd=R,check=True);subprocess.run(['git','apply',str(O/diff)],cwd=R,check=True)
+ with open(O/(id+'-standalone-vet.log'),'w') as out:p=subprocess.run(['timeout','90','go','vet','./internal/lower/'],cwd=R,stdout=out,stderr=subprocess.STDOUT)
+ (R/f).write_text(base[f]);status.append(dict(id=id,code=p.returncode,seconds=time.monotonic()-t));(O/'standalone-vet.json').write_text(json.dumps(status,indent=2));print(status[-1],flush=True)
+ assert p.returncode==0,(O/(id+'-standalone-vet.log')).read_text()
+# Timings of two out-of-slice subsumers, with matrix load removed.
+timing=json.loads((O/'timings.json').read_text())
+for row in ['TestEnumLimitsStayLoud','TestDefaultTaggedInterfaceAdmission']:
+ times=[]
+ for i in range(1,4):
+  path=O/f'time-{row}-{i}.log'
+  if path.exists():path.rename(O/f'time-{row}-loaded-{i}.log')
+  with open(path,'w') as out:p=subprocess.run(['timeout','120','go','test','-count=1','-timeout','90s','./internal/lower/','-run','^'+row+'$'],cwd=R,stdout=out,stderr=subprocess.STDOUT)
+  assert p.returncode==0;times.append(float(re.search(r'ok\s+\S+\s+([\d.]+)s',path.read_text())[1]))
+ timing[row]=dict(runs=times,median=sorted(times)[1]);(O/'timings.json').write_text(json.dumps(timing,indent=2))
+rows=json.loads((O/'rows.json').read_text());pattern='^('+'|'.join(rows)+')$';t=time.monotonic()
+with open(O/'restored-slice.log','w') as out:p=subprocess.run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/lower/','-run',pattern],cwd=R,stdout=out,stderr=subprocess.STDOUT)
+assert p.returncode==0
+subprocess.run(['git','diff','--exit-code','--','internal/lower/'],cwd=R,check=True)
+(O/'finish-status.json').write_text(json.dumps(dict(restored_slice_wall=time.monotonic()-t,finished=time.time(),checks=len(status)),indent=2))

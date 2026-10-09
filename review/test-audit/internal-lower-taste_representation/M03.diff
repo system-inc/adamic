@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -253,7 +253,7 @@
+ 	if index.Type() != ir.Number || value.Type() != ir.Number {
+ 		return nil, true, l.notYet(target, "a typed array write with nonnumeric index or value")
+ 	}
+-	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: value, Element: ir.Number, Site: l.writeSite(access.Expression)}}, true, nil
++	return []ir.Statement{ir.SetIndex{Array: array, Index: index, Value: value, Element: ir.String, Site: l.writeSite(access.Expression)}}, true, nil
+ }
+ 
+ func (l *lowering) typedArrayForOf(node *ast.Node) ([]ir.Statement, bool, error) {

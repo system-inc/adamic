@@ -1,0 +1,11 @@
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -28,7 +28,7 @@
+ 	if key.Kind != ast.KindStringLiteral {
+ 		return nil, l.notYet(key, "in with a key other than a string literal (dynamic key coercion)")
+ 	}
+-	if strings.ContainsRune(key.Text(), 0) {
++	if strings.ContainsRune(key.Text(), 1) {
+ 		return nil, l.notYet(key, "in with a NUL key (native shape names)")
+ 	}
+ 	// "key" in value narrows a union of object types to the members that declare the key, and any

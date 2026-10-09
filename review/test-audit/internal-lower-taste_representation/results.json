@@ -1,0 +1,686 @@
+[
+  {
+    "test": "TestTasteRepresentationLimitsStayExplicit",
+    "package": "internal/lower",
+    "file": "internal/lower/taste_representation_test.go:9",
+    "seconds": 0.25,
+    "oracle": "Handwritten refusal class and diagnostic fragments; enum prototype expects Refused although failure text says NotYet.",
+    "oracle_kind": "self",
+    "kills": [
+      "M08"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M08: taste_representation_test.go:28: want NotYet \"an enum member name that changes the prototype\", got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestEnumLimitsStayLoud"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.63,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M08 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M08.log 2>&1; taste_representation_test.go:28: want NotYet \"an enum member name that changes the prototype\", got <nil>",
+    "subsumption_mutants": 1,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestTypedArraysLower",
+    "package": "internal/lower",
+    "file": "internal/lower/typed_arrays_test.go:11",
+    "seconds": 0.144,
+    "oracle": "Handwritten typed-array local membership and numeric SetIndex IR. Does not check exact kind, FromArray, conversion values, or native execution; M02 survives.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03",
+      "M04"
+    ],
+    "unique_kills": [
+      "M03"
+    ],
+    "last_proven_fail": "M04: typed_arrays_test.go:24: /tmp/adamic-gate/TestTypedArraysLowerUint8Array2770007613/001/main.a:5:12: stage 0 can't lower typed array set from a different element type or a plain array yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M04.log 2>&1; typed_arrays_test.go:24: /tmp/adamic-gate/TestTypedArraysLowerUint8Array2770007613/001/main.a:5:12: stage 0 can't lower typed array set from a different element type or a plain array yet",
+    "subsumption_mutants": null,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestTypedArrayGaps",
+    "package": "internal/lower",
+    "file": "internal/lower/typed_arrays_test.go:37",
+    "seconds": 0.436,
+    "oracle": "Handwritten NotYet class and diagnostic fragments for unsupported facilities and operations.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M04: typed_arrays_test.go:55: const v = new Uint8Array(4); v.set(new Int32Array(2));: want \"different element type\", got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestTypedArraysLower"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.144,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M04.log 2>&1; typed_arrays_test.go:55: const v = new Uint8Array(4); v.set(new Int32Array(2));: want \"different element type\", got <nil>",
+    "subsumption_mutants": 1,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestTypedArrayViewsCannotChangeRepresentation",
+    "package": "internal/lower",
+    "file": "internal/lower/typed_arrays_test.go:60",
+    "seconds": 0.132,
+    "oracle": "Handwritten NotYet class only. A different NotYet refusal can satisfy the same expected answer.",
+    "oracle_kind": "self",
+    "kills": [
+      "M05"
+    ],
+    "unique_kills": [
+      "M05"
+    ],
+    "last_proven_fail": "M05: typed_arrays_test.go:70: representation change accepted: const narrow = new Uint8Array(2); const shape: {readonly length: number} = narrow;: <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M05 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M05.log 2>&1; typed_arrays_test.go:70: representation change accepted: const narrow = new Uint8Array(2); const shape: {readonly length: number} = narrow;: <nil>",
+    "subsumption_mutants": null,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestUnknownReflectionRefusals",
+    "package": "internal/lower",
+    "file": "internal/lower/unknown_test.go:9",
+    "seconds": 0.752,
+    "oracle": "Handwritten NotYet class and diagnostic fragments for reflection hazards; no Node comparison.",
+    "oracle_kind": "self",
+    "kills": [
+      "M06",
+      "M07"
+    ],
+    "unique_kills": [
+      "M06",
+      "M07"
+    ],
+    "last_proven_fail": "M07: unknown_test.go:37: got <nil>, want NotYet explaining \"descriptor metadata\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M07 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M07.log 2>&1; unknown_test.go:37: got <nil>, want NotYet explaining \"descriptor metadata\"",
+    "subsumption_mutants": null,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestViewObjectContractsAreAvailableToEraser",
+    "package": "internal/lower",
+    "file": "internal/lower/view_objects_test.go:9",
+    "seconds": 0.061,
+    "oracle": "Handwritten transitive IR object and boolean-scalar contract expectations; eraser is not executed.",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: view_objects_test.go:39: no transitive object read found",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.064,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestViewObjectContractsAreAvailableToEraser$ > review/test-audit/internal-lower-taste_representation/M12-TestViewObjectContractsAreAvailableToEraser.log 2>&1; view_objects_test.go:39: no transitive object read found",
+    "subsumption_mutants": 2,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestViewObjectWritesNeedSourceCertificate",
+    "package": "internal/lower",
+    "file": "internal/lower/view_objects_test.go:43",
+    "seconds": 0.096,
+    "oracle": "Handwritten nonnil error and source-slot type certificate substring; no external execution.",
+    "oracle_kind": "self",
+    "kills": [
+      "M09",
+      "M12"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M12: view_objects_test.go:54: unchecked write could invalidate another alias: <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDefaultTaggedInterfaceAdmission"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": 0.512,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M12 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestViewObjectWritesNeedSourceCertificate$ > review/test-audit/internal-lower-taste_representation/M12-TestViewObjectWritesNeedSourceCertificate.log 2>&1; view_objects_test.go:54: unchecked write could invalidate another alias: <nil>",
+    "subsumption_mutants": 2,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractGraph",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:32",
+    "seconds": 0.146,
+    "oracle": "Live in-process Microsoft TypeScript-Go checker supplies member names and count; handwritten descriptor and field checks. Does not require primitive member scalar kinds: M11 passes.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M12",
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: view_unions_mixed_test.go:56: union lost a member contract",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": 0.064,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M16.log 2>&1; view_unions_mixed_test.go:56: union lost a member contract",
+    "subsumption_mutants": 2,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:74",
+    "seconds": 0.06,
+    "oracle": "Handwritten atomic rollback, injected callback error propagation, and complete retry graph expectations. Callback error is a production API input, not a witness harness mutant.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M14",
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: view_unions_mixed_test.go:97: retry used incomplete graph: id 1, <nil>",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M16.log 2>&1; view_unions_mixed_test.go:97: retry used incomplete graph: id 1, <nil>",
+    "subsumption_mutants": 3,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractUnknownMemberFails",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:101",
+    "seconds": 0.06,
+    "oracle": "Handwritten rejection and registry rollback for unavailable child descriptors.",
+    "oracle_kind": "self",
+    "kills": [
+      "M13",
+      "M14",
+      "M15"
+    ],
+    "unique_kills": [
+      "M15"
+    ],
+    "last_proven_fail": "M15: view_unions_mixed_test.go:115: unavailable member certified",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M15 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M15 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestMixedUnionContractUnknownMemberFails$ > review/test-audit/internal-lower-taste_representation/M15-TestMixedUnionContractUnknownMemberFails.log 2>&1; view_unions_mixed_test.go:115: unavailable member certified",
+    "subsumption_mutants": null,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractRecursiveMember",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:120",
+    "seconds": 0.064,
+    "oracle": "Handwritten recursive graph identity, object field count, and exactly three contracts.",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M12",
+      "M16"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M16: view_unions_mixed_test.go:140: recursive contract graph expanded instead of linking",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestMixedUnionContractGraph"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M16 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M16 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M16.log 2>&1; view_unions_mixed_test.go:140: recursive contract graph expanded instead of linking",
+    "subsumption_mutants": 3,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:144",
+    "seconds": 0.06,
+    "oracle": "Handwritten scalar string representation of phantom primitive brand.",
+    "oracle_kind": "self",
+    "kills": [
+      "M11",
+      "M16",
+      "M17"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M17: view_unions_mixed_test.go:151: approved phantom base refused: /tmp/adamic-gate/TestMixedUnionContractPhantomBrandUsesPrimitiveBase2024958023/001/contract.a:1:1: stage 0 can't lower checked union representation for Target yet",
+    "verdict": "overlapping",
+    "subsumed_by": [
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomVoidIsUndefined"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestMixedUnionContractPhantomBrandUsesPrimitiveBase$ > review/test-audit/internal-lower-taste_representation/M17-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log 2>&1; view_unions_mixed_test.go:151: approved phantom base refused: /tmp/adamic-gate/TestMixedUnionContractPhantomBrandUsesPrimitiveBase2024958023/001/contract.a:1:1: stage 0 can't lower checked union representation for Target yet",
+    "subsumption_mutants": 3,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_mixed_test.go:168",
+    "seconds": 0.057,
+    "oracle": "Handwritten undefined descriptor and absence of fields/unsupported marker for phantom void.",
+    "oracle_kind": "self",
+    "kills": [
+      "M10",
+      "M17"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M17: view_unions_mixed_test.go:179: phantom void became an object obligation: ir.ViewContract{Intersection:false, IntersectionTag:\"\", IntersectionRecursive:false, IntersectionBounded:false, ObjectPresent:0, RepresentationMask:0x0, Payload:0, PayloadTypeID:0, Unsupported:\"intersection\", NominalClass:0, NominalBases:[]string(nil), Nominal:\"\", Undefined:false, Null:false, Kind:0x0, Name:\"Target\", Of:0, Allowed:[]ir.ViewLiteral(nil), Fields:[]ir.ViewFieldContract(nil), Members:[]ir.ViewContractID(nil), Key:0, MapReadonly:false, ArrayReadonly:false, Element:0, TupleUnion:false, FixedTuple:false, TupleVariable:false, TupleMinimum:0, TupleRest:0, Tuple:[]ir.ViewContractID(nil), Functions:[]int(nil), ProducerCertified:false, Parameters:[]ir.ViewContractID(nil), Result:0, DiscardResult:false}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P03"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M17 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M17 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestMixedUnionContractPhantomVoidIsUndefined$ > review/test-audit/internal-lower-taste_representation/M17-TestMixedUnionContractPhantomVoidIsUndefined.log 2>&1; view_unions_mixed_test.go:179: phantom void became an object obligation: ir.ViewContract{Intersection:false, IntersectionTag:\"\", IntersectionRecursive:false, IntersectionBounded:false, ObjectPresent:0, RepresentationMask:0x0, Payload:0, PayloadTypeID:0, Unsupported:\"intersection\", NominalClass:0, NominalBases:[]string(nil), Nominal:\"\", Undefined:false, Null:false, Kind:0x0, Name:\"Target\", Of:0, Allowed:[]ir.ViewLiteral(nil), Fields:[]ir.ViewFieldContract(nil), Members:[]ir.ViewContractID(nil), Key:0, MapReadonly:false, ArrayReadonly:false, Element:0, TupleUnion:false, FixedTuple:false, TupleVariable:false, TupleMinimum:0, TupleRest:0, Tuple:[]ir.ViewContractID(nil), Functions:[]int(nil), ProducerCertified:false, Parameters:[]ir.ViewContractID(nil), Result:0, DiscardResult:false}",
+    "subsumption_mutants": null,
+    "supplemental_kills": []
+  },
+  {
+    "test": "TestUntaggedViewMemberTags",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_untagged_test.go:9",
+    "seconds": 0.014,
+    "oracle": "Handwritten member identities, tag alternatives, optional-tag exclusion, and writable-slice independence.",
+    "oracle_kind": "self",
+    "kills": [
+      "M18",
+      "M19"
+    ],
+    "unique_kills": [
+      "M18"
+    ],
+    "last_proven_fail": "M19: view_unions_untagged_test.go:22: union member Left needs its owning family adapter",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M19.log 2>&1; view_unions_untagged_test.go:22: union member Left needs its owning family adapter",
+    "subsumption_mutants": null,
+    "supplemental_kills": [
+      "M20"
+    ]
+  },
+  {
+    "test": "TestUntaggedViewStructuralFallback",
+    "package": "internal/lower",
+    "file": "internal/lower/view_unions_untagged_test.go:43",
+    "seconds": 0.01,
+    "oracle": "Handwritten untagged fallback and rejection of unsupported kinds and invalid IDs.",
+    "oracle_kind": "self",
+    "kills": [
+      "M19"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M19: view_unions_untagged_test.go:52: structural fallback lost: union member  needs its owning family adapter []lower.UntaggedViewMember(nil)",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestUntaggedViewMemberTags"
+    ],
+    "mutants_in_matrix": 19,
+    "probe_kills": [
+      "P04"
+    ],
+    "subsumer_seconds": 0.014,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestTasteRepresentationLimitsStayExplicit",
+      "TestTypedArraysLower",
+      "TestTypedArrayGaps",
+      "TestTypedArrayViewsCannotChangeRepresentation",
+      "TestUnknownReflectionRefusals",
+      "TestViewObjectContractsAreAvailableToEraser",
+      "TestViewObjectWritesNeedSourceCertificate",
+      "TestMixedUnionContractGraph",
+      "TestMixedUnionContractFailureDoesNotCertifyRetry",
+      "TestMixedUnionContractUnknownMemberFails",
+      "TestMixedUnionContractRecursiveMember",
+      "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+      "TestMixedUnionContractPhantomVoidIsUndefined",
+      "TestUntaggedViewMemberTags",
+      "TestUntaggedViewStructuralFallback"
+    ],
+    "evidence": "ADAMIC_MUTANT=M19 ADAMIC_BUILD_CACHE_DIR=/tmp/u044/cache/M19 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > review/test-audit/internal-lower-taste_representation/M19.log 2>&1; view_unions_untagged_test.go:52: structural fallback lost: union member  needs its owning family adapter []lower.UntaggedViewMember(nil)",
+    "subsumption_mutants": 1,
+    "supplemental_kills": []
+  }
+]

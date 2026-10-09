@@ -1,0 +1,33 @@
+{
+  "base": "2f7d81f91623c81b86e2ce5a439fdca69ef2d2b8",
+  "nproc": 5,
+  "counts": {
+    "subsumed": 6,
+    "sacred": 6,
+    "overlapping": 3
+  },
+  "baseline": 39.195,
+  "bounded_mutants": [
+    "M01",
+    "M09",
+    "M10",
+    "M11",
+    "M12",
+    "M15",
+    "M17"
+  ],
+  "survivors": [
+    "M01",
+    "M02"
+  ],
+  "menu_mutants": 19,
+  "supplemental": [
+    "M20"
+  ],
+  "probes": 4,
+  "full_package_binary_seconds": 1728.778,
+  "full_package_wall_seconds": 1886.5369709280008,
+  "recovery_wall_seconds": 462.92067114099655,
+  "standalone_vet_seconds": 17.153831135999553,
+  "finished": 1791543207.3301275
+}

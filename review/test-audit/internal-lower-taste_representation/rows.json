@@ -1,0 +1,17 @@
+[
+  "TestTasteRepresentationLimitsStayExplicit",
+  "TestTypedArraysLower",
+  "TestTypedArrayGaps",
+  "TestTypedArrayViewsCannotChangeRepresentation",
+  "TestUnknownReflectionRefusals",
+  "TestViewObjectContractsAreAvailableToEraser",
+  "TestViewObjectWritesNeedSourceCertificate",
+  "TestMixedUnionContractGraph",
+  "TestMixedUnionContractFailureDoesNotCertifyRetry",
+  "TestMixedUnionContractUnknownMemberFails",
+  "TestMixedUnionContractRecursiveMember",
+  "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+  "TestMixedUnionContractPhantomVoidIsUndefined",
+  "TestUntaggedViewMemberTags",
+  "TestUntaggedViewStructuralFallback"
+]

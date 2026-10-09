@@ -1,0 +1,59 @@
+import pathlib,json,subprocess,time,os,difflib,concurrent.futures
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-lower-taste_representation';items=json.loads((O/'mutant-plan.json').read_text());base=json.loads(pathlib.Path('/tmp/u044-base.json').read_text());rows=json.loads((O/'rows.json').read_text());pat='^('+'|'.join(rows)+')$'
+items[1]['old'] += ', true, nil'; items[1]['new'] += ', true, nil'
+# Drop the complete rollback map loop, avoiding unused loop variables.
+x=items[13];x['old']='\t\tfor key, value := range l.result.ViewContractTypes {\n\t\t\tif int(value) > start {\n\t\t\t\tdelete(l.result.ViewContractTypes, key)\n\t\t\t}\n\t\t}';x['new']='';x['line']=base[x['file']][:base[x['file']].index(x['old'])].count('\n')+1;x['menu']='drop whole loop'
+(O/'mutant-plan.json').write_text(json.dumps(items,indent=2))
+for x in items:
+ t=base[x['file']]; c=t.replace(x['old'],x['new'],1);(O/x['diff']).write_text(''.join(difflib.unified_diff(t.splitlines(True),c.splitlines(True),fromfile='a/'+x['file'],tofile='b/'+x['file'])))
+# Switched form supports concurrent independent runs; pure values use generic choice.
+work=dict(base)
+for x in items:
+ old,new=x['old'],x['new'];id=x['id']
+ if not new: switched='if !auditOn("'+id+'") { '+old+' }'
+ elif old.startswith('return '): switched='if auditOn("'+id+'") { '+new+' }; '+old
+ elif old.startswith('if '):
+  a=old[3:-2];b=new[3:-2];switched='if auditPick("'+id+'", '+a+', '+b+') {'
+ elif old.startswith('contract.Kind = '): switched='contract.Kind = auditPick("'+id+'", '+old.split(' = ')[1]+', '+new.split(' = ')[1]+')'
+ elif old.startswith('Value: value, Element: '): switched='Value: value, Element: auditPick("'+id+'", ir.Number, ir.String), Site:'
+ elif old.startswith('Kind: ir.ViewUndefined'): switched='Kind: ir.ViewUndefined, Name: "undefined", Undefined: auditPick("'+id+'", true, false)'
+ elif old.startswith('FromArray:'): switched='FromArray: auditPick("'+id+'", true, false)'
+ else: switched='auditPick("'+id+'", '+old+', '+new+')'
+ assert old in work[x['file']],id;work[x['file']]=work[x['file']].replace(old,switched,1)
+probes=[('P01','lower.go','func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {','return nil, nil'),('P02','view_unions_mixed.go','func internMixedUnionViewContract(l *lowering, node *ast.Node, target *checker.Type, build viewContractBuilder) (id ir.ViewContractID, err error) {','return 0, nil'),('P03','view_lazy.go','func (l *lowering) viewContract(node *ast.Node, target *checker.Type) (ir.ViewContractID, error) {','return 0, nil'),('P04','view_unions_untagged.go','func UntaggedViewMembers(contracts []ir.ViewContract, union ir.ViewContractID) ([]UntaggedViewMember, error) {','return nil, nil')]
+for id,f,sig,ret in probes:
+ f='internal/lower/'+f
+ if f not in base:base[f]=subprocess.check_output(['git','show','origin/main:'+f],cwd=R,text=True);work[f]=base[f]
+ work[f]=work[f].replace(sig,sig+'\n if auditOn("'+id+'") { '+ret+' }',1)
+ # Probe diff uses return at entry, because normal body preserves imports and compiles.
+ t=base[f];c=t.replace(sig,sig+'\n '+ret,1);(O/(id+'.diff')).write_text(''.join(difflib.unified_diff(t.splitlines(True),c.splitlines(True),fromfile='a/'+f,tofile='b/'+f)))
+pathlib.Path('/tmp/u044-base.json').write_text(json.dumps(base))
+for f,t in work.items():(R/f).write_text(t)
+(R/'internal/lower/audit_switch.go').write_text('package lower\nimport "os"\nfunc auditOn(id string) bool { return os.Getenv("ADAMIC_MUTANT")==id }\nfunc auditPick[T any](id string,a,b T) T { if auditOn(id) {return b};return a }\n')
+subprocess.run(['gofmt','-w']+[str(R/f) for f in work]+[str(R/'internal/lower/audit_switch.go')],check=True)
+for f in work:(O/(pathlib.Path(f).name+'.switched.txt')).write_text((R/f).read_text())
+(O/'audit_switch.go.txt').write_text((R/'internal/lower/audit_switch.go').read_text())
+def run(id,scope,filename):
+ env=dict(os.environ,ADAMIC_MUTANT=id,ADAMIC_BUILD_CACHE_DIR='/tmp/u044/cache/'+id);t=time.monotonic()
+ with open(O/filename,'w') as out:p=subprocess.run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/lower/','-run',scope],cwd=R,env=env,stdout=out,stderr=subprocess.STDOUT)
+ return dict(id=id,code=p.returncode,wall=time.monotonic()-t,log=filename)
+# Compile once before parallel matrix.
+t=time.monotonic()
+with open(O/'switch-vet.log','w') as out:p=subprocess.run(['go','vet','./internal/lower/'],cwd=R,stdout=out,stderr=subprocess.STDOUT)
+assert p.returncode==0,(O/'switch-vet.log').read_text()
+(O/'switch-build-seconds.txt').write_text(str(time.monotonic()-t))
+results=[]
+with concurrent.futures.ThreadPoolExecutor(max_workers=2) as pool:
+ fs=[pool.submit(run,x['id'],'.',x['id']+'.log') for x in items]
+ for fut in concurrent.futures.as_completed(fs):
+  x=fut.result();results.append(x);(O/'run-status.json').write_text(json.dumps(results,indent=2));print(x,flush=True)
+# Every requested row alone after a panic/timeout, preserving observed results.
+for result in list(results):
+ text=(O/result['log']).read_text()
+ if 'panic:' in text or result['code']==124:
+  for row in rows:
+   results.append(run(result['id'],'^'+row+'$',result['id']+'-'+row+'.log'))
+  (O/'run-status.json').write_text(json.dumps(results,indent=2))
+for id,*_ in probes:
+ for row in rows:results.append(run(id,'^'+row+'$',id+'-'+row+'.log'))
+ (O/'run-status.json').write_text(json.dumps(results,indent=2));print('probe '+id+' done',flush=True)

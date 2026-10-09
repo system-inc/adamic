@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_untagged.go
++++ b/internal/lower/view_unions_untagged.go
+@@ -42,7 +42,7 @@
+ 		if err != nil {
+ 			return nil, err
+ 		}
+-		if contract.Kind != ir.ViewObject || contract.Of != ir.Object {
++		if contract.Kind == ir.ViewObject || contract.Of != ir.Object {
+ 			return nil, fmt.Errorf("union member %s needs its owning family adapter", contract.Name)
+ 		}
+ 		member := UntaggedViewMember{Contract: id}

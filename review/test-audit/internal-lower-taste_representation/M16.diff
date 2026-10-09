@@ -1,0 +1,10 @@
+--- a/internal/lower/view_unions_mixed.go
++++ b/internal/lower/view_unions_mixed.go
+@@ -58,6 +58,6 @@
+ 		}
+ 		contract.Members = append(contract.Members, child)
+ 	}
+-	l.result.ViewContracts[int(id)-1] = contract
++
+ 	return id, nil
+ }

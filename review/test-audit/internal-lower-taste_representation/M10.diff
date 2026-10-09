@@ -1,0 +1,11 @@
+--- a/internal/lower/view_contracts.go
++++ b/internal/lower/view_contracts.go
+@@ -24,7 +24,7 @@
+ 	}
+ 	if target.Flags()&checker.TypeFlagsUndefined != 0 || l.phantomUndefined(target) {
+ 		id := ir.ViewContractID(len(l.result.ViewContracts) + 1)
+-		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: true, Of: ir.Object})
++		l.result.ViewContracts = append(l.result.ViewContracts, ir.ViewContract{Kind: ir.ViewUndefined, Name: "undefined", Undefined: false, Of: ir.Object})
+ 		l.result.ViewContractTypes[int(target.Id())] = id
+ 		return id, nil
+ 	}

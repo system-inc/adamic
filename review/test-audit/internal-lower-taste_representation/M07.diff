@@ -1,0 +1,11 @@
+--- a/internal/lower/unknown.go
++++ b/internal/lower/unknown.go
+@@ -48,7 +48,7 @@
+ 	if checker.IsTupleType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Right))) {
+ 		return nil, l.notYet(binary.Right, "in on a tuple (array presence metadata)")
+ 	}
+-	if key.Text() == "stack" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
++	if key.Text() == "stack_disabled" || key.Text() == "cause" || key.Text() == "errno" || key.Text() == "syscall" || key.Text() == "path" {
+ 		return nil, l.notYet(key, "in on an Error internal or optional property (host descriptor metadata)")
+ 	}
+ 	if reason := l.presenceHazard(key.Text()); reason != "" {

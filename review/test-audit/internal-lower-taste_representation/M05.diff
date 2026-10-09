@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -283,7 +283,7 @@
+ 	}
+ 	visited[[2]*checker.Type{from, to}] = true
+ 	if fromKind, toKind := l.typedArrayKind(from), l.typedArrayKind(to); fromKind != 0 || toKind != 0 {
+-		return fromKind != 0 && fromKind == toKind
++		return true
+ 	}
+ 	if !l.nodeBufferView(from, to) {
+ 		return false

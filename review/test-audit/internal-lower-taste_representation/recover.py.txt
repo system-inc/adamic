@@ -1,0 +1,17 @@
+import pathlib,json,subprocess,time,os,concurrent.futures,sys
+sys.path.insert(0,'/tmp');from u044_analyze import parse
+R=pathlib.Path('/workspace/adamic');O=R/'review/test-audit/internal-lower-taste_representation';rows=json.loads((O/'rows.json').read_text());old=json.loads((O/'run-status.json').read_text());jobs=[]
+for x in old:
+ if x['log']==x['id']+'.log' and (parse(O/x['log'])['panic'] or x['code']==124):
+  for r in rows:jobs.append((x['id'],r,'bounded'))
+entries={**{r:'P01' for r in rows[:7]},**{r:'P02' for r in rows[7:12]},rows[12]:'P03',**{r:'P04' for r in rows[13:]}}
+for r,id in entries.items():jobs.append((id,r,'probe'))
+def run(job):
+ id,r,kind=job;log=id+'-'+r+'.log';env=dict(os.environ,ADAMIC_MUTANT=id,ADAMIC_BUILD_CACHE_DIR='/tmp/u044/cache/'+id);t=time.monotonic()
+ with open(O/log,'w') as f:p=subprocess.run(['timeout','120','go','test','-json','-count=1','-timeout','90s','./internal/lower/','-run','^'+r+'$'],cwd=R,env=env,stdout=f,stderr=subprocess.STDOUT)
+ return dict(id=id,row=r,kind=kind,code=p.returncode,wall=time.monotonic()-t,log=log)
+results=[]
+with concurrent.futures.ThreadPoolExecutor(max_workers=4) as pool:
+ for x in pool.map(run,jobs):
+  results.append(x);(O/'recovery-status.json').write_text(json.dumps(results,indent=2));print(x,flush=True)
+(O/'probe-entries.json').write_text(json.dumps(entries,indent=2))

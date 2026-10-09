@@ -1,0 +1,962 @@
+[
+  {
+    "id": "M01",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.005767416999788,
+    "log": "M01-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.232523641000171,
+    "log": "M01-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 5.006715035999605,
+    "log": "M01-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.16376252200007,
+    "log": "M01-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.779659414999969,
+    "log": "M01-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.5964610189998893,
+    "log": "M01-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.3679241110003204,
+    "log": "M01-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.173923866000223,
+    "log": "M01-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.104839607000031,
+    "log": "M01-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.196626395999829,
+    "log": "M01-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.302965659000165,
+    "log": "M01-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.415954916999908,
+    "log": "M01-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.522610863999944,
+    "log": "M01-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.12080679599967,
+    "log": "M01-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M01",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.0226252140000724,
+    "log": "M01-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.087567717999718,
+    "log": "M09-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.485699042000306,
+    "log": "M09-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.152161201999661,
+    "log": "M09-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.9920469480002794,
+    "log": "M09-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.362113125000178,
+    "log": "M09-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.0653136390001237,
+    "log": "M09-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 4.155549320999853,
+    "log": "M09-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.980438459999732,
+    "log": "M09-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.769495997999911,
+    "log": "M09-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.225649126999997,
+    "log": "M09-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.738193524000053,
+    "log": "M09-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.592963337999663,
+    "log": "M09-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.3572172090002823,
+    "log": "M09-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 2.605082478999975,
+    "log": "M09-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M09",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.489057311000124,
+    "log": "M09-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 5.013306548999935,
+    "log": "M10-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.8184389649995865,
+    "log": "M10-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 6.486991862000195,
+    "log": "M10-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.39206390299978,
+    "log": "M10-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 5.123740994999935,
+    "log": "M10-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.653111722000176,
+    "log": "M10-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.562106010000207,
+    "log": "M10-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.1261643069997263,
+    "log": "M10-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.032393187999787,
+    "log": "M10-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.094691904999763,
+    "log": "M10-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.4527151900001627,
+    "log": "M10-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.9119681930001207,
+    "log": "M10-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.84473005000018,
+    "log": "M10-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.3171806499999548,
+    "log": "M10-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M10",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 2.883570621000217,
+    "log": "M10-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.6603245889996288,
+    "log": "M11-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.204000532000009,
+    "log": "M11-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.510001888000261,
+    "log": "M11-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.77076168900021,
+    "log": "M11-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 5.067798733000018,
+    "log": "M11-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.330296716999783,
+    "log": "M11-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.7541224130000046,
+    "log": "M11-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.9582368169999427,
+    "log": "M11-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.664029525999922,
+    "log": "M11-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.5423618830000123,
+    "log": "M11-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.3257710920001955,
+    "log": "M11-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.4003615430001446,
+    "log": "M11-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.9374325230000977,
+    "log": "M11-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.275573178000286,
+    "log": "M11-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M11",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.128530863999913,
+    "log": "M11-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 5.047620795000057,
+    "log": "M12-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.419967714999984,
+    "log": "M12-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.694110857000396,
+    "log": "M12-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.193941139999879,
+    "log": "M12-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.494208668000283,
+    "log": "M12-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 4.5575331639997785,
+    "log": "M12-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.9432563750001464,
+    "log": "M12-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.956334147999769,
+    "log": "M12-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.8645747049999954,
+    "log": "M12-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.162546924999788,
+    "log": "M12-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.25431307000008,
+    "log": "M12-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.5613489699999263,
+    "log": "M12-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.38711651299991,
+    "log": "M12-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.6997373290000724,
+    "log": "M12-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M12",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.2869267040000523,
+    "log": "M12-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.00621201299964,
+    "log": "M15-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.890980280000349,
+    "log": "M15-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.324220256999979,
+    "log": "M15-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.6058506690001195,
+    "log": "M15-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.557241496999723,
+    "log": "M15-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.3111286979997203,
+    "log": "M15-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.090399520000119,
+    "log": "M15-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.36997307799993,
+    "log": "M15-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.5363438670001415,
+    "log": "M15-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 4.114890354000181,
+    "log": "M15-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.314897235999979,
+    "log": "M15-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.459808528999929,
+    "log": "M15-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.744626677999804,
+    "log": "M15-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.6517840100000285,
+    "log": "M15-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M15",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.565898210999876,
+    "log": "M15-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.4094649100002243,
+    "log": "M17-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestTypedArraysLower",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.600201886999912,
+    "log": "M17-TestTypedArraysLower.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestTypedArrayGaps",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.309252070999719,
+    "log": "M17-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.128076650999901,
+    "log": "M17-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.52787909899962,
+    "log": "M17-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.0474646980001125,
+    "log": "M17-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.537399992999781,
+    "log": "M17-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.8050429069999154,
+    "log": "M17-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 4.106597106000208,
+    "log": "M17-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.7895364629998767,
+    "log": "M17-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 2.8691248420000193,
+    "log": "M17-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.380484119999892,
+    "log": "M17-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "bounded",
+    "code": 1,
+    "wall": 3.2735773499998686,
+    "log": "M17-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.7171565189996727,
+    "log": "M17-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "M17",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "bounded",
+    "code": 0,
+    "wall": 3.29388172400013,
+    "log": "M17-TestUntaggedViewStructuralFallback.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestTasteRepresentationLimitsStayExplicit",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.761378169999716,
+    "log": "P01-TestTasteRepresentationLimitsStayExplicit.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestTypedArraysLower",
+    "kind": "probe",
+    "code": 1,
+    "wall": 4.381366071999764,
+    "log": "P01-TestTypedArraysLower.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestTypedArrayGaps",
+    "kind": "probe",
+    "code": 1,
+    "wall": 4.6401847369997995,
+    "log": "P01-TestTypedArrayGaps.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestTypedArrayViewsCannotChangeRepresentation",
+    "kind": "probe",
+    "code": 1,
+    "wall": 4.50576749899983,
+    "log": "P01-TestTypedArrayViewsCannotChangeRepresentation.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestUnknownReflectionRefusals",
+    "kind": "probe",
+    "code": 1,
+    "wall": 5.1159593669999595,
+    "log": "P01-TestUnknownReflectionRefusals.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestViewObjectContractsAreAvailableToEraser",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.2419857299996693,
+    "log": "P01-TestViewObjectContractsAreAvailableToEraser.log"
+  },
+  {
+    "id": "P01",
+    "row": "TestViewObjectWritesNeedSourceCertificate",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.9808137869999882,
+    "log": "P01-TestViewObjectWritesNeedSourceCertificate.log"
+  },
+  {
+    "id": "P02",
+    "row": "TestMixedUnionContractGraph",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.6822947489999933,
+    "log": "P02-TestMixedUnionContractGraph.log"
+  },
+  {
+    "id": "P02",
+    "row": "TestMixedUnionContractFailureDoesNotCertifyRetry",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.3273038979996272,
+    "log": "P02-TestMixedUnionContractFailureDoesNotCertifyRetry.log"
+  },
+  {
+    "id": "P02",
+    "row": "TestMixedUnionContractUnknownMemberFails",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.7013885289998143,
+    "log": "P02-TestMixedUnionContractUnknownMemberFails.log"
+  },
+  {
+    "id": "P02",
+    "row": "TestMixedUnionContractRecursiveMember",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.65153895200001,
+    "log": "P02-TestMixedUnionContractRecursiveMember.log"
+  },
+  {
+    "id": "P02",
+    "row": "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+    "kind": "probe",
+    "code": 1,
+    "wall": 3.3231033570000363,
+    "log": "P02-TestMixedUnionContractPhantomBrandUsesPrimitiveBase.log"
+  },
+  {
+    "id": "P03",
+    "row": "TestMixedUnionContractPhantomVoidIsUndefined",
+    "kind": "probe",
+    "code": 1,
+    "wall": 2.8207173810001223,
+    "log": "P03-TestMixedUnionContractPhantomVoidIsUndefined.log"
+  },
+  {
+    "id": "P04",
+    "row": "TestUntaggedViewMemberTags",
+    "kind": "probe",
+    "code": 1,
+    "wall": 2.939714806000211,
+    "log": "P04-TestUntaggedViewMemberTags.log"
+  },
+  {
+    "id": "P04",
+    "row": "TestUntaggedViewStructuralFallback",
+    "kind": "probe",
+    "code": 1,
+    "wall": 2.66972877399985,
+    "log": "P04-TestUntaggedViewStructuralFallback.log"
+  }
+]

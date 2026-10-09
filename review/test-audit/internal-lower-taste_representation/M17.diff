@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_primitive_brands.go
++++ b/internal/lower/view_unions_primitive_brands.go
+@@ -66,7 +66,7 @@
+ 		}
+ 		return true
+ 	}
+-	return flags&checker.TypeFlagsVoid != 0 || optional && flags&checker.TypeFlagsUndefined != 0
++	return flags&checker.TypeFlagsVoid == 0 || optional && flags&checker.TypeFlagsUndefined != 0
+ }
+ 
+ // These inventories are the own names of boxed primitives and their complete prototype chains,

@@ -1,0 +1,11 @@
+--- a/internal/lower/typed_arrays.go
++++ b/internal/lower/typed_arrays.go
+@@ -205,7 +205,7 @@
+ 				return nil, true, err
+ 			}
+ 			if index == 0 && method == "set" {
+-				if value.Type() != kind {
++				if value.Type() == kind {
+ 					return nil, true, l.notYet(argument, "typed array set from a different element type or a plain array")
+ 				}
+ 			} else if method == "fill" && index == 0 {

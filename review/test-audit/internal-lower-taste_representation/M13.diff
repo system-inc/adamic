@@ -1,0 +1,11 @@
+--- a/internal/lower/view_unions_mixed.go
++++ b/internal/lower/view_unions_mixed.go
+@@ -39,7 +39,7 @@
+ 		if err == nil {
+ 			return
+ 		}
+-		l.result.ViewContracts = l.result.ViewContracts[:start]
++
+ 		for key, value := range l.result.ViewContractTypes {
+ 			if int(value) > start {
+ 				delete(l.result.ViewContractTypes, key)

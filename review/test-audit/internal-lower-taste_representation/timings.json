@@ -1,0 +1,138 @@
+{
+  "TestTasteRepresentationLimitsStayExplicit": {
+    "runs": [
+      0.25,
+      0.414,
+      0.24
+    ],
+    "median": 0.25
+  },
+  "TestTypedArraysLower": {
+    "runs": [
+      0.144,
+      0.157,
+      0.141
+    ],
+    "median": 0.144
+  },
+  "TestTypedArrayGaps": {
+    "runs": [
+      0.51,
+      0.404,
+      0.436
+    ],
+    "median": 0.436
+  },
+  "TestTypedArrayViewsCannotChangeRepresentation": {
+    "runs": [
+      0.132,
+      0.128,
+      0.135
+    ],
+    "median": 0.132
+  },
+  "TestUnknownReflectionRefusals": {
+    "runs": [
+      0.752,
+      0.881,
+      0.729
+    ],
+    "median": 0.752
+  },
+  "TestViewObjectContractsAreAvailableToEraser": {
+    "runs": [
+      0.053,
+      0.061,
+      0.067
+    ],
+    "median": 0.061
+  },
+  "TestViewObjectWritesNeedSourceCertificate": {
+    "runs": [
+      0.122,
+      0.096,
+      0.093
+    ],
+    "median": 0.096
+  },
+  "TestMixedUnionContractGraph": {
+    "runs": [
+      0.153,
+      0.146,
+      0.135
+    ],
+    "median": 0.146
+  },
+  "TestMixedUnionContractFailureDoesNotCertifyRetry": {
+    "runs": [
+      0.062,
+      0.06,
+      0.056
+    ],
+    "median": 0.06
+  },
+  "TestMixedUnionContractUnknownMemberFails": {
+    "runs": [
+      0.063,
+      0.057,
+      0.06
+    ],
+    "median": 0.06
+  },
+  "TestMixedUnionContractRecursiveMember": {
+    "runs": [
+      0.064,
+      0.068,
+      0.059
+    ],
+    "median": 0.064
+  },
+  "TestMixedUnionContractPhantomBrandUsesPrimitiveBase": {
+    "runs": [
+      0.07,
+      0.06,
+      0.054
+    ],
+    "median": 0.06
+  },
+  "TestMixedUnionContractPhantomVoidIsUndefined": {
+    "runs": [
+      0.063,
+      0.057,
+      0.057
+    ],
+    "median": 0.057
+  },
+  "TestUntaggedViewMemberTags": {
+    "runs": [
+      0.014,
+      0.012,
+      0.042
+    ],
+    "median": 0.014
+  },
+  "TestUntaggedViewStructuralFallback": {
+    "runs": [
+      0.013,
+      0.01,
+      0.01
+    ],
+    "median": 0.01
+  },
+  "TestEnumLimitsStayLoud": {
+    "runs": [
+      0.669,
+      0.63,
+      0.561
+    ],
+    "median": 0.63
+  },
+  "TestDefaultTaggedInterfaceAdmission": {
+    "runs": [
+      0.512,
+      0.534,
+      0.438
+    ],
+    "median": 0.512
+  }
+}
