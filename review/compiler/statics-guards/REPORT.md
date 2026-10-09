@@ -1,5 +1,5 @@
 Built test-only lowering guards toward task #jhxsq14, private/public statics, readiness messages, and namespace bindings.
-Commits: see the delivery branch log; the implementation and evidence contain only tests and review files.
+Implementation commit: 153a5c2b. Later commits merge current main and preserve lane evidence; unit edits contain only tests and review files.
 Focused commands: bounded internal/lower leaves pass; exact replay commands and exits are in probe-results.json and restored.jsonl.
 Mutants: M06 fails Node agreement, M13 fails the Node panic message, M12 fails the exact named-binding assertion; all seven empty-answer probes fail.
 Limit: M12's Node comparison survives because the parser-factory JavaScript is byte-identical under that mutant; no behavioral kill is claimed for M12.
@@ -44,3 +44,5 @@ Final top-level leaf timings, all below 60 seconds:
 | TestClassWrongOutputPrivateRepair | 0.11 |
 | TestDefiniteAssignmentSoundNeighbors | 0.26 |
 | TestNamespaceAmbientHostInitialization | 1.18 |
+
+Landing merged current main 09769cb5ddc8067d2fa052a8c760d813894c8919. The focused leaves passed again on that merge (landed.jsonl). Lane checks on the implementation commit exited 0: `lane checks 5.4 s: gofmt and tools on 7 Go files, t.Parallel on 1 test packages; vet 1 packages`. The landing commit is checked again before push. The review logs were force-added because the repository ignores .log files. No non-test production file changed in any unit commit.

@@ -1,0 +1,7 @@
+=== RUN   TestStaticsGeneratedEvidence
+=== PAUSE TestStaticsGeneratedEvidence
+=== CONT  TestStaticsGeneratedEvidence
+    statics_evidence_test.go:29: generated JavaScript sha256=d13c3e58a27feb38584cfbc5ab2338e7a93933145f5e0e9cb003b16ec3a045e7 bytes=10320
+--- PASS: TestStaticsGeneratedEvidence (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.041s
