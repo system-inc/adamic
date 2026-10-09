@@ -1,0 +1,12 @@
+FIRST FAILURE (tests, at 803.5 s):
+github.com/system-inc/adamic/internal/ir TestCallTargetReaders
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /home/ahra/fast-gate/tree-3/internal/lower/overload_results.go:212:23; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /home/ahra/fast-gate/tree-3/internal/lower/overload_results.go:255:49; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /home/ahra/fast-gate/tree-3/internal/lower/overload_results.go:274:47; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:Call.Function at /home/ahra/fast-gate/tree-3/internal/lower/overload_results.go:313:46; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/overload_results.go:overloadSpecialization:CallClosure.Closure at /home/ahra/fast-gate/tree-3/internal/lower/overload_results.go:325:46; use CallTargets or ClosureTargets
+--- FAIL: TestCallTargetReaders (1.73s)
+
