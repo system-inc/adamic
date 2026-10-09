@@ -2,7 +2,7 @@
 type AnyFunction = (...args: never[]) => void;
 function fail(message?: string, stackCrawlMark?: AnyFunction): never {
     if (stackCrawlMark) { console.log(typeof stackCrawlMark); }
-    throw new Error(message);
+    throw new Error(message ?? '');
 }
 const marker: AnyFunction = fail;
 console.log(typeof marker);
