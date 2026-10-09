@@ -14,3 +14,12 @@ words.copyWithin(1, 0);
 console.log(words.join('|'));
 const empty: number[] = [];
 console.log(empty.copyWithin(0, 0).join('|'));
+console.log([1, 2, 3, 4].copyWithin(0, 2, undefined).join('|'));
+function optionalEnd(end: number | undefined): string {
+	return [1, 2, 3, 4].copyWithin(0, 2, end).join('|');
+}
+console.log(optionalEnd(undefined));
+console.log(optionalEnd(3));
+const changed = [1, 2, 3];
+function appendBeforeLength(): number { changed.push(4); return 2; }
+console.log(changed.copyWithin(0, appendBeforeLength(), undefined).join('|'));

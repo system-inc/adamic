@@ -1,0 +1,34 @@
+console.log(String({}));
+console.log(String({ valueOf: () => 'ignored' }));
+console.log(String({ toString: () => ' chosen ', valueOf: () => 'wrong' }));
+let order = '';
+const object = {
+ toString: () => { order = order + 't'; return {}; },
+ valueOf: () => { order = order + 'v'; return ' text '; }
+};
+function position(): number { order = order + 'p'; return 1; }
+console.log(String.prototype.slice.call(object, position()));
+console.log(order);
+console.log(String.prototype.trim.call(object));
+console.log(order);
+const throws = { toString: (): never => { throw new Error('primitive'); } };
+try { console.log(String(throws)); } catch (error) {
+ if (error instanceof Error) { console.log(error.message); }
+}
+console.log(String({toString: () => 42}));
+console.log(String({toString: () => true}));
+console.log(String([1, -0, 42]));
+console.log(String(['a', '🌍', 'z']));
+console.log(String([[1, 2], [3]]));
+console.log(String(new Map<string, number>()));
+console.log(String(new Set<number>()));
+const objects = { toString: () => ({}), valueOf: () => ({}) };
+try { console.log(String(objects)); } catch (error) {
+ if (error instanceof Error) { console.log(error.name); console.log(error.message); }
+}
+try { console.log(String({ toString: undefined, valueOf: undefined })); } catch (error) {
+ if (error instanceof Error) { console.log(error.name); console.log(error.message); }
+}
+const array = ['a'];
+function changeArray(): number { array.push('b'); return 0; }
+console.log(String.prototype.slice.call(array, changeArray()));

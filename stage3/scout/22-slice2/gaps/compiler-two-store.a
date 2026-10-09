@@ -1,0 +1,5 @@
+// Compiler ruling 1: fixed fields and ordered index-signature keys on one object.
+interface MapLike { fixed: string; [key:string]: string; }
+const values: MapLike = {fixed:"f"};
+values.extra="e";
+console.log(`${Object.entries(values).map(pair => pair.join(":")).join(",")}`);

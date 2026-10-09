@@ -1,0 +1,29 @@
+// Hold global and sticky lastIndex against the source run on Node.
+for (const regex of [/(a)|(z)/g, /(a)|(z)/gy, /(?:)/gu, /(?:)/gy]) {
+ for (const start of [-1, -0, 0, 1.5, 3, 99, NaN, Infinity]) {
+  regex.lastIndex = start;
+  const iterator = 'aba'.matchAll(regex);
+  regex.lastIndex = 99;
+  for (const match of iterator) {
+   console.log(`${match.index}:${match.map((part) => part ?? 'undefined').join('|')}`);
+  }
+  console.log(`original:${regex.lastIndex}:${iterator.next().done}`);
+  regex.lastIndex = start;
+  for (const match of String.prototype.matchAll.call('🌍aba', regex)) {
+   console.log(`call:${match.index}:${match[0]}`);
+  }
+  console.log(`call-original:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+function fail(): void { 'a'.matchAll(/a/); }
+try { fail(); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.name}:${error.message}`); }
+} finally { console.log('finally'); }
+try { String.prototype.matchAll.call('a', /a/y); } catch (error) {
+ if (error instanceof Error) { console.log(`${error.name}:${error.message}`); }
+}
+
+let text = 'aba';
+function pattern(): RegExp { text = 'xxx'; return /a/g; }
+const first = text.matchAll(pattern()).next();
+if (!first.done) { console.log(`order:${first.value[0]}:${text}`); }

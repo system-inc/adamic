@@ -1,0 +1,3 @@
+const full = {number: 1, hidden: 'built'.repeat(2)};
+const descriptors = Object.getOwnPropertyDescriptors(full);
+console.log(Object.keys(descriptors).join('|'));

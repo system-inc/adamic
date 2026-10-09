@@ -1,0 +1,8 @@
+// Reduced from core.ts:110
+function append<T>(input: T[], element: T): T[] {
+    const result: T[] = [];
+    result.push(element);
+    result.push(input[0] ?? element);
+    return result;
+}
+console.log(append([1], 2).join('|'));

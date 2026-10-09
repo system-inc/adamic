@@ -1,0 +1,33 @@
+const values = [1, 2, 3, 4];
+console.log(`${values.reduceRight((sum, value) => sum * 10 + value, 0)}`);
+console.log(values.reduceRight((text, value, index, array) => text + `${index}:${value}:${array === values}|`, ''));
+const empty: number[] = [];
+console.log(`${empty.reduceRight((sum, value) => sum + value, 17)}`);
+console.log(['a'.repeat(2), 'b'.repeat(2)].reduceRight((text, value) => text + value, 'start:'));
+const shrinking = [1, 2, 3, 4];
+console.log(shrinking.reduceRight((text, value, index) => {
+ if (index === 3) { shrinking.pop(); shrinking.pop(); }
+ return text + `${value}`;
+}, ''));
+const growing = [1, 2, 3];
+console.log(`${growing.reduceRight((sum, value) => { growing.push(9); return sum + value; }, 0)}`);
+console.log(`${growing.length}`);
+let calls = 0;
+console.log(`${[8].reduceRight((sum, value) => { calls++; return sum + value; }, 2)}`);
+console.log(`${calls}`);
+let current = [1, 2];
+const original = current;
+let order = '';
+function receiver(): number[] { order += 'r'; return current; }
+function initial(): number { order += 'i'; current = [9]; original.push(3); return 0; }
+console.log(`${receiver().reduceRight((sum, value) => sum * 10 + value, initial())}`);
+console.log(order);
+console.log(current.join('|'));
+try {
+	[1, 2, 3].reduceRight((sum, value): number => {
+		if (value === 2) { throw new Error('stop'); }
+		return sum + value;
+	}, 0);
+} catch (error: unknown) {
+	console.log(error instanceof Error ? error.message : '?');
+}

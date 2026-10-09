@@ -1,0 +1,8 @@
+import type { Stats } from 'node:fs';
+const error = new Error('captured');
+Error.captureStackTrace(error);
+console.log(`own:${Object.hasOwn(error, 'stack')}`);
+console.log(`present:${error.stack !== undefined}`);
+console.log(`type:${typeof error.stack}`);
+console.log(`bracket-type:${typeof error['stack']}`);
+// Neither this fixture nor its comparison prints any frame text.

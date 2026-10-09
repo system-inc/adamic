@@ -1,0 +1,12 @@
+export function generateDjb2Hash(data: string): string {
+    let acc = 5381;
+    for (let i = 0; i < data.length; i++) {
+        acc = ((acc << 5) + acc) + data.charCodeAt(i);
+    }
+    return acc.toString();
+}
+const _crypto = false;
+const createHash = _crypto ? createSHA256Hash : generateDjb2Hash;
+declare function createSHA256Hash(data: string): string;
+for (const text of ["", "abc", "héllo 🌍", "x".repeat(40)]) { console.log(createHash(text)); }
+console.log(createHash === generateDjb2Hash ? 'same function' : 'different function');

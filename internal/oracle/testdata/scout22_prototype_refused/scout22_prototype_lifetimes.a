@@ -1,0 +1,41 @@
+// Copied to .ts by the dedicated oracle: prototype mutation is outside .a.
+function prototypeFirst(): {} {
+ const prototype = {};
+ const receiver: {} = Object.create(prototype);
+ console.log(`${Object.is(Object.getPrototypeOf(receiver),prototype)}`);
+ return receiver;
+}
+function receiverFirst(): {} {
+ const receiver = {};
+ const prototype = {};
+ Object.setPrototypeOf(receiver,prototype);
+ console.log(`${Object.is(Object.getPrototypeOf(receiver),prototype)}`);
+ return receiver;
+}
+function replacement(): {} {
+ const first = {};
+ const second = {};
+ const receiver: {} = Object.create(first);
+ Object.setPrototypeOf(receiver,second);
+ console.log(`${Object.is(Object.getPrototypeOf(receiver),second)}`);
+ return receiver;
+}
+function teardownPrototypeFirst(): void {
+ const prototype = {};
+ const receiver: {} = Object.create(prototype);
+ console.log(`${Object.is(Object.getPrototypeOf(receiver),prototype)}`);
+}
+function teardownReceiverFirst(): void {
+ const receiver = {};
+ const prototype = {};
+ Object.setPrototypeOf(receiver,prototype);
+ console.log(`${Object.is(Object.getPrototypeOf(receiver),prototype)}`);
+}
+const first = prototypeFirst();
+const second = receiverFirst();
+const changed = replacement();
+// Use escaped objects after their prototype-owning function has returned.
+console.log(`${Object.is(first,first)}/${Object.is(second,second)}/${Object.is(changed,changed)}`);
+teardownPrototypeFirst();
+teardownReceiverFirst();
+console.log('after teardown');

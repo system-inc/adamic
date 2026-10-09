@@ -1,0 +1,16 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import { programArguments } from 'adamic';
+import { readdirSync, realpathSync } from 'node:fs';
+import { getAccessibleFileSystemEntries, directoryExists } from '../../../stage3/host/fs_directory.a';
+const path = programArguments()[0] ?? 'walking';
+try { console.log(`listing ${readdirSync(path).join('|')}`); }
+catch (error) { if (error instanceof Error) { console.log(`${errorCode(error) ?? ''} ${error.message}`); } }
+try { console.log(realpathSync(path + '/child')); }
+catch (error) { if (error instanceof Error) { console.log(`${errorCode(error) ?? ''} ${error.message}`); } }
+try { console.log(realpathSync.native(path + '/child')); }
+catch (error) { if (error instanceof Error) { console.log(`${errorCode(error) ?? ''} ${error.message}`); } }
+const entries = getAccessibleFileSystemEntries(path);
+console.log(`entries ${entries.files.join('|')} ${entries.directories.join('|')}`);
+console.log(`directory ${directoryExists(path)}`);
