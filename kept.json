@@ -1,0 +1,13 @@
+{
+ "github.com/system-inc/adamic/stage1/cohere/json": [
+  "TestAdditionalJSONBoundaries",
+  "TestUpstreamRepositoryCorpusParity"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdowninline": [
+  "TestDelimiterExpressionMatchesNode",
+  "TestMarkdownInline"
+ ],
+ "github.com/system-inc/adamic/stage3/fixtures": [
+  "TestFixtures"
+ ]
+}
