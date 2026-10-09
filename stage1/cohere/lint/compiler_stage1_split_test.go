@@ -9,9 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"regexp"
 	"runtime"
-	"strconv"
 	"strings"
 	"sync"
 	"syscall"
@@ -249,25 +247,9 @@ func TestCompilerAndStage1Agree_Setup(t *testing.T) {
 			}
 		}
 	}
-	// Check the actual top-level function enumeration, including empty future buckets.
-	source, err := os.ReadFile("compiler_stage1_split_test.go")
-	if err != nil {
-		t.Fatal(err)
-	}
-	matches := regexp.MustCompile(`(?m)^func TestCompilerAndStage1Agree_([0-9]+)\(t \*testing.T\)`).FindAllSubmatch(source, -1)
-	if len(matches) != testCompilerAndStage1AgreeShards {
-		t.Fatalf("enumerated %d, want %d", len(matches), testCompilerAndStage1AgreeShards)
-	}
-	seen := make([]bool, testCompilerAndStage1AgreeShards)
-	for _, m := range matches {
-		index, err := strconv.Atoi(string(m[1]))
-		if err != nil || index < 0 || index >= len(seen) || seen[index] {
-			t.Fatalf("invalid enumerated shard %s", m[1])
-		}
-		seen[index] = true
-	}
+	compilerAgreementCheckUnits(t, cases)
 
-	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix comparisons and %d checker per-rule fix comparisons per side; %d shards", pairs, fixes, checkerFixes, testCompilerAndStage1AgreeShards)
+	t.Logf("union: %d file/rule pairs exactly once per side; %d full-rule fix cases (%d active sanitized, one pending #5ggwf8c); %d checker per-rule fix cases; %d shards", pairs, fixes, fixes-1, checkerFixes, testCompilerAndStage1AgreeShards+compilerAgreementSanitizedCheckerGroups)
 	t.Logf("TestCompilerAndStage1Agree (enumeration setup): %s", time.Since(started))
 }
 
@@ -286,10 +268,6 @@ func TestProduct_CompilerAgreementGoOracle(t *testing.T) {
 	t.Parallel()
 	compilerAgreementMeasureProduct(t, compilerAgreementGoOracle)
 }
-
-// Lowering includes native C emission (70–75 s cold), tracked as a compiler
-// performance finding. Independent shards still prepare it through the shared
-// buildcache recipe; it is deliberately not a gate TestProduct declaration.
 
 func TestProduct_CompilerAgreementSanitizedNative(t *testing.T) {
 	t.Parallel()
@@ -341,9 +319,13 @@ func compilerAgreementShard(t *testing.T, shard int) {
 	}
 	cases := compilerAgreementCases(t)
 	owner, side := shard/compilerAgreementSides, shard%compilerAgreementSides
+	if shard >= testCompilerAndStage1AgreeShards {
+		owner = testCompilerAndStage1AgreeShards/compilerAgreementSides + shard - testCompilerAndStage1AgreeShards
+		side = 4
+	}
 	var rows []string
 	for _, c := range cases {
-		if compilerAgreementOwner(c) == owner {
+		if compilerAgreementUnit(c, side) == shard {
 			rows = append(rows, c.path+"\t"+c.rule)
 		}
 	}
@@ -13355,7 +13337,6 @@ func TestCompilerAndStage1Agree_6480(t *testing.T) { t.Parallel(); compilerAgree
 func TestCompilerAndStage1Agree_6481(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6481) }
 func TestCompilerAndStage1Agree_6482(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6482) }
 func TestCompilerAndStage1Agree_6483(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6483) }
-func TestCompilerAndStage1Agree_6484(t *testing.T) { t.Parallel(); compilerAgreementShard(t, 6484) }
 
 func compilerAgreementCompare(t *testing.T, got, want []byte) {
 	t.Helper()
