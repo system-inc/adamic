@@ -1,0 +1,17 @@
+=== RUN   TestCheckedViewEntries
+=== PAUSE TestCheckedViewEntries
+=== CONT  TestCheckedViewEntries
+    view_element_reads_test.go:84: gate cache node hit
+    view_element_reads_test.go:84: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    view_element_reads_test.go:84: native: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: Object.entries(view) (field count) expected 7, found number 9\n"; got exit 0 stdout "kind:1\ncount:9\n" stderr ""
+        JavaScript: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: Object.entries(view) (field count) expected 7, found number 9\n"; got exit 0 stdout "kind:1\ncount:9\n" stderr ""
+        release: exit codes differ; Node exit 70 stdout "" stderr "adamic: panic: field read failed: Object.entries(view) (field count) expected 7, found number 9\n"; got exit 0 stdout "kind:1\ncount:9\n" stderr ""
+--- FAIL: TestCheckedViewEntries (0.36s)
+FAIL
+gate cache: native hits=0 misses=2
+gate cache: node hits=1 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.369s
+FAIL

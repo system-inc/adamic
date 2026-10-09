@@ -112,3 +112,9 @@ func TestViewValuesControl(t *testing.T) {
 	source := viewElementFixture(t, "values")
 	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
 }
+
+func TestViewEntriesControl(t *testing.T) {
+	t.Parallel()
+	source := viewElementFixture(t, "entries")
+	lowersAndAgreesWithNode(t, strings.Replace(source, "count: 9", "count: 7", 1))
+}

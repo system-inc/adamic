@@ -78,3 +78,8 @@ func TestCheckedViewValues(t *testing.T) {
 	t.Parallel()
 	checkedViewElementFixture(t, "values", "field read failed: Object.values(view) (field count) expected 7, found number 9")
 }
+
+func TestCheckedViewEntries(t *testing.T) {
+	t.Parallel()
+	checkedViewElementFixture(t, "entries", "field read failed: Object.entries(view) (field count) expected 7, found number 9")
+}
