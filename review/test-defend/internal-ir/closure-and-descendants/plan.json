@@ -1,0 +1,22 @@
+[
+  {
+    "id": "D1",
+    "row": "TestClosureArgumentsCountTargets",
+    "file": "internal/ir/call_targets.go",
+    "old": "return p.ClosureArgumentLayout(call).Count",
+    "new": "return !p.ClosureArgumentLayout(call).Count",
+    "menu": "flip condition",
+    "aim": "Invert the wrapper result while retaining correct argument layouts; the subsumer bypasses this wrapper.",
+    "line": 102
+  },
+  {
+    "id": "D2",
+    "row": "TestCallTargetsIncludeEveryDescendant",
+    "file": "internal/ir/call_targets.go",
+    "old": "\t\treturn targets\n",
+    "new": "\t\treturn targets[1:]\n",
+    "menu": "off-by-one bound",
+    "aim": "Omit the first virtual implementation. The synthetic effect sets begin with nonthrowing candidates, so effects remain correct while target membership is wrong.",
+    "line": 15
+  }
+]

@@ -1,0 +1,9 @@
+CODE UNDER TEST: Adamic internal/ir target-query and argument-count code. D1 mutates Program.ClosureReadsArgumentsCount. D2 mutates Program.CallTargets. These call Program.ClosureArgumentLayout, ClosureTargets, PackedCountNeeded, argumentFactsOf and packedCountNeeded, plus Type methods; the per-test cover profiles and functions logs list the reached IR functions. The descendant test prepares its input with load.Load and lower.Lower, but neither preparation nor lowering was mutated.
+
+ORACLE: Self-written expected booleans for closure count and call effects, and self-written target membership and cardinality assertions for the lowered class hierarchy. No Node execution, copied external authority, oracle or harness mutation is involved.
+
+DIFFERENCES: TestClosureArgumentsCountTargets reaches three IR blocks its subsumer misses, including call_targets.go:102's wrapper return. TestArgumentLayouts calls ClosureArgumentLayout directly and cannot see an inverted wrapper result. The count test checks argument cardinality metadata, not a performance cost threshold.
+
+TestCallTargetsIncludeEveryDescendant reaches seventeen blocks its effect subsumer misses, but its CallTargets query lines are shared. Its semantic difference is set membership: it requires Base, Child, Grandchild and Sibling implementations, then exactly four targets. TestCallMayThrowUsesReachableTargets uses synthetic two-element sets whose first implementation is always nonthrowing. D2 changes the implicit slice lower bound from zero to one, dropping that implementation. Its effect assertions still hold because the remaining set has the same may-throw result. The descendant row requires membership even for nonthrowing implementations.
+
+Neither requested row is a Node/native twin, a helper, a witness or a cost row. Mutants use the specified condition-flip and off-by-one menu. Tests and assertion values remain unchanged.

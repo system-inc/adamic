@@ -1,0 +1,32 @@
+{
+  "TestClosureArgumentsCountTargets": {
+    "subsumer": "TestArgumentLayouts",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:165.5,165.13",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:73.4,73.12",
+      "github.com/system-inc/adamic/internal/ir/call_targets.go:102.2,103.1"
+    ]
+  },
+  "TestCallTargetsIncludeEveryDescendant": {
+    "subsumer": "TestCallMayThrowUsesReachableTargets",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:21.2,22.39",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:23.3,24.32",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:27.3,27.24",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:28.4,29.1",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:30.3,30.24",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:32.2,33.39",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:34.3,34.32",
+      "github.com/system-inc/adamic/internal/ir/argument_slots.go:41.2,41.30",
+      "github.com/system-inc/adamic/internal/ir/ir.go:1004.36,1004.52",
+      "github.com/system-inc/adamic/internal/ir/ir.go:1006.36,1006.54",
+      "github.com/system-inc/adamic/internal/ir/ir.go:1078.29,1078.42",
+      "github.com/system-inc/adamic/internal/ir/ir.go:1079.29,1079.47",
+      "github.com/system-inc/adamic/internal/ir/ir.go:236.2,237.1",
+      "github.com/system-inc/adamic/internal/ir/ir.go:252.2,253.1",
+      "github.com/system-inc/adamic/internal/ir/ir.go:935.38,935.53",
+      "github.com/system-inc/adamic/internal/ir/ir.go:940.38,940.53",
+      "github.com/system-inc/adamic/internal/ir/typed_arrays.go:5.2,6.1"
+    ]
+  }
+}

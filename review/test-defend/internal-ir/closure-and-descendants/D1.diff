@@ -1,0 +1,11 @@
+--- a/internal/ir/call_targets.go
++++ b/internal/ir/call_targets.go
+@@ -99,7 +99,7 @@
+ // call's function type. Missing type evidence uses bounded closure targets,
+ // falling back to the entire program only when those targets are unknown.
+ func (p *Program) ClosureReadsArgumentsCount(call CallClosure) bool {
+-	return p.ClosureArgumentLayout(call).Count
++	return !p.ClosureArgumentLayout(call).Count
+ }
+ 
+ // CallExpandsArguments means source positions do not match parameter positions.

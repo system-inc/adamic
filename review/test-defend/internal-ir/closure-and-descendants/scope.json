@@ -1,0 +1,27 @@
+{
+  "starting_commit": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "current_tests": [
+    "TestArgumentLayouts",
+    "TestCallMayThrowUsesReachableTargets",
+    "TestCallTargetReaders",
+    "TestCallTargetsIncludeEveryDescendant",
+    "TestClosureArgumentsCountTargets",
+    "TestClosureTargetsBoundOnlyProvenValues",
+    "TestDirectClosureTargetsUseEncodedIndex",
+    "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+    "TestPrimitiveViewMembers",
+    "TestUnknownClosurePreservesThrowingEffect",
+    "TestViewUnionDiscriminantOverlaps"
+  ],
+  "added_since_audit": [
+    "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+    "TestUnknownClosurePreservesThrowingEffect"
+  ],
+  "vanished_since_audit": [],
+  "coverage_commands": [
+    "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestClosureArgumentsCountTargets$ -coverpkg=./internal/ir -coverprofile=TestClosureArgumentsCountTargets.cover",
+    "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestArgumentLayouts$ -coverpkg=./internal/ir -coverprofile=TestArgumentLayouts.cover",
+    "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallTargetsIncludeEveryDescendant$ -coverpkg=./internal/ir -coverprofile=TestCallTargetsIncludeEveryDescendant.cover",
+    "timeout 120 go test -count=1 -timeout 90s ./internal/ir/ -run ^TestCallMayThrowUsesReachableTargets$ -coverpkg=./internal/ir -coverprofile=TestCallMayThrowUsesReachableTargets.cover"
+  ]
+}

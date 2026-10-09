@@ -1,0 +1,12 @@
+TestArgumentLayouts
+TestClosureArgumentsCountTargets
+TestPrimitiveViewMembers
+TestViewUnionDiscriminantOverlaps
+TestMixedOptionalFixedLayoutPreservesMaybeNumber
+TestCallMayThrowUsesReachableTargets
+TestDirectClosureTargetsUseEncodedIndex
+TestUnknownClosurePreservesThrowingEffect
+TestCallTargetReaders
+TestCallTargetsIncludeEveryDescendant
+TestClosureTargetsBoundOnlyProvenValues
+ok  	github.com/system-inc/adamic/internal/ir	0.014s

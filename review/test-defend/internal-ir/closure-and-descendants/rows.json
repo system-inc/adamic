@@ -1,0 +1,68 @@
+[
+  {
+    "test": "TestClosureArgumentsCountTargets",
+    "package": "internal/ir",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestArgumentLayouts"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/ir/call_targets.go:102",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/ir/call_targets.go:102",
+        "change": "return p.ClosureArgumentLayout(call).Count -> return !p.ClosureArgumentLayout(call).Count",
+        "rows_failed": [
+          "TestClosureArgumentsCountTargets"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D1.log 2>&1; arguments_length_test.go:13: type 10: true, want false",
+    "rows_passed": [
+      "TestArgumentLayouts",
+      "TestClosureTargetsBoundOnlyProvenValues",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestUnknownClosurePreservesThrowingEffect",
+      "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestPrimitiveViewMembers",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestCallTargetReaders"
+    ]
+  },
+  {
+    "test": "TestCallTargetsIncludeEveryDescendant",
+    "package": "internal/ir",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCallMayThrowUsesReachableTargets"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D2 internal/ir/call_targets.go:15",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/ir/call_targets.go:15",
+        "change": "return targets -> return targets[1:]",
+        "rows_failed": [
+          "TestCallTargetsIncludeEveryDescendant"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D2.log 2>&1; call_targets_test.go:36: missing Base override 3 in [9 12 15]; call_targets_test.go:40: want four implementations, got [9 12 15]",
+    "rows_passed": [
+      "TestArgumentLayouts",
+      "TestClosureTargetsBoundOnlyProvenValues",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestUnknownClosurePreservesThrowingEffect",
+      "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+      "TestClosureArgumentsCountTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestPrimitiveViewMembers",
+      "TestCallTargetReaders"
+    ]
+  }
+]

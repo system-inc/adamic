@@ -1,0 +1,14 @@
+[
+  {
+    "mutant": "D1",
+    "applies_to_starting_main": true,
+    "go_vet": "passed; D1.vet.log",
+    "go_test_build": "compiled; D1.log"
+  },
+  {
+    "mutant": "D2",
+    "applies_to_starting_main": true,
+    "go_vet": "passed; D2.vet.log",
+    "go_test_build": "compiled; D2.log"
+  }
+]

@@ -1,0 +1,61 @@
+[
+  {
+    "mutant": "D1",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D1.log 2>&1",
+    "exit": 1,
+    "wall_seconds_including_vet_compile": 62.92802086099982,
+    "rows_failed": [
+      "TestClosureArgumentsCountTargets"
+    ],
+    "rows_passed": [
+      "TestArgumentLayouts",
+      "TestClosureTargetsBoundOnlyProvenValues",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestUnknownClosurePreservesThrowingEffect",
+      "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestPrimitiveViewMembers",
+      "TestCallTargetsIncludeEveryDescendant",
+      "TestCallTargetReaders"
+    ],
+    "rows_skipped": [],
+    "rows_unknown": [],
+    "fail_lines": [
+      "arguments_length_test.go:13: type 10: true, want false"
+    ],
+    "binary_seconds": [
+      44.739
+    ]
+  },
+  {
+    "mutant": "D2",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defendir/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/ir/ -run . > D2.log 2>&1",
+    "exit": 1,
+    "wall_seconds_including_vet_compile": 54.32349619800152,
+    "rows_failed": [
+      "TestCallTargetsIncludeEveryDescendant"
+    ],
+    "rows_passed": [
+      "TestArgumentLayouts",
+      "TestClosureTargetsBoundOnlyProvenValues",
+      "TestCallMayThrowUsesReachableTargets",
+      "TestViewUnionDiscriminantOverlaps",
+      "TestUnknownClosurePreservesThrowingEffect",
+      "TestMixedOptionalFixedLayoutPreservesMaybeNumber",
+      "TestClosureArgumentsCountTargets",
+      "TestDirectClosureTargetsUseEncodedIndex",
+      "TestPrimitiveViewMembers",
+      "TestCallTargetReaders"
+    ],
+    "rows_skipped": [],
+    "rows_unknown": [],
+    "fail_lines": [
+      "call_targets_test.go:36: missing Base override 3 in [9 12 15]",
+      "call_targets_test.go:40: want four implementations, got [9 12 15]"
+    ],
+    "binary_seconds": [
+      38.265
+    ]
+  }
+]

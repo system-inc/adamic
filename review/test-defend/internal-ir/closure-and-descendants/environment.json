@@ -1,0 +1,22 @@
+{
+  "starting_main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "toolchain": "warm env.sh works; setup skipped",
+  "nproc": 5,
+  "disk_before": {
+    "tmp_free": "8.8G",
+    "workspace_free": "17G"
+  },
+  "removed_previous_scratch": [
+    "/tmp/defend027",
+    "/tmp/adamic-gate"
+  ],
+  "disk_after_tmp_used": "12M",
+  "tmp_total_capacity": "8.8G",
+  "npm_reported_seconds": 1,
+  "baseline_binary_seconds": 28.968,
+  "matrix_binary_seconds": {
+    "D1": 44.738,
+    "D2": 38.264
+  },
+  "matrix_wall_seconds_including_vet_compile": 117.25151705900134
+}
