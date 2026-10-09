@@ -1,0 +1,115 @@
+[
+  {
+    "test": "TestJsxMutants family",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "seconds": 27.105,
+    "oracle": "Executed typescript-go AST bytes compared with an unchanged native control; deliberate Node/native mutant output must differ. Self-written child proof requires exactly owner 004 to reject its planted Node survivor; self-written union checks coverage.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: jsx_mutants_products_test.go:217: owner failed to catch planted survivor: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMutants family",
+      "TestProduct_JsxMutants family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u155/evidence/W1.overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$' > W1.log 2>&1; jsx_mutants_products_test.go:217: owner failed to catch planted survivor: <nil>",
+    "members": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_004",
+      "TestJsxMutants_005",
+      "TestJsxMutants_006",
+      "TestJsxMutants_007",
+      "TestJsxMutants_008",
+      "TestJsxMutantsUnion"
+    ],
+    "timing_samples": [
+      27.221,
+      27.105,
+      27.1
+    ],
+    "own_probes": [
+      "P1",
+      "P2"
+    ],
+    "probe_entry_map": "probe-entry-map.json",
+    "raw_failing_line": "jsx_mutants_products_test.go:217: owner failed to catch planted survivor: <nil>",
+    "construction_kills": [
+      "S2"
+    ]
+  },
+  {
+    "test": "TestProduct_JsxMutants family",
+    "package": "stage1/typescript/parser",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "seconds": 8.204,
+    "oracle": "Self-written build recipes and successful product preparation. Go builds the oracle, and lowering/native compilation build control and mutant products; wrappers ignore returned paths and do not compare parser answers.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: jsx_mutants_products_test.go:405: open /tmp/u155/cache/S1/9d9743cc642e357826f14e756dc5184d4d607a8592e9f9b547049a744398f58b/program.c: no such file or directory",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": true,
+    "matrix_rows": [
+      "TestJsxMutants family",
+      "TestProduct_JsxMutants family"
+    ],
+    "evidence": "timeout 120 go test -overlay=/tmp/u155/evidence/S1.overlay.json -json -count=1 -timeout 90s ./stage1/typescript/parser/ -run '^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$' > S1.log 2>&1; jsx_mutants_products_test.go:405: open /tmp/u155/cache/S1/9d9743cc642e357826f14e756dc5184d4d607a8592e9f9b547049a744398f58b/program.c: no such file or directory",
+    "members": [
+      "TestProduct_JsxMutantsOracle",
+      "TestProduct_JsxMutantsLower_Control",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsLower_000",
+      "TestProduct_JsxMutantsNative_000",
+      "TestProduct_JsxMutantsLower_001",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsLower_002",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsLower_003",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsLower_004",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsLower_005",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsLower_006",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsLower_007",
+      "TestProduct_JsxMutantsNative_007",
+      "TestProduct_JsxMutantsLower_008",
+      "TestProduct_JsxMutantsNative_008"
+    ],
+    "timing_samples": [
+      8.204,
+      8.127,
+      8.583
+    ],
+    "own_probes": [
+      "P3",
+      "P4",
+      "P5"
+    ],
+    "probe_entry_map": "probe-entry-map.json",
+    "raw_failing_line": "jsx_mutants_products_test.go:405: open /tmp/u155/cache/S1/9d9743cc642e357826f14e756dc5184d4d607a8592e9f9b547049a744398f58b/program.c: no such file or directory",
+    "construction_kills": [
+      "S1"
+    ]
+  }
+]

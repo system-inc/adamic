@@ -1,0 +1,43 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -19,8 +19,6 @@
+ 	"time"
+ 
+ 	"github.com/system-inc/adamic/internal/buildcache"
+-	"github.com/system-inc/adamic/internal/load"
+-	"github.com/system-inc/adamic/internal/lower"
+ 	"github.com/system-inc/adamic/internal/native"
+ )
+ 
+@@ -59,30 +57,7 @@
+ }
+ 
+ func jsxMutantsLower(t *testing.T, source string) string {
+-	t.Helper()
+-	flags := []string{"load main.ts; lower; native.C", os.Getenv("ADAMIC_NATIVE_SPLIT")}
+-	// Mutant copies live outside the repository. Their complete contents are inputs,
+-	// with only the temporary copy's location normalized out of the address.
+-	for _, name := range portFiles {
+-		data, err := os.ReadFile(filepath.Join(source, name))
+-		if err != nil {
+-			t.Fatal(err)
+-		}
+-		flags = append(flags, name+":"+strings.ReplaceAll(string(data), source, "$PORT"))
+-	}
+-	inputs := buildcache.Inputs{Name: "jsx-mutants-lowered", Files: []string{"internal/load", "internal/lower", "internal/native", "internal/ir", "internal/flow", "internal/fresh", "internal/regexp", "internal/unicodeproperties", "bridge/tsgo", "stage1/typescript/scanner/characters.ts", "stage1/typescript/scanner/tokens.ts", "stage1/typescript/scanner/scanner.ts", "cohere", "go.mod"}, Flags: flags, Toolchain: []string{runtime.Version()}}
+-	lowered := jsxMutantsFetch(t, inputs, func(dir string) error {
+-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
+-		if err != nil {
+-			return err
+-		}
+-		ir, err := lower.Lower(context.Background(), program)
+-		if err != nil {
+-			return err
+-		}
+-		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644)
+-	})
+-	return lowered
++	return ""
+ }
+ 
+ func jsxMutantsNative(t *testing.T, lowered string) string {

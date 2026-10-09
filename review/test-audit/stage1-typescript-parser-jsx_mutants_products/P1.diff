@@ -1,0 +1,64 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -1,7 +1,6 @@
+ package parser
+ 
+ import (
+-	"bytes"
+ 	"context"
+ 	"crypto/sha256"
+ 	"encoding/json"
+@@ -162,52 +161,7 @@
+ 
+ // Each selected shard prepares its own products before its comparison deadline.
+ func jsxMutantsRun(t *testing.T, shard int) {
+-	t.Helper()
+-	selected := jsxMutantsSelection(t)
+-	if selected >= 0 && selected != shard {
+-		t.Skip("different ADAMIC_TEST_SHARD selected")
+-	}
+-	changes := jsxMutantsChanges()
+-	if len(changes) != testJsxMutantsShards {
+-		t.Fatalf("enumerated %d mutants, want %d", len(changes), testJsxMutantsShards)
+-	}
+-	setupStarted := time.Now()
+-	manifest, count := jsxManifest(t)
+-	jsxMutantsRows(t, manifest, count)
+-	oracle := jsxMutantsOracle(t)
+-	directory, _ := filepath.Abs(".")
+-	change := changes[shard]
+-	mutant := copyPort(t, "jsx.ts", change.from, change.to)
+-	controlBinary := jsxMutantsNative(t, jsxMutantsLower(t, directory))
+-	binary := jsxMutantsNative(t, jsxMutantsLower(t, mutant))
+-	t.Logf("setup %.2fs", time.Since(setupStarted).Seconds())
+-	ownStarted := time.Now()
+-	deadline := time.AfterFunc(60*time.Second, func() { panic("JSX mutant own work exceeded 60 seconds") })
+-	defer deadline.Stop()
+-	defer func() { t.Logf("own work %.2fs", time.Since(ownStarted).Seconds()) }()
+-	want := execute(t, "", oracle, "--manifest", manifest, "--whole").output
+-	control := execute(t, "", controlBinary, "--manifest", manifest, "--whole")
+-	if diff := difference(control.output, want); diff != "" {
+-		t.Fatal(diff)
+-	}
+-	node := wholeNode(t, mutant, manifest, false)
+-	compiled := execute(t, "", binary, "--manifest", manifest, "--whole")
+-	if os.Getenv("ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR") == change.name {
+-		node.output = want
+-	}
+-	for _, side := range []struct {
+-		name   string
+-		output []byte
+-	}{{"Node", node.output}, {"native", compiled.output}} {
+-		if bytes.Equal(side.output, want) {
+-			t.Fatalf("%s mutant survived: %s", side.name, change.name)
+-		}
+-		t.Logf("%s compiled mutant caught: %s", side.name, difference(side.output, want))
+-	}
+-	t.Logf("shard-%03d: %s, %d inputs", shard, change.name, count)
+-	if os.Getenv("ADAMIC_JSX_MUTANTS_PROOF_CHILD") == "" {
+-		jsxMutantsPlantedProof(t, shard)
+-	}
++	return
+ }
+ 
+ func TestJsxMutants_000(t *testing.T) { t.Parallel(); jsxMutantsRun(t, 0) }

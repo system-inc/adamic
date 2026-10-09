@@ -1,0 +1,10 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -129,7 +129,6 @@
+ 			if seen[id] || !expected[id] {
+ 				t.Fatalf("repeated or unexpected shard case %q", id)
+ 			}
+-			seen[id] = true
+ 		}
+ 	}
+ 	if len(seen) != len(expected) {

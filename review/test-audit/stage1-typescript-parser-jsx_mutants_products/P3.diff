@@ -1,0 +1,41 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -25,37 +25,7 @@
+ )
+ 
+ func jsxMutantsOracle(t *testing.T) string {
+-	t.Helper()
+-	root, err := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	side, err := filepath.Abs("testdata/oracle.go")
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	virtual := filepath.Join(root, "adamic_parser_oracle.go")
+-	inputs := buildcache.Inputs{Name: "jsx-mutants-go-oracle", Files: []string{"stage1/typescript/parser/testdata/oracle.go", "cohere/TypeScript/tsc", "go.mod"}, Flags: []string{"go build -overlay", os.Getenv("GOFLAGS"), os.Getenv("GOTOOLCHAIN")}, Toolchain: []string{buildcache.Tool("go", "version")}}
+-	directory := jsxMutantsFetch(t, inputs, func(dir string) error {
+-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
+-		if err != nil {
+-			return err
+-		}
+-		path := filepath.Join(dir, "overlay.json")
+-		if err := os.WriteFile(path, overlay, 0644); err != nil {
+-			return err
+-		}
+-		ctx, cancel := context.WithCancel(context.Background())
+-		defer cancel()
+-		cmd := jsxMutantsCommand(ctx, "go", "build", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), virtual)
+-		cmd.Dir = root
+-		out, err := cmd.CombinedOutput()
+-		if err != nil {
+-			return fmt.Errorf("oracle: %w\n%s", err, out)
+-		}
+-		return nil
+-	})
+-	return filepath.Join(directory, "oracle")
++	return ""
+ }
+ 
+ func jsxMutantsLower(t *testing.T, source string) string {

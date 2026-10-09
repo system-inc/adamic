@@ -1,0 +1,433 @@
+[
+  {
+    "id": "timing-0-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 29.46430375499949,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 9.85923818000083,
+    "exit": 0
+  },
+  {
+    "id": "timing-0-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 28.77370067799893,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 9.92989282599956,
+    "exit": 0
+  },
+  {
+    "id": "timing-0-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 28.7748555520011,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 10.212138390999826,
+    "exit": 0
+  },
+  {
+    "id": "W1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/W1.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.18429412400109868,
+    "exit": 0
+  },
+  {
+    "id": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/W1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 31.862316832000943,
+    "exit": 1
+  },
+  {
+    "id": "S1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/S1.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.1624977970004693,
+    "exit": 0
+  },
+  {
+    "id": "S1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/S1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u155/cache/S1"
+    },
+    "wall": 27.038179388999197,
+    "exit": 1
+  },
+  {
+    "id": "S2-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/S2.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.16280995499982964,
+    "exit": 0
+  },
+  {
+    "id": "S2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/S2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 32.63978897800007,
+    "exit": 1
+  },
+  {
+    "id": "P1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/P1.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.1634465619990806,
+    "exit": 0
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/P1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 13.128782440000577,
+    "exit": 0
+  },
+  {
+    "id": "P2-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/P2.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.16238040999996883,
+    "exit": 0
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/P2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 30.57027140699938,
+    "exit": 0
+  },
+  {
+    "id": "P3-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/P3.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.15052330599974084,
+    "exit": 0
+  },
+  {
+    "id": "P3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/P3.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 12.848700708998877,
+    "exit": 1
+  },
+  {
+    "id": "P4-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/P4.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.17327757400016708,
+    "exit": 0
+  },
+  {
+    "id": "P4",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/P4.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 5.406698156999482,
+    "exit": 1
+  },
+  {
+    "id": "P5-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u155/evidence/P5.overlay.json",
+      "./stage1/typescript/parser/"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 0.16676549600015278,
+    "exit": 0
+  },
+  {
+    "id": "P5",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u155/evidence/P5.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/typescript/parser/",
+      "-run",
+      "^(TestJsxMutants_000|TestJsxMutants_001|TestJsxMutants_002|TestJsxMutants_003|TestJsxMutants_004|TestJsxMutants_005|TestJsxMutants_006|TestJsxMutants_007|TestJsxMutants_008|TestJsxMutantsUnion|TestProduct_JsxMutantsOracle|TestProduct_JsxMutantsLower_Control|TestProduct_JsxMutantsNative_Control|TestProduct_JsxMutantsLower_000|TestProduct_JsxMutantsNative_000|TestProduct_JsxMutantsLower_001|TestProduct_JsxMutantsNative_001|TestProduct_JsxMutantsLower_002|TestProduct_JsxMutantsNative_002|TestProduct_JsxMutantsLower_003|TestProduct_JsxMutantsNative_003|TestProduct_JsxMutantsLower_004|TestProduct_JsxMutantsNative_004|TestProduct_JsxMutantsLower_005|TestProduct_JsxMutantsNative_005|TestProduct_JsxMutantsLower_006|TestProduct_JsxMutantsNative_006|TestProduct_JsxMutantsLower_007|TestProduct_JsxMutantsNative_007|TestProduct_JsxMutantsLower_008|TestProduct_JsxMutantsNative_008)$"
+    ],
+    "environment": {
+      "ADAMIC_TYPESCRIPT_SOURCE": "/tmp/u155/typescript"
+    },
+    "wall": 9.667775607000294,
+    "exit": 1
+  }
+]

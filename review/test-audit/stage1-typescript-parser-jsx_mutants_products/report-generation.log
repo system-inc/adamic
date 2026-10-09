@@ -1,0 +1,107 @@
+{
+  "rows": [
+    {
+      "test": "TestJsxMutants family",
+      "seconds": 27.105,
+      "verdict": "witness",
+      "vacuous": true,
+      "last_proven_fail": "W1: jsx_mutants_products_test.go:217: owner failed to catch planted survivor: <nil>"
+    },
+    {
+      "test": "TestProduct_JsxMutants family",
+      "seconds": 8.204,
+      "verdict": "setup-check",
+      "vacuous": true,
+      "last_proven_fail": "S1: jsx_mutants_products_test.go:405: open /tmp/u155/cache/S1/9d9743cc642e357826f14e756dc5184d4d607a8592e9f9b547049a744398f58b/program.c: no such file or directory"
+    }
+  ],
+  "matrix": {
+    "W1": [
+      "TestJsxMutants_004"
+    ],
+    "S1": [
+      "TestProduct_JsxMutantsNative_008",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsNative_001",
+      "TestJsxMutants_000",
+      "TestProduct_JsxMutantsNative_004",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsNative_002",
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsNative_007",
+      "TestJsxMutants_008",
+      "TestJsxMutants_004",
+      "TestJsxMutants_006",
+      "TestJsxMutants_005",
+      "TestJsxMutants_007",
+      "TestJsxMutants_002",
+      "TestJsxMutants_003",
+      "TestJsxMutants_001",
+      "TestProduct_JsxMutantsNative_006",
+      "TestProduct_JsxMutantsNative_000"
+    ],
+    "S2": [
+      "TestJsxMutantsUnion"
+    ],
+    "P1": [],
+    "P2": [],
+    "P3": [
+      "TestJsxMutants_000",
+      "TestJsxMutants_008",
+      "TestJsxMutants_004",
+      "TestJsxMutants_007",
+      "TestJsxMutants_005",
+      "TestJsxMutants_003",
+      "TestJsxMutants_001",
+      "TestJsxMutants_002",
+      "TestJsxMutants_006"
+    ],
+    "P4": [
+      "TestProduct_JsxMutantsNative_Control",
+      "TestProduct_JsxMutantsNative_008",
+      "TestProduct_JsxMutantsNative_001",
+      "TestProduct_JsxMutantsNative_000",
+      "TestJsxMutants_008",
+      "TestJsxMutants_007",
+      "TestJsxMutants_006",
+      "TestJsxMutants_000",
+      "TestJsxMutants_005",
+      "TestJsxMutants_004",
+      "TestProduct_JsxMutantsNative_007",
+      "TestJsxMutants_002",
+      "TestProduct_JsxMutantsNative_006",
+      "TestJsxMutants_003",
+      "TestProduct_JsxMutantsNative_005",
+      "TestProduct_JsxMutantsNative_002",
+      "TestJsxMutants_001",
+      "TestProduct_JsxMutantsNative_003",
+      "TestProduct_JsxMutantsNative_004"
+    ],
+    "P5": [
+      "TestJsxMutants_008",
+      "TestJsxMutants_000",
+      "TestJsxMutants_005",
+      "TestJsxMutants_007",
+      "TestJsxMutants_006",
+      "TestJsxMutants_001",
+      "TestJsxMutants_004",
+      "TestJsxMutants_003",
+      "TestJsxMutants_002"
+    ]
+  },
+  "builds": {
+    "bounded-baseline": {
+      "binary_seconds": 64.336,
+      "logged_miss_seconds": 174.53
+    },
+    "W1": {
+      "binary_seconds": 26.816,
+      "logged_miss_seconds": 0
+    },
+    "S1": {
+      "binary_seconds": 22.28,
+      "logged_miss_seconds": 71.73
+    }
+  },
+  "initial_skips": []
+}

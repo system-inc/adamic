@@ -1,0 +1,38 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -112,34 +112,7 @@
+ }
+ 
+ func jsxMutantsUnion(t *testing.T, names, rows []string, shards [][]string) {
+-	t.Helper()
+-	expected := map[string]bool{}
+-	for _, name := range names {
+-		for _, row := range rows {
+-			id := name + "\t" + row
+-			if expected[id] {
+-				t.Fatalf("duplicate unsplit case %q", id)
+-			}
+-			expected[id] = true
+-		}
+-	}
+-	seen := map[string]bool{}
+-	for _, ids := range shards {
+-		for _, id := range ids {
+-			if seen[id] || !expected[id] {
+-				t.Fatalf("repeated or unexpected shard case %q", id)
+-			}
+-			seen[id] = true
+-		}
+-	}
+-	if len(seen) != len(expected) {
+-		t.Fatalf("shard union %d differs from enumeration %d", len(seen), len(expected))
+-	}
+-	for id := range expected {
+-		if !seen[id] {
+-			t.Fatalf("missing shard case %q", id)
+-		}
+-	}
++	return
+ }
+ 
+ func jsxMutantsSelection(t *testing.T) int {

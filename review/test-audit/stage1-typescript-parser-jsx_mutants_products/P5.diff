@@ -1,0 +1,28 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -3,7 +3,6 @@
+ import (
+ 	"bytes"
+ 	"context"
+-	"crypto/sha256"
+ 	"encoding/json"
+ 	"errors"
+ 	"fmt"
+@@ -86,16 +85,7 @@
+ }
+ 
+ func jsxMutantsNative(t *testing.T, lowered string) string {
+-	t.Helper()
+-	data, err := os.ReadFile(filepath.Join(lowered, "program.c"))
+-	if err != nil {
+-		t.Fatal(err)
+-	}
+-	hash := sha256.Sum256(data)
+-	options := native.Options{Sanitize: true}
+-	inputs := buildcache.Inputs{Name: "jsx-mutants-sanitized", Files: []string{"internal/native", "bridge/tsgo", "cohere"}, Flags: append(native.Flags(options), fmt.Sprintf("C=%x", hash), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "CC="+os.Getenv("CC")), Toolchain: []string{runtime.Version(), buildcache.Tool("clang", "--version")}}
+-	product := jsxMutantsFetch(t, inputs, func(dir string) error { return native.Build(string(data), filepath.Join(dir, "parser"), options) })
+-	return filepath.Join(product, "parser")
++	return ""
+ }
+ 
+ func jsxMutantsRows(t *testing.T, manifest string, count int) []string {

@@ -1,0 +1,81 @@
+[
+  {
+    "id": "W1",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 202,
+    "before": "if bytes.Equal(side.output, want) {",
+    "after": "if false && bytes.Equal(side.output, want) {",
+    "kind": "weaken comparison",
+    "removed_unused_imports": []
+  },
+  {
+    "id": "S1",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 83,
+    "before": "os.WriteFile(filepath.Join(dir, \"program.c\"), []byte(native.C(ir)), 0644)",
+    "after": "os.WriteFile(filepath.Join(dir, \"missing-program.c\"), []byte(native.C(ir)), 0644)",
+    "kind": "construction artifact option change",
+    "removed_unused_imports": []
+  },
+  {
+    "id": "S2",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 132,
+    "before": "\t\t\tseen[id] = true\n",
+    "after": "",
+    "kind": "construction drop statement",
+    "removed_unused_imports": []
+  },
+  {
+    "id": "P1",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 164,
+    "before": "func jsxMutantsRun(t *testing.T, shard int) {\n\tt.Helper()\n\tselected := jsxMutantsSelection(t)\n\tif selected >= 0 && selected != shard {\n\t\tt.Skip(\"different ADAMIC_TEST_SHARD selected\")\n\t}\n\tchanges := jsxMutantsChanges()\n\tif len(changes) != testJsxMutantsShards {\n\t\tt.Fatalf(\"enumerated %d mutants, want %d\", len(changes), testJsxMutantsShards)\n\t}\n\tsetupStarted := time.Now()\n\tmanifest, count := jsxManifest(t)\n\tjsxMutantsRows(t, manifest, count)\n\toracle := jsxMutantsOracle(t)\n\tdirectory, _ := filepath.Abs(\".\")\n\tchange := changes[shard]\n\tmutant := copyPort(t, \"jsx.ts\", change.from, change.to)\n\tcontrolBinary := jsxMutantsNative(t, jsxMutantsLower(t, directory))\n\tbinary := jsxMutantsNative(t, jsxMutantsLower(t, mutant))\n\tt.Logf(\"setup %.2fs\", time.Since(setupStarted).Seconds())\n\townStarted := time.Now()\n\tdeadline := time.AfterFunc(60*time.Second, func() { panic(\"JSX mutant own work exceeded 60 seconds\") })\n\tdefer deadline.Stop()\n\tdefer func() { t.Logf(\"own work %.2fs\", time.Since(ownStarted).Seconds()) }()\n\twant := execute(t, \"\", oracle, \"--manifest\", manifest, \"--whole\").output\n\tcontrol := execute(t, \"\", controlBinary, \"--manifest\", manifest, \"--whole\")\n\tif diff := difference(control.output, want); diff != \"\" {\n\t\tt.Fatal(diff)\n\t}\n\tnode := wholeNode(t, mutant, manifest, false)\n\tcompiled := execute(t, \"\", binary, \"--manifest\", manifest, \"--whole\")\n\tif os.Getenv(\"ADAMIC_JSX_MUTANTS_PLANTED_SURVIVOR\") == change.name {\n\t\tnode.output = want\n\t}\n\tfor _, side := range []struct {\n\t\tname   string\n\t\toutput []byte\n\t}{{\"Node\", node.output}, {\"native\", compiled.output}} {\n\t\tif bytes.Equal(side.output, want) {\n\t\t\tt.Fatalf(\"%s mutant survived: %s\", side.name, change.name)\n\t\t}\n\t\tt.Logf(\"%s compiled mutant caught: %s\", side.name, difference(side.output, want))\n\t}\n\tt.Logf(\"shard-%03d: %s, %d inputs\", shard, change.name, count)\n\tif os.Getenv(\"ADAMIC_JSX_MUTANTS_PROOF_CHILD\") == \"\" {\n\t\tjsxMutantsPlantedProof(t, shard)\n\t}\n}",
+    "after": "func jsxMutantsRun(t *testing.T, shard int) {\n\treturn\n}",
+    "kind": "empty entry probe",
+    "removed_unused_imports": [
+      "bytes"
+    ]
+  },
+  {
+    "id": "P2",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 114,
+    "before": "func jsxMutantsUnion(t *testing.T, names, rows []string, shards [][]string) {\n\tt.Helper()\n\texpected := map[string]bool{}\n\tfor _, name := range names {\n\t\tfor _, row := range rows {\n\t\t\tid := name + \"\\t\" + row\n\t\t\tif expected[id] {\n\t\t\t\tt.Fatalf(\"duplicate unsplit case %q\", id)\n\t\t\t}\n\t\t\texpected[id] = true\n\t\t}\n\t}\n\tseen := map[string]bool{}\n\tfor _, ids := range shards {\n\t\tfor _, id := range ids {\n\t\t\tif seen[id] || !expected[id] {\n\t\t\t\tt.Fatalf(\"repeated or unexpected shard case %q\", id)\n\t\t\t}\n\t\t\tseen[id] = true\n\t\t}\n\t}\n\tif len(seen) != len(expected) {\n\t\tt.Fatalf(\"shard union %d differs from enumeration %d\", len(seen), len(expected))\n\t}\n\tfor id := range expected {\n\t\tif !seen[id] {\n\t\t\tt.Fatalf(\"missing shard case %q\", id)\n\t\t}\n\t}\n}",
+    "after": "func jsxMutantsUnion(t *testing.T, names, rows []string, shards [][]string) {\n\treturn\n}",
+    "kind": "empty entry probe",
+    "removed_unused_imports": []
+  },
+  {
+    "id": "P3",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 27,
+    "before": "func jsxMutantsOracle(t *testing.T) string {\n\tt.Helper()\n\troot, err := filepath.Abs(filepath.Join(repository, \"cohere/TypeScript/tsc\"))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tside, err := filepath.Abs(\"testdata/oracle.go\")\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\tvirtual := filepath.Join(root, \"adamic_parser_oracle.go\")\n\tinputs := buildcache.Inputs{Name: \"jsx-mutants-go-oracle\", Files: []string{\"stage1/typescript/parser/testdata/oracle.go\", \"cohere/TypeScript/tsc\", \"go.mod\"}, Flags: []string{\"go build -overlay\", os.Getenv(\"GOFLAGS\"), os.Getenv(\"GOTOOLCHAIN\")}, Toolchain: []string{buildcache.Tool(\"go\", \"version\")}}\n\tdirectory := jsxMutantsFetch(t, inputs, func(dir string) error {\n\t\toverlay, err := json.Marshal(map[string]any{\"Replace\": map[string]string{virtual: side}})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tpath := filepath.Join(dir, \"overlay.json\")\n\t\tif err := os.WriteFile(path, overlay, 0644); err != nil {\n\t\t\treturn err\n\t\t}\n\t\tctx, cancel := context.WithCancel(context.Background())\n\t\tdefer cancel()\n\t\tcmd := jsxMutantsCommand(ctx, \"go\", \"build\", \"-overlay=\"+path, \"-o\", filepath.Join(dir, \"oracle\"), virtual)\n\t\tcmd.Dir = root\n\t\tout, err := cmd.CombinedOutput()\n\t\tif err != nil {\n\t\t\treturn fmt.Errorf(\"oracle: %w\\n%s\", err, out)\n\t\t}\n\t\treturn nil\n\t})\n\treturn filepath.Join(directory, \"oracle\")\n}",
+    "after": "func jsxMutantsOracle(t *testing.T) string {\n\treturn \"\"\n}",
+    "kind": "empty entry probe",
+    "removed_unused_imports": []
+  },
+  {
+    "id": "P4",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 61,
+    "before": "func jsxMutantsLower(t *testing.T, source string) string {\n\tt.Helper()\n\tflags := []string{\"load main.ts; lower; native.C\", os.Getenv(\"ADAMIC_NATIVE_SPLIT\")}\n\t// Mutant copies live outside the repository. Their complete contents are inputs,\n\t// with only the temporary copy's location normalized out of the address.\n\tfor _, name := range portFiles {\n\t\tdata, err := os.ReadFile(filepath.Join(source, name))\n\t\tif err != nil {\n\t\t\tt.Fatal(err)\n\t\t}\n\t\tflags = append(flags, name+\":\"+strings.ReplaceAll(string(data), source, \"$PORT\"))\n\t}\n\tinputs := buildcache.Inputs{Name: \"jsx-mutants-lowered\", Files: []string{\"internal/load\", \"internal/lower\", \"internal/native\", \"internal/ir\", \"internal/flow\", \"internal/fresh\", \"internal/regexp\", \"internal/unicodeproperties\", \"bridge/tsgo\", \"stage1/typescript/scanner/characters.ts\", \"stage1/typescript/scanner/tokens.ts\", \"stage1/typescript/scanner/scanner.ts\", \"cohere\", \"go.mod\"}, Flags: flags, Toolchain: []string{runtime.Version()}}\n\tlowered := jsxMutantsFetch(t, inputs, func(dir string) error {\n\t\tprogram, err := load.Load([]string{filepath.Join(source, \"main.ts\")})\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tir, err := lower.Lower(context.Background(), program)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn os.WriteFile(filepath.Join(dir, \"program.c\"), []byte(native.C(ir)), 0644)\n\t})\n\treturn lowered\n}",
+    "after": "func jsxMutantsLower(t *testing.T, source string) string {\n\treturn \"\"\n}",
+    "kind": "empty entry probe",
+    "removed_unused_imports": [
+      "github.com/system-inc/adamic/internal/load",
+      "github.com/system-inc/adamic/internal/lower"
+    ]
+  },
+  {
+    "id": "P5",
+    "file": "stage1/typescript/parser/jsx_mutants_products_test.go",
+    "line": 88,
+    "before": "func jsxMutantsNative(t *testing.T, lowered string) string {\n\tt.Helper()\n\tdata, err := os.ReadFile(filepath.Join(lowered, \"program.c\"))\n\tif err != nil {\n\t\tt.Fatal(err)\n\t}\n\thash := sha256.Sum256(data)\n\toptions := native.Options{Sanitize: true}\n\tinputs := buildcache.Inputs{Name: \"jsx-mutants-sanitized\", Files: []string{\"internal/native\", \"bridge/tsgo\", \"cohere\"}, Flags: append(native.Flags(options), fmt.Sprintf(\"C=%x\", hash), \"ADAMIC_NATIVE_SPLIT=\"+os.Getenv(\"ADAMIC_NATIVE_SPLIT\"), \"CC=\"+os.Getenv(\"CC\")), Toolchain: []string{runtime.Version(), buildcache.Tool(\"clang\", \"--version\")}}\n\tproduct := jsxMutantsFetch(t, inputs, func(dir string) error { return native.Build(string(data), filepath.Join(dir, \"parser\"), options) })\n\treturn filepath.Join(product, \"parser\")\n}",
+    "after": "func jsxMutantsNative(t *testing.T, lowered string) string {\n\treturn \"\"\n}",
+    "kind": "empty entry probe",
+    "removed_unused_imports": [
+      "crypto/sha256"
+    ]
+  }
+]

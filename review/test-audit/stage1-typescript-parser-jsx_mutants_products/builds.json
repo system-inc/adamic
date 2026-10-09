@@ -1,0 +1,368 @@
+{
+  "bounded-baseline": {
+    "binary_seconds": 64.336,
+    "logged_miss_seconds": 174.53,
+    "products": [
+      {
+        "product": "jsx-mutants-go-oracle",
+        "key": "d024cbb85c35",
+        "status": "miss",
+        "seconds": 1.52
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "34b497dfb623",
+        "status": "miss",
+        "seconds": 6.78
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "6badee1ec6d1",
+        "status": "miss",
+        "seconds": 6.81
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "2ed0e8c429fd",
+        "status": "miss",
+        "seconds": 6.72
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "7ad9cf600a3c",
+        "status": "miss",
+        "seconds": 6.84
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "62f420edb044",
+        "status": "miss",
+        "seconds": 9.66
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "2ab04cd12bff",
+        "status": "miss",
+        "seconds": 9.64
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "3a676a6bc33e",
+        "status": "miss",
+        "seconds": 9.35
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "f27d7a4f398f",
+        "status": "miss",
+        "seconds": 8.6
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "bc5e934a70f9",
+        "status": "miss",
+        "seconds": 7.08
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "9d9743cc642e",
+        "status": "miss",
+        "seconds": 7.13
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "f07eab8a489d",
+        "status": "miss",
+        "seconds": 7.14
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "b479292d2153",
+        "status": "miss",
+        "seconds": 7.21
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "6fdf9d972655",
+        "status": "miss",
+        "seconds": 10.5
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "29eece2bd437",
+        "status": "miss",
+        "seconds": 10.36
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "aea804da986f",
+        "status": "miss",
+        "seconds": 10.86
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "7f5a56361ebe",
+        "status": "miss",
+        "seconds": 11.07
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "c1640bfecb6d",
+        "status": "miss",
+        "seconds": 9.93
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "8c210f3de8b6",
+        "status": "miss",
+        "seconds": 8.57
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "eeee4abef970",
+        "status": "miss",
+        "seconds": 9.36
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "985204b35f81",
+        "status": "miss",
+        "seconds": 9.4
+      }
+    ]
+  },
+  "W1": {
+    "binary_seconds": 26.816,
+    "logged_miss_seconds": 0,
+    "products": [
+      {
+        "product": "jsx-mutants-go-oracle",
+        "key": "d024cbb85c35",
+        "status": "hit",
+        "seconds": 1.23
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "34b497dfb623",
+        "status": "hit",
+        "seconds": 1.53
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "7ad9cf600a3c",
+        "status": "hit",
+        "seconds": 1.56
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "6badee1ec6d1",
+        "status": "hit",
+        "seconds": 1.58
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "2ed0e8c429fd",
+        "status": "hit",
+        "seconds": 1.68
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "62f420edb044",
+        "status": "hit",
+        "seconds": 1.64
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "f27d7a4f398f",
+        "status": "hit",
+        "seconds": 1.68
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "bc5e934a70f9",
+        "status": "hit",
+        "seconds": 1.69
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "2ab04cd12bff",
+        "status": "hit",
+        "seconds": 1.71
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "3a676a6bc33e",
+        "status": "hit",
+        "seconds": 1.34
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "b479292d2153",
+        "status": "hit",
+        "seconds": 1.33
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "6fdf9d972655",
+        "status": "hit",
+        "seconds": 1.31
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "f07eab8a489d",
+        "status": "hit",
+        "seconds": 1.36
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "9d9743cc642e",
+        "status": "hit",
+        "seconds": 1.43
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "7f5a56361ebe",
+        "status": "hit",
+        "seconds": 1.39
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "29eece2bd437",
+        "status": "hit",
+        "seconds": 1.42
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "aea804da986f",
+        "status": "hit",
+        "seconds": 1.5
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "c1640bfecb6d",
+        "status": "hit",
+        "seconds": 1.68
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "8c210f3de8b6",
+        "status": "hit",
+        "seconds": 1.83
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "eeee4abef970",
+        "status": "hit",
+        "seconds": 1.78
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "985204b35f81",
+        "status": "hit",
+        "seconds": 1.67
+      },
+      {
+        "product": "jsx-mutants-go-oracle",
+        "key": "d024cbb85c35",
+        "status": "hit",
+        "seconds": 1.11
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "2ed0e8c429fd",
+        "status": "hit",
+        "seconds": 1.82
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "3a676a6bc33e",
+        "status": "hit",
+        "seconds": 1.67
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "7ad9cf600a3c",
+        "status": "hit",
+        "seconds": 1.85
+      },
+      {
+        "product": "jsx-mutants-sanitized",
+        "key": "f27d7a4f398f",
+        "status": "hit",
+        "seconds": 1.7
+      }
+    ]
+  },
+  "S1": {
+    "binary_seconds": 22.28,
+    "logged_miss_seconds": 71.73,
+    "products": [
+      {
+        "product": "jsx-mutants-go-oracle",
+        "key": "d024cbb85c35",
+        "status": "miss",
+        "seconds": 1.84
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "9d9743cc642e",
+        "status": "miss",
+        "seconds": 7.22
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "6badee1ec6d1",
+        "status": "miss",
+        "seconds": 7.28
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "34b497dfb623",
+        "status": "miss",
+        "seconds": 7.29
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "2ed0e8c429fd",
+        "status": "miss",
+        "seconds": 6.9
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "7ad9cf600a3c",
+        "status": "miss",
+        "seconds": 6.91
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "bc5e934a70f9",
+        "status": "miss",
+        "seconds": 7.04
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "b479292d2153",
+        "status": "miss",
+        "seconds": 6.93
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "c1640bfecb6d",
+        "status": "miss",
+        "seconds": 6.84
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "8c210f3de8b6",
+        "status": "miss",
+        "seconds": 6.9
+      },
+      {
+        "product": "jsx-mutants-lowered",
+        "key": "f07eab8a489d",
+        "status": "miss",
+        "seconds": 6.58
+      }
+    ]
+  }
+}

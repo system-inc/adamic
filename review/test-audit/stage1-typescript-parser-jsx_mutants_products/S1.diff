@@ -1,0 +1,11 @@
+--- a/stage1/typescript/parser/jsx_mutants_products_test.go
++++ b/stage1/typescript/parser/jsx_mutants_products_test.go
+@@ -80,7 +80,7 @@
+ 		if err != nil {
+ 			return err
+ 		}
+-		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644)
++		return os.WriteFile(filepath.Join(dir, "missing-program.c"), []byte(native.C(ir)), 0644)
+ 	})
+ 	return lowered
+ }
