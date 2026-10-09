@@ -1,0 +1,31 @@
+FIRST FAILURE (tests, at 1015.1 s):
+github.com/system-inc/adamic/stage1/cohere/css TestCSSPrinterAgreesWithGo_003
+=== RUN   TestCSSPrinterAgreesWithGo_003
+=== PAUSE TestCSSPrinterAgreesWithGo_003
+=== CONT  TestCSSPrinterAgreesWithGo_003
+    printer_shards_test.go:57: build css-printer-oracle-0 5961f1334a08 hit 2.45
+    css_printer_parallel_test.go:25: === RUN   TestAdamicPortCases
+        === PAUSE TestAdamicPortCases
+        === CONT  TestAdamicPortCases
+            adamic_port_side_test.go:168: corpus files: map[.css:323 .less:43 .scss:180]
+            adamic_port_side_test.go:251: 24596 cases, 5481 parsed
+            adamic_port_side_test.go:269: Go: 245960 stylesheets in 5.429522672s, 45300 stylesheets/s; 54810 parsed, 129930 children
+        --- PASS: TestAdamicPortCases (6.96s)
+        PASS
+    printer_shards_test.go:57: build css-printer-oracle-1 eb799af65cc7 hit 2.64
+    printer_shards_test.go:99: build css-printer-executable--1 aba670cb33fd hit 2.81
+    css_printer_parallel_test.go:149: setup including products: 14.952258479s
+    css_printer_parallel_test.go:149: === RUN   TestAdamicPrinterCases
+            adamic_print_side_test.go:92: printed stylesheets: 3025 inputs, 670 formatted, elapsed 423.460385ms
+        --- PASS: TestAdamicPrinterCases (0.42s)
+        PASS
+    css_printer_parallel_test.go:149: Prettier npm default: 668 byte-identical formats, 2352 shared refusals, 5 exact recorded discrepancy occurrences: map[BOM boundary:2 whitespace fast path:1 yaml embedding:2]
+panic: TestCSSPrinterAgreesWithGo_003: own work exceeded 60s
+
+goroutine 87 [running]:
+github.com/system-inc/adamic/stage1/cohere/css.cssPrinterOwnDeadline.func1()
+	/home/ahra/fast-gate/tree/stage1/cohere/css/css_printer_parallel_test.go:47 +0x6d
+created by time.goFunc
+	/home/ahra/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+(box load 39.4 on 64 cores at first failure)
