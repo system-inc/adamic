@@ -21,21 +21,11 @@ func scalarCases() []string {
 }
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestScalarEdges(t *testing.T) {
-	cases := scalarCases()
-	list := manifest(t, cases)
-	oracle := goOracle(t)
-	want := execute(t, "", oracle, "--manifest", list)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"source Node": onNode(t, main, "--manifest", list), "sanitized native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatalf("%s: %s", name, diff)
-		}
-	}
-	t.Logf("%d scalar edge files, %d bytes identical on Go, source Node, sanitized native and emitted JS", len(cases), len(want))
+	runScalarEdges(t, main)
 }
 
 func TestScalarOriginalLibraries(t *testing.T) {

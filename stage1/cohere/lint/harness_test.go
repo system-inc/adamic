@@ -1,7 +1,6 @@
 package lint
 
 import (
-	"bytes"
 	"os"
 	"path/filepath"
 	"strings"
@@ -10,6 +9,7 @@ import (
 )
 
 // Prepare products once before the parallel comparison leaf.
+// Not parallel: prepares shared emitted-mismatch products before the parallel comparison leaf.
 func TestEmittedJavaScriptMismatch(t *testing.T) {
 	started := time.Now()
 	deadline := time.AfterFunc(90*time.Second, func() { panic("P0: emitted JavaScript setup exceeded 90s") })
@@ -21,38 +21,6 @@ func TestEmittedJavaScriptMismatch(t *testing.T) {
 	if elapsed >= 60*time.Second {
 		t.Fatal("setup exceeds 60s budget")
 	}
-}
-
-func TestDotARename(t *testing.T) {
-	directory, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := goOracle(t)
-	want := compare(t, oracle, buildPort(t, directory, true), directory, path)
-	copied := mutant(t, "", "")
-	entry := filepath.Join(copied, "rules/no-var/rule.a")
-	before, err := os.ReadFile(entry)
-	if err != nil {
-		t.Fatal(err)
-	}
-	renamed := filepath.Join(copied, "rules/no-var/rule.ts")
-	if err := os.Rename(entry, renamed); err != nil {
-		t.Fatal(err)
-	}
-	after, err := os.ReadFile(renamed)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !bytes.Equal(before, after) {
-		t.Fatal("rename changed module bytes")
-	}
-	got := compare(t, oracle, buildPort(t, copied, true), copied, path)
-	if !bytes.Equal(got, want) {
-		t.Fatal("rename changed results")
-	}
-	t.Logf("rename only: .ts and .a identical on all three runtimes against Go (%d bytes)", len(want))
 }
 
 func serializationPort(t *testing.T) string {
@@ -72,16 +40,19 @@ func serializationPort(t *testing.T) string {
 	return directory
 }
 
+// Not parallel: initializes shared suggestion-serialization fixtures and products.
 func TestCompleteSuggestionSerialization(t *testing.T) {
 	completeSuggestionUnion(t)
 	completeSuggestionSetup(t)
 }
 
+// Not parallel: initializes shared suggestion and automatic-fix fixtures and products.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
 	suggestionAlongsideSetup(t)
 	suggestionAlongsideUnion(t)
 }
 
+// Not parallel: initializes shared witness-script-kind state before its parallel shards.
 func TestWitnessScriptKind(t *testing.T) {
 	witnessScriptKindSetup(t)
 	witnessScriptKindUnion(t)

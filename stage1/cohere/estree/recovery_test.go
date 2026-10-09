@@ -69,6 +69,7 @@ func TestRecoveryMutants(t *testing.T) {
 }
 
 func TestRecoveryMutantsShardSurvivor(t *testing.T) {
+	t.Parallel()
 	proveRecoveryShard(t, recoveryMutantCases(), testRecoveryMutantsShards, true)
 }
 // Not parallel: recovery helpers write the shared cache directory adamic-build

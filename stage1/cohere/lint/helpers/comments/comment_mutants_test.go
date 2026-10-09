@@ -2,6 +2,7 @@ package comments
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -9,7 +10,9 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+	"syscall"
 	"testing"
+	"time"
 )
 
 const testCommentMutantsShards = 5
@@ -18,11 +21,26 @@ const testCommentMutantsShards = 5
 // its owner. Every unit checks all witnesses with the original sanitizer/leak checks.
 // ADAMIC_TEST_SHARD=i/n selects units locally; unset runs every unit. The generated
 // witnesses come from pinned cohere 7945d102a6c18dd36adf9114a758ce646e8b2359.
-func TestCommentMutants_000(t *testing.T) { runCommentMutant(t, 0) }
-func TestCommentMutants_001(t *testing.T) { runCommentMutant(t, 1) }
-func TestCommentMutants_002(t *testing.T) { runCommentMutant(t, 2) }
-func TestCommentMutants_003(t *testing.T) { runCommentMutant(t, 3) }
-func TestCommentMutants_004(t *testing.T) { runCommentMutant(t, 4) }
+func TestCommentMutants_000(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 0)
+}
+func TestCommentMutants_001(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 1)
+}
+func TestCommentMutants_002(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 2)
+}
+func TestCommentMutants_003(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 3)
+}
+func TestCommentMutants_004(t *testing.T) {
+	t.Parallel()
+	runCommentMutant(t, 4)
+}
 
 func commentMutants() []struct{ file, old, new string } {
 	return []struct{ file, old, new string }{
@@ -36,7 +54,6 @@ func commentMutants() []struct{ file, old, new string } {
 
 func runCommentMutant(t *testing.T, index int) {
 	t.Helper()
-	t.Parallel()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
 		t.Fatalf("enumerated %d mutants, declared %d shards", len(mutants), testCommentMutantsShards)
@@ -121,6 +138,7 @@ func requireCommentMutantKilled(t *testing.T, got, want []byte) {
 }
 
 func TestCommentMutantsUnion(t *testing.T) {
+	t.Parallel()
 	mutants := commentMutants()
 	if len(mutants) != testCommentMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(mutants), testCommentMutantsShards)
@@ -170,13 +188,24 @@ func TestCommentMutantsUnion(t *testing.T) {
 }
 
 func TestCommentMutantsPlantedFailure(t *testing.T) {
+	t.Parallel()
 	binary, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
 	for shard := 0; shard < testCommentMutantsShards; shard++ {
 		name := fmt.Sprintf("TestCommentMutants_%03d", shard)
-		command := exec.Command(binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
+		ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+		command := exec.CommandContext(ctx, binary, "-test.run=^"+name+"$", "-test.timeout=75s", "-test.v")
+		command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+		command.Cancel = func() error {
+			err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+			if err == syscall.ESRCH {
+				return os.ErrProcessDone
+			}
+			return err
+		}
+		command.WaitDelay = time.Second
 		for _, value := range os.Environ() {
 			if !strings.HasPrefix(value, "ADAMIC_TEST_SHARD=") && !strings.HasPrefix(value, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=") {
 				command.Env = append(command.Env, value)
@@ -184,6 +213,7 @@ func TestCommentMutantsPlantedFailure(t *testing.T) {
 		}
 		command.Env = append(command.Env, "ADAMIC_COMMENT_MUTANT_SURVIVOR_PROBE=1")
 		output, err := command.CombinedOutput()
+		cancel()
 		if shard == 2 {
 			if err == nil || !bytes.Contains(output, []byte("compiled semantic mutant survived")) || !bytes.Contains(output, []byte("--- FAIL: "+name)) {
 				t.Fatalf("%s did not catch planted survivor: %v\n%s", name, err, output)
