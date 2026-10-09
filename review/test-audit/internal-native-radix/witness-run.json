@@ -1,0 +1,5 @@
+{
+  "command": "timeout 120 go test -json -overlay /tmp/u052-witness-overlay.json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordReadMutants|TestRecordMutantsUnit.*)$",
+  "exit": 1,
+  "wall": 33.54861009900014
+}

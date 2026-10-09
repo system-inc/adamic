@@ -1,0 +1,17 @@
+[
+  {
+    "exit": 0,
+    "seconds": 1.569,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRegExpLintPatternsNode)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 1.634,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRegExpLintPatternsNode)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 1.713,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRegExpLintPatternsNode)$"
+  }
+]

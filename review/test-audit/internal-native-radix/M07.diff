@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -6,7 +6,7 @@
+ #include <string.h>
+ 
+ static uint64_t regex_step_limit;
+-void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = limit; }
++void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = 1; }
+ static void *regex_memory(size_t size) {
+ 	void *memory = malloc(size == 0 ? 1 : size);
+ 	if (memory == NULL) {

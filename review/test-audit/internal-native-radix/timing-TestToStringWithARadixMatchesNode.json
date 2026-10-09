@@ -1,0 +1,17 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.715,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestToStringWithARadixMatchesNode)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.804,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestToStringWithARadixMatchesNode)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.714,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestToStringWithARadixMatchesNode)$"
+  }
+]

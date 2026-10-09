@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -124,7 +124,7 @@
+ 	if (left == NULL || right == NULL) {
+ 		return left == right;
+ 	}
+-	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
++	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) != 0);
+ }
+ 
+ adamic_string adamic_string_empty = ADAMIC_STRING("");

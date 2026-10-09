@@ -1,0 +1,17 @@
+[
+  {
+    "exit": 0,
+    "seconds": 16.934,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordBenchmark)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 16.966,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordBenchmark)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 16.844,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordBenchmark)$"
+  }
+]

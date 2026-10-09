@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -129,7 +129,7 @@
+ 		}
+ 		number = number * 10 + (digit - '0');
+ 	}
+-	if (number >= UINT32_MAX) {
++	if (number > UINT32_MAX) {
+ 		return false;
+ 	}
+ 	*value = (uint32_t)number;

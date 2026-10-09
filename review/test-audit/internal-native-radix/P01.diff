@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/radix.c
++++ b/internal/native/runtime/radix.c
+@@ -138,6 +138,7 @@
+ // NumberPrototypeToString with a radix: the radix is checked first, before NaN (unlike
+ // toExponential), so (NaN).toString(1) is a RangeError.
+ adamic_string *adamic_number_to_radix(double value, double radix) {
++ return NULL;
+ 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
+ 	radix = isnan(radix) ? 0 : trunc(radix);
+ 	if (radix < 2 || radix > 36) {

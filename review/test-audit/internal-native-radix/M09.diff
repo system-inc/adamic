@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -578,7 +578,7 @@
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+ 	for (size_t k = 0; k < object->shape->count; k++)
+-		if (strcmp(object->shape->names[k], "done") == 0)
++		if (strcmp(object->shape->names[k], "value") == 0)
+ 			return (adamic_maybe_boolean){true, object->slots[k].boolean};
+ 	return (adamic_maybe_boolean){false, false};
+ }

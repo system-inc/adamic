@@ -1,0 +1,17 @@
+[
+  {
+    "exit": 0,
+    "seconds": 0.856,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.726,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05)$"
+  },
+  {
+    "exit": 0,
+    "seconds": 0.748,
+    "command": "ADAMIC_RECORD_BENCH=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRecordMutantsUnit00|TestRecordMutantsUnit01|TestRecordMutantsUnit02|TestRecordMutantsUnit03|TestRecordMutantsUnit04|TestRecordMutantsUnit05)$"
+  }
+]

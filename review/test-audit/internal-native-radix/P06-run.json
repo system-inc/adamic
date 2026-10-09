@@ -1,0 +1,6 @@
+{
+  "command": "ADAMIC_MUTANT=P06 ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u052/cache/P06 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestRuntimeReleasePaths|TestRuntimeStringEquality)$",
+  "exit": 1,
+  "wall": 3.233578827999736,
+  "pattern": "^(TestRuntimeReleasePaths|TestRuntimeStringEquality)$"
+}

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -607,6 +607,7 @@
+ 	return (adamic_value){.reference = NULL};
+ }
+ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
++ return NULL;
+ 	size_t length;
+ 	uint16_t *units = regex_input(input, &length);
+ 	uint64_t steps = 0;

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -372,5 +372,5 @@
+ 	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
+ 		return;
+ 	}
+-	release_last(value);
+-}
++	(void)value;
++}

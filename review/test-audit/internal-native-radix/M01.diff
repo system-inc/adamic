@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/radix.c
++++ b/internal/native/runtime/radix.c
+@@ -66,7 +66,7 @@
+ 	double integer = floor(value);
+ 	double fraction = value - integer;
+ 	// We only compute fractional digits up to the input double's precision.
+-	double delta = 0.5 * (radix_next_double(value) - value);
++	double delta = 1.0 * (radix_next_double(value) - value);
+ 	// If the delta rounded down to zero, use the minimum (denormal) delta value. (V8 skips the loop
+ 	// instead when the processor flushes denormals to zero, which a native Adamic program never asks
+ 	// it to.)

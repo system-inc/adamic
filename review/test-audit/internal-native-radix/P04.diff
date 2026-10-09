@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -573,6 +573,7 @@
+ 	return result;
+ }
+ adamic_maybe_boolean adamic_regex_done(adamic_object *object) {
++ return (adamic_maybe_boolean){false,false};
+ 	if (object == NULL) {
+ 		static const char message[] = "undefined iterator result";
+ 		adamic_panic(message, sizeof message - 1);

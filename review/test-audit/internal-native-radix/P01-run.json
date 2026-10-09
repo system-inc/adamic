@@ -1,0 +1,6 @@
+{
+  "command": "ADAMIC_MUTANT=P01 ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u052/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestToStringWithARadix",
+  "exit": 1,
+  "wall": 2.412682501999825,
+  "pattern": "^TestToStringWithARadix"
+}

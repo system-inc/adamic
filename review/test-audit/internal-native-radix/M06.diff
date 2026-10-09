@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -144,7 +144,7 @@
+ static int compare_indices(const void *left, const void *right) {
+ 	uint32_t a = ((const indexed_key *)left)->index;
+ 	uint32_t b = ((const indexed_key *)right)->index;
+-	return a < b ? -1 : a > b ? 1 : 0;
++	return a < b ? 1 : a > b ? -1 : 0;
+ }
+ 
+ adamic_array *adamic_record_keys(const adamic_record *record) {

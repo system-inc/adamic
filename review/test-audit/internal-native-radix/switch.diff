@@ -1,0 +1,250 @@
+diff --git a/internal/native/runtime/heap.c b/internal/native/runtime/heap.c
+index db97e947..1bdf9bc4 100644
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -1,6 +1,14 @@
+ // heap.c: allocation, counting and freeing for every heap value (docs/memory.md).
+ 
+ #include "adamic.h"
++#include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {
++ static bool loaded; static const char *selected;
++ if (!loaded) { selected = getenv("ADAMIC_MUTANT"); loaded = true; }
++ return selected != NULL && strcmp(selected,id)==0;
++}
++
+ #include "count.h"
+ 
+ #include <stdint.h>
+@@ -367,10 +375,11 @@ __attribute__((noinline)) static void release_last(void *value) {
+ }
+ 
+ void adamic_release(void *value) {
++ if (audit_selected("P06")) { return; }
+ 	ADAMIC_COUNT_RELEASE();
+ 	adamic_heap *heap = value;
+ 	if (heap == NULL || heap->references == 0 || --heap->references != 0) {
+ 		return;
+ 	}
+-	release_last(value);
++	if (!audit_selected("M11")) release_last(value);
+ }
+diff --git a/internal/native/runtime/radix.c b/internal/native/runtime/radix.c
+index 68207787..a5324e7e 100644
+--- a/internal/native/runtime/radix.c
++++ b/internal/native/runtime/radix.c
+@@ -18,6 +18,14 @@
+ // That's V8's algorithm, not the exact expansion: (0.1).toString(3) stops after 34 digits.
+ 
+ #include "adamic.h"
++#include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {
++ static bool loaded; static const char *selected;
++ if (!loaded) { selected = getenv("ADAMIC_MUTANT"); loaded = true; }
++ return selected != NULL && strcmp(selected,id)==0;
++}
++
+ 
+ #include <math.h>
+ #include <stdint.h>
+@@ -66,7 +74,7 @@ static const char *double_to_radix(double value, int radix, char buffer[radix_bu
+ 	double integer = floor(value);
+ 	double fraction = value - integer;
+ 	// We only compute fractional digits up to the input double's precision.
+-	double delta = 0.5 * (radix_next_double(value) - value);
++	double delta = (audit_selected("M01") ? (1.0 * (radix_next_double(value) - value)) : (0.5 * (radix_next_double(value) - value)));
+ 	// If the delta rounded down to zero, use the minimum (denormal) delta value. (V8 skips the loop
+ 	// instead when the processor flushes denormals to zero, which a native Adamic program never asks
+ 	// it to.)
+@@ -138,9 +146,10 @@ static adamic_string *radix_result(const char *text, size_t length) {
+ // NumberPrototypeToString with a radix: the radix is checked first, before NaN (unlike
+ // toExponential), so (NaN).toString(1) is a RangeError.
+ adamic_string *adamic_number_to_radix(double value, double radix) {
++ if (audit_selected("P01")) { return NULL; }
+ 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
+ 	radix = isnan(radix) ? 0 : trunc(radix);
+-	if (radix < 2 || radix > 36) {
++	if (radix < 2 || (audit_selected("M03") ? (radix > 35) : (radix > 36))) {
+ 		static const char message[] = "RangeError: toString() radix argument must be between 2 and 36";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+@@ -148,7 +157,7 @@ adamic_string *adamic_number_to_radix(double value, double radix) {
+ 		return adamic_string_from_number(value);
+ 	}
+ 	if (value == 0) {
+-		return radix_result("0", 1);
++		return (audit_selected("M02") ? (radix_result("1", 1)) : (radix_result("0", 1)));
+ 	}
+ 	if (isnan(value)) {
+ 		return radix_result("NaN", 3);
+diff --git a/internal/native/runtime/record.c b/internal/native/runtime/record.c
+index 8ce40637..273ea615 100644
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -1,5 +1,13 @@
+ // record.c: own enumerable string properties, using Map's counted ordered hash table.
+ #include "adamic.h"
++#include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {
++ static bool loaded; static const char *selected;
++ if (!loaded) { selected = getenv("ADAMIC_MUTANT"); loaded = true; }
++ return selected != NULL && strcmp(selected,id)==0;
++}
++
+ 
+ #include <stdlib.h>
+ #include <stdio.h>
+@@ -82,6 +90,7 @@ static void check_missing_member(const adamic_string *key) {
+ }
+ 
+ adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {
++ if (audit_selected("P07")) { return NULL; }
+ 	adamic_value *value = adamic_record_get_own(record, key);
+ 	if (value == NULL) {
+ 		check_missing_member(key);
+@@ -108,7 +117,7 @@ void adamic_record_set(adamic_record *record, adamic_string *key, adamic_value v
+ bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
+ 	// JavaScript delete succeeds even when no own property was there.
+ 	(void)adamic_map_delete(table(record), (adamic_value){.reference = (void *)key});
+-	return true;
++	return !audit_selected("M04");
+ }
+ 
+ size_t adamic_record_size(const adamic_record *record) {
+@@ -129,7 +138,7 @@ static bool array_index(const adamic_string *key, uint32_t *value) {
+ 		}
+ 		number = number * 10 + (digit - '0');
+ 	}
+-	if (number >= UINT32_MAX) {
++	if ((audit_selected("M05") ? (number > UINT32_MAX) : (number >= UINT32_MAX))) {
+ 		return false;
+ 	}
+ 	*value = (uint32_t)number;
+@@ -144,10 +153,11 @@ typedef struct indexed_key {
+ static int compare_indices(const void *left, const void *right) {
+ 	uint32_t a = ((const indexed_key *)left)->index;
+ 	uint32_t b = ((const indexed_key *)right)->index;
+-	return a < b ? -1 : a > b ? 1 : 0;
++	return audit_selected("M06") ? (a < b ? 1 : a > b ? -1 : 0) : (a < b ? -1 : a > b ? 1 : 0);
+ }
+ 
+ adamic_array *adamic_record_keys(const adamic_record *record) {
++ if (audit_selected("P08")) { return NULL; }
+ 	const adamic_map *map = table(record);
+ 	adamic_array *keys = adamic_array_new(map->count, true);
+ 	size_t count = 0;
+diff --git a/internal/native/runtime/regexp.c b/internal/native/runtime/regexp.c
+index 2b43acf1..0b7cdca3 100644
+--- a/internal/native/runtime/regexp.c
++++ b/internal/native/runtime/regexp.c
+@@ -1,12 +1,20 @@
+ // Compile-time bytecode, executed over UTF-16 with ordered backtracking.
+ #include "adamic.h"
++#include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {
++ static bool loaded; static const char *selected;
++ if (!loaded) { selected = getenv("ADAMIC_MUTANT"); loaded = true; }
++ return selected != NULL && strcmp(selected,id)==0;
++}
++
+ #include "regexp_fold.h"
+ #include <math.h>
+ #include <stdlib.h>
+ #include <string.h>
+ 
+ static uint64_t regex_step_limit;
+-void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = limit; }
++void adamic_regex_set_step_limit(uint64_t limit) { regex_step_limit = audit_selected("M07") ? 1 : limit; }
+ static void *regex_memory(size_t size) {
+ 	void *memory = malloc(size == 0 ? 1 : size);
+ 	if (memory == NULL) {
+@@ -79,7 +87,7 @@ static bool regex_contains(const adamic_regex_instruction *i, uint32_t c) {
+ 		else
+ 			end = mid;
+ 	}
+-	return first < i->range_count && i->ranges[first].first <= c;
++	return first < i->range_count && (audit_selected("M08") ? (i->ranges[first].first < c) : (i->ranges[first].first <= c));
+ }
+ typedef struct {
+ 	uint64_t count;
+@@ -184,7 +192,7 @@ static bool regex_run(const adamic_regex_program *p, const uint16_t *input, size
+ 	regex_state *stack = NULL;
+ 	bool matched = false;
+ 	for (;;) {
+-		if (regex_step_limit && *steps >= regex_step_limit) {
++		if (regex_step_limit && (audit_selected("M12") ? (*steps > regex_step_limit) : (*steps >= regex_step_limit))) {
+ 			static const char message[] = "regexp: instruction step limit exceeded";
+ 			adamic_panic(message, sizeof message - 1);
+ 		}
+@@ -573,12 +581,13 @@ static adamic_array *regex_result(const adamic_regex_program *p, adamic_string *
+ 	return result;
+ }
+ adamic_maybe_boolean adamic_regex_done(adamic_object *object) {
++ if (audit_selected("P04")) { return (adamic_maybe_boolean){false,false}; }
+ 	if (object == NULL) {
+ 		static const char message[] = "undefined iterator result";
+ 		adamic_panic(message, sizeof message - 1);
+ 	}
+ 	for (size_t k = 0; k < object->shape->count; k++)
+-		if (strcmp(object->shape->names[k], "done") == 0)
++		if ((audit_selected("M09") ? (strcmp(object->shape->names[k], "value")) : (strcmp(object->shape->names[k], "done"))) == 0)
+ 			return (adamic_maybe_boolean){true, object->slots[k].boolean};
+ 	return (adamic_maybe_boolean){false, false};
+ }
+@@ -607,6 +616,7 @@ adamic_value adamic_regex_property(adamic_array *array, const char *name) {
+ 	return (adamic_value){.reference = NULL};
+ }
+ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
++ if (audit_selected("P03")) { return NULL; }
+ 	size_t length;
+ 	uint16_t *units = regex_input(input, &length);
+ 	uint64_t steps = 0;
+@@ -619,6 +629,7 @@ adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {
+ 	return result;
+ }
+ bool adamic_regex_test(adamic_object *regex, adamic_string *input) {
++ if (audit_selected("P02")) { return false; }
+ 	const adamic_regex_program *p = regex_program(regex);
+ 	size_t ascii_length = (size_t)adamic_string_length(input);
+ 	if (p->fast_ascii != NULL && p->captures < 16 && regex_step_limit == 0 &&
+diff --git a/internal/native/runtime/string.c b/internal/native/runtime/string.c
+index 48fc51e8..f0294f39 100644
+--- a/internal/native/runtime/string.c
++++ b/internal/native/runtime/string.c
+@@ -10,6 +10,14 @@
+ // 10), each held to Node by the oracle.
+ 
+ #include "adamic.h"
++#include <stdlib.h>
++#include <string.h>
++static bool audit_selected(const char *id) {
++ static bool loaded; static const char *selected;
++ if (!loaded) { selected = getenv("ADAMIC_MUTANT"); loaded = true; }
++ return selected != NULL && strcmp(selected,id)==0;
++}
++
+ 
+ #include <math.h>
+ 
+diff --git a/internal/native/runtime/string_build_impl.h b/internal/native/runtime/string_build_impl.h
+index da505b3c..2e668802 100644
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -120,11 +120,12 @@ size_t adamic_string_join_halves(char *bytes, size_t from, size_t length) {
+ }
+ 
+ int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
++ if (audit_selected("P05")) { return 0; }
+ 	// Either may be undefined (a string | undefined): undefined is equal only to itself.
+ 	if (left == NULL || right == NULL) {
+ 		return left == right;
+ 	}
+-	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);
++	return left->length == right->length && (left == right || left->length == 0 || (audit_selected("M10") ? (memcmp(left->bytes, right->bytes, left->length) != 0) : (memcmp(left->bytes, right->bytes, left->length) == 0)));
+ }
+ 
+ adamic_string adamic_string_empty = ADAMIC_STRING("");

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -108,7 +108,7 @@
+ bool adamic_record_delete(adamic_record *record, const adamic_string *key) {
+ 	// JavaScript delete succeeds even when no own property was there.
+ 	(void)adamic_map_delete(table(record), (adamic_value){.reference = (void *)key});
+-	return true;
++	return false;
+ }
+ 
+ size_t adamic_record_size(const adamic_record *record) {

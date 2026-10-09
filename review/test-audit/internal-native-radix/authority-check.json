@@ -1,0 +1,52 @@
+{
+  "authority": "test262 test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js",
+  "case": {
+    "pattern": "^\\d+$",
+    "flags": "",
+    "input": [
+      48,
+      49,
+      50,
+      51,
+      52,
+      53,
+      54,
+      55,
+      56,
+      57
+    ],
+    "lastIndex": 0,
+    "expected": {
+      "captures": [
+        [
+          0,
+          10
+        ]
+      ],
+      "lastIndex": 0,
+      "groups": null
+    },
+    "source": "test/built-ins/RegExp/CharacterClassEscapes/character-class-digit-class-escape-positive-cases.js",
+    "patternUnits": [
+      94,
+      92,
+      100,
+      43,
+      36
+    ]
+  },
+  "command": "node --eval <node_script>",
+  "node_script": "const c=JSON.parse(require('fs').readFileSync(0,'utf8'));let r=new RegExp(String.fromCharCode(...c.patternUnits),c.flags.includes('d')?c.flags:c.flags+'d');r.lastIndex=c.lastIndex;const m=r.exec(String.fromCharCode(...c.input));console.log(JSON.stringify({captures:m?Array.from(m.indices,x=>x||[-1,-1]):null,lastIndex:r.lastIndex,groups:m&&m.indices.groups||null}));",
+  "actual": {
+    "captures": [
+      [
+        0,
+        10
+      ]
+    ],
+    "lastIndex": 0,
+    "groups": null
+  },
+  "exit": 0,
+  "matches": true
+}

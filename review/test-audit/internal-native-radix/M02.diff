@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/radix.c
++++ b/internal/native/runtime/radix.c
+@@ -148,7 +148,7 @@
+ 		return adamic_string_from_number(value);
+ 	}
+ 	if (value == 0) {
+-		return radix_result("0", 1);
++		return radix_result("1", 1);
+ 	}
+ 	if (isnan(value)) {
+ 		return radix_result("NaN", 3);

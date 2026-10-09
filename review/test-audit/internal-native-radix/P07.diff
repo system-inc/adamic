@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -82,6 +82,7 @@
+ }
+ 
+ adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {
++ return NULL;
+ 	adamic_value *value = adamic_record_get_own(record, key);
+ 	if (value == NULL) {
+ 		check_missing_member(key);

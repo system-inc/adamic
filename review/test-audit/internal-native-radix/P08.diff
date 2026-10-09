@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/record.c
++++ b/internal/native/runtime/record.c
+@@ -148,6 +148,7 @@
+ }
+ 
+ adamic_array *adamic_record_keys(const adamic_record *record) {
++ return NULL;
+ 	const adamic_map *map = table(record);
+ 	adamic_array *keys = adamic_array_new(map->count, true);
+ 	size_t count = 0;

@@ -1,0 +1,6 @@
+{
+  "command": "ADAMIC_MUTANT=P02 ADAMIC_RECORD_BENCH=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u052/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestRegExp",
+  "exit": 1,
+  "wall": 35.76191865800001,
+  "pattern": "^TestRegExp"
+}

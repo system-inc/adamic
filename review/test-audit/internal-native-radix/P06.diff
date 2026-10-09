@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/heap.c
++++ b/internal/native/runtime/heap.c
+@@ -367,6 +367,7 @@
+ }
+ 
+ void adamic_release(void *value) {
++ return;
+ 	ADAMIC_COUNT_RELEASE();
+ 	adamic_heap *heap = value;
+ 	if (heap == NULL || heap->references == 0 || --heap->references != 0) {

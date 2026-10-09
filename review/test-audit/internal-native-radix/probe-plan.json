@@ -1,0 +1,50 @@
+[
+  [
+    "P01",
+    "radix.c",
+    "adamic_string *adamic_number_to_radix(double value, double radix) {",
+    "return NULL;"
+  ],
+  [
+    "P02",
+    "regexp.c",
+    "bool adamic_regex_test(adamic_object *regex, adamic_string *input) {",
+    "return false;"
+  ],
+  [
+    "P03",
+    "regexp.c",
+    "adamic_array *adamic_regex_exec(adamic_object *regex, adamic_string *input) {",
+    "return NULL;"
+  ],
+  [
+    "P04",
+    "regexp.c",
+    "adamic_maybe_boolean adamic_regex_done(adamic_object *object) {",
+    "return (adamic_maybe_boolean){false,false};"
+  ],
+  [
+    "P05",
+    "string_build_impl.h",
+    "int adamic_string_equal(const adamic_string *left, const adamic_string *right) {",
+    "return 0;"
+  ],
+  [
+    "P06",
+    "heap.c",
+    "void adamic_release(void *value) {",
+    "return;"
+  ],
+  [
+    "P07",
+    "record.c",
+    "adamic_value *adamic_record_get(const adamic_record *record, const adamic_string *key) {",
+    "return NULL;"
+  ],
+  [
+    "P08",
+    "record.c",
+    "adamic_array *adamic_record_keys(const adamic_record *record) {",
+    "return NULL;"
+  ]
+]
