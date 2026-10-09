@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -20,7 +20,7 @@
+ 		return false
+ 	}
+ 	access := node.AsPropertyAccessExpression()
+-	return access.Name().Text() == "length" && access.QuestionDotToken == nil && l.builtinArguments(access.Expression)
++	return access.Name().Text() == "size" && access.QuestionDotToken == nil && l.builtinArguments(access.Expression)
+ }
+ 
+ func (l *lowering) argumentsRefusal(node *ast.Node) error {

@@ -1,0 +1,11 @@
+--- a/internal/lower/library_array_predicate.go
++++ b/internal/lower/library_array_predicate.go
+@@ -78,7 +78,7 @@
+ 		return true
+ 	}
+ 	if proven.Flags()&checker.TypeFlagsUnknown != 0 {
+-		return true
++		return false
+ 	}
+ 	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsTypeParameter|checker.TypeFlagsIntersection) != 0 || checker.IsTupleType(proven) {
+ 		return false

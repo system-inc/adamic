@@ -1,0 +1,11 @@
+--- a/internal/lower/expression.go
++++ b/internal/lower/expression.go
+@@ -1227,7 +1227,7 @@
+ 	}
+ 	if symbol != nil {
+ 		for _, declaration := range symbol.Declarations {
+-			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() == nil && l.censusImplementation(declaration) != nil {
++			if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil && l.censusImplementation(declaration) != nil {
+ 				return nil, l.notYet(node, "an overloaded function as a value")
+ 			}
+ 		}

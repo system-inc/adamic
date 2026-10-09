@@ -1,0 +1,23 @@
+package lower
+
+import "os"
+
+func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
+func auditBool(id string, value bool) bool {
+	if auditMutant(id) {
+		return !value
+	}
+	return value
+}
+func auditString(id, value, changed string) string {
+	if auditMutant(id) {
+		return changed
+	}
+	return value
+}
+func auditNumber(id string, value float64) float64 {
+	if auditMutant(id) {
+		return value + 1
+	}
+	return value
+}

@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -263,7 +263,7 @@
+ 		return true
+ 	}
+ 	if p.l.isArrayPredicateCall(node) {
+-		return p.reference(ast.SkipParentheses(node.AsCallExpression().Arguments.Nodes[0])) && (p.l.arrayPredicateDomain(p.declared) || p.declared.Flags()&checker.TypeFlagsUnknown != 0)
++		return false
+ 	}
+ 	if node.Kind != ast.KindBinaryExpression {
+ 		return false

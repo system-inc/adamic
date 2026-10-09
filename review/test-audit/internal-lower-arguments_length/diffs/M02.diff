@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -26,7 +26,7 @@
+ func (l *lowering) argumentsRefusal(node *ast.Node) error {
+ 	for owner := node.Parent; owner != nil; owner = owner.Parent {
+ 		if ast.IsFunctionLike(owner) {
+-			if owner.Kind == ast.KindArrowFunction {
++			if owner.Kind != ast.KindArrowFunction {
+ 				return &Refused{Where: l.program.Where(node), What: "arguments inside an arrow function", Fix: "read arguments.length in the enclosing non-arrow function and capture that number"}
+ 			}
+ 			break

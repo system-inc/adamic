@@ -1,0 +1,11 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -41,7 +41,7 @@
+ 		for length.Parent != nil && length.Parent.Kind == ast.KindParenthesizedExpression {
+ 			length = length.Parent
+ 		}
+-		if !ast.IsAssignmentTarget(length) {
++		if ast.IsAssignmentTarget(length) {
+ 			return nil
+ 		}
+ 		return &Refused{Where: l.program.Where(node), What: "writing arguments.length", Fix: "keep the count read-only; write an explicit local number instead"}

@@ -1,0 +1,11 @@
+--- a/internal/lower/cast_proof.go
++++ b/internal/lower/cast_proof.go
+@@ -251,7 +251,7 @@
+ // base is a nongeneric Animal is uncheckable; Box<number> and Box<string> have the same tag there.
+ func (l *lowering) classCastArguments(source, target *checker.Type) bool {
+ 	declaration := l.classNodeFor(target)
+-	if declaration == nil || len(declaration.TypeParameters()) == 0 {
++	if declaration == nil || len(declaration.TypeParameters()) != 0 {
+ 		return true
+ 	}
+ 	view := l.classView(l.checker.GetTypeAtLocation(declaration.Name()), l.classNodeFor(source))

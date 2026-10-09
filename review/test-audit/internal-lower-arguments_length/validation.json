@@ -1,0 +1,104 @@
+{
+  "M01": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 4.321096677000014,
+    "log": "M01-vet.log"
+  },
+  "M02": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.45611861800000497,
+    "log": "M02-vet.log"
+  },
+  "M03": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.45902339700000994,
+    "log": "M03-vet.log"
+  },
+  "M04": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.46819099399999686,
+    "log": "M04-vet.log"
+  },
+  "M05": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.4551228779999974,
+    "log": "M05-vet.log"
+  },
+  "M06": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.46749515499993777,
+    "log": "M06-vet.log"
+  },
+  "M07": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.44523145300001943,
+    "log": "M07-vet.log"
+  },
+  "M08": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.44243463600002997,
+    "log": "M08-vet.log"
+  },
+  "M09": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.45150853999996343,
+    "log": "M09-vet.log"
+  },
+  "M10": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.48085416899994016,
+    "log": "M10-vet.log"
+  },
+  "M11": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.5090141540000559,
+    "log": "M11-vet.log"
+  },
+  "M12": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.47255519600003026,
+    "log": "M12-vet.log"
+  },
+  "M13": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.46981549400004496,
+    "log": "M13-vet.log"
+  },
+  "M14": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.48483884400002353,
+    "log": "M14-vet.log"
+  },
+  "M15": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.44397169499995925,
+    "log": "M15-vet.log"
+  },
+  "M16": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.4643336870000212,
+    "log": "M16-vet.log"
+  },
+  "M17": {
+    "command": "timeout 90 go vet ./internal/lower/",
+    "exit": 0,
+    "wall": 0.4749640880000925,
+    "log": "M17-vet.log"
+  }
+}
