@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T11:22:34.737103577Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:34.744489012Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:22:34.744571795Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== RUN   TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.744598132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== PAUSE TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.744600532Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:22:34.744603366Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags"}
+{"Time":"2026-10-09T11:22:34.744605128Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"=== CONT  TestFlags\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.744678559Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"    parser_test.go:36: flags \"uu\" accepted\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:34.744687822Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"    parser_test.go:36: flags \"uv\" accepted\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:34.744691102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"    parser_test.go:36: flags \"z\" accepted\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:34.744698931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Output":"--- FAIL: TestFlags (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.744702411Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestFlags","Elapsed":0}
+{"Time":"2026-10-09T11:22:34.744785999Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.744971509Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.007s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:34.745013593Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.008}

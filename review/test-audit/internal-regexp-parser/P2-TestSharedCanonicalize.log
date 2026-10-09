@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:22:35.414405414Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:35.417060491Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:35.417136107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== RUN   TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417192264Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== PAUSE TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417195574Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:35.417200835Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize"}
+{"Time":"2026-10-09T11:22:35.417203324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"=== CONT  TestSharedCanonicalize\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417205897Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"    properties_test.go:19: Unicode U+0001: shared=0 local=1\n","OutputType":"error"}
+{"Time":"2026-10-09T11:22:35.417215785Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Output":"--- FAIL: TestSharedCanonicalize (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417218161Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestSharedCanonicalize","Elapsed":0}
+{"Time":"2026-10-09T11:22:35.417230574Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417435955Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.002s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.417469756Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.003}

@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T11:22:35.098368493Z","Action":"start","Package":"github.com/system-inc/adamic/internal/regexp"}
+{"Time":"2026-10-09T11:22:35.109776402Z","Action":"run","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:35.109864447Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== RUN   TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.109898476Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== PAUSE TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.109901314Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:35.109907902Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds"}
+{"Time":"2026-10-09T11:22:35.109911865Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"=== CONT  TestQuantifierBounds\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.109919739Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"--- FAIL: TestQuantifierBounds (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.112487561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]\n"}
+{"Time":"2026-10-09T11:22:35.112504454Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"[signal SIGSEGV: segmentation violation code=0x1 addr=0x8 pc=0x5ed0cc]\n"}
+{"Time":"2026-10-09T11:22:35.112510059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\n"}
+{"Time":"2026-10-09T11:22:35.112563153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"goroutine 19 [running]:\n"}
+{"Time":"2026-10-09T11:22:35.112570017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"testing.tRunner.func1.2({0x803130, 0x87b3a0})\n"}
+{"Time":"2026-10-09T11:22:35.112576006Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T11:22:35.112580351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T11:22:35.11258912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T11:22:35.112592329Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"panic({0x803130?, 0x87b3a0?})\n"}
+{"Time":"2026-10-09T11:22:35.112595805Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T11:22:35.11260001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"github.com/system-inc/adamic/internal/regexp.TestQuantifierBounds(0x24b8f34b0248)\n"}
+{"Time":"2026-10-09T11:22:35.112603297Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic/internal/regexp/parser_test.go:47 +0x8c\n"}
+{"Time":"2026-10-09T11:22:35.112606164Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"testing.tRunner(0x24b8f34b0248, 0x829d78)\n"}
+{"Time":"2026-10-09T11:22:35.112618085Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T11:22:35.112621255Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"created by testing.(*T).Run in goroutine 1\n"}
+{"Time":"2026-10-09T11:22:35.112624548Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T11:22:35.113146961Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Test":"TestQuantifierBounds","Elapsed":0}
+{"Time":"2026-10-09T11:22:35.113171079Z","Action":"output","Package":"github.com/system-inc/adamic/internal/regexp","Output":"FAIL\tgithub.com/system-inc/adamic/internal/regexp\t0.010s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:22:35.113181631Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/regexp","Elapsed":0.015}
