@@ -356,6 +356,31 @@ esac
         (self.root / 'whole-gates').write_text('')
         self.assertIn('no whole gate has started', self.check()[0])
 
+    def test_main_unconfirmed_ten_minutes_across_landings_pages_once_per_stretch(self):
+        # Found by Kirk, Oct 9 21:37Z: main moved every few minutes, the page was timed per head and never came, and main
+        # went unconfirmed for over an hour while the pool took none.
+        first, second, third, fourth, fifth = ('%d' % digit * 40 for digit in range(1, 6))
+        (self.root / 'pool-promoted').write_text('promoted\n')
+        (self.root / 'main-head').write_text(first + '\n')
+        (self.root / 'main-head-first-seen').write_text('%s %d\n' % (first, self.now - 300))
+        self.assertEqual(self.check(), [], 'five minutes is inside the pool grace')
+        (self.root / 'main-head').write_text(second + '\n')
+        self.assertEqual(self.check(), [])
+        # Five more minutes, and main moved again: ten minutes since the first main went without a whole gate.
+        (self.root / 'main-head-first-seen').write_text('%s %d\n%s %d\n' % (first, self.now - 650, second, self.now - 350))
+        (self.root / 'main-head').write_text(third + '\n')
+        sends = self.check()
+        self.assertEqual([line.split('|')[0] for line in sends], ['system_adamic_developer_tools', 'system_adamic'])
+        self.assertIn('no whole gate has started on it or on any main since %s' % first[:12], sends[0])
+        (self.root / 'main-head').write_text(fourth + '\n')
+        self.assertEqual(len(self.check()), 2, 'one stretch pages once')
+        # The pool takes the third main: the stretch after it starts at the fourth, and the alarm re-arms.
+        (self.root / 'whole-gates').write_text('%s running %d\n' % (third, self.now))
+        (self.root / 'main-head').write_text(fifth + '\n')
+        self.assertEqual(len(self.check()), 2)
+        self.assertFalse((self.root / 'main-confirm-alarmed').exists())
+        self.assertEqual([line.split()[0] for line in (self.root / 'main-head-first-seen').read_text().splitlines()], [fourth, fifth])
+
     def test_a_main_moved_only_by_test_only_landings_over_a_gated_main_is_covered(self):
         # Oct 9 06:42Z: b5245943 (d25a7da5 plus one test-only landing) paged while d25a7da5's pool whole gate ran.
         head, base, older = '9' * 40, '8' * 40, '7' * 40
