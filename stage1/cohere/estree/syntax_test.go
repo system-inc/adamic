@@ -26,12 +26,7 @@ func TestSyntaxGrammar(t *testing.T) {
 	list := manifest(t, syntaxGrammar())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d syntax cases, %d identical canonical bytes", len(syntaxGrammar()), len(want))
 }
 
@@ -50,9 +45,10 @@ func TestSyntaxRefusals(t *testing.T) {
 		t.Fatal(err)
 	}
 	for _, path := range strings.Fields(string(paths)) {
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "ESTree parser")
-		}
+		t.Run(filepath.Base(path), func(t *testing.T) {
+			t.Parallel()
+			checkRefusalModes(t, main, binary, script, path, "ESTree parser")
+		})
 	}
 	t.Log("three Go refusals explicitly refused with empty stdout on all builds")
 }

@@ -22,7 +22,8 @@ func TestUndefinedNumbersShapes(t *testing.T) {
 	t.Parallel()
 	programs := map[uint64]string{}
 	for seed := uint64(1); seed <= 40; seed++ {
-		programs[seed] = Generate(seed).Source()
+		// Moves and parallel programs can be refused by design; every program here must lower.
+		programs[seed] = GenerateWithout(seed, []string{"moves", "parallel"}).Source()
 	}
 
 	// The literal ranges are also the gate's independently selectable work units.

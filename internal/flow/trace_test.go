@@ -133,6 +133,9 @@ func prepareTrace(t *testing.T, path string) traceSetup {
 		t.Fatal(err)
 	}
 	program := lowered(t, path)
+	if program.Async != nil {
+		t.Skip("suspension-state tracing is NotYet; these programs use no synchronous lifetime proofs and have a separate async Node oracle")
+	}
 	result := run{graphs: map[int]*Function{}}
 	points := map[*ir.Statement]map[int]point{}
 	// variables is, per function, the JavaScript that reads each of its tracked variables that can

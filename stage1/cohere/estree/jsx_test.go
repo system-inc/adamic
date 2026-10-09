@@ -42,65 +42,71 @@ func TestJSXOriginalLibraries(t *testing.T) {
 	list := jsxManifest(t)
 	script, _ := filepath.Abs("testdata/library.mjs")
 	for _, mode := range []string{"raw", "postprocessed"} {
-		flag := "--raw-json"
-		if mode == "postprocessed" {
-			flag = "--json"
-		}
-		wants := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
-		gots := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
-		if len(wants) != 9 || len(gots) != 9 {
-			t.Fatal("JSX library record count")
-		}
-		for i := range wants {
-			var want, got map[string]any
-			if err := json.Unmarshal([]byte(wants[i]), &want); err != nil {
-				t.Fatal(err)
+		t.Run(mode, func(t *testing.T) {
+			t.Parallel()
+			flag := "--raw-json"
+			if mode == "postprocessed" {
+				flag = "--json"
 			}
-			if err := json.Unmarshal([]byte(gots[i]), &got); err != nil {
-				t.Fatal(err)
+			wants := strings.Split(strings.TrimSpace(string(execute(t, "", oracle, flag, list))), "\n")
+			gots := strings.Split(strings.TrimSpace(string(execute(t, "", "node", script, library, mode, list))), "\n")
+			if len(wants) != 9 || len(gots) != 9 {
+				t.Fatal("JSX library record count")
 			}
-			if i == 0 {
-				expected := "Type argument list cannot be empty."
-				if mode != "raw" {
-					expected += " (1:11)"
-				}
-				if len(got) != 1 || got["error"] != expected || !strings.Contains(wants[i], `"params":[]`) {
-					t.Fatal("empty JSX type argument gap changed")
-				}
-				t.Log(mode + ": original rejects empty JSX type arguments; Go accepts")
-				continue
+			for i := range wants {
+				t.Run(fmt.Sprintf("%04d", i), func(t *testing.T) {
+					t.Parallel()
+					var want, got map[string]any
+					if err := json.Unmarshal([]byte(wants[i]), &want); err != nil {
+						t.Fatal(err)
+					}
+					if err := json.Unmarshal([]byte(gots[i]), &got); err != nil {
+						t.Fatal(err)
+					}
+					if i == 0 {
+						expected := "Type argument list cannot be empty."
+						if mode != "raw" {
+							expected += " (1:11)"
+						}
+						if len(got) != 1 || got["error"] != expected || !strings.Contains(wants[i], `"params":[]`) {
+							t.Fatal("empty JSX type argument gap changed")
+						}
+						t.Log(mode + ": original rejects empty JSX type arguments; Go accepts")
+						return
+					}
+					if mode != "raw" && (i == 4 || i == 6) {
+						init := want["ast"].(map[string]any)["body"].([]any)[0].(map[string]any)["declarations"].([]any)[0].(map[string]any)["init"].(map[string]any)
+						var value map[string]any
+						var before, after string
+						if i == 4 {
+							value = init["openingElement"].(map[string]any)["attributes"].([]any)[0].(map[string]any)["value"].(map[string]any)
+							before = "&😀"
+							after = "&amp;😀"
+						} else {
+							value = init["children"].([]any)[0].(map[string]any)
+							before = " // text /* not comment */ &&unknown;&#1114112; "
+							after = " // text /* not comment */ &amp;&unknown;&#1114112; "
+						}
+						if value["value"] != before {
+							t.Fatal("entity gap changed")
+						}
+						value["value"] = after
+						t.Logf("postprocessed case %d: only ampersand spelling differs", i)
+					}
+					if mode != "raw" && i == 8 {
+						normalized := jsxManifestCases(t, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
+						data := execute(t, "", oracle, flag, normalized)
+						if err := json.Unmarshal(bytes.TrimSpace(data), &want); err != nil {
+							t.Fatal(err)
+						}
+						t.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
+					}
+					if !bytes.Equal(mustJSON(t, want), mustJSON(t, got)) {
+						t.Fatalf("%s JSX %d differs beyond documented deltas: Go %s; library %s", mode, i, mustJSON(t, want), mustJSON(t, got))
+					}
+				})
 			}
-			if mode != "raw" && (i == 4 || i == 6) {
-				init := want["ast"].(map[string]any)["body"].([]any)[0].(map[string]any)["declarations"].([]any)[0].(map[string]any)["init"].(map[string]any)
-				var value map[string]any
-				var before, after string
-				if i == 4 {
-					value = init["openingElement"].(map[string]any)["attributes"].([]any)[0].(map[string]any)["value"].(map[string]any)
-					before = "&😀"
-					after = "&amp;😀"
-				} else {
-					value = init["children"].([]any)[0].(map[string]any)
-					before = " // text /* not comment */ &&unknown;&#1114112; "
-					after = " // text /* not comment */ &amp;&unknown;&#1114112; "
-				}
-				if value["value"] != before {
-					t.Fatal("entity gap changed")
-				}
-				value["value"] = after
-				t.Logf("postprocessed case %d: only ampersand spelling differs", i)
-			}
-			if mode != "raw" && i == 8 {
-				normalized := jsxManifestCases(t, []string{strings.ReplaceAll(jsxCases()[i], "\r\n", "\n")})
-				data := execute(t, "", oracle, flag, normalized)
-				if err := json.Unmarshal(bytes.TrimSpace(data), &want); err != nil {
-					t.Fatal(err)
-				}
-				t.Log("postprocessed CRLF: library exactly matches Go on LF-normalized input")
-			}
-			if !bytes.Equal(mustJSON(t, want), mustJSON(t, got)) {
-				t.Fatalf("%s JSX %d differs beyond documented deltas: Go %s; library %s", mode, i, mustJSON(t, want), mustJSON(t, got))
-			}
-		}
+		})
 	}
 }
 
@@ -115,13 +121,13 @@ func TestJSXMutant(t *testing.T) {
 	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
 	oracle := miscOracle(t)
 	path := miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
-	binary, _ := miscBuild(t, path)
+	binary, script := miscBuild(t, path)
 	answers := miscTextAnswers(t, oracle, cases, ".tsx")
 	finishSetup()
 	miscRunShards(t, testJSXMutantShards, ids, func(t *testing.T, i int) {
 		list := jsxManifestCases(t, cases[i:i+1])
 		want := answers[i].Data
-		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": mutantEmittedOutput(t, path, script, "--manifest", list)} {
 			if err := miscCompare(want, got, true); err != nil {
 				t.Fatalf("%s %s: %v", ids[i], name, err)
 			}

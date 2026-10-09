@@ -1,6 +1,7 @@
 package estree
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -16,12 +17,7 @@ func TestCookedSurrogates(t *testing.T) {
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	main, _ := filepath.Abs("main.ts")
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": onNode(t, script, "--manifest", list)} {
-		if d := firstDifference(want, got); d != "" {
-			t.Fatal(name + ": " + d)
-		}
-	}
+	checkPort(t, main, []string{"--manifest", list}, want, false, false)
 	t.Logf("%d cooked-surrogate files, %d bytes match Go", len(cookedSurrogates()), len(want))
 }
 
@@ -30,14 +26,7 @@ func TestCookedSurrogateMutant(t *testing.T) {
 	list := manifest(t, cookedSurrogates())
 	want := execute(t, "", goOracle(t), "--manifest", list)
 	path := mutantPort(t, "protocol.ts", `result += '\\ufffd\\ufffd\\ufffd';`, `result += '\\ufffd';`)
-	binary, _ := build(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if d := firstDifference(want, got); d == "" {
-			t.Fatal(name + " mutant survived")
-		} else {
-			t.Log(name + ": " + d)
-		}
-	}
+	checkPort(t, path, []string{"--manifest", list}, want, true, true)
 }
 func TestCookedSurrogateLibraryGap(t *testing.T) {
 	t.Parallel()
@@ -62,12 +51,14 @@ func TestCookedSurrogateLibraryGap(t *testing.T) {
 func TestLossyInputRefusal(t *testing.T) {
 	main, _ := filepath.Abs("main.ts")
 	binary, script := build(t, main, true)
-	for _, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
-		path := filepath.Join(t.TempDir(), "input.ts")
-		os.WriteFile(path, body, 0644)
-		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
-			refusedBeforeDeadline(t, argv, "cannot recover original UTF-8 bytes")
-		}
+	for index, body := range [][]byte{{47, 47, 240, 144, 128, 10, 120, 59}, {47, 47, 239, 191, 189, 10, 120, 59}} {
+		t.Run(fmt.Sprintf("%04d", index), func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "input.ts")
+			os.WriteFile(path, body, 0644)
+			checkRefusalModes(t, main, binary, script, path, "cannot recover original UTF-8 bytes")
+
+		})
 	}
 	t.Log("equal-size malformed and valid replacement inputs both explicitly refuse; raw-byte API remains required")
 }

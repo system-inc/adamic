@@ -157,6 +157,11 @@ func prepareCSSNumbersSetup(t *testing.T) {
 		build := numbersPreparedProgram(t, -1)
 		sanitized := numbersPreparedNative(t, -1, true)
 		fast := numbersPreparedNative(t, -1, false)
+		counted := numbersCounted(t, build)
+		code, err := os.ReadFile(build.c)
+		if err != nil {
+			t.Fatal(err)
+		}
 		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
 		mutants := make(map[string]numbersProgram)
 		mutantBinaries := make(map[string]string)
@@ -203,7 +208,7 @@ func prepareCSSNumbersSetup(t *testing.T) {
 					clean(t, side.name, side.result)
 					checkNumbersOutput(t, unit, side.name, side.result.stdout, want.stdout)
 				}
-				numbersLeaks(t, sanitized, fast, "--batch", path)
+				numbersLeaks(t, string(code), sanitized, counted, "--batch", path)
 				if library != "" {
 					answer := numbersOracleAnswers(t, "Prettier", "node", []string{script, library}, numbersInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
 					clean(t, "Prettier", answer)

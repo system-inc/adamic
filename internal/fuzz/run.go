@@ -9,11 +9,14 @@ import (
 	"os/exec"
 	"path/filepath"
 	"regexp"
+	"runtime"
 	"sort"
 	"strings"
+	"sync"
 	"syscall"
 	"time"
 
+	"github.com/system-inc/adamic/internal/leakcheck"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -26,6 +29,11 @@ type Checkout struct {
 	directory string
 	adamic    string
 	runtime   string
+	// tsanRuntime is set when this machine can build a ThreadSanitizer runtime. Empty means the
+	// runner still compares one thread with the default, and says why TSan is missing in TSan.
+	tsanRuntime string
+	// TSan is "ready", or the reason the ThreadSanitizer runtime could not be built.
+	TSan string
 }
 
 // flags are native.Build's for a sanitized build, what the oracle compiles with. They're this tree's,
@@ -51,6 +59,14 @@ func Prepare(root string, directory string) (*Checkout, error) {
 	checkout.runtime, err = native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{Sanitize: true})
 	if err != nil {
 		return nil, fmt.Errorf("fuzz: compiling the runtime: %w", err)
+	}
+	// TSan is a separate build. A machine without it still runs; the report says so.
+	tsanRuntime, tsanErr := native.RuntimeLibrary(filepath.Join(root, "internal", "native", "runtime"), native.Options{ThreadSanitize: true})
+	if tsanErr != nil {
+		checkout.TSan = tsanErr.Error()
+	} else {
+		checkout.tsanRuntime = tsanRuntime
+		checkout.TSan = "ready"
 	}
 	return checkout, nil
 }
@@ -78,9 +94,13 @@ const (
 	// on Node runs on. That's Adamic meaning what it says, not a bug. The panic line has to be one of
 	// the inserted checks' (insertedCheck), not just any stop the two backends share.
 	Checked Verdict = "checked"
+	// Refused: the program was built to break a parallel proof, and the compiler named that path.
+	Refused Verdict = "refused"
 	// Unfit: the program misbehaved on Node itself (it never ended, or printed megabytes), which is
 	// the generator's fault.
 	Unfit Verdict = "unfit"
+	// Flaked: an execution failure under load disappeared on one exclusive rerun.
+	Flaked Verdict = "flaked under load"
 	// Finding: a disagreement, a sanitizer report, a leak, a compiler crash, or C that clang refused.
 	Finding Verdict = "finding"
 )
@@ -94,7 +114,37 @@ type Outcome struct {
 	Node    Run
 	Native  Run
 	Backend Run
+	retry   bool // execution failures that need one exclusive confirmation
 }
+
+// programRuns covers all checkouts in this process, including shrinking and
+// reduction. A waiting confirmation blocks new attempts until it has run alone.
+var programRuns sync.RWMutex
+
+func confirm(run func() Outcome) Outcome {
+	first := func() Outcome {
+		programRuns.RLock()
+		defer programRuns.RUnlock()
+		return run()
+	}()
+	if first.Verdict != Finding || !first.retry {
+		return first
+	}
+	programRuns.Lock()
+	defer programRuns.Unlock()
+	second := run()
+	if second.Verdict == Agreed {
+		first.Verdict = Flaked
+		return first
+	}
+	// The exclusive attempt is authoritative; retain both diagnostics when it
+	// produces a different failure rather than losing the initial evidence.
+	second.Detail = fmt.Sprintf("first attempt: %s %s\n%s\nexclusive rerun: %s %s\n%s",
+		first.Verdict, first.Key, first.Detail, second.Verdict, second.Key, second.Detail)
+	return second
+}
+
+func runnerDied(run Run) bool { return run.ExitCode < 0 || run.TimedOut }
 
 // Try runs a program's source three ways in a directory of its own, the way the oracle does.
 func (c *Checkout) Try(source string, directory string) Outcome {
@@ -110,45 +160,93 @@ func (c *Checkout) Try(source string, directory string) Outcome {
 
 // TryFile runs a program file three ways, building in directory.
 func (c *Checkout) TryFile(path string, directory string) Outcome {
+	return confirm(func() Outcome { return c.tryFile(path, directory) })
+}
+
+// tryFile performs exactly one attempt; callers hold programRuns throughout it.
+func (c *Checkout) tryFile(path string, directory string) Outcome {
+	// The refusal a program expects, and whether it reaches a task boundary, are in its comments.
+	contents, err := os.ReadFile(path)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	}
+	source := string(contents)
 	// The C first: the checker's and stage 0's refusals come from here.
 	lowered := execute(directory, nil, 30*time.Second, c.adamic, "c", path)
+	expected := parallelRefusal(source)
+	moveWhat, moveFix := moveRefusal(source)
+	if (moveWhat == "") != (moveFix == "") || (moveWhat != "" && moveFix != "return it through the results" && moveFix != "don't use it after the parallelMap") {
+		return Outcome{Verdict: Finding, Key: "invalid move expectation"}
+	}
 	if lowered.ExitCode != 0 || lowered.TimedOut {
-		return compilerRefusal(lowered)
+		var outcome Outcome
+		switch {
+		case moveWhat != "":
+			outcome = judgeMoveRefusal(moveWhat, moveFix, lowered)
+		case expected == "":
+			outcome = compilerRefusal(lowered)
+		default:
+			outcome = judgeParallelRefusal(expected, compilerRefusal(lowered), lowered)
+		}
+		outcome.retry = outcome.Verdict == Finding
+		return outcome
+	}
+	if expected != "" || moveWhat != "" {
+		if moveWhat != "" {
+			expected = moveWhat + "; " + moveFix
+		}
+		return Outcome{Verdict: Finding, Key: "compiler accepted a program it must refuse", Detail: "expected a refusal containing " + expected}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), lowered.Stdout, 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	javascript := execute(directory, nil, 30*time.Second, c.adamic, "js", path)
 	if javascript.ExitCode != 0 || javascript.TimedOut {
-		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr)}
+		return Outcome{Verdict: Finding, Key: "javascript backend failed", Detail: string(javascript.Stderr), retry: true}
 	}
 	if err := os.WriteFile(filepath.Join(directory, "program.mjs"), javascript.Stdout, 0o644); err != nil {
 		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
 	}
 	binary := filepath.Join(directory, "program")
-	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(c.runtime), "-o", binary, filepath.Join(directory, "main.c"))
-	arguments = append(arguments, native.RuntimeLinkFlags(c.runtime)...)
+	runtime, err := c.runtimeFor(directory, native.Options{Sanitize: true}, c.runtime)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	}
+	arguments := append(append([]string{}, flags...), "-I", filepath.Dir(runtime), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(runtime)...)
 	arguments = append(arguments, "-lm")
 	if output, err := exec.Command("clang", arguments...).CombinedOutput(); err != nil {
 		key := "clang refused the C"
 		if warning := clangWarning.FindSubmatch(output); warning != nil {
 			key += ": " + string(warning[1])
 		}
-		return Outcome{Verdict: Finding, Key: key, Detail: firstLines(string(output), 12)}
+		detail := strings.TrimSpace(string(output))
+		if detail == "" {
+			detail = err.Error()
+		}
+		return Outcome{Verdict: Finding, Key: key, Detail: detail, retry: true}
 	}
 
 	oracle := filepath.Join(c.Root, "oracle", "node.mjs")
 	outcome := Outcome{
 		Node:    execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, path),
-		Native:  execute(directory, []string{"ASAN_OPTIONS=detect_leaks=0"}, 20*time.Second, binary),
+		Native:  executeIsolated(directory, nativeEnvironment(""), 20*time.Second, binary),
 		Backend: execute(directory, nil, 20*time.Second, "node", "--disable-warning=ExperimentalWarning", oracle, filepath.Join(directory, "program.mjs")),
 	}
-	return c.judge(outcome, binary, directory)
+	judged := c.judge(outcome, binary, directory)
+	if judged.Verdict != Agreed && judged.Verdict != Checked {
+		return judged
+	}
+	if !strings.Contains(source, "parallelMap(") {
+		return judged
+	}
+	return c.parallelRuns(judged, binary, directory)
 }
 
-// sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, or UBSan's
-// "runtime error" with its words, numbers taken out so the same bug at another address is the same.
-var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|runtime error: ([^\n]*)|ERROR: LeakSanitizer`)
+// sanitizerReport finds the kind of report a sanitizer wrote, if any: ASan's error name, UBSan's
+// "runtime error" with its words, TSan's race, or a leak. Numbers are taken out by sanitizerKind so
+// the same bug at another address is the same.
+var sanitizerReport = regexp.MustCompile(`ERROR: AddressSanitizer: ([a-z-]+)|runtime error: ([^\n]*)|WARNING: ThreadSanitizer: ([^\n]+)|ERROR: ThreadSanitizer: ([^\n]+)|ERROR: LeakSanitizer`)
 
 // clangWarning is the warning -Werror made an error, by its flag, so two kinds of bad C stay apart.
 var clangWarning = regexp.MustCompile(`\[-Werror,(-W[a-z-]+)\]`)
@@ -169,6 +267,7 @@ var digits = regexp.MustCompile(`[0-9]+|0x[0-9a-f]+`)
 var javascriptError = regexp.MustCompile(`^adamic: panic: (RangeError|TypeError|ReferenceError|SyntaxError|Error|InternalError)\b`)
 
 func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outcome {
+	outcome.retry = runnerDied(outcome.Node) || runnerDied(outcome.Native) || runnerDied(outcome.Backend)
 	switch {
 	case outcome.Node.TimedOut:
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node never finished", ""
@@ -179,11 +278,7 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 		outcome.Verdict, outcome.Key, outcome.Detail = Unfit, "node printed more than a megabyte", ""
 		return outcome
 	}
-	if match := sanitizerReport.FindSubmatch(outcome.Native.Stderr); match != nil {
-		kind := string(match[1])
-		if kind == "" && match[2] != nil {
-			kind = "undefined behavior: " + digits.ReplaceAllString(string(match[2]), "N")
-		}
+	if kind := sanitizerKind(outcome.Native.Stderr); kind != "" {
 		outcome.Verdict, outcome.Key, outcome.Detail = Finding, "sanitizer: "+kind, firstLines(string(outcome.Native.Stderr), 20)
 		return outcome
 	}
@@ -221,13 +316,21 @@ func (c *Checkout) judge(outcome Outcome, binary string, directory string) Outco
 			outcome.Backend.ExitCode, tail(outcome.Backend.Stdout), outcome.Backend.Stderr)
 		return outcome
 	}
-	// Every program that finishes must let go of everything: the same binary again, leak detection on.
+	// Every program that finishes must let go of everything through the shared platform check.
+	// Threads stay at the default here; the one-thread leak check is parallelRuns' job.
 	if outcome.Node.ExitCode == 0 {
-		leaked := execute(directory, []string{"ASAN_OPTIONS=detect_leaks=1"}, 20*time.Second, binary)
-		if leaked.ExitCode != 0 {
-			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(string(leaked.Stderr), 20)
+		report, died, err := c.leaksRun(binary, directory, "")
+		if err != nil {
+			// A leak check that never finished says nothing about the program: run it again alone.
+			report, outcome.retry = err.Error(), true
+		}
+		// So does a leak runner killed by a signal (under load, or by the harness's deadline).
+		outcome.retry = outcome.retry || died
+		if report != "" {
+			outcome.Verdict, outcome.Key, outcome.Detail = Finding, "leak", firstLines(report, 20)
 			return outcome
 		}
+
 	}
 	outcome.Verdict = Agreed
 	return outcome
@@ -257,6 +360,202 @@ func compilerRefusal(lowered Run) Outcome {
 	return Outcome{Verdict: Finding, Key: "compiler failed", Detail: firstLines(stderr, 20)}
 }
 
+// judgeParallelRefusal checks that a program built to be illegal was refused, and that the message
+// names the path the generator broke. Acceptance is a finding: the proof did not fire.
+func judgeParallelRefusal(expected string, refusal Outcome, lowered Run) Outcome {
+	stderr := string(lowered.Stderr)
+	if lowered.TimedOut || strings.Contains(stderr, "panic:") || strings.Contains(stderr, "goroutine ") {
+		return refusal
+	}
+	if strings.Contains(stderr, "can't lower") && strings.Contains(stderr, "yet") {
+		return Outcome{Verdict: Finding, Key: "expected a refusal, stage 0 said not yet", Detail: firstLines(stderr, 6)}
+	}
+	if strings.Contains(stderr, expected) {
+		return Outcome{Verdict: Refused, Key: expected, Detail: firstLines(stderr, 4)}
+	}
+	return Outcome{Verdict: Finding, Key: "refusal did not name the path", Detail: "expected " + expected + "\n" + firstLines(stderr, 8)}
+}
+
+// parallelRuns holds an accepted parallel program to one thread, the default pool, and ThreadSanitizer
+// when that runtime built. Any of those disagreeing with Node, or with each other, is a finding.
+func (c *Checkout) parallelRuns(outcome Outcome, binary string, directory string) Outcome {
+	one := executeIsolated(directory, nativeEnvironment("1"), 20*time.Second, binary)
+	if kind := sanitizerKind(one.Stderr); kind != "" {
+		return Outcome{Verdict: Finding, Key: "sanitizer: " + kind, Detail: firstLines(string(one.Stderr), 20)}
+	}
+	reference := outcome.Node
+	if outcome.Verdict == Checked {
+		// An inserted check already disagrees with Node. The thread counts still have to agree with each other.
+		reference = outcome.Native
+	} else if diff := difference(outcome.Node, one); diff != "" {
+		return threadFinding("ADAMIC_THREADS=1 "+diff, outcome.Node, one)
+	}
+	if diff := difference(outcome.Native, one); diff != "" {
+		return threadFinding("threads differ: "+diff, outcome.Native, one)
+	}
+	if outcome.Verdict == Agreed && outcome.Node.ExitCode == 0 {
+		report, err := c.leaks(binary, directory, "1")
+		if err != nil {
+			report = err.Error()
+		}
+		if report != "" {
+			return Outcome{Verdict: Finding, Key: "leak at ADAMIC_THREADS=1", Detail: firstLines(report, 20)}
+		}
+
+	}
+	if c.tsanRuntime == "" {
+		return outcome
+	}
+	tsanBinary := filepath.Join(directory, "program-tsan")
+	tsanRuntime, err := c.runtimeFor(directory, native.Options{ThreadSanitize: true}, c.tsanRuntime)
+	if err != nil {
+		return Outcome{Verdict: Finding, Key: "fuzzer", Detail: err.Error()}
+	}
+	if err := c.link(tsanBinary, directory, native.Options{ThreadSanitize: true}, tsanRuntime); err != nil {
+		return Outcome{Verdict: Finding, Key: "clang refused the TSan build", Detail: err.Error()}
+	}
+	for _, threads := range []string{"", "1"} {
+		label := "default"
+		if threads == "1" {
+			label = "ADAMIC_THREADS=1"
+		}
+		observed := executeIsolated(directory, tsanEnvironment(threads), 45*time.Second, tsanBinary)
+		if kind := sanitizerKind(observed.Stderr); kind != "" {
+			return Outcome{Verdict: Finding, Key: "sanitizer: " + kind + " (" + label + ")", Detail: firstLines(string(observed.Stderr), 20)}
+		}
+		if observed.TimedOut {
+			return Outcome{Verdict: Finding, Key: "thread sanitizer never finished (" + label + ")"}
+		}
+		if reference.ExitCode != observed.ExitCode || !bytes.Equal(reference.Stdout, observed.Stdout) {
+			return threadFinding("thread sanitizer "+label+" disagrees", reference, observed)
+		}
+		if len(observed.Stderr) != 0 && !bytes.Equal(reference.Stderr, observed.Stderr) {
+			return threadFinding("thread sanitizer "+label+" stderr differs", reference, observed)
+		}
+	}
+	return outcome
+}
+
+// runtimeFor is the runtime a program's C links against: the one built with the features its main.c
+// defines (closure convention, canonical closures and the rest change struct layouts the runtime
+// allocates), or prebuilt when the program defines none.
+func (c *Checkout) runtimeFor(directory string, options native.Options, prebuilt string) (string, error) {
+	source, err := os.ReadFile(filepath.Join(directory, "main.c"))
+	if err != nil {
+		return "", err
+	}
+	if !strings.Contains(string(source), "#define ADAMIC_") {
+		return prebuilt, nil
+	}
+	return native.RuntimeLibraryForSource(filepath.Join(c.Root, "internal", "native", "runtime"), string(source), options)
+}
+
+func (c *Checkout) link(binary string, directory string, options native.Options, runtime string) error {
+	arguments := append(append([]string{}, native.Flags(options)...), "-I", filepath.Dir(runtime), "-o", binary, filepath.Join(directory, "main.c"))
+	arguments = append(arguments, native.RuntimeLinkFlags(runtime)...)
+	arguments = append(arguments, "-lm")
+	output, err := exec.Command("clang", arguments...).CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("%s", firstLines(string(output), 12))
+	}
+	return nil
+}
+
+func threadFinding(key string, expected Run, actual Run) Outcome {
+	return Outcome{
+		Verdict: Finding,
+		Key:     key,
+		Detail: fmt.Sprintf("expected: exit %d, stdout %q, stderr %q\nactual:   exit %d, stdout %q, stderr %q",
+			expected.ExitCode, tail(expected.Stdout), expected.Stderr,
+			actual.ExitCode, tail(actual.Stdout), actual.Stderr),
+	}
+}
+
+func sanitizerKind(stderr []byte) string {
+	match := sanitizerReport.FindSubmatch(stderr)
+	if match == nil {
+		return ""
+	}
+	switch {
+	case len(match) > 1 && len(match[1]) > 0:
+		return string(match[1])
+	case len(match) > 2 && len(match[2]) > 0:
+		return "undefined behavior: " + digits.ReplaceAllString(string(match[2]), "N")
+	case len(match) > 3 && len(match[3]) > 0:
+		return "thread: " + strings.TrimSpace(digits.ReplaceAllString(string(match[3]), "N"))
+	case len(match) > 4 && len(match[4]) > 0:
+		return "thread: " + strings.TrimSpace(digits.ReplaceAllString(string(match[4]), "N"))
+	default:
+		return "leak"
+	}
+}
+
+// Native comparison disables Linux leak detection; the shared check runs it separately.
+func nativeEnvironment(threads string) []string {
+	var extra []string
+	if runtime.GOOS == "linux" {
+		extra = append(extra, "ASAN_OPTIONS=detect_leaks=0")
+	}
+	if threads != "" {
+		extra = append(extra, "ADAMIC_THREADS="+threads)
+	}
+	return isolatedEnvironment(extra)
+}
+
+// Preserve the fuzzer's isolated environment, deadline and one-worker witness in every leak run.
+func (c *Checkout) leaks(binary, directory, threads string) (string, error) {
+	report, _, err := c.leaksRun(binary, directory, threads)
+	return report, err
+}
+
+// leaksRun is leaks that also says whether a run of the check was killed by a signal, so a
+// leak runner that died under load is tried again alone rather than reported as a leak.
+func (c *Checkout) leaksRun(binary, directory, threads string) (string, bool, error) {
+	code, err := os.ReadFile(filepath.Join(directory, "main.c"))
+	if err != nil {
+		return "", false, err
+	}
+	timedOut, died := false, false
+	report, err := leakcheck.Check(leakcheck.Program{
+		C: string(code), Sanitized: binary, Counted: filepath.Join(directory, "program-counted"),
+		Execute: func(environment []string, name string, arguments ...string) leakcheck.Run {
+			extra := append([]string{}, environment...)
+			if threads != "" {
+				extra = append(extra, "ADAMIC_THREADS="+threads)
+			}
+			result := executeIsolated(directory, isolatedEnvironment(extra), 20*time.Second, name, arguments...)
+			timedOut = timedOut || result.TimedOut
+			died = died || runnerDied(result)
+			return leakcheck.Run{Stdout: result.Stdout, Stderr: result.Stderr, ExitCode: result.ExitCode}
+		},
+	})
+	if timedOut {
+		return "", true, fmt.Errorf("leak check never finished")
+	}
+	return report, died, err
+}
+
+func tsanEnvironment(threads string) []string {
+	extra := []string{"TSAN_OPTIONS=halt_on_error=1"}
+	if threads != "" {
+		extra = append(extra, "ADAMIC_THREADS="+threads)
+	}
+	return isolatedEnvironment(extra)
+}
+
+// isolatedEnvironment drops a parent shell's thread and sanitizer settings, then adds extra.
+// The default pool is the unset variable, not whatever the fuzzer itself was launched with.
+func isolatedEnvironment(extra []string) []string {
+	var environment []string
+	for _, entry := range os.Environ() {
+		if strings.HasPrefix(entry, "ADAMIC_THREADS=") || strings.HasPrefix(entry, "ASAN_OPTIONS=") || strings.HasPrefix(entry, "TSAN_OPTIONS=") {
+			continue
+		}
+		environment = append(environment, entry)
+	}
+	return append(environment, extra...)
+}
+
 // differenceBesidesStderr is difference, without comparing what was written to stderr.
 func differenceBesidesStderr(expected Run, actual Run) string {
 	actual.Stderr = expected.Stderr
@@ -277,9 +576,15 @@ func difference(expected Run, actual Run) string {
 	return ""
 }
 
-// execute limits child CPU time, with a wall backstop for blocked children.
-// Cancellation kills the whole process group so descendants are not orphaned.
+// execute limits child CPU time, with a wall backstop for blocked children, in its own process group,
+// killed whole at the deadline so descendants are not orphaned. environment is appended to the
+// parent environment.
 func execute(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
+	return executeIsolated(directory, append(os.Environ(), environment...), limit, name, arguments...)
+}
+
+// executeIsolated is execute with exactly the environment it is given.
+func executeIsolated(directory string, environment []string, limit time.Duration, name string, arguments ...string) Run {
 	path, err := exec.LookPath(name)
 	if err != nil {
 		return Run{ExitCode: -1, Stderr: []byte(err.Error())}
@@ -302,14 +607,12 @@ func execute(directory string, environment []string, limit time.Duration, name s
 	script := fmt.Sprintf(`ulimit -S -t %d && ulimit -H -t %d || exit; exec "$0" "$@"`, seconds, seconds+1)
 	command := exec.CommandContext(ctx, "/bin/sh", append([]string{"-c", script, path}, arguments...)...)
 	command.Dir = directory
+	command.Env = environment
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
 		return syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
 	}
 	command.WaitDelay = 5 * time.Second
-	if environment != nil {
-		command.Env = append(os.Environ(), environment...)
-	}
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr

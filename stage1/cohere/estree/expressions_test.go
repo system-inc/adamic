@@ -29,8 +29,8 @@ func TestRecoveredExpressionMutant(t *testing.T) {
 	list := manifest(t, recoveredExpressions())
 	want := recoveryAnswer(t, goOracle(t), list, "--manifest")
 	path := mutantPort(t, "sourceLookahead.ts", "(scanner.flags & 1) === 0 &&\n        (token", "(scanner.flags & 1) >= 0 &&\n        (token")
-	binary, _ := recoveryBuild(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+	binary, script := recoveryBuild(t, path, true)
+	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted": mutantEmittedOutput(t, path, script, "--manifest", list)} {
 		if d := firstDifference(want, got); d == "" {
 			t.Fatal(name + " mutant survived")
 		} else {
