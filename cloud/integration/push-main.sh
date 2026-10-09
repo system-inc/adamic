@@ -31,6 +31,7 @@
 #        cloud/integration/push-main.sh [same options] (--fast-gate | --full-gate) <gate-logs ref> [--smoke-list-reviewed] <full sha> "<branches landed>"
 #        cloud/integration/push-main.sh --test-only <full sha> "<branches landed>"
 #        cloud/integration/push-main.sh --deletion [--not-a-reader <file>]... <full sha> "<branches landed>"
+#        cloud/integration/push-main.sh --test-only --markdown-corpus "<its corpus verdict>" <full sha> "<branches landed>"
 set -euo pipefail
 
 fastGate=""
@@ -43,6 +44,7 @@ testOnly=no
 deletion=no
 extraTrailers=""
 notReaders=()
+markdownCorpus=""
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 	--fast-gate) fastGate=${2#origin/}; shift 2 ;;
@@ -71,6 +73,11 @@ while [ "$#" -gt 0 ]; do
 	# --not-a-reader <file>, repeatable: a file that names a deleted path without reading it (a list of record
 	# paths, a test writing its own copy), checked by hand; the landing names each one.
 	--not-a-reader) notReaders+=("$2"); shift 2 ;;
+	# --markdown-corpus "<verdict>", with --test-only: Markdown files whose only reader is the markdown corpus land on
+	# that corpus's units alone (@system_adamic, Oct 9 02:16: "a doc no code reads except the markdown corpora is
+	# gated by the markdown corpora alone"; internal/corpusfiles takes every tracked .md). The verdict names where
+	# those units ran green on this sha merged onto main; the landing carries it. Not a docs class: the run is required.
+	--markdown-corpus) markdownCorpus=$2; shift 2 ;;
 	--revert) pauseException=revert; shift ;;
 	--fix-forward) pauseException="fix-forward ${2#origin/}"; shift 2 ;;
 	*) break ;;
@@ -610,6 +617,10 @@ Named but not read, checked by hand: ${notReaders[*]}."
 		echo "Landing deletion ${gated:0:8} over main ${old:0:8}."
 	else
 	nonTest=$(printf '%s\n' "$changed" | grep -v -E "$testOnlyPattern" | grep . || true)
+	if [ -n "$markdownCorpus" ]; then
+		nonTest=$(printf '%s\n' "$nonTest" | grep -v -E '\.md$' | grep . || true)
+		branches="${branches}; Markdown gated by its corpus alone (@system_adamic, Oct 9 02:16): ${markdownCorpus}"
+	fi
 	if [ -n "$nonTest" ]; then
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
 		exit 1
@@ -619,7 +630,7 @@ Named but not read, checked by hand: ${notReaders[*]}."
 	# its branch then silently deletes them (cohere's estree split carried buildcache-shared 2afbfa75 this way).
 	# The lane never filters files out of a merge; the worker cherry-picks its test commits onto main instead.
 	for commit in $(git rev-list --reverse --topo-order --no-merges "${old}..${gated}"); do
-		outside=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -v -E "$testOnlyPattern" | grep . || true)
+		outside=$(git diff-tree --no-commit-id --name-only -r "$commit" | grep -v -E "$testOnlyPattern" | { if [ -n "$markdownCorpus" ]; then grep -v -E '\.md$'; else cat; fi; } | grep . || true)
 		if [ -n "$outside" ]; then
 			echo "refused: carries non-test history: ${commit:0:8} ($(git log -1 --format=%s "$commit" | cut -c1-60)) changes $(printf '%s' "$outside" | head -n 3 | paste -sd ' ' -); cherry-pick the test commits onto main instead" >&2
 			exit 1

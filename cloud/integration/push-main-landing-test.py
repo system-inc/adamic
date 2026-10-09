@@ -153,6 +153,17 @@ class LandingTests(unittest.TestCase):
         carried = self.commit('then a deletion')
         self.assertIn('carries more than deletions: %s' % edited[:8], self.push('--deletion', carried, 'carried').stderr)
 
+    def test_a_doc_lands_on_its_markdown_corpus_verdict_only(self):
+        # @system_adamic, Oct 9 02:16: a doc no code reads except the markdown corpora lands on those units alone,
+        # through the test-only path, carrying the verdict. Without it, or with any non-Markdown file, it's refused.
+        doc = self.change(self.main, 'docs/convention.md', '# Convention\n', 'a doc')
+        self.assertIn('not test-only', self.push('--test-only', doc, 'doc').stderr)
+        landed = self.assertLanded(self.push('--test-only', '--markdown-corpus', 'corpusfiles, markdowninline, markdownblocks census green on Home', doc, 'doc'), self.main, doc)
+        self.assertIn('Markdown gated by its corpus alone', git(self.repository, 'log', '-1', '--format=%B', landed))
+        mixed = self.change(landed, 'docs/more.md', '# More\n', 'a doc')
+        mixed = self.change(mixed, 'code/a.go', 'package code\n\n// beside\n', 'and code')
+        self.assertIn('not test-only', self.push('--test-only', '--markdown-corpus', 'green', mixed, 'mixed').stderr)
+
     def test_a_candidate_built_ahead_lands_over_the_landing_commit_below_it(self):
         lower = self.change(self.main, 'code/a.go', 'package code\n\n// lower\n', 'lower')
         upper = self.change(lower, 'other/b.go', 'package other\n\n// upper\n', 'upper')
