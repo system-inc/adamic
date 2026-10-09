@@ -1,0 +1,14 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -156,9 +156,9 @@
+ 		walker.Type.Results.List[0].Names = []*ast.Ident{ast.NewIdent("latentStop")}
+ 		prefix := statements(`
+ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+-    outerOwner := latentFindingOwner
++
+     latentFindingOwner = l.program.Where(node)
+-    defer func(){ latentFindingOwner = outerOwner }()
++
+     if len(l.latentBodyDiagnostics(node.Body())) > 0 { latentNestedDeclarations(node.Body(), ` + name + `); return false }
+ } else {
+     if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }

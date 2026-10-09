@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -155,7 +155,7 @@
+ 		eraseWalks(walker.Body)
+ 		walker.Type.Results.List[0].Names = []*ast.Ident{ast.NewIdent("latentStop")}
+ 		prefix := statements(`
+-if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
++if latentFullEnabled() || node.Kind == ast.KindFunctionDeclaration {
+     outerOwner := latentFindingOwner
+     latentFindingOwner = l.program.Where(node)
+     defer func(){ latentFindingOwner = outerOwner }()

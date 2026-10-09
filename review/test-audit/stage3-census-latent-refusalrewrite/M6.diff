@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -217,7 +217,7 @@
+ 	if badReturn || outerReturns < 2 {
+ 		return nil, fail("unsupported outer refusal returns")
+ 	}
+-	collectReturns(clone.Body)
++	// collectReturns dropped
+ 	clone.Body.List = append(clone.Body.List, &ast.ReturnStmt{Results: []ast.Expr{ast.NewIdent("nil")}})
+ 	file.Decls = append(file.Decls, clone)
+ 	var output bytes.Buffer

@@ -1,0 +1,16 @@
+id,kind,TestCompiler41231d51Shape,TestMissingFunctionMutantFailsLoudly,TestChangedVisitorMutantFailsLoudly,TestVisitorsCollectContinueAndSkipDiagnosedBodies
+M1,production,fail,pass,pass,fail
+M2,production,fail,pass,pass,pass
+M3,production,pass,pass,pass,fail
+M4,production,pass,pass,pass,fail
+M5,production,pass,pass,pass,fail
+M6,production,pass,pass,pass,fail
+M7,production,pass,pass,pass,fail
+M8,production,pass,pass,pass,fail
+M9,production,pass,pass,pass,fail
+M10,production,pass,pass,pass,pass
+M11,production,pass,pass,pass,pass
+M12,production,pass,fail,fail,pass
+W1,witness check,pass,fail,pass,pass
+W2,witness check,pass,pass,fail,pass
+P1,probe,fail,fail,fail,fail

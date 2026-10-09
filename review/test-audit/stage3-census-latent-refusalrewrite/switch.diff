@@ -1,0 +1,157 @@
+diff --git a/stage3/census/latent/refusalrewrite/rewrite.go b/stage3/census/latent/refusalrewrite/rewrite.go
+index 404eb452..55ae7629 100644
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -8,12 +8,18 @@ import (
+ 	"go/format"
+ 	"go/parser"
+ 	"go/token"
++	"os"
++	"strings"
+ )
+ 
+ const function = "lowering.refuse"
+ 
+ func fail(message string, args ...any) error {
+-	return fmt.Errorf("latent refusal rewrite: %s: %s", function, fmt.Sprintf(message, args...))
++	name := function
++	if os.Getenv("ADAMIC_MUTANT") == "M12" {
++		name = "lowering.refused"
++	}
++	return fmt.Errorf("latent refusal rewrite: %s: %s", name, fmt.Sprintf(message, args...))
+ }
+ 
+ func ident(node ast.Node, name string) bool { n, ok := node.(*ast.Ident); return ok && n.Name == name }
+@@ -35,6 +41,9 @@ func statements(text string) []ast.Stmt {
+ // Rewrite retains production refuse and appends a separate measurement-only clone.
+ // Every supported walker must have its own error binding and exactly one child walk.
+ func Rewrite(source []byte) ([]byte, error) {
++	if os.Getenv("ADAMIC_MUTANT") == "P1" {
++		return nil, nil
++	}
+ 	fs := token.NewFileSet()
+ 	file, err := parser.ParseFile(fs, "refusals.go", source, 0)
+ 	if err != nil {
+@@ -51,7 +60,11 @@ func Rewrite(source []byte) ([]byte, error) {
+ 		}
+ 	}
+ 	if len(matches) != 1 {
+-		return nil, fail("expected exactly one function, found %d", len(matches))
++		if os.Getenv("ADAMIC_MUTANT") == "W1" {
++			return source, nil
++		} else {
++			return nil, fail("expected exactly one function, found %d", len(matches))
++		}
+ 	}
+ 	original := matches[0]
+ 	if printed(original.Type) != "func(module *ast.SourceFile) error" || len(original.Recv.List[0].Names) != 1 || original.Recv.List[0].Names[0].Name != "l" {
+@@ -66,7 +79,11 @@ func Rewrite(source []byte) ([]byte, error) {
+ 		return nil, fail("cannot clone: %v", err)
+ 	}
+ 	clone := cloneFile.Decls[0].(*ast.FuncDecl)
+-	clone.Name.Name = "latentRefuse"
++	if os.Getenv("ADAMIC_MUTANT") == "M1" {
++		clone.Name.Name = "latentRefused"
++	} else {
++		clone.Name.Name = "latentRefuse"
++	}
+ 	var collision bool
+ 	ast.Inspect(clone.Body, func(n ast.Node) bool {
+ 		if ident(n, "latentStop") {
+@@ -148,13 +165,15 @@ func Rewrite(source []byte) ([]byte, error) {
+ 			}
+ 			return true
+ 		})
+-		if count != 1 {
++		if (os.Getenv("ADAMIC_MUTANT") != "W2" && count != 1) || (os.Getenv("ADAMIC_MUTANT") == "W2" && count > 1) {
+ 			return nil, fail("%s expected one child walk, found %d", name, count)
+ 		}
+ 		// Replace the temporary marker structurally, including walks inside conditionals.
+-		eraseWalks(walker.Body)
++		if os.Getenv("ADAMIC_MUTANT") != "M7" {
++			eraseWalks(walker.Body)
++		}
+ 		walker.Type.Results.List[0].Names = []*ast.Ident{ast.NewIdent("latentStop")}
+-		prefix := statements(`
++		prefixText := `
+ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+     outerOwner := latentFindingOwner
+     latentFindingOwner = l.program.Where(node)
+@@ -164,7 +183,24 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+     if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }
+     if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }
+ }
+-` + fmt.Sprintf(`defer func(){ latentRecord(%s); %s = nil; node.ForEachChild(%s); latentStop = false }()`, binding, binding, name))
++` + fmt.Sprintf(`defer func(){ latentRecord(%s); %s = nil; node.ForEachChild(%s); latentStop = false }()`, binding, binding, name)
++		if os.Getenv("ADAMIC_MUTANT") == "M2" {
++			prefixText = strings.ReplaceAll(prefixText, "    defer func(){ latentFindingOwner = outerOwner }()", "")
++			prefixText = strings.ReplaceAll(prefixText, "    outerOwner := latentFindingOwner", "")
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M3" {
++			prefixText = strings.ReplaceAll(prefixText, "; "+binding+" = nil;", ";")
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M4" {
++			prefixText = strings.ReplaceAll(prefixText, "latentStop = false }()", "latentStop = true }()")
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M5" {
++			prefixText = strings.ReplaceAll(prefixText, "len(l.program.LatentDiagnosticsIn(node.Body())) > 0", "len(l.program.LatentDiagnosticsIn(node.Body())) > 1")
++		}
++		if os.Getenv("ADAMIC_MUTANT") == "M10" {
++			prefixText = strings.ReplaceAll(prefixText, "if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration", "if latentFullEnabled() || node.Kind == ast.KindFunctionDeclaration")
++		}
++		prefix := statements(prefixText)
+ 		walker.Body.List = append(prefix, walker.Body.List...)
+ 	}
+ 	// Module metadata returns are outside the visitors. Collect each directive and pragma.
+@@ -214,10 +250,12 @@ if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+ 		outerReturns++
+ 		return false
+ 	})
+-	if badReturn || outerReturns < 2 {
++	if badReturn || outerReturns < auditBound() {
+ 		return nil, fail("unsupported outer refusal returns")
+ 	}
+-	collectReturns(clone.Body)
++	if os.Getenv("ADAMIC_MUTANT") != "M6" {
++		collectReturns(clone.Body)
++	}
+ 	clone.Body.List = append(clone.Body.List, &ast.ReturnStmt{Results: []ast.Expr{ast.NewIdent("nil")}})
+ 	file.Decls = append(file.Decls, clone)
+ 	var output bytes.Buffer
+@@ -238,7 +276,7 @@ func eraseWalks(block *ast.BlockStmt) {
+ func collectReturns(block *ast.BlockStmt) {
+ 	rewriteBlocks(block, func(statement ast.Stmt) []ast.Stmt {
+ 		if ret, ok := statement.(*ast.ReturnStmt); ok {
+-			return []ast.Stmt{&ast.ExprStmt{X: &ast.CallExpr{Fun: ast.NewIdent("latentRecord"), Args: ret.Results}}}
++			return []ast.Stmt{&ast.ExprStmt{X: &ast.CallExpr{Fun: ast.NewIdent("latentRecord"), Args: auditArgs(ret.Results)}}}
+ 		}
+ 		return []ast.Stmt{statement}
+ 	})
+@@ -253,7 +291,9 @@ func rewriteBlocks(block *ast.BlockStmt, rewrite func(ast.Stmt) []ast.Stmt) {
+ 				return false
+ 			}
+ 			if child, ok := node.(*ast.BlockStmt); ok {
+-				rewriteBlocks(child, rewrite)
++				if os.Getenv("ADAMIC_MUTANT") != "M9" {
++					rewriteBlocks(child, rewrite)
++				}
+ 				return false
+ 			}
+ 			return true
+@@ -262,3 +302,16 @@ func rewriteBlocks(block *ast.BlockStmt, rewrite func(ast.Stmt) []ast.Stmt) {
+ 	}
+ 	block.List = list
+ }
++
++func auditArgs(args []ast.Expr) []ast.Expr {
++	if os.Getenv("ADAMIC_MUTANT") == "M8" {
++		return []ast.Expr{ast.NewIdent("nil")}
++	}
++	return args
++}
++func auditBound() int {
++	if os.Getenv("ADAMIC_MUTANT") == "M11" {
++		return 3
++	}
++	return 2
++}

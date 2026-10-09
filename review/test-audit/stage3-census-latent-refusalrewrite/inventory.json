@@ -1,0 +1,22 @@
+{
+  "commit": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "nproc": "5",
+  "rows": [
+    "TestCompiler41231d51Shape",
+    "TestMissingFunctionMutantFailsLoudly",
+    "TestChangedVisitorMutantFailsLoudly",
+    "TestVisitorsCollectContinueAndSkipDiagnosedBodies"
+  ],
+  "functions": [
+    "Rewrite",
+    "fail",
+    "ident",
+    "printed",
+    "statements",
+    "eraseWalks",
+    "collectReturns",
+    "rewriteBlocks"
+  ],
+  "oracle_kind": "self",
+  "setup": "warm env works; skipped"
+}

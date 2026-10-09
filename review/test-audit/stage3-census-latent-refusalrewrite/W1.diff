@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -51,7 +51,7 @@
+ 		}
+ 	}
+ 	if len(matches) != 1 {
+-		return nil, fail("expected exactly one function, found %d", len(matches))
++		return source, nil
+ 	}
+ 	original := matches[0]
+ 	if printed(original.Type) != "func(module *ast.SourceFile) error" || len(original.Recv.List[0].Names) != 1 || original.Recv.List[0].Names[0].Name != "l" {

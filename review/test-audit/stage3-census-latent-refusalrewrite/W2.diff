@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -148,7 +148,7 @@
+ 			}
+ 			return true
+ 		})
+-		if count != 1 {
++		if count > 1 {
+ 			return nil, fail("%s expected one child walk, found %d", name, count)
+ 		}
+ 		// Replace the temporary marker structurally, including walks inside conditionals.

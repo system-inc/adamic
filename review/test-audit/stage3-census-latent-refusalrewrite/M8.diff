@@ -1,0 +1,13 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -237,8 +237,8 @@
+ }
+ func collectReturns(block *ast.BlockStmt) {
+ 	rewriteBlocks(block, func(statement ast.Stmt) []ast.Stmt {
+-		if ret, ok := statement.(*ast.ReturnStmt); ok {
+-			return []ast.Stmt{&ast.ExprStmt{X: &ast.CallExpr{Fun: ast.NewIdent("latentRecord"), Args: ret.Results}}}
++		if _, ok := statement.(*ast.ReturnStmt); ok {
++			return []ast.Stmt{&ast.ExprStmt{X: &ast.CallExpr{Fun: ast.NewIdent("latentRecord"), Args: []ast.Expr{ast.NewIdent("nil")}}}}
+ 		}
+ 		return []ast.Stmt{statement}
+ 	})

@@ -1,0 +1,15 @@
+{
+  "setup_seconds": 0,
+  "npm_ci_seconds": 0.5522702430025674,
+  "clean_baseline_driver_seconds": 0.4309776289992442,
+  "clean_baseline_binary_seconds": 0.237,
+  "isolated_12_runs_driver_seconds": 3.046877061995474,
+  "switch_build_seconds": 0.33079079299932346,
+  "clean_build_seconds": 0.23575286000050255,
+  "final_12_mutant_matrix_driver_seconds": 4.051722890995734,
+  "witness_matrix_driver_seconds": 0.8488192550030362,
+  "probe_matrix_driver_seconds": 0.22095365300265257,
+  "standalone_replay_driver_seconds": 5.9447754960019665,
+  "final_vet_driver_seconds": 0.9286513129918603,
+  "note": "Driver timings include Go tool startup and any compilation; recorded final runs exclude overwritten development retries. All steps below 90 seconds. No native rebuild needed."
+}

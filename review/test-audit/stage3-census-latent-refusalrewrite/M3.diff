@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -164,7 +164,7 @@
+     if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile { latentFindingOwner = l.program.Where(node) }
+     if node.Kind == ast.KindFunctionDeclaration && node.Parent != nil && node.Parent.Kind == ast.KindSourceFile && len(l.program.LatentDiagnosticsIn(node.Body())) > 0 { return false }
+ }
+-` + fmt.Sprintf(`defer func(){ latentRecord(%s); %s = nil; node.ForEachChild(%s); latentStop = false }()`, binding, binding, name))
++` + fmt.Sprintf(`defer func(){ latentRecord(%s); node.ForEachChild(%s); latentStop = false }()`, binding, name))
+ 		walker.Body.List = append(prefix, walker.Body.List...)
+ 	}
+ 	// Module metadata returns are outside the visitors. Collect each directive and pragma.

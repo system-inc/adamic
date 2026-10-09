@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -10,7 +10,7 @@
+ 	"go/token"
+ )
+ 
+-const function = "lowering.refuse"
++const function = "lowering.refused"
+ 
+ func fail(message string, args ...any) error {
+ 	return fmt.Errorf("latent refusal rewrite: %s: %s", function, fmt.Sprintf(message, args...))

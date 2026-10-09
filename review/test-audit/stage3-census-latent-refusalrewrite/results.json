@@ -1,0 +1,210 @@
+[
+  {
+    "test": "TestCompiler41231d51Shape",
+    "package": "stage3/census/latent/refusalrewrite",
+    "file": "stage3/census/latent/refusalrewrite/rewrite_test.go",
+    "seconds": 0.008,
+    "oracle": "Self-written: production refuse AST must be unchanged and latentRefuse must contain exactly four defers. Counting defers does not check owner behavior.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [
+      "M2"
+    ],
+    "last_proven_fail": "M2: rewrite_test.go:53: expected independently instrumented contracts and visit functions with scoped owners, got 2",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompiler41231d51Shape",
+      "TestMissingFunctionMutantFailsLoudly",
+      "TestChangedVisitorMutantFailsLoudly",
+      "TestVisitorsCollectContinueAndSkipDiagnosedBodies"
+    ],
+    "evidence": "ADAMIC_MUTANT=M2 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/refusalrewrite/ -run . > M2.log 2>&1; rewrite_test.go:53: expected independently instrumented contracts and visit functions with scoped owners, got 2",
+    "timing_samples": [
+      0.008,
+      0.008,
+      0.007
+    ]
+  },
+  {
+    "test": "TestMissingFunctionMutantFailsLoudly",
+    "package": "stage3/census/latent/refusalrewrite",
+    "file": "stage3/census/latent/refusalrewrite/rewrite_test.go",
+    "seconds": 0.003,
+    "oracle": "Self-written missing-function diagnostic substring and nil partial output. Exact label matters: M12 fails although rejection still works. Witness of Rewrite validation.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: rewrite_test.go:66: missing-function mutant not caught: output=10425 error=<nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompiler41231d51Shape",
+      "TestMissingFunctionMutantFailsLoudly",
+      "TestChangedVisitorMutantFailsLoudly",
+      "TestVisitorsCollectContinueAndSkipDiagnosedBodies"
+    ],
+    "evidence": "ADAMIC_MUTANT=W1 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/refusalrewrite/ -run . > W1.log 2>&1; rewrite_test.go:66: missing-function mutant not caught: output=10425 error=<nil>",
+    "timing_samples": [
+      0.003,
+      0.002,
+      0.003
+    ],
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestChangedVisitorMutantFailsLoudly",
+    "package": "stage3/census/latent/refusalrewrite",
+    "file": "stage3/census/latent/refusalrewrite/rewrite_test.go",
+    "seconds": 0.003,
+    "oracle": "Self-written changed-child-walk diagnostic substring. Exact label matters: M12 fails although rejection still works. Witness of Rewrite validation.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: rewrite_test.go:82: changed visitor mutant not caught: <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompiler41231d51Shape",
+      "TestMissingFunctionMutantFailsLoudly",
+      "TestChangedVisitorMutantFailsLoudly",
+      "TestVisitorsCollectContinueAndSkipDiagnosedBodies"
+    ],
+    "evidence": "ADAMIC_MUTANT=W2 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/refusalrewrite/ -run . > W2.log 2>&1; rewrite_test.go:82: changed visitor mutant not caught: <nil>",
+    "timing_samples": [
+      0.003,
+      0.004,
+      0.003
+    ],
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestVisitorsCollectContinueAndSkipDiagnosedBodies",
+    "package": "stage3/census/latent/refusalrewrite",
+    "file": "stage3/census/latent/refusalrewrite/rewrite_test.go",
+    "seconds": 0.253,
+    "oracle": "Self-written ordered findings, continuation, diagnosed-body exclusion and first production refusal, executed in a synthetic Go program. Child go test must exit zero; logs distinguish compilation errors from semantic mismatches.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "unique_kills": [
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9"
+    ],
+    "last_proven_fail": "M9: rewrite_test.go:188: compiled behavior probe: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": [
+      "M1",
+      "M2",
+      "M3",
+      "M4",
+      "M5",
+      "M6",
+      "M7",
+      "M8",
+      "M9",
+      "M10",
+      "M11",
+      "M12"
+    ],
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestCompiler41231d51Shape",
+      "TestMissingFunctionMutantFailsLoudly",
+      "TestChangedVisitorMutantFailsLoudly",
+      "TestVisitorsCollectContinueAndSkipDiagnosedBodies"
+    ],
+    "evidence": "ADAMIC_MUTANT=M9 timeout 120 go test -json -count=1 -timeout 90s ./stage3/census/latent/refusalrewrite/ -run . > M9.log 2>&1; rewrite_test.go:188: compiled behavior probe: exit status 1",
+    "timing_samples": [
+      0.253,
+      0.273,
+      0.229
+    ]
+  }
+]

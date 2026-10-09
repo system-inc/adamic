@@ -1,0 +1,140 @@
+package lower
+
+import "probe/ast"
+
+func (l *lowering) refuse(module *ast.SourceFile) error {
+	if len(module.CommentDirectives) > 0 {
+		directive := module.CommentDirectives[0]
+		return &Refused{What: directive.Name}
+	}
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) bool {
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+			node.ForEachChild(contracts)
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	var found error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) bool {
+		if found != nil {
+			return true
+		}
+		if err := l.nodeRefusal(node); err != nil {
+			found = err
+			return true
+		}
+		node.ForEachChild(visit)
+		return false
+	}
+	module.AsNode().ForEachChild(visit)
+	return found
+}
+func (l *lowering) latentRefuse(module *ast.SourceFile) error {
+	for _, directive := range module.CommentDirectives {
+		latentRecord(&Refused{What: directive.Name})
+	}
+
+	var contractError error
+	var contracts ast.Visitor
+	contracts = func(node *ast.Node) (latentStop bool) {
+		if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+			outerOwner := latentFindingOwner
+			latentFindingOwner = l.program.
+				Where(node)
+			defer func() {
+				latentFindingOwner = outerOwner
+			}()
+			if len(l.latentBodyDiagnostics(node.Body())) > 0 {
+				latentNestedDeclarations(node.Body(), contracts,
+				)
+				return false
+			}
+		} else {
+			if node.Parent != nil && node.Parent.Kind == ast.
+				KindSourceFile {
+				latentFindingOwner = l.program.Where(node,
+				)
+			}
+			if node.Kind == ast.
+				KindFunctionDeclaration && node.Parent !=
+				nil && node.Parent.
+				Kind == ast.KindSourceFile &&
+				len(l.program.LatentDiagnosticsIn(node.Body())) > 0 {
+				return false
+			}
+		}
+		defer func() {
+			latentRecord(contractError)
+			contractError = nil
+			node.ForEachChild(contracts,
+			)
+			latentStop = false
+		}()
+		if contractError != nil {
+			return true
+		}
+		if node.Kind == ast.KindCallExpression {
+			contractError = l.predicateArguments(node)
+		}
+		if contractError == nil {
+
+		}
+		return contractError != nil
+	}
+	module.AsNode().ForEachChild(contracts)
+	var found error
+	var visit ast.Visitor
+	visit = func(node *ast.Node) (latentStop bool) {
+		if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration {
+			outerOwner := latentFindingOwner
+			latentFindingOwner = l.program.
+				Where(node)
+			defer func() {
+				latentFindingOwner = outerOwner
+			}()
+			if len(l.latentBodyDiagnostics(node.Body())) > 0 {
+				latentNestedDeclarations(node.Body(), visit)
+				return false
+			}
+		} else {
+			if node.Parent != nil && node.Parent.Kind == ast.KindSourceFile {
+				latentFindingOwner = l.program.Where(node)
+			}
+			if node.Kind == ast.KindFunctionDeclaration &&
+				node.Parent != nil &&
+				node.Parent.Kind ==
+					ast.KindSourceFile &&
+				len(l.program.LatentDiagnosticsIn(node.Body())) > 0 {
+				return false
+			}
+		}
+		defer func() {
+			latentRecord(found)
+			found = nil
+			node.
+				ForEachChild(visit)
+			latentStop = false
+		}()
+		if found != nil {
+			return true
+		}
+		if err := l.nodeRefusal(node); err != nil {
+			found = err
+			return true
+		}
+
+		return false
+	}
+	module.AsNode().ForEachChild(visit)
+	latentRecord(found)
+	return nil
+}

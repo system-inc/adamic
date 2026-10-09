@@ -1,0 +1,112 @@
+[
+  {
+    "id": "M1",
+    "menu": "change constant",
+    "line": 69,
+    "old": "clone.Name.Name = \"latentRefuse\"",
+    "new": "clone.Name.Name = \"latentRefused\""
+  },
+  {
+    "id": "M2",
+    "menu": "drop statement",
+    "line": 161,
+    "old": "    defer func(){ latentFindingOwner = outerOwner }()",
+    "new": "",
+    "compile_adjustment": "Also drop the now unused outerOwner declaration at line 159."
+  },
+  {
+    "id": "M3",
+    "menu": "drop statement",
+    "line": 167,
+    "old": "latentRecord(%s); %s = nil; node.ForEachChild(%s); latentStop = false",
+    "new": "latentRecord(%s); node.ForEachChild(%s); latentStop = false",
+    "compile_adjustment": "Remove the unused corresponding fmt.Sprintf argument at line 167."
+  },
+  {
+    "id": "M4",
+    "menu": "change constant",
+    "line": 167,
+    "old": "latentStop = false }()",
+    "new": "latentStop = true }()"
+  },
+  {
+    "id": "M5",
+    "menu": "off-by-one bound",
+    "line": 165,
+    "old": "len(l.program.LatentDiagnosticsIn(node.Body())) > 0",
+    "new": "len(l.program.LatentDiagnosticsIn(node.Body())) > 1"
+  },
+  {
+    "id": "M6",
+    "menu": "drop statement",
+    "line": 220,
+    "old": "\tcollectReturns(clone.Body)",
+    "new": "\t// collectReturns dropped"
+  },
+  {
+    "id": "M7",
+    "menu": "drop statement",
+    "line": 155,
+    "old": "\t\teraseWalks(walker.Body)",
+    "new": "\t\t// eraseWalks dropped"
+  },
+  {
+    "id": "M8",
+    "menu": "change constant",
+    "line": 241,
+    "old": "Fun: ast.NewIdent(\"latentRecord\"), Args: ret.Results",
+    "new": "Fun: ast.NewIdent(\"latentRecord\"), Args: []ast.Expr{ast.NewIdent(\"nil\")}",
+    "compile_adjustment": "Discard the now unused ReturnStmt binding on line 240."
+  },
+  {
+    "id": "M9",
+    "menu": "drop statement",
+    "line": 256,
+    "old": "\t\t\t\trewriteBlocks(child, rewrite)",
+    "new": "",
+    "compile_adjustment": "Discard the now unused BlockStmt binding at line 255."
+  },
+  {
+    "id": "M10",
+    "menu": "flip condition",
+    "line": 158,
+    "old": "if latentFullEnabled() && node.Kind == ast.KindFunctionDeclaration",
+    "new": "if latentFullEnabled() || node.Kind == ast.KindFunctionDeclaration"
+  },
+  {
+    "id": "M11",
+    "menu": "off-by-one bound",
+    "line": 217,
+    "old": "badReturn || outerReturns < 2",
+    "new": "badReturn || outerReturns < 3"
+  },
+  {
+    "id": "M12",
+    "menu": "change constant",
+    "line": 13,
+    "old": "const function = \"lowering.refuse\"",
+    "new": "const function = \"lowering.refused\""
+  },
+  {
+    "id": "W1",
+    "menu": "weaken missing-function validation",
+    "line": 54,
+    "old": "return nil, fail(\"expected exactly one function, found %d\", len(matches))",
+    "new": "return source, nil"
+  },
+  {
+    "id": "W2",
+    "menu": "weaken child-walk validation",
+    "line": 151,
+    "old": "if count != 1 {",
+    "new": "if count > 1 {"
+  },
+  {
+    "id": "P1",
+    "menu": "empty entry probe",
+    "line": 37,
+    "old": "func Rewrite(source []byte) ([]byte, error) {",
+    "new": "func Rewrite(source []byte) ([]byte, error) {\n\treturn nil, nil",
+    "compile_adjustment": "Replace whole Rewrite body with empty return to avoid unreachable code."
+  }
+]

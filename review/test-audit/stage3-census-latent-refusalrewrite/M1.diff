@@ -1,0 +1,11 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -66,7 +66,7 @@
+ 		return nil, fail("cannot clone: %v", err)
+ 	}
+ 	clone := cloneFile.Decls[0].(*ast.FuncDecl)
+-	clone.Name.Name = "latentRefuse"
++	clone.Name.Name = "latentRefused"
+ 	var collision bool
+ 	ast.Inspect(clone.Body, func(n ast.Node) bool {
+ 		if ident(n, "latentStop") {

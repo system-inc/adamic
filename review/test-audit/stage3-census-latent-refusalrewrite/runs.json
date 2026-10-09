@@ -1,0 +1,326 @@
+{
+  "TestCompiler41231d51Shape-1": {
+    "exit": 0,
+    "wall_seconds": 0.22229483599949162
+  },
+  "TestCompiler41231d51Shape-2": {
+    "exit": 0,
+    "wall_seconds": 0.20034802599911927
+  },
+  "TestCompiler41231d51Shape-3": {
+    "exit": 0,
+    "wall_seconds": 0.16575053999986267
+  },
+  "TestMissingFunctionMutantFailsLoudly-1": {
+    "exit": 0,
+    "wall_seconds": 0.16935984099836787
+  },
+  "TestMissingFunctionMutantFailsLoudly-2": {
+    "exit": 0,
+    "wall_seconds": 0.1814270930008206
+  },
+  "TestMissingFunctionMutantFailsLoudly-3": {
+    "exit": 0,
+    "wall_seconds": 0.1699533050013997
+  },
+  "TestChangedVisitorMutantFailsLoudly-1": {
+    "exit": 0,
+    "wall_seconds": 0.18998684399775811
+  },
+  "TestChangedVisitorMutantFailsLoudly-2": {
+    "exit": 0,
+    "wall_seconds": 0.20166550499925506
+  },
+  "TestChangedVisitorMutantFailsLoudly-3": {
+    "exit": 0,
+    "wall_seconds": 0.20327206399815623
+  },
+  "TestVisitorsCollectContinueAndSkipDiagnosedBodies-1": {
+    "exit": 0,
+    "wall_seconds": 0.4426126500002283
+  },
+  "TestVisitorsCollectContinueAndSkipDiagnosedBodies-2": {
+    "exit": 0,
+    "wall_seconds": 0.46846784000081243
+  },
+  "TestVisitorsCollectContinueAndSkipDiagnosedBodies-3": {
+    "exit": 0,
+    "wall_seconds": 0.431738518000202
+  },
+  "switch-gofmt": {
+    "exit": 0,
+    "wall_seconds": 0.003865568000037456
+  },
+  "switch-control": {
+    "exit": 0,
+    "wall_seconds": 0.3837996699985524
+  },
+  "M1": {
+    "exit": 1,
+    "wall_seconds": 0.2234101340000052
+  },
+  "M2": {
+    "exit": 1,
+    "wall_seconds": 0.3572162109994679
+  },
+  "M3": {
+    "exit": 1,
+    "wall_seconds": 0.3815494590016897
+  },
+  "M4": {
+    "exit": 1,
+    "wall_seconds": 0.371523066998634
+  },
+  "M5": {
+    "exit": 1,
+    "wall_seconds": 0.37024627799837617
+  },
+  "M6": {
+    "exit": 1,
+    "wall_seconds": 0.3755407879980339
+  },
+  "M7": {
+    "exit": 1,
+    "wall_seconds": 0.2463245340004505
+  },
+  "M8": {
+    "exit": 1,
+    "wall_seconds": 0.2333102839984349
+  },
+  "M9": {
+    "exit": 1,
+    "wall_seconds": 0.23253008100073203
+  },
+  "M10": {
+    "exit": 0,
+    "wall_seconds": 0.374208365999948
+  },
+  "M11": {
+    "exit": 0,
+    "wall_seconds": 0.4207485260012618
+  },
+  "M12": {
+    "exit": 1,
+    "wall_seconds": 0.4651151629986998
+  },
+  "W1": {
+    "exit": 1,
+    "wall_seconds": 0.4463503450024291
+  },
+  "W2": {
+    "exit": 1,
+    "wall_seconds": 0.40246891000060714
+  },
+  "P1": {
+    "exit": 1,
+    "wall_seconds": 0.22095365300265257
+  },
+  "M1-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0026796079982887022
+  },
+  "M1-vet": {
+    "exit": 0,
+    "wall_seconds": 0.0674315750002279
+  },
+  "M2-apply": {
+    "exit": 0,
+    "wall_seconds": 0.002818976998241851
+  },
+  "M2-vet": {
+    "exit": 0,
+    "wall_seconds": 0.08963695299826213
+  },
+  "M3-apply": {
+    "exit": 0,
+    "wall_seconds": 0.002433099998597754
+  },
+  "M3-vet": {
+    "exit": 0,
+    "wall_seconds": 0.07765331599875935
+  },
+  "M4-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001893796001240844
+  },
+  "M4-vet": {
+    "exit": 0,
+    "wall_seconds": 0.05516540900134714
+  },
+  "M5-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0018300070005352609
+  },
+  "M5-vet": {
+    "exit": 0,
+    "wall_seconds": 0.05326394599978812
+  },
+  "M6-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0018546589999459684
+  },
+  "M6-vet": {
+    "exit": 0,
+    "wall_seconds": 0.049041408998164115
+  },
+  "M7-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001945914002135396
+  },
+  "M7-vet": {
+    "exit": 0,
+    "wall_seconds": 0.04726813500019489
+  },
+  "M8-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0017987469982472248
+  },
+  "M8-vet": {
+    "exit": 0,
+    "wall_seconds": 0.06223694899745169
+  },
+  "M9-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0019787210003414657
+  },
+  "M9-vet": {
+    "exit": 0,
+    "wall_seconds": 0.07146426399776828
+  },
+  "M10-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0026205670001218095
+  },
+  "M10-vet": {
+    "exit": 0,
+    "wall_seconds": 0.06849526799851446
+  },
+  "M11-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001852997000241885
+  },
+  "M11-vet": {
+    "exit": 0,
+    "wall_seconds": 0.04732576199967298
+  },
+  "M12-apply": {
+    "exit": 0,
+    "wall_seconds": 0.001935659001901513
+  },
+  "M12-vet": {
+    "exit": 0,
+    "wall_seconds": 0.0626213879986608
+  },
+  "W1-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0031414229997608345
+  },
+  "W1-vet": {
+    "exit": 0,
+    "wall_seconds": 0.05846602300152881
+  },
+  "W2-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0018424119989504106
+  },
+  "W2-vet": {
+    "exit": 0,
+    "wall_seconds": 0.04763328899935004
+  },
+  "P1-apply": {
+    "exit": 0,
+    "wall_seconds": 0.0021203710020927247
+  },
+  "P1-vet": {
+    "exit": 0,
+    "wall_seconds": 0.07094762700216961
+  },
+  "M1-replay": {
+    "exit": 1,
+    "wall_seconds": 0.3500432319997344
+  },
+  "M2-replay": {
+    "exit": 1,
+    "wall_seconds": 0.5300280830015254
+  },
+  "M3-replay": {
+    "exit": 1,
+    "wall_seconds": 0.4452455579994421
+  },
+  "M4-replay": {
+    "exit": 1,
+    "wall_seconds": 0.4331776330000139
+  },
+  "M5-replay": {
+    "exit": 1,
+    "wall_seconds": 0.4272449840027548
+  },
+  "M6-replay": {
+    "exit": 1,
+    "wall_seconds": 0.42658414200195693
+  },
+  "M7-replay": {
+    "exit": 1,
+    "wall_seconds": 0.2784599189981236
+  },
+  "M8-replay": {
+    "exit": 1,
+    "wall_seconds": 0.288771920997533
+  },
+  "M9-replay": {
+    "exit": 1,
+    "wall_seconds": 0.2938852080005745
+  },
+  "M10-replay": {
+    "exit": 0,
+    "wall_seconds": 0.4525481399978162
+  },
+  "M11-replay": {
+    "exit": 0,
+    "wall_seconds": 0.4699015240003064
+  },
+  "M12-replay": {
+    "exit": 1,
+    "wall_seconds": 0.4690520539988938
+  },
+  "W1-replay": {
+    "exit": 1,
+    "wall_seconds": 0.4260435910000524
+  },
+  "W2-replay": {
+    "exit": 1,
+    "wall_seconds": 0.41879666000022553
+  },
+  "P1-replay": {
+    "exit": 1,
+    "wall_seconds": 0.2349928470030136
+  },
+  "M10-witness-before": {
+    "exit": 0,
+    "wall_seconds": 0.12846168000032776
+  },
+  "M10-witness-after": {
+    "exit": 0,
+    "wall_seconds": 0.1773410120003973
+  },
+  "M11-witness-before": {
+    "exit": 0,
+    "wall_seconds": 0.03976027699900442
+  },
+  "M11-witness-after": {
+    "exit": 1,
+    "wall_seconds": 0.18098684800133924
+  },
+  "clean-build": {
+    "exit": 0,
+    "wall_seconds": 0.23575286000050255
+  },
+  "restored-baseline": {
+    "exit": 0,
+    "wall_seconds": 0.3481462819981971
+  },
+  "switch-build": {
+    "exit": 0,
+    "wall_seconds": 0.33079079299932346
+  }
+}

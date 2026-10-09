@@ -1,0 +1,13 @@
+--- a/stage3/census/latent/refusalrewrite/rewrite.go
++++ b/stage3/census/latent/refusalrewrite/rewrite.go
+@@ -252,8 +252,8 @@
+ 			if _, ok := node.(*ast.FuncLit); ok {
+ 				return false
+ 			}
+-			if child, ok := node.(*ast.BlockStmt); ok {
+-				rewriteBlocks(child, rewrite)
++			if _, ok := node.(*ast.BlockStmt); ok {
++
+ 				return false
+ 			}
+ 			return true
