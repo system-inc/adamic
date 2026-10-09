@@ -1,0 +1,433 @@
+[
+  {
+    "id": "timing-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "environment": {},
+    "wall": 31.8792401289993,
+    "exit": 0
+  },
+  {
+    "id": "timing-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "environment": {},
+    "wall": 31.41409838799882,
+    "exit": 0
+  },
+  {
+    "id": "timing-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "^TestCompileProfiles$"
+    ],
+    "environment": {},
+    "wall": 31.140543931998764,
+    "exit": 0
+  },
+  {
+    "id": "compiler-build",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "build",
+      "-o",
+      "/tmp/u124/adamic",
+      "./cmd/adamic"
+    ],
+    "environment": {},
+    "wall": 4.649473494000631,
+    "exit": 0
+  },
+  {
+    "id": "clean-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/clean-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/clean"
+    },
+    "wall": 11.219852870000977,
+    "exit": 0
+  },
+  {
+    "id": "clean-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/clean-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {},
+    "wall": 0.002441791999444831,
+    "exit": 0
+  },
+  {
+    "id": "clean-count",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/clean-native",
+      "/tmp/u124/evidence/manifest.txt",
+      "--count"
+    ],
+    "environment": {},
+    "wall": 0.0021889310010010377,
+    "exit": 0
+  },
+  {
+    "id": "M1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M1"
+    },
+    "wall": 31.274809306998577,
+    "exit": 0
+  },
+  {
+    "id": "M1-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/M1-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M1"
+    },
+    "wall": 11.257693246998315,
+    "exit": 0
+  },
+  {
+    "id": "M1-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M1-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {},
+    "wall": 0.0020652949988289038,
+    "exit": 0
+  },
+  {
+    "id": "M1-count",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M1-native",
+      "/tmp/u124/evidence/manifest.txt",
+      "--count"
+    ],
+    "environment": {},
+    "wall": 0.001826555000661756,
+    "exit": 0
+  },
+  {
+    "id": "M2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M2"
+    },
+    "wall": 31.403756760999386,
+    "exit": 0
+  },
+  {
+    "id": "M2-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/M2-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M2"
+    },
+    "wall": 11.332979658000113,
+    "exit": 0
+  },
+  {
+    "id": "M2-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M2-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {},
+    "wall": 0.002375489999394631,
+    "exit": 0
+  },
+  {
+    "id": "M2-count",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M2-native",
+      "/tmp/u124/evidence/manifest.txt",
+      "--count"
+    ],
+    "environment": {},
+    "wall": 0.001969748998817522,
+    "exit": 0
+  },
+  {
+    "id": "M3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M3"
+    },
+    "wall": 31.710814558000493,
+    "exit": 0
+  },
+  {
+    "id": "M3-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/M3-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/M3"
+    },
+    "wall": 11.344778137001413,
+    "exit": 0
+  },
+  {
+    "id": "M3-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M3-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {},
+    "wall": 0.002271265000672429,
+    "exit": 0
+  },
+  {
+    "id": "M3-count",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/M3-native",
+      "/tmp/u124/evidence/manifest.txt",
+      "--count"
+    ],
+    "environment": {},
+    "wall": 0.0021864770005777245,
+    "exit": 0
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/P1"
+    },
+    "wall": 31.124397507999674,
+    "exit": 0
+  },
+  {
+    "id": "P1-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/P1-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/P1"
+    },
+    "wall": 11.175420076999217,
+    "exit": 0
+  },
+  {
+    "id": "P1-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/P1-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {},
+    "wall": 0.0020566310013236944,
+    "exit": 0
+  },
+  {
+    "id": "P1-count",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/P1-native",
+      "/tmp/u124/evidence/manifest.txt",
+      "--count"
+    ],
+    "environment": {},
+    "wall": 0.0018311399999220157,
+    "exit": 0
+  },
+  {
+    "id": "package-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/"
+    ],
+    "environment": {},
+    "wall": 0.11687644999983604,
+    "exit": 0
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/lint/rules/typescript-no-this-alias/",
+      "-run",
+      "."
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/P2"
+    },
+    "wall": 19.07118671600074,
+    "exit": 0
+  },
+  {
+    "id": "P2-build",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/adamic",
+      "build",
+      "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+      "-o",
+      "/tmp/u124/P2-native"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/P2"
+    },
+    "wall": 8.994532426999285,
+    "exit": 0
+  },
+  {
+    "id": "P2-output",
+    "command": [
+      "timeout",
+      "120",
+      "/tmp/u124/P2-native",
+      "/tmp/u124/evidence/manifest.txt"
+    ],
+    "environment": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u124/cache/P2"
+    },
+    "wall": 0.002357800000027055,
+    "exit": 0
+  }
+]

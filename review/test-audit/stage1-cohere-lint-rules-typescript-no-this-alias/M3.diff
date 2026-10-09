@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
++++ b/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+@@ -38,7 +38,7 @@
+         const name = context.node(target);
+         if(name.kind !== 'Identifier') { return; }
+         if(context.settings.list('allowednames', []).includes(name.text)) { return; }
+-        context.report(target, '@typescript-eslint/no-this-alias', 'thisAssignment', assignment, '', '', '');
++        context.report(target, '@typescript-eslint/no-this-alias', 'thisAssignmentAudit', assignment, '', '', '');
+     }
+ }
+ export function create(context: RuleContext): Rule { return new Rule(context); }

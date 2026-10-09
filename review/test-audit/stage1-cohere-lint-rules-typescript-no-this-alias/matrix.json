@@ -1,0 +1,47 @@
+[
+  {
+    "id": "M1",
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "seconds": 29.58,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M1.log 2>&1"
+  },
+  {
+    "id": "M2",
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "seconds": 29.792,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M2.log 2>&1"
+  },
+  {
+    "id": "M3",
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "seconds": 30.055,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M3.log 2>&1"
+  },
+  {
+    "id": "P1",
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "seconds": 29.495,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > P1.log 2>&1"
+  },
+  {
+    "id": "P2",
+    "failed_rows": [],
+    "passed_rows": [
+      "TestCompileProfiles"
+    ],
+    "seconds": 17.363,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > P2.log 2>&1"
+  }
+]

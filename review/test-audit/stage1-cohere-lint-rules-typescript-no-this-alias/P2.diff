@@ -1,0 +1,19 @@
+--- a/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a
++++ b/stage1/cohere/lint/rules/typescript-no-this-alias/profile.a
+@@ -42,16 +42,3 @@
+     console.log(`fixed\t${written(source)}`);
+     return context.findings.length;
+ }
+-const args = programArguments();
+-const read = readTextFile(args[0] ?? panic('missing manifest'));
+-if(read.kind === 'Error') { panic(read.message); }
+-const countOnly = args.includes('--count');
+-let total = 0;
+-let index = 0;
+-for(const path of read.text.split('\n')) {
+-    if(path === '') { continue; }
+-    if(!countOnly) { console.log(`case ${index}`); }
+-    total += run(path, countOnly);
+-    index++;
+-}
+-if(countOnly) { console.log(`${total}`); }

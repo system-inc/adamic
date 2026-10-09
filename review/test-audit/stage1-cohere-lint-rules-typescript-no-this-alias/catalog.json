@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 27,
+    "before": "if(context.node(right).kind !== 'ThisKeyword')",
+    "after": "if(context.node(right).kind === 'ThisKeyword')",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 36,
+    "before": "while(wrappers.includes(context.node(target).kind))",
+    "after": "while(false)",
+    "kind": "change condition constant, disables loop"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 41,
+    "before": "'thisAssignment', assignment",
+    "after": "'thisAssignmentAudit', assignment",
+    "kind": "change constant"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/rule.a",
+    "line": 11,
+    "before": "visit(node: ParseNode, index: number): void {",
+    "after": "visit(node: ParseNode, index: number): void { return;",
+    "kind": "empty entry probe"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/profile.a",
+    "line": 45,
+    "before": "top-level manifest driver from const args through the end of the module",
+    "after": "empty top-level driver (implicit void answer)",
+    "kind": "empty executable entry probe"
+  }
+]

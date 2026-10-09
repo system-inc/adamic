@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:43:32.907262789Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias"}
+{"Time":"2026-10-09T12:43:32.914545266Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Test":"TestCompileProfiles"}
+{"Time":"2026-10-09T12:43:32.914614801Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Test":"TestCompileProfiles","Output":"=== RUN   TestCompileProfiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:44:02.399714268Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Test":"TestCompileProfiles","Output":"    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled\n"}
+{"Time":"2026-10-09T12:44:02.400527694Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Test":"TestCompileProfiles","Output":"--- PASS: TestCompileProfiles (29.49s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:44:02.400535175Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Test":"TestCompileProfiles","Elapsed":29.49}
+{"Time":"2026-10-09T12:44:02.40055782Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:44:02.402695297Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias\t29.495s\n"}
+{"Time":"2026-10-09T12:44:02.402715948Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/typescript-no-this-alias","Elapsed":29.495}

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
++++ b/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+@@ -8,7 +8,7 @@
+ export class Rule {
+     readonly context: RuleContext;
+     constructor(context: RuleContext) { this.context = context; }
+-    visit(node: ParseNode, index: number): void {
++    visit(node: ParseNode, index: number): void { return;
+         const context = this.context;
+         const path = context.parser.path;
+         if(!path.endsWith('.ts') && !path.endsWith('.tsx') && !path.endsWith('.mts') && !path.endsWith('.cts')) { return; }

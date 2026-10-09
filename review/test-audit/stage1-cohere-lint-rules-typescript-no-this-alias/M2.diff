@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
++++ b/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+@@ -33,7 +33,7 @@
+             return;
+         }
+         if(node.kind === 'BinaryExpression') {
+-            while(wrappers.includes(context.node(target).kind)) { target = context.node(target).children[0] ?? panic('missing wrapper operand'); }
++            while(false) { target = context.node(target).children[0] ?? panic('missing wrapper operand'); }
+         }
+         const name = context.node(target);
+         if(name.kind !== 'Identifier') { return; }

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
++++ b/stage1/cohere/lint/rules/typescript-no-this-alias/rule.a
+@@ -24,7 +24,7 @@
+             target = node.children[0] ?? panic('missing binary left');
+             right = node.children[2] ?? panic('missing binary right');
+         }
+-        if(context.node(right).kind !== 'ThisKeyword') { return; }
++        if(context.node(right).kind === 'ThisKeyword') { return; }
+         const original = context.node(target).kind;
+         const pattern = ['ObjectBindingPattern', 'ArrayBindingPattern', 'ObjectLiteralExpression', 'ArrayLiteralExpression'].includes(original);
+         if(pattern) {

@@ -1,0 +1,79 @@
+{
+  "row": {
+    "test": "TestCompileProfiles",
+    "package": "stage1/cohere/lint/rules/typescript-no-this-alias",
+    "file": "stage1/cohere/lint/rules/typescript-no-this-alias/build_test.go",
+    "seconds": 29.799,
+    "oracle": "Self: Adamic load/lower, sanitized and release native Build, and JavaScript rendering must succeed. No product executes and no findings, exit behavior or diagnostic bytes are compared. Native survivor witnesses below are audit observations, not an external oracle invoked by this test.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 3,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "entry_probes": {
+      "profile top-level driver": "P2",
+      "Rule.visit (additional semantic entry)": "P1"
+    },
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > P2.log 2>&1; build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled; P2 passed despite native stdout being empty"
+  },
+  "matrix": [
+    {
+      "id": "M1",
+      "failed_rows": [],
+      "passed_rows": [
+        "TestCompileProfiles"
+      ],
+      "seconds": 29.58,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M1.log 2>&1"
+    },
+    {
+      "id": "M2",
+      "failed_rows": [],
+      "passed_rows": [
+        "TestCompileProfiles"
+      ],
+      "seconds": 29.792,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M2.log 2>&1"
+    },
+    {
+      "id": "M3",
+      "failed_rows": [],
+      "passed_rows": [
+        "TestCompileProfiles"
+      ],
+      "seconds": 30.055,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > M3.log 2>&1"
+    },
+    {
+      "id": "P1",
+      "failed_rows": [],
+      "passed_rows": [
+        "TestCompileProfiles"
+      ],
+      "seconds": 29.495,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > P1.log 2>&1"
+    },
+    {
+      "id": "P2",
+      "failed_rows": [],
+      "passed_rows": [
+        "TestCompileProfiles"
+      ],
+      "seconds": 17.363,
+      "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/u124/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/rules/typescript-no-this-alias/ -run . > P2.log 2>&1"
+    }
+  ],
+  "native_counts": {
+    "clean": "2",
+    "M1": "0",
+    "M2": "1",
+    "M3": "2",
+    "P1": "0"
+  }
+}
