@@ -3,10 +3,10 @@ package lint
 import (
 	"bytes"
 	"context"
-	"encoding/json"
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -16,29 +16,44 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// jsxSpansOracle builds testdata/jsx_spans.go inside cohere, which says whether a file holds JSX.
+// jsxSpansOracle builds the batch JSX-membership oracle once per test run.
 func jsxSpansOracle(t *testing.T) string {
 	t.Helper()
 	root, _ := filepath.Abs(filepath.Join(repository, "cohere"))
-	side, _ := filepath.Abs("testdata/jsx_spans.go")
-	virtual := filepath.Join(root, "adamic_jsx_spans.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	directory := t.TempDir()
-	path := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(path, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(directory, "jsx-spans")
-	execute(t, root, "go", "build", "-overlay="+path, "-o", binary, virtual)
-	return binary
+	side, _ := filepath.Abs("testdata/jsx_inventory.go")
+	return jsxGoOracle(t, "jsx-membership", root, side, "adamic_jsx_inventory.go")
 }
 
-// jsxSources returns the captured upstream cases of every registry rule whose source holds JSX.
+// jsxSources preserves the complete captured enumeration, checking membership in
+// one process instead of starting a parser process for every captured case.
 func jsxSources(t *testing.T) []string {
 	t.Helper()
-	spans := jsxSpansOracle(t)
-	paths, byRule, err := discoverJsxInventory(prepareRegistry(t, "."), upstream(t), func(path string) bool {
-		return len(bytes.TrimSpace(execute(t, "", spans, path).output)) > 0
+	rows := upstream(t)
+	all := make([]string, len(rows))
+	for i, row := range rows {
+		all[i] = strings.Split(row, "\t")[0]
+	}
+	output := execute(t, "", jsxSpansOracle(t), manifest(t, all)).output
+	membership := map[string]bool{}
+	for _, line := range strings.Split(strings.TrimSpace(string(output)), "\n") {
+		fields := strings.Split(line, "\t")
+		if len(fields) != 2 || (fields[1] != "0" && fields[1] != "1") {
+			t.Fatalf("malformed JSX membership %q", line)
+		}
+		if _, exists := membership[fields[0]]; exists {
+			t.Fatalf("repeated JSX membership %q", fields[0])
+		}
+		membership[fields[0]] = fields[1] == "1"
+	}
+	if len(membership) != len(all) {
+		t.Fatalf("JSX membership count %d, want %d", len(membership), len(all))
+	}
+	paths, byRule, err := discoverJsxInventory(prepareRegistry(t, "."), rows, func(path string) bool {
+		value, exists := membership[path]
+		if !exists {
+			t.Fatalf("missing JSX membership %q", path)
+		}
+		return value
 	})
 	if err != nil {
 		t.Fatal(err)
@@ -49,19 +64,30 @@ func jsxSources(t *testing.T) []string {
 
 func buildNative(t *testing.T, entry string, sanitize bool) string {
 	t.Helper()
-	program, err := load.Load([]string{entry})
-	if err != nil {
-		t.Fatal(err)
-	}
-	lowered, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatal(err)
-	}
-	binary := filepath.Join(t.TempDir(), "native")
-	if err := nativeBuild(func() error { return native.Build(native.C(lowered), binary, native.Options{Sanitize: sanitize}) }); err != nil {
-		t.Fatal(err)
-	}
-	return binary
+	inputs := jsxProductInputs{Name: "lowered " + entry, Files: jsxInputFiles(t, entry, filepath.Join(repository, "stage1"), filepath.Join(repository, "internal"), filepath.Join(repository, "cohere")), Toolchain: runtime.Version()}
+	lowered := jsxProduct(t, inputs, func(dir string) error {
+		program, err := load.Load([]string{entry})
+		if err != nil {
+			return err
+		}
+		lowered, err := lower.Lower(context.Background(), program)
+		if err != nil {
+			return err
+		}
+		return os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(lowered)), 0644)
+	})
+	source := filepath.Join(lowered, "program.c")
+	inputs = jsxProductInputs{Name: "native " + entry, Files: jsxInputFiles(t, source, filepath.Join(repository, "internal/native/runtime")), Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: string(execute(t, "", "clang", "--version").output)}
+	built := jsxProduct(t, inputs, func(dir string) error {
+		data, err := os.ReadFile(source)
+		if err != nil {
+			return err
+		}
+		return nativeBuild(func() error {
+			return native.Build(string(data), filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+		})
+	})
+	return filepath.Join(built, "native")
 }
 
 // Not parallel: fresh-process throughput is measured after correctness on the same sources.
@@ -119,32 +145,50 @@ func TestJsxLintReleaseAndThroughput(t *testing.T) {
 	}
 }
 
+const testJsxLintTreesShards = 16
+
+// ADAMIC_TEST_SHARD=i/n selects shard indices congruent to i modulo n;
+// unset runs all shards. Builds are shared inputs, made once per run until
+// internal/buildcache is available. Every shard compares Go, Node and ASan/UBSan
+// native whole trees, including native leak checks, for its complete assigned cases.
 func TestJsxLintTrees(t *testing.T) {
 	t.Parallel()
 	skipWhenRuleScoped(t)
+	started := time.Now()
 	paths := jsxSources(t)
-	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
-	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
-	virtual := filepath.Join(root, "adamic_jsx_oracle.go")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{virtual: side}})
-	overlayPath := filepath.Join(t.TempDir(), "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
+	shards, err := jsxTreeShards(paths)
+	if err != nil {
 		t.Fatal(err)
 	}
-	oracle := filepath.Join(t.TempDir(), "parser-oracle")
-	execute(t, root, "go", "build", "-overlay="+overlayPath, "-o", oracle, virtual)
-	path := manifest(t, paths)
-	want := execute(t, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
+	selected, err := jsxShardSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	root, _ := filepath.Abs(filepath.Join(repository, "cohere/TypeScript/tsc"))
+	side, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser/testdata/oracle.go"))
+	oracle := jsxGoOracle(t, "jsx-parser", root, side, "adamic_jsx_oracle.go")
 	directory, _ := filepath.Abs(filepath.Join(repository, "stage1/typescript/parser"))
 	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	node := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
-	if diff := difference(node.output, want.output); diff != "" {
-		t.Fatal(diff)
-	}
 	binary := buildNative(t, filepath.Join(directory, "main.ts"), true)
-	got := execute(t, "", binary, "--manifest", path, "--whole")
-	if diff := difference(got.output, want.output); diff != "" {
-		t.Fatal(diff)
+	t.Logf("setup including builds: %s; union: %d cases in %d shards", time.Since(started), len(paths), len(shards))
+	for i, cases := range shards {
+		if !selected(i) {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			path := manifest(t, cases)
+			want := execute(t, "", oracle, "--manifest", path, "--whole", "--jsx-recovery")
+			node := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), "--manifest", path, "--whole")
+			jsxCheckTree(t, "Node", node.output, want.output)
+			got := execute(t, "", binary, "--manifest", path, "--whole")
+			// The failure witness is opt-in and only changes one case in shard-003.
+			if os.Getenv("ADAMIC_JSX_TREE_DISAGREEMENT") == "1" && i == 3 {
+				t.Logf("planted disagreement in case id %s", cases[0])
+				got.output = jsxPlantDisagreement(got.output)
+			}
+			jsxCheckTree(t, "native", got.output, want.output)
+			t.Logf("%d captured cohere JSX sources: %d identical whole-tree bytes", len(cases), len(want.output))
+		})
 	}
-	t.Logf("%d captured cohere JSX sources: %d identical whole-tree bytes", len(paths), len(want.output))
 }
