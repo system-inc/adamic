@@ -1,0 +1,8 @@
+=== RUN   TestPlaceholderWeakSlotStaysNotYet
+=== PAUSE TestPlaceholderWeakSlotStaysNotYet
+=== CONT  TestPlaceholderWeakSlotStaysNotYet
+    placeholder_test.go:129: unsupported weak placeholder: <nil>
+--- FAIL: TestPlaceholderWeakSlotStaysNotYet (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.151s
+FAIL

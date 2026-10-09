@@ -1,5 +1,6 @@
 """Use integration's a-check implementation on changed Adamic fixtures only."""
-import importlib.util,json,pathlib,subprocess,types
+import importlib.util,json,pathlib,subprocess,types,sys
+sys.dont_write_bytecode=True
 root=pathlib.Path(__file__).resolve().parents[3]
 evidence=pathlib.Path(__file__).resolve().parent
 source=subprocess.check_output(['git','show','origin/devtools/fast-gate:cloud/fast-gate/run.py'],cwd=root)

@@ -482,7 +482,11 @@ func (e *emitter) statement(at *ir.Statement) {
 			break
 		}
 		if statement.Define || statement.Uninitialized {
-			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, viewFieldRepresentation(statement.Value))
+			representation := viewFieldRepresentation(statement.Value)
+			if statement.Uninitialized && statement.Value.Type() == ir.Union {
+				representation = int(ir.Union)
+			}
+			e.line("adamicDefineField(%s, %s, %s, %t, %t, %d);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value), !strings.HasPrefix(statement.Name, "#"), !statement.Uninitialized || statement.Unset, representation)
 		} else {
 			e.line("adamicWriteField(%s, %s, %s);", e.value(statement.Object), quote(statement.Name), e.value(statement.Value))
 		}
@@ -877,7 +881,11 @@ func (e *emitter) value(expression ir.Expression) string {
 		if len(e.program.CheckedFields) != 0 {
 			types := []string{}
 			for _, field := range expression.Fields {
-				types = append(types, quote(field.Name)+": "+fmt.Sprint(viewFieldRepresentation(field.Value)))
+				representation := viewFieldRepresentation(field.Value)
+				if field.Uninitialized && field.Value.Type() == ir.Union {
+					representation = int(ir.Union)
+				}
+				types = append(types, quote(field.Name)+": "+fmt.Sprint(representation))
 			}
 			parentTypes := ""
 			if spreadValue != "" {

@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:774: stdout differs
+        node:   exit 0, stdout "true|false\ntrue|false\nfalse|true\ntrue\nfalse\nfalse\n3\n", stderr ""
+        native: exit 0, stdout "true|false\ntrue|false\nfalse|true\ntrue\nfalse\nfalse\n5\n", stderr ""
+    oracle_test.go:780: JavaScript backend: stdout differs
+        node:    exit 0, stdout "true|false\ntrue|false\nfalse|true\ntrue\nfalse\nfalse\n3\n", stderr ""
+        backend: exit 0, stdout "true|false\ntrue|false\nfalse|true\ntrue\nfalse\nfalse\n5\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.04s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a (0.81s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.859s
+FAIL

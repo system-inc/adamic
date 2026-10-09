@@ -1,0 +1,26 @@
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== CONT  TestOptionalWideningSpreadOverwrite
+--- FAIL: TestOptionalWideningSpreadOverwrite (0.42s)
+panic: runtime error: invalid memory address or nil pointer dereference [recovered, repanicked]
+[signal SIGSEGV: segmentation violation code=0x1 addr=0x38 pc=0xc11141]
+
+goroutine 34 [running]:
+testing.tRunner.func1.2({0x1cf7e68, 0x1e05600})
+	/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329
+panic({0x1cf7e68?, 0x1e05600?})
+	/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125
+github.com/system-inc/adamic/internal/lower.(*lowering).notePlaceholderSlots(0x0?)
+	/workspace/adamic/internal/lower/placeholder.go:122 +0x21
+github.com/system-inc/adamic/internal/lower.(*lowering).refuse(0x2acd76a81c00, 0x2acd76254e08)
+	/workspace/adamic/internal/lower/refusals.go:40 +0x32
+github.com/system-inc/adamic/internal/lower.TestOptionalWideningSpreadOverwrite(0x2acd76388008)
+	/workspace/adamic/internal/lower/optional_widening_test.go:104 +0x20a
+testing.tRunner(0x2acd76388008, 0x1da35d0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	0.580s
+FAIL

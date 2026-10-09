@@ -8,13 +8,13 @@
       "/workspace/adamic/review/compiler/placeholder-nonnull-main/drop-flow-check.json",
       "./internal/oracle",
       "-run",
-      "^TestPlaceholderUseChecks$/saved_leak$",
+      "^TestPlaceholderUseCheckSavedLeak$",
       "-count=1",
       "-v"
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 12.441992810003285
+    "seconds": 6.302761357001145
   },
   {
     "name": "retain-alias-proof",
@@ -25,13 +25,13 @@
       "/workspace/adamic/review/compiler/placeholder-nonnull-main/retain-alias-proof.json",
       "./internal/oracle",
       "-run",
-      "^TestPlaceholderUseChecks$/alias_reset$",
+      "^TestPlaceholderUseCheckAliasReset$",
       "-count=1",
       "-v"
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 14.423513591005758
+    "seconds": 6.60382313199807
   },
   {
     "name": "nullish-receiver-twice",
@@ -48,7 +48,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 29.674413626002206
+    "seconds": 7.357284655998228
   },
   {
     "name": "json-ordinary-assertion",
@@ -65,7 +65,7 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 23.57667078099621
+    "seconds": 16.23297634899791
   },
   {
     "name": "admit-weak-slot",
@@ -80,9 +80,9 @@
       "-count=1",
       "-v"
     ],
-    "exit": 0,
-    "caught": false,
-    "seconds": 14.711857667003642
+    "exit": 1,
+    "caught": true,
+    "seconds": 15.605852648994187
   },
   {
     "name": "omit-refusal-state",
@@ -99,6 +99,6 @@
     ],
     "exit": 1,
     "caught": true,
-    "seconds": 10.298541247000685
+    "seconds": 31.70049502800248
   }
 ]
