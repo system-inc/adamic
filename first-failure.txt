@@ -1,0 +1,15 @@
+FIRST FAILURE (tests, at 105.7 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestSixRuleAgreementAndMutants_004
+=== RUN   TestSixRuleAgreementAndMutants_004
+=== PAUSE TestSixRuleAgreementAndMutants_004
+=== CONT  TestSixRuleAgreementAndMutants_004
+    typeaware_budget_test.go:40: unit-budget name=setup/stage0 elapsed_s=12.038972 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/checker-asan elapsed_s=3.496226 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/suite-asan elapsed_s=54.882399 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/checker elapsed_s=3.003148 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/suite elapsed_s=16.103103 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/checker elapsed_s=0.000021 cooked=false
+    typeaware_budget_test.go:40: unit-budget name=setup/checker-asan elapsed_s=0.000006 cooked=false
+unit deadline exceeded name=setup/six elapsed_s=90.000736 limit_s=90.000000
+
+(box load 36.4 on 64 cores at first failure)
