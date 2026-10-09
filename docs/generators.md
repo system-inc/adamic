@@ -87,6 +87,10 @@ The initial lowering also keeps these paths stopped:
   <name> needs a weak frame reference". Retaining the frame from a closure kept
   in that frame would create a strong cycle; native stack cells cannot survive
   suspension as a substitute.
+- Parameter patterns with whole-parameter defaults or binding defaults keep the
+  existing "a parameter that isn't a plain name" or "a destructured name that
+  isn't plain" diagnostic. Supported plain destructuring runs at the call and
+  retains the whole parameter, including unbound fields, under the cycle rule.
 - Unproved initialization, captured per-iteration cells, labeled suspension
   targets, a yield in a switch case test, a short-circuit yield, and a string or non-array for-of inside a
   generator identify their named suspension path. Their existing eager lowering

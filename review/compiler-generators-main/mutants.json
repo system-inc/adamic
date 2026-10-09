@@ -76,6 +76,25 @@
     "witness": "stdout differs"
   },
   {
+    "mutant": "forget-pattern-parameter",
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler-generators-main/forget-pattern-parameter/overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestGeneratorDestructuredParameterCycle$",
+      "-timeout",
+      "60s",
+      "-count=1",
+      "-v"
+    ],
+    "exit": 1,
+    "caught": true,
+    "witness": "want the retained whole parameter's cycle refusal"
+  },
+  {
     "mutant": "admit-cycle",
     "command": [
       "go",

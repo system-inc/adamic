@@ -68,3 +68,12 @@ func TestGeneratorProtocolReplacementRemainsExplicit(t *testing.T) {
 	}
 	t.Fatalf("got %v, want an explicit method-replacement stop", err)
 }
+
+func TestGeneratorDestructuredParameterCycle(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Holder{label:string;owner:Generator<string,string,undefined>|undefined;}function* f({label}:Holder):Generator<string,string,undefined>{yield label;return label;}const holder:Holder={label:'label',owner:undefined};const g=f(holder);holder.owner=g;g.next();`)
+	var refused *Refused
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "cycle-capable generator frame slot destructured") {
+		t.Fatalf("got %v, want the retained whole parameter's cycle refusal", err)
+	}
+}

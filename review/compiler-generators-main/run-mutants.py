@@ -14,6 +14,7 @@ rules = [
  ('first-next-argument', 'TestGeneratorBasic', [
  ('internal/lower/generator_body.go', 'ir.Assign{Local: input, Value: ir.Undefined{Of: ir.Union}}', 'ir.Assign{Local: input, Value: supplied}'),
  ('internal/lower/generator_expressions.go', 'g.store("input", ir.Undefined{Of: ir.Union}), ir.Return{Value: g.packet(g.slot(held), false)}', 'ir.Return{Value: g.packet(g.field("input", ir.Union), false)}')], 'stdout differs'),
+ ('forget-pattern-parameter', 'TestGeneratorDestructuredParameterCycle', [('internal/lower/functions.go', 'l.noteLocal(incoming, l.checker.GetTypeAtLocation(parameter), parameter)', '// Mutant forgets the whole retained parameter type.')], "want the retained whole parameter's cycle refusal"),
  ('admit-cycle', 'TestGeneratorCycleFrame', [('internal/lower/generator_cycles.go', 'if f.reaches(proven, cycleNode{proven: target}) {', 'if false && f.reaches(proven, cycleNode{proven: target}) {')], 'LeakSanitizer'),
 ]
 results=[]
@@ -31,7 +32,8 @@ for name, test, edits, witness in rules:
   mapping[str(original)]=str(mutant)
  overlay=directory/'overlay.json'
  overlay.write_text(json.dumps({'Replace':mapping},indent=2)+'\n')
- command=['go','test','-overlay',str(overlay),'./internal/oracle','-run','^'+test+'$','-timeout','60s','-count=1','-v']
+ package = './internal/lower' if name == 'forget-pattern-parameter' else './internal/oracle'
+ command=['go','test','-overlay',str(overlay),package,'-run','^'+test+'$','-timeout','60s','-count=1','-v']
  with (directory/'test.log').open('w') as log:
   result=subprocess.run(command,cwd=root,stdout=log,stderr=subprocess.STDOUT,env=os.environ)
  text=(directory/'test.log').read_text()

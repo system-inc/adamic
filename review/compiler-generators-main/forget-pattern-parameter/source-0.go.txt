@@ -127,7 +127,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			l.result.Locals = append(l.result.Locals, ir.Local{Name: "destructured", Type: ir.Object, Function: index})
 			if function.Generator != nil {
 				// The retained whole parameter owns even fields not bound by the pattern.
-				l.noteLocal(incoming, l.checker.GetTypeAtLocation(parameter), parameter)
+				// Mutant forgets the whole retained parameter type.
 			}
 			function.Parameters = append(function.Parameters, incoming)
 			patterns = append(patterns, patterned{pattern: name, parameter: parameter, incoming: incoming})
