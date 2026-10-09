@@ -33,24 +33,33 @@ Discovery uses `go list ./...` and `go test -json -list . ./...`, including exam
 seed tests. Packages with no tests are build-only units. Ordinary units are top-level tests;
 the following audited parents have independently selectable, enumerable children:
 
-- `internal/oracle`: `TestNativeAgreesWithNode`, `TestInputAgreesWithNode`, and
+- `internal/oracle`: `TestNativeAgreesWithNode` (34 fixed name-partitioned shards), `TestInputAgreesWithNode`, and
   `TestFreshWriteProbesStayRefused`.
 - `stage1/cohere/typeaware`: the 15 literal `changes` rows of `TestVolumeAgreementAndMutants`.
 - `internal/native`: `TestNormalizeMatchesNode` and `TestStringIndexMatchesNode`.
 - `stage1/cohere/lint`: `TestMutants` and `TestVolumeMutants`.
 - `stage1/cohere/css`: the two modes of `TestCSSPrinterAgreesWithGo`, including each mode's nested mutants.
 
-The first two fixture lists come from literal rows in the checked-in test AST, with every
-named input checked on disk. Globbing all oracle testdata would incorrectly include helpers
+The native oracle exposes a literal list of gate shard names in the checked-in test AST.
+Its runtime union test checks every registered fixture exactly once, including registrations
+from other test files. Select a child with, for example,
+`go test ./internal/oracle -run '^TestNativeAgreesWithNode$/^shard-003-0$' -count=1 -timeout=90s`.
+Selecting the old parent alone still runs every fixture. Shared oracle setup repeats on each
+isolated invocation and is included in the cold wall measurements under
+`internal/oracle/evidence/split-native-node`. The input fixture list comes from literal rows
+in the checked-in test AST, with every named input checked on disk. Globbing all oracle testdata would incorrectly include helpers
 and probes. Fresh probes come from the same glob the test uses. Native sweep labels come
 from the literal slice iterated by the audited parent. Unsupported enumeration fails loudly.
 The selector escapes regex metacharacters and anchors each slash-separated component.
 Only siblings with an identical literal prefix share one pattern, avoiding the Cartesian
 product that Go creates when alternatives at different slash levels are combined.
 
-`cmd/adamic-gate/timings.json` contains terminal elapsed seconds keyed by `package::test`.
-Generate it with `adamic-gate timings -out cmd/adamic-gate/timings.json whole.jsonl` and commit
-it. Known units are assigned by greedy longest-first packing, ties by name and shard index.
+`cmd/adamic-gate/timings.json` contains terminal elapsed seconds keyed by `package::test`. The native oracle shard
+weights instead use isolated cold wall measurements, including repeated shared setup: Go
+reports zero elapsed for these shard callbacks while their parallel fixture children run.
+Generate it with `adamic-gate timings -out cmd/adamic-gate/timings.json whole.jsonl`, then
+restore the oracle cold-wall weights from `internal/oracle/evidence/split-native-node/final-times.json`
+before committing it. Known units are assigned by greedy longest-first packing, ties by name and shard index.
 Unknown names use SHA-256 modulo shard count. Predictions sum known elapsed weights and
 add positive parent elapsed time minus its enumerated child spans once per selected parent
 invocation. This accounts for repeated setup, including 44.98 seconds for the type-aware volume
