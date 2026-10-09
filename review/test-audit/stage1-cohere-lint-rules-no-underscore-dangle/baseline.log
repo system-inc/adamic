@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T12:32:29.061804333Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle"}
+{"Time":"2026-10-09T12:32:29.070214444Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Test":"TestCompileProfiles"}
+{"Time":"2026-10-09T12:32:29.070287787Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Test":"TestCompileProfiles","Output":"=== RUN   TestCompileProfiles\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:59.395484333Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Test":"TestCompileProfiles","Output":"    build_test.go:39: standalone profile: sanitized native, release native and emitted JavaScript compiled\n"}
+{"Time":"2026-10-09T12:32:59.396521561Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Test":"TestCompileProfiles","Output":"--- PASS: TestCompileProfiles (30.33s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:59.396540991Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Test":"TestCompileProfiles","Elapsed":30.33}
+{"Time":"2026-10-09T12:32:59.396871747Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T12:32:59.399102725Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle\t30.337s\n"}
+{"Time":"2026-10-09T12:32:59.399235937Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/lint/rules/no-underscore-dangle","Elapsed":30.337}

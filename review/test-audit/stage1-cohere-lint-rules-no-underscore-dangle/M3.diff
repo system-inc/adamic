@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-underscore-dangle/profile.a
++++ b/stage1/cohere/lint/rules/no-underscore-dangle/profile.a
+@@ -29,7 +29,7 @@
+     const context = new RuleContext(source, parser, new Scanner(source), '', '', '', false, parents, settings, root);
+     const rule = create(context);
+     ancestry(context, parents, root, -1);
+-    visit(context, rule, root);
++
+     if(countOnly) { return context.findings.length; }
+     const offsets: number[] = [0];
+     let bytes = 0;

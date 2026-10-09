@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-underscore-dangle/rule.a
++++ b/stage1/cohere/lint/rules/no-underscore-dangle/rule.a
+@@ -5,7 +5,7 @@
+     readonly context: RuleContext;
+     constructor(context: RuleContext) { this.context = context; }
+     flag(name: string, fallback: string): boolean { return this.context.settings.read(name, fallback) === 'true'; }
+-    reportable(name: string): boolean { return name !== '' && name !== '_' && (name.startsWith('_') || name.endsWith('_')) && !this.context.settings.list('allow', []).includes(name); }
++    reportable(name: string): boolean { return name !== '' && name !== '_' && (name.startsWith('$') || name.endsWith('_')) && !this.context.settings.list('allow', []).includes(name); }
+     report(index: number, name: string): void {
+         this.context.report(index, 'no-underscore-dangle', 'unexpectedUnderscore', `Unexpected dangling '_' in '${name}'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, \`#private\` or a closure says so and is checked.`, '', '', '');
+     }

@@ -1,0 +1,1 @@
+const _lead = 1; const tail_ = 2; const plain = 3; this._x; function _fn(_arg) {} const { plain: _bound } = obj;

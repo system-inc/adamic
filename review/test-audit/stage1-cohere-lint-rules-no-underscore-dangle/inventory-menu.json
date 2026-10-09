@@ -1,0 +1,99 @@
+{
+  "code_under_test": "owned .a port lowered and compiled; no port function is executed by the Go row",
+  "oracle": "self: load, lower and native.Build success; no external authority or runtime comparison",
+  "functions_lowered": {
+    "rule.a": [
+      {
+        "name": "Rule.constructor",
+        "line": 6
+      },
+      {
+        "name": "flag",
+        "line": 7
+      },
+      {
+        "name": "reportable",
+        "line": 8
+      },
+      {
+        "name": "report",
+        "line": 9
+      },
+      {
+        "name": "name",
+        "line": 12
+      },
+      {
+        "name": "bindingName",
+        "line": 21
+      },
+      {
+        "name": "bindings",
+        "line": 30
+      },
+      {
+        "name": "visit",
+        "line": 43
+      },
+      {
+        "name": "create",
+        "line": 80
+      }
+    ],
+    "profile.a": [
+      {
+        "name": "ancestry",
+        "line": 8
+      },
+      {
+        "name": "visit",
+        "line": 12
+      },
+      {
+        "name": "run",
+        "line": 17
+      },
+      {
+        "name": "anonymous findings.sort comparator",
+        "line": 42
+      }
+    ]
+  },
+  "menu": [
+    {
+      "id": "M1",
+      "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "from": "name.startsWith('_')",
+      "to": "name.startsWith('$')",
+      "operator": "constant change"
+    },
+    {
+      "id": "M2",
+      "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "from": "this.context.settings.read(name, fallback) === 'true'",
+      "to": "this.context.settings.read(name, fallback) !== 'true'",
+      "operator": "condition flip"
+    },
+    {
+      "id": "M3",
+      "file": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+      "from": "    visit(context, rule, root);",
+      "to": "",
+      "operator": "drop statement"
+    },
+    {
+      "id": "M4",
+      "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a",
+      "from": "children[offset + 1] ?? -1",
+      "to": "children[offset + 0] ?? -1",
+      "operator": "off-by-one bound"
+    },
+    {
+      "id": "P1",
+      "file": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a",
+      "from": "function run(row: string, countOnly: boolean): number {",
+      "to": "function run(row: string, countOnly: boolean): number {\n    if (row.length >= 0) return 0;",
+      "operator": "empty-answer probe"
+    }
+  ]
+}

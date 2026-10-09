@@ -1,0 +1,11 @@
+--- a/stage1/cohere/lint/rules/no-underscore-dangle/rule.a
++++ b/stage1/cohere/lint/rules/no-underscore-dangle/rule.a
+@@ -24,7 +24,7 @@
+         const first = children[offset] ?? -1;
+         if(first < 0) { return -1; }
+         this.context.scanner.pos = this.context.node(first).end;
+-        if(this.context.scanner.scan() === 'ColonToken') { return children[offset + 1] ?? -1; }
++        if(this.context.scanner.scan() === 'ColonToken') { return children[offset + 0] ?? -1; }
+         return first;
+     }
+     bindings(index: number, declaration: number, pattern: string): void {

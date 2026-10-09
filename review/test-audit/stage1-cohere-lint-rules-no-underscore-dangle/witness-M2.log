@@ -1,0 +1,5 @@
+case 0
+finding 6 15 unexpectedUnderscore	Unexpected dangling '_' in '_lead'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+finding 23 32 unexpectedUnderscore	Unexpected dangling '_' in 'tail_'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+finding 60 81 unexpectedUnderscore	Unexpected dangling '_' in '_fn'. A leading or trailing underscore is a convention for privacy that the language does not enforce, so it tells a reader something is off limits while doing nothing to keep them out. Where privacy is real, `#private` or a closure says so and is checked.
+fixed	const _lead = 1; const tail_ = 2; const plain = 3; this._x; function _fn(_arg) {} const { plain: _bound } = obj;\u000a

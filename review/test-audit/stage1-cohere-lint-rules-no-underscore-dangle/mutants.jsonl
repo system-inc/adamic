@@ -1,0 +1,5 @@
+{"id": "M1", "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a", "line": 8, "from": "name.startsWith('_')", "to": "name.startsWith('$')", "operator": "constant change"}
+{"id": "M2", "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a", "line": 7, "from": "this.context.settings.read(name, fallback) === 'true'", "to": "this.context.settings.read(name, fallback) !== 'true'", "operator": "condition flip"}
+{"id": "M3", "file": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a", "line": 32, "from": "    visit(context, rule, root);", "to": "", "operator": "drop statement"}
+{"id": "M4", "file": "stage1/cohere/lint/rules/no-underscore-dangle/rule.a", "line": 27, "from": "children[offset + 1] ?? -1", "to": "children[offset + 0] ?? -1", "operator": "off-by-one bound"}
+{"id": "P1", "file": "stage1/cohere/lint/rules/no-underscore-dangle/profile.a", "line": 17, "from": "function run(row: string, countOnly: boolean): number {", "to": "function run(row: string, countOnly: boolean): number {\n    if (row.length >= 0) return 0;", "operator": "empty-answer probe"}
