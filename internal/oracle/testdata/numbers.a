@@ -14,3 +14,10 @@ up++;
 ++up;
 up--;
 console.log(`${up} ${-up} ${+up} ${up < 1} ${up >= 1}`);
+
+function powerBase(value: number): number {
+    return value;
+}
+const quarterBase = powerBase(16);
+console.log(`${Math.pow(quarterBase, 0.25)} ${powerBase(2) ** 0.25}`);
+console.log(`${1 / (powerBase(-0) ** 0.5)} ${powerBase(-Infinity) ** 0.5}`);

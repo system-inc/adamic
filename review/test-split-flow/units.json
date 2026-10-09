@@ -4058,6 +4058,14 @@
   {
     "package": "flow",
     "family": "SingleAssignment",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "SingleAssignment",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -4277,7 +4285,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
+    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
   },
   {
     "package": "flow",
@@ -10666,6 +10674,14 @@
   {
     "package": "flow",
     "family": "MutationRanges",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "MutationRanges",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -10885,7 +10901,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
+    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
   },
   {
     "package": "flow",
@@ -17274,6 +17290,14 @@
   {
     "package": "flow",
     "family": "GraphPaths",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "GraphPaths",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -17493,7 +17517,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
+    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
   },
   {
     "package": "flow",
@@ -23882,6 +23906,14 @@
   {
     "package": "flow",
     "family": "Liveness",
+    "test": "TestFlowProgram____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "flow",
+    "family": "Liveness",
     "test": "TestFlowProgram____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -24101,7 +24133,7 @@
     "test": "TestFlowProgram____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
+    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
   },
   {
     "package": "flow",
@@ -30530,6 +30562,14 @@
   {
     "package": "fresh",
     "family": "Writes",
+    "test": "TestFreshWrites____oracle_testdata_node_buffer_digest_twice_a_eee6c7ec2841",
+    "program": "internal/oracle/testdata/node_buffer_digest_twice.a",
+    "path": "../oracle/testdata/node_buffer_digest_twice.a",
+    "sha256": "b53bb95de81be7d64b17d4cf073a9b3fe9739288236d140c47975dcb2e3ca93b"
+  },
+  {
+    "package": "fresh",
+    "family": "Writes",
     "test": "TestFreshWrites____oracle_testdata_node_buffer_encodings_a_ff90fb91f28c",
     "program": "internal/oracle/testdata/node_buffer_encodings.a",
     "path": "../oracle/testdata/node_buffer_encodings.a",
@@ -30869,7 +30909,7 @@
     "test": "TestFreshWrites____oracle_testdata_numbers_a_9cab67029846",
     "program": "internal/oracle/testdata/numbers.a",
     "path": "../oracle/testdata/numbers.a",
-    "sha256": "96497e2b2313fb11aa6a7644e022c8b769a6656704516657496f196aba0b23d5"
+    "sha256": "e805d677dfbbb7780d18be2afdc1adead7d630c3d0608f67de803f00e5f85282"
   },
   {
     "package": "fresh",
