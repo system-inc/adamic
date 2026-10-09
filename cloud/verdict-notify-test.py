@@ -83,6 +83,16 @@ class VerdictTests(unittest.TestCase):
         self.assertEqual(self.send('devtools/fast-gate', self.red), [])
         self.assertEqual([name for name, _ in self.send('devtools/gate-shards', self.red)], ['system_adamic_developer_tools'])
 
+    def test_a_red_whose_first_failure_ran_above_the_box_s_cores_says_under_load(self):
+        loaded = self.red.replace('TestOwnershipShapes\n', 'TestOwnershipShapes\n(box load 178.0 on 64 cores at first failure)\n')
+        text = self.send('codex/compiler-loops', loaded)[0][1]
+        self.assertIn('(2 failed, 1586 passed), under load (load 178.0 on 64 cores at first failure).', text)
+        # The test the failure names is still the first line under it.
+        self.assertIn('first failure at tests: internal/fuzz TestOwnershipShapes', text)
+        # At the core count, no label.
+        level = self.red.replace('TestOwnershipShapes\n', 'TestOwnershipShapes\n(box load 64.0 on 64 cores at first failure)\n')
+        self.assertNotIn('under load', self.send('codex/compiler-loops', level)[0][1])
+
     def test_no_all_caps_word_survives(self):
         log = self.red.replace('TestOwnershipShapes', 'TestJSONShapes')
         self.assertIn('Testjsonshapes', self.send('codex/compiler-x', log)[0][1])

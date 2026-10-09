@@ -178,6 +178,11 @@ def message(branch, sha, log, early=None):
         failed = re.search(r'(\d+) fail, (\d+) pass\s*$', rest)
         if failed and failed.group(1) != '0':
             parts.append(' (%s failed, %s passed)' % failed.groups())
+        # The gate prints the box's load under its first failure; above the core count, the page says so first
+        # (@system_adamic from the witness, Oct 9: about six of Oct 8's reds were load, each found by hand).
+        box = re.search(r'^\(box load ([\d.]+) on (\d+) cores at first failure\)$', text, re.M)
+        if box and float(box.group(1)) > int(box.group(2)):
+            parts.append(', under load (load %s on %s cores at first failure)' % box.groups())
     else:
         took = re.search(r'fast gate in ([\d.]+ s)', rest)
         if took:

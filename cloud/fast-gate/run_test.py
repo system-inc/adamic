@@ -178,6 +178,37 @@ class FailClosed(unittest.TestCase):
         gate, status, result = self.gate(full=False, failing="vet")
         self.assertNotIn("cancelled", status)
 
+    def test_the_record_keeps_the_box_load_and_a_red_above_its_cores_says_under_load(self):
+        # The witness (Oct 9): six of Oct 8's reds were load, each diagnosed by hand. The record names it itself.
+        for full, runToEnd in ((False, False), (True, False), (True, True)):
+            with self.subTest(full=full, runToEnd=runToEnd):
+                lines = []
+                realStatus = run.Gate.status
+                with mock.patch.object(run, "boxLoad", return_value={"load_1m": 178.0, "cores": 64}), \
+                        mock.patch.object(run.Gate, "status", lambda gate, line: lines.append(line) or realStatus(gate, line)):
+                    gate, status, result = self.gate(full=full, failing="vet", runToEnd=runToEnd)
+                self.assertTrue(status.startswith("red:"), status)
+                self.assertIn("under load (load 178.0 on 64 cores at first failure)", status)
+                self.assertTrue(gate.failure["under_load"])
+                self.assertEqual(result["box_load"], {moment: {"load_1m": 178.0, "cores": 64} for moment in ("start", "first_failure", "end")})
+                # A whole gate's red line goes out at the first failure, before the run ends, and carries it too.
+                if full:
+                    self.assertIn("under load", next(line for line in lines if "first failure at vet" in line))
+                    with open(os.path.join(gate.arguments.out, "first-failure.txt")) as handle:
+                        self.assertIn("box load 178.0 on 64 cores at first failure", handle.read())
+        # At or under the core count it is a red like any other, the load still on the record.
+        with mock.patch.object(run, "boxLoad", return_value={"load_1m": 64.0, "cores": 64}):
+            gate, status, result = self.gate(failing="vet")
+        self.assertNotIn("under load", status)
+        self.assertFalse(gate.failure["under_load"])
+        self.assertIn("box load 64.0 on 64 cores at start, load 64.0 on 64 cores at first failure, load 64.0 on 64 cores at end", status)
+        # A green under load is green; its record still carries the readings, with no first failure.
+        with mock.patch.object(run, "boxLoad", return_value={"load_1m": 178.0, "cores": 64}):
+            gate, status, result = self.gate()
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertNotIn("under load", status)
+        self.assertEqual(sorted(result["box_load"]), ["end", "start"])
+
     def test_a_stage_that_reports_nothing_is_red(self):
         for silent, stageName in (("build", "build"), ("vet", "vet"), ("testSplit", "tests"), ("checkCensus", "census")):
             with self.subTest(stage=stageName):

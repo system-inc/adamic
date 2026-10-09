@@ -100,6 +100,27 @@ esac
         (self.root / 'queue').write_text('B %d cloud/land-views-slice1 %s\n' % (self.now - 5, other))
         self.assertEqual(len(self.check()), 2)
 
+    def test_a_red_page_says_under_load_when_its_record_does(self):
+        # The witness (Oct 9): the red's own record names load, and the page reads it first.
+        label = ', under load (load 178.0 on 64 cores at first failure)'
+        (self.root / 'seen').write_text('cloud/land-views-slice1 %s\n' % star)
+        (self.root / 'watch.log').write_text('20:29:21 done cloud/land-views-slice1: red: %s fast gate, first failure at tests after 40 s%s (steps), 1 fail, 9 pass\n' % (star, label))
+        sends = self.check()
+        self.assertIn('ran under load (load 178.0 on 64 cores): read it as load', sends[0])
+        # A whole gate's red on a train slice, by its record.
+        (self.root / 'seen').write_text('cloud/land-train-2-views-slice1 %s\n' % other)
+        (self.root / 'watch.log').write_text('%s done cloud/land-train-2-views-slice1: green: %s fast gate in 600 s\n' % (self.clock(30), other))
+        (self.root / 'whole-gates').write_text('%s red %d red: %s full gate, first failure at tests after 1042.6 s%s, cancelled after first failure (steps)\n' % (other, self.now - 60, other, label))
+        sends = self.check()
+        self.assertIn('whole gate is red, so it can\'t land. Its record says the first failure ran under load (load 178.0 on 64 cores)', sends[-2])
+        # Main's red, by its log line; one without the label pages without the note.
+        for main, tail, loaded in (('e' * 40, '', False), ('9' * 40, label, True)):
+            (self.root / 'full.log').write_text('20:35:28 red: %s full gate, first failure at tests after 597.9 s%s (steps)\n' % (main, tail))
+            (self.root / 'main-head').write_text(main + '\n')
+            sends = self.check()
+            self.assertIn('Main %s is red at tests' % main[:12], sends[-2])
+            self.assertEqual('ran under load (load 178.0 on 64 cores)' in sends[-2], loaded)
+
     def test_a_quiet_worker_on_the_chain_pages_its_owner_once_and_a_push_rearms(self):
         # @system_adamic, Oct 8: V1's worker was quiet for two hours on the critical path and nobody knew.
         waterfall = {'nodes': [{'id': 'a03mesg', 'wave': 0}, {'id': 'v1', 'wave': 1}, {'id': 'v2', 'wave': 2}, {'id': 'v3', 'wave': 3}],

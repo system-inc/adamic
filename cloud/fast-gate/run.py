@@ -66,6 +66,21 @@ fixtureEntry = re.compile(r'^\s*\}?\{?"(internal/oracle/testdata/[^"]+)", (true|
 scopingEnvironment = ("ADAMIC_LINT_RULES",)
 
 
+def boxLoad():
+    """The box's 1-minute load average and core count, the whole box's and not the gate's slot: what the record
+    keeps at a gate's start, its first failure and its end (@system_adamic, from the witness, Oct 9 00:30Z: about six
+    of Oct 8's reds and stalls were load, not bugs, each diagnosed by hand)."""
+    return {"load_1m": round(os.getloadavg()[0], 1), "cores": os.cpu_count() or 1}
+
+
+def underLoad(reading):
+    return reading is not None and reading["load_1m"] > reading["cores"]
+
+
+def loadWords(reading):
+    return "load %.1f on %d cores" % (reading["load_1m"], reading["cores"])
+
+
 class TestSeconds:
     def __init__(self, path=None):
         self.path = path or os.path.expanduser("~/fast-gate/test-seconds.tsv")
@@ -220,6 +235,7 @@ class Gate:
             "uncached_tests": True,
             "build_ok": False,
             "vet_ok": False,
+            "box_load": {"start": boxLoad()},
         }
         self.kind = "full" if arguments.full else "fast"
         self.status("running: %s gate of %s against %s" % (self.kind, arguments.sha, arguments.base))
@@ -1481,6 +1497,11 @@ class Gate:
             if self.failure is not None or getattr(self, "stopped", None):
                 return
             self.failure = {"step": step, "detail": detail, "after_seconds": round(time.monotonic() - self.started, 1)}
+            reading = boxLoad()
+            getattr(self, "result", {}).setdefault("box_load", {})["first_failure"] = reading
+            self.failure["under_load"] = underLoad(reading)
+            loaded = (", under load (%s at first failure)" % loadWords(reading)) if self.failure["under_load"] else ""
+            detail = "%s\n(box %s at first failure)" % (detail, loadWords(reading))
             # A Python traceback is the gate tool's own exception, not the change's verdict: a complete or
             # whole run goes no further on broken tools, since it would teach nothing (@system_adamic, Oct 8,
             # after a-check crashed on views slice 1 and its complete run went on for minutes).
@@ -1497,7 +1518,7 @@ class Gate:
             if self.arguments.full and getattr(self.arguments, "run_to_end", False):
                 with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
                     handle.write(detail + "\n")
-                self.status("red: %s first failure at %s after %.1f s (parity: running to the end)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                self.status("red: %s first failure at %s after %.1f s%s (parity: running to the end)" % (self.arguments.sha, step, self.failure["after_seconds"], loaded))
                 return
             if self.arguments.full:
                 # A whole gate fails fast and frees its box (Kirk, Oct 8: "all tests should fail fast and loud and
@@ -1506,7 +1527,7 @@ class Gate:
                 # in parallel and every red comes back at once.
                 with open(os.path.join(self.arguments.out, "first-failure.txt"), "w") as handle:
                     handle.write(detail + "\n")
-                self.status("red: %s first failure at %s after %.1f s (cancelled after first failure)" % (self.arguments.sha, step, self.failure["after_seconds"]))
+                self.status("red: %s first failure at %s after %.1f s%s (cancelled after first failure)" % (self.arguments.sha, step, self.failure["after_seconds"], loaded))
                 self.cancelled = True
                 self.killSessions()
                 return
@@ -1587,6 +1608,7 @@ class Gate:
         with self.lock:
             self.killSessions()
         wall = round(time.monotonic() - self.started, 1)
+        self.result.setdefault("box_load", {})["end"] = boxLoad()
         units = testUnits(os.path.join(self.arguments.out, "test.jsonl"))
         ledger = longTests(units)
         self.budget(ledger, units)
@@ -1630,6 +1652,8 @@ class Gate:
         steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
+        steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))
+                                      for moment in ("start", "first_failure", "end") if moment in self.result["box_load"])
         deferred = self.result.get("deferred_to_full_gate", [])
         if not self.arguments.full:
             steps += "; deferred to full gate: %d tests%s" % (len(deferred), (" (" + ", ".join(name.split()[-1] for name in deferred) + ")") if deferred else "")
@@ -1647,7 +1671,9 @@ class Gate:
         else:
             crash = " (the gate tool crashed, not the change)" if self.failure.get("tool_crash") else ""
             cancelled = ", cancelled after first failure" if getattr(self, "cancelled", False) else ""
-            self.status("red: %s %s gate, first failure at %s%s after %.1f s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], cancelled, steps, self.counts["fail"], self.counts["pass"]))
+            # A red whose first failure ran above the box's core count says so itself, so a page reads it as load first.
+            loaded = ", under load (%s at first failure)" % loadWords(self.result["box_load"]["first_failure"]) if self.failure.get("under_load") else ""
+            self.status("red: %s %s gate, first failure at %s%s after %.1f s%s%s (%s), %d fail, %d pass" % (self.arguments.sha, self.kind, self.failure["step"], crash, self.failure["after_seconds"], loaded, cancelled, steps, self.counts["fail"], self.counts["pass"]))
         if getattr(self, "stopped", None) and self.failure is not None:
             with open(os.path.join(self.arguments.out, "status.txt"), "a") as handle:
                 handle.write("stopped: " + self.stopped["reason"] + "\n")

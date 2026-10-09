@@ -180,7 +180,7 @@ def check(step, now):
             record, since = wholeGate(sha)
             if record == 'red':
                 return ('whole gate red %s %s' % (branch, sha[:12]), 'whole-red:' + sha,
-                        '★%s: %s %s is green on its fast gate but its whole gate is red, so it can\'t land.' % (step['id'], branch, sha[:12]))
+                        '★%s: %s %s is green on its fast gate but its whole gate is red, so it can\'t land.%s' % (step['id'], branch, sha[:12], loadNote(wholeGateStatus.get(sha))))
             if record != 'green':
                 return 'green %s %s, whole gate %s' % (branch, sha[:12], record), None, None
             clock = time.strftime('%H:%M:%S', time.gmtime(since))
@@ -194,7 +194,7 @@ def check(step, now):
         where = re.search(r'first failure at (\S+)', rest)
         return ('red %s %s, no newer push' % (branch, sha[:12]), 'red:' + sha,
                 '★%s has no live turn in the gate: its newest verdict is red (%s %s, first failure at %s) and nothing newer has been pushed '
-                'on its branches (%s).' % (step['id'], branch, sha[:12], where.group(1) if where else 'unknown', ' '.join(step['globs'])))
+                'on its branches (%s).%s' % (step['id'], branch, sha[:12], where.group(1) if where else 'unknown', ' '.join(step['globs']), loadNote(rest)))
     return '%s %s %s' % (verdict, branch, sha[:12]), None, None
 
 
@@ -289,6 +289,15 @@ def unwatchedPushes(globs, own):
 
 
 wholeGateCache = {}
+# Each record's status line, by sha, as wholeGate last read it: a red page quotes its load label.
+wholeGateStatus = {}
+
+
+def loadNote(status):
+    """What a page adds when the red's own record says its first failure ran above the box's core count (run.py's
+    'under load' label, @system_adamic from the witness, Oct 9: about six of Oct 8's reds were load, each found by hand)."""
+    found = re.search(r'under load \((load [\d.]+ on \d+ cores) at first failure\)', status or '')
+    return (' Its record says the first failure ran under load (%s): read it as load before reading it as a bug.' % found.group(1)) if found else ''
 
 
 def wholeGate(sha):
@@ -298,8 +307,9 @@ def wholeGate(sha):
     stand = os.environ.get('ADAMIC_WHOLE_GATES')
     if stand is not None:
         for line in lines(Path(stand)):
-            fields = line.split()
-            if len(fields) == 3 and fields[0] == sha:
+            fields = line.split(None, 3)
+            if len(fields) >= 3 and fields[0] == sha:
+                wholeGateStatus[sha] = fields[3] if len(fields) > 3 else ''
                 return fields[1], int(fields[2])
         return 'none', 0
     cached = wholeGateCache.get(sha)
@@ -316,6 +326,7 @@ def wholeGate(sha):
         full = subprocess.run(['git', '-C', repository, 'show', 'FETCH_HEAD:full.json'], capture_output=True, text=True).stdout
         when = subprocess.run(['git', '-C', repository, 'log', '-1', '--format=%ct', 'FETCH_HEAD'], capture_output=True, text=True).stdout.strip()
         finished = '"finished": true' in full
+        wholeGateStatus[sha] = status
         state = ('void' if status.startswith('void:') else 'green' if status.startswith('green:') and finished else
                  'red' if status.startswith('red:') and finished else 'running')
         result = (state, int(when) if when.isdigit() else 0)
@@ -378,7 +389,7 @@ def mainRed():
     if verdict is None or verdict.group(1) != 'red':
         return None
     where = re.search(r'first failure at (\S+)', verdict.group(3))
-    return verdict.group(2), where.group(1) if where else 'unknown', published.get(verdict.group(2)[:12], '')
+    return verdict.group(2), where.group(1) if where else 'unknown', published.get(verdict.group(2)[:12], ''), verdict.group(3)
 
 
 def mainRedRow(sha):
@@ -403,7 +414,7 @@ def checkMain(now):
     red = mainRed()
     if red is None:
         return 'main green', None, None, []
-    sha, where, ref = red
+    sha, where, ref, rest = red
     row = mainRedRow(sha) or {'owner': '', 'fix': '', 'closed': False}
     if row['closed']:
         return 'main red %s, explained in main-reds.tsv' % sha[:12], None, None, []
@@ -411,7 +422,7 @@ def checkMain(now):
     if not row['fix']:
         return ('main red %s, no fix-forward named' % sha[:12], 'main:' + sha,
                 'Main %s is red at %s (%s) and main-reds.tsv names no fix-forward for it (a row with "owner @<name>" and '
-                '"fix-forward <branch>"), so nothing lands and nothing is visibly fixing it.' % (sha[:12], where, ref or 'full-main'), [owner])
+                '"fix-forward <branch>"), so nothing lands and nothing is visibly fixing it.%s' % (sha[:12], where, ref or 'full-main', loadNote(rest)), [owner])
     fixStep = {'id': 'main-fix', 'globs': [row['fix']], 'owner': owner}
     summary, key, text = check(fixStep, now)
     # Running, queued under a minute, green under a minute or landed is a live turn; no verdict at all isn't.
