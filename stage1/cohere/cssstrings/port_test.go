@@ -2,48 +2,30 @@ package cssstrings
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"syscall"
 	"testing"
 	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/ir"
-	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
-	"github.com/system-inc/adamic/internal/native"
+	"github.com/system-inc/adamic/internal/corpusfiles"
 )
 
 const repository = "../../.."
+
+const testCSSStringsShards = 287
 
 // run is one execution's observable behavior.
 type run struct {
 	stdout   []byte
 	stderr   []byte
 	exitCode int
-}
-
-// lowered checks and lowers a program, failing the test with stage 0's refusal if it can't.
-func lowered(t *testing.T, path string) *ir.Program {
-	t.Helper()
-	program, err := load.Load([]string{path})
-	if err != nil {
-		t.Fatalf("Load: %v", err)
-	}
-	result, err := lower.Lower(context.Background(), program)
-	if err != nil {
-		t.Fatalf("Lower: %v", err)
-	}
-	return result
 }
 
 // bounded configures a child command; Run and CombinedOutput below guard its output progress.
@@ -87,66 +69,49 @@ func onNode(t *testing.T, path string, arguments ...string) run {
 	return execute(t, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
 }
 
-// onJavaScriptBackend runs the lowered port through the JavaScript backend, on Node.
-func onJavaScriptBackend(t *testing.T, program *ir.Program, arguments ...string) run {
+// stringsCorpus preserves the original enumeration, including duplicate texts as distinct cases.
+type stringsCorpus struct {
+	texts []string
+	paths []string
+	raw   []string
+}
+
+func enumerateStrings(t *testing.T) stringsCorpus {
 	t.Helper()
-	path := filepath.Join(t.TempDir(), "program.mjs")
-	if err := os.WriteFile(path, []byte(javascript.JavaScript(program)), 0o644); err != nil {
+	root, err := filepath.Abs(repository)
+	if err != nil {
 		t.Fatal(err)
 	}
-	return onNode(t, path, arguments...)
-}
-
-// nativelyRun is natively's run alone.
-func nativelyRun(t *testing.T, program *ir.Program, arguments ...string) run {
-	t.Helper()
-	result, _ := natively(t, program, arguments...)
-	return result
-}
-
-// natively builds the lowered port under the address and undefined-behavior sanitizers and runs it,
-// returning the binary too, for the leak check. Leak detection is off here, as in the oracle; leaks is
-// its own run.
-func natively(t *testing.T, program *ir.Program, arguments ...string) (run, string) {
-	t.Helper()
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	var environment []string
-	if runtime.GOOS == "linux" {
-		environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-	}
-	return execute(t, environment, binary, arguments...), binary
-}
-
-// leaks returns a report of everything the finished port never let go of, or "": macOS's leaks tool on
-// an unsanitized build, or LeakSanitizer on Linux running the sanitized binary again, as the oracle
-// checks every fixture.
-func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...string) string {
-	t.Helper()
-	switch runtime.GOOS {
-	case "darwin":
-		binary := filepath.Join(t.TempDir(), "port")
-		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+	var texts []string
+	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
+	for _, path := range paths {
+		data, err := os.ReadFile(path)
+		if err != nil {
 			t.Fatal(err)
 		}
-		report := execute(t, nil, "leaks", append([]string{"--atExit", "--", binary}, arguments...)...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return string(report.stdout)
-	case "linux":
-		report := execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, arguments...)
-		if report.exitCode == 0 {
-			return ""
-		}
-		return fmt.Sprintf("exit %d\n%s", report.exitCode, report.stderr)
+		texts = append(texts, string(data))
 	}
-	t.Fatalf("no leak check for %s", runtime.GOOS)
-	return ""
+	files := len(texts)
+	alphabet := []string{"a", "'", "\"", "\\", "\n", "😀"}
+	var generate func(string, int)
+	generate = func(s string, n int) {
+		texts = append(texts, s)
+		if n > 0 {
+			for _, c := range alphabet {
+				generate(s+c, n-1)
+			}
+		}
+	}
+	generate("", 5)
+	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
+	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
+	return stringsCorpus{texts: texts, paths: paths, raw: raw}
 }
 
+// TestCSSStrings builds each input once before the parallel units. ADAMIC_TEST_SHARD=i/n
+// (zero-based i) selects units whose stable ordinal modulo n equals i; unset runs all.
+// Stable shard-NNN names use the same zero-based ordinals for direct -run selection.
+// No corpus is sampled: batch ranges, raw files, mutants and throughput sides form the census.
 // TestCSSStrings_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestCSSStrings_NNN$'. Every original side and sanitizer/leak check stays.
@@ -198,7 +163,7 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 			if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
 				return err
 			}
-			command := bounded(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
+			command := stringsCommand(t, "go", "build", "-overlay="+overlayPath, "-o", filepath.Join(dir, "go-printer"), filepath.Join(cohere, "cmd/adamic_stage_one/main.go"))
 			command.Dir = cohere
 			if output, err := childguard.CombinedOutput(command, childguard.Options{}); err != nil {
 				return fmt.Errorf("Go bridge: %w\n%s", err, output)
@@ -248,9 +213,9 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 					name   string
 					result run
 				}{
-					{"native", execute(t, stringsSanitizerEnvironment(false), sanitized, "--batch", path)},
-					{"Node", onNode(t, main, "--batch", path)},
-					{"JavaScript backend", onNode(t, build.javascript, "--batch", path)},
+					{"native", stringsExecute(t, stringsSanitizerEnvironment(false), sanitized, "--batch", path)},
+					{"Node", stringsOnNode(t, main, "--batch", path)},
+					{"JavaScript backend", stringsOnNode(t, build.javascript, "--batch", path)},
 				} {
 					clean(t, side.name, side.result)
 					checkStringsOutput(t, unit, side.name, side.result.stdout, want.stdout)
@@ -277,7 +242,7 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 					expected := stringsOracleAnswers(t, "Go", goBinary, nil, []byte(pref+stringsEncode.Replace(text)+"\n"), goIdentity)
 					clean(t, "Go raw", expected)
 					decoded := strings.NewReplacer(`\n`, "\n", `\r`, "\r", `\t`, "\t", `\\`, `\`).Replace(strings.TrimSuffix(string(expected.stdout), "\n"))
-					for _, r := range []run{execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), onNode(t, main, args...)} {
+					for _, r := range []run{stringsExecute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, sanitized, args...), stringsOnNode(t, main, args...)} {
 						clean(t, "raw", r)
 						equal(t, "raw "+pref, r.stdout, []byte(decoded))
 					}
@@ -287,8 +252,8 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 				clean(t, "Go", want)
 				mutation := stringsMutations[unit.lo]
 				for _, r := range []run{
-					execute(t, stringsSanitizerEnvironment(false), mutantBinaries[mutation.name], "--batch", cases),
-					onNode(t, mutants[mutation.name].main, "--batch", cases),
+					stringsExecute(t, stringsSanitizerEnvironment(false), mutantBinaries[mutation.name], "--batch", cases),
+					stringsOnNode(t, mutants[mutation.name].main, "--batch", cases),
 				} {
 					clean(t, "mutant", r)
 					if bytes.Equal(r.stdout, want.stdout) {
@@ -327,7 +292,7 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 				var elapsed time.Duration
 				for round := 0; round < 3; round++ {
 					start := time.Now()
-					answer := execute(t, nil, command, args...)
+					answer := stringsExecute(t, nil, command, args...)
 					elapsed += time.Since(start)
 					clean(t, side, answer)
 					equal(t, side, answer.stdout, want.stdout)
@@ -350,6 +315,7 @@ func runCSSStringsShard(t *testing.T, ordinal int) {
 	}
 	t.Skip("excluded by ADAMIC_TEST_SHARD")
 }
+
 func write(t *testing.T, path string, b []byte) {
 	t.Helper()
 	if err := os.WriteFile(path, b, 0644); err != nil {

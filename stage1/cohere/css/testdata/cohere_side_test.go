@@ -89,6 +89,7 @@ func adamicCohereTexts(t *testing.T) []string {
 }
 
 func TestAdamicPortCases(t *testing.T) {
+	t.Parallel()
 	var request struct{ Cases, Answers, IDs, Repository, Fixtures string }
 	path := os.Getenv("ADAMIC_PORT_REQUEST")
 	if path == "" {

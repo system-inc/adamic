@@ -320,7 +320,7 @@ func cssParserOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command := bounded(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
+		command := cssParserCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
 		command.Dir = cohere
 		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -402,12 +402,12 @@ func checkCSSParserLeaks(t *testing.T, sanitized, unsanitized string, args ...st
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		result := execute(t, cssParserASAN(true), sanitized, args...)
+		result := cssParserExecute(t, cssParserASAN(true), sanitized, args...)
 		if result.exitCode != 0 {
 			t.Errorf("leaks: exit %d\n%s", result.exitCode, result.stderr)
 		}
 	case "darwin":
-		result := execute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		result := cssParserExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if result.exitCode != 0 {
 			t.Errorf("leaks: %s", result.stdout)
 		}
@@ -502,7 +502,7 @@ func TestCSSParserPlantedDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	result := execute(t, []string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$", "-test.timeout=75s", "-test.v", "-test.parallel=4")
+	result := cssParserExecute(t, []string{"ADAMIC_CSS_PARSER_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestThePortParsesAsGoCohereDoes_[0-9]{3}$", "-test.timeout=75s", "-test.v", "-test.parallel=4")
 	topOwner := "TestThePortParsesAsGoCohereDoes_" + strings.TrimPrefix(owner, "shard-")
 	prefix := "--- FAIL: TestThePortParsesAsGoCohereDoes_"
 	if result.exitCode != 1 || len(result.stderr) != 0 || strings.Count(string(result.stdout), prefix) != 1 || !strings.Contains(string(result.stdout), "--- FAIL: "+topOwner+" (") || !strings.Contains(string(result.stdout), "planted disagreement") {
@@ -624,7 +624,7 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 		if err := os.WriteFile(requestPath, data, 0644); err != nil {
 			return err
 		}
-		cmd := bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+		cmd := cssParserCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
 		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
 		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
@@ -667,7 +667,7 @@ func cachedCSSParserPostCSSAnswers(t *testing.T, script, library, path, identity
 		if err := os.WriteFile(input, data, 0644); err != nil {
 			return err
 		}
-		cmd := bounded(t, "node", script, library, input)
+		cmd := cssParserCommand(t, "node", script, library, input)
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout, cmd.Stderr = &stdout, &stderr
 		if err := childguard.Run(cmd, childguard.Options{Stall: childStall}); err != nil || stderr.Len() != 0 {
@@ -697,5 +697,3 @@ func cssParserMutantWitness(mutation int) int {
 	}
 	panic("parser mutant has no witness")
 }
-
-const testThePortParsesAsGoCohereDoesShards = 388

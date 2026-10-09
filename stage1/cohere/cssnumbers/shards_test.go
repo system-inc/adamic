@@ -15,7 +15,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/corpusfiles"
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
@@ -305,7 +304,7 @@ func buildNumbersProgram(t *testing.T, name, main string) numbersProgram {
 
 func numbersClangToolchain(t *testing.T) string {
 	t.Helper()
-	version := execute(t, nil, "clang", "--version")
+	version := numbersExecute(t, nil, "clang", "--version")
 	clean(t, "clang version", version)
 	return strings.TrimSpace(string(version.stdout))
 }
@@ -370,12 +369,12 @@ func numbersLeaks(t *testing.T, sanitized, unsanitized string, args ...string) {
 	t.Helper()
 	switch runtime.GOOS {
 	case "linux":
-		r := execute(t, numbersSanitizerEnvironment(true), sanitized, args...)
+		r := numbersExecute(t, numbersSanitizerEnvironment(true), sanitized, args...)
 		if r.exitCode != 0 {
 			t.Fatalf("leaks: exit %d\n%s", r.exitCode, r.stderr)
 		}
 	case "darwin":
-		r := execute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
+		r := numbersExecute(t, nil, "leaks", append([]string{"--atExit", "--", unsanitized}, args...)...)
 		if r.exitCode != 0 {
 			t.Fatalf("leaks: %s", r.stdout)
 		}
@@ -493,7 +492,7 @@ func TestCSSNumbersPlantedDisagreement(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	r := execute(t, []string{"ADAMIC_CSSNUMBERS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSNumbersPlantedDisagreement$", "-test.v", "-test.parallel=4")
+	r := numbersExecute(t, []string{"ADAMIC_CSSNUMBERS_DISAGREEMENT_PROBE=1"}, binary, "-test.run=^TestCSSNumbersPlantedDisagreement$", "-test.v", "-test.parallel=4")
 	if r.exitCode != 1 || len(r.stderr) != 0 {
 		t.Fatalf("probe exit %d stderr %s", r.exitCode, r.stderr)
 	}
@@ -512,7 +511,7 @@ func numbersOracleAnswers(t *testing.T, name, command string, arguments []string
 		if err := os.WriteFile(path, data, 0644); err != nil {
 			return err
 		}
-		cmd := bounded(t, command, append(append([]string{}, arguments...), path)...)
+		cmd := numbersCommand(t, command, append(append([]string{}, arguments...), path)...)
 		var stdout, stderr bytes.Buffer
 		cmd.Stdout, cmd.Stderr = &stdout, &stderr
 		if err := childguard.Run(cmd, childguard.Options{}); err != nil || stderr.Len() != 0 {
@@ -555,57 +554,4 @@ func numbersOracleIdentity(t *testing.T, path string) string {
 		t.Fatal(err)
 	}
 	return fmt.Sprintf("oracle-content-sha256=%x", hash.Sum(nil))
-}
-
-const testCSSNumbersShards = 357
-
-type numbersCorpus struct {
-	texts []string
-	paths []string
-	raw   []string
-}
-
-func enumerateNumbers(t *testing.T) numbersCorpus {
-	t.Helper()
-	root, err := filepath.Abs(repository)
-	if err != nil {
-		t.Fatal(err)
-	}
-	var texts []string
-	paths := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit, []string{"internal/format/css/testdata/prettier", "internal/lint/rules/tailwind"}, []string{"*.css", "*.scss", "*.less"})
-	for _, path := range paths {
-		data, err := os.ReadFile(path)
-		if err != nil {
-			t.Fatal(err)
-		}
-		texts = append(texts, string(data))
-	}
-	files := len(texts)
-	alphabet := []string{"a", "0", "1", ".", "e", "-", "\"", "\\"}
-	var generate func(string, int)
-	generate = func(s string, n int) {
-		texts = append(texts, s)
-		if n > 0 {
-			for _, c := range alphabet {
-				generate(s+c, n-1)
-			}
-		}
-	}
-	generate("", 5)
-	texts = append(texts, "\r\t\u2028\u2029", strings.Repeat("'😀\\\"x' ", 10000), "'never closed\\", `"\'"`, "\x00'null'")
-	for _, mantissa := range []string{"0", "01", ".0", ".00100", "1.", "1.000", "12.34000"} {
-		for _, exponent := range []string{"", "e0", "E+000", "e-000", "e+001", "e-002", "E00020", "e+", "e-"} {
-			for _, unit := range strings.Split("|n|EM|Q|HZ|kHZ|px|cQmAX|unknown|foo|é|Σ|İ", "|") {
-				for _, prefix := range []string{"", "a", "$x", "@foo", "-", "+", "😀", "'", "\""} {
-					texts = append(texts, prefix+mantissa+exponent+unit)
-				}
-			}
-		}
-	}
-	for _, unit := range strings.Split("em|rem|ex|rex|cap|rcap|ch|rch|ic|ric|lh|rlh|vw|svw|lvw|dvw|vh|svh|lvh|dvh|vi|svi|lvi|dvi|vb|svb|lvb|dvb|vmin|svmin|lvmin|dvmin|vmax|svmax|lvmax|dvmax|cm|mm|Q|in|pt|pc|px|deg|grad|rad|turn|s|ms|Hz|kHz|dpi|dpcm|dppx|x|cqw|cqh|cqi|cqb|cqmin|cqmax|fr", "|") {
-		texts = append(texts, ".1000E+002"+strings.ToUpper(unit))
-	}
-	texts = append(texts, "'1.000px'", "1.000unknown", "a1.000px", "😀1.000px", strings.Repeat(".000100E-002KHZ ", 10000))
-	raw := append(append([]string{}, texts[:files]...), "", "a", "a\n", "a\r\n\n", "'😀'", "\"\\'\"")
-	return numbersCorpus{texts: texts, paths: paths, raw: raw}
 }

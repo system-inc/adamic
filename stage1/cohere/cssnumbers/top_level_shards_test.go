@@ -30,6 +30,7 @@ func numbersTopTempDir(t *testing.T) string {
 }
 
 // Shared build inputs outlive every parallel leaf and are removed after m.Run.
+// Not parallel: owns package-wide shared build-input lifetime and cleanup.
 func TestMain(m *testing.M) {
 	code := m.Run()
 	if numbersTopRoot != "" {

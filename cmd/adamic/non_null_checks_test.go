@@ -9,6 +9,7 @@ import (
 )
 
 func TestNonNullExplainChecks(t *testing.T) {
+	t.Parallel()
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)
@@ -24,6 +25,7 @@ func TestNonNullExplainChecks(t *testing.T) {
 		{"refuse_null", "1:13", "checked", "proven 0 checked 1"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			path := "internal/oracle/testdata/non_null_checked_" + probe.name + ".ts"
 			expression := "value!"
 			if probe.name == "refuse_undefined" || probe.name == "refuse_null" {
@@ -32,22 +34,25 @@ func TestNonNullExplainChecks(t *testing.T) {
 			}
 			want := "adamic: predicate checks: proven 0 checked 0 unobservable 0\n" + path + ":" + probe.position + ": non-null assertion " + expression + ": " + probe.status + "\nadamic: non-null checks: " + probe.counts + "\nadamic: checks: " + probe.counts + " unobservable 0\n"
 			for _, backend := range []string{"c", "js", "build"} {
-				args := []string{backend, path, "--explain-checks"}
-				if backend == "build" {
-					args = append(args, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")
-				}
-				command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...)
-				command.Dir = repository
-				command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1")
-				var output, diagnostic bytes.Buffer
-				command.Stdout = &output
-				command.Stderr = &diagnostic
-				if err := command.Run(); err != nil {
-					t.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
-				}
-				if diagnostic.String() != want {
-					t.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)
-				}
+				t.Run(backend, func(t *testing.T) {
+					t.Parallel()
+					args := []string{backend, path, "--explain-checks"}
+					if backend == "build" {
+						args = append(args, "-o", filepath.Join(t.TempDir(), "program"), "--sanitize")
+					}
+					command := exec.Command(os.Args[0], append([]string{"-test.run=^TestExplainChecksDriver$", "--"}, args...)...)
+					command.Dir = repository
+					command.Env = append(os.Environ(), "ADAMIC_EXPLAIN_TEST_DRIVER=1", "XDG_CACHE_HOME="+t.TempDir())
+					var output, diagnostic bytes.Buffer
+					command.Stdout = &output
+					command.Stderr = &diagnostic
+					if err := command.Run(); err != nil {
+						t.Fatalf("%s: %v %s", backend, err, diagnostic.Bytes())
+					}
+					if diagnostic.String() != want {
+						t.Fatalf("%s explanation:\n%s\nwant:\n%s", backend, diagnostic.Bytes(), want)
+					}
+				})
 			}
 		})
 	}

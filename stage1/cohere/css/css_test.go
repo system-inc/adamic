@@ -25,6 +25,8 @@ import (
 
 const repository = "../../.."
 
+const testThePortParsesAsGoCohereDoesShards = 388
+
 // Loaded formatter output gaps reached 66.19 seconds; four minutes gives over 3x headroom.
 const childStall = 4 * time.Minute
 
@@ -76,7 +78,11 @@ func portDirectory(t *testing.T, applied *mutant) string {
 }
 func askedCases(t *testing.T) (string, string) {
 	t.Helper()
-	directory := t.TempDir()
+	return askedCasesIn(t, t.TempDir(), "")
+}
+
+func askedCasesIn(t *testing.T, directory, oracle string) (string, string) {
+	t.Helper()
 	cases := filepath.Join(directory, "cases.txt")
 	answers := filepath.Join(directory, "answers.txt")
 	repo, _ := filepath.Abs(repository)
@@ -95,6 +101,10 @@ func askedCases(t *testing.T) (string, string) {
 	}
 	cmd := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPortCases$", "./internal/format/css/postcss")
 	cmd.Dir = filepath.Join(repo, "cohere")
+	if oracle != "" {
+		cmd = bounded(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+		cmd.Dir = packageDirectory
+	}
 	cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 	output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})
 	if err != nil {
@@ -122,6 +132,11 @@ func askedCases(t *testing.T) (string, string) {
 	return cases, string(data)
 }
 
+// TestThePortParsesAsGoCohereDoes enumerates the full corpus before starting
+// deterministic shard-NNN subtests. ADAMIC_TEST_SHARD=i/n (zero-based i) selects
+// ordinals modulo n as a local convenience; the gate can instead use
+// -run '^TestThePortParsesAsGoCohereDoes$/^shard-NNN$'. Every agreement shard
+// compares all original sides and runs ASan/UBSan and the separate leak check.
 // TestThePortParsesAsGoCohereDoes_NNN are top-level parallel units. ADAMIC_TEST_SHARD=i/n
 // selects stable ordinals modulo n locally; unset runs every unit. The gate uses
 // -run '^TestThePortParsesAsGoCohereDoes_NNN$'. Every original side and sanitizer/leak check stays.
@@ -188,9 +203,9 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 						name   string
 						result run
 					}{
-						{"native", execute(t, cssParserASAN(false), binaries[0], shardCases)},
-						{"Node", onNode(t, programs[0].main, shardCases)},
-						{"JS backend", onNode(t, programs[0].javascript, shardCases)},
+						{"native", cssParserExecute(t, cssParserASAN(false), binaries[0], shardCases)},
+						{"Node", cssParserOnNode(t, programs[0].main, shardCases)},
+						{"JS backend", cssParserOnNode(t, programs[0].javascript, shardCases)},
 					} {
 						if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
 							t.Fatalf("%s: exit %d, %s", side.name, side.result.exitCode, side.result.stderr)
@@ -219,8 +234,8 @@ func runThePortParsesAsGoCohereDoesShard(t *testing.T, ordinal int) {
 						name   string
 						result run
 					}{
-						{"native", execute(t, cssParserASAN(false), mutantBinary, shardCases)},
-						{"Node", onNode(t, programs[unit.mutation+1].main, shardCases)},
+						{"native", cssParserExecute(t, cssParserASAN(false), mutantBinary, shardCases)},
+						{"Node", cssParserOnNode(t, programs[unit.mutation+1].main, shardCases)},
 					} {
 						if side.result.exitCode != 0 {
 							t.Fatalf("%s: mutant must terminate: %s", side.name, side.result.stderr)
@@ -393,73 +408,9 @@ func leaks(t *testing.T, program *ir.Program, sanitized string, arguments ...str
 }
 
 // Hold the complete composed implementation against the external Go tree.
+// Not parallel: initializes the composition worker's shared setup.
 func TestCompositionMatchesGo(t *testing.T) {
-	cases, _ := askedCases(t)
-	directory := t.TempDir()
-	answers := filepath.Join(directory, "answers.txt")
-	repo, _ := filepath.Abs(repository)
-	side, _ := filepath.Abs("testdata/compose_side_test.go")
-	request, _ := json.Marshal(map[string]string{"Cases": cases, "Answers": answers})
-	requestPath := filepath.Join(directory, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		t.Fatal(err)
-	}
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(repo, "cohere", "internal", "format", "css", "adamic_compose_side_test.go"): side}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err := os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-timeout=0", "-v", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicCompositionCases$", "./internal/format/css")
-	command.Dir = filepath.Join(repo, "cohere")
-	command.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
-	output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall})
-	if err != nil {
-		t.Fatalf("Go composition oracle: %v\n%s", err, output)
-	}
-	t.Logf("%s", output)
-	data, err := os.ReadFile(answers)
-	if err != nil {
-		t.Fatal(err)
-	}
-	source, _ := filepath.Abs("compose_main.ts")
-	program := lowered(t, source)
-	nativeRun, sanitized := natively(t, program, cases)
-	for _, side := range []struct {
-		name   string
-		result run
-	}{
-		{"native ASan/UBSan", nativeRun}, {"Node", onNode(t, source, cases)}, {"JavaScript backend", onJavaScriptBackend(t, program, cases)},
-	} {
-		if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-			t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
-		}
-		if difference := firstDifference(string(side.result.stdout), string(data)); difference != "" {
-			t.Fatalf("%s: %s", side.name, difference)
-		}
-	}
-	if report := leaks(t, program, sanitized, cases); report != "" {
-		t.Fatal(report)
-	}
-	t.Logf("%d composed trees/error positions agree with Go on native ASan/UBSan, Node and JavaScript backend; LeakSanitizer clean", strings.Count(string(data), "\n")/2)
-	if keep := os.Getenv("ADAMIC_CSS_KEEP_COMPOSED"); keep != "" {
-		if err := os.WriteFile(keep, data, 0644); err != nil {
-			t.Fatal(err)
-		}
-	}
-	for _, mutation := range mutants {
-		t.Run("catches "+mutation.name, func(t *testing.T) {
-			mutated := portDirectory(t, &mutation)
-			result := onNode(t, filepath.Join(mutated, "compose_main.ts"), cases)
-			if result.exitCode != 0 || len(result.stderr) != 0 {
-				t.Fatalf("composed mutant must terminate: %s", result.stderr)
-			}
-			difference := firstDifference(string(result.stdout), string(data))
-			if difference == "" {
-				t.Fatal("composition comparison missed the mutant")
-			}
-			t.Logf("Node composition caught: %s", difference)
-		})
-	}
+	compositionSetup(t)
 }
 
 // Not parallel: parser throughput runs alone, after agreement has been checked.
@@ -511,6 +462,7 @@ func TestCSSThroughput(t *testing.T) {
 }
 
 // Only a corrupt Range catches these probes; source properties remain correct.
+// Not parallel: canonical failure probes use the shared native toolchain.
 func TestTheCanonicalRangeChecksCanFail(t *testing.T) {
 	raw, err := filepath.Abs("testdata/range_guard.ts")
 	if err != nil {
