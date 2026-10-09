@@ -1,0 +1,27 @@
+=== RUN   TestCanonicalProgramCacheOrderMutant
+=== PAUSE TestCanonicalProgramCacheOrderMutant
+=== CONT  TestCanonicalProgramCacheOrderMutant
+=== RUN   TestCanonicalProgramCacheOrderMutant/canonical.a
+    canonical_program_test.go:45: function 0 Reader_new parent=0 frame=0 identity=0 member=false environment=[]
+    canonical_program_test.go:45: function 1 Reader_new_initialize parent=0 frame=0 identity=0 member=false environment=[]
+    canonical_program_test.go:45: function 2 read parent=2 frame=0 identity=0 member=true environment=[5 8 6 4]
+    canonical_program_test.go:49: 	adamic_closure * adamic_temporary_9 = adamic_closure_new(adamic_function_2_read, 4);
+    canonical_program_test.go:49: 	adamic_closure * adamic_temporary_21 = adamic_closure_new(adamic_function_2_read, 4);
+    canonical_program_test.go:52: fixture does not exercise adamic_closure_canonical_program
+=== RUN   TestCanonicalProgramCacheOrderMutant/canonical_counted.a
+    canonical_program_test.go:45: function 0 Reader_new parent=0 frame=0 identity=0 member=false environment=[]
+    canonical_program_test.go:45: function 1 Reader_new_initialize parent=0 frame=0 identity=0 member=false environment=[]
+    canonical_program_test.go:45: function 2 read parent=2 frame=0 identity=0 member=true environment=[4 5 10 6]
+    canonical_program_test.go:49: 	adamic_closure * adamic_temporary_9 = adamic_counted_closure_new(adamic_function_2_read, 4);
+    canonical_program_test.go:49: 	adamic_closure * adamic_temporary_23 = adamic_counted_closure_new(adamic_function_2_read, 4);
+    canonical_program_test.go:49: 	adamic_value adamic_temporary_43 = adamic_closure_call(adamic_temporary_42, (adamic_value[]){{.reference = NULL}}, 0);
+    canonical_program_test.go:49: 	adamic_value adamic_temporary_46 = adamic_closure_call(adamic_temporary_45, (adamic_value[]){{.reference = &adamic_string_2}}, 1);
+    canonical_program_test.go:49: 	adamic_value adamic_temporary_57 = adamic_closure_call(adamic_temporary_56, (adamic_value[]){{.reference = NULL}}, 0);
+    canonical_program_test.go:49: 	adamic_value adamic_temporary_63 = (adamic_temporary_62 != NULL ? adamic_closure_call(adamic_temporary_62, (adamic_value[]){{.reference = NULL}}, 0) : adamic_method_call(adamic_temporary_60, adamic_temporary_59, (adamic_value[]){{.reference = NULL}}, 0));
+    canonical_program_test.go:52: fixture does not exercise adamic_counted_closure_canonical_program
+--- FAIL: TestCanonicalProgramCacheOrderMutant (0.11s)
+    --- FAIL: TestCanonicalProgramCacheOrderMutant/canonical.a (0.06s)
+    --- FAIL: TestCanonicalProgramCacheOrderMutant/canonical_counted.a (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.129s
+FAIL

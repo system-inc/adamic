@@ -1,0 +1,25 @@
+// a-check: refused adamic/cycle-capable
+class Reader {
+ next: Reader | undefined = undefined;
+ read: (suffix?: string) => string;
+ constructor(label: string) {
+  let saved: typeof read | undefined = undefined;
+  this.read = read;
+  const owner: Reader = this;
+  function read(suffix?: string): string {
+   return `${label}:${arguments.length}:${saved === read && owner.next === owner}:${suffix === undefined}`;
+  }
+  saved = read;
+  this.next = this;
+  console.log(String(read === read));
+ }
+}
+const first = new Reader(`node${1}`);
+const held = first.read;
+console.log(String(held === first.read));
+console.log(held());
+console.log(held("!"));
+const second = new Reader(`node${2}`);
+console.log(String(held === second.read));
+console.log(held());
+console.log(second.read());

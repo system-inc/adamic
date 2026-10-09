@@ -1,0 +1,12 @@
+=== RUN   TestProgramCanonicalConstructorBoundary
+=== PAUSE TestProgramCanonicalConstructorBoundary
+=== CONT  TestProgramCanonicalConstructorBoundary
+=== RUN   TestProgramCanonicalConstructorBoundary/canonical.a
+    program_canonical_constructor_test.go:31: canonical.a: Adamic 0.1 refuses Program canonical closure before canonical-cache adoption; await runtime's 06c canonical closure adoption; use an anonymous closure or a module function
+=== RUN   TestProgramCanonicalConstructorBoundary/canonical_counted.a
+    program_canonical_constructor_test.go:31: canonical_counted.a: Adamic 0.1 refuses Program canonical closure before canonical-cache adoption; await runtime's 06c canonical closure adoption; use an anonymous closure or a module function
+--- PASS: TestProgramCanonicalConstructorBoundary (0.85s)
+    --- PASS: TestProgramCanonicalConstructorBoundary/canonical.a (0.42s)
+    --- PASS: TestProgramCanonicalConstructorBoundary/canonical_counted.a (0.43s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.931s
