@@ -35,3 +35,9 @@ Observed mutant catches (every run exited 1 from test assertions, no timeout or 
 | load-M19 | TestStarExportCollisionNamesBothModules | 9.11 |
 
 Every failing row and original Go JSON output is preserved in replay-results.json and the corresponding mutant log. The inference supported by these observations is redundancy against this recorded mutant set, not all possible future defects. No numbered roadmap step was specified for this unit; it delivers the named test-audit deletion task. Integration lane output is recorded separately after the required committed-branch check.
+
+Change commit: 0618a123. Restored full package runs: load 1.752s and fuzz 13.094s, each exit 0 under timeout 89. Production-source git diff was empty.
+
+Committed-branch lane command: git fetch -q origin main devtools/fast-gate cloud/merge-tree && git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -. Exit 0: lane checks 4.2 s: gofmt and tools on 2 Go files, t.Parallel on 2 test packages; vet 2 packages.
+
+Automatic approval review initially rejected an end-of-file deletion because it said the retained collision test could also be removed. The full file showed that test preceding the target. An exact-text edit with explicit preservation assertions was subsequently approved; no action remains blocked.
