@@ -36,7 +36,7 @@ esac
                         ADAMIC_MAIN_HEAD=str(self.root / 'main-head'), ADAMIC_FULL_GATE_RUNNING=str(self.root / 'full-running'),
                         ADAMIC_BRANCH_COMMITS=str(self.root / 'branch-commits'),
                         ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
-                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'))
+                        ADAMIC_WHOLE_GATES=str(self.root / 'whole-gates'), ADAMIC_FULL_GATE_PREGATES=str(self.root / 'pregate'))
         self.now = int(time.time())
         for name in ('queue', 'queue.ranked', 'seen', 'watch.log', 'full.log', 'main-reds.tsv', 'landed', 'main-head', 'full-running', 'branch-commits', 'requests', 'whole-gates'):
             (self.root / name).write_text('')
@@ -232,6 +232,20 @@ esac
         self.queueStar(waited=4000)
         self.assertEqual(self.check(), [], 'a gate running on one of its branches is a live turn')
 
+
+    def test_a_step_in_its_pre_gate_is_not_quiet(self):
+        # @system_adamic, Oct 9 01:45Z: V2's complete candidate waited in Loom's pre-gate, and the alarm paged its worker.
+        waterfall = {'nodes': [{'id': 'a03mesg', 'wave': 0}, {'id': 'v2', 'wave': 1}], 'criticalPath': ['a03mesg', 'v2']}
+        (self.root / 'waterfall.json').write_text(json.dumps(waterfall))
+        (self.root / 'show-v2').write_text('owner     @system_adamic_compiler (direct)\n    Branches: compiler/views-v2*\n')
+        (self.root / 'chain-first-seen.json').write_text(json.dumps({'a03mesg': self.now, 'v2': self.now - 3600}))
+        (self.root / 'branch-commits').write_text('%d compiler/views-v2 %s\n' % (self.now - 1500, other))
+        (self.root / 'pregate').mkdir()
+        (self.root / 'pregate' / other).write_text('running\npre-gate of %s (the whole Go test set) on codex\n' % other)
+        self.assertEqual(self.check(), [], 'a step whose commit is in its pre-gate has a live turn')
+        # A finished pre-gate is no longer a turn: quiet pages.
+        (self.root / 'pregate' / other).write_text('red: 3 units failed\n')
+        self.assertIn('#v2 is on the critical path and its worker is quiet', self.check()[0])
 
     def mainIsRed(self):
         main = 'e' * 40

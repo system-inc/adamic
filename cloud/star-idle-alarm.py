@@ -226,6 +226,9 @@ def checkQuiet(chain, now):
             results.append(('%s: in the gate' % entry['id'], None, None, []))
             continue
         own = [glob for glob in entry['globs'] if counts[glob] == 1]
+        if pregating(entry['globs'], own):
+            results.append(('%s: in its pre-gate' % entry['id'], None, None, []))
+            continue
         last = sorted([push for push in pushes if matches(push[1], own)] + unwatchedPushes(entry['globs'], own))
         pushedAgo = now - last[-1][0] if last else None
         # Quiet since the later of its last push and its arrival on the chain.
@@ -273,6 +276,23 @@ def branchCommits(glob):
                 rows.append((int(fields[0]), branch, fields[1], fields[2] if len(fields) > 2 else ''))
     branchCache[glob] = (time.time(), rows)
     return rows
+
+
+pregates = Path(os.environ.get('ADAMIC_FULL_GATE_PREGATES', os.path.expanduser('~/.adamic-full-gate/pregate')))
+
+
+def pregating(globs, own):
+    """A pre-gate on Loom's pool running or queued on one of a step's commits is its live turn: the candidate waits on the
+    pool, not on its worker (@system_adamic, Oct 9 01:45Z: V2 paged quiet while d7c6d796's pre-gate waited behind V1's).
+    Loom writes ${pregates}/<sha>, first word running, queued, green or red. The step's commits are its own pushes, as the
+    quiet check counts them, and the watched tips of its globs."""
+    active = {path.name for path in pregates.glob('*') if (lines(path) or [''])[0].split()[:1] in (['running'], ['queued'])}
+    if not active:
+        return None
+    shas = {sha for _, _, sha in unwatchedPushes(globs, own)}
+    shas |= {line.split()[1] for line in lines(state / 'seen') if len(line.split()) == 2 and matches(line.split()[0], own)}
+    found = sorted(active & shas)
+    return ('pre-gate %s' % found[0][:12]) if found else None
 
 
 def unwatchedPushes(globs, own):
