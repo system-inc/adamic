@@ -496,7 +496,10 @@ class Gate:
             if self.failure is not None:
                 break
             try:
-                if self.arguments.full and phase in ("products", "wasi", "stage3", "catalog"):
+                # A pool phase unit takes the products as given: Loom's planner runs every TestProduct_ as its own unit
+                # first, and the phases fetch them by hash. Rebuilding them inside each phase cost every unit about 100 s
+                # cold on 4 CPUs (main b5245943's phases, Oct 9 07:43Z). Only the products phase builds them.
+                if self.arguments.full and phase == "products":
                     with open(logPath, "a") as log:
                         if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):
                             break

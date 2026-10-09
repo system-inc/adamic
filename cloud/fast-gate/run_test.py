@@ -609,13 +609,18 @@ class Products(unittest.TestCase):
         self.assertEqual(result["stages_exit"]["products"], 0)
         self.assertIn("^TestProduct_", commands[1][commands[1].index("-skip") + 1])
 
-    def test_whole_gate_phase_products_before_test_units(self):
-        for extra in ({"phase": "wasi"}, {"phases": "vet,wasi"}, {"phases": "products,wasi"}):
+    def test_whole_gate_phases_build_products_only_in_the_products_phase(self):
+        for extra in ({"phases": "products,wasi"}, {"phase": "products"}):
             _, status, result, _, order = self.probe(full=True, extra=extra)
             self.assertTrue(status.startswith("green:"), status)
             self.assertEqual(order, ["TestProduct_A"])
             self.assertEqual(result["stages_exit"]["products"], 0)
             self.assertEqual(result["planned_stages"].count("products"), 1)
+        # Every other phase takes the products as given: Loom ran them as their own units first.
+        for extra in ({"phase": "wasi"}, {"phases": "vet,wasi"}):
+            _, status, result, _, order = self.probe(full=True, extra=extra)
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertEqual(order, [])
 
     def test_whole_gate_failed_product_blocks_test_units(self):
         _, status, result, _, order = self.probe(full=True, failing=True)
