@@ -7,3 +7,7 @@ update();
 console.log(String(held.z));
 held.a = 4;
 console.log(String(State.a));
+update();
+console.log(String(State.z));
+console.log(String(retain() === held));
+console.log(Object.keys(retain()).join(","));

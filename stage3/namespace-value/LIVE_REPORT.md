@@ -2,7 +2,7 @@ Built: live escaped namespace objects with staged ordered exports and checked re
 Commit: this implementation commit follows the recorded boundary d5feab7d; delivery SHA is in the push report.
 Checks: TypeScript emit on Node, both backends, native sanitizers and leak checks, focused mutants and landing sweep; logs in live-evidence.
 Mutants: snapshot, second object, early member, reordered assignments and independently removed native/JavaScript write checks are caught.
-Limits: global-script linking, descriptor reflection, nullable exports and several exported declaration forms remain unsupported.
+Limits: descriptor reflection, nullable exports and several exported declaration forms remain unsupported. Global-script linking is outside this unit.
 
 ## Representation and execution
 
@@ -20,7 +20,7 @@ Stored, passed and returned witnesses now pass. Identity, staged initialization,
 
 Direct const mutation is TS2540. Contrary to the ruling's example diagnostic, TypeScript accepts qualified namespace-function property replacement and its emitted program prints 2. Adamic explicitly refuses replacing this fixed member, as the ruling requires. Wider-view const mutation prints 2 on Node but terminates in both backends with exit 70 and `adamic: panic: namespace write failed: value is readonly`. This divergence is recorded in ruled-divergences.json. Shared oracle registry integration awaits compiler/per-backend-stops, which was absent on the starting base; the dedicated oracle test pins both backends now.
 
-Two executable global-script namespace declarations in separate files are not demonstrated: the current loader forces source files to be modules, and TypeScript then gives them distinct symbols. The cross-file fixture imports one exported namespace containing two merged blocks and proves shared identity and writes through imports. A question proposing preservation of module semantics versus adding global-script linking was sent; no linker policy was assumed.
+Module semantics are preserved, as confirmed by the ruling clarification. The loader makes every file an ES module: namespace declarations merge within their module, and other files share the object through imports. The cross-file fixture imports one exported namespace containing two merged blocks. It proves identity and ordered keys across imports, mutation through the consumer, mutation through the escaped alias followed by a consumer read, and identity and key order after those writes. Global-script linking is a separate unit if a script-mode program needs it.
 
 ## Mutants
 
@@ -45,3 +45,7 @@ Current main 6f933fa04292441026791bbf3143bdf2dbaa3f02 was merged before delivery
 Fourteen rows are added to counts.md, with no existing namespace control row changed. Stored, passed and returned register the formerly refused live escapes. Identity records the canonical object comparison; staged records before/after keys and membership; merged records two reopened blocks; structural-view records an ordinary receiver passed through the namespace shape; order records assignment-order enumeration; effects records once-only receiver evaluation; prototype-presence records inherited membership versus own membership; imports/main records cross-module alias identity and writes; wider-reference records protected reference fields and closures; 10_tracing_escape records the newly admitted roadmap witness; erased-block records omission of type-only and const-enum-only blocks. The six numeric columns are generated IR/check counts, not revealed bytes. Negative/refused witnesses and mutants are not counted as fitting programs.
 
 The final focused namespace oracle run passed in 33.777s; stage3 fixtures passed in 19.565s; counts regeneration passed in 51.352s. The changed-file a-check covered 24 .a paths. The environment restarted during an earlier sweep, interrupting its remaining processes; those checks and the actual runtime mutants were resumed and completed. Raw TypeScript-emitter observations for 17 programs are in live-evidence/typescript-node-observations.json. Terminal exit-70 cases use the existing _exit policy; leak checks cover successful fitting programs and successful semantic mutants.
+
+## Shared import followup
+
+The module-scope clarification is accepted: keep the loader's ES module semantics, merge namespace declarations in their exporting module and share its object through imports. The strengthened shared-import witness additionally checks a consumer read after an escaped-alias write, identity after mutation, and unchanged key order. The TypeScript-emitter comparison and both backends pass with native sanitizers and leak checks; the generic control and a-check pass too. Counts regeneration passes and changes only imports/main: 11/11/10/20/7/0 to 15/15/17/30/7/0, from the additional calls, reads and printed observations. No implementation changed. The followup verification and compressed logs are in live-evidence/shared-import-followup.json.
