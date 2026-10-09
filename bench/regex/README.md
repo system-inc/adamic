@@ -1,5 +1,9 @@
 # Regex speed benchmark
 
+The dispatch repair is documented in [DISPATCH.md](DISPATCH.md), with longer wall-time trials, all 102 rows against `8ac5675` and Node, and a mutant proving the per-pattern performance guard.
+
+The next performance step, based on `8ac5675`, is documented in [REGULAR.md](REGULAR.md), including all 102 before/after rows and the regular-engine validation. The results below describe the first VM optimization step.
+
 [RESULTS.md](RESULTS.md) reports before/after wall time and Callgrind instructions for every pattern. [results.csv](results.csv) preserves exact timings and checksums. Baseline is `59d82c5de172e4e53d1224553b319d076f22424a`; optimized runtime is this commit.
 
 ## Implementation

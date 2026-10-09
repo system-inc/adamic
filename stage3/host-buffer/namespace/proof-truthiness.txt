@@ -1,0 +1,13 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a (0.65s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.674s

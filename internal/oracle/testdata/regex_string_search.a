@@ -1,0 +1,13 @@
+// Hold global and sticky lastIndex against the source run on Node.
+for (const regex of [/a/, /a/g, /a/y, /a/gy, /(?:)/gu, /z/y]) {
+ for (const start of [-1, -0, 0, 1.5, 3, 99, NaN, Infinity]) {
+  regex.lastIndex = start;
+  console.log(`${'ba'.search(regex)}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+  console.log(`${String.prototype.search.call('ba', regex)}:${regex.lastIndex}:${1 / regex.lastIndex}`);
+ }
+}
+console.log(`${'🌍a'.search(/a/u)}`);
+
+let text = 'aba';
+function pattern(): RegExp { text = 'xxx'; return /a/g; }
+console.log(`order:${text.search(pattern())}:${text}`);

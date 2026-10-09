@@ -1,0 +1,13 @@
+async function leaf(value: string | undefined): Promise<string | undefined> {
+    await Promise.resolve();
+    return value;
+}
+async function relay(value: string | undefined): Promise<string | undefined> { return await leaf(value); }
+const absent = await relay(false ? 'value' : undefined);
+const present = await relay(true ? 'value' : undefined);
+console.log(`${typeof absent} ${absent === undefined} ${present ?? 'missing'}`);
+async function word(value: 'a' | 'b'): Promise<'a' | 'b'> { return value; }
+async function digit(value: 1 | 2): Promise<1 | 2> { return value; }
+const text = await word('b');
+const number = await digit(2);
+console.log(`${text} ${number}`);

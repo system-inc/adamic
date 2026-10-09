@@ -176,17 +176,17 @@ func TestNumbersParseExactlyAsJavaScriptDoes(t *testing.T) {
 	if len(native) != len(cases) || len(oracle) != len(cases) {
 		t.Fatalf("got %d native lines and %d from Node for %d texts", len(native), len(oracle), len(cases))
 	}
-	mismatches := 0
-	for index, parse := range cases {
-		if native[index] != oracle[index] {
-			mismatches++
-			if mismatches <= 10 {
-				t.Errorf("parseInt %t, radix %v, text %q: native %s, Node %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
-			}
+	// Where this Node's V8 contracts multiply-adds, a difference a fused build explains is forgiven
+	// (fused_test.go); every other one fails.
+	explained, unexplained := contraction(native, oracle, func(left, right string) bool { return left == right }, func() []string { return fusedAnswers(t, parseHarness, input.String(), len(cases)) })
+	for count, index := range unexplained {
+		if count < 10 {
+			parse := cases[index]
+			t.Errorf("parseInt %t, radix %v, text %q: native %s, Node %s", parse.parseInt, parse.radix, parse.text, native[index], oracle[index])
 		}
 	}
-	if mismatches > 0 {
-		t.Errorf("%d of %d texts parse differently", mismatches, len(cases))
+	if len(unexplained) > 0 {
+		t.Errorf("%d of %d texts parse differently", len(unexplained), len(cases))
 	}
-	t.Logf("%d texts, %d mismatches", len(cases), mismatches)
+	t.Logf("%d texts, %d mismatches, %d more that only contraction in this Node explains", len(cases), len(unexplained), explained)
 }

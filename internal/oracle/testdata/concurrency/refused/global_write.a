@@ -1,0 +1,6 @@
+import { parallelMap } from 'adamic';
+const items: readonly number[] = [1, 2, 3];
+let seen = 0;
+function record(item: number): number { seen += item; return item; }
+function summarize(item: number): number { return record(item); }
+parallelMap(items, summarize);

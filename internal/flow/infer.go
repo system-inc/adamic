@@ -396,6 +396,8 @@ func (n *inference) value(expression ir.Expression) shape {
 		array := n.value(expression.Array)
 		n.store(array, shape{})
 		return array
+	case ir.DateCall:
+		return n.dateCall(expression)
 	case ir.MakeClosure:
 		// Its cells hold captured variables, which this graph doesn't track.
 		return shape{fresh: true, unknown: true}

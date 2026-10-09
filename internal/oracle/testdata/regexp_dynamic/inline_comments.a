@@ -1,0 +1,4 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '^\\s*eslint-disable(?:-next-line)?\\b';
+const ignore = new RegExp(pattern, 'u');
+console.log(`${ignore.test(' eslint-disable-next-line id-length')} ${ignore.test(' ordinary comment')}`);
