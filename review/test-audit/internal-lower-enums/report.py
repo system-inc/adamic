@@ -16,7 +16,11 @@ for mid in ids:
   matrix[mid][r]=status[-1] if status else 'unknown'
   fail=[x.get('Output','').strip() for x in use if x.get('Test','').split('/')[0]==r and x['Action']=='output' and re.search(r'_test.go:\d+:',x.get('Output','')) and 'statements=map' not in x.get('Output','')]
   panic=[x['Output'].strip() for x in use if x.get('Output','').startswith('panic: ')]
-  if status and status[-1]=='fail':failures[mid,r]=fail[0] if fail else panic[0] if panic else '--- FAIL: '+r
+  if status and status[-1]=='fail':
+   failures[mid,r]=fail[0] if fail else panic[0] if panic else '--- FAIL: '+r
+   if r=='TestInputSpreadCoverage':
+    details=[x.get('Output','').strip() for x in use if x.get('Test','').split('/')[0]==r and 'want NotYet naming' in x.get('Output','')]
+    if details:failures[mid,r]='input_test.go:77 (multiline assertion): '+details[0]
   subpasses[mid,r]=[x['Test'].split('/',1)[1] for x in use if x['Action']=='pass' and x.get('Test','').startswith(r+'/')]
  elapsed[mid]=[x.get('Elapsed') for x in e if x['Action'] in ['pass','fail'] and 'Test' not in x][-1]
 seconds={};rounds={}

@@ -618,7 +618,7 @@ Evidence pushed on test-audit/internal-lower-enums under review/test-audit/inter
       "M13"
     ],
     "unique_kills": [],
-    "last_proven_fail": "M13 input_test.go:77: import { programArguments } from 'adamic';",
+    "last_proven_fail": "M13 input_test.go:77 (multiline assertion): : got lower: /workspace/adamic/internal/lower/testdata/input-spread/programArguments_tuple.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet naming programArguments",
     "verdict": "subsumed",
     "subsumed_by": [
       "TestInputSpreadArgumentsAreNotYet"
@@ -647,7 +647,7 @@ Evidence pushed on test-audit/internal-lower-enums under review/test-audit/inter
       "TestInputSpreadArgumentsAreNotYet",
       "TestInputSpreadCoverage"
     ],
-    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u032/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"$pattern\" > M13.log 2>&1; input_test.go:77: import { programArguments } from 'adamic';",
+    "evidence": "ADAMIC_MUTANT=M13 ADAMIC_BUILD_CACHE_DIR=/tmp/u032/cache/M13 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run \"$pattern\" > M13.log 2>&1; input_test.go:77 (multiline assertion): : got lower: /workspace/adamic/internal/lower/testdata/input-spread/programArguments_tuple.a:3:1: programArguments takes nothing, and the checker let arguments through, want NotYet naming programArguments",
     "vacuous_subcases": [
       "readTextFile_array.a",
       "readDirectory_array.a",
