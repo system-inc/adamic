@@ -1,0 +1,56 @@
+[
+  {
+    "test": "TestParseIntMapUsesIndexRadix",
+    "wall_seconds": 2.078,
+    "exit": 0
+  },
+  {
+    "test": "TestFSOpenStringFlagsLower",
+    "wall_seconds": 2.274,
+    "exit": 0
+  },
+  {
+    "test": "TestFSRemoveDefaultRetryDelayLowers",
+    "wall_seconds": 2.372,
+    "exit": 0
+  },
+  {
+    "test": "TestFSExistsOperation",
+    "wall_seconds": 2.278,
+    "exit": 0
+  },
+  {
+    "test": "TestFSStatThrowsByDefault",
+    "wall_seconds": 2.384,
+    "exit": 0
+  },
+  {
+    "test": "TestLibraryMethodValues",
+    "wall_seconds": 2.521,
+    "exit": 0
+  },
+  {
+    "test": "TestLibraryMethodValueBoundaries",
+    "wall_seconds": 2.371,
+    "exit": 0
+  },
+  {
+    "test": "TestLibraryMethodValueSafety",
+    "wall_seconds": 2.48,
+    "exit": 0
+  },
+  {
+    "test": "TestParseIntMapIndexRadixAgreesWithNode",
+    "split": "0",
+    "uncached": true,
+    "wall_seconds": 2.48,
+    "exit": 0
+  },
+  {
+    "test": "TestParseIntMapIndexRadixAgreesWithNode",
+    "split": "1",
+    "uncached": true,
+    "wall_seconds": 2.576,
+    "exit": 0
+  }
+]
