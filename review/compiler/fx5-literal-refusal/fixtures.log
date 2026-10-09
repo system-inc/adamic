@@ -1,0 +1,15 @@
+=== RUN   TestFX5NumberLiteralRefused
+=== PAUSE TestFX5NumberLiteralRefused
+=== RUN   TestFX5NumberValueRefused
+=== PAUSE TestFX5NumberValueRefused
+=== RUN   TestFX5MixedLiteralAgrees
+=== PAUSE TestFX5MixedLiteralAgrees
+=== CONT  TestFX5NumberLiteralRefused
+=== CONT  TestFX5MixedLiteralAgrees
+=== CONT  TestFX5NumberValueRefused
+    fx5_literal_test.go:26: /tmp/adamic-gate/TestFX5NumberValueRefused2328153262/001/main.a:2:36: Adamic 0.1 refuses a value of type number[] seen as (string | number)[], which can write string | number where number is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)
+--- PASS: TestFX5NumberValueRefused (0.08s)
+--- PASS: TestFX5NumberLiteralRefused (0.08s)
+--- PASS: TestFX5MixedLiteralAgrees (5.73s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	5.740s
