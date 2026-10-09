@@ -214,3 +214,34 @@ func jsonOracleAnswers(t *testing.T, oracle string, cases []textCase) []answer {
 	}
 	return answers
 }
+
+type jsonProducts struct{ oracle, entry, script, release, sanitized string }
+
+func jsonPreparePort(t *testing.T, release, sanitized bool) jsonProducts {
+	t.Helper()
+	tools, err := jsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle)
+	lowered := jsonBuildUnit(t, "build-lowered-port", jsonLoweredPortInputs(tools), buildJSONLoweredPort)
+	products := jsonProducts{oracle: filepath.Join(oracle, "go-cohere"), entry: filepath.Join(lowered, "main.ts"), script: filepath.Join(lowered, "program.mjs")}
+	if !release && !sanitized {
+		return products
+	}
+	clang, err := jsonClangToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(filepath.Join(lowered, "main.c"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if release {
+		products.release = filepath.Join(jsonBuildUnit(t, "build-release", jsonNativePortInputs(string(source), false, clang), buildJSONReleasePort(string(source))), "port")
+	}
+	if sanitized {
+		products.sanitized = filepath.Join(jsonBuildUnit(t, "build-sanitized", jsonNativePortInputs(string(source), true, clang), buildJSONSanitizedPort(string(source))), "port")
+	}
+	return products
+}

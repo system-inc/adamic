@@ -566,23 +566,39 @@ func buildGoDriver(t *testing.T) string {
 	return filepath.Join(dir, "go-cohere")
 }
 
+const testSingleFileStdoutDriverShards = 2
+
+// ADAMIC_TEST_SHARD=i/n selects shard ordinals modulo n; unset runs every shard.
 func TestSingleFileStdoutDriver(t *testing.T) {
 	t.Parallel()
 	cases := []textCase{{"probe.json", `{"text":"é😀","items":[1,2,3]}`}, {"package.json", `{"text":"é😀","items":[1,2,3]}`}}
-	answers, _ := cohereAnswers(t, cases, false)
-	directory := portDirectory(t, nil)
-	entry := filepath.Join(directory, "main.ts")
-	program := lowered(t, entry)
-	binary := filepath.Join(t.TempDir(), "port")
-	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+	shards := []nativeChunk{{start: 0, end: 1}, {start: 1, end: 2}}
+	if len(shards) != testSingleFileStdoutDriverShards {
+		t.Fatal("single-file shard count changed")
+	}
+	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
-	for index, item := range cases {
-		path := filepath.Join(t.TempDir(), item.Name)
-		if err := os.WriteFile(path, []byte(item.Text), 0644); err != nil {
-			t.Fatal(err)
+	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	products := jsonPreparePort(t, false, true)
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
 		}
-		compare(t, "Node file driver", onNode(t, entry, path), answers[index].Output, cases)
-		compare(t, "native file driver", execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary, path), answers[index].Output, cases)
+		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			items := cases[shard.start:shard.end]
+			expected := jsonOracleAnswers(t, products.oracle, items)
+			path := filepath.Join(t.TempDir(), items[0].Name)
+			if err := os.WriteFile(path, []byte(items[0].Text), 0644); err != nil {
+				t.Fatal(err)
+			}
+			compare(t, t.Name()+" Node file driver", onNode(t, products.entry, path), expected[0].Output, items)
+			compare(t, t.Name()+" native file driver", execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, path), expected[0].Output, items)
+			t.Logf("case range [%d:%d]; %s", shard.start, shard.end, items[0].Name)
+		})
 	}
 }
