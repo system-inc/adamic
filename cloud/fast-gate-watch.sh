@@ -219,8 +219,12 @@ sameReservedFamily() {
 # the reason from beside its out directory on SIGTERM, publishes what it had and exits.
 stopGate() {
   local pid=$1 branch=$2 sha=$3 box=$4 reason=$5
-  # A pool job is a local waiter: stopping it stops the wait (Loom's run finishes on its own and is never read).
+  # A pool job is a local waiter, so stopping it also tells Loom's server: <sha>.cancel, which fast.sh honours (a job
+  # not started never starts; a running one has its coordinator stopped within 10 s). Without it a skip-listed
+  # 961a7506 held one of the side pool's two server slots for 37 minutes (Oct 9 03:58Z).
   if [ "${box}" = pool ]; then
+    local jobs=${LOOM_FAST_JOBS:-${HOME}/.loom/jobs/fast}
+    [ -d "${jobs}" ] && printf '%s\n' "${reason}" > "${jobs}/${sha}.cancel"
     kill -TERM "${pid}" 2> /dev/null && touch "${state}/stopped-running/${pid}"
     return 0
   fi

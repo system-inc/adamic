@@ -128,8 +128,9 @@ fi
             good.mkdir(parents=True)
             (good / 'fast-gate.sh').write_text((cloud / 'fast-gate.sh').read_text().replace('"$TEST_ROOT/starts"', '"$TEST_ROOT/good-starts"'))
             extra['ADAMIC_FAST_GATE_GOOD_TREE'] = str(self.root / 'good')
+        (self.root / 'loom-jobs').mkdir()
         env = dict(os.environ, **extra, PATH=str(self.bin) + ':' + os.environ['PATH'],
-                   TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state),
+                   TEST_ROOT=str(self.root), ADAMIC_FAST_GATE_WATCH_STATE=str(self.state), LOOM_FAST_JOBS=str(self.root / 'loom-jobs'),
                    ADAMIC_FULL_GATE_REQUESTS=str(self.root / 'requests'),
                    ADAMIC_FAST_GATE_AHRA_DIR=str(self.root))
         self.output = open(self.root / 'output', 'w')
@@ -684,6 +685,18 @@ class WatchTests(unittest.TestCase):
         time.sleep(.2)
         self.assertNotIn('promoted tools', w.read('output'))
         self.assertEqual((w.state / 'tools-good').read_text().strip(), 'tools-zero')
+
+    def test_a_skip_listed_pool_job_is_cancelled_on_loom_s_server_too(self):
+        # Oct 9 03:58Z: a skip-listed pool job held one of the server's two slots for 37 minutes after its waiter died.
+        w = Watcher(1, canaryBox='box1', mode='hold', slots='pool P\n')
+        self.addCleanup(w.close)
+        (w.state / 'pool-side').touch()
+        w.wait(lambda: 'codex/test0 ' in w.read('pool-starts'))
+        branch, sha = w.read('pool-starts').split()[:2]
+        (w.state / 'skip').write_text('%s %s\n' % (branch, sha))
+        w.wait(lambda: (w.root / 'loom-jobs' / (sha + '.cancel')).exists())
+        self.assertIn('on the skip list', (w.root / 'loom-jobs' / (sha + '.cancel')).read_text())
+        w.wait(lambda: 'stopped %s %s: on the skip list' % (branch, sha) in w.read('output'))
 
     def test_stop_gate_refuses_anything_but_a_whole_sha(self):
         w = self.start(0)
