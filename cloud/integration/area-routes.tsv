@@ -15,7 +15,9 @@ codex/checked-	hold	@system_adamic_compiler: checked writes and casts on the are
 codex/scout-36-	hold	@system_adamic_library: library's scouts for step 36 (speed), cut from area/library
 codex/scanner-cast-	hold	@system_adamic_compiler: checked-cast work (step 09), restacked on area-views-next; not the lint scanner
 codex/scanner-	stage1-lint
+codex/parallel-	hold	@system_adamic_library: library's t.Parallel judgment waves (#mc8rhkg and wave 2), merged into library/area-on-main-3 by #nze2hkd, never landed alone
 codex/parser-	hold	@system_cohere_adamic: the shared parser serves both stage 1 areas
+codex/parser-rulings	hold	@system_adamic_compiler: stage 3 parser rulings (#ktz9fek), not cohere's stage 1 parser port; 8b571656 superseded, so it never lands as is
 codex/realpath-	hold	@system_cohere_adamic
 codex/cohere-	hold	@system_cohere_adamic: a cohere pin moves the submodule every area and gate box reads
 codex/shared-ssa	stage1-lint	cohere's static_single_assignment port (#dnv6f2c)
