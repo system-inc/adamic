@@ -33,3 +33,17 @@ Pending admission skips use acceptance dependency: compiler/views-v3 787cea7a, w
 Runtime stack compatibility correction: the fallback slot-index expression now lives as a guarded macro in view_representations.h, after adamic.h, so it never defines a duplicate static inline. view_write indexes both reference flags and type bytes by the returned slot. adamic_object_size reserves sizeof(size_t) per slot for c1 insertion order, and both current allocators use that function. The base has no order accessor or dynamic adamic_object_copy_reserving_checked allocator. That allocator must initialize tuple = false beside frozen when c1 is merged; the scratch proof applies that integration hunk explicitly. This absent allocator is not imported into V2.
 
 The census owner changed its pending protocol again: skips now use awaits compiler/views-v3: array element kind and holes (787cea7a). Two existing stage3 results were proved against Node, release native, sanitized native and JavaScript before their records moved to Compiles: taste/refused/21_truthy_loops.a and predicates/03_void_zero.a. assertions/09_interface_kind.a remains unavailable and records the specifically named V3 NotYet. The first candidate and c1 scratch attempts failed from disk exhaustion; the Go build cache was cleared and those attempts are not verification. Subsequent scratch runs share the same absolute cohere modules using temporary workspace files, with no source copied.
+
+## Complete standalone source
+
+The standalone source contains non-array mixed unions, object-plus-primitive unions, untagged object and certified callable unions, and fixed object-backed tuples with contract checks at reads.
+It carries the four runtime changes cleared by runtime: 845a6ba6, 88202e15, 572f51a3 and c6fc3e66, replayed as 63d532b70, 68f636f5d, 300ebc497 and 7e0da230c.
+Build, vet, the V2 differential and mutant tests, stage3 and the 64-file V2 program audit passed on the standalone source and the c2 merge.
+The representation mutants use old null, undefined and typed-array layouts; the family mutant selects the wrong adapter. Membership, tuple identity and callable producer certificate removals are also caught.
+Array-arm admissions remain refused; all three pending test sites await compiler/views-v3 b065fa576. The complete oracle and stage1 comparison remain separate from these focused checks.
+
+The standalone source adds the approved shared dispatch hook and optional-read guards as V2 compatibility fixes, without importing V1 commit history. An unused optional view is admitted lazily; reading its optional alias remains refused. No V3 array element-kind or hole admission is imported.
+
+The c2 merge removes the fallback slot-index macro, uses runtime's returned-slot index for metadata and presence, initializes dynamic copies with tuple=false and sizes them through adamic_object_size. The only V2 changes to shared runtime files are object.c, adamic.h and region.c. Other runtime files on c2 come from the explicitly requested c2 merge.
+
+V3 merge with standalone V2 26e74db3 keeps its main resolutions, source refusal headers and moved census tests. V3 installs the ordinary array field adapter, so assertions/09_interface_kind.a remains Compiles. The array element-type helper has one implementation in the array owner. Array union membership still has its V3 lowering boundary because both native and JavaScript matchers reject array descriptors; the three V2 pending census tests stay pending. This merge does not turn those placeholders into membership certificates.

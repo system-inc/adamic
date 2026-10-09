@@ -51,6 +51,7 @@ func checkedViewsV2Counts(t *testing.T) []string {
 		"stage3/interface-downcasts/v2/callable-producer-wrong.a",
 		"stage3/interface-downcasts/v2/fixed-tuple-good.a",
 		"stage3/interface-downcasts/v2/fixed-tuple-wrong.a",
+		"stage3/interface-downcasts/v2/fs-option-boxing.a",
 		"stage3/interface-downcasts/v2/mixed-read-write.a",
 		"stage3/interface-downcasts/v2/null-read-write.a",
 		"stage3/interface-downcasts/v2/representation-read-write.a",

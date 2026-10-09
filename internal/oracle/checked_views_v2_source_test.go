@@ -198,7 +198,7 @@ func TestCheckedViewUntaggedArrayPending(t *testing.T) {
 				t.Fatalf("array admission must stay NotYet: %v", err)
 			}
 			// Array membership needs V3 element-kind metadata and hole-aware reads.
-			t.Skip("awaits compiler/views-v3: array element kind and holes (787cea7a)")
+			t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")
 		})
 	}
 }

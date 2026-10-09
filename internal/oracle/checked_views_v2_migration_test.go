@@ -13,7 +13,7 @@ import (
 )
 
 func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
-	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good"} {
+	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good", "fs-option-boxing"} {
 		t.Run(name, func(t *testing.T) {
 			program, path := interfaceFixture(t, "v2/"+name)
 			node := onNode(t, path)
@@ -241,7 +241,7 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 }
 
 func TestCheckedViewV2MovedStage3Results(t *testing.T) {
-	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a"} {
+	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.a", "assertions/20_type_flag_mask.a", "assertions/13_flag_downcast.a"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs("../../stage3/fixtures/" + name)
 			if err != nil {

@@ -279,3 +279,13 @@ arrays-b
 - 4be16240660318473e294465cbd170fefd58aa92 Certify remaining one-read array fields from original declarations
 - 4bf6da09a3c8a35c99ae76b26bb892879de0ee90 Certify mapper and two-read array fields from original declarations
 - 7676bf57386e256ac4dd3b3a6e11a1827ff21889 Certify the final two-read array fields and record refused reads
+
+## Merge with the standalone V2 source
+
+Merge compiler/views-v2 26e74db38d1ead7530f9645f469247090857138f into b065fa5764b27478bb9b8acb1edef254731dd9a2 without rebasing either history. Preserve V2's resolutions against main, its optional-read guards, fs-option-boxing fixture, moved stage3 records and the three source-absent a-check refusal headers. Preserve V3's array adapter before the aggregate placeholder, the owning array element-type helper, the Compiles record for assertions/09_interface_kind.a and all 26 V3 count rows. Untagged array membership remains refused until the native and JavaScript matchers implement it; accepting its descriptor alone would be unsound.
+
+Conflict resolutions apply to views-v2-dispatch-review.md, view_lazy.go, view_unions_callable_members.go, view_unions_untagged.go, view_unions_mixed_test.go, the four checked_views_v2 test files, counts.md, assertions/status.json and the three source-absent fixtures. V2's new tests and census pins are kept. The duplicate array element helper is removed from the callable file because its identical implementation is owned by V3. No protected emitter or orchestration file needs manual conflict resolution.
+
+Run build, vet, stage3, V3 Node/native/JavaScript fixtures and omission mutants, lower array-boundary tests and regenerated counts on the merged tree. The fast gate's a-check implementation checks exactly the 90 existing .a paths added or changed against fetched origin/main: 87 checked programs and three deliberately refused programs with V2's exact headers, zero failures. Command output is recorded in /tmp/views-v3-v2-{build,vet,audit,stage3,owned,lower,counts}.log. The top merge commit carries Train-slice: views-v3. The c2 compatibility source receives this merge afterward and keeps its runtime audit and dynamic-spread initialization tests.
+
+The regenerated count comparison against V2 has 26 added V3 rows, 0 changed existing V2 row values, and 0 changed V3 row values. views-v3-v2-counts-comparison.json names every added and moved row. New rows are the existing V3 array fixtures and numeric hole constructor witnesses; no additional source admissions are introduced by this merge.
