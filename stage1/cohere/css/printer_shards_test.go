@@ -5,6 +5,7 @@ import (
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
+	"io/fs"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -101,7 +102,7 @@ func cssPrinterProduct(t *testing.T, variant int) cssExecutable {
 				mutation = &printerMutants[variant]
 			}
 			original := portDirectory(t, mutation)
-			if err := os.Rename(filepath.Dir(original), filepath.Join(dir, "sources")); err != nil {
+			if err := moveTree(filepath.Dir(original), filepath.Join(dir, "sources")); err != nil {
 				return err
 			}
 			source := filepath.Join(dir, "sources/css/print_main.ts")
@@ -390,4 +391,44 @@ func TestCSSPrinterShardingCatchesDisagreement(t *testing.T) {
 	if cssModeUnion(lines, broken, testCSSPrinterAgreesWithGoShards) == nil {
 		t.Fatal("missing case accepted")
 	}
+}
+
+// moveTree moves a directory into a product. The port's copy lives under t.TempDir() and the product
+// under the build cache, which can be different filesystems on a pool instance, where os.Rename fails
+// with "invalid cross-device link". There it copies the tree instead, files, directories and symbolic
+// links alike.
+func moveTree(source, destination string) error {
+	if err := os.Rename(source, destination); err == nil {
+		return nil
+	}
+	return filepath.WalkDir(source, func(path string, entry fs.DirEntry, walkErr error) error {
+		if walkErr != nil {
+			return walkErr
+		}
+		relative, err := filepath.Rel(source, path)
+		if err != nil {
+			return err
+		}
+		target := filepath.Join(destination, relative)
+		info, err := entry.Info()
+		if err != nil {
+			return err
+		}
+		switch {
+		case entry.IsDir():
+			return os.MkdirAll(target, info.Mode().Perm())
+		case entry.Type()&fs.ModeSymlink != 0:
+			link, err := os.Readlink(path)
+			if err != nil {
+				return err
+			}
+			return os.Symlink(link, target)
+		default:
+			data, err := os.ReadFile(path)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(target, data, info.Mode().Perm())
+		}
+	})
 }
