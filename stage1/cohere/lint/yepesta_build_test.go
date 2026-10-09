@@ -17,7 +17,7 @@ import (
 
 // Products are built once per content address, across both leaves and processes.
 // Lowering emits C and JS together so native and JS use the same mutated program.
-func jsxTextnodesProducts(t *testing.T) (string, string, string) {
+func jsxTextnodesLowered(t *testing.T) (string, buildcache.Inputs) {
 	t.Helper()
 	d := jsxTextnodesDescriptor(t)
 	var change struct{ Name, File, From, To string }
@@ -62,6 +62,17 @@ func jsxTextnodesProducts(t *testing.T) (string, string, string) {
 		t.Logf("emit JS: %.3fs", time.Since(started).Seconds())
 		return err
 	})
+	return lowered, inputs
+}
+
+func jsxTextnodesNative(t *testing.T) string {
+	t.Helper()
+	lowered, inputs := jsxTextnodesLowered(t)
+	return jsxTextnodesNativeFrom(t, lowered, inputs)
+}
+
+func jsxTextnodesNativeFrom(t *testing.T, lowered string, inputs buildcache.Inputs) string {
+	t.Helper()
 	inputs.Name = "jsx-textnodes-mutant-native"
 	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4})...)
 	inputs.Flags = append(inputs.Flags, "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"))
@@ -73,5 +84,11 @@ func jsxTextnodesProducts(t *testing.T) (string, string, string) {
 		}
 		return native.Build(string(source), filepath.Join(out, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 	})
-	return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), filepath.Join(built, "scanner")
+	return filepath.Join(built, "scanner")
+}
+
+func jsxTextnodesProducts(t *testing.T) (string, string, string) {
+	t.Helper()
+	lowered, inputs := jsxTextnodesLowered(t)
+	return filepath.Join(lowered, "port"), filepath.Join(lowered, "lint.mjs"), jsxTextnodesNativeFrom(t, lowered, inputs)
 }
