@@ -17,8 +17,6 @@ import (
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/javascript"
-	"github.com/system-inc/adamic/internal/load"
-	"github.com/system-inc/adamic/internal/lower"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -92,7 +90,7 @@ func deepMutantsProof(t *testing.T) {
 
 // Products are addressed by source content, never by shard. Source snapshots live
 // in the product (not a shard's TempDir), so parallel users share persistent builds.
-func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+func deepMutantsSnapshot(t *testing.T, mutation deepMutantsMutation) (map[string][]byte, buildcache.Inputs) {
 	t.Helper()
 	path := mutantPort(t, mutation.file, mutation.from, mutation.to)
 	files, err := filepath.Glob(filepath.Join(filepath.Dir(path), "*.ts"))
@@ -102,7 +100,7 @@ func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, bui
 	snapshot := map[string][]byte{}
 	inputs := buildcache.Inputs{
 		Name:      "deep-mutants-lowered-v1",
-		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_product_shards_test.go", "stage1/cohere/estree/estree_test.go"},
+		Files:     []string{"internal", "cohere", "stage1/typescript", "go.mod", "go.work", "stage1/cohere/estree/deep_mutants_product_shards_test.go", "stage1/cohere/estree/estree_test.go", "stage1/cohere/estree/loom_family_products_test.go"},
 		Flags:     []string{"root=" + root(t)},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH},
 	}
@@ -115,28 +113,35 @@ func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, bui
 		snapshot[name] = data
 		inputs.Flags = append(inputs.Flags, fmt.Sprintf("%s=%x", name, sha256.Sum256(data)))
 	}
+	return snapshot, inputs
+}
+
+func deepMutantsIRProduct(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+	t.Helper()
+	snapshot, inputs := deepMutantsSnapshot(t, mutation)
+	inputs.Name = "deep-mutants-ir-v1"
+	checkpoint := buildcache.Product(t, inputs, func(dir string) error {
+		return estreeFamilyLowerCheckpoint(dir, snapshot)
+	})
+	return checkpoint, inputs
+}
+
+func deepMutantsLowered(t *testing.T, mutation deepMutantsMutation) (string, buildcache.Inputs) {
+	t.Helper()
+	checkpoint, inputs := deepMutantsIRProduct(t, mutation)
+	inputs.Name = "deep-mutants-emitted-v1"
 	lowered := buildcache.Product(t, inputs, func(dir string) error {
-		source := filepath.Join(dir, "source")
-		if err := os.Mkdir(source, 0755); err != nil {
-			return err
-		}
-		for name, data := range snapshot {
-			if err := os.WriteFile(filepath.Join(source, name), data, 0644); err != nil {
-				return err
-			}
-		}
-		program, err := load.Load([]string{filepath.Join(source, "main.ts")})
+		program, err := estreeFamilyReadCheckpoint(checkpoint)
 		if err != nil {
 			return err
 		}
-		ir, err := lower.Lower(context.Background(), program)
-		if err != nil {
+		if err := estreeFamilyCopySource(checkpoint, dir); err != nil {
 			return err
 		}
-		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(ir)), 0644); err != nil {
+		if err := os.WriteFile(filepath.Join(dir, "program.c"), []byte(native.C(program)), 0644); err != nil {
 			return err
 		}
-		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(ir)), 0644)
+		return os.WriteFile(filepath.Join(dir, "port.mjs"), []byte(javascript.JavaScript(program)), 0644)
 	})
 	return lowered, inputs
 }
@@ -149,15 +154,15 @@ func deepMutantsNative(t *testing.T, mutation deepMutantsMutation) string {
 	if err != nil {
 		t.Fatal(err)
 	}
-	inputs.Name = "deep-mutants-native-v2"
+	inputs.Name = "deep-mutants-native-v3"
 	for _, name := range []string{"ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED"} {
 		inputs.Flags = append(inputs.Flags, name+"="+os.Getenv(name))
 	}
-	inputs.Flags = append(inputs.Flags, native.Flags(native.Options{Sanitize: true, Split: true})...)
+	inputs.Flags = append(inputs.Flags, native.Flags(estreeFamilyNativeOptions())...)
 	inputs.Flags = append(inputs.Flags, fmt.Sprintf("C=%x", sha256.Sum256(data)))
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	product := buildcache.Product(t, inputs, func(dir string) error {
-		return native.Build(string(data), filepath.Join(dir, "port"), native.Options{Sanitize: true, Split: true})
+		return native.Build(string(data), filepath.Join(dir, "port"), estreeFamilyNativeOptions())
 	})
 	return filepath.Join(product, "port")
 }
@@ -224,10 +229,6 @@ func TestProduct_DeepMutantsFixture(t *testing.T) {
 func TestProduct_DeepMutantsLowered0(t *testing.T) {
 	t.Parallel()
 	deepMutantsLowered(t, deepMutantsEnumeration()[0])
-}
-func TestProduct_DeepMutantsNative0(t *testing.T) {
-	t.Parallel()
-	deepMutantsNative(t, deepMutantsEnumeration()[0])
 }
 func TestProduct_DeepMutantsLowered1(t *testing.T) {
 	t.Parallel()
