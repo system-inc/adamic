@@ -35,7 +35,7 @@ func (r RegExpProperty) Type() Type {
 	return r.Of
 }
 
-// Null is distinct in JavaScript; nullable references use a null pointer in C.
+// Null is a reference kind's null value: a sentinel for migrated kinds, NULL for legacy ones.
 type Null struct{ Of Type }
 
 func (n Null) Type() Type {
@@ -48,6 +48,8 @@ func (n Null) Type() Type {
 type IsNull struct {
 	Value       Expression
 	AlwaysFalse bool
+	// IncludeUndefined is == null, a nullish test, rather than === null.
+	IncludeUndefined bool
 }
 
 func (IsNull) Type() Type { return Boolean }

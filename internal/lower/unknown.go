@@ -167,7 +167,13 @@ func (l *lowering) unknownView(node *ast.Node, own, contextual *checker.Type) er
 		}
 	}
 	for _, field := range l.checker.GetPropertiesOfType(present) {
-		if l.includesNull(l.checker.GetTypeOfSymbol(field)) {
+		fieldType := l.checker.GetTypeOfSymbol(field)
+		if l.includesNull(fieldType) {
+			// The caught-value representation records null for message/code slots.
+			// Slots admitting both null and undefined remain refused.
+			if l.program.UsesProjectOptions() && supportedCaughtMember(field.Name, false) && !l.includesUndefined(fieldType) {
+				continue
+			}
 			return l.notYet(node, "an object with a nullable field viewed as unknown or object (null and undefined slot tags)")
 		}
 	}

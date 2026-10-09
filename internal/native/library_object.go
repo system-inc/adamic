@@ -13,6 +13,8 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		arguments = append(arguments, e.value(argument))
 	}
 	switch call.Method {
+	case "catchProperty":
+		return e.caughtProperty(call, arguments)
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":

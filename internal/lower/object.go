@@ -92,14 +92,15 @@ func (l *lowering) objectLiteral(node *ast.Node) (ir.Expression, error) {
 				}
 				literal.NoReuse = true
 			}
-			if declared := l.declaredField(node, fieldName); declared != 0 && !censusFieldSlotless(declared) {
+			if declared := l.declaredField(node, fieldName); declared != 0 && (!censusFieldSlotless(declared) || declared == ir.Union && l.catchFieldContext(node, fieldName)) {
 				// Store the value as the member's slot holds it, rather than the initializer's type.
 				value = fit(value, declared)
 			}
-			if censusFieldSlotless(value.Type()) {
+			if censusFieldSlotless(value.Type()) && value.Type() != ir.Union {
 				return nil, l.notYet(property, "a field holding "+typeName(value.Type()))
 			}
-			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value})
+			fieldType := l.checker.GetTypeAtLocation(property.Name())
+			literal.Fields = append(literal.Fields, ir.Field{Name: fieldName, Value: value, Null: l.includesNull(fieldType) && !l.includesUndefined(fieldType)})
 		default:
 			return nil, l.notYet(property, describe(property)+" in an object literal")
 		}
@@ -165,6 +166,9 @@ func (l *lowering) emptySpread(node *ast.Node, own []ir.Field) ([]ir.Field, erro
 
 // typeOfSymbol is what's left at runtime of a symbol's declared type, or NotYet at node.
 func (l *lowering) typeOfSymbol(node *ast.Node, symbol *ast.Symbol) (ir.Type, error) {
+	if l.caught[symbol] {
+		return ir.Union, nil
+	}
 	declared := l.checker.GetTypeOfSymbol(symbol)
 	if valueType, isKnown := l.representation(declared); isKnown {
 		return valueType, nil
@@ -203,6 +207,9 @@ func (l *lowering) declaredField(literal *ast.Node, name string) ir.Type {
 	field := l.checker.GetPropertyOfType(contextual, name)
 	if field == nil {
 		return 0
+	}
+	if l.caught[field] {
+		return ir.Union
 	}
 	declared, _ := l.representation(l.checker.GetTypeOfSymbol(field))
 	return declared
@@ -321,14 +328,14 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			contexts = append(contexts, l.impliedTarget(literal))
 			for _, contextual := range contexts {
 				if element := l.literalArrayElement(contextual); element != nil {
-					if held, known := l.kept(element); known && !slotless(held) {
+					if held, known := l.kept(element); known && (!slotless(held) || l.nullSentinelType(element)) {
 						return held, nil
 					}
 				}
 			}
 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
 			// Keep every proven nonempty contextual element representation, including weak handles.
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && (!slotless(declared) || l.nullSentinelType(l.checker.GetElementTypeOfArrayType(contextual))) {
 				arrayType = contextual
 			}
 		}
@@ -354,6 +361,9 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 
 // property lowers object.name, array.length, and Math's constants.
 func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
+	if value, handled, err := l.catchProperty(node); handled {
+		return value, err
+	}
 	if err := l.staticProperty(node); err != nil {
 		return nil, err
 	}
@@ -365,6 +375,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, "an indexed record field read without a named declared property")
 	}
 	name := l.fieldName(node.Name())
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) && name != "length" {
+		return nil, l.notYet(node, "typed array properties other than length require buffer and view semantics")
+	}
 	if _, iterator := l.libraryIteratorElement(access.Expression); iterator && name != "next" {
 		return nil, l.notYet(node, "a collection iterator property other than next")
 	}
@@ -425,6 +438,12 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 	object, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
+	}
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		if name != "length" || access.QuestionDotToken != nil {
+			return nil, l.notYet(node, "typed array properties other than length require buffer and view semantics")
+		}
+		return ir.Length{Array: ir.TypedArrayData{Value: object}}, nil
 	}
 	if object.Type() == ir.Union {
 		return l.dynamicProperty(node, object, name)
@@ -525,6 +544,9 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 			}
 		}
 		of, err := l.typeOf(node)
+		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil && l.caught[field] {
+			of, err = ir.Union, nil
+		}
 		if err != nil && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
 			// Narrowed to undefined (just assigned it): read as the field is declared.
 			if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
@@ -563,7 +585,7 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 				}
 			}
 		}
-		if censusFieldSlotless(of) {
+		if censusFieldSlotless(of) && !(of == ir.Union && l.catchOrigin(node, map[*ast.Symbol]bool{})) {
 			return nil, l.notYet(node, "a field of type "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node)))
 		}
 		if of.IsMaybe() {
@@ -574,7 +596,11 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 		if optional && !of.IsReference() {
 			return nil, l.notYet(node, "?. to a "+typeName(of)+", which would be "+typeName(of)+" | undefined")
 		}
-		return l.defined(node, l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})), nil
+		value := l.readObjectField(node, ir.Property{Object: object, Name: name, Of: of, Optional: optional, Class: l.classOf(node)})
+		if of == ir.Union {
+			value = l.checkedCatchUse(node, value)
+		}
+		return l.defined(node, value), nil
 	}
 	return nil, l.notYet(node, "."+name+" on a "+typeName(object.Type()))
 }
@@ -674,6 +700,12 @@ func refusedRandom(l *lowering, node *ast.Node) error {
 
 // builtin lowers a call to Math or a number's toFixed. isBuiltin is false for any other call.
 func (l *lowering) builtin(node *ast.Node) (ir.Expression, bool, error) {
+	if err := l.typedArrayCall(node); err != nil {
+		return nil, true, err
+	}
+	if err := l.sparseCall(node); err != nil {
+		return nil, true, err
+	}
 	if value, known, err := l.arrayIsArray(node); known {
 		return value, known, err
 	}
@@ -919,6 +951,21 @@ var numberConstants = map[string]float64{
 
 // forOf lowers for (const element of array).
 func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(node.AsForInOrOfStatement().Expression)) {
+		return nil, l.notYet(node, "typed array iteration requires buffer and iterator semantics")
+	}
+	if l.program.ContainsSparseArrays() && l.checker.IsArrayType(l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(node.AsForInOrOfStatement().Expression))) {
+		return nil, l.notYet(node, "for...of over arrays in a program with sparse arrays")
+	}
+	iterated := ast.SkipParentheses(node.AsForInOrOfStatement().Expression)
+	if iterated.Kind == ast.KindCallExpression {
+		if err := l.typedArrayCall(iterated); err != nil {
+			return nil, err
+		}
+		if err := l.sparseCall(iterated); err != nil {
+			return nil, err
+		}
+	}
 	if statements, known, err := l.libraryArrayForOf(node); known {
 		return statements, err
 	}
@@ -1656,7 +1703,7 @@ func (l *lowering) shorthand(property *ast.Node) (ir.Expression, error) {
 	}
 	l.touch(local)
 	of := l.result.Locals[local].Type
-	if censusFieldSlotless(of) {
+	if censusFieldSlotless(of) && of != ir.Union {
 		return nil, l.notYet(property, "a field from a "+typeName(of)+" variable")
 	}
 	read := ir.Read{Local: local, Of: of, Checked: l.checked(local)}
@@ -1782,6 +1829,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 	if err != nil {
 		return nil, err
 	}
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		return l.typedArrayIndex(node, object)
+	}
 	if object.Type() == ir.Object && l.regexGroups(access.Expression) {
 		if index.Kind != ast.KindStringLiteral {
 			return nil, l.notYet(node, "a computed named-group key")
@@ -1864,6 +1914,9 @@ func (l *lowering) setIndex(target *ast.Node, valueNode *ast.Node) ([]ir.Stateme
 		return body, err
 	}
 	access := target.AsElementAccessExpression()
+	if l.numericTypedArray(l.checker.GetTypeAtLocation(access.Expression)) {
+		return nil, l.notYet(target, "typed array writes require numeric coercion and buffer aliasing")
+	}
 	array, err := l.expression(access.Expression)
 	if err != nil {
 		return nil, err
@@ -2155,7 +2208,14 @@ func (l *lowering) updateIndex(node *ast.Node, target *ast.Node, operator ast.Ki
 	l.result.Locals = append(l.result.Locals, ir.Local{Name: "element", Type: ir.Number, Function: l.functionIndex})
 	arrayRead := ir.Read{Local: arrayLocal, Of: ir.Array}
 	indexRead := ir.Read{Local: indexLocal, Of: ir.Number}
-	current := ir.Unwrap{Value: ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}}
+	lookup := ir.ArrayIndex{Array: arrayRead, Index: indexRead, Element: ir.Number}
+	var current ir.Expression = ir.Unwrap{Value: lookup}
+	if l.program.RequiresIndexedPresenceChecks() {
+		current, err = l.checkedIndexedRead(target, lookup)
+		if err != nil {
+			return nil, err
+		}
+	}
 	right, err := l.expression(valueNode)
 	if err != nil {
 		return nil, err
@@ -2178,4 +2238,11 @@ func isCallee(node *ast.Node) bool {
 		node = node.Parent
 	}
 	return node.Parent != nil && node.Parent.Kind == ast.KindCallExpression && node.Parent.AsCallExpression().Expression == node
+}
+
+// Only catch-derived fields change their declared slot to the generic carrier.
+// Ordinary unknown contextual fields retain the initializer's proven layout.
+func (l *lowering) catchFieldContext(literal *ast.Node, name string) bool {
+	contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone)
+	return contextual != nil && l.caught[l.checker.GetPropertyOfType(contextual, name)]
 }

@@ -1,0 +1,39 @@
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D054
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=true
+    witness_test.go:154: [D054] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+=== RUN   TestCheckerIndexedWitnesses/D056
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=true
+    witness_test.go:154: [D056] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+=== RUN   TestCheckerIndexedWitnesses/D057
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=true
+    witness_test.go:154: [D057] receiver=readonly callable array, loop index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+=== RUN   TestCheckerIndexedWitnesses/D067
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=true
+    witness_test.go:154: [D067] receiver=object field containing number array, subtraction index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="0\n"
+=== RUN   TestCheckerIndexedWitnesses/D068
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=true
+    witness_test.go:154: [D068] receiver=readonly object array, position local Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n"
+--- PASS: TestCheckerIndexedWitnesses (22.64s)
+    --- PASS: TestCheckerIndexedWitnesses/D054 (3.74s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=false (1.62s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=true (2.11s)
+    --- PASS: TestCheckerIndexedWitnesses/D056 (3.31s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=false (1.75s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=true (1.56s)
+    --- PASS: TestCheckerIndexedWitnesses/D057 (3.68s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=false (1.60s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=true (2.07s)
+    --- PASS: TestCheckerIndexedWitnesses/D067 (3.51s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=false (1.89s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=true (1.62s)
+    --- PASS: TestCheckerIndexedWitnesses/D068 (3.32s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=false (1.56s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=true (1.76s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	22.672s

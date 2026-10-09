@@ -18,6 +18,8 @@ static const char *const error_fields[] = {"name", "message", "code"};
 static const bool error_refs[] = {true, true, true};
 static const adamic_shape error_shape = {3, error_fields, error_refs, NULL};
 
+bool adamic_fs_file_is_error(const adamic_object *value) { return value->shape == &error_shape; }
+
 static adamic_string *text(const char *bytes) {
     return adamic_decode_utf8((const unsigned char *)bytes, strlen(bytes));
 }
@@ -27,7 +29,8 @@ static void raise_error(const char *name, const char *code, const char *message)
     error->slots[0].reference = text(name);
     error->slots[1].reference = text(message);
     error->slots[2].reference = text(code);
-    adamic_thrown = error;
+    adamic_thrown = &error->heap;
+    adamic_exception_pending = true;
 }
 
 static void system_error(int error, const char *operation, const char *path) {
@@ -339,7 +342,7 @@ static double write_data(int descriptor, const char *buffer, size_t length, bool
     // finally closes an internally opened fd, even after write/fsync failed.
     // A close failure overrides an earlier exception as Node's finally does.
     if (owned && close(descriptor) < 0 && errno != EINTR) {
-        if (adamic_thrown != NULL) { adamic_release(adamic_thrown); adamic_thrown = NULL; }
+        if (adamic_exception_pending) { adamic_release(adamic_thrown); adamic_thrown = NULL; adamic_exception_pending = false; }
         system_error(errno, "close", NULL);
     }
     return 0;

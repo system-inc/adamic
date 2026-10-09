@@ -1,0 +1,15 @@
+=== RUN   TestOptionalReturnAttribution
+--- PASS: TestOptionalReturnAttribution (1.39s)
+=== RUN   TestDifferentOverloadStorageRefuses
+--- PASS: TestDifferentOverloadStorageRefuses (0.64s)
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D037
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=true
+    witness_test.go:187: [D037] receiver=object array, constant zero, overload-selected optional return Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+--- PASS: TestCheckerIndexedWitnesses (12.68s)
+    --- PASS: TestCheckerIndexedWitnesses/D037 (3.98s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=false (1.83s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=true (2.14s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	14.785s

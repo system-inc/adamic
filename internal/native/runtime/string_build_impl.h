@@ -121,7 +121,7 @@ size_t adamic_string_join_halves(char *bytes, size_t from, size_t length) {
 
 int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
 	// Either may be undefined (a string | undefined): undefined is equal only to itself.
-	if (left == NULL || right == NULL) {
+	if (left == NULL || right == NULL || adamic_reference_is_sentinel(left) || adamic_reference_is_sentinel(right)) {
 		return left == right;
 	}
 	return left->length == right->length && (left == right || left->length == 0 || memcmp(left->bytes, right->bytes, left->length) == 0);

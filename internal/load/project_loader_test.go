@@ -1,0 +1,113 @@
+package load
+
+import (
+	"context"
+	"errors"
+	"strings"
+	"testing"
+)
+
+func TestProductionProjectSitesRetainUnconvertedErrors(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"useUnknownInCatchVariables":false,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `const items: number[] = [];
+const first: number = items[0];
+const point: { x?: number } = { x: undefined };
+try { throw new Error('boom'); } catch (error) { const message = error.message; }
+const ordinary: number = 'wrong';
+`})
+	_, err := Load(paths[1:])
+	var rejected *CheckError
+	if !errors.As(err, &rejected) || len(rejected.OptionSites) != 3 {
+		t.Fatalf("unconverted sites must remain errors and be recorded: %v", err)
+	}
+	if !strings.Contains(err.Error(), "main.ts:5:") || !strings.Contains(err.Error(), "main.ts:3:") {
+		t.Fatalf("ordinary or unconverted error disappeared: %v", err)
+	}
+	if strings.Contains(err.Error(), "main.ts:2:") || strings.Contains(err.Error(), "main.ts:4:") {
+		t.Fatalf("indexed row was not deferred to its lowering check: %v", err)
+	}
+}
+
+func TestProductionProjectPreservesCatchTypeAndLib(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"useUnknownInCatchVariables":false,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `const value = BigInt(1);
+try { throw new Error('boom'); } catch (error) { const held = error; }
+`})
+	program, err := Load(paths[1:])
+	if err != nil {
+		t.Fatal(err)
+	}
+	foundCatch := false
+	for _, declaration := range program.Declarations(context.Background()) {
+		if declaration.Name == "held" {
+			foundCatch = true
+			if declaration.Type != "any" {
+				t.Fatalf("project catch type replaced: %+v", declaration)
+			}
+		}
+	}
+	if !foundCatch {
+		t.Fatal("catch witness was not checked")
+	}
+	oldLib := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2015"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `const value = BigInt(1);`})
+	if _, err := Load(oldLib[1:]); err == nil || !strings.Contains(err.Error(), "BigInt") {
+		t.Fatalf("project's old lib was overwritten: %v", err)
+	}
+}
+
+func TestProductionAdamicKeepsStrictOptions(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":false},"files":["main.a"]}`},
+		[2]string{"main.a", `const values: number[] = []; const value: number = values[0];`})
+	if _, err := Load(paths[1:]); err == nil || !strings.Contains(err.Error(), "undefined") {
+		t.Fatalf(".a lost its proof obligation: %v", err)
+	}
+}
+
+func TestProductionMixedOwnershipRefused(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `import './proof.a';`},
+		[2]string{"proof.a", `export const values: number[] = []; const value: number = values[0];`})
+	if _, err := Load(paths[1:2]); err == nil || !strings.Contains(err.Error(), "mixed .a") {
+		t.Fatalf("mixed import silently received relaxed options: %v", err)
+	}
+}
+
+func TestProductionCompositeKeepsProjectRoots(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2020"],"composite":true,"module":"esnext","noEmit":true},"files":["main.ts","other.ts"]}`},
+		[2]string{"main.ts", `import { value } from './other'; export const held = value;`},
+		[2]string{"other.ts", `export const value = 1;`})
+	if _, err := Load(paths[1:2]); err != nil {
+		t.Fatalf("composite project root list truncated: %v", err)
+	}
+}
+
+func TestProductionProjectOverlaySites(t *testing.T) {
+	t.Parallel()
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `export const value = 1;`})
+	program, err := LoadOverlay(paths[1:], map[string]string{paths[1]: `const items: number[] = []; const first: number = items[0];`})
+	if err != nil {
+		t.Fatal(err)
+	}
+	rows := program.OptionDispositions()
+	if len(rows) != 1 || rows[0].Kind != "indexed-presence" || rows[0].State != OptionCheckScheduled || rows[0].Site.Line != 1 {
+		t.Fatalf("overlay read needs its own recorded contract: %+v", rows)
+	}
+	_, err = LoadOverlay(paths[1:], map[string]string{paths[1]: `const wrong: number = 'wrong';`})
+	if err == nil || !strings.Contains(err.Error(), "not assignable") {
+		t.Fatalf("ordinary overlay error was lost: %v", err)
+	}
+}

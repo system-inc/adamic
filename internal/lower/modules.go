@@ -148,6 +148,17 @@ func (l *lowering) declareModule(statements []*ast.Node) error {
 				return err
 			}
 			symbol := l.symbol(statement.Name())
+			if statement.Body() == nil {
+				implementation := functionImplementation(symbol)
+				if implementation != nil {
+					if !l.sameOverloadRepresentation(statement, implementation) {
+						return l.notYet(statement, "function overloads with different parameter or return representations")
+					}
+					// The checker retains overload selection. Only the implementation
+					// owns executable code and storage in the lowered program.
+					continue
+				}
+			}
 			if len(statement.TypeParameters()) > 0 {
 				// A generic function is lowered once per instantiation, where it's called (generic.go).
 				if l.generics == nil {
@@ -192,4 +203,36 @@ func runtimeModuleStatement(statement *ast.Node) bool {
 		return clause == nil || !clause.IsTypeOnly()
 	}
 	return !statement.AsExportDeclaration().IsTypeOnly
+}
+
+func functionImplementation(symbol *ast.Symbol) *ast.Node {
+	for _, declaration := range symbol.Declarations {
+		if declaration.Kind == ast.KindFunctionDeclaration && declaration.Body() != nil {
+			return declaration
+		}
+	}
+	return nil
+}
+
+// Overloads can narrow optional reference returns without changing their storage.
+// Other storage changes need explicit adapters and remain refused here.
+func (l *lowering) sameOverloadRepresentation(overload, implementation *ast.Node) bool {
+	if len(overload.TypeParameters()) != 0 || len(implementation.TypeParameters()) != 0 {
+		return false
+	}
+	left := l.checker.GetSignatureFromDeclaration(overload)
+	right := l.checker.GetSignatureFromDeclaration(implementation)
+	if len(left.Parameters()) != len(right.Parameters()) {
+		return false
+	}
+	for index, parameter := range left.Parameters() {
+		leftType, knownLeft := l.representation(l.checker.GetTypeOfSymbol(parameter))
+		rightType, knownRight := l.representation(l.checker.GetTypeOfSymbol(right.Parameters()[index]))
+		if !knownLeft || !knownRight || leftType != rightType {
+			return false
+		}
+	}
+	leftType, knownLeft := l.representation(l.checker.GetReturnTypeOfSignature(left))
+	rightType, knownRight := l.representation(l.checker.GetReturnTypeOfSignature(right))
+	return knownLeft && knownRight && leftType == rightType
 }

@@ -9,8 +9,8 @@ import (
 )
 
 // Exceptions (docs/memory.md, "Exceptions, designed into counting"): throw new Error(message), a
-// caught error thrown again, and try with catch, finally or both. What's thrown is only ever an
-// Error, made by new Error or caught, since a catch binds unknown and 0.2 has no value of every kind.
+// arbitrary values thrown or caught, and try with catch, finally or both. Catch bindings use
+// Union so their runtime kind and identity survive unwinding.
 
 // tryRecord is a try statement lowered, for the checks made once every function is: where it is,
 // and its body.
@@ -22,46 +22,11 @@ type tryRecord struct {
 // throwStatement lowers throw.
 func (l *lowering) throwStatement(node *ast.Node) ([]ir.Statement, error) {
 	thrown := ast.SkipParentheses(node.AsThrowStatement().Expression)
-	isNewError := thrown.Kind == ast.KindNewExpression && l.isLibraryGlobal(thrown.AsNewExpression().Expression, "Error")
-	isCaught := ast.IsIdentifier(thrown) && l.caught[l.symbol(thrown)]
-	// Error is structurally typed: { name, message, stack } can satisfy it without
-	// being an Error on Node. Follow only immutable bindings to a real allocation.
-	seen := map[*ast.Symbol]bool{}
-	var madeError func(*ast.Node) bool
-	madeError = func(value *ast.Node) bool {
-		if value == nil {
-			return false
-		}
-		value = ast.SkipParentheses(value)
-		if value.Kind == ast.KindNewExpression {
-			return l.isLibraryGlobal(value.AsNewExpression().Expression, "Error")
-		}
-		if !ast.IsIdentifier(value) {
-			return false
-		}
-		symbol := l.symbol(value)
-		if symbol == nil || seen[symbol] || len(symbol.Declarations) != 1 {
-			return false
-		}
-		seen[symbol] = true
-		declaration := symbol.Declarations[0]
-		if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Kind != ast.KindVariableDeclarationList || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
-			return false
-		}
-		return madeError(declaration.AsVariableDeclaration().Initializer)
-	}
-	isStoredError := !isNewError && !isCaught && l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") && madeError(thrown)
-	if !isNewError && !isCaught && !isStoredError {
-		if l.isLibraryType(l.checker.GetTypeAtLocation(thrown), "Error") {
-			return nil, l.notYet(thrown, "throwing an Error that isn't made where it's thrown or caught by the catch around it")
-		}
-		return nil, &Refused{Where: l.program.Where(thrown), What: "throwing a " + l.checker.TypeToString(l.checker.GetTypeAtLocation(thrown)), Fix: "throw an Error: throw new Error(String(value)); what a catch takes is unknown, and an Error is what it can be sure of"}
-	}
 	value, err := l.expression(thrown)
 	if err != nil {
 		return nil, err
 	}
-	return []ir.Statement{ir.Throw{Value: value}}, nil
+	return []ir.Statement{ir.Throw{Value: l.boxCaughtValue(thrown, value)}}, nil
 }
 
 // newError lowers new Error(message), and new Error().
@@ -123,15 +88,26 @@ func (l *lowering) tryStatement(node *ast.Node) ([]ir.Statement, error) {
 	return []ir.Statement{lowered}, nil
 }
 
-// caughtInstanceOfError lowers error instanceof Error on what a catch took, which is always an Error.
+// caughtInstanceOfError tests the runtime identity of the value, never its catch origin.
 func (l *lowering) caughtInstanceOfError(node *ast.Node) (ir.Expression, bool) {
 	binary := node.AsBinaryExpression()
 	left := ast.SkipParentheses(binary.Left)
-	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !ast.IsIdentifier(left) || !l.caught[l.symbol(left)] || !l.isLibraryGlobal(binary.Right, "Error") {
+	if binary.OperatorToken.Kind != ast.KindInstanceOfKeyword || !l.isLibraryGlobal(binary.Right, "Error") {
 		return nil, false
 	}
-	l.local(left)
-	return ir.BooleanConstant{Value: true}, true
+	if ast.IsIdentifier(left) {
+		local, known := l.local(left)
+		if !known {
+			return nil, false
+		}
+		return ir.InstanceOf{Value: ir.Read{Local: local, Of: l.result.Locals[local].Type, Checked: l.checkedModuleRead(left, local)}, Class: ir.ErrorClass}, true
+	}
+	value, err := l.expression(left)
+	if err != nil {
+		l.unlowerable = err
+		return nil, false
+	}
+	return ir.InstanceOf{Value: value, Class: ir.ErrorClass}, true
 }
 
 // exceptions works out which functions a throw can leave, once every function is lowered, and
@@ -188,6 +164,10 @@ func (l *lowering) throwsOut(statements []ir.Statement) bool {
 			found = found || node.MayThrow()
 		case ir.Throw:
 			found = true
+		case ir.ObjectCall:
+			if node.Method == "catchProperty" {
+				found = true
+			}
 		case ir.Call:
 			if l.result.CallMayThrow(node) {
 				found = true

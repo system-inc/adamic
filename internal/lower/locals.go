@@ -115,7 +115,10 @@ func (l *lowering) declareLocal(name *ast.Node) (int, error) {
 	}
 	valueType := ir.Object
 	inferred := l.evolvingObject(name)
-	if !l.alwaysUndefined[symbol] && !l.caught[symbol] {
+	if l.catchOrigin(name, map[*ast.Symbol]bool{}) {
+		valueType = ir.Union
+	}
+	if !l.alwaysUndefined[symbol] && !l.catchOrigin(name, map[*ast.Symbol]bool{}) {
 		var err error
 		if valueType, err = l.typeOf(name); err != nil {
 			if inferred == nil {
@@ -283,6 +286,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 			if l.includesUndefined(l.arrayPredicateObservedType(node)) {
 				matches = ir.Binary{Operator: ir.Or, Left: matches, Right: ir.IsUndefined{Value: held}}
 			}
+			if l.isLibraryType(l.checker.GetTypeAtLocation(node), "Error") {
+				matches = ir.InstanceOf{Value: held, Class: ir.ErrorClass}
+			}
 			message := "union member where the checker narrowed it away: a call since the narrowing put it back"
 			b.body = append(b.body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: matches}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
 			read = b.finish("narrowed_union_member", ir.Narrow{Value: held, To: narrowed})
@@ -294,6 +300,9 @@ func (l *lowering) localRead(node *ast.Node, local int) (ir.Expression, error) {
 		if narrowed, _ := l.representation(l.checker.GetTypeAtLocation(node)); narrowed == declared.Present() && !l.acceptsUndefined(node) {
 			read = ir.Unwrap{Value: read}
 		}
+	}
+	if l.catchOrigin(node, map[*ast.Symbol]bool{}) {
+		read = l.checkedCatchUse(node, read)
 	}
 	return l.defined(node, read), nil
 }

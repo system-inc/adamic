@@ -147,6 +147,9 @@ func (e *emitter) coalesce(coalesce ir.Coalesce) string {
 	} else if coalesce.Value.Type() == ir.Union {
 		present += " && " + value + " != &adamic_null"
 	}
+	if coalesce.Value.Type().UsesNullSentinel() && !coalesce.UndefinedOnly {
+		present = "!(" + nullTest(coalesce.Value.Type(), value, true) + ")"
+	}
 	if coalesce.Value.Type().IsMaybe() {
 		present, unwrapped = value+".present", value+"."+member(coalesce.Value.Type().Present())
 	}

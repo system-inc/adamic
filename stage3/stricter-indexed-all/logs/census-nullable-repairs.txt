@@ -1,0 +1,75 @@
+=== RUN   TestNullableStringRepresentation
+    nullable_test.go:103: Node controls "true\ntrue\nfalse\ntrue\nfalse\ntrue\ntrue\nfalse\nfalse\ntrue\nobject\nnull\nnull\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nmade\nmade\nfalse\nfalse\nmade\n4\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\n\n\ntrue\nfalse\n\n0\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nnull\nnull\nfalse\ntrue\nnull\n4\n"; release, sanitized and JS match; NULL sentinel mutant caught: exit=0 stdout="true\ntrue\nfalse\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nmade\nmade\nfalse\nfalse\nmade\n4\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\n\n\ntrue\nfalse\n\n0\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nnull\nnull\nfalse\ntrue\nnull\n4\n" stderr=""
+--- PASS: TestNullableStringRepresentation (0.74s)
+=== RUN   TestNullableStringPresenceGuard
+=== RUN   TestNullableStringPresenceGuard/[null]
+    nullable_test.go:149: Node "true\nfalse\ntrue\nobject\nnull\nnull\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/["ma"_+_"de"]
+    nullable_test.go:149: Node "false\nfalse\nfalse\nstring\nmade\nmade\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/[]
+    nullable_test.go:146: erase-guard mutant caught sanitize=false: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:146: erase-guard mutant caught sanitize=true: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:149: Node "false\ntrue\ntrue\nundefined\nundefined\nundefined\n"; JS, release and sanitized agree with expected exit=70 stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestNullableStringPresenceGuard1142118199/001/nullable.ts:2:30\n"
+--- PASS: TestNullableStringPresenceGuard (1.73s)
+    --- PASS: TestNullableStringPresenceGuard/[null] (0.50s)
+    --- PASS: TestNullableStringPresenceGuard/["ma"_+_"de"] (0.51s)
+    --- PASS: TestNullableStringPresenceGuard/[] (0.72s)
+=== RUN   TestNullableRuntimeReview
+=== RUN   TestNullableRuntimeReview/map-set
+    runtime_review_test.go:58: Node "4\nmissing\nempty\nnil\ntext\nempty\nupdated\ntrue\ntrue\nfalse\ntrue\n4\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\ntrue\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:65: map address-check mutant caught: exit=0 stdout="3\nmissing\nempty\ntext\ntext\nempty\nupdated\ntrue\ntrue\nfalse\nfalse\n3\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\nfalse\n" stderr=""
+=== RUN   TestNullableRuntimeReview/narrow-concat
+    runtime_review_test.go:58: Node "abc!\n!\nnull!\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-length
+    runtime_review_test.go:58: Node "3\n0\n4\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-json
+    runtime_review_test.go:58: Node "\"abc\"\n\"\"\n\"null\"\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-slice
+    runtime_review_test.go:58: Node "bc\n\nul\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-comparison
+    runtime_review_test.go:58: Node "false\ntrue\nfalse\ntrue\ntrue\nfalse\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-template
+    runtime_review_test.go:58: Node "value:null\nvalue:null\nliteral:null\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-concat
+    runtime_review_test.go:58: Node "value:null\nnull:value\nvalue:null\nnull:value\nliteral:null\nnull:literal\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-json
+    runtime_review_test.go:58: Node "null\n\"null\"\nnull\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:75: JSON sentinel mutant caught: exit=0 stdout="\"null\"\n\"null\"\nnull\n" stderr=""
+=== RUN   TestNullableRuntimeReview/null-string
+    runtime_review_test.go:58: Node "null\nnull\nnull\n"; JS, release and ASan/UBSan match
+--- PASS: TestNullableRuntimeReview (5.71s)
+    --- PASS: TestNullableRuntimeReview/map-set (0.88s)
+    --- PASS: TestNullableRuntimeReview/narrow-concat (0.49s)
+    --- PASS: TestNullableRuntimeReview/narrow-length (0.50s)
+    --- PASS: TestNullableRuntimeReview/narrow-json (0.53s)
+    --- PASS: TestNullableRuntimeReview/narrow-slice (0.52s)
+    --- PASS: TestNullableRuntimeReview/narrow-comparison (0.50s)
+    --- PASS: TestNullableRuntimeReview/null-template (0.50s)
+    --- PASS: TestNullableRuntimeReview/null-concat (0.50s)
+    --- PASS: TestNullableRuntimeReview/null-json (0.80s)
+    --- PASS: TestNullableRuntimeReview/null-string (0.50s)
+=== RUN   TestNullableSentinelHeader
+    runtime_review_test.go:100: one immortal string-kind sentinel directly prints Node String(null): "null\n"
+--- PASS: TestNullableSentinelHeader (0.44s)
+=== RUN   TestNullableGuardTiming
+    runtime_timing_test.go:15: explicit before/after runtime measurement
+--- SKIP: TestNullableGuardTiming (0.00s)
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:242: PRESENT D151 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:231: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151/hole
+    witness_test.go:231: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:240: PROVEN D151 null sentinel mutant caught: exit 70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestLedgerWitnessesD151null4227233596/001/D151.ts:2:30\n"
+    witness_test.go:242: PRESENT D151 matches source Node in release/sanitized and JS
+--- PASS: TestLedgerWitnesses (5.43s)
+    --- PASS: TestLedgerWitnesses/D151 (3.22s)
+        --- PASS: TestLedgerWitnesses/D151/present (0.74s)
+        --- PASS: TestLedgerWitnesses/D151/absent (0.82s)
+        --- PASS: TestLedgerWitnesses/D151/hole (0.80s)
+        --- PASS: TestLedgerWitnesses/D151/null (0.86s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	14.060s

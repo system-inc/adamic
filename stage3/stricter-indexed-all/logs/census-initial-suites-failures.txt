@@ -1,0 +1,2507 @@
+=== RUN   TestOptionalReturnAttribution
+--- PASS: TestOptionalReturnAttribution (2.32s)
+=== RUN   TestDifferentOverloadStorageRefuses
+--- PASS: TestDifferentOverloadStorageRefuses (0.99s)
+=== RUN   TestAssignedLedgerIsCovered
+--- PASS: TestAssignedLedgerIsCovered (0.00s)
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D037
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D054
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D056
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D057
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D060-D061
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D067
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D068
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D071
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=false
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=false456038820/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=true
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=true3203267811/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D072
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=false
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=false2189608533/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=true
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=true1354038274/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D073
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=false
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=false2315636589/001/main.ts:5:21: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=true
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesD073absent=true2341322038/001/main.ts:5:21: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/D077
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D082
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D083
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D084
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D085
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D086
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D087
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D088
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D089
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D090
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D091
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D092
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D093
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D094
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D095
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=false
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=true
+    witness_test.go:143: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesgapsdestructuring-thirdabsent=fals3769367041/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true
+    witness_test.go:111: /tmp/adamic-gate/TestCheckerIndexedWitnessesgapsdestructuring-thirdabsent=true2891934830/001/main.ts:5:43: stage 0 can't lower a structural view of library prototype member toString as an own field or method; use a wrapper object with an arrow that calls the member on its library receiver yet
+--- FAIL: TestCheckerIndexedWitnesses (114.48s)
+    --- FAIL: TestCheckerIndexedWitnesses/D037 (2.66s)
+        --- FAIL: TestCheckerIndexedWitnesses/D037/absent=false (1.47s)
+        --- FAIL: TestCheckerIndexedWitnesses/D037/absent=true (1.19s)
+    --- FAIL: TestCheckerIndexedWitnesses/D054 (2.17s)
+        --- FAIL: TestCheckerIndexedWitnesses/D054/absent=false (1.17s)
+        --- FAIL: TestCheckerIndexedWitnesses/D054/absent=true (1.00s)
+    --- FAIL: TestCheckerIndexedWitnesses/D056 (1.60s)
+        --- FAIL: TestCheckerIndexedWitnesses/D056/absent=false (0.92s)
+        --- FAIL: TestCheckerIndexedWitnesses/D056/absent=true (0.68s)
+    --- FAIL: TestCheckerIndexedWitnesses/D057 (2.24s)
+        --- FAIL: TestCheckerIndexedWitnesses/D057/absent=false (1.02s)
+        --- FAIL: TestCheckerIndexedWitnesses/D057/absent=true (1.22s)
+    --- FAIL: TestCheckerIndexedWitnesses/D060-D061 (2.76s)
+        --- FAIL: TestCheckerIndexedWitnesses/D060-D061/absent=false (1.38s)
+        --- FAIL: TestCheckerIndexedWitnesses/D060-D061/absent=true (1.38s)
+    --- FAIL: TestCheckerIndexedWitnesses/D067 (2.22s)
+        --- FAIL: TestCheckerIndexedWitnesses/D067/absent=false (0.97s)
+        --- FAIL: TestCheckerIndexedWitnesses/D067/absent=true (1.25s)
+    --- FAIL: TestCheckerIndexedWitnesses/D068 (3.15s)
+        --- FAIL: TestCheckerIndexedWitnesses/D068/absent=false (1.42s)
+        --- FAIL: TestCheckerIndexedWitnesses/D068/absent=true (1.73s)
+    --- FAIL: TestCheckerIndexedWitnesses/D069 (3.70s)
+        --- FAIL: TestCheckerIndexedWitnesses/D069/absent=false (1.94s)
+        --- FAIL: TestCheckerIndexedWitnesses/D069/absent=true (1.76s)
+    --- FAIL: TestCheckerIndexedWitnesses/D071 (2.59s)
+        --- FAIL: TestCheckerIndexedWitnesses/D071/absent=false (1.44s)
+        --- FAIL: TestCheckerIndexedWitnesses/D071/absent=true (1.15s)
+    --- FAIL: TestCheckerIndexedWitnesses/D072 (2.31s)
+        --- FAIL: TestCheckerIndexedWitnesses/D072/absent=false (0.96s)
+        --- FAIL: TestCheckerIndexedWitnesses/D072/absent=true (1.35s)
+    --- FAIL: TestCheckerIndexedWitnesses/D073 (2.65s)
+        --- FAIL: TestCheckerIndexedWitnesses/D073/absent=false (1.39s)
+        --- FAIL: TestCheckerIndexedWitnesses/D073/absent=true (1.26s)
+    --- FAIL: TestCheckerIndexedWitnesses/D077 (2.22s)
+        --- FAIL: TestCheckerIndexedWitnesses/D077/absent=false (1.09s)
+        --- FAIL: TestCheckerIndexedWitnesses/D077/absent=true (1.13s)
+    --- FAIL: TestCheckerIndexedWitnesses/D082 (2.77s)
+        --- FAIL: TestCheckerIndexedWitnesses/D082/absent=false (1.16s)
+        --- FAIL: TestCheckerIndexedWitnesses/D082/absent=true (1.60s)
+    --- FAIL: TestCheckerIndexedWitnesses/D083 (2.93s)
+        --- FAIL: TestCheckerIndexedWitnesses/D083/absent=false (1.46s)
+        --- FAIL: TestCheckerIndexedWitnesses/D083/absent=true (1.47s)
+    --- FAIL: TestCheckerIndexedWitnesses/D084 (2.98s)
+        --- FAIL: TestCheckerIndexedWitnesses/D084/absent=false (1.76s)
+        --- FAIL: TestCheckerIndexedWitnesses/D084/absent=true (1.22s)
+    --- FAIL: TestCheckerIndexedWitnesses/D085 (3.54s)
+        --- FAIL: TestCheckerIndexedWitnesses/D085/absent=false (1.52s)
+        --- FAIL: TestCheckerIndexedWitnesses/D085/absent=true (2.01s)
+    --- FAIL: TestCheckerIndexedWitnesses/D086 (4.25s)
+        --- FAIL: TestCheckerIndexedWitnesses/D086/absent=false (2.07s)
+        --- FAIL: TestCheckerIndexedWitnesses/D086/absent=true (2.18s)
+    --- FAIL: TestCheckerIndexedWitnesses/D087 (6.53s)
+        --- FAIL: TestCheckerIndexedWitnesses/D087/absent=false (3.42s)
+        --- FAIL: TestCheckerIndexedWitnesses/D087/absent=true (3.11s)
+    --- FAIL: TestCheckerIndexedWitnesses/D088 (4.39s)
+        --- FAIL: TestCheckerIndexedWitnesses/D088/absent=false (2.73s)
+        --- FAIL: TestCheckerIndexedWitnesses/D088/absent=true (1.66s)
+    --- FAIL: TestCheckerIndexedWitnesses/D089 (3.91s)
+        --- FAIL: TestCheckerIndexedWitnesses/D089/absent=false (1.64s)
+        --- FAIL: TestCheckerIndexedWitnesses/D089/absent=true (2.28s)
+    --- FAIL: TestCheckerIndexedWitnesses/D090 (3.52s)
+        --- FAIL: TestCheckerIndexedWitnesses/D090/absent=false (1.77s)
+        --- FAIL: TestCheckerIndexedWitnesses/D090/absent=true (1.75s)
+    --- FAIL: TestCheckerIndexedWitnesses/D091 (6.31s)
+        --- FAIL: TestCheckerIndexedWitnesses/D091/absent=false (2.61s)
+        --- FAIL: TestCheckerIndexedWitnesses/D091/absent=true (3.70s)
+    --- FAIL: TestCheckerIndexedWitnesses/D092 (6.84s)
+        --- FAIL: TestCheckerIndexedWitnesses/D092/absent=false (3.89s)
+        --- FAIL: TestCheckerIndexedWitnesses/D092/absent=true (2.95s)
+    --- FAIL: TestCheckerIndexedWitnesses/D093 (3.01s)
+        --- FAIL: TestCheckerIndexedWitnesses/D093/absent=false (1.61s)
+        --- FAIL: TestCheckerIndexedWitnesses/D093/absent=true (1.39s)
+    --- FAIL: TestCheckerIndexedWitnesses/D094 (2.85s)
+        --- FAIL: TestCheckerIndexedWitnesses/D094/absent=false (1.29s)
+        --- FAIL: TestCheckerIndexedWitnesses/D094/absent=true (1.56s)
+    --- FAIL: TestCheckerIndexedWitnesses/D095 (2.60s)
+        --- FAIL: TestCheckerIndexedWitnesses/D095/absent=false (1.37s)
+        --- FAIL: TestCheckerIndexedWitnesses/D095/absent=true (1.23s)
+    --- FAIL: TestCheckerIndexedWitnesses/gaps/destructuring-third (4.94s)
+        --- FAIL: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false (2.53s)
+        --- FAIL: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true (2.40s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-a	117.849s
+=== RUN   TestGeneratorWitnesses
+=== PAUSE TestGeneratorWitnesses
+=== CONT  TestGeneratorWitnesses
+=== RUN   TestGeneratorWitnesses/D195
+=== RUN   TestGeneratorWitnesses/D195/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD195absent=false2586264484/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D195/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD195absent=true411192019/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D196
+=== RUN   TestGeneratorWitnesses/D196/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD196absent=false1972950626/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D196/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD196absent=true1275417505/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D197
+=== RUN   TestGeneratorWitnesses/D197/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD197absent=false3245463189/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D197/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD197absent=true1547668735/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D198
+=== RUN   TestGeneratorWitnesses/D198/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD198absent=false4122767813/001/main.ts:4:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D198/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD198absent=true2479188010/001/main.ts:4:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D199
+=== RUN   TestGeneratorWitnesses/D199/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD199absent=false4186563554/001/main.ts:4:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D199/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD199absent=true4123750629/001/main.ts:4:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D200
+=== RUN   TestGeneratorWitnesses/D200/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD200absent=false2349193112/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D200/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD200absent=true65804784/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D201
+=== RUN   TestGeneratorWitnesses/D201/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD201absent=false357726560/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D201/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD201absent=true3528140673/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D202
+=== RUN   TestGeneratorWitnesses/D202/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD202absent=false3360469222/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D202/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD202absent=true3206624898/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D203
+=== RUN   TestGeneratorWitnesses/D203/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD203absent=false3184736905/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D203/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD203absent=true3937288090/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D204
+=== RUN   TestGeneratorWitnesses/D204/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD204absent=false2221674238/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D204/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD204absent=true1950938329/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D205
+=== RUN   TestGeneratorWitnesses/D205/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD205absent=false2649686679/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D205/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD205absent=true3873492278/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D206
+=== RUN   TestGeneratorWitnesses/D206/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD206absent=false2097113594/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D206/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD206absent=true1788611529/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D207
+=== RUN   TestGeneratorWitnesses/D207/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD207absent=false1951183118/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D207/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD207absent=true2576471686/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D208
+=== RUN   TestGeneratorWitnesses/D208/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD208absent=false3298749168/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D208/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD208absent=true3747693994/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D209
+=== RUN   TestGeneratorWitnesses/D209/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD209absent=false4179048710/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D209/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD209absent=true1711808415/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D210
+=== RUN   TestGeneratorWitnesses/D210/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD210absent=false2423884427/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D210/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD210absent=true2980071057/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D211
+=== RUN   TestGeneratorWitnesses/D211/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD211absent=false2148424088/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D211/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD211absent=true625447244/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D212
+=== RUN   TestGeneratorWitnesses/D212/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD212absent=false996081681/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D212/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD212absent=true1242622960/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D213
+=== RUN   TestGeneratorWitnesses/D213/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD213absent=false148333836/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D213/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD213absent=true599251222/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D214
+=== RUN   TestGeneratorWitnesses/D214/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD214absent=false334965066/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D214/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD214absent=true1157957203/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D215
+=== RUN   TestGeneratorWitnesses/D215/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD215absent=false2180486871/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D215/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD215absent=true3106989178/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D216
+=== RUN   TestGeneratorWitnesses/D216/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD216absent=false3117452954/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D216/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD216absent=true2246029340/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D217
+=== RUN   TestGeneratorWitnesses/D217/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD217absent=false70352383/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D217/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD217absent=true1206541836/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D218
+=== RUN   TestGeneratorWitnesses/D218/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD218absent=false391486228/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D218/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD218absent=true4283664135/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D219
+=== RUN   TestGeneratorWitnesses/D219/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD219absent=false3736548979/001/main.ts:4:25: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D219/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD219absent=true3172051161/001/main.ts:4:25: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D220
+=== RUN   TestGeneratorWitnesses/D220/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD220absent=false2851088039/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D220/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD220absent=true3216036504/001/main.ts:4:23: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D221
+=== RUN   TestGeneratorWitnesses/D221/absent=false
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD221absent=false2979032145/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+=== RUN   TestGeneratorWitnesses/D221/absent=true
+    witness_test.go:113: CLI explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}, want "/tmp/adamic-gate/TestGeneratorWitnessesD221absent=true1983918254/001/main.ts:5:21: checked indexed-presence\nchecked: indexed-presence=1 catch-error=0 json-stringify-defined=0 optional-write=0\ntrusted: 0\n"
+--- FAIL: TestGeneratorWitnesses (118.42s)
+    --- FAIL: TestGeneratorWitnesses/D195 (2.33s)
+        --- FAIL: TestGeneratorWitnesses/D195/absent=false (1.09s)
+        --- FAIL: TestGeneratorWitnesses/D195/absent=true (1.24s)
+    --- FAIL: TestGeneratorWitnesses/D196 (1.66s)
+        --- FAIL: TestGeneratorWitnesses/D196/absent=false (0.89s)
+        --- FAIL: TestGeneratorWitnesses/D196/absent=true (0.77s)
+    --- FAIL: TestGeneratorWitnesses/D197 (1.89s)
+        --- FAIL: TestGeneratorWitnesses/D197/absent=false (0.91s)
+        --- FAIL: TestGeneratorWitnesses/D197/absent=true (0.98s)
+    --- FAIL: TestGeneratorWitnesses/D198 (2.42s)
+        --- FAIL: TestGeneratorWitnesses/D198/absent=false (1.00s)
+        --- FAIL: TestGeneratorWitnesses/D198/absent=true (1.42s)
+    --- FAIL: TestGeneratorWitnesses/D199 (2.41s)
+        --- FAIL: TestGeneratorWitnesses/D199/absent=false (1.24s)
+        --- FAIL: TestGeneratorWitnesses/D199/absent=true (1.17s)
+    --- FAIL: TestGeneratorWitnesses/D200 (3.37s)
+        --- FAIL: TestGeneratorWitnesses/D200/absent=false (1.31s)
+        --- FAIL: TestGeneratorWitnesses/D200/absent=true (2.07s)
+    --- FAIL: TestGeneratorWitnesses/D201 (3.22s)
+        --- FAIL: TestGeneratorWitnesses/D201/absent=false (1.60s)
+        --- FAIL: TestGeneratorWitnesses/D201/absent=true (1.62s)
+    --- FAIL: TestGeneratorWitnesses/D202 (2.91s)
+        --- FAIL: TestGeneratorWitnesses/D202/absent=false (1.59s)
+        --- FAIL: TestGeneratorWitnesses/D202/absent=true (1.31s)
+    --- FAIL: TestGeneratorWitnesses/D203 (2.58s)
+        --- FAIL: TestGeneratorWitnesses/D203/absent=false (1.28s)
+        --- FAIL: TestGeneratorWitnesses/D203/absent=true (1.30s)
+    --- FAIL: TestGeneratorWitnesses/D204 (2.69s)
+        --- FAIL: TestGeneratorWitnesses/D204/absent=false (1.29s)
+        --- FAIL: TestGeneratorWitnesses/D204/absent=true (1.40s)
+    --- FAIL: TestGeneratorWitnesses/D205 (1.76s)
+        --- FAIL: TestGeneratorWitnesses/D205/absent=false (0.91s)
+        --- FAIL: TestGeneratorWitnesses/D205/absent=true (0.85s)
+    --- FAIL: TestGeneratorWitnesses/D206 (2.45s)
+        --- FAIL: TestGeneratorWitnesses/D206/absent=false (1.06s)
+        --- FAIL: TestGeneratorWitnesses/D206/absent=true (1.39s)
+    --- FAIL: TestGeneratorWitnesses/D207 (3.04s)
+        --- FAIL: TestGeneratorWitnesses/D207/absent=false (1.58s)
+        --- FAIL: TestGeneratorWitnesses/D207/absent=true (1.45s)
+    --- FAIL: TestGeneratorWitnesses/D208 (3.71s)
+        --- FAIL: TestGeneratorWitnesses/D208/absent=false (1.66s)
+        --- FAIL: TestGeneratorWitnesses/D208/absent=true (2.05s)
+    --- FAIL: TestGeneratorWitnesses/D209 (2.89s)
+        --- FAIL: TestGeneratorWitnesses/D209/absent=false (1.10s)
+        --- FAIL: TestGeneratorWitnesses/D209/absent=true (1.80s)
+    --- FAIL: TestGeneratorWitnesses/D210 (3.50s)
+        --- FAIL: TestGeneratorWitnesses/D210/absent=false (1.55s)
+        --- FAIL: TestGeneratorWitnesses/D210/absent=true (1.95s)
+    --- FAIL: TestGeneratorWitnesses/D211 (5.20s)
+        --- FAIL: TestGeneratorWitnesses/D211/absent=false (2.15s)
+        --- FAIL: TestGeneratorWitnesses/D211/absent=true (3.05s)
+    --- FAIL: TestGeneratorWitnesses/D212 (5.98s)
+        --- FAIL: TestGeneratorWitnesses/D212/absent=false (3.35s)
+        --- FAIL: TestGeneratorWitnesses/D212/absent=true (2.63s)
+    --- FAIL: TestGeneratorWitnesses/D213 (2.96s)
+        --- FAIL: TestGeneratorWitnesses/D213/absent=false (1.47s)
+        --- FAIL: TestGeneratorWitnesses/D213/absent=true (1.50s)
+    --- FAIL: TestGeneratorWitnesses/D214 (4.02s)
+        --- FAIL: TestGeneratorWitnesses/D214/absent=false (2.22s)
+        --- FAIL: TestGeneratorWitnesses/D214/absent=true (1.80s)
+    --- FAIL: TestGeneratorWitnesses/D215 (3.22s)
+        --- FAIL: TestGeneratorWitnesses/D215/absent=false (1.63s)
+        --- FAIL: TestGeneratorWitnesses/D215/absent=true (1.59s)
+    --- FAIL: TestGeneratorWitnesses/D216 (7.28s)
+        --- FAIL: TestGeneratorWitnesses/D216/absent=false (3.52s)
+        --- FAIL: TestGeneratorWitnesses/D216/absent=true (3.76s)
+    --- FAIL: TestGeneratorWitnesses/D217 (5.99s)
+        --- FAIL: TestGeneratorWitnesses/D217/absent=false (3.61s)
+        --- FAIL: TestGeneratorWitnesses/D217/absent=true (2.38s)
+    --- FAIL: TestGeneratorWitnesses/D218 (3.04s)
+        --- FAIL: TestGeneratorWitnesses/D218/absent=false (1.52s)
+        --- FAIL: TestGeneratorWitnesses/D218/absent=true (1.51s)
+    --- FAIL: TestGeneratorWitnesses/D219 (2.62s)
+        --- FAIL: TestGeneratorWitnesses/D219/absent=false (1.35s)
+        --- FAIL: TestGeneratorWitnesses/D219/absent=true (1.27s)
+    --- FAIL: TestGeneratorWitnesses/D220 (4.03s)
+        --- FAIL: TestGeneratorWitnesses/D220/absent=false (1.54s)
+        --- FAIL: TestGeneratorWitnesses/D220/absent=true (2.49s)
+    --- FAIL: TestGeneratorWitnesses/D221 (4.76s)
+        --- FAIL: TestGeneratorWitnesses/D221/absent=false (2.41s)
+        --- FAIL: TestGeneratorWitnesses/D221/absent=true (2.34s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-b	118.494s
+=== RUN   TestHoleCompoundReads
+=== RUN   TestHoleCompoundReads/D155
+=== RUN   TestHoleCompoundReads/D155/present-true
+    holes_test.go:61: compound explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestHoleCompoundReads/D155/present-false
+    holes_test.go:61: compound explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestHoleCompoundReads/D156
+=== RUN   TestHoleCompoundReads/D156/present-true
+    holes_test.go:61: compound explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestHoleCompoundReads/D156/present-false
+    holes_test.go:61: compound explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+--- FAIL: TestHoleCompoundReads (29.10s)
+    --- FAIL: TestHoleCompoundReads/D155 (1.42s)
+        --- FAIL: TestHoleCompoundReads/D155/present-true (0.59s)
+        --- FAIL: TestHoleCompoundReads/D155/present-false (0.83s)
+    --- FAIL: TestHoleCompoundReads/D156 (2.38s)
+        --- FAIL: TestHoleCompoundReads/D156/present-true (1.00s)
+        --- FAIL: TestHoleCompoundReads/D156/present-false (1.38s)
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D155
+=== RUN   TestLedgerWitnesses/D155/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D155/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D156
+=== RUN   TestLedgerWitnesses/D156/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D156/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D157
+=== RUN   TestLedgerWitnesses/D157/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D157/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D158
+=== RUN   TestLedgerWitnesses/D158/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D158/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D159
+=== RUN   TestLedgerWitnesses/D159/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D159/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D160
+=== RUN   TestLedgerWitnesses/D160/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D160/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D161
+=== RUN   TestLedgerWitnesses/D161/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D161/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D162
+=== RUN   TestLedgerWitnesses/D162/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D162/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D163
+=== RUN   TestLedgerWitnesses/D163/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D163/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D164
+=== RUN   TestLedgerWitnesses/D164/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D164/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D165
+=== RUN   TestLedgerWitnesses/D165/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D165/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D166
+=== RUN   TestLedgerWitnesses/D166/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D166/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D178
+=== RUN   TestLedgerWitnesses/D178/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D178/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D179
+=== RUN   TestLedgerWitnesses/D179/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D179/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D180
+=== RUN   TestLedgerWitnesses/D180/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D180/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D181
+=== RUN   TestLedgerWitnesses/D181/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D181/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D182
+=== RUN   TestLedgerWitnesses/D182/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D182/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D183
+=== RUN   TestLedgerWitnesses/D183/present
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D183/absent
+    witness_test.go:135: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+--- FAIL: TestLedgerWitnesses (78.43s)
+    --- FAIL: TestLedgerWitnesses/D155 (2.32s)
+        --- FAIL: TestLedgerWitnesses/D155/present (1.11s)
+        --- FAIL: TestLedgerWitnesses/D155/absent (1.21s)
+    --- FAIL: TestLedgerWitnesses/D156 (2.10s)
+        --- FAIL: TestLedgerWitnesses/D156/present (1.06s)
+        --- FAIL: TestLedgerWitnesses/D156/absent (1.04s)
+    --- FAIL: TestLedgerWitnesses/D157 (2.23s)
+        --- FAIL: TestLedgerWitnesses/D157/present (1.12s)
+        --- FAIL: TestLedgerWitnesses/D157/absent (1.11s)
+    --- FAIL: TestLedgerWitnesses/D158 (2.15s)
+        --- FAIL: TestLedgerWitnesses/D158/present (1.06s)
+        --- FAIL: TestLedgerWitnesses/D158/absent (1.09s)
+    --- FAIL: TestLedgerWitnesses/D159 (2.62s)
+        --- FAIL: TestLedgerWitnesses/D159/present (1.13s)
+        --- FAIL: TestLedgerWitnesses/D159/absent (1.48s)
+    --- FAIL: TestLedgerWitnesses/D160 (3.27s)
+        --- FAIL: TestLedgerWitnesses/D160/present (1.61s)
+        --- FAIL: TestLedgerWitnesses/D160/absent (1.65s)
+    --- FAIL: TestLedgerWitnesses/D161 (3.16s)
+        --- FAIL: TestLedgerWitnesses/D161/present (1.54s)
+        --- FAIL: TestLedgerWitnesses/D161/absent (1.62s)
+    --- FAIL: TestLedgerWitnesses/D162 (3.76s)
+        --- FAIL: TestLedgerWitnesses/D162/present (1.79s)
+        --- FAIL: TestLedgerWitnesses/D162/absent (1.97s)
+    --- FAIL: TestLedgerWitnesses/D163 (5.45s)
+        --- FAIL: TestLedgerWitnesses/D163/present (2.50s)
+        --- FAIL: TestLedgerWitnesses/D163/absent (2.95s)
+    --- FAIL: TestLedgerWitnesses/D164 (6.14s)
+        --- FAIL: TestLedgerWitnesses/D164/present (3.35s)
+        --- FAIL: TestLedgerWitnesses/D164/absent (2.79s)
+    --- FAIL: TestLedgerWitnesses/D165 (4.62s)
+        --- FAIL: TestLedgerWitnesses/D165/present (2.65s)
+        --- FAIL: TestLedgerWitnesses/D165/absent (1.98s)
+    --- FAIL: TestLedgerWitnesses/D166 (3.66s)
+        --- FAIL: TestLedgerWitnesses/D166/present (1.87s)
+        --- FAIL: TestLedgerWitnesses/D166/absent (1.79s)
+    --- FAIL: TestLedgerWitnesses/D178 (3.73s)
+        --- FAIL: TestLedgerWitnesses/D178/present (1.85s)
+        --- FAIL: TestLedgerWitnesses/D178/absent (1.88s)
+    --- FAIL: TestLedgerWitnesses/D179 (6.39s)
+        --- FAIL: TestLedgerWitnesses/D179/present (2.98s)
+        --- FAIL: TestLedgerWitnesses/D179/absent (3.41s)
+    --- FAIL: TestLedgerWitnesses/D180 (6.11s)
+        --- FAIL: TestLedgerWitnesses/D180/present (3.59s)
+        --- FAIL: TestLedgerWitnesses/D180/absent (2.52s)
+    --- FAIL: TestLedgerWitnesses/D181 (2.84s)
+        --- FAIL: TestLedgerWitnesses/D181/present (1.54s)
+        --- FAIL: TestLedgerWitnesses/D181/absent (1.30s)
+    --- FAIL: TestLedgerWitnesses/D182 (2.99s)
+        --- FAIL: TestLedgerWitnesses/D182/present (1.54s)
+        --- FAIL: TestLedgerWitnesses/D182/absent (1.45s)
+    --- FAIL: TestLedgerWitnesses/D183 (2.88s)
+        --- FAIL: TestLedgerWitnesses/D183/present (1.30s)
+        --- FAIL: TestLedgerWitnesses/D183/absent (1.58s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-c	107.615s
+=== RUN   TestNullableStringRepresentation
+    nullable_test.go:96: /tmp/adamic-gate/TestNullableStringRepresentation1941232160/001/nullable.ts:11:14: error TS2345: Argument of type 'string | null | undefined' is not assignable to parameter of type 'string'.
+          Type 'undefined' is not assignable to type 'string'.
+--- FAIL: TestNullableStringRepresentation (1.93s)
+=== RUN   TestNullableStringPresenceGuard
+=== RUN   TestNullableStringPresenceGuard/[null]
+    nullable_test.go:118: /tmp/adamic-gate/TestNullableStringPresenceGuardnull2862138911/001/nullable.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestNullableStringPresenceGuard/["ma"_+_"de"]
+    nullable_test.go:118: /tmp/adamic-gate/TestNullableStringPresenceGuardma_+_de1568485797/001/nullable.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestNullableStringPresenceGuard/[]
+    nullable_test.go:118: /tmp/adamic-gate/TestNullableStringPresenceGuard2608228295/001/nullable.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+--- FAIL: TestNullableStringPresenceGuard (3.83s)
+    --- FAIL: TestNullableStringPresenceGuard/[null] (1.37s)
+    --- FAIL: TestNullableStringPresenceGuard/["ma"_+_"de"] (1.24s)
+    --- FAIL: TestNullableStringPresenceGuard/[] (1.21s)
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D107/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D129
+=== RUN   TestLedgerWitnesses/D129/present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD129present456853124/001/D129.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129/absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD129absent2858867217/001/D129.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129/hole
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD129hole1216498425/001/D129.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129/outer-present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD129outer-present3656216019/001/D129.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129/outer-absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD129outer-absent1730063848/001/D129.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D130
+=== RUN   TestLedgerWitnesses/D130/present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD130present2838579863/001/D130.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D130/absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD130absent1642387873/001/D130.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D130/hole
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD130hole367393821/001/D130.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D130/outer-present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD130outer-present137364987/001/D130.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D130/outer-absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD130outer-absent691426686/001/D130.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D131
+=== RUN   TestLedgerWitnesses/D131/present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD131present3608016447/001/D131.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D131/absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD131absent1899515675/001/D131.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D131/hole
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD131hole3423014176/001/D131.ts:2:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D131/outer-present
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD131outer-present1285518948/001/D131.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D131/outer-absent
+    witness_test.go:152: /tmp/adamic-gate/TestLedgerWitnessesD131outer-absent3053269044/001/D131.ts:2:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D171
+=== RUN   TestLedgerWitnesses/D171/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D171/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D171/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D172
+=== RUN   TestLedgerWitnesses/D172/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D172/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D172/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D173
+=== RUN   TestLedgerWitnesses/D173/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D173/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D173/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D174
+=== RUN   TestLedgerWitnesses/D174/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D174/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D174/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D175
+=== RUN   TestLedgerWitnesses/D175/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D175/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D175/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D184
+=== RUN   TestLedgerWitnesses/D184/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D184/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D184/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D185
+=== RUN   TestLedgerWitnesses/D185/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D185/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D185/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D186
+=== RUN   TestLedgerWitnesses/D186/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D186/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D186/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D189
+=== RUN   TestLedgerWitnesses/D189/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D189/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D189/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D191
+=== RUN   TestLedgerWitnesses/D191/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D191/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D191/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D192
+=== RUN   TestLedgerWitnesses/D192/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D192/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D192/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D193
+=== RUN   TestLedgerWitnesses/D193/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D193/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D193/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D194
+=== RUN   TestLedgerWitnesses/D194/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D194/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D194/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D225
+=== RUN   TestLedgerWitnesses/D225/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D225/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D225/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D226
+=== RUN   TestLedgerWitnesses/D226/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D226/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D226/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D227
+=== RUN   TestLedgerWitnesses/D227/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D227/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D227/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D228
+=== RUN   TestLedgerWitnesses/D228/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D228/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D228/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D229
+=== RUN   TestLedgerWitnesses/D229/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D229/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D229/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D230
+=== RUN   TestLedgerWitnesses/D230/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D230/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D230/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D231
+=== RUN   TestLedgerWitnesses/D231/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D231/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D231/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:146: expected representation refusal "stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet": /tmp/adamic-gate/TestLedgerWitnessesD119present2923396520/001/D119.ts:1:24: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:146: expected representation refusal "stage 0 can't lower a record other than a readonly string index signature holding nonnullable scalars or arrays of nonnullable scalars yet": /tmp/adamic-gate/TestLedgerWitnessesD119absent3709946605/001/D119.ts:1:24: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:137: /tmp/adamic-gate/TestLedgerWitnessesD151present588832510/001/D151.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:137: /tmp/adamic-gate/TestLedgerWitnessesD151absent4096864386/001/D151.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestLedgerWitnesses/D151/hole
+    witness_test.go:137: /tmp/adamic-gate/TestLedgerWitnessesD151hole2354742706/001/D151.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:137: /tmp/adamic-gate/TestLedgerWitnessesD151null1208751612/001/D151.ts:8:13: error TS2345: Argument of type 'string | null' is not assignable to parameter of type 'string'.
+          Type 'null' is not assignable to type 'string'.
+=== RUN   TestLedgerWitnesses/D170
+=== RUN   TestLedgerWitnesses/D170/present
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D170/absent
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+=== RUN   TestLedgerWitnesses/D170/hole
+    witness_test.go:178: explain: {stdout: stderr:usage:
+          adamic types <file.a|file.ts>...
+          adamic c <file.a|file.ts>... [--explain-checks]
+          adamic js <file.a|file.ts>... [--explain-checks]
+          adamic build [--target wasm32-wasi] <file.a|file.ts>... -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+          adamic build --project <tsconfig.json> --entry <file.a|file.ts> -o <out> [--count] [--sanitize] [--tsgo <archive>] [--explain-checks]
+         code:2}
+--- FAIL: TestLedgerWitnesses (135.42s)
+    --- FAIL: TestLedgerWitnesses/D107 (2.45s)
+        --- FAIL: TestLedgerWitnesses/D107/present (0.79s)
+        --- FAIL: TestLedgerWitnesses/D107/absent (0.73s)
+        --- FAIL: TestLedgerWitnesses/D107/hole (0.92s)
+    --- FAIL: TestLedgerWitnesses/D129 (5.73s)
+        --- FAIL: TestLedgerWitnesses/D129/present (1.08s)
+        --- FAIL: TestLedgerWitnesses/D129/absent (1.02s)
+        --- FAIL: TestLedgerWitnesses/D129/hole (1.18s)
+        --- FAIL: TestLedgerWitnesses/D129/outer-present (1.20s)
+        --- FAIL: TestLedgerWitnesses/D129/outer-absent (1.25s)
+    --- FAIL: TestLedgerWitnesses/D130 (8.04s)
+        --- FAIL: TestLedgerWitnesses/D130/present (1.63s)
+        --- FAIL: TestLedgerWitnesses/D130/absent (1.50s)
+        --- FAIL: TestLedgerWitnesses/D130/hole (1.75s)
+        --- FAIL: TestLedgerWitnesses/D130/outer-present (1.62s)
+        --- FAIL: TestLedgerWitnesses/D130/outer-absent (1.52s)
+    --- FAIL: TestLedgerWitnesses/D131 (6.49s)
+        --- FAIL: TestLedgerWitnesses/D131/present (1.43s)
+        --- FAIL: TestLedgerWitnesses/D131/absent (1.31s)
+        --- FAIL: TestLedgerWitnesses/D131/hole (1.30s)
+        --- FAIL: TestLedgerWitnesses/D131/outer-present (1.18s)
+        --- FAIL: TestLedgerWitnesses/D131/outer-absent (1.27s)
+    --- FAIL: TestLedgerWitnesses/D171 (3.42s)
+        --- FAIL: TestLedgerWitnesses/D171/present (0.94s)
+        --- FAIL: TestLedgerWitnesses/D171/absent (1.33s)
+        --- FAIL: TestLedgerWitnesses/D171/hole (1.15s)
+    --- FAIL: TestLedgerWitnesses/D172 (4.21s)
+        --- FAIL: TestLedgerWitnesses/D172/present (1.51s)
+        --- FAIL: TestLedgerWitnesses/D172/absent (1.28s)
+        --- FAIL: TestLedgerWitnesses/D172/hole (1.42s)
+    --- FAIL: TestLedgerWitnesses/D173 (4.99s)
+        --- FAIL: TestLedgerWitnesses/D173/present (1.69s)
+        --- FAIL: TestLedgerWitnesses/D173/absent (1.87s)
+        --- FAIL: TestLedgerWitnesses/D173/hole (1.42s)
+    --- FAIL: TestLedgerWitnesses/D174 (6.81s)
+        --- FAIL: TestLedgerWitnesses/D174/present (2.18s)
+        --- FAIL: TestLedgerWitnesses/D174/absent (1.94s)
+        --- FAIL: TestLedgerWitnesses/D174/hole (2.69s)
+    --- FAIL: TestLedgerWitnesses/D175 (9.18s)
+        --- FAIL: TestLedgerWitnesses/D175/present (2.97s)
+        --- FAIL: TestLedgerWitnesses/D175/absent (3.30s)
+        --- FAIL: TestLedgerWitnesses/D175/hole (2.91s)
+    --- FAIL: TestLedgerWitnesses/D184 (5.39s)
+        --- FAIL: TestLedgerWitnesses/D184/present (1.41s)
+        --- FAIL: TestLedgerWitnesses/D184/absent (1.79s)
+        --- FAIL: TestLedgerWitnesses/D184/hole (2.18s)
+    --- FAIL: TestLedgerWitnesses/D185 (5.71s)
+        --- FAIL: TestLedgerWitnesses/D185/present (1.61s)
+        --- FAIL: TestLedgerWitnesses/D185/absent (1.88s)
+        --- FAIL: TestLedgerWitnesses/D185/hole (2.22s)
+    --- FAIL: TestLedgerWitnesses/D186 (10.49s)
+        --- FAIL: TestLedgerWitnesses/D186/present (3.30s)
+        --- FAIL: TestLedgerWitnesses/D186/absent (4.36s)
+        --- FAIL: TestLedgerWitnesses/D186/hole (2.83s)
+    --- FAIL: TestLedgerWitnesses/D189 (4.53s)
+        --- FAIL: TestLedgerWitnesses/D189/present (1.88s)
+        --- FAIL: TestLedgerWitnesses/D189/absent (1.55s)
+        --- FAIL: TestLedgerWitnesses/D189/hole (1.10s)
+    --- FAIL: TestLedgerWitnesses/D191 (4.13s)
+        --- FAIL: TestLedgerWitnesses/D191/present (1.36s)
+        --- FAIL: TestLedgerWitnesses/D191/absent (1.32s)
+        --- FAIL: TestLedgerWitnesses/D191/hole (1.45s)
+    --- FAIL: TestLedgerWitnesses/D192 (6.27s)
+        --- FAIL: TestLedgerWitnesses/D192/present (1.63s)
+        --- FAIL: TestLedgerWitnesses/D192/absent (2.08s)
+        --- FAIL: TestLedgerWitnesses/D192/hole (2.55s)
+    --- FAIL: TestLedgerWitnesses/D193 (4.76s)
+        --- FAIL: TestLedgerWitnesses/D193/present (2.27s)
+        --- FAIL: TestLedgerWitnesses/D193/absent (1.69s)
+        --- FAIL: TestLedgerWitnesses/D193/hole (0.79s)
+    --- FAIL: TestLedgerWitnesses/D194 (1.74s)
+        --- FAIL: TestLedgerWitnesses/D194/present (0.58s)
+        --- FAIL: TestLedgerWitnesses/D194/absent (0.46s)
+        --- FAIL: TestLedgerWitnesses/D194/hole (0.70s)
+    --- FAIL: TestLedgerWitnesses/D225 (2.55s)
+        --- FAIL: TestLedgerWitnesses/D225/present (0.90s)
+        --- FAIL: TestLedgerWitnesses/D225/absent (0.81s)
+        --- FAIL: TestLedgerWitnesses/D225/hole (0.85s)
+    --- FAIL: TestLedgerWitnesses/D226 (2.41s)
+        --- FAIL: TestLedgerWitnesses/D226/present (0.63s)
+        --- FAIL: TestLedgerWitnesses/D226/absent (0.90s)
+        --- FAIL: TestLedgerWitnesses/D226/hole (0.88s)
+    --- FAIL: TestLedgerWitnesses/D227 (2.63s)
+        --- FAIL: TestLedgerWitnesses/D227/present (0.90s)
+        --- FAIL: TestLedgerWitnesses/D227/absent (0.98s)
+        --- FAIL: TestLedgerWitnesses/D227/hole (0.75s)
+    --- FAIL: TestLedgerWitnesses/D228 (3.10s)
+        --- FAIL: TestLedgerWitnesses/D228/present (0.86s)
+        --- FAIL: TestLedgerWitnesses/D228/absent (0.82s)
+        --- FAIL: TestLedgerWitnesses/D228/hole (1.41s)
+    --- FAIL: TestLedgerWitnesses/D229 (1.68s)
+        --- FAIL: TestLedgerWitnesses/D229/present (0.67s)
+        --- FAIL: TestLedgerWitnesses/D229/absent (0.58s)
+        --- FAIL: TestLedgerWitnesses/D229/hole (0.43s)
+    --- FAIL: TestLedgerWitnesses/D230 (2.14s)
+        --- FAIL: TestLedgerWitnesses/D230/present (0.71s)
+        --- FAIL: TestLedgerWitnesses/D230/absent (0.71s)
+        --- FAIL: TestLedgerWitnesses/D230/hole (0.72s)
+    --- FAIL: TestLedgerWitnesses/D231 (4.59s)
+        --- FAIL: TestLedgerWitnesses/D231/present (1.00s)
+        --- FAIL: TestLedgerWitnesses/D231/absent (1.49s)
+        --- FAIL: TestLedgerWitnesses/D231/hole (2.10s)
+    --- FAIL: TestLedgerWitnesses/D119 (3.86s)
+        --- FAIL: TestLedgerWitnesses/D119/present (1.95s)
+        --- FAIL: TestLedgerWitnesses/D119/absent (1.92s)
+    --- FAIL: TestLedgerWitnesses/D151 (4.83s)
+        --- FAIL: TestLedgerWitnesses/D151/present (1.71s)
+        --- FAIL: TestLedgerWitnesses/D151/absent (1.34s)
+        --- FAIL: TestLedgerWitnesses/D151/hole (0.94s)
+        --- FAIL: TestLedgerWitnesses/D151/null (0.84s)
+    --- FAIL: TestLedgerWitnesses/D170 (2.66s)
+        --- FAIL: TestLedgerWitnesses/D170/present (1.05s)
+        --- FAIL: TestLedgerWitnesses/D170/absent (0.82s)
+        --- FAIL: TestLedgerWitnesses/D170/hole (0.78s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-d	141.285s
+=== RUN   TestRecordBoundaries
+=== PAUSE TestRecordBoundaries
+=== RUN   TestRecordPrototypeMiss
+=== PAUSE TestRecordPrototypeMiss
+=== RUN   TestRecordAliases
+=== PAUSE TestRecordAliases
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/number
+=== RUN   TestLedgerWitnesses/number/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesnumberpresent1005802265/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: number; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/number/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesnumberabsent4278321108/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: number; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/boolean
+=== RUN   TestLedgerWitnesses/boolean/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesbooleanpresent477399028/001/main.ts:3:24: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: boolean; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/boolean/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesbooleanabsent2904284973/001/main.ts:3:24: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: boolean; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/string
+=== RUN   TestLedgerWitnesses/string/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesstringpresent901981901/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/string/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesstringabsent3742689129/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129-D131
+=== RUN   TestLedgerWitnesses/D129-D131/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesD129-D131present80728258/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/D129-D131/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesD129-D131absent3931368012/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/prototype-own-key
+=== RUN   TestLedgerWitnesses/prototype-own-key/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesprototype-own-keypresent3713512816/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/prototype-own-key/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesprototype-own-keyabsent86400249/001/main.ts:3:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/proto-data
+=== RUN   TestLedgerWitnesses/proto-data/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesproto-datapresent2271934427/001/main.ts:4:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/proto-data/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesproto-dataabsent3716148230/001/main.ts:4:23: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/record-array
+=== RUN   TestLedgerWitnesses/record-array/present
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesrecord-arraypresent1578082271/001/main.ts:3:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+=== RUN   TestLedgerWitnesses/record-array/absent
+    witness_test.go:119: /tmp/adamic-gate/TestLedgerWitnessesrecord-arrayabsent61016099/001/main.ts:3:25: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string[]; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+--- FAIL: TestLedgerWitnesses (39.80s)
+    --- FAIL: TestLedgerWitnesses/number (2.09s)
+        --- FAIL: TestLedgerWitnesses/number/present (1.00s)
+        --- FAIL: TestLedgerWitnesses/number/absent (1.09s)
+    --- FAIL: TestLedgerWitnesses/boolean (3.33s)
+        --- FAIL: TestLedgerWitnesses/boolean/present (1.45s)
+        --- FAIL: TestLedgerWitnesses/boolean/absent (1.88s)
+    --- FAIL: TestLedgerWitnesses/string (3.19s)
+        --- FAIL: TestLedgerWitnesses/string/present (1.47s)
+        --- FAIL: TestLedgerWitnesses/string/absent (1.72s)
+    --- FAIL: TestLedgerWitnesses/D129-D131 (2.90s)
+        --- FAIL: TestLedgerWitnesses/D129-D131/present (1.59s)
+        --- FAIL: TestLedgerWitnesses/D129-D131/absent (1.31s)
+    --- FAIL: TestLedgerWitnesses/prototype-own-key (2.48s)
+        --- FAIL: TestLedgerWitnesses/prototype-own-key/present (1.16s)
+        --- FAIL: TestLedgerWitnesses/prototype-own-key/absent (1.32s)
+    --- FAIL: TestLedgerWitnesses/proto-data (2.39s)
+        --- FAIL: TestLedgerWitnesses/proto-data/present (1.22s)
+        --- FAIL: TestLedgerWitnesses/proto-data/absent (1.17s)
+    --- FAIL: TestLedgerWitnesses/record-array (2.30s)
+        --- FAIL: TestLedgerWitnesses/record-array/present (1.23s)
+        --- FAIL: TestLedgerWitnesses/record-array/absent (1.07s)
+=== CONT  TestRecordBoundaries
+=== CONT  TestRecordPrototypeMiss
+=== CONT  TestRecordAliases
+=== RUN   TestRecordBoundaries/named_read
+=== NAME  TestRecordPrototypeMiss
+    boundaries_test.go:79: /tmp/adamic-gate/TestRecordPrototypeMiss2691151964/001/main.ts:1:99: stage 0 can't lower dynamic record reads for a value of type { readonly [key: string]: string; } (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+--- FAIL: TestRecordPrototypeMiss (1.31s)
+=== NAME  TestRecordBoundaries/named_read
+    boundaries_test.go:53: /tmp/adamic-gate/TestRecordBoundariesnamed_read552831865/001/main.ts:1:68: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+=== RUN   TestRecordBoundaries/record_cast
+=== NAME  TestRecordAliases
+    boundaries_test.go:133: /tmp/adamic-gate/TestRecordAliases1424389798/001/main.ts:2:68: stage 0 can't lower dynamic record reads for a value of type Paths (own-key lookup returning T | undefined is not implemented for this representation; use Map.get) yet
+--- FAIL: TestRecordAliases (1.44s)
+=== NAME  TestRecordBoundaries/record_cast
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_cast3752132025/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: number; } yet
+=== RUN   TestRecordBoundaries/nested_cast
+    boundaries_test.go:57: unsupported record boundary compiled
+=== RUN   TestRecordBoundaries/undefined
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesundefined2987478764/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/reflection
+    boundaries_test.go:62: Node stdout="\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesreflection2783077661/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: number; } yet
+=== RUN   TestRecordBoundaries/proto_literal
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesproto_literal2474854556/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: string; } yet
+=== RUN   TestRecordBoundaries/nullable
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnullable1029687849/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/mixed
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmixed462939238/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/record_to_fixed
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_to_fixed2648005126/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: number; } yet
+=== RUN   TestRecordBoundaries/nested_view
+    boundaries_test.go:57: unsupported record boundary compiled
+=== RUN   TestRecordBoundaries/array_widening
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesarray_widening272348837/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: "a"[]; } yet
+=== RUN   TestRecordBoundaries/mutable
+    boundaries_test.go:57: unsupported record boundary compiled
+=== RUN   TestRecordBoundaries/recursive
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecursive2338616230/001/main.ts:1:24: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/fixed_to_record
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesfixed_to_record3445769375/001/main.ts:1:35: stage 0 can't lower a value of type { readonly [key: string]: number; } yet
+=== RUN   TestRecordBoundaries/spread
+    boundaries_test.go:62: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesspread2931868993/001/main.ts:1:7: stage 0 can't lower a value of type { readonly [key: string]: number; } yet
+--- FAIL: TestRecordBoundaries (29.59s)
+    --- FAIL: TestRecordBoundaries/named_read (1.43s)
+    --- PASS: TestRecordBoundaries/record_cast (1.42s)
+    --- FAIL: TestRecordBoundaries/nested_cast (1.33s)
+    --- PASS: TestRecordBoundaries/undefined (1.60s)
+    --- PASS: TestRecordBoundaries/reflection (1.93s)
+    --- PASS: TestRecordBoundaries/proto_literal (1.50s)
+    --- PASS: TestRecordBoundaries/nullable (1.40s)
+    --- PASS: TestRecordBoundaries/mixed (2.19s)
+    --- PASS: TestRecordBoundaries/record_to_fixed (1.90s)
+    --- FAIL: TestRecordBoundaries/nested_view (2.32s)
+    --- PASS: TestRecordBoundaries/array_widening (2.97s)
+    --- FAIL: TestRecordBoundaries/mutable (2.93s)
+    --- PASS: TestRecordBoundaries/recursive (3.37s)
+    --- PASS: TestRecordBoundaries/fixed_to_record (1.59s)
+    --- PASS: TestRecordBoundaries/spread (1.71s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-records	69.427s
+=== RUN   TestIndexedPresenceRuntime
+=== PAUSE TestIndexedPresenceRuntime
+=== RUN   TestJSONStringifyUseRuntime
+=== PAUSE TestJSONStringifyUseRuntime
+=== RUN   TestSparseRepresentationBoundaries
+=== PAUSE TestSparseRepresentationBoundaries
+=== RUN   TestTypedArrayRepresentationBoundaries
+=== PAUSE TestTypedArrayRepresentationBoundaries
+=== CONT  TestIndexedPresenceRuntime
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int8Array
+=== CONT  TestJSONStringifyUseRuntime
+=== RUN   TestJSONStringifyUseRuntime/undefined
+=== CONT  TestTypedArrayRepresentationBoundaries
+=== RUN   TestTypedArrayRepresentationBoundaries/for-of
+=== CONT  TestSparseRepresentationBoundaries
+=== RUN   TestSparseRepresentationBoundaries/slice
+=== RUN   TestSparseRepresentationBoundaries/join
+=== RUN   TestTypedArrayRepresentationBoundaries/iterator
+=== RUN   TestSparseRepresentationBoundaries/for-of
+=== RUN   TestTypedArrayRepresentationBoundaries/data-input
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint8Array
+=== NAME  TestJSONStringifyUseRuntime/undefined
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/function
+=== RUN   TestTypedArrayRepresentationBoundaries/fractional-length
+=== RUN   TestSparseRepresentationBoundaries/entries
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint8ClampedArray
+=== RUN   TestSparseRepresentationBoundaries/spread
+=== RUN   TestTypedArrayRepresentationBoundaries/dynamic-length
+=== NAME  TestJSONStringifyUseRuntime/function
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/held-result
+=== RUN   TestTypedArrayRepresentationBoundaries/method
+=== RUN   TestSparseRepresentationBoundaries/stringify
+=== RUN   TestTypedArrayRepresentationBoundaries/write
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int16Array
+=== RUN   TestSparseRepresentationBoundaries/from
+=== RUN   TestTypedArrayRepresentationBoundaries/buffer
+=== NAME  TestJSONStringifyUseRuntime/held-result
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/observed-result
+=== RUN   TestSparseRepresentationBoundaries/set
+=== RUN   TestTypedArrayRepresentationBoundaries/keys
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint16Array
+--- PASS: TestSparseRepresentationBoundaries (14.76s)
+    --- PASS: TestSparseRepresentationBoundaries/slice (3.69s)
+    --- PASS: TestSparseRepresentationBoundaries/join (2.89s)
+    --- PASS: TestSparseRepresentationBoundaries/for-of (1.92s)
+    --- PASS: TestSparseRepresentationBoundaries/entries (1.00s)
+    --- PASS: TestSparseRepresentationBoundaries/spread (1.44s)
+    --- PASS: TestSparseRepresentationBoundaries/stringify (1.43s)
+    --- PASS: TestSparseRepresentationBoundaries/from (1.31s)
+    --- PASS: TestSparseRepresentationBoundaries/set (1.04s)
+=== RUN   TestTypedArrayRepresentationBoundaries/from
+=== RUN   TestJSONStringifyUseRuntime/present
+=== RUN   TestTypedArrayRepresentationBoundaries/spread
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int32Array
+=== RUN   TestTypedArrayRepresentationBoundaries/view
+--- PASS: TestJSONStringifyUseRuntime (18.45s)
+    --- PASS: TestJSONStringifyUseRuntime/undefined (7.19s)
+    --- PASS: TestJSONStringifyUseRuntime/function (3.15s)
+    --- PASS: TestJSONStringifyUseRuntime/held-result (2.60s)
+    --- PASS: TestJSONStringifyUseRuntime/observed-result (2.28s)
+    --- PASS: TestJSONStringifyUseRuntime/present (3.22s)
+=== RUN   TestTypedArrayRepresentationBoundaries/cast-view
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint32Array
+=== RUN   TestTypedArrayRepresentationBoundaries/stringify
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Float32Array
+--- PASS: TestTypedArrayRepresentationBoundaries (23.16s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/for-of (3.93s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/iterator (2.69s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/data-input (1.82s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/fractional-length (1.17s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/dynamic-length (0.94s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/method (1.11s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/write (0.98s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/buffer (1.30s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/keys (1.20s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/from (1.28s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/spread (1.53s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/view (1.82s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/cast-view (1.67s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/stringify (1.74s)
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Float64Array
+=== RUN   TestIndexedPresenceRuntime/observed-typed-metadata
+=== RUN   TestIndexedPresenceRuntime/typed-return
+=== RUN   TestIndexedPresenceRuntime/typed-identity
+=== RUN   TestIndexedPresenceRuntime/typed-parameter
+=== RUN   TestIndexedPresenceRuntime/typed-enum-length
+=== RUN   TestIndexedPresenceRuntime/typed-empty
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-outside
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-fractional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-present
+=== RUN   TestIndexedPresenceRuntime/observed-typed
+=== RUN   TestIndexedPresenceRuntime/hole-enum-effects
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-enum-length
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-compound
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-integer-loop
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-reference-write
+=== RUN   TestIndexedPresenceRuntime/hole-number
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-string
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/hole-partial-fill
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-alias-write
+=== RUN   TestIndexedPresenceRuntime/hole-filled
+=== RUN   TestIndexedPresenceRuntime/observed-hole
+=== RUN   TestIndexedPresenceRuntime/number
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/boolean
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/string-array
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/string
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/negative
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/fractional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/present-number
+=== RUN   TestIndexedPresenceRuntime/present-string
+=== RUN   TestIndexedPresenceRuntime/observed-undefined
+=== RUN   TestIndexedPresenceRuntime/observed-string
+=== RUN   TestIndexedPresenceRuntime/joint-optional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/once
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+--- PASS: TestIndexedPresenceRuntime (70.95s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int8Array (6.86s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint8Array (2.66s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint8ClampedArray (2.47s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int16Array (2.75s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint16Array (1.90s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int32Array (3.28s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint32Array (3.13s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Float32Array (2.86s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Float64Array (1.03s)
+    --- PASS: TestIndexedPresenceRuntime/observed-typed-metadata (0.74s)
+    --- PASS: TestIndexedPresenceRuntime/typed-return (0.93s)
+    --- PASS: TestIndexedPresenceRuntime/typed-identity (1.34s)
+    --- PASS: TestIndexedPresenceRuntime/typed-parameter (1.06s)
+    --- PASS: TestIndexedPresenceRuntime/typed-enum-length (0.94s)
+    --- PASS: TestIndexedPresenceRuntime/typed-empty (1.69s)
+    --- PASS: TestIndexedPresenceRuntime/typed-outside (1.74s)
+    --- PASS: TestIndexedPresenceRuntime/typed-fractional (2.25s)
+    --- PASS: TestIndexedPresenceRuntime/typed-present (1.88s)
+    --- PASS: TestIndexedPresenceRuntime/observed-typed (0.89s)
+    --- PASS: TestIndexedPresenceRuntime/hole-enum-effects (1.16s)
+    --- PASS: TestIndexedPresenceRuntime/hole-enum-length (1.66s)
+    --- PASS: TestIndexedPresenceRuntime/hole-compound (2.08s)
+    --- PASS: TestIndexedPresenceRuntime/hole-integer-loop (4.35s)
+    --- PASS: TestIndexedPresenceRuntime/hole-reference-write (2.25s)
+    --- PASS: TestIndexedPresenceRuntime/hole-number (2.55s)
+    --- PASS: TestIndexedPresenceRuntime/hole-string (1.67s)
+    --- PASS: TestIndexedPresenceRuntime/hole-partial-fill (1.53s)
+    --- PASS: TestIndexedPresenceRuntime/hole-alias-write (1.23s)
+    --- PASS: TestIndexedPresenceRuntime/hole-filled (1.22s)
+    --- PASS: TestIndexedPresenceRuntime/observed-hole (0.81s)
+    --- PASS: TestIndexedPresenceRuntime/number (1.19s)
+    --- PASS: TestIndexedPresenceRuntime/boolean (2.29s)
+    --- PASS: TestIndexedPresenceRuntime/string-array (1.18s)
+    --- PASS: TestIndexedPresenceRuntime/string (0.75s)
+    --- PASS: TestIndexedPresenceRuntime/negative (0.69s)
+    --- PASS: TestIndexedPresenceRuntime/fractional (0.78s)
+    --- PASS: TestIndexedPresenceRuntime/present-number (0.51s)
+    --- PASS: TestIndexedPresenceRuntime/present-string (0.48s)
+    --- PASS: TestIndexedPresenceRuntime/observed-undefined (0.47s)
+    --- PASS: TestIndexedPresenceRuntime/observed-string (0.46s)
+    --- PASS: TestIndexedPresenceRuntime/joint-optional (0.61s)
+    --- PASS: TestIndexedPresenceRuntime/once (0.61s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-options	71.090s
+=== RUN   TestReceiverAssertionRouting
+=== PAUSE TestReceiverAssertionRouting
+=== CONT  TestReceiverAssertionRouting
+=== RUN   TestReceiverAssertionRouting/D212
+    routing_test.go:32: /tmp/adamic-gate/TestReceiverAssertionRoutingD2121377786767/001/generators.ts:1:190: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+=== RUN   TestReceiverAssertionRouting/D220
+    routing_test.go:32: /tmp/adamic-gate/TestReceiverAssertionRoutingD2202463458826/001/generators.ts:1:180: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.
+--- FAIL: TestReceiverAssertionRouting (1.01s)
+    --- FAIL: TestReceiverAssertionRouting/D212 (0.45s)
+    --- FAIL: TestReceiverAssertionRouting/D220 (0.56s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage3/stricter-indexed-all	1.028s
+FAIL

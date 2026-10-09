@@ -1,0 +1,88 @@
+[
+  {
+    "id": "number",
+    "typed": "const record: { readonly [key: string]: number } = INPUT;\nconst key = \"entry\";\nconst value: number = record[key];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: 7 }",
+    "absent": "{}",
+    "read": "record[key]",
+    "want": "7\n"
+  },
+  {
+    "id": "boolean",
+    "typed": "const record: { readonly [key: string]: boolean } = INPUT;\nconst key = \"entry\";\nconst value: boolean = record[key];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: false }",
+    "absent": "{}",
+    "read": "record[key]",
+    "want": "false\n"
+  },
+  {
+    "id": "string",
+    "typed": "const record: { readonly [key: string]: string } = INPUT;\nconst key = \"entry\";\nconst value: string = record[key];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: \"7\" }",
+    "absent": "{}",
+    "read": "record[key]",
+    "want": "7\n"
+  },
+  {
+    "id": "D129-D131",
+    "typed": "const options: { readonly paths: { readonly [key: string]: string[] } } = { paths: INPUT };\nconst key = \"entry\"; const i = 0;\nconst value: string = options.paths[key][i];\nconsole.log(`${value}`);\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{ entry: [] }",
+    "read": "options.paths[key][i]",
+    "want": "7\n"
+  },
+  {
+    "id": "prototype-own-key",
+    "typed": "const record: { readonly [key: string]: string } = INPUT;\nconst key = \"toString\";\nconst value: string = record[key];\nconsole.log(`${value}`);\n",
+    "present": "{ toString: \"7\" }",
+    "absent": "{ toString: \"7\" }",
+    "read": "record[key]",
+    "want": "7\n"
+  },
+  {
+    "id": "proto-data",
+    "typed": "const __proto__ = \"7\";\nconst record: { readonly [key: string]: string } = INPUT;\nconst key = \"entry\";\nconst value: string = record[key];\nconsole.log(`${value}`);\n",
+    "present": "{ __proto__, entry: \"7\" }",
+    "absent": "{ __proto__ }",
+    "read": "record[key]",
+    "want": "7\n"
+  },
+  {
+    "id": "record-array",
+    "typed": "const record: { readonly [key: string]: string[] } = INPUT;\nconst key = \"entry\";\nconst value: string[] = record[key];\nconsole.log(value === undefined ? \"undefined\" : \"present\");\n",
+    "present": "{ entry: [\"7\"] }",
+    "absent": "{}",
+    "read": "record[key]",
+    "want": "present\n"
+  },
+  {
+    "id": "D119",
+    "typed": "const typesVersions: { readonly [key: string]: { readonly [path: string]: string[] } } = INPUT;\nconst key = \"version\"; const path = \"entry\"; const i = 0;\nconst value: { readonly [path: string]: string[] } = typesVersions[key];\nconsole.log(value === undefined ? \"undefined\" : \"7\");\n",
+    "present": "{ version: { entry: [\"7\"] } }",
+    "absent": "{}",
+    "read": "typesVersions[key]",
+    "want": "7\n",
+    "checks": 1,
+    "arrays": 0
+  },
+  {
+    "id": "nested-inner",
+    "typed": "const typesVersions: { readonly [key: string]: { readonly [path: string]: string[] } } = INPUT;\nconst key = \"version\"; const path = \"entry\"; const i = 0;\nconst value: string[] = typesVersions[key][path];\nconsole.log(value === undefined ? \"undefined\" : \"7\");\n",
+    "present": "{ version: { entry: [\"7\"] } }",
+    "absent": "{ version: {} }",
+    "read": "typesVersions[key][path]",
+    "want": "7\n",
+    "checks": 2,
+    "arrays": 0
+  },
+  {
+    "id": "nested-array",
+    "typed": "const typesVersions: { readonly [key: string]: { readonly [path: string]: string[] } } = INPUT;\nconst key = \"version\"; const path = \"entry\"; const i = 0;\nconst value: string = typesVersions[key][path][i];\nconsole.log(value === undefined ? \"undefined\" : \"7\");\n",
+    "present": "{ version: { entry: [\"7\"] } }",
+    "absent": "{ version: { entry: [] } }",
+    "read": "typesVersions[key][path][i]",
+    "want": "7\n",
+    "checks": 3,
+    "arrays": 1
+  }
+]

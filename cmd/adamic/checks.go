@@ -25,6 +25,9 @@ func renderWithChecks(backend, path string) int {
 		return 1
 	}
 	explainPredicateChecks(os.Stderr, program)
+	if len(ir.InsertedChecks(program)) != 0 {
+		explainChecks(program, os.Stderr)
+	}
 	if backend == "js" {
 		fmt.Print(javascript.JavaScript(program))
 	} else {

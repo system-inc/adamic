@@ -14,10 +14,14 @@ import (
 const (
 	preludeDirectory = "/adamic-prelude"
 	preludePath      = preludeDirectory + "/adamic.d.ts"
+	setPreludePath   = preludeDirectory + "/set.d.ts"
 )
 
 //go:embed prelude.d.ts
 var prelude string
+
+//go:embed prelude_set.d.ts
+var setPrelude string
 
 // sourceFS is the disk as the checker sees an Adamic program.
 //
@@ -30,8 +34,10 @@ var prelude string
 // is ever shadowed silently.
 type sourceFS struct {
 	vfs.FS
-	overlay   map[tspath.RootedFilePath]string
-	nodeTypes bool
+	overlay          map[tspath.RootedFilePath]string
+	nodeTypes        bool
+	projectConsole   bool
+	jsonAssumeString bool
 }
 
 // adamicFile is the .a file behind a path the checker asked for, when there is one and no real .ts
@@ -53,7 +59,7 @@ func (s *sourceFS) displayName(path tspath.RootedFilePath) string {
 }
 
 func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
-	if path == preludePath {
+	if path == preludePath || path == setPreludePath {
 		return true
 	}
 	if _, isAdamic := s.adamicFile(path); isAdamic {
@@ -67,10 +73,31 @@ func (s *sourceFS) FileExists(path tspath.RootedFilePath) bool {
 
 func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
 	if path == preludePath {
+		text := prelude
 		if s.nodeTypes {
-			return nodePrelude(), true
+			text = nodePrelude()
 		}
-		return prelude, true
+		if s.jsonAssumeString {
+			text = strings.ReplaceAll(text, "stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;", "stringify(value?: unknown, replacer?: unknown, space?: unknown): string;")
+		}
+		if s.projectConsole {
+			text = strings.ReplaceAll(text, "log(message: string): void;", "log(...data: any[]): void;")
+			text = strings.ReplaceAll(text, "error(message: string): void;", "error(...data: any[]): void;")
+			start := strings.Index(text, "declare var console:")
+			if start < 0 {
+				start = strings.Index(text, "declare const console:")
+			}
+			if start >= 0 && !s.nodeTypes {
+				if end := strings.Index(text[start:], "declare module 'adamic'"); end >= 0 {
+					text = text[:start] + text[start+end:]
+				}
+			}
+			return text, true
+		}
+		return text, true
+	}
+	if path == setPreludePath {
+		return setPrelude, true
 	}
 	if source, exists := s.overlay[path]; exists {
 		return source, true
@@ -96,7 +123,7 @@ func (s *sourceFS) Stat(path tspath.RootedPath) vfs.FileInfo {
 }
 
 func (s *sourceFS) Realpath(path tspath.RootedPath) tspath.RootedPath {
-	if path == preludePath {
+	if path == preludePath || path == setPreludePath {
 		return path
 	}
 	if adamicPath, isAdamic := s.adamicFile(tspath.RootedFilePathFromPath(path)); isAdamic {

@@ -90,6 +90,9 @@ type NonNullCheck struct {
 	Proven            bool
 }
 
+// ErrorClass names the runtime built-in Error identity, outside source class IDs.
+const ErrorClass = -1
+
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
 type Class struct {
 	// Definition is the erased source identity, shared by distinct native layouts.
@@ -207,6 +210,8 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	// Record is a string-key table wrapped by the runtime record object.
+	Record
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -239,7 +244,7 @@ func (t Type) Present() Type {
 
 // IsReference reports whether a value of the type lives on the heap and is counted.
 func (t Type) IsReference() bool {
-	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray()
+	return t == String || t == Object || t == Array || t == Map || t == Closure || t == Union || t == Weak || t.IsTypedArray() || t == Record
 }
 
 // Local is a variable: its name as written, for reading the output, and its type.
@@ -535,7 +540,10 @@ type (
 	MaybeToString struct{ Value Expression }
 
 	// Box is Value where a Union goes: a number boxed, a boolean as its box, a reference as itself.
-	Box struct{ Value Expression }
+	Box struct {
+		Value Expression
+		Null  bool
+	}
 
 	// Narrow is a Union the checker has proven to be one member (by typeof, ===, or assignment), as
 	// that member's type To, which may be a Maybe pair (number | undefined, out of string | number |
@@ -543,6 +551,9 @@ type (
 	Narrow struct {
 		Value Expression
 		To    Type
+		// Checked guards a project catch value at a typed use; Optional admits undefined.
+		Checked, Optional bool
+		Where             string
 	}
 
 	// TypeOf is typeof Value: "number", "string", "boolean", "undefined", "object" or "function".
@@ -575,10 +586,12 @@ type (
 	// Coalesce is Value ?? Fallback: Value when it's present, and otherwise Fallback, evaluated only
 	// then. With Panic set instead of Fallback, it's Value ?? panic(Panic).
 	Coalesce struct {
-		Value    Expression
-		Fallback Expression
-		Panic    Expression
-		Of       Type
+		// UndefinedOnly is an indexed-presence guard: null is a present value.
+		UndefinedOnly bool
+		Value         Expression
+		Fallback      Expression
+		Panic         Expression
+		Of            Type
 	}
 
 	// StringLength is string.length, in UTF-16 code units.
@@ -764,6 +777,8 @@ type (
 
 	// MapNew is new Map(), or new Map([[key, value], ...]) with the pairs written out.
 	MapNew struct {
+		// Record selects the existing own-key record runtime rather than a Map.
+		Record     bool
 		Key, Value Type
 		Entries    [][2]Expression
 
@@ -901,6 +916,8 @@ type Field struct {
 	Name          string
 	Value         Expression
 	Private       bool
+	// Null distinguishes nullable reference slots from absent ones.
+	Null bool
 }
 
 // Method is one of a class's methods: its name, and the function that is it, whose first parameter
@@ -1040,7 +1057,12 @@ func (WriteTextFile) Type() Type    { return Object }
 func (ReadDirectory) Type() Type    { return Object }
 func (FileStatus) Type() Type       { return Object }
 
-func (MapNew) Type() Type     { return Map }
+func (n MapNew) Type() Type {
+	if n.Record {
+		return Record
+	}
+	return Map
+}
 func (MapKeys) Type() Type    { return Array }
 func (MapValues) Type() Type  { return Array }
 func (MapClear) Type() Type   { return 0 }
@@ -1250,7 +1272,7 @@ type (
 	}
 	Continue struct{ Label string }
 
-	// Throw throws Value, an Error: to the innermost Try around it, or out of the function, whose
+	// Throw throws Value, preserving its runtime kind and identity: to the innermost Try around it, or out of the function, whose
 	// caller passes it on the same way, or, out of every function, as a panic of String(Value).
 	Throw struct{ Value Expression }
 

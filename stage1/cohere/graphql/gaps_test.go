@@ -23,7 +23,7 @@ var gaps = []struct {
 	stdout string
 }{
 	{path: "gaps/1_throwing_function_value.ts", stdout: "too long: bb\n"},
-	{path: "gaps/2_error_made_elsewhere.ts", notYet: "throwing an Error that isn't made where it's thrown or caught by the catch around it", stdout: "Unexpected token at 3.\n"},
+	{path: "gaps/2_error_made_elsewhere.ts", stdout: "Unexpected token at 3.\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {

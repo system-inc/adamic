@@ -46,7 +46,9 @@ The reason the message gives is the runtime's own loops (`map`, `sort` and the r
 
 **Around it:** each list is its helper's loop, written where graphql-js calls the helper, and marked with the helper's name (`// optionalMany('(', parseVariableDefinition, ')')`). A dispatching method taking the item's kind in the function's place doesn't lower either, since it would call methods declared after it (gap 3 below, met again).
 
-## 2. Throwing an Error made in another function
+## 2. Throwing an Error made in another function (closed by caught-value representation)
+
+Closed by `codex/stricter-catch-variables` step 1 (`a77b4c46`): a thrown Error keeps its runtime representation even when made in another function. `gaps_test.go` now requires the probe to agree with Node under sanitizers. The port's message-returning helpers remain compatible; this unit does not change the port's helper API.
 
 graphql-js's parser throws what `this.unexpected()` and `syntaxError()` return.
 
@@ -65,7 +67,7 @@ try {
 stage 0 can't lower throwing an Error that isn't made where it's thrown or caught by the catch around it yet        (Node prints Unexpected token at 3.)
 ```
 
-**Around it:** `syntaxError` and `unexpected` return the message, and each of the 35 places throws `new Error(...)` of it. Since 0.1 has no class inheritance, the error can't carry graphql-js's `locations` either; Prettier reads only the first location into its message, so the message is the whole of what the port needs.
+**Historical workaround:** `syntaxError` and `unexpected` return the message, and each of the 35 places throws `new Error(...)` of it. Since 0.1 has no class inheritance, the error can't carry graphql-js's `locations` either; Prettier reads only the first location into its message, so the message is the whole of what the port needs.
 
 ## Cooking a string without `String.fromCodePoint`
 

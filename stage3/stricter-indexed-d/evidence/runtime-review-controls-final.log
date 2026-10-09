@@ -1,0 +1,39 @@
+=== RUN   TestNullableRuntimeReview
+=== RUN   TestNullableRuntimeReview/map-set
+    runtime_review_test.go:58: Node "4\nmissing\nempty\nnil\ntext\nempty\nupdated\ntrue\ntrue\nfalse\ntrue\n4\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\ntrue\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:65: map address-check mutant caught: exit=0 stdout="3\nmissing\nempty\ntext\ntext\nempty\nupdated\ntrue\ntrue\nfalse\nfalse\n3\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\nfalse\n" stderr=""
+=== RUN   TestNullableRuntimeReview/narrow-concat
+    runtime_review_test.go:58: Node "abc!\n!\nnull!\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-length
+    runtime_review_test.go:58: Node "3\n0\n4\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-json
+    runtime_review_test.go:58: Node "\"abc\"\n\"\"\n\"null\"\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-slice
+    runtime_review_test.go:58: Node "bc\n\nul\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-comparison
+    runtime_review_test.go:58: Node "false\ntrue\nfalse\ntrue\ntrue\nfalse\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-template
+    runtime_review_test.go:58: Node "value:null\nvalue:null\nliteral:null\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-concat
+    runtime_review_test.go:58: Node "value:null\nnull:value\nvalue:null\nnull:value\nliteral:null\nnull:literal\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-json
+    runtime_review_test.go:58: Node "null\n\"null\"\nnull\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:75: JSON sentinel mutant caught: exit=0 stdout="\"null\"\n\"null\"\nnull\n" stderr=""
+=== RUN   TestNullableRuntimeReview/null-string
+    runtime_review_test.go:58: Node "null\nnull\nnull\n"; JS, release and ASan/UBSan match
+--- PASS: TestNullableRuntimeReview (5.33s)
+    --- PASS: TestNullableRuntimeReview/map-set (0.84s)
+    --- PASS: TestNullableRuntimeReview/narrow-concat (0.45s)
+    --- PASS: TestNullableRuntimeReview/narrow-length (0.46s)
+    --- PASS: TestNullableRuntimeReview/narrow-json (0.46s)
+    --- PASS: TestNullableRuntimeReview/narrow-slice (0.48s)
+    --- PASS: TestNullableRuntimeReview/narrow-comparison (0.46s)
+    --- PASS: TestNullableRuntimeReview/null-template (0.47s)
+    --- PASS: TestNullableRuntimeReview/null-concat (0.46s)
+    --- PASS: TestNullableRuntimeReview/null-json (0.78s)
+    --- PASS: TestNullableRuntimeReview/null-string (0.48s)
+=== RUN   TestNullableSentinelHeader
+    runtime_review_test.go:100: one immortal string-kind sentinel directly prints Node String(null): "null\n"
+--- PASS: TestNullableSentinelHeader (0.44s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	5.781s

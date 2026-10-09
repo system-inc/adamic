@@ -1,0 +1,32 @@
+function caught(value: unknown): unknown {
+	try {
+		throw value;
+	} catch (error) {
+		return error;
+	}
+}
+function inspect(value: unknown): void {
+	const error = caught(value);
+	console.log(`${error instanceof Error} ${typeof error} ${error === value}`);
+	if (error instanceof Error) {
+		console.log(error.message);
+	} else if (typeof error === 'string') {
+		console.log(error);
+	} else if (typeof error === 'number') {
+		console.log(`${error}`);
+	}
+}
+inspect(new Error(`error ${1}`));
+inspect(`string ${2}`);
+inspect(3);
+inspect({ message: `object ${4}` });
+inspect(undefined);
+try {
+	try {
+		throw undefined;
+	} finally {
+		console.log('finally undefined');
+	}
+} catch (error) {
+	console.log(`${typeof error} ${error instanceof Error}`);
+}

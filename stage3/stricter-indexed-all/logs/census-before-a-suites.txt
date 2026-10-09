@@ -1,0 +1,1353 @@
+=== RUN   TestOptionalReturnAttribution
+--- PASS: TestOptionalReturnAttribution (2.12s)
+=== RUN   TestDifferentOverloadStorageRefuses
+--- PASS: TestDifferentOverloadStorageRefuses (1.01s)
+=== RUN   TestAssignedLedgerIsCovered
+--- PASS: TestAssignedLedgerIsCovered (0.00s)
+=== RUN   TestCheckerIndexedWitnesses
+=== RUN   TestCheckerIndexedWitnesses/D037
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D037/absent=true
+    witness_test.go:187: [D037] receiver=object array, constant zero, overload-selected optional return Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D054
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D054/absent=true
+    witness_test.go:187: [D054] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D056
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D056/absent=true
+    witness_test.go:187: [D056] receiver=readonly object array, variable index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D057
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D057/absent=true
+    witness_test.go:187: [D057] receiver=readonly callable array, loop index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D060-D061
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D060-D061/absent=true
+    witness_test.go:187: [D060 D061] receiver=array of variadic tuples, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D067
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D067/absent=true
+    witness_test.go:187: [D067] receiver=object field containing number array, subtraction index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="0\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D068
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D068/absent=true
+    witness_test.go:187: [D068] receiver=readonly object array, position local Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D069
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D069/absent=true
+    witness_test.go:187: [D069] receiver=returned readonly object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+=== RUN   TestCheckerIndexedWitnesses/D071
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D071/absent=true
+    witness_test.go:187: [D071] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestCheckerIndexedWitnessesD071absent=true3967199292/001/main.ts:5:19\n"
+=== RUN   TestCheckerIndexedWitnesses/D072
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D072/absent=true
+    witness_test.go:187: [D072] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestCheckerIndexedWitnessesD072absent=true2374015918/001/main.ts:5:31\n"
+=== RUN   TestCheckerIndexedWitnesses/D073
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D073/absent=true
+    witness_test.go:187: [D073] receiver=returned readonly object array, one-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D077
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D077/absent=true
+    witness_test.go:187: [D077] receiver=object field containing object array, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D082
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D082/absent=true
+    witness_test.go:187: [D082] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D083
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D083/absent=true
+    witness_test.go:187: [D083] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D084
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D084/absent=true
+    witness_test.go:187: [D084] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D085
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D085/absent=true
+    witness_test.go:187: [D085] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D086
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D086/absent=true
+    witness_test.go:187: [D086] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D087
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D087/absent=true
+    witness_test.go:187: [D087] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D088
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D088/absent=true
+    witness_test.go:187: [D088] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D089
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D089/absent=true
+    witness_test.go:187: [D089] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D090
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D090/absent=true
+    witness_test.go:187: [D090] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D091
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D091/absent=true
+    witness_test.go:187: [D091] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D092
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D092/absent=true
+    witness_test.go:187: [D092] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D093
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D093/absent=true
+    witness_test.go:187: [D093] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D094
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D094/absent=true
+    witness_test.go:187: [D094] receiver=NodeArray object field, constant zero Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/D095
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=false
+=== RUN   TestCheckerIndexedWitnesses/D095/absent=true
+    witness_test.go:187: [D095] receiver=mutable object array, property index Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false
+=== RUN   TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true
+    witness_test.go:187: [] receiver=returned readonly object array, three-element destructuring Node undefined; named stderr pinned in release/sanitized native and JS; erased guard caught: exit=0 stdout="undefined\n" stderr=""
+--- PASS: TestCheckerIndexedWitnesses (144.49s)
+    --- PASS: TestCheckerIndexedWitnesses/D037 (3.51s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=false (1.58s)
+        --- PASS: TestCheckerIndexedWitnesses/D037/absent=true (1.93s)
+    --- PASS: TestCheckerIndexedWitnesses/D054 (3.95s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=false (1.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D054/absent=true (2.25s)
+    --- PASS: TestCheckerIndexedWitnesses/D056 (5.61s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=false (2.16s)
+        --- PASS: TestCheckerIndexedWitnesses/D056/absent=true (3.44s)
+    --- PASS: TestCheckerIndexedWitnesses/D057 (5.27s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=false (2.51s)
+        --- PASS: TestCheckerIndexedWitnesses/D057/absent=true (2.76s)
+    --- PASS: TestCheckerIndexedWitnesses/D060-D061 (5.35s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=false (2.45s)
+        --- PASS: TestCheckerIndexedWitnesses/D060-D061/absent=true (2.89s)
+    --- PASS: TestCheckerIndexedWitnesses/D067 (4.66s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=false (2.15s)
+        --- PASS: TestCheckerIndexedWitnesses/D067/absent=true (2.51s)
+    --- PASS: TestCheckerIndexedWitnesses/D068 (4.66s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=false (2.14s)
+        --- PASS: TestCheckerIndexedWitnesses/D068/absent=true (2.52s)
+    --- PASS: TestCheckerIndexedWitnesses/D069 (6.62s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=false (2.77s)
+        --- PASS: TestCheckerIndexedWitnesses/D069/absent=true (3.85s)
+    --- PASS: TestCheckerIndexedWitnesses/D071 (6.29s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=false (2.96s)
+        --- PASS: TestCheckerIndexedWitnesses/D071/absent=true (3.31s)
+    --- PASS: TestCheckerIndexedWitnesses/D072 (5.13s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=false (2.27s)
+        --- PASS: TestCheckerIndexedWitnesses/D072/absent=true (2.86s)
+    --- PASS: TestCheckerIndexedWitnesses/D073 (5.95s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=false (2.70s)
+        --- PASS: TestCheckerIndexedWitnesses/D073/absent=true (3.25s)
+    --- PASS: TestCheckerIndexedWitnesses/D077 (5.80s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=false (2.62s)
+        --- PASS: TestCheckerIndexedWitnesses/D077/absent=true (3.18s)
+    --- PASS: TestCheckerIndexedWitnesses/D082 (5.79s)
+        --- PASS: TestCheckerIndexedWitnesses/D082/absent=false (2.74s)
+        --- PASS: TestCheckerIndexedWitnesses/D082/absent=true (3.04s)
+    --- PASS: TestCheckerIndexedWitnesses/D083 (5.10s)
+        --- PASS: TestCheckerIndexedWitnesses/D083/absent=false (2.30s)
+        --- PASS: TestCheckerIndexedWitnesses/D083/absent=true (2.80s)
+    --- PASS: TestCheckerIndexedWitnesses/D084 (5.30s)
+        --- PASS: TestCheckerIndexedWitnesses/D084/absent=false (2.36s)
+        --- PASS: TestCheckerIndexedWitnesses/D084/absent=true (2.95s)
+    --- PASS: TestCheckerIndexedWitnesses/D085 (4.94s)
+        --- PASS: TestCheckerIndexedWitnesses/D085/absent=false (2.23s)
+        --- PASS: TestCheckerIndexedWitnesses/D085/absent=true (2.71s)
+    --- PASS: TestCheckerIndexedWitnesses/D086 (6.67s)
+        --- PASS: TestCheckerIndexedWitnesses/D086/absent=false (2.57s)
+        --- PASS: TestCheckerIndexedWitnesses/D086/absent=true (4.10s)
+    --- PASS: TestCheckerIndexedWitnesses/D087 (6.33s)
+        --- PASS: TestCheckerIndexedWitnesses/D087/absent=false (2.76s)
+        --- PASS: TestCheckerIndexedWitnesses/D087/absent=true (3.57s)
+    --- PASS: TestCheckerIndexedWitnesses/D088 (3.78s)
+        --- PASS: TestCheckerIndexedWitnesses/D088/absent=false (1.90s)
+        --- PASS: TestCheckerIndexedWitnesses/D088/absent=true (1.88s)
+    --- PASS: TestCheckerIndexedWitnesses/D089 (3.30s)
+        --- PASS: TestCheckerIndexedWitnesses/D089/absent=false (1.50s)
+        --- PASS: TestCheckerIndexedWitnesses/D089/absent=true (1.80s)
+    --- PASS: TestCheckerIndexedWitnesses/D090 (3.33s)
+        --- PASS: TestCheckerIndexedWitnesses/D090/absent=false (1.44s)
+        --- PASS: TestCheckerIndexedWitnesses/D090/absent=true (1.89s)
+    --- PASS: TestCheckerIndexedWitnesses/D091 (3.30s)
+        --- PASS: TestCheckerIndexedWitnesses/D091/absent=false (1.59s)
+        --- PASS: TestCheckerIndexedWitnesses/D091/absent=true (1.71s)
+    --- PASS: TestCheckerIndexedWitnesses/D092 (3.11s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=false (1.65s)
+        --- PASS: TestCheckerIndexedWitnesses/D092/absent=true (1.47s)
+    --- PASS: TestCheckerIndexedWitnesses/D093 (3.25s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=false (1.38s)
+        --- PASS: TestCheckerIndexedWitnesses/D093/absent=true (1.87s)
+    --- PASS: TestCheckerIndexedWitnesses/D094 (3.75s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=false (1.62s)
+        --- PASS: TestCheckerIndexedWitnesses/D094/absent=true (2.13s)
+    --- PASS: TestCheckerIndexedWitnesses/D095 (4.10s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=false (2.08s)
+        --- PASS: TestCheckerIndexedWitnesses/D095/absent=true (2.02s)
+    --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third (3.77s)
+        --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=false (1.80s)
+        --- PASS: TestCheckerIndexedWitnesses/gaps/destructuring-third/absent=true (1.96s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-a	147.641s
+=== RUN   TestGeneratorWitnesses
+=== PAUSE TestGeneratorWitnesses
+=== CONT  TestGeneratorWitnesses
+=== RUN   TestGeneratorWitnesses/D195
+=== RUN   TestGeneratorWitnesses/D195/absent=false
+=== RUN   TestGeneratorWitnesses/D195/absent=true
+    witness_test.go:168: PROVEN D195: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD195absent=true2540800277/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D196
+=== RUN   TestGeneratorWitnesses/D196/absent=false
+=== RUN   TestGeneratorWitnesses/D196/absent=true
+    witness_test.go:168: PROVEN D196: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD196absent=true1260950174/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D197
+=== RUN   TestGeneratorWitnesses/D197/absent=false
+=== RUN   TestGeneratorWitnesses/D197/absent=true
+    witness_test.go:168: PROVEN D197: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD197absent=true2986116920/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D198
+=== RUN   TestGeneratorWitnesses/D198/absent=false
+=== RUN   TestGeneratorWitnesses/D198/absent=true
+    witness_test.go:168: PROVEN D198: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD198absent=true2206283739/001/main.ts:4:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D199
+=== RUN   TestGeneratorWitnesses/D199/absent=false
+=== RUN   TestGeneratorWitnesses/D199/absent=true
+    witness_test.go:168: PROVEN D199: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD199absent=true522420065/001/main.ts:4:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D200
+=== RUN   TestGeneratorWitnesses/D200/absent=false
+=== RUN   TestGeneratorWitnesses/D200/absent=true
+    witness_test.go:168: PROVEN D200: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD200absent=true2588768544/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D201
+=== RUN   TestGeneratorWitnesses/D201/absent=false
+=== RUN   TestGeneratorWitnesses/D201/absent=true
+    witness_test.go:168: PROVEN D201: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD201absent=true1091172588/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D202
+=== RUN   TestGeneratorWitnesses/D202/absent=false
+=== RUN   TestGeneratorWitnesses/D202/absent=true
+    witness_test.go:168: PROVEN D202: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD202absent=true522216711/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D203
+=== RUN   TestGeneratorWitnesses/D203/absent=false
+=== RUN   TestGeneratorWitnesses/D203/absent=true
+    witness_test.go:168: PROVEN D203: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD203absent=true2352585380/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D204
+=== RUN   TestGeneratorWitnesses/D204/absent=false
+=== RUN   TestGeneratorWitnesses/D204/absent=true
+    witness_test.go:168: PROVEN D204: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD204absent=true1245208191/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D205
+=== RUN   TestGeneratorWitnesses/D205/absent=false
+=== RUN   TestGeneratorWitnesses/D205/absent=true
+    witness_test.go:168: PROVEN D205: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD205absent=true1593020246/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D206
+=== RUN   TestGeneratorWitnesses/D206/absent=false
+=== RUN   TestGeneratorWitnesses/D206/absent=true
+    witness_test.go:168: PROVEN D206: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD206absent=true2712318111/001/main.ts:4:23\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D207
+=== RUN   TestGeneratorWitnesses/D207/absent=false
+=== RUN   TestGeneratorWitnesses/D207/absent=true
+    witness_test.go:168: PROVEN D207: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD207absent=true2777528093/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D208
+=== RUN   TestGeneratorWitnesses/D208/absent=false
+=== RUN   TestGeneratorWitnesses/D208/absent=true
+    witness_test.go:168: PROVEN D208: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD208absent=true3454300732/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D209
+=== RUN   TestGeneratorWitnesses/D209/absent=false
+=== RUN   TestGeneratorWitnesses/D209/absent=true
+    witness_test.go:168: PROVEN D209: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD209absent=true816248933/001/main.ts:4:23\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D210
+=== RUN   TestGeneratorWitnesses/D210/absent=false
+=== RUN   TestGeneratorWitnesses/D210/absent=true
+    witness_test.go:168: PROVEN D210: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD210absent=true1577703230/001/main.ts:4:23\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D211
+=== RUN   TestGeneratorWitnesses/D211/absent=false
+=== RUN   TestGeneratorWitnesses/D211/absent=true
+    witness_test.go:168: PROVEN D211: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD211absent=true307484744/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D212
+=== RUN   TestGeneratorWitnesses/D212/absent=false
+=== RUN   TestGeneratorWitnesses/D212/absent=true
+    witness_test.go:168: PROVEN D212: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD212absent=true719763356/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D213
+=== RUN   TestGeneratorWitnesses/D213/absent=false
+=== RUN   TestGeneratorWitnesses/D213/absent=true
+    witness_test.go:168: PROVEN D213: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD213absent=true1248018062/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D214
+=== RUN   TestGeneratorWitnesses/D214/absent=false
+=== RUN   TestGeneratorWitnesses/D214/absent=true
+    witness_test.go:168: PROVEN D214: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD214absent=true2231382581/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D215
+=== RUN   TestGeneratorWitnesses/D215/absent=false
+=== RUN   TestGeneratorWitnesses/D215/absent=true
+    witness_test.go:168: PROVEN D215: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD215absent=true1619573480/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D216
+=== RUN   TestGeneratorWitnesses/D216/absent=false
+=== RUN   TestGeneratorWitnesses/D216/absent=true
+    witness_test.go:168: PROVEN D216: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD216absent=true2882304188/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D217
+=== RUN   TestGeneratorWitnesses/D217/absent=false
+=== RUN   TestGeneratorWitnesses/D217/absent=true
+    witness_test.go:168: PROVEN D217: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD217absent=true3243744855/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D218
+=== RUN   TestGeneratorWitnesses/D218/absent=false
+=== RUN   TestGeneratorWitnesses/D218/absent=true
+    witness_test.go:168: PROVEN D218: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD218absent=true4096638880/001/main.ts:5:21\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D219
+=== RUN   TestGeneratorWitnesses/D219/absent=false
+=== RUN   TestGeneratorWitnesses/D219/absent=true
+    witness_test.go:168: PROVEN D219: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD219absent=true2447149332/001/main.ts:4:25\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D220
+=== RUN   TestGeneratorWitnesses/D220/absent=false
+=== RUN   TestGeneratorWitnesses/D220/absent=true
+    witness_test.go:168: PROVEN D220: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD220absent=true4132977339/001/main.ts:4:23\n"; erase-check mutant exit=0
+=== RUN   TestGeneratorWitnesses/D221
+=== RUN   TestGeneratorWitnesses/D221/absent=false
+=== RUN   TestGeneratorWitnesses/D221/absent=true
+    witness_test.go:168: PROVEN D221: pinned stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestGeneratorWitnessesD221absent=true1238419931/001/main.ts:5:21\n"; erase-check mutant exit=0
+--- PASS: TestGeneratorWitnesses (141.52s)
+    --- PASS: TestGeneratorWitnesses/D195 (3.59s)
+        --- PASS: TestGeneratorWitnesses/D195/absent=false (1.55s)
+        --- PASS: TestGeneratorWitnesses/D195/absent=true (2.04s)
+    --- PASS: TestGeneratorWitnesses/D196 (5.69s)
+        --- PASS: TestGeneratorWitnesses/D196/absent=false (2.15s)
+        --- PASS: TestGeneratorWitnesses/D196/absent=true (3.54s)
+    --- PASS: TestGeneratorWitnesses/D197 (5.40s)
+        --- PASS: TestGeneratorWitnesses/D197/absent=false (2.76s)
+        --- PASS: TestGeneratorWitnesses/D197/absent=true (2.64s)
+    --- PASS: TestGeneratorWitnesses/D198 (5.34s)
+        --- PASS: TestGeneratorWitnesses/D198/absent=false (2.73s)
+        --- PASS: TestGeneratorWitnesses/D198/absent=true (2.62s)
+    --- PASS: TestGeneratorWitnesses/D199 (4.40s)
+        --- PASS: TestGeneratorWitnesses/D199/absent=false (2.10s)
+        --- PASS: TestGeneratorWitnesses/D199/absent=true (2.30s)
+    --- PASS: TestGeneratorWitnesses/D200 (4.37s)
+        --- PASS: TestGeneratorWitnesses/D200/absent=false (1.87s)
+        --- PASS: TestGeneratorWitnesses/D200/absent=true (2.49s)
+    --- PASS: TestGeneratorWitnesses/D201 (6.52s)
+        --- PASS: TestGeneratorWitnesses/D201/absent=false (2.80s)
+        --- PASS: TestGeneratorWitnesses/D201/absent=true (3.72s)
+    --- PASS: TestGeneratorWitnesses/D202 (6.59s)
+        --- PASS: TestGeneratorWitnesses/D202/absent=false (3.07s)
+        --- PASS: TestGeneratorWitnesses/D202/absent=true (3.51s)
+    --- PASS: TestGeneratorWitnesses/D203 (4.94s)
+        --- PASS: TestGeneratorWitnesses/D203/absent=false (1.90s)
+        --- PASS: TestGeneratorWitnesses/D203/absent=true (3.04s)
+    --- PASS: TestGeneratorWitnesses/D204 (5.34s)
+        --- PASS: TestGeneratorWitnesses/D204/absent=false (2.63s)
+        --- PASS: TestGeneratorWitnesses/D204/absent=true (2.71s)
+    --- PASS: TestGeneratorWitnesses/D205 (5.26s)
+        --- PASS: TestGeneratorWitnesses/D205/absent=false (2.27s)
+        --- PASS: TestGeneratorWitnesses/D205/absent=true (2.99s)
+    --- PASS: TestGeneratorWitnesses/D206 (5.74s)
+        --- PASS: TestGeneratorWitnesses/D206/absent=false (2.89s)
+        --- PASS: TestGeneratorWitnesses/D206/absent=true (2.85s)
+    --- PASS: TestGeneratorWitnesses/D207 (5.41s)
+        --- PASS: TestGeneratorWitnesses/D207/absent=false (2.48s)
+        --- PASS: TestGeneratorWitnesses/D207/absent=true (2.93s)
+    --- PASS: TestGeneratorWitnesses/D208 (5.00s)
+        --- PASS: TestGeneratorWitnesses/D208/absent=false (2.14s)
+        --- PASS: TestGeneratorWitnesses/D208/absent=true (2.85s)
+    --- PASS: TestGeneratorWitnesses/D209 (5.02s)
+        --- PASS: TestGeneratorWitnesses/D209/absent=false (2.19s)
+        --- PASS: TestGeneratorWitnesses/D209/absent=true (2.83s)
+    --- PASS: TestGeneratorWitnesses/D210 (6.46s)
+        --- PASS: TestGeneratorWitnesses/D210/absent=false (2.78s)
+        --- PASS: TestGeneratorWitnesses/D210/absent=true (3.69s)
+    --- PASS: TestGeneratorWitnesses/D211 (6.91s)
+        --- PASS: TestGeneratorWitnesses/D211/absent=false (3.11s)
+        --- PASS: TestGeneratorWitnesses/D211/absent=true (3.81s)
+    --- PASS: TestGeneratorWitnesses/D212 (3.88s)
+        --- PASS: TestGeneratorWitnesses/D212/absent=false (1.96s)
+        --- PASS: TestGeneratorWitnesses/D212/absent=true (1.92s)
+    --- PASS: TestGeneratorWitnesses/D213 (3.28s)
+        --- PASS: TestGeneratorWitnesses/D213/absent=false (1.60s)
+        --- PASS: TestGeneratorWitnesses/D213/absent=true (1.68s)
+    --- PASS: TestGeneratorWitnesses/D214 (3.22s)
+        --- PASS: TestGeneratorWitnesses/D214/absent=false (1.43s)
+        --- PASS: TestGeneratorWitnesses/D214/absent=true (1.79s)
+    --- PASS: TestGeneratorWitnesses/D215 (3.60s)
+        --- PASS: TestGeneratorWitnesses/D215/absent=false (1.71s)
+        --- PASS: TestGeneratorWitnesses/D215/absent=true (1.88s)
+    --- PASS: TestGeneratorWitnesses/D216 (3.43s)
+        --- PASS: TestGeneratorWitnesses/D216/absent=false (1.55s)
+        --- PASS: TestGeneratorWitnesses/D216/absent=true (1.89s)
+    --- PASS: TestGeneratorWitnesses/D217 (3.06s)
+        --- PASS: TestGeneratorWitnesses/D217/absent=false (1.36s)
+        --- PASS: TestGeneratorWitnesses/D217/absent=true (1.70s)
+    --- PASS: TestGeneratorWitnesses/D218 (3.83s)
+        --- PASS: TestGeneratorWitnesses/D218/absent=false (1.52s)
+        --- PASS: TestGeneratorWitnesses/D218/absent=true (2.31s)
+    --- PASS: TestGeneratorWitnesses/D219 (4.02s)
+        --- PASS: TestGeneratorWitnesses/D219/absent=false (1.80s)
+        --- PASS: TestGeneratorWitnesses/D219/absent=true (2.22s)
+    --- PASS: TestGeneratorWitnesses/D220 (3.84s)
+        --- PASS: TestGeneratorWitnesses/D220/absent=false (1.75s)
+        --- PASS: TestGeneratorWitnesses/D220/absent=true (2.09s)
+    --- PASS: TestGeneratorWitnesses/D221 (3.73s)
+        --- PASS: TestGeneratorWitnesses/D221/absent=false (1.51s)
+        --- PASS: TestGeneratorWitnesses/D221/absent=true (2.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-b	141.539s
+=== RUN   TestHoleCompoundReads
+=== RUN   TestHoleCompoundReads/D155
+=== RUN   TestHoleCompoundReads/D155/present-true
+=== RUN   TestHoleCompoundReads/D155/present-false
+    holes_test.go:99: D155 compound guard erased: mutant exits 0 printing "undefined\n1\n"; named exit-70 assertion catches it; sanitized=false
+    holes_test.go:99: D155 compound guard erased: mutant exits 0 printing "undefined\n1\n"; named exit-70 assertion catches it; sanitized=true
+=== RUN   TestHoleCompoundReads/D156
+=== RUN   TestHoleCompoundReads/D156/present-true
+=== RUN   TestHoleCompoundReads/D156/present-false
+    holes_test.go:99: D156 compound guard erased: mutant exits 0 printing "undefined\n2\n"; named exit-70 assertion catches it; sanitized=false
+    holes_test.go:99: D156 compound guard erased: mutant exits 0 printing "undefined\n2\n"; named exit-70 assertion catches it; sanitized=true
+--- PASS: TestHoleCompoundReads (23.54s)
+    --- PASS: TestHoleCompoundReads/D155 (3.80s)
+        --- PASS: TestHoleCompoundReads/D155/present-true (1.58s)
+        --- PASS: TestHoleCompoundReads/D155/present-false (2.22s)
+    --- PASS: TestHoleCompoundReads/D156 (5.92s)
+        --- PASS: TestHoleCompoundReads/D156/present-true (2.16s)
+        --- PASS: TestHoleCompoundReads/D156/present-false (3.76s)
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D155
+=== RUN   TestLedgerWitnesses/D155/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D155/absent
+    witness_test.go:182: erase D155 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:182: erase D155 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D156
+=== RUN   TestLedgerWitnesses/D156/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D156/absent
+    witness_test.go:182: erase D156 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:182: erase D156 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D157
+=== RUN   TestLedgerWitnesses/D157/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D157/absent
+    witness_test.go:182: erase D157 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D157 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D158
+=== RUN   TestLedgerWitnesses/D158/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D158/absent
+    witness_test.go:182: erase D158 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D158 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D159
+=== RUN   TestLedgerWitnesses/D159/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D159/absent
+    witness_test.go:182: erase D159 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D159 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D160
+=== RUN   TestLedgerWitnesses/D160/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D160/absent
+    witness_test.go:182: erase D160 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D160 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D161
+=== RUN   TestLedgerWitnesses/D161/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D161/absent
+    witness_test.go:182: erase D161 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D161 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D162
+=== RUN   TestLedgerWitnesses/D162/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D162/absent
+    witness_test.go:182: erase D162 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="present\n"
+    witness_test.go:182: erase D162 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="present\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D163
+=== RUN   TestLedgerWitnesses/D163/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D163/absent
+    witness_test.go:182: erase D163 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:182: erase D163 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D164
+=== RUN   TestLedgerWitnesses/D164/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D164/absent
+    witness_test.go:182: erase D164 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="1\n"
+    witness_test.go:182: erase D164 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="1\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D165
+=== RUN   TestLedgerWitnesses/D165/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D165/absent
+    witness_test.go:182: erase D165 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D165 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D166
+=== RUN   TestLedgerWitnesses/D166/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D166/absent
+    witness_test.go:182: erase D166 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D166 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D178
+=== RUN   TestLedgerWitnesses/D178/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D178/absent
+    witness_test.go:182: erase D178 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D178 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D179
+=== RUN   TestLedgerWitnesses/D179/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D179/absent
+    witness_test.go:182: erase D179 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D179 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D180
+=== RUN   TestLedgerWitnesses/D180/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D180/absent
+    witness_test.go:182: erase D180 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D180 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D181
+=== RUN   TestLedgerWitnesses/D181/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D181/absent
+    witness_test.go:182: erase D181 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D181 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D182
+=== RUN   TestLedgerWitnesses/D182/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D182/absent
+    witness_test.go:182: erase D182 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D182 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D183
+=== RUN   TestLedgerWitnesses/D183/present
+    witness_test.go:185: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D183/absent
+    witness_test.go:182: erase D183 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:182: erase D183 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:185: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+--- PASS: TestLedgerWitnesses (98.89s)
+    --- PASS: TestLedgerWitnesses/D155 (5.65s)
+        --- PASS: TestLedgerWitnesses/D155/present (2.99s)
+        --- PASS: TestLedgerWitnesses/D155/absent (2.66s)
+    --- PASS: TestLedgerWitnesses/D156 (4.52s)
+        --- PASS: TestLedgerWitnesses/D156/present (1.97s)
+        --- PASS: TestLedgerWitnesses/D156/absent (2.55s)
+    --- PASS: TestLedgerWitnesses/D157 (4.79s)
+        --- PASS: TestLedgerWitnesses/D157/present (2.03s)
+        --- PASS: TestLedgerWitnesses/D157/absent (2.76s)
+    --- PASS: TestLedgerWitnesses/D158 (6.44s)
+        --- PASS: TestLedgerWitnesses/D158/present (2.80s)
+        --- PASS: TestLedgerWitnesses/D158/absent (3.64s)
+    --- PASS: TestLedgerWitnesses/D159 (6.02s)
+        --- PASS: TestLedgerWitnesses/D159/present (3.05s)
+        --- PASS: TestLedgerWitnesses/D159/absent (2.97s)
+    --- PASS: TestLedgerWitnesses/D160 (5.38s)
+        --- PASS: TestLedgerWitnesses/D160/present (2.24s)
+        --- PASS: TestLedgerWitnesses/D160/absent (3.14s)
+    --- PASS: TestLedgerWitnesses/D161 (6.02s)
+        --- PASS: TestLedgerWitnesses/D161/present (2.76s)
+        --- PASS: TestLedgerWitnesses/D161/absent (3.27s)
+    --- PASS: TestLedgerWitnesses/D162 (5.46s)
+        --- PASS: TestLedgerWitnesses/D162/present (2.06s)
+        --- PASS: TestLedgerWitnesses/D162/absent (3.40s)
+    --- PASS: TestLedgerWitnesses/D163 (5.53s)
+        --- PASS: TestLedgerWitnesses/D163/present (2.59s)
+        --- PASS: TestLedgerWitnesses/D163/absent (2.95s)
+    --- PASS: TestLedgerWitnesses/D164 (5.71s)
+        --- PASS: TestLedgerWitnesses/D164/present (2.86s)
+        --- PASS: TestLedgerWitnesses/D164/absent (2.85s)
+    --- PASS: TestLedgerWitnesses/D165 (5.35s)
+        --- PASS: TestLedgerWitnesses/D165/present (2.30s)
+        --- PASS: TestLedgerWitnesses/D165/absent (3.05s)
+    --- PASS: TestLedgerWitnesses/D166 (5.68s)
+        --- PASS: TestLedgerWitnesses/D166/present (2.09s)
+        --- PASS: TestLedgerWitnesses/D166/absent (3.59s)
+    --- PASS: TestLedgerWitnesses/D178 (7.27s)
+        --- PASS: TestLedgerWitnesses/D178/present (3.02s)
+        --- PASS: TestLedgerWitnesses/D178/absent (4.25s)
+    --- PASS: TestLedgerWitnesses/D179 (5.36s)
+        --- PASS: TestLedgerWitnesses/D179/present (3.12s)
+        --- PASS: TestLedgerWitnesses/D179/absent (2.24s)
+    --- PASS: TestLedgerWitnesses/D180 (3.89s)
+        --- PASS: TestLedgerWitnesses/D180/present (1.73s)
+        --- PASS: TestLedgerWitnesses/D180/absent (2.16s)
+    --- PASS: TestLedgerWitnesses/D181 (3.24s)
+        --- PASS: TestLedgerWitnesses/D181/present (1.50s)
+        --- PASS: TestLedgerWitnesses/D181/absent (1.74s)
+    --- PASS: TestLedgerWitnesses/D182 (3.48s)
+        --- PASS: TestLedgerWitnesses/D182/present (1.46s)
+        --- PASS: TestLedgerWitnesses/D182/absent (2.02s)
+    --- PASS: TestLedgerWitnesses/D183 (3.41s)
+        --- PASS: TestLedgerWitnesses/D183/present (1.62s)
+        --- PASS: TestLedgerWitnesses/D183/absent (1.79s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-c	122.453s
+=== RUN   TestNullableStringRepresentation
+    nullable_test.go:103: Node controls "true\ntrue\nfalse\ntrue\nfalse\ntrue\ntrue\nfalse\nfalse\ntrue\nobject\nnull\nnull\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nmade\nmade\nfalse\nfalse\nmade\n4\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\n\n\ntrue\nfalse\n\n0\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nnull\nnull\nfalse\ntrue\nnull\n4\n"; release, sanitized and JS match; NULL sentinel mutant caught: exit=0 stdout="true\ntrue\nfalse\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nmade\nmade\nfalse\nfalse\nmade\n4\nfalse\ntrue\ntrue\ntrue\nfalse\ntrue\nfalse\nundefined\nundefined\nundefined\nfalse\nfalse\nfallback\nundefined\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\n\n\ntrue\nfalse\n\n0\nfalse\nfalse\nfalse\nfalse\ntrue\ntrue\ntrue\nstring\nnull\nnull\nfalse\ntrue\nnull\n4\n" stderr=""
+--- PASS: TestNullableStringRepresentation (2.32s)
+=== RUN   TestNullableStringPresenceGuard
+=== RUN   TestNullableStringPresenceGuard/[null]
+    nullable_test.go:149: Node "true\nfalse\ntrue\nobject\nnull\nnull\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/["ma"_+_"de"]
+    nullable_test.go:149: Node "false\nfalse\nfalse\nstring\nmade\nmade\n"; JS, release and sanitized agree with expected exit=0 stderr=""
+=== RUN   TestNullableStringPresenceGuard/[]
+    nullable_test.go:146: erase-guard mutant caught sanitize=false: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:146: erase-guard mutant caught sanitize=true: exit=0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+    nullable_test.go:149: Node "false\ntrue\ntrue\nundefined\nundefined\nundefined\n"; JS, release and sanitized agree with expected exit=70 stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestNullableStringPresenceGuard1202112307/001/nullable.ts:2:30\n"
+--- PASS: TestNullableStringPresenceGuard (7.77s)
+    --- PASS: TestNullableStringPresenceGuard/[null] (2.03s)
+    --- PASS: TestNullableStringPresenceGuard/["ma"_+_"de"] (2.87s)
+    --- PASS: TestNullableStringPresenceGuard/[] (2.87s)
+=== RUN   TestNullableRuntimeReview
+=== RUN   TestNullableRuntimeReview/map-set
+    runtime_review_test.go:58: Node "4\nmissing\nempty\nnil\ntext\nempty\nupdated\ntrue\ntrue\nfalse\ntrue\n4\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\ntrue\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:65: map address-check mutant caught: exit=0 stdout="3\nmissing\nempty\ntext\ntext\nempty\nupdated\ntrue\ntrue\nfalse\nfalse\n3\ntrue\ntrue\ntrue\ntrue\ntrue\ntrue\nfalse\nfalse\n" stderr=""
+=== RUN   TestNullableRuntimeReview/narrow-concat
+    runtime_review_test.go:58: Node "abc!\n!\nnull!\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-length
+    runtime_review_test.go:58: Node "3\n0\n4\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-json
+    runtime_review_test.go:58: Node "\"abc\"\n\"\"\n\"null\"\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-slice
+    runtime_review_test.go:58: Node "bc\n\nul\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/narrow-comparison
+    runtime_review_test.go:58: Node "false\ntrue\nfalse\ntrue\ntrue\nfalse\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-template
+    runtime_review_test.go:58: Node "value:null\nvalue:null\nliteral:null\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-concat
+    runtime_review_test.go:58: Node "value:null\nnull:value\nvalue:null\nnull:value\nliteral:null\nnull:literal\n"; JS, release and ASan/UBSan match
+=== RUN   TestNullableRuntimeReview/null-json
+    runtime_review_test.go:58: Node "null\n\"null\"\nnull\n"; JS, release and ASan/UBSan match
+    runtime_review_test.go:75: JSON sentinel mutant caught: exit=0 stdout="\"null\"\n\"null\"\nnull\n" stderr=""
+=== RUN   TestNullableRuntimeReview/null-string
+    runtime_review_test.go:58: Node "null\nnull\nnull\n"; JS, release and ASan/UBSan match
+--- PASS: TestNullableRuntimeReview (15.55s)
+    --- PASS: TestNullableRuntimeReview/map-set (1.62s)
+    --- PASS: TestNullableRuntimeReview/narrow-concat (1.11s)
+    --- PASS: TestNullableRuntimeReview/narrow-length (1.03s)
+    --- PASS: TestNullableRuntimeReview/narrow-json (1.19s)
+    --- PASS: TestNullableRuntimeReview/narrow-slice (1.42s)
+    --- PASS: TestNullableRuntimeReview/narrow-comparison (1.56s)
+    --- PASS: TestNullableRuntimeReview/null-template (1.33s)
+    --- PASS: TestNullableRuntimeReview/null-concat (2.26s)
+    --- PASS: TestNullableRuntimeReview/null-json (2.82s)
+    --- PASS: TestNullableRuntimeReview/null-string (1.20s)
+=== RUN   TestNullableSentinelHeader
+    runtime_review_test.go:100: one immortal string-kind sentinel directly prints Node String(null): "null\n"
+--- PASS: TestNullableSentinelHeader (1.27s)
+=== RUN   TestNullableGuardTiming
+    runtime_timing_test.go:15: explicit before/after runtime measurement
+--- SKIP: TestNullableGuardTiming (0.00s)
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/D107
+=== RUN   TestLedgerWitnesses/D107/present
+    witness_test.go:242: PRESENT D107 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D107/absent
+    witness_test.go:231: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D107/hole
+    witness_test.go:231: PROVEN D107 read=args[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D129
+=== RUN   TestLedgerWitnesses/D129/present
+    witness_test.go:242: PRESENT D129 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D129/absent
+    witness_test.go:231: PROVEN D129 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D129/hole
+    witness_test.go:231: PROVEN D129 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D129/outer-present
+    witness_test.go:242: PRESENT D129 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D129/outer-absent
+    witness_test.go:231: PROVEN D129 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D130
+=== RUN   TestLedgerWitnesses/D130/present
+    witness_test.go:242: PRESENT D130 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D130/absent
+    witness_test.go:231: PROVEN D130 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D130/hole
+    witness_test.go:231: PROVEN D130 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D130/outer-present
+    witness_test.go:242: PRESENT D130 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D130/outer-absent
+    witness_test.go:231: PROVEN D130 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D131
+=== RUN   TestLedgerWitnesses/D131/present
+    witness_test.go:242: PRESENT D131 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D131/absent
+    witness_test.go:231: PROVEN D131 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D131/hole
+    witness_test.go:231: PROVEN D131 read=options.paths[key][i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 1 stdout="" stderr="/home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21: runtime error: member access within null pointer of type 'adamic_string' (aka 'struct adamic_string')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-3023556074/string_build_impl.h:40:21 \n"
+=== RUN   TestLedgerWitnesses/D131/outer-present
+    witness_test.go:242: PRESENT D131 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D131/outer-absent
+    witness_test.go:231: PROVEN D131 read=options.paths[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D171
+=== RUN   TestLedgerWitnesses/D171/present
+    witness_test.go:242: PRESENT D171 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D171/absent
+    witness_test.go:231: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D171/hole
+    witness_test.go:231: PROVEN D171 read=node.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D172
+=== RUN   TestLedgerWitnesses/D172/present
+    witness_test.go:242: PRESENT D172 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D172/absent
+    witness_test.go:231: PROVEN D172 read=declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D172/hole
+    witness_test.go:231: PROVEN D172 read=declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D173
+=== RUN   TestLedgerWitnesses/D173/present
+    witness_test.go:242: PRESENT D173 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D173/absent
+    witness_test.go:231: PROVEN D173 read=funcStatements[classBodyStart]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D173/hole
+    witness_test.go:231: PROVEN D173 read=funcStatements[classBodyStart]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D174
+=== RUN   TestLedgerWitnesses/D174/present
+    witness_test.go:242: PRESENT D174 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D174/absent
+    witness_test.go:231: PROVEN D174 read=segments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D174/hole
+    witness_test.go:231: PROVEN D174 read=segments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D175
+=== RUN   TestLedgerWitnesses/D175/present
+    witness_test.go:242: PRESENT D175 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D175/absent
+    witness_test.go:231: PROVEN D175 read=segments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D175/hole
+    witness_test.go:231: PROVEN D175 read=segments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D184
+=== RUN   TestLedgerWitnesses/D184/present
+    witness_test.go:242: PRESENT D184 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D184/absent
+    witness_test.go:231: PROVEN D184 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D184/hole
+    witness_test.go:231: PROVEN D184 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D185
+=== RUN   TestLedgerWitnesses/D185/present
+    witness_test.go:242: PRESENT D185 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D185/absent
+    witness_test.go:231: PROVEN D185 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D185/hole
+    witness_test.go:231: PROVEN D185 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D186
+=== RUN   TestLedgerWitnesses/D186/present
+    witness_test.go:242: PRESENT D186 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D186/absent
+    witness_test.go:231: PROVEN D186 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D186/hole
+    witness_test.go:231: PROVEN D186 read=superPath[superPathDepth]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="0\n" stderr=""
+=== RUN   TestLedgerWitnesses/D189
+=== RUN   TestLedgerWitnesses/D189/present
+    witness_test.go:242: PRESENT D189 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D189/absent
+    witness_test.go:231: PROVEN D189 read=node.statements[pos]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D189/hole
+    witness_test.go:231: PROVEN D189 read=node.statements[pos]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D191
+=== RUN   TestLedgerWitnesses/D191/present
+    witness_test.go:242: PRESENT D191 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D191/absent
+    witness_test.go:231: PROVEN D191 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D191/hole
+    witness_test.go:231: PROVEN D191 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D192
+=== RUN   TestLedgerWitnesses/D192/present
+    witness_test.go:242: PRESENT D192 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D192/absent
+    witness_test.go:231: PROVEN D192 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D192/hole
+    witness_test.go:231: PROVEN D192 read=statementsIn[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D193
+=== RUN   TestLedgerWitnesses/D193/present
+    witness_test.go:242: PRESENT D193 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D193/absent
+    witness_test.go:231: PROVEN D193 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D193/hole
+    witness_test.go:231: PROVEN D193 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D194
+=== RUN   TestLedgerWitnesses/D194/present
+    witness_test.go:242: PRESENT D194 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D194/absent
+    witness_test.go:231: PROVEN D194 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D194/hole
+    witness_test.go:231: PROVEN D194 read=statements[i]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D225
+=== RUN   TestLedgerWitnesses/D225/present
+    witness_test.go:242: PRESENT D225 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D225/absent
+    witness_test.go:231: PROVEN D225 read=nonWhitespaceChildren[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D225/hole
+    witness_test.go:231: PROVEN D225 read=nonWhitespaceChildren[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D226
+=== RUN   TestLedgerWitnesses/D226/present
+    witness_test.go:242: PRESENT D226 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D226/absent
+    witness_test.go:231: PROVEN D226 read=expressions[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D226/hole
+    witness_test.go:231: PROVEN D226 read=expressions[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D227
+=== RUN   TestLedgerWitnesses/D227/present
+    witness_test.go:242: PRESENT D227 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D227/absent
+    witness_test.go:231: PROVEN D227 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D227/hole
+    witness_test.go:231: PROVEN D227 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D228
+=== RUN   TestLedgerWitnesses/D228/present
+    witness_test.go:242: PRESENT D228 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D228/absent
+    witness_test.go:231: PROVEN D228 read=importsAndRequiresToRewriteOrShim[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D228/hole
+    witness_test.go:231: PROVEN D228 read=importsAndRequiresToRewriteOrShim[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D229
+=== RUN   TestLedgerWitnesses/D229/present
+    witness_test.go:242: PRESENT D229 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D229/absent
+    witness_test.go:231: PROVEN D229 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D229/hole
+    witness_test.go:231: PROVEN D229 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D230
+=== RUN   TestLedgerWitnesses/D230/present
+    witness_test.go:242: PRESENT D230 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D230/absent
+    witness_test.go:231: PROVEN D230 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D230/hole
+    witness_test.go:231: PROVEN D230 read=node.arguments[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D231
+=== RUN   TestLedgerWitnesses/D231/present
+    witness_test.go:242: PRESENT D231 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D231/absent
+    witness_test.go:231: PROVEN D231 read=importRequireStatements[1].declarationList.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D231/hole
+    witness_test.go:231: PROVEN D231 read=importRequireStatements[1].declarationList.declarations[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:242: PRESENT D119 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:231: PROVEN D119 read=typesVersions[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=false: exit 0 stdout="undefined\n" stderr=""
+    witness_test.go:231: PROVEN D119 read=typesVersions[key]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151
+=== RUN   TestLedgerWitnesses/D151/present
+    witness_test.go:242: PRESENT D151 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D151/absent
+    witness_test.go:231: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151/hole
+    witness_test.go:231: PROVEN D151 read=map.sourcesContent[raw.sourceIndex]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="false\ntrue\ntrue\nundefined\nundefined\nundefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D151/null
+    witness_test.go:240: PROVEN D151 null sentinel mutant caught: exit 70 stdout="" stderr="adamic: panic: indexed read is absent: /tmp/adamic-gate/TestLedgerWitnessesD151null22447674/001/D151.ts:2:30\n"
+    witness_test.go:242: PRESENT D151 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D170
+=== RUN   TestLedgerWitnesses/D170/present
+    witness_test.go:242: PRESENT D170 matches source Node in release/sanitized and JS
+=== RUN   TestLedgerWitnesses/D170/absent
+    witness_test.go:231: PROVEN D170 read=clause.types[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+=== RUN   TestLedgerWitnesses/D170/hole
+    witness_test.go:231: PROVEN D170 read=clause.types[0]; release/sanitized and JS exit 70 with exact stderr; erase-panic mutant caught sanitize=true: exit 0 stdout="undefined\n" stderr=""
+--- PASS: TestLedgerWitnesses (158.12s)
+    --- PASS: TestLedgerWitnesses/D107 (6.84s)
+        --- PASS: TestLedgerWitnesses/D107/present (1.87s)
+        --- PASS: TestLedgerWitnesses/D107/absent (2.37s)
+        --- PASS: TestLedgerWitnesses/D107/hole (2.60s)
+    --- PASS: TestLedgerWitnesses/D129 (15.01s)
+        --- PASS: TestLedgerWitnesses/D129/present (2.06s)
+        --- PASS: TestLedgerWitnesses/D129/absent (2.85s)
+        --- PASS: TestLedgerWitnesses/D129/hole (3.61s)
+        --- PASS: TestLedgerWitnesses/D129/outer-present (2.70s)
+        --- PASS: TestLedgerWitnesses/D129/outer-absent (3.79s)
+    --- PASS: TestLedgerWitnesses/D130 (13.96s)
+        --- PASS: TestLedgerWitnesses/D130/present (2.13s)
+        --- PASS: TestLedgerWitnesses/D130/absent (2.98s)
+        --- PASS: TestLedgerWitnesses/D130/hole (3.10s)
+        --- PASS: TestLedgerWitnesses/D130/outer-present (2.71s)
+        --- PASS: TestLedgerWitnesses/D130/outer-absent (3.05s)
+    --- PASS: TestLedgerWitnesses/D131 (13.99s)
+        --- PASS: TestLedgerWitnesses/D131/present (2.05s)
+        --- PASS: TestLedgerWitnesses/D131/absent (3.35s)
+        --- PASS: TestLedgerWitnesses/D131/hole (3.03s)
+        --- PASS: TestLedgerWitnesses/D131/outer-present (2.62s)
+        --- PASS: TestLedgerWitnesses/D131/outer-absent (2.94s)
+    --- PASS: TestLedgerWitnesses/D171 (7.39s)
+        --- PASS: TestLedgerWitnesses/D171/present (2.11s)
+        --- PASS: TestLedgerWitnesses/D171/absent (2.55s)
+        --- PASS: TestLedgerWitnesses/D171/hole (2.73s)
+    --- PASS: TestLedgerWitnesses/D172 (9.46s)
+        --- PASS: TestLedgerWitnesses/D172/present (2.36s)
+        --- PASS: TestLedgerWitnesses/D172/absent (3.12s)
+        --- PASS: TestLedgerWitnesses/D172/hole (3.98s)
+    --- PASS: TestLedgerWitnesses/D173 (8.60s)
+        --- PASS: TestLedgerWitnesses/D173/present (3.29s)
+        --- PASS: TestLedgerWitnesses/D173/absent (3.41s)
+        --- PASS: TestLedgerWitnesses/D173/hole (1.91s)
+    --- PASS: TestLedgerWitnesses/D174 (5.01s)
+        --- PASS: TestLedgerWitnesses/D174/present (1.46s)
+        --- PASS: TestLedgerWitnesses/D174/absent (1.74s)
+        --- PASS: TestLedgerWitnesses/D174/hole (1.81s)
+    --- PASS: TestLedgerWitnesses/D175 (5.28s)
+        --- PASS: TestLedgerWitnesses/D175/present (1.61s)
+        --- PASS: TestLedgerWitnesses/D175/absent (1.89s)
+        --- PASS: TestLedgerWitnesses/D175/hole (1.78s)
+    --- PASS: TestLedgerWitnesses/D184 (5.03s)
+        --- PASS: TestLedgerWitnesses/D184/present (1.58s)
+        --- PASS: TestLedgerWitnesses/D184/absent (1.65s)
+        --- PASS: TestLedgerWitnesses/D184/hole (1.80s)
+    --- PASS: TestLedgerWitnesses/D185 (5.44s)
+        --- PASS: TestLedgerWitnesses/D185/present (1.52s)
+        --- PASS: TestLedgerWitnesses/D185/absent (1.65s)
+        --- PASS: TestLedgerWitnesses/D185/hole (2.26s)
+    --- PASS: TestLedgerWitnesses/D186 (6.36s)
+        --- PASS: TestLedgerWitnesses/D186/present (1.79s)
+        --- PASS: TestLedgerWitnesses/D186/absent (2.29s)
+        --- PASS: TestLedgerWitnesses/D186/hole (2.28s)
+    --- PASS: TestLedgerWitnesses/D189 (5.64s)
+        --- PASS: TestLedgerWitnesses/D189/present (1.92s)
+        --- PASS: TestLedgerWitnesses/D189/absent (1.77s)
+        --- PASS: TestLedgerWitnesses/D189/hole (1.95s)
+    --- PASS: TestLedgerWitnesses/D191 (3.99s)
+        --- PASS: TestLedgerWitnesses/D191/present (1.17s)
+        --- PASS: TestLedgerWitnesses/D191/absent (1.43s)
+        --- PASS: TestLedgerWitnesses/D191/hole (1.40s)
+    --- PASS: TestLedgerWitnesses/D192 (3.59s)
+        --- PASS: TestLedgerWitnesses/D192/present (0.93s)
+        --- PASS: TestLedgerWitnesses/D192/absent (1.34s)
+        --- PASS: TestLedgerWitnesses/D192/hole (1.33s)
+    --- PASS: TestLedgerWitnesses/D193 (3.34s)
+        --- PASS: TestLedgerWitnesses/D193/present (0.89s)
+        --- PASS: TestLedgerWitnesses/D193/absent (1.25s)
+        --- PASS: TestLedgerWitnesses/D193/hole (1.20s)
+    --- PASS: TestLedgerWitnesses/D194 (3.58s)
+        --- PASS: TestLedgerWitnesses/D194/present (0.95s)
+        --- PASS: TestLedgerWitnesses/D194/absent (1.36s)
+        --- PASS: TestLedgerWitnesses/D194/hole (1.27s)
+    --- PASS: TestLedgerWitnesses/D225 (3.48s)
+        --- PASS: TestLedgerWitnesses/D225/present (1.18s)
+        --- PASS: TestLedgerWitnesses/D225/absent (1.07s)
+        --- PASS: TestLedgerWitnesses/D225/hole (1.23s)
+    --- PASS: TestLedgerWitnesses/D226 (3.43s)
+        --- PASS: TestLedgerWitnesses/D226/present (1.19s)
+        --- PASS: TestLedgerWitnesses/D226/absent (1.15s)
+        --- PASS: TestLedgerWitnesses/D226/hole (1.08s)
+    --- PASS: TestLedgerWitnesses/D227 (3.37s)
+        --- PASS: TestLedgerWitnesses/D227/present (1.12s)
+        --- PASS: TestLedgerWitnesses/D227/absent (1.04s)
+        --- PASS: TestLedgerWitnesses/D227/hole (1.21s)
+    --- PASS: TestLedgerWitnesses/D228 (3.41s)
+        --- PASS: TestLedgerWitnesses/D228/present (0.93s)
+        --- PASS: TestLedgerWitnesses/D228/absent (1.29s)
+        --- PASS: TestLedgerWitnesses/D228/hole (1.19s)
+    --- PASS: TestLedgerWitnesses/D229 (3.60s)
+        --- PASS: TestLedgerWitnesses/D229/present (1.15s)
+        --- PASS: TestLedgerWitnesses/D229/absent (1.37s)
+        --- PASS: TestLedgerWitnesses/D229/hole (1.08s)
+    --- PASS: TestLedgerWitnesses/D230 (2.60s)
+        --- PASS: TestLedgerWitnesses/D230/present (0.81s)
+        --- PASS: TestLedgerWitnesses/D230/absent (0.93s)
+        --- PASS: TestLedgerWitnesses/D230/hole (0.85s)
+    --- PASS: TestLedgerWitnesses/D231 (2.40s)
+        --- PASS: TestLedgerWitnesses/D231/present (0.71s)
+        --- PASS: TestLedgerWitnesses/D231/absent (0.88s)
+        --- PASS: TestLedgerWitnesses/D231/hole (0.81s)
+    --- PASS: TestLedgerWitnesses/D119 (1.54s)
+        --- PASS: TestLedgerWitnesses/D119/present (0.65s)
+        --- PASS: TestLedgerWitnesses/D119/absent (0.89s)
+    --- PASS: TestLedgerWitnesses/D151 (3.17s)
+        --- PASS: TestLedgerWitnesses/D151/present (0.66s)
+        --- PASS: TestLedgerWitnesses/D151/absent (0.82s)
+        --- PASS: TestLedgerWitnesses/D151/hole (0.82s)
+        --- PASS: TestLedgerWitnesses/D151/null (0.87s)
+    --- PASS: TestLedgerWitnesses/D170 (2.35s)
+        --- PASS: TestLedgerWitnesses/D170/present (0.71s)
+        --- PASS: TestLedgerWitnesses/D170/absent (0.84s)
+        --- PASS: TestLedgerWitnesses/D170/hole (0.80s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-d	185.063s
+=== RUN   TestRecordBoundaries
+=== PAUSE TestRecordBoundaries
+=== RUN   TestRecordPrototypeMiss
+=== PAUSE TestRecordPrototypeMiss
+=== RUN   TestRecordAliases
+=== PAUSE TestRecordAliases
+=== RUN   TestLedgerWitnesses
+=== RUN   TestLedgerWitnesses/number
+=== RUN   TestLedgerWitnesses/number/present
+    witness_test.go:197: adamic: counts: allocations 4 frees 4 retains 2 releases 6 peak 4 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/number/absent
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="0\n"
+    witness_test.go:213: erase number guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="0\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean
+=== RUN   TestLedgerWitnesses/boolean/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 2 releases 5 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/boolean/absent
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="false\n"
+    witness_test.go:213: erase boolean guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="false\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string
+=== RUN   TestLedgerWitnesses/string/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/string/absent
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase string guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131
+=== RUN   TestLedgerWitnesses/D129-D131/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 6 releases 9 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D129-D131/absent
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase D129-D131 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key
+=== RUN   TestLedgerWitnesses/prototype-own-key/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 4 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/prototype-own-key/absent
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data
+=== RUN   TestLedgerWitnesses/proto-data/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 8 releases 10 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/proto-data/absent
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=-1 stdout=""
+    witness_test.go:213: erase proto-data guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=1 stdout=""
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array
+=== RUN   TestLedgerWitnesses/record-array/present
+    witness_test.go:197: adamic: counts: allocations 3 frees 3 retains 5 releases 7 peak 3 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/record-array/absent
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase record-array guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D119
+=== RUN   TestLedgerWitnesses/D119/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 8 releases 10 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/D119/absent
+    witness_test.go:213: erase D119 guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase D119 guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-inner
+=== RUN   TestLedgerWitnesses/nested-inner/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 9 releases 11 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-inner/absent
+    witness_test.go:213: erase nested-inner guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase nested-inner guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-array
+=== RUN   TestLedgerWitnesses/nested-array/present
+    witness_test.go:197: adamic: counts: allocations 5 frees 5 retains 10 releases 12 peak 5 regions 0
+    witness_test.go:216: present: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+=== RUN   TestLedgerWitnesses/nested-array/absent
+    witness_test.go:213: erase nested-array guard caught by pinned stdout/stderr/exit assertion; sanitized=false, mutant exit=0 stdout="undefined\n"
+    witness_test.go:213: erase nested-array guard caught by pinned stdout/stderr/exit assertion; sanitized=true, mutant exit=0 stdout="undefined\n"
+    witness_test.go:216: absent: source Node matched; both backends, release and sanitized native, exact named stderr and explain site passed
+--- PASS: TestLedgerWitnesses (63.27s)
+    --- PASS: TestLedgerWitnesses/number (4.50s)
+        --- PASS: TestLedgerWitnesses/number/present (2.00s)
+        --- PASS: TestLedgerWitnesses/number/absent (2.50s)
+    --- PASS: TestLedgerWitnesses/boolean (6.90s)
+        --- PASS: TestLedgerWitnesses/boolean/present (2.89s)
+        --- PASS: TestLedgerWitnesses/boolean/absent (4.01s)
+    --- PASS: TestLedgerWitnesses/string (5.39s)
+        --- PASS: TestLedgerWitnesses/string/present (2.65s)
+        --- PASS: TestLedgerWitnesses/string/absent (2.74s)
+    --- PASS: TestLedgerWitnesses/D129-D131 (5.70s)
+        --- PASS: TestLedgerWitnesses/D129-D131/present (3.41s)
+        --- PASS: TestLedgerWitnesses/D129-D131/absent (2.29s)
+    --- PASS: TestLedgerWitnesses/prototype-own-key (4.59s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/present (2.45s)
+        --- PASS: TestLedgerWitnesses/prototype-own-key/absent (2.14s)
+    --- PASS: TestLedgerWitnesses/proto-data (6.12s)
+        --- PASS: TestLedgerWitnesses/proto-data/present (2.60s)
+        --- PASS: TestLedgerWitnesses/proto-data/absent (3.52s)
+    --- PASS: TestLedgerWitnesses/record-array (7.75s)
+        --- PASS: TestLedgerWitnesses/record-array/present (3.53s)
+        --- PASS: TestLedgerWitnesses/record-array/absent (4.22s)
+    --- PASS: TestLedgerWitnesses/D119 (5.33s)
+        --- PASS: TestLedgerWitnesses/D119/present (2.68s)
+        --- PASS: TestLedgerWitnesses/D119/absent (2.65s)
+    --- PASS: TestLedgerWitnesses/nested-inner (6.14s)
+        --- PASS: TestLedgerWitnesses/nested-inner/present (3.10s)
+        --- PASS: TestLedgerWitnesses/nested-inner/absent (3.04s)
+    --- PASS: TestLedgerWitnesses/nested-array (5.94s)
+        --- PASS: TestLedgerWitnesses/nested-array/present (3.22s)
+        --- PASS: TestLedgerWitnesses/nested-array/absent (2.71s)
+=== CONT  TestRecordBoundaries
+=== RUN   TestRecordBoundaries/mixed
+=== CONT  TestRecordPrototypeMiss
+=== CONT  TestRecordAliases
+=== NAME  TestRecordBoundaries/mixed
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmixed2646561201/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/fixed_to_record
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesfixed_to_record1661144987/001/main.ts:1:35: stage 0 can't lower a { entry: number; } seen as { readonly [key: string]: number; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/nested_view
+=== NAME  TestRecordPrototypeMiss
+    boundaries_test.go:116: prototype guard erasure caught by exact named stderr and exit 70; mutant exits 0 printing undefined
+--- PASS: TestRecordPrototypeMiss (2.36s)
+--- PASS: TestRecordAliases (2.42s)
+=== NAME  TestRecordBoundaries/nested_view
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_view1383925974/001/main.ts:1:94: stage 0 can't lower a { readonly record: { readonly [key: string]: number; }; } seen as { readonly record: {}; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/named_read
+    boundaries_test.go:67: Node stdout="undefined\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnamed_read2837125962/001/main.ts:1:75: stage 0 can't lower a named property or prototype member on a record; read an own string key with brackets yet
+=== RUN   TestRecordBoundaries/nested_cast
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_cast310143562/001/main.ts:1:102: stage 0 can't lower a { readonly record: { readonly [key: string]: number; }; } seen as { readonly record: {}; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/nested_mutable
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_mutable2210557199/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/expanding_generic
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesexpanding_generic1367790123/001/main.ts:1:21: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/reflection
+    boundaries_test.go:67: Node stdout="\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesreflection1643531657/001/main.ts:1:80: stage 0 can't lower a { readonly [key: string]: number; } seen as a {} (one keeps something weakly that the other keeps strongly; keep the Weak annotations the same in the view and implementation) yet
+=== RUN   TestRecordBoundaries/proto_literal
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesproto_literal1195525347/001/main.ts:1:54: stage 0 can't lower __proto__ in a record literal changes JavaScript's prototype yet
+=== RUN   TestRecordBoundaries/spread
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesspread4230369313/001/main.ts:1:107: stage 0 can't lower a record literal with spread, methods or accessors yet
+=== RUN   TestRecordBoundaries/record_cast
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_cast4132394862/001/main.ts:1:70: stage 0 can't lower a { readonly [key: string]: number; } seen as {} (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/nested_array_widening
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_array_widening2870330650/001/main.ts:1:92: stage 0 can't lower a { readonly [key: string]: { readonly [path: string]: "a"[]; }; } seen as { readonly [key: string]: { readonly [path: string]: string[]; }; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/nullable
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnullable2783317534/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/undefined
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesundefined1540226839/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/record_to_fixed
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecord_to_fixed1831399970/001/main.ts:1:62: stage 0 can't lower a { readonly [key: string]: number; } seen as {} (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/array_widening
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesarray_widening306232627/001/main.ts:1:63: stage 0 can't lower a { readonly [key: string]: "a"[]; } seen as { readonly [key: string]: string[]; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/nested_nullable
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_nullable420041857/001/main.ts:1:17: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/mutual_recursive
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesmutual_recursive1288967782/001/main.ts:1:15: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+=== RUN   TestRecordBoundaries/nested_record_view
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesnested_record_view234194256/001/main.ts:1:91: stage 0 can't lower a { readonly [key: string]: { readonly [path: string]: number; }; } seen as { readonly [key: string]: {}; } (fixed objects and records have different storage; copy explicitly) yet
+=== RUN   TestRecordBoundaries/recursive
+    boundaries_test.go:67: Node stdout="done\n"; explicit refusal: /tmp/adamic-gate/TestRecordBoundariesrecursive3694778700/001/main.ts:1:24: stage 0 can't lower an index signature beside named members, or a non-mutable unrestricted string signature (dictionary storage cannot preserve named-property contracts) yet
+--- PASS: TestRecordBoundaries (18.70s)
+    --- PASS: TestRecordBoundaries/mixed (1.38s)
+    --- PASS: TestRecordBoundaries/fixed_to_record (0.95s)
+    --- PASS: TestRecordBoundaries/nested_view (0.88s)
+    --- PASS: TestRecordBoundaries/named_read (0.92s)
+    --- PASS: TestRecordBoundaries/nested_cast (1.03s)
+    --- PASS: TestRecordBoundaries/nested_mutable (1.05s)
+    --- PASS: TestRecordBoundaries/expanding_generic (0.95s)
+    --- PASS: TestRecordBoundaries/reflection (0.92s)
+    --- PASS: TestRecordBoundaries/proto_literal (0.86s)
+    --- PASS: TestRecordBoundaries/spread (1.16s)
+    --- PASS: TestRecordBoundaries/record_cast (0.88s)
+    --- PASS: TestRecordBoundaries/nested_array_widening (0.84s)
+    --- PASS: TestRecordBoundaries/nullable (0.78s)
+    --- PASS: TestRecordBoundaries/undefined (0.90s)
+    --- PASS: TestRecordBoundaries/record_to_fixed (0.90s)
+    --- PASS: TestRecordBoundaries/array_widening (0.92s)
+    --- PASS: TestRecordBoundaries/nested_nullable (0.96s)
+    --- PASS: TestRecordBoundaries/mutual_recursive (0.73s)
+    --- PASS: TestRecordBoundaries/nested_record_view (0.87s)
+    --- PASS: TestRecordBoundaries/recursive (0.84s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-records	82.017s
+=== RUN   TestIndexedPresenceRuntime
+=== PAUSE TestIndexedPresenceRuntime
+=== RUN   TestJSONStringifyUseRuntime
+=== PAUSE TestJSONStringifyUseRuntime
+=== RUN   TestSparseRepresentationBoundaries
+=== PAUSE TestSparseRepresentationBoundaries
+=== RUN   TestTypedArrayRepresentationBoundaries
+=== PAUSE TestTypedArrayRepresentationBoundaries
+=== CONT  TestIndexedPresenceRuntime
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int8Array
+=== CONT  TestSparseRepresentationBoundaries
+=== RUN   TestSparseRepresentationBoundaries/slice
+=== CONT  TestTypedArrayRepresentationBoundaries
+=== RUN   TestTypedArrayRepresentationBoundaries/for-of
+=== CONT  TestJSONStringifyUseRuntime
+=== RUN   TestJSONStringifyUseRuntime/undefined
+=== RUN   TestSparseRepresentationBoundaries/join
+=== RUN   TestTypedArrayRepresentationBoundaries/iterator
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint8Array
+=== RUN   TestTypedArrayRepresentationBoundaries/data-input
+=== RUN   TestSparseRepresentationBoundaries/for-of
+=== NAME  TestJSONStringifyUseRuntime/undefined
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/function
+=== RUN   TestTypedArrayRepresentationBoundaries/fractional-length
+=== RUN   TestSparseRepresentationBoundaries/entries
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint8ClampedArray
+=== RUN   TestTypedArrayRepresentationBoundaries/dynamic-length
+=== RUN   TestSparseRepresentationBoundaries/spread
+=== NAME  TestJSONStringifyUseRuntime/function
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/held-result
+=== RUN   TestSparseRepresentationBoundaries/stringify
+=== RUN   TestTypedArrayRepresentationBoundaries/method
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int16Array
+=== RUN   TestSparseRepresentationBoundaries/from
+=== RUN   TestTypedArrayRepresentationBoundaries/write
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint16Array
+=== RUN   TestTypedArrayRepresentationBoundaries/buffer
+=== RUN   TestSparseRepresentationBoundaries/set
+=== NAME  TestJSONStringifyUseRuntime/held-result
+    json_test.go:95: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestJSONStringifyUseRuntime/observed-result
+=== RUN   TestTypedArrayRepresentationBoundaries/keys
+--- PASS: TestSparseRepresentationBoundaries (9.31s)
+    --- PASS: TestSparseRepresentationBoundaries/slice (1.33s)
+    --- PASS: TestSparseRepresentationBoundaries/join (1.23s)
+    --- PASS: TestSparseRepresentationBoundaries/for-of (1.41s)
+    --- PASS: TestSparseRepresentationBoundaries/entries (1.14s)
+    --- PASS: TestSparseRepresentationBoundaries/spread (1.01s)
+    --- PASS: TestSparseRepresentationBoundaries/stringify (1.13s)
+    --- PASS: TestSparseRepresentationBoundaries/from (0.99s)
+    --- PASS: TestSparseRepresentationBoundaries/set (1.06s)
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Int32Array
+=== RUN   TestTypedArrayRepresentationBoundaries/from
+=== RUN   TestJSONStringifyUseRuntime/present
+=== RUN   TestTypedArrayRepresentationBoundaries/spread
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Uint32Array
+=== RUN   TestTypedArrayRepresentationBoundaries/view
+--- PASS: TestJSONStringifyUseRuntime (11.59s)
+    --- PASS: TestJSONStringifyUseRuntime/undefined (2.73s)
+    --- PASS: TestJSONStringifyUseRuntime/function (2.96s)
+    --- PASS: TestJSONStringifyUseRuntime/held-result (3.18s)
+    --- PASS: TestJSONStringifyUseRuntime/observed-result (1.53s)
+    --- PASS: TestJSONStringifyUseRuntime/present (1.19s)
+=== RUN   TestTypedArrayRepresentationBoundaries/cast-view
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Float32Array
+=== RUN   TestTypedArrayRepresentationBoundaries/stringify
+--- PASS: TestTypedArrayRepresentationBoundaries (13.02s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/for-of (1.33s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/iterator (1.07s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/data-input (1.41s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/fractional-length (1.18s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/dynamic-length (1.13s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/method (1.19s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/write (0.89s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/buffer (1.03s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/keys (0.84s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/from (0.51s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/spread (0.65s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/view (0.65s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/cast-view (0.59s)
+    --- PASS: TestTypedArrayRepresentationBoundaries/stringify (0.52s)
+=== RUN   TestIndexedPresenceRuntime/typed-zero-Float64Array
+=== RUN   TestIndexedPresenceRuntime/observed-typed-metadata
+=== RUN   TestIndexedPresenceRuntime/typed-return
+=== RUN   TestIndexedPresenceRuntime/typed-identity
+=== RUN   TestIndexedPresenceRuntime/typed-parameter
+=== RUN   TestIndexedPresenceRuntime/typed-enum-length
+=== RUN   TestIndexedPresenceRuntime/typed-empty
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-outside
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-fractional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/typed-present
+=== RUN   TestIndexedPresenceRuntime/observed-typed
+=== RUN   TestIndexedPresenceRuntime/hole-enum-effects
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-enum-length
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-compound
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-integer-loop
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-reference-write
+=== RUN   TestIndexedPresenceRuntime/hole-number
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-string
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/hole-partial-fill
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/hole-alias-write
+=== RUN   TestIndexedPresenceRuntime/hole-filled
+=== RUN   TestIndexedPresenceRuntime/observed-hole
+=== RUN   TestIndexedPresenceRuntime/number
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/boolean
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/string-array
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/string
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 1)
+=== RUN   TestIndexedPresenceRuntime/negative
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/fractional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/present-number
+=== RUN   TestIndexedPresenceRuntime/present-string
+=== RUN   TestIndexedPresenceRuntime/observed-undefined
+=== RUN   TestIndexedPresenceRuntime/observed-string
+=== RUN   TestIndexedPresenceRuntime/joint-optional
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+=== RUN   TestIndexedPresenceRuntime/once
+    indexed_test.go:155: Node gives undefined; both backends stop at site with exit 70; erased guard caught (mutant exit 0)
+--- PASS: TestIndexedPresenceRuntime (49.17s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int8Array (2.13s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint8Array (2.02s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint8ClampedArray (2.00s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int16Array (2.09s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint16Array (1.83s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Int32Array (1.18s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Uint32Array (1.10s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Float32Array (1.07s)
+    --- PASS: TestIndexedPresenceRuntime/typed-zero-Float64Array (0.79s)
+    --- PASS: TestIndexedPresenceRuntime/observed-typed-metadata (0.98s)
+    --- PASS: TestIndexedPresenceRuntime/typed-return (0.75s)
+    --- PASS: TestIndexedPresenceRuntime/typed-identity (0.87s)
+    --- PASS: TestIndexedPresenceRuntime/typed-parameter (0.84s)
+    --- PASS: TestIndexedPresenceRuntime/typed-enum-length (0.73s)
+    --- PASS: TestIndexedPresenceRuntime/typed-empty (1.11s)
+    --- PASS: TestIndexedPresenceRuntime/typed-outside (1.08s)
+    --- PASS: TestIndexedPresenceRuntime/typed-fractional (1.17s)
+    --- PASS: TestIndexedPresenceRuntime/typed-present (0.90s)
+    --- PASS: TestIndexedPresenceRuntime/observed-typed (0.84s)
+    --- PASS: TestIndexedPresenceRuntime/hole-enum-effects (1.09s)
+    --- PASS: TestIndexedPresenceRuntime/hole-enum-length (1.10s)
+    --- PASS: TestIndexedPresenceRuntime/hole-compound (1.08s)
+    --- PASS: TestIndexedPresenceRuntime/hole-integer-loop (1.14s)
+    --- PASS: TestIndexedPresenceRuntime/hole-reference-write (0.90s)
+    --- PASS: TestIndexedPresenceRuntime/hole-number (1.34s)
+    --- PASS: TestIndexedPresenceRuntime/hole-string (1.05s)
+    --- PASS: TestIndexedPresenceRuntime/hole-partial-fill (1.48s)
+    --- PASS: TestIndexedPresenceRuntime/hole-alias-write (1.06s)
+    --- PASS: TestIndexedPresenceRuntime/hole-filled (1.04s)
+    --- PASS: TestIndexedPresenceRuntime/observed-hole (1.06s)
+    --- PASS: TestIndexedPresenceRuntime/number (1.53s)
+    --- PASS: TestIndexedPresenceRuntime/boolean (1.29s)
+    --- PASS: TestIndexedPresenceRuntime/string-array (1.24s)
+    --- PASS: TestIndexedPresenceRuntime/string (1.59s)
+    --- PASS: TestIndexedPresenceRuntime/negative (1.29s)
+    --- PASS: TestIndexedPresenceRuntime/fractional (1.11s)
+    --- PASS: TestIndexedPresenceRuntime/present-number (0.85s)
+    --- PASS: TestIndexedPresenceRuntime/present-string (1.01s)
+    --- PASS: TestIndexedPresenceRuntime/observed-undefined (0.65s)
+    --- PASS: TestIndexedPresenceRuntime/observed-string (0.62s)
+    --- PASS: TestIndexedPresenceRuntime/joint-optional (1.11s)
+    --- PASS: TestIndexedPresenceRuntime/once (1.05s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-options	49.222s
+=== RUN   TestReceiverAssertionRouting
+=== PAUSE TestReceiverAssertionRouting
+=== CONT  TestReceiverAssertionRouting
+=== RUN   TestReceiverAssertionRouting/D212
+    routing_test.go:48: ROUTE D212 file=src/compiler/transformers/generators.ts function=transformGenerators.hasImmediateContainingLabeledBlock redundant assertion lowers; indexed-presence=1
+=== RUN   TestReceiverAssertionRouting/D220
+    routing_test.go:48: ROUTE D220 file=src/compiler/transformers/generators.ts function=transformGenerators.tryEnterOrLeaveBlock redundant assertion lowers; indexed-presence=1
+--- PASS: TestReceiverAssertionRouting (0.93s)
+    --- PASS: TestReceiverAssertionRouting/D212 (0.45s)
+    --- PASS: TestReceiverAssertionRouting/D220 (0.48s)
+PASS
+ok  	github.com/system-inc/adamic/stage3/stricter-indexed-all	0.957s

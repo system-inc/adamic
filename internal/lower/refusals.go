@@ -24,7 +24,6 @@ var refusals = map[ast.Kind]refusal{
 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
 	ast.KindWithStatement:     {"with", "name the object you mean"},
-	ast.KindIndexSignature:    {"an index signature", "use a Map, which keeps keys in the order they were added"},
 	ast.KindExportAssignment:  {"export default", "export by name: one name for one thing"},
 }
 
@@ -36,6 +35,7 @@ var refusedOperators = map[ast.Kind]refusal{
 
 // refuse walks a module for what 0.1 refuses and returns the first, with where it is and the fix.
 func (l *lowering) refuse(module *ast.SourceFile) error {
+	l.prepareCatchValues()
 	// Use the parser's directives, which also recognize the block forms honored by the checker.
 	// Text in a string or a prose comment never enters this list.
 	if len(module.CommentDirectives) > 0 {
@@ -104,6 +104,12 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = &Refused{Where: l.program.Where(node), What: refused.what, Fix: refused.fix}
 			return true
 		}
+		if node.Kind == ast.KindIndexSignature {
+			if _, supported := l.recordInfo(l.checker.GetTypeAtLocation(node.Parent)); !supported {
+				found = l.notYet(node, recordLimit)
+				return true
+			}
+		}
 		if err := l.typedArrayUnsupported(node); err != nil {
 			found = err
 			return true
@@ -132,7 +138,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			return true
 		}
 		if node.Kind == ast.KindBinaryExpression {
-			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused {
+			if refused, isRefused := refusedOperators[node.AsBinaryExpression().OperatorToken.Kind]; isRefused && !l.nullishComparison(node) {
 				found = &Refused{Where: l.program.Where(node.AsBinaryExpression().OperatorToken), What: refused.what, Fix: refused.fix}
 				return true
 			}

@@ -33,6 +33,7 @@ enum adamic_kind {
 #ifdef ADAMIC_CANONICAL_CLOSURES
 	adamic_kind_environment,
 #endif
+	adamic_kind_null,
 };
 
 typedef struct adamic_heap {
@@ -209,6 +210,22 @@ extern char adamic_literal_mark;
 
 // ADAMIC_STRING_BYTES is a constant too long for a C string literal: its bytes an array of size.
 #define ADAMIC_STRING_BYTES(array, size) {{0, adamic_kind_string, 0}, size, array, 0, ADAMIC_LITERAL_INDEX, NULL, 0}
+
+// Nullable references keep undefined as NULL and null as a kind-specific immortal sentinel.
+// Declarations are shared by runtime translation units; sentinel storage lives only in nullable.c.
+void *adamic_reference_null(enum adamic_kind kind);
+extern adamic_string adamic_null_string;
+static inline bool adamic_reference_is_null(const void *value, enum adamic_kind kind, bool undefined) {
+	if (undefined && value == NULL) { return true; }
+	switch (kind) {
+	case adamic_kind_string: return value == &adamic_null_string;
+	default: return value == NULL; // Unmigrated kinds retain their existing null representation.
+	}
+}
+static inline bool adamic_reference_is_sentinel(const void *value) {
+	return value == &adamic_null_string;
+}
+adamic_string *adamic_reference_null_text(void);
 
 // adamic_shape is an object's layout: its fields' names in order, and which fields hold references.
 //
@@ -458,6 +475,9 @@ adamic_typed_array_iterator *adamic_typed_array_iterate(adamic_typed_array *arra
 bool adamic_typed_array_iterator_next(adamic_typed_array_iterator *iterator, double *value);
 
 adamic_array *adamic_array_new(size_t capacity, bool references);
+adamic_array *adamic_array_holes(double length, bool references);
+bool adamic_array_has_index(const adamic_array *array, size_t index);
+void adamic_array_mark_index(adamic_array *array, size_t index);
 size_t adamic_public_index(const adamic_shape *shape, size_t position);
 adamic_array *adamic_class_object_keys(const adamic_object *object);
 const adamic_accessor *adamic_accessor_find(const adamic_object *object, const char *name);
@@ -603,7 +623,8 @@ static inline adamic_value *adamic_array_at_integer(const adamic_array *array, i
 	if (index < 0 || (uint64_t)index >= array->length) {
 		return NULL;
 	}
-	return &array->elements[index];
+	if (array->properties != NULL && !adamic_array_has_index(array, (size_t)index)) { return NULL; }
+ return &array->elements[index];
 }
 
 static inline adamic_value *adamic_array_at(const adamic_array *array, double index) {
@@ -614,7 +635,8 @@ static inline adamic_value *adamic_array_at(const adamic_array *array, double in
 	if ((double)whole != index) {
 		return NULL;
 	}
-	return &array->elements[whole];
+	if (array->properties != NULL && !adamic_array_has_index(array, whole)) { return NULL; }
+ return &array->elements[whole];
 }
 
 // adamic_array_set is array[index] = value, which takes the value; it panics at an index the array
@@ -902,8 +924,15 @@ bool adamic_weak_held(const void *target);
 // adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
 // every call that can throw, and taken by the catch that lands it. adamic_error_new is new
 // Error(message), and adamic_uncaught the panic of an error nothing caught.
-extern adamic_object *adamic_thrown;
+extern adamic_heap *adamic_thrown;
+extern bool adamic_exception_pending;
+bool adamic_is_error(const adamic_heap *value);
+extern adamic_heap adamic_null;
+
+adamic_heap *adamic_caught_property(adamic_heap *value, const adamic_string *name);
 adamic_object *adamic_error_new(adamic_string *message);
+// Genuine host Errors have a known code-bearing shape; arguments are borrowed.
+adamic_object *adamic_host_error_new(adamic_string *name, adamic_string *message, adamic_string *code);
 _Noreturn void adamic_uncaught(void);
 
 // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail

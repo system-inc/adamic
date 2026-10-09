@@ -5,7 +5,8 @@
 #include <math.h>
 #include <string.h>
 
-adamic_heap adamic_null = {0, adamic_kind_object, 0};
+
+adamic_heap adamic_null = {0, adamic_kind_null, 0};
 
 adamic_boolean_box adamic_box_true = {{0, adamic_kind_boolean, 0}, true};
 adamic_boolean_box adamic_box_false = {{0, adamic_kind_boolean, 0}, false};
@@ -46,11 +47,18 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 	if (value == NULL) {
 		return &adamic_string_undefined;
 	}
+	if (adamic_reference_is_sentinel(value)) {
+		return adamic_reference_null_text();
+	}
 	switch (value->kind) {
 	case adamic_kind_number:
 		return adamic_string_from_number(((adamic_number_box *)value)->number);
 	case adamic_kind_boolean:
 		return ((adamic_boolean_box *)value)->boolean ? &adamic_string_true : &adamic_string_false;
+	case adamic_kind_null: {
+		static adamic_string null = ADAMIC_STRING("null");
+		return &null;
+	}
 	case adamic_kind_string:
 		return adamic_retain(value);
 	default: {
@@ -63,7 +71,9 @@ adamic_string *adamic_union_to_string(adamic_heap *value) {
 }
 
 adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
-	if (value == &adamic_null) { return &adamic_typeof_object; }
+	if (adamic_reference_is_sentinel(value)) {
+		return &adamic_typeof_object;
+	}
 	if (value == NULL) {
 		return null ? &adamic_typeof_object : &adamic_typeof_undefined;
 	}
