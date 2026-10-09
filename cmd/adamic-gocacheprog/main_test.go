@@ -12,7 +12,6 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"sync"
 	"testing"
@@ -257,7 +256,12 @@ func runGo(t *testing.T, dir, url, token string, args ...string) (string, time.D
 	t.Helper()
 	ctx, cancel := context.WithTimeout(context.Background(), 25*time.Second)
 	defer cancel()
-	cmd := exec.CommandContext(ctx, filepath.Join(runtime.GOROOT(), "bin", "go"), args...)
+	// runtime.GOROOT is empty in a test binary built with -trimpath, so the go command comes from PATH.
+	goCommand, err := exec.LookPath("go")
+	if err != nil {
+		t.Skipf("no go command on PATH: %v", err)
+	}
+	cmd := exec.CommandContext(ctx, goCommand, args...)
 	cmd.Dir = dir
 	cmd.Env = append(helperEnv(t.TempDir(), url, "main", token), "GOCACHE="+t.TempDir(), "GOCACHEPROG="+fmt.Sprintf("%q -test.run=^TestHelperProcess$", os.Args[0]), "GOMAXPROCS=4")
 	start := time.Now()

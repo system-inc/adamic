@@ -73,8 +73,10 @@ func newCache() (*cache, error) {
 		writer:    strings.TrimRight(env("ADAMIC_GOCACHE_WRITE", "https://loom.kirkouimet.com/public"), "/"),
 		namespace: "gocache-candidate",
 		stderr:    os.Stderr,
+		// The timeout covers reading the body, and a linked test binary is tens of megabytes: at 3 s a cold
+		// instance on a slow link missed every large output. A miss is always safe, only slower.
 		client: &http.Client{
-			Timeout:       3 * time.Second,
+			Timeout:       30 * time.Second,
 			CheckRedirect: func(r *http.Request, via []*http.Request) error { return http.ErrUseLastResponse },
 		},
 	}
