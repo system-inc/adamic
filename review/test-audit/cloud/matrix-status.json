@@ -1,0 +1,32 @@
+[
+  {
+    "id": "control",
+    "exit": 0,
+    "wall": 7.226379329000338,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./cloud/ -run . > /workspace/adamic/review/test-audit/cloud/control.log 2>&1"
+  },
+  {
+    "id": "M1",
+    "exit": 1,
+    "wall": 4.6520350229984615,
+    "command": "ADAMIC_MUTANT=M1 timeout 120 go test -json -count=1 -timeout 90s ./cloud/ -run . > /workspace/adamic/review/test-audit/cloud/M1.log 2>&1"
+  },
+  {
+    "id": "M2",
+    "exit": 1,
+    "wall": 7.296945016998507,
+    "command": "ADAMIC_MUTANT=M2 timeout 120 go test -json -count=1 -timeout 90s ./cloud/ -run . > /workspace/adamic/review/test-audit/cloud/M2.log 2>&1"
+  },
+  {
+    "id": "M3",
+    "exit": 1,
+    "wall": 6.986228386998846,
+    "command": "ADAMIC_MUTANT=M3 timeout 120 go test -json -count=1 -timeout 90s ./cloud/ -run . > /workspace/adamic/review/test-audit/cloud/M3.log 2>&1"
+  },
+  {
+    "id": "P1",
+    "exit": 1,
+    "wall": 4.362992158999987,
+    "command": "ADAMIC_MUTANT=P1 timeout 120 go test -json -count=1 -timeout 90s ./cloud/ -run . > /workspace/adamic/review/test-audit/cloud/P1.log 2>&1"
+  }
+]

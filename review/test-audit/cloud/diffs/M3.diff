@@ -1,0 +1,11 @@
+--- a/cloud/lint-wave-check.py
++++ b/cloud/lint-wave-check.py
+@@ -335,7 +335,7 @@
+     for rule, label in mutants.items():
+         test = "TestMutants/" + label.replace(" ", "_")
+         require(test in runs and test in passes, "mutants", f"{rule}: owned mutant did not run and pass")
+-        for backend in ("Node", "native"):
++        for backend in ("Node",):
+             require(label + " caught on " + backend + ":" in outputs.get(test, ""),
+                     "mutants", f"{rule}: no successful execution and caught comparison on {backend}")
+ 

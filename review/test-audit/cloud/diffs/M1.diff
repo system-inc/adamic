@@ -1,0 +1,11 @@
+--- a/cloud/lint-wave-check.py
++++ b/cloud/lint-wave-check.py
+@@ -70,7 +70,7 @@
+ 
+     def clean(self):
+         status = self.text("status", "--porcelain", "--untracked-files=all", "--ignore-submodules=none")
+-        require(not status, "evidence", "commit changes and remove untracked files first:\n" + status)
++        require(status, "evidence", "commit changes and remove untracked files first:\n" + status)
+ 
+     def claim(self, requested=None):
+         branch = self.text("branch", "--show-current")

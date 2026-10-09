@@ -1,0 +1,23 @@
+Unit u006, cloud
+Starting origin/main: b3f83786a0ea00c23d47d774d3b6c98f9dd71336
+Scope: go test -list . ./cloud/ found TestLintWaveCheck only. No families, helpers, missing rows, skips, or opt-ins. Clean baseline passed, 43 Python cases.
+Code under test: cloud/lint-wave-check.py. Oracle: real Git plus self-written fixture claims and synthetic Go events, not actual lint parity products.
+The traced function inventory is function-inventory.json; raw per-process observations are reach-trace.json. The external sitecustomize profiler altered no test, harness or oracle files.
+The fixed three-mutant menu was declared before mutations: clean condition flip, fetch prune option removal, backend tuple constant change. See plan.json. P1 is an empty-answer probe, excluded from kill and uniqueness counts.
+Every standalone diff was applied independently to the starting commit and compiled with Python compile(), the same parser used by the Python CLI. See *-compile.log and compile-status.json. There is no Python native rebuild. No production Go files were changed, so Go vet is not the compilation tool for these diffs.
+selector.diff is the one-selector source used for the matrices. control.log proves its inactive behavior passes. ADAMIC_MUTANT selects the mutant; replay.py installs the selector, runs matrices and restores the source.
+All M1/M2/M3 failed the sole Go row, hence package-unique. M2 fails test_pruned_claim_does_not_linger; M3 fails test_mutant_not_caught_on_native. This verdict rests on three production mutants and makes no repo-wide claim.
+Survivors: none among the three production mutants. No survivor witness was necessary.
+P1 failed the Go row. Seven positive Python cases still passed; see vacuous_subcases in results.json. The row is not vacuous. In particular, the positive commit-bound verification case passes without any receipt or validation when main returns 0.
+Oracle strength: positive cases often assert only rc0; negatives assert rc1 and category, not an exact cause. M1 made multiple evidence-category negative cases pass at the wrong rejection site while the aggregate row still failed. The baseline log and M1 log retain those cases for replay.
+Clarifications and costs:
+* This cloud package tests a Python production CLI, not a stage1 port. Mutating a lint port would miss its code under test. The brief's Go and native compilation instructions do not describe this package; Python parser validation was used.
+* The inner Python tests print "mutant caught" for malformed input fixtures. They are ordinary input-validation cases, not the brief's witness tests that guard a separate comparison. The top-level row has no built-in production mutants.
+* The oracle taxonomy is mixed: real Git executes, but acceptance expectations and event streams are self-written. A real Git subprocess is not an independent oracle for three-way parity.
+* Unit scope is one Go row enclosing 43 Python tests. Package uniqueness is therefore coarse and proves nothing about uniqueness of inner cases.
+* Warm Node dependencies were installed as instructed even though these tests load no node_modules; npm ci took 0.616 seconds.
+* Empty main return is appropriate for a CLI's integer entry. It exposes success-only assertions in positive subcases without classifying the aggregate row as vacuous.
+* No timeouts, panics, red baseline, skipped rows, or compilation failures occurred. No narrowing was needed.
+Timing: see timing-summary.json. Setup skipped; nproc 5. Isolated binary times 7.150, 7.422, 7.083 seconds, median 7.150. Baseline binary 8.318 seconds.
+Not covered: other packages, actual cohere/Node/native parity execution, repo-wide uniqueness, and mutations beyond the declared three-function sample. No external-authority expected value was claimed.
+Production source was restored. Evidence alone is committed under review/test-audit/cloud/. No main push or pull request.

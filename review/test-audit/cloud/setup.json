@@ -1,0 +1,35 @@
+[
+  {
+    "label": "tools",
+    "command": [
+      "bash",
+      "-c",
+      "go version; node --version; nproc; git rev-parse HEAD"
+    ],
+    "exit": 0,
+    "seconds": 0.033
+  },
+  {
+    "label": "list",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "test",
+      "-list",
+      ".",
+      "./cloud/"
+    ],
+    "exit": 0,
+    "seconds": 0.267
+  },
+  {
+    "label": "npm-ci",
+    "command": [
+      "npm",
+      "ci"
+    ],
+    "exit": 0,
+    "seconds": 0.616
+  }
+]

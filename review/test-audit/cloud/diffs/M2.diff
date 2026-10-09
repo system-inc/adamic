@@ -1,0 +1,11 @@
+--- a/cloud/lint-wave-check.py
++++ b/cloud/lint-wave-check.py
+@@ -105,7 +105,7 @@
+     def origin(self):
+         # A main-only remote.fetch is normal in cloud checkouts. Fetch explicitly,
+         # prune stale remote heads, and avoid unrelated nested submodule fetches.
+-        self.git("fetch", "--prune", "--no-recurse-submodules", "origin",
++        self.git("fetch", "--no-recurse-submodules", "origin",
+                  "+refs/heads/*:refs/remotes/origin/*")
+         refs = {}
+         for row in self.text("for-each-ref", "--format=%(refname) %(objectname)",

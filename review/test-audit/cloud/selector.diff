@@ -1,0 +1,38 @@
+--- a/cloud/lint-wave-check.py
++++ b/cloud/lint-wave-check.py
+@@ -70,7 +70,7 @@
+ 
+     def clean(self):
+         status = self.text("status", "--porcelain", "--untracked-files=all", "--ignore-submodules=none")
+-        require(not status, "evidence", "commit changes and remove untracked files first:\n" + status)
++        require(status if os.getenv("ADAMIC_MUTANT") == "M1" else not status, "evidence", "commit changes and remove untracked files first:\n" + status)
+ 
+     def claim(self, requested=None):
+         branch = self.text("branch", "--show-current")
+@@ -105,7 +105,7 @@
+     def origin(self):
+         # A main-only remote.fetch is normal in cloud checkouts. Fetch explicitly,
+         # prune stale remote heads, and avoid unrelated nested submodule fetches.
+-        self.git("fetch", "--prune", "--no-recurse-submodules", "origin",
++        self.git("fetch", *(("--prune",) if os.getenv("ADAMIC_MUTANT") != "M2" else ()), "--no-recurse-submodules", "origin",
+                  "+refs/heads/*:refs/remotes/origin/*")
+         refs = {}
+         for row in self.text("for-each-ref", "--format=%(refname) %(objectname)",
+@@ -335,7 +335,7 @@
+     for rule, label in mutants.items():
+         test = "TestMutants/" + label.replace(" ", "_")
+         require(test in runs and test in passes, "mutants", f"{rule}: owned mutant did not run and pass")
+-        for backend in ("Node", "native"):
++        for backend in (("Node",) if os.getenv("ADAMIC_MUTANT") == "M3" else ("Node", "native")):
+             require(label + " caught on " + backend + ":" in outputs.get(test, ""),
+                     "mutants", f"{rule}: no successful execution and caught comparison on {backend}")
+ 
+@@ -402,6 +402,8 @@
+ 
+ 
+ def main():
++    if os.getenv("ADAMIC_MUTANT") == "P1":
++        return 0
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument("--verify", action="store_true", help="verify this commit's existing receipt instead of rerunning tests")
+     parser.add_argument("--claim", help="existing Markdown reservation path under stage1/cohere/lint/claims (otherwise discovered by owner)")

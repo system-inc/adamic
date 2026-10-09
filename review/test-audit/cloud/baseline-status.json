@@ -1,0 +1,17 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./cloud/",
+    "-run",
+    "."
+  ],
+  "exit": 0,
+  "wall_seconds": 8.544
+}

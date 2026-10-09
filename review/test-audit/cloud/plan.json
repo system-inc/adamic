@@ -1,0 +1,34 @@
+[
+  {
+    "id": "M1",
+    "file": "cloud/lint-wave-check.py",
+    "line": 73,
+    "old": "require(not status, \"evidence\"",
+    "new": "require(status, \"evidence\"",
+    "kind": "flip condition"
+  },
+  {
+    "id": "M2",
+    "file": "cloud/lint-wave-check.py",
+    "line": 108,
+    "old": "self.git(\"fetch\", \"--prune\", \"--no-recurse-submodules\", \"origin\",",
+    "new": "self.git(\"fetch\", \"--no-recurse-submodules\", \"origin\",",
+    "kind": "change option"
+  },
+  {
+    "id": "M3",
+    "file": "cloud/lint-wave-check.py",
+    "line": 338,
+    "old": "for backend in (\"Node\", \"native\"):",
+    "new": "for backend in (\"Node\",):",
+    "kind": "change constant"
+  },
+  {
+    "id": "P1",
+    "file": "cloud/lint-wave-check.py",
+    "line": 405,
+    "old": "def main():\n",
+    "new": "def main():\n    return 0\n",
+    "kind": "empty-answer probe"
+  }
+]

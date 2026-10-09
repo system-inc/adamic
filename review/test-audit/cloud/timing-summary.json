@@ -1,0 +1,31 @@
+{
+  "nproc": 5,
+  "setup": "skipped, warm env worked",
+  "npm_ci_seconds": 0.616,
+  "baseline_wall_seconds": {
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./cloud/",
+      "-run",
+      "."
+    ],
+    "exit": 0,
+    "wall_seconds": 8.544
+  },
+  "isolated_binary_seconds": [
+    7.15,
+    7.422,
+    7.083
+  ],
+  "median_seconds": 7.15,
+  "timing_and_trace_wall_seconds": 30.094350781000685,
+  "matrix_and_control_wall_seconds": 30.52457991499614,
+  "standalone_compile_and_apply_wall_seconds": 0.23814549600501778
+}
