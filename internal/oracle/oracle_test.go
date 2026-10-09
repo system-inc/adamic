@@ -725,69 +725,104 @@ func disagreement(oracle run, native run) string {
 	return ""
 }
 
+// TestNativeAgreesWithNode still runs the complete registered oracle when selected whole.
+// Each fixed child can also be selected independently by the gate.
 func TestNativeAgreesWithNode(t *testing.T) {
 	t.Parallel()
-	for _, fixture := range fixtures {
-		t.Run(fixture.path, func(t *testing.T) {
+	setupStarted := time.Now()
+	identity(t)
+	t.Logf("shared oracle setup: %.3fs", time.Since(setupStarted).Seconds())
+	shards := nativeOracleShards()
+	if err := nativeOracleUnion(shards); err != nil {
+		t.Fatal(err)
+	}
+	names := []string{"shard-000", "shard-001", "shard-002", "shard-003-0", "shard-003-1", "shard-004", "shard-005", "shard-006", "shard-007", "shard-008", "shard-009", "shard-010", "shard-011", "shard-012", "shard-013", "shard-014", "shard-015", "shard-016", "shard-017", "shard-018", "shard-019-0", "shard-019-1", "shard-020", "shard-021", "shard-022", "shard-023", "shard-024", "shard-025", "shard-026", "shard-027", "shard-028", "shard-029", "shard-030", "shard-031"}
+	if len(shards) != len(names) {
+		t.Fatal("shard declaration differs from partition")
+	}
+	for ordinal, name := range names {
+		if name != nativeOracleShardNames()[ordinal] {
+			t.Fatal("shard name differs from partition")
+		}
+		t.Run(name, func(t *testing.T) {
 			t.Parallel()
-			path, err := filepath.Abs(filepath.Join(repository, fixture.path))
-			if err != nil {
-				t.Fatal(err)
-			}
-			program, err := lowered(t, path)
-			if refusedAdamicNonNullFixture(fixture.path) {
-				assertAdamicNonNullRefusal(t, err)
-				return
-			}
-			if !fixture.lowers {
-				var notYet *lower.NotYet
-				if !errors.As(err, &notYet) {
-					t.Fatalf("want stage 0 to refuse with where and what, got %v", err)
-				}
-				t.Logf("not yet: %v", notYet)
-				return
-			}
-			if err != nil {
-				t.Fatalf("Lower: %v", err)
-			}
-			oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
-			native, sanitized := natively(t, program)
-			// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
-			// allocator rather than malloc) must say exactly what the sanitized one did.
-			if released := released(t, program); disagreement(native, released) != "" {
-				t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
-					disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
-			}
-			if fixture.checked {
-				// The check fires, so the source on Node goes on where Adamic stops: hold native to the
-				// backend that carries the same check, and make sure the check really did fire.
-				if difference := disagreement(backend, native); difference != "" {
-					t.Errorf("%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
-						difference, backend.exitCode, backend.stdout, backend.stderr, native.exitCode, native.stdout, native.stderr)
-				}
-				if native.exitCode != 70 || oracle.exitCode == 70 {
-					t.Errorf("want the inserted check to fire natively (exit 70) where the source on Node runs on: native %d, Node %d", native.exitCode, oracle.exitCode)
-				}
-				return
-			}
-			if difference := disagreement(oracle, native); difference != "" {
-				t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
-			}
-			// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
-			// where it differs from the source the fault is in lowering.
-			if difference := disagreement(oracle, backend); difference != "" {
-				t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
-					difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
-			}
-			// A program that panicked stopped where it stood, as Node's does, so what it held then
-			// isn't a leak; every program that finishes must have let go of everything.
-			if oracle.exitCode == 0 {
-				if leaked := leaks(t, program, sanitized); leaked != "" {
-					t.Errorf("leaks:\n%s", leaked)
-				}
-			}
+			runNativeOracleShard(t, shards[ordinal], -1)
 		})
+	}
+}
+
+func runNativeOracleShard(t *testing.T, rows []int, planted int) {
+	t.Helper()
+	for _, row := range rows {
+		t.Run(fixtures[row].path, func(t *testing.T) {
+			t.Parallel()
+			nativeOracleFixture(t, row, row == planted)
+		})
+	}
+}
+
+func nativeOracleFixture(t *testing.T, row int, planted bool) {
+	t.Helper()
+	fixture := fixtures[row]
+	path, err := filepath.Abs(filepath.Join(repository, fixture.path))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if planted && err == nil {
+		program.Strings[0] += "!"
+	}
+	if refusedAdamicNonNullFixture(fixture.path) {
+		assertAdamicNonNullRefusal(t, err)
+		return
+	}
+	if !fixture.lowers {
+		var notYet *lower.NotYet
+		if !errors.As(err, &notYet) {
+			t.Fatalf("want stage 0 to refuse with where and what, got %v", err)
+		}
+		t.Logf("not yet: %v", notYet)
+		return
+	}
+	if err != nil {
+		t.Fatalf("Lower: %v", err)
+	}
+	oracle, backend := onNode(t, path), onJavaScriptBackend(t, program)
+	native, sanitized := natively(t, program)
+	// The build a user gets (clang -O2, no sanitizers, heap values from the size-class
+	// allocator rather than malloc) must say exactly what the sanitized one did.
+	if released := released(t, program); disagreement(native, released) != "" {
+		t.Errorf("the release build: %s\nsanitized: exit %d, stdout %q, stderr %q\nrelease:   exit %d, stdout %q, stderr %q",
+			disagreement(native, released), native.exitCode, native.stdout, native.stderr, released.exitCode, released.stdout, released.stderr)
+	}
+	if fixture.checked {
+		// The check fires, so the source on Node goes on where Adamic stops: hold native to the
+		// backend that carries the same check, and make sure the check really did fire.
+		if difference := disagreement(backend, native); difference != "" {
+			t.Errorf("%s\nbackend: exit %d, stdout %q, stderr %q\nnative:  exit %d, stdout %q, stderr %q",
+				difference, backend.exitCode, backend.stdout, backend.stderr, native.exitCode, native.stdout, native.stderr)
+		}
+		if native.exitCode != 70 || oracle.exitCode == 70 {
+			t.Errorf("want the inserted check to fire natively (exit 70) where the source on Node runs on: native %d, Node %d", native.exitCode, oracle.exitCode)
+		}
+		return
+	}
+	if difference := disagreement(oracle, native); difference != "" {
+		t.Errorf("%s\nnode:   exit %d, stdout %q, stderr %q\nnative: exit %d, stdout %q, stderr %q",
+			difference, oracle.exitCode, oracle.stdout, oracle.stderr, native.exitCode, native.stdout, native.stderr)
+	}
+	// The JavaScript backend runs the same IR the native one compiled, with nothing of C, so
+	// where it differs from the source the fault is in lowering.
+	if difference := disagreement(oracle, backend); difference != "" {
+		t.Errorf("JavaScript backend: %s\nnode:    exit %d, stdout %q, stderr %q\nbackend: exit %d, stdout %q, stderr %q",
+			difference, oracle.exitCode, oracle.stdout, oracle.stderr, backend.exitCode, backend.stdout, backend.stderr)
+	}
+	// A program that panicked stopped where it stood, as Node's does, so what it held then
+	// isn't a leak; every program that finishes must have let go of everything.
+	if oracle.exitCode == 0 {
+		if leaked := leaks(t, program, sanitized); leaked != "" {
+			t.Errorf("leaks:\n%s", leaked)
+		}
 	}
 }
 
