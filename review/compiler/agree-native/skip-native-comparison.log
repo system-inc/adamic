@@ -1,0 +1,14 @@
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== CONT  TestNativeAgreementRejectsWrongExit
+    agree_test.go:337: planted native exit was not caught by exit comparison: ""
+=== NAME  TestNativeAgreementRejectsWrongOutput
+    agree_test.go:322: planted native output was not caught by stdout comparison: ""
+--- FAIL: TestNativeAgreementRejectsWrongOutput (0.59s)
+--- FAIL: TestNativeAgreementRejectsWrongExit (0.59s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.633s
+FAIL

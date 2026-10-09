@@ -1,0 +1,18 @@
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== CONT  TestTypedArrayFromArray
+=== CONT  TestNativeAgreementRejectsWrongExit
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestNativeAgreementRejectsWrongOutput (5.89s)
+--- PASS: TestTypedArrayFromArray (5.89s)
+--- PASS: TestNativeAgreementRejectsWrongExit (5.89s)
+--- PASS: TestTypedArrayFromEmptyArray (5.90s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	5.922s

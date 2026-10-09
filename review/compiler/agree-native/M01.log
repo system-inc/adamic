@@ -1,0 +1,15 @@
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestTypedArrayFromEmptyArray
+    typed_arrays_test.go:77: Native build: native: clang failed: exit status 1
+        /tmp/adamic-gate/adamic-build-3782439488/main.c:14:93: error: passing 'adamic_array *' (aka 'struct adamic_array *') to parameter of incompatible type 'double'
+           14 |         adamic_typed_array * adamic_temporary_2 = adamic_typed_array_new(adamic_typed_array_uint8, adamic_temporary_1);
+              |                                                                                                    ^~~~~~~~~~~~~~~~~~
+        /home/agent/.cache/adamic/runtime/092f927d904b310f1a341208c0f3aeec8c9904e497df88d0c0c72128f695dfc0/adamic.h:433:86: note: passing argument to parameter 'length' here
+          433 | adamic_typed_array *adamic_typed_array_new(enum adamic_typed_array_kind kind, double length);
+              |                                                                                      ^
+        1 error generated.
+--- FAIL: TestTypedArrayFromEmptyArray (0.41s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.423s
+FAIL

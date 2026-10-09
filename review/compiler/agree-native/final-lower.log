@@ -1,0 +1,72 @@
+=== RUN   TestAgreementRejectsWrongLoweredOutput
+=== PAUSE TestAgreementRejectsWrongLoweredOutput
+=== RUN   TestAgreementRejectsEmptyAnswer
+=== PAUSE TestAgreementRejectsEmptyAnswer
+=== RUN   TestAgreementAcceptsComputedAnswer
+=== PAUSE TestAgreementAcceptsComputedAnswer
+=== RUN   TestAgreementAcceptsExpectedPanic
+=== PAUSE TestAgreementAcceptsExpectedPanic
+=== RUN   TestAgreementEnumConstantWitness
+=== PAUSE TestAgreementEnumConstantWitness
+=== RUN   TestAgreementInheritedFieldWitness
+=== PAUSE TestAgreementInheritedFieldWitness
+=== RUN   TestAgreementParameterPropertyWitness
+=== PAUSE TestAgreementParameterPropertyWitness
+=== RUN   TestAgreementStaticInitializerWitness
+=== PAUSE TestAgreementStaticInitializerWitness
+=== RUN   TestAgreementParseIntRadixWitness
+=== PAUSE TestAgreementParseIntRadixWitness
+=== RUN   TestNativeAgreementRejectsWrongOutput
+=== PAUSE TestNativeAgreementRejectsWrongOutput
+=== RUN   TestNativeAgreementRejectsWrongExit
+=== PAUSE TestNativeAgreementRejectsWrongExit
+=== RUN   TestTypedArraysLower
+=== PAUSE TestTypedArraysLower
+=== RUN   TestTypedArrayGaps
+=== PAUSE TestTypedArrayGaps
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== RUN   TestTypedArrayFromArray
+=== PAUSE TestTypedArrayFromArray
+=== RUN   TestTypedArrayFromEmptyArray
+=== PAUSE TestTypedArrayFromEmptyArray
+=== CONT  TestAgreementRejectsWrongLoweredOutput
+=== CONT  TestAgreementParseIntRadixWitness
+=== CONT  TestAgreementEnumConstantWitness
+=== CONT  TestAgreementAcceptsComputedAnswer
+=== CONT  TestAgreementAcceptsExpectedPanic
+--- PASS: TestAgreementAcceptsExpectedPanic (0.44s)
+=== CONT  TestAgreementRejectsEmptyAnswer
+--- PASS: TestAgreementEnumConstantWitness (0.45s)
+=== CONT  TestAgreementParameterPropertyWitness
+--- PASS: TestAgreementAcceptsComputedAnswer (0.51s)
+=== CONT  TestAgreementStaticInitializerWitness
+--- PASS: TestAgreementRejectsWrongLoweredOutput (0.52s)
+=== CONT  TestTypedArrayGaps
+--- PASS: TestAgreementParseIntRadixWitness (0.67s)
+=== CONT  TestTypedArrayFromEmptyArray
+--- PASS: TestAgreementRejectsEmptyAnswer (0.40s)
+=== CONT  TestTypedArrayFromArray
+--- PASS: TestAgreementParameterPropertyWitness (0.46s)
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+--- PASS: TestAgreementStaticInitializerWitness (0.51s)
+=== CONT  TestNativeAgreementRejectsWrongExit
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.33s)
+=== CONT  TestTypedArraysLower
+=== RUN   TestTypedArraysLower/Uint8Array
+--- PASS: TestTypedArrayFromEmptyArray (0.89s)
+=== CONT  TestAgreementInheritedFieldWitness
+--- PASS: TestTypedArrayFromArray (0.72s)
+=== CONT  TestNativeAgreementRejectsWrongOutput
+=== RUN   TestTypedArraysLower/Int32Array
+--- PASS: TestNativeAgreementRejectsWrongExit (0.68s)
+--- PASS: TestTypedArrayGaps (1.31s)
+--- PASS: TestAgreementInheritedFieldWitness (0.32s)
+=== RUN   TestTypedArraysLower/Float64Array
+--- PASS: TestNativeAgreementRejectsWrongOutput (0.95s)
+--- PASS: TestTypedArraysLower (1.48s)
+    --- PASS: TestTypedArraysLower/Uint8Array (0.37s)
+    --- PASS: TestTypedArraysLower/Int32Array (0.80s)
+    --- PASS: TestTypedArraysLower/Float64Array (0.31s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.769s
