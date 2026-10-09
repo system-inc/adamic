@@ -1,0 +1,12 @@
+[
+  "TestNestedFunctionGapsAreLoud",
+  "TestNestedFunctionCycleIsRefused",
+  "TestNestedEnvironmentHasOneAllocationSite",
+  "TestNestedEnvironmentCycleIncludesDisjointSlots",
+  "TestNestedCapturedParametersAreOwned",
+  "TestClosedFrameInputRejectsMutation",
+  "TestNestedRebindingNotYet",
+  "TestNestedCallbackCycleIsRefused",
+  "TestNestedBodylessDeclarationsAreLoud",
+  "TestNestedRestIsSupported"
+]

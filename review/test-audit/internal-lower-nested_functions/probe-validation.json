@@ -1,0 +1,44 @@
+[
+  {
+    "id": "PLower",
+    "status": 0,
+    "seconds": 0.44092194699987886,
+    "file": "internal/lower/lower.go",
+    "line": 20
+  },
+  {
+    "id": "PDeclareModule",
+    "status": 0,
+    "seconds": 0.4559025499997915,
+    "file": "internal/lower/modules.go",
+    "line": 75
+  },
+  {
+    "id": "PStatements",
+    "status": 0,
+    "seconds": 0.44191406200025085,
+    "file": "internal/lower/statements.go",
+    "line": 13
+  },
+  {
+    "id": "PNestedDeclarations",
+    "status": 0,
+    "seconds": 0.4163895480000974,
+    "file": "internal/lower/nested_functions.go",
+    "line": 12
+  },
+  {
+    "id": "PLowerBody",
+    "status": 0,
+    "seconds": 0.4354080369998883,
+    "file": "internal/lower/functions.go",
+    "line": 197
+  },
+  {
+    "id": "PClosedFrame",
+    "status": 0,
+    "seconds": 0.41178001099979156,
+    "file": "internal/lower/closed_frame_inputs.go",
+    "line": 12
+  }
+]

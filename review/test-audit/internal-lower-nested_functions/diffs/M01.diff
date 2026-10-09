@@ -1,0 +1,11 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -267,7 +267,7 @@
+ 		if !binding.Preallocated && !direct[local] && !slices.Contains(function.Parameters, local) {
+ 			continue
+ 		}
+-		l.result.Locals[local].EnvironmentCell = true
++		l.result.Locals[local].EnvironmentCell = false
+ 		l.result.Locals[local].Preallocated = true
+ 		function.FrameEnvironment = append(function.FrameEnvironment, local)
+ 	}

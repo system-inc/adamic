@@ -1,0 +1,11 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -38,7 +38,7 @@
+ 					break
+ 				}
+ 			}
+-			if !implemented {
++			if implemented {
+ 				return nil, l.notYet(node, "a nested function declaration without an implementation")
+ 			}
+ 			continue

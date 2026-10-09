@@ -1,0 +1,16 @@
+--- a/internal/lower/closed_frame_inputs.go
++++ b/internal/lower/closed_frame_inputs.go
+@@ -10,6 +10,7 @@
+ // parameter is never replaced, and no operation can rewrite an object field.
+ // This is a closed input graph proof, not freshness of arbitrary captured cells.
+ func (l *lowering) closedFrameInput(local int) bool {
++	if auditSelected("PClosedFrame") { return false }
+ 	owner := l.result.Locals[local].Function
+ 	if owner < 0 || l.result.Functions[owner].Closure {
+ 		return false
+--- /dev/null
++++ b/internal/lower/audit_switch.go
+@@ -0,0 +1,3 @@
++package lower
++import "os"
++func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }

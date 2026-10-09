@@ -1,0 +1,42 @@
+[
+  {
+    "id": "M01",
+    "file": "internal/lower/nested_functions.go",
+    "line": 270,
+    "old": "l.result.Locals[local].EnvironmentCell = true",
+    "new": "l.result.Locals[local].EnvironmentCell = false",
+    "menu": "change constant"
+  },
+  {
+    "id": "M02",
+    "file": "internal/lower/nested_functions.go",
+    "line": 275,
+    "old": "function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)",
+    "new": "",
+    "menu": "drop statement"
+  },
+  {
+    "id": "M03",
+    "file": "internal/lower/cycles.go",
+    "line": 412,
+    "old": "for _, local := range f.l.result.Functions[closure.function].Environment {\n\t\t\t\t\tqueue = append(queue, cycleNode{cell: local + 1})\n\t\t\t\t}",
+    "new": "",
+    "menu": "drop whole loop"
+  },
+  {
+    "id": "M04",
+    "file": "internal/lower/nested_functions.go",
+    "line": 41,
+    "old": "if !implemented {",
+    "new": "if implemented {",
+    "menu": "flip condition"
+  },
+  {
+    "id": "W01",
+    "file": "internal/lower/closed_frame_inputs.go",
+    "line": 66,
+    "old": "return safe && called",
+    "new": "return safe || called",
+    "menu": "witness weakening"
+  }
+]

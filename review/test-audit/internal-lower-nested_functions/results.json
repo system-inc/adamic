@@ -1,0 +1,209 @@
+[
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:16",
+    "seconds": 0.093,
+    "oracle": "Self-written NotYet type and diagnostic substrings for block, generic-value and dynamic-this gaps.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=PLower ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/PLower timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedFunctionGapsAreLoud$ > PLower-TestNestedFunctionGapsAreLoud.log 2>&1; nested_functions_test.go:27: want NotYet \"block-scoped nested\", got <nil>; nested_functions_test.go:27: want NotYet \"generic function as a value\", got <nil>; nested_functions_test.go:27: want NotYet \"dynamic this\", got <nil>; no production kills in M01-M04.",
+    "reason": "Four compiler mutants exhausted the stated cap; no meaningful change to this row's specific guard or rest-parameter handling was exercised. No untrue verdict without that honest try."
+  },
+  {
+    "test": "TestNestedCycle family",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:33",
+    "seconds": 0.066,
+    "oracle": "Self-written Refused type and adamic/cycle-capable substring; all three cases use the same checker with different source inputs.",
+    "oracle_kind": "self",
+    "kills": [
+      "M03"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M03: nested_functions_test.go:44: want cycle refusal, got <nil>",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestLiteralMethodCapturesCannotMakeCycles"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": 0.038,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M03 ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M03.log 2>&1; M03: nested_functions_test.go:44: want cycle refusal, got <nil>",
+    "members": [
+      "TestNestedFunctionCycleIsRefused",
+      "TestNestedEnvironmentCycleIncludesDisjointSlots",
+      "TestNestedCallbackCycleIsRefused"
+    ],
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:48",
+    "seconds": 0.036,
+    "oracle": "Self-written IR invariant: exactly one allocation, two cells, complete layout and linked EnvironmentCell flags.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [
+      "M02"
+    ],
+    "last_proven_fail": "M02: nested_functions_test.go:78: want one environment allocation, got 0",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M02 ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M02.log 2>&1; M02: nested_functions_test.go:78: want one environment allocation, got 0"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:99",
+    "seconds": 0.034,
+    "oracle": "Self-written IR invariant: a captured string parameter exists and is not Borrowed.",
+    "oracle_kind": "self",
+    "kills": [
+      "M01"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M01: nested_functions_test.go:115: missing captured parameter",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestNestedEnvironmentHasOneAllocationSite"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PLower"
+    ],
+    "subsumer_seconds": 0.036,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M01 ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M01.log 2>&1; M01: nested_functions_test.go:115: missing captured parameter",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:119",
+    "seconds": 0.035,
+    "oracle": "Self-written proof predicate accepts a literal input and rejects the built-in SetProperty mutation; W01 alone decides witness verdict.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: nested_functions_test.go:144: mutable graph accepted as closed",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PClosedFrame"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=W01 ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$ > W01.log 2>&1; W01: nested_functions_test.go:144: mutable graph accepted as closed"
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:150",
+    "seconds": 0.037,
+    "oracle": "Self-written lowering NotYet type and rebinding substring; TS2630 is bypassed, not used as the expected answer.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PDeclareModule",
+      "PStatements"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=PDeclareModule ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/PDeclareModule timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$ > PDeclareModule.log 2>&1; nested_functions_test.go:177: want canonical NotYet, got /workspace/adamic/internal/oracle/refusals/nested_rebinding.a:7:20: stage 0 can't lower reading outer yet; no production kills in M01-M04.",
+    "reason": "Four compiler mutants exhausted the stated cap; no meaningful change to this row's specific guard or rest-parameter handling was exercised. No untrue verdict without that honest try."
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:197",
+    "seconds": 0.044,
+    "oracle": "Self-written NotYet type and exact bodyless diagnostic substrings on two direct entries.",
+    "oracle_kind": "self",
+    "kills": [
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: nested_functions_test.go:229: want NotYet \"a nested function declaration without an implementation\", got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "PNestedDeclarations",
+      "PLowerBody"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=M04 ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > M04.log 2>&1; M04: nested_functions_test.go:229: want NotYet \"a nested function declaration without an implementation\", got <nil>",
+    "vacuous_subcases": {
+      "PNestedDeclarations": [],
+      "PLowerBody": []
+    }
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "package": "internal/lower",
+    "file": "internal/lower/nested_functions_test.go:235",
+    "seconds": 0.035,
+    "oracle": "Checks only successful lowering, discards returned IR; PLower passes with nil output and nil error.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "cannot-judge",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": true,
+    "bounded": false,
+    "matrix_rows": [],
+    "evidence": "ADAMIC_MUTANT=PLower ADAMIC_BUILD_CACHE_DIR=/tmp/u039/cache/PLower timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedRestIsSupported$ > PLower-TestNestedRestIsSupported.log 2>&1; --- PASS: TestNestedRestIsSupported (0.03s); no production kills in M01-M04.",
+    "reason": "Four compiler mutants exhausted the stated cap; no meaningful change to this row's specific guard or rest-parameter handling was exercised. No untrue verdict without that honest try."
+  }
+]

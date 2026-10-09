@@ -1,0 +1,11 @@
+--- a/internal/lower/closed_frame_inputs.go
++++ b/internal/lower/closed_frame_inputs.go
+@@ -63,7 +63,7 @@
+ 		walk(function.Body, inspect)
+ 	}
+ 	walk(l.result.Main, inspect)
+-	return safe && called
++	return safe || called
+ }
+ 
+ func (l *lowering) closedInputLiteral(value ir.Expression) bool {

@@ -1,0 +1,11 @@
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -272,7 +272,7 @@
+ 		function.FrameEnvironment = append(function.FrameEnvironment, local)
+ 	}
+ 	if len(function.FrameEnvironment) > 0 {
+-		function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
++		
+ 	}
+ 	for index := range l.result.Functions {
+ 		target := &l.result.Functions[index]

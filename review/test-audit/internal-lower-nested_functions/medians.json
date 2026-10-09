@@ -1,0 +1,14 @@
+{
+  "TestNestedRestIsSupported": 0.035,
+  "TestNestedEnvironmentCycleIncludesDisjointSlots": 0.035,
+  "TestNestedCapturedParametersAreOwned": 0.034,
+  "TestNestedBodylessDeclarationsAreLoud": 0.044,
+  "TestNestedRebindingNotYet": 0.037,
+  "TestNestedFunctionCycleIsRefused": 0.042,
+  "TestNestedCycle family": 0.066,
+  "TestLiteralMethodCapturesCannotMakeCycles": 0.038,
+  "TestNestedCallbackCycleIsRefused": 0.033,
+  "TestNestedEnvironmentHasOneAllocationSite": 0.036,
+  "TestNestedFunctionGapsAreLoud": 0.093,
+  "TestClosedFrameInputRejectsMutation": 0.035
+}

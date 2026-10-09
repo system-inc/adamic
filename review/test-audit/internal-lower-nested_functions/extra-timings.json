@@ -1,0 +1,44 @@
+[
+  {
+    "test": "TestNestedCycle family",
+    "run": 1,
+    "status": 0,
+    "wall": 1.8546493439998812,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCycle_family-1.log"
+  },
+  {
+    "test": "TestNestedCycle family",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6825240440002744,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCycle_family-2.log"
+  },
+  {
+    "test": "TestNestedCycle family",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7582892770001308,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCycle_family-3.log"
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 1,
+    "status": 0,
+    "wall": 1.684152339999855,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestLiteralMethodCapturesCannotMakeCycles-1.log"
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7163858529997924,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestLiteralMethodCapturesCannotMakeCycles-2.log"
+  },
+  {
+    "test": "TestLiteralMethodCapturesCannotMakeCycles",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7188503380002658,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestLiteralMethodCapturesCannotMakeCycles-3.log"
+  }
+]

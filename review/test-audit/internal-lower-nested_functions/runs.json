@@ -1,0 +1,159 @@
+[
+  {
+    "id": "M01",
+    "status": 1,
+    "wall": 29.37224778000018,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "log": "M01.log"
+  },
+  {
+    "id": "M02",
+    "status": 1,
+    "wall": 23.372206182000355,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "log": "M02.log"
+  },
+  {
+    "id": "M03",
+    "status": 1,
+    "wall": 23.58532739500015,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "log": "M03.log"
+  },
+  {
+    "id": "M04",
+    "status": 1,
+    "wall": 24.050338494000243,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "log": "M04.log"
+  },
+  {
+    "id": "W01",
+    "status": 1,
+    "wall": 2.0318153859998347,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "W01.log"
+  },
+  {
+    "id": "PLower",
+    "status": 1,
+    "wall": 2.020137920000252,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PLower.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedFunctionGapsAreLoud",
+    "status": 1,
+    "wall": 1.7452953450001587,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedFunctionGapsAreLoud$",
+    "log": "PLower-TestNestedFunctionGapsAreLoud.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedFunctionCycleIsRefused",
+    "status": 1,
+    "wall": 1.7885473910000655,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedFunctionCycleIsRefused$",
+    "log": "PLower-TestNestedFunctionCycleIsRefused.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "status": 1,
+    "wall": 1.741157352999835,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedEnvironmentHasOneAllocationSite$",
+    "log": "PLower-TestNestedEnvironmentHasOneAllocationSite.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "status": 1,
+    "wall": 1.729494989000159,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedEnvironmentCycleIncludesDisjointSlots$",
+    "log": "PLower-TestNestedEnvironmentCycleIncludesDisjointSlots.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedCapturedParametersAreOwned",
+    "status": 1,
+    "wall": 1.7305306890002612,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedCapturedParametersAreOwned$",
+    "log": "PLower-TestNestedCapturedParametersAreOwned.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestClosedFrameInputRejectsMutation",
+    "status": 1,
+    "wall": 1.7084807460000775,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestClosedFrameInputRejectsMutation$",
+    "log": "PLower-TestClosedFrameInputRejectsMutation.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedRebindingNotYet",
+    "status": 0,
+    "wall": 1.6932286690002911,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedRebindingNotYet$",
+    "log": "PLower-TestNestedRebindingNotYet.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedCallbackCycleIsRefused",
+    "status": 1,
+    "wall": 1.7537616839999828,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedCallbackCycleIsRefused$",
+    "log": "PLower-TestNestedCallbackCycleIsRefused.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "status": 0,
+    "wall": 1.9807782459997725,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedBodylessDeclarationsAreLoud$",
+    "log": "PLower-TestNestedBodylessDeclarationsAreLoud.log"
+  },
+  {
+    "id": "PLower",
+    "test": "TestNestedRestIsSupported",
+    "status": 0,
+    "wall": 1.7948834660001012,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestNestedRestIsSupported$",
+    "log": "PLower-TestNestedRestIsSupported.log"
+  },
+  {
+    "id": "PDeclareModule",
+    "status": 1,
+    "wall": 1.9692322529999728,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PDeclareModule.log"
+  },
+  {
+    "id": "PStatements",
+    "status": 1,
+    "wall": 1.8981346539999322,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PStatements.log"
+  },
+  {
+    "id": "PNestedDeclarations",
+    "status": 1,
+    "wall": 1.9151302740001483,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PNestedDeclarations.log"
+  },
+  {
+    "id": "PLowerBody",
+    "status": 1,
+    "wall": 1.9394401699996706,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PLowerBody.log"
+  },
+  {
+    "id": "PClosedFrame",
+    "status": 1,
+    "wall": 1.925829652000175,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^(TestNestedFunctionGapsAreLoud|TestNestedFunctionCycleIsRefused|TestNestedEnvironmentHasOneAllocationSite|TestNestedEnvironmentCycleIncludesDisjointSlots|TestNestedCapturedParametersAreOwned|TestClosedFrameInputRejectsMutation|TestNestedRebindingNotYet|TestNestedCallbackCycleIsRefused|TestNestedBodylessDeclarationsAreLoud|TestNestedRestIsSupported)$",
+    "log": "PClosedFrame.log"
+  }
+]

@@ -1,0 +1,16 @@
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -11,6 +11,7 @@
+ 
+ // statements lowers a list of statements.
+ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
++	if auditSelected("PStatements") { return nil, nil }
+ 	lowered, err := l.nestedDeclarations(nodes)
+ 	if err != nil {
+ 		return nil, err
+--- /dev/null
++++ b/internal/lower/audit_switch.go
+@@ -0,0 +1,3 @@
++package lower
++import "os"
++func auditSelected(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }

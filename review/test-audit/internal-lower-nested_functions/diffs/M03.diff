@@ -1,0 +1,13 @@
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -409,9 +409,7 @@
+ 				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+ 					continue
+ 				}
+-				for _, local := range f.l.result.Functions[closure.function].Environment {
+-					queue = append(queue, cycleNode{cell: local + 1})
+-				}
++				
+ 			}
+ 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+ 			for _, argument := range f.l.checker.GetTypeArguments(proven) {

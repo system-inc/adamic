@@ -1,0 +1,212 @@
+[
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "run": 1,
+    "status": 0,
+    "wall": 1.8198525619998236,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionGapsAreLoud-1.log"
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7811805379999441,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionGapsAreLoud-2.log"
+  },
+  {
+    "test": "TestNestedFunctionGapsAreLoud",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7925063840000348,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionGapsAreLoud-3.log"
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "run": 1,
+    "status": 0,
+    "wall": 1.687114622999843,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionCycleIsRefused-1.log"
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "run": 2,
+    "status": 0,
+    "wall": 1.8600041980000697,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionCycleIsRefused-2.log"
+  },
+  {
+    "test": "TestNestedFunctionCycleIsRefused",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7909849229999963,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedFunctionCycleIsRefused-3.log"
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7059715579998738,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentHasOneAllocationSite-1.log"
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6743145719999575,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentHasOneAllocationSite-2.log"
+  },
+  {
+    "test": "TestNestedEnvironmentHasOneAllocationSite",
+    "run": 3,
+    "status": 0,
+    "wall": 1.687679098999979,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentHasOneAllocationSite-3.log"
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "run": 1,
+    "status": 0,
+    "wall": 1.6368350870000086,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentCycleIncludesDisjointSlots-1.log"
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6461389209998742,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentCycleIncludesDisjointSlots-2.log"
+  },
+  {
+    "test": "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7637003090001144,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedEnvironmentCycleIncludesDisjointSlots-3.log"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7029932259999896,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCapturedParametersAreOwned-1.log"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "run": 2,
+    "status": 0,
+    "wall": 1.712097219000043,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCapturedParametersAreOwned-2.log"
+  },
+  {
+    "test": "TestNestedCapturedParametersAreOwned",
+    "run": 3,
+    "status": 0,
+    "wall": 1.7205155560000094,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCapturedParametersAreOwned-3.log"
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7295800550000422,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestClosedFrameInputRejectsMutation-1.log"
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "run": 2,
+    "status": 0,
+    "wall": 1.6237600049998946,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestClosedFrameInputRejectsMutation-2.log"
+  },
+  {
+    "test": "TestClosedFrameInputRejectsMutation",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6968917359999978,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestClosedFrameInputRejectsMutation-3.log"
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7110406199999488,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRebindingNotYet-1.log"
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7322242400000505,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRebindingNotYet-2.log"
+  },
+  {
+    "test": "TestNestedRebindingNotYet",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6915277079999669,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRebindingNotYet-3.log"
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7145467090001603,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCallbackCycleIsRefused-1.log"
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "run": 2,
+    "status": 0,
+    "wall": 1.702099841000063,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCallbackCycleIsRefused-2.log"
+  },
+  {
+    "test": "TestNestedCallbackCycleIsRefused",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6315894199999548,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedCallbackCycleIsRefused-3.log"
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "run": 1,
+    "status": 0,
+    "wall": 1.6871636280000075,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedBodylessDeclarationsAreLoud-1.log"
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "run": 2,
+    "status": 0,
+    "wall": 1.7768198489998213,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedBodylessDeclarationsAreLoud-2.log"
+  },
+  {
+    "test": "TestNestedBodylessDeclarationsAreLoud",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6688002509999933,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedBodylessDeclarationsAreLoud-3.log"
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "run": 1,
+    "status": 0,
+    "wall": 1.7050220349999563,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRestIsSupported-1.log"
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "run": 2,
+    "status": 0,
+    "wall": 1.757108270000117,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRestIsSupported-2.log"
+  },
+  {
+    "test": "TestNestedRestIsSupported",
+    "run": 3,
+    "status": 0,
+    "wall": 1.6764305829999557,
+    "log": "review/test-audit/internal-lower-nested_functions/timing-TestNestedRestIsSupported-3.log"
+  }
+]

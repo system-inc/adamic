@@ -1,0 +1,142 @@
+diff --git a/internal/lower/closed_frame_inputs.go b/internal/lower/closed_frame_inputs.go
+index 8f8b7725..9e26091a 100644
+--- a/internal/lower/closed_frame_inputs.go
++++ b/internal/lower/closed_frame_inputs.go
+@@ -10,6 +10,9 @@ import (
+ // parameter is never replaced, and no operation can rewrite an object field.
+ // This is a closed input graph proof, not freshness of arbitrary captured cells.
+ func (l *lowering) closedFrameInput(local int) bool {
++	if auditSelected("PClosedFrame") {
++		return false
++	}
+ 	owner := l.result.Locals[local].Function
+ 	if owner < 0 || l.result.Functions[owner].Closure {
+ 		return false
+@@ -63,7 +66,7 @@ func (l *lowering) closedFrameInput(local int) bool {
+ 		walk(function.Body, inspect)
+ 	}
+ 	walk(l.result.Main, inspect)
+-	return safe && called
++	return auditPick("W01", safe && called, safe || called)
+ }
+ 
+ func (l *lowering) closedInputLiteral(value ir.Expression) bool {
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 63513189..0949028d 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -409,8 +409,11 @@ func (f *cycleFinder) reaches(from *checker.Type, target cycleNode) bool {
+ 				if !f.l.checker.IsTypeAssignableTo(closure.proven, proven) {
+ 					continue
+ 				}
+-				for _, local := range f.l.result.Functions[closure.function].Environment {
+-					queue = append(queue, cycleNode{cell: local + 1})
++				if auditSelected("M03") {
++				} else {
++					for _, local := range f.l.result.Functions[closure.function].Environment {
++						queue = append(queue, cycleNode{cell: local + 1})
++					}
+ 				}
+ 			}
+ 		case f.l.checker.IsArrayType(proven) || checker.IsTupleType(proven) || f.l.isLibraryType(proven, "Map", "ReadonlyMap", "Set", "ReadonlySet"):
+diff --git a/internal/lower/functions.go b/internal/lower/functions.go
+index 37301ad0..9796a205 100644
+--- a/internal/lower/functions.go
++++ b/internal/lower/functions.go
+@@ -195,6 +195,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
+ 
+ // lowerBody lowers the body of the function at index, whose signature is written.
+ func (l *lowering) lowerBody(index int, declaration *ast.Node, this int, defaults []defaulted, patterns []patterned) error {
++	if auditSelected("PLowerBody") {
++		return nil
++	}
+ 	if declaration.Body() == nil {
+ 		return l.notYet(declaration, "a function without a body")
+ 	}
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..1df32cbc 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditSelected("PLower") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/modules.go b/internal/lower/modules.go
+index 7fe064f1..644c9ed3 100644
+--- a/internal/lower/modules.go
++++ b/internal/lower/modules.go
+@@ -73,6 +73,9 @@ func esmModuleOrder(typeChecker *checker.Checker, entry *ast.SourceFile) ([]*ast
+ // call knows what the function it calls returns wherever that function is declared, and two
+ // functions can call each other. Then each body is lowered.
+ func (l *lowering) declareModule(statements []*ast.Node) error {
++	if auditSelected("PDeclareModule") {
++		return nil
++	}
+ 	statements = namespaceDeclarations(statements)
+ 	declarations := []*ast.Node{}
+ 	for _, statement := range statements {
+diff --git a/internal/lower/nested_functions.go b/internal/lower/nested_functions.go
+index cc7ed208..d536ffa7 100644
+--- a/internal/lower/nested_functions.go
++++ b/internal/lower/nested_functions.go
+@@ -10,6 +10,9 @@ import (
+ // nestedDeclarations binds a function body's declarations before any body is lowered.
+ // Sibling code shares a cell layout, never cells holding sibling closure values.
+ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error) {
++	if auditSelected("PNestedDeclarations") {
++		return nil, nil
++	}
+ 	if l.function == nil {
+ 		return nil, nil
+ 	}
+@@ -38,7 +41,7 @@ func (l *lowering) nestedDeclarations(nodes []*ast.Node) ([]ir.Statement, error)
+ 					break
+ 				}
+ 			}
+-			if !implemented {
++			if auditPick("M04", !implemented, implemented) {
+ 				return nil, l.notYet(node, "a nested function declaration without an implementation")
+ 			}
+ 			continue
+@@ -267,12 +270,19 @@ func (l *lowering) finishNestedEnvironment(function *ir.Function, owner int) {
+ 		if !binding.Preallocated && !direct[local] && !slices.Contains(function.Parameters, local) {
+ 			continue
+ 		}
+-		l.result.Locals[local].EnvironmentCell = true
++		if auditSelected("M01") {
++			l.result.Locals[local].EnvironmentCell = false
++		} else {
++			l.result.Locals[local].EnvironmentCell = true
++		}
+ 		l.result.Locals[local].Preallocated = true
+ 		function.FrameEnvironment = append(function.FrameEnvironment, local)
+ 	}
+ 	if len(function.FrameEnvironment) > 0 {
+-		function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
++		if auditSelected("M02") {
++		} else {
++			function.Body = append([]ir.Statement{ir.AllocateEnvironment{Cells: slices.Clone(function.FrameEnvironment)}}, function.Body...)
++		}
+ 	}
+ 	for index := range l.result.Functions {
+ 		target := &l.result.Functions[index]
+diff --git a/internal/lower/statements.go b/internal/lower/statements.go
+index 7fb91a2a..ca207add 100644
+--- a/internal/lower/statements.go
++++ b/internal/lower/statements.go
+@@ -11,6 +11,9 @@ import (
+ 
+ // statements lowers a list of statements.
+ func (l *lowering) statements(nodes []*ast.Node) ([]ir.Statement, error) {
++	if auditSelected("PStatements") {
++		return nil, nil
++	}
+ 	lowered, err := l.nestedDeclarations(nodes)
+ 	if err != nil {
+ 		return nil, err
