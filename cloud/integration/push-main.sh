@@ -451,7 +451,24 @@ if record.get("rerun_of"):
 	movedSince=$(git diff --name-only "$fastBase" origin/main | countingPaths "$(codePackages "$fastBase" "$sha")")
 	untested=$(comm -23 <(printf '%s\n' "$movedSince" | grep . | sort) <(git diff --name-only "$fastBase" "$sha" | sort) || true)
 	if [ -n "$untested" ]; then
-		echo "refused: main moved past the fast gate's base ${fastBase:0:8} in paths the gate didn't see change ($(printf '%s' "$untested" | head -n 3 | paste -sd ' ' -)); merge main in and fast-gate again" >&2
+		why="main moved past the fast gate's base ${fastBase:0:8} in paths the gate didn't see change ($(printf '%s' "$untested" | head -n 3 | paste -sd ' ' -))"
+		# B, main merged with the gated sha, descends from the gate (#mbexftz). On a whole pool record, Loom's rerun.sh
+		# reruns only the units whose input hash the move changed (inputs.py rerun-plan) and publishes a rerun_of record
+		# keeping the rest's verdicts; B lands on it with --full-gate. Held (exit 3) until then. A conflict means recut.
+		if movedTree=$(git merge-tree --write-tree origin/main "$sha" | head -n 1) && [ -n "$movedTree" ]; then
+			moved=$(git commit-tree "$movedTree" -p "$(git rev-parse origin/main)" -p "$sha" -m "Moved main: ${sha:0:8} merged onto main $(git rev-parse --short=8 origin/main), for a rerun of the units the move changed")
+			rerun=${LOOM_RERUN:-$HOME/.loom/bin/rerun.sh}
+			if [[ "$fastGate" =~ ^gate-logs/[0-9a-f]{12}/[0-9TZ]+/full-main$ ]] && [ -x "$rerun" ]; then
+				git push -q origin "${moved}:refs/gate-merges/${moved}"
+				logs=${ADAMIC_RERUN_LOGS:-$HOME/.adamic-integration/reruns}
+				mkdir -p "$logs"
+				nohup "$rerun" "$fastGate" "$moved" >"${logs}/${moved}.log" 2>&1 &
+				echo "held: ${why}; rerunning the units the move changed on B ${moved} (${rerun} ${fastGate}, log ${logs}/${moved}.log), then land B with --full-gate <the record it publishes>" >&2
+				exit 3
+			fi
+			why="${why}; rerun the units the move changed on B ${moved}"
+		fi
+		echo "refused: ${why}; merge main in and fast-gate again" >&2
 		exit 1
 	fi
 	# The fast gate reads its smoke list from the gated tree when the tree has one, so a landing could

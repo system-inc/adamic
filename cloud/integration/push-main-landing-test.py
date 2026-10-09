@@ -203,6 +203,37 @@ class LandingTests(unittest.TestCase):
         self.assertIn('Rerun-units: code', trailers)
         self.assertIn('Moved-main: %s..%s' % (self.main, moved), trailers)
 
+    def test_a_moved_main_under_a_whole_pool_record_starts_loom_s_rerun_on_b_and_holds(self):
+        # #mbexftz: on a whole record, push-main pushes B (main merged with the gated sha) and starts Loom's rerun.sh on
+        # it, which reruns only the units whose input hash moved; push-main holds (exit 3) until that record lands B.
+        candidate = self.change(self.main, 'code/a.go', 'package code\n\n// candidate\n', 'candidate')
+        git(self.repository, 'push', '-q', 'origin', candidate + ':refs/heads/candidate')
+        stages = ('coverage', 'tools', 'build', 'vet', 'tests', 'wasi', 'stage3', 'catalog', 'determinism', 'census')
+        record = {'sha': candidate, 'base': self.main, 'finished': True, 'skip': 0, 'packages': 'all', 'package_list': ['code', 'other'],
+                  'fail': 0, 'pass': 3, 'build_ok': True, 'vet_ok': True, 'uncached_tests': True, 'wall_seconds': 60,
+                  'steps_seconds': {stage: 5 for stage in stages}, 'stages_exit': {stage: 0 for stage in stages}, 'planned_stages': list(stages)}
+        whole = self.publish(candidate, 'main', record, kind='full')
+        beside = self.change(self.main, 'code/a_test.go', 'package code\n', 'a test beside it')
+        moved = self.assertLanded(self.push('--test-only', beside, 'beside'), self.main, beside)
+        root = Path(self.tmp.name)
+        fake = root / 'rerun.sh'
+        fake.write_text('#!/usr/bin/env bash\necho "$@" > %s\n' % (root / 'rerun-called'))
+        fake.chmod(0o755)
+        environment = dict(LOOM_RERUN=str(fake), ADAMIC_RERUN_LOGS=str(root / 'reruns'))
+        held = subprocess.run(['bash', str(self.scripts / 'push-main.sh'), '--full-gate', whole, candidate, 'candidate'], cwd=self.repository,
+                              capture_output=True, text=True, env=dict(os.environ, ADAMIC_STAR_FILE=str(root / 'star'),
+                              ADAMIC_FAST_GATE_STATE=str(root / 'watch'), ADAMIC_LANE_TREE=str(root / 'lane'), **environment, **identity))
+        self.assertEqual(held.returncode, 3, held.stdout + held.stderr)
+        b = held.stderr.split('on B ')[1].split()[0]
+        self.assertEqual(git(self.repository, 'rev-list', '--parents', '-n', '1', b).split()[1:], [moved, candidate])
+        self.assertEqual(git(self.repository, 'ls-remote', 'origin', 'refs/gate-merges/' + b).split()[0], b)
+        for _ in range(50):
+            if (root / 'rerun-called').exists():
+                break
+            __import__('time').sleep(0.1)
+        self.assertEqual((root / 'rerun-called').read_text().split(), [whole, b])
+        self.assertEqual(self.main_now(), moved)
+
     def test_a_test_beside_the_stars_code_waits_while_its_gate_runs(self):
         root = Path(self.tmp.name)
         star = self.change(self.main, 'code/a.go', 'package code\n\n// the star\n', 'the star')
