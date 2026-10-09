@@ -1,0 +1,89 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p59_map_null_write.a (1.47s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a (1.49s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p04_undefined_slot_write.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p06_undefined_other_name.a (1.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p08_null_array_write.a (1.65s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/review/agree/fxspptb_oct9_native_p75_unviewed_undefined_read.a (0.69s)
+PASS
+gate cache: native hits=6 misses=12
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.208s

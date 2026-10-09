@@ -1,0 +1,17 @@
+--- a/internal/native/emit_statements.go
++++ b/internal/native/emit_statements.go
+@@ -237,7 +237,7 @@
+ 		if e.fieldTypesNeeded() {
+ 			cache = e.cache()
+ 		}
+-		if e.program.CheckedFields[statement.Name] {
++		if e.program.CheckedFields[statement.Name] || ((statement.Value.Type() == ir.String) && e.fx7NameChecked(statement.Name)) {
+ 			e.line("adamic_object_view_write(%s, %s, &%s, %d, %s, %s);", object, cString(statement.Name), cache, fieldRepresentation(statement.Value), cString(map[ir.Type]string{ir.Number: "number", ir.Boolean: "boolean", ir.String: "string"}[statement.Value.Type()]), cString("<write>."+statement.Name))
+ 		}
+ 		if e.fieldTypesNeeded() {
+@@ -602,3 +602,5 @@
+ 	e.indent--
+ 	e.line("}")
+ }
++
++func (e *emitter) fx7NameChecked(name string) bool { for key, checked := range e.program.CheckedFields { if checked && strings.HasSuffix(key, ":"+name) { return true } }; return false }

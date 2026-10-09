@@ -1,0 +1,26 @@
+=== RUN   TestFX7P04
+=== PAUSE TestFX7P04
+=== RUN   TestFX7P06
+=== PAUSE TestFX7P06
+=== RUN   TestFX7P08
+=== PAUSE TestFX7P08
+=== RUN   TestFX7P59
+=== PAUSE TestFX7P59
+=== RUN   TestFX7P75
+=== PAUSE TestFX7P75
+=== RUN   TestFX7P77
+=== PAUSE TestFX7P77
+=== CONT  TestFX7P04
+=== CONT  TestFX7P59
+=== CONT  TestFX7P75
+=== CONT  TestFX7P77
+=== CONT  TestFX7P06
+--- PASS: TestFX7P04 (1.29s)
+=== CONT  TestFX7P08
+--- PASS: TestFX7P77 (1.33s)
+--- PASS: TestFX7P06 (1.33s)
+--- PASS: TestFX7P75 (1.35s)
+--- PASS: TestFX7P59 (1.36s)
+--- PASS: TestFX7P08 (0.74s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	2.044s

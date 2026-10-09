@@ -1,0 +1,14 @@
+=== RUN   TestFX7P75
+=== PAUSE TestFX7P75
+=== RUN   TestFX7P77
+=== PAUSE TestFX7P77
+=== CONT  TestFX7P75
+=== CONT  TestFX7P77
+    fx7_name_family_test.go:55: JavaScript backend stdout = "3\n", source Node = "3\nundefined\n"
+--- FAIL: TestFX7P77 (0.24s)
+=== NAME  TestFX7P75
+    fx7_name_family_test.go:48: JavaScript backend stdout = "3\n", source Node = "3\nundefined\n"
+--- FAIL: TestFX7P75 (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.265s
+FAIL
