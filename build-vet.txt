@@ -1,0 +1,12 @@
+loom-pilot: only 798 MB free on the instance after trimming its caches: Loom's fault
+Filesystem      Size  Used Avail Use% Mounted on
+overlay          32G   13G   18G  42% /
+none            8.8G  8.1G  798M  92% /tmp
+11M	/tmp/loom-runner-7f01c04925b5
+11M	/tmp/loom-runner-c1825196c9c8
+48M	/tmp/loom-disk-fill-gocache-82728
+48M	/tmp/loom-disk-fill-gocache-84588
+180M	/tmp/adamic-gate-tools
+960M	/tmp/adamic-tools
+3.2G	/tmp/adamic-gate
+3.7G	/tmp/adamic
