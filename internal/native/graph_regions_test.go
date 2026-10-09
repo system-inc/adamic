@@ -36,6 +36,8 @@ static void link(adamic_object *from, size_t index, adamic_object *to) {
 }
 __attribute__((noinline)) static int run(int count, char **arguments) {
  (void)count;
+ printf("node_bytes %zu\n", adamic_object_size(3));
+ fflush(stdout);
  adamic_object *root = node(), *child = node(), *orphan = node();
  static adamic_string a = ADAMIC_STRING("made ");
  static adamic_string b = ADAMIC_STRING("at runtime");
@@ -96,7 +98,7 @@ func TestGraphRegionsRuntime(t *testing.T) {
 					t.Fatal(text)
 				}
 				if counted {
-					if !strings.Contains(text, "live 3 bytes 210 reachable 2 bytes 140 unreachable 1 bytes 70") {
+					if !strings.Contains(text, fmt.Sprintf("live 3 bytes %d reachable 2 bytes %d unreachable 1 bytes %d", 3*graphMeasuredSize(t, output, "node_bytes"), 2*graphMeasuredSize(t, output, "node_bytes"), graphMeasuredSize(t, output, "node_bytes"))) {
 						t.Fatal(text)
 					}
 					if !strings.Contains(text, "graph counts: regions 1 merges 2") {
@@ -329,6 +331,7 @@ func TestGraphContainerBoundary(t *testing.T) {
  root->slots[0].reference = adamic_graph_hold(root, array);
  link(child, 0, root);
  adamic_map_set(cache, (adamic_value){.reference = key}, (adamic_value){.reference = adamic_graph_hold(cache, root)});
+ printf("node_bytes %zu\narray_bytes %zu\nmap_bytes %zu\n", adamic_object_size(3), sizeof *array + array->capacity * sizeof(adamic_value), sizeof *cache + cache->capacity * sizeof(adamic_map_entry) + cache->bucket_count * sizeof(size_t));
  adamic_release(root); adamic_release(child); adamic_release(array);
  adamic_object *kept = adamic_map_get(cache, (adamic_value){.reference = key})->reference;
  if (((adamic_array *)kept->slots[0].reference)->length != 1) { return 1; }
@@ -356,7 +359,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 	if !strings.Contains(string(output), "graph counts: regions 1 merges 3") {
 		t.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), "live 4 bytes 604 reachable 3 bytes 204 unreachable 1 bytes 400") {
+	if !strings.Contains(string(output), fmt.Sprintf("live 4 bytes %d reachable 3 bytes %d unreachable 1 bytes %d", 2*graphMeasuredSize(t, output, "node_bytes")+graphMeasuredSize(t, output, "array_bytes")+graphMeasuredSize(t, output, "map_bytes"), 2*graphMeasuredSize(t, output, "node_bytes")+graphMeasuredSize(t, output, "array_bytes"), graphMeasuredSize(t, output, "map_bytes"))) {
 		t.Fatal(string(output))
 	}
 	if !strings.Contains(string(output), "allocations 6 frees 6 retains 1 releases 5 peak 6 regions 0") {
@@ -368,6 +371,7 @@ func TestGraphContainerBoundary(t *testing.T) {
 func TestGraphLazyRegions(t *testing.T) {
 	t.Parallel()
 	const main = `int main(void) {
+  printf("node_bytes %zu\n", adamic_object_size(3));
   if (sizeof(adamic_graph_header) != 16) { return 1; }
   adamic_object *a = node(), *b = node(), *c = node(), *d = node();
   if (adamic_graph_header_of(a)->region != NULL) { return 2; }
@@ -400,7 +404,7 @@ func TestGraphLazyRegions(t *testing.T) {
 	if !strings.Contains(string(output), "graph counts: regions 2 merges 3") || !strings.Contains(string(output), "allocations 5 frees 5") {
 		t.Fatal(string(output))
 	}
-	if !strings.Contains(string(output), "live 1 bytes 70 reachable 1 bytes 70 unreachable 0 bytes 0 metadata 16") {
+	if !strings.Contains(string(output), fmt.Sprintf("live 1 bytes %d reachable 1 bytes %d unreachable 0 bytes 0 metadata 16", graphMeasuredSize(t, output, "node_bytes"), graphMeasuredSize(t, output, "node_bytes"))) {
 		t.Fatal(string(output))
 	}
 	t.Logf("lazy regions:\n%s", output)
@@ -428,4 +432,17 @@ func TestGraphUnreleasedAnchorCounted(t *testing.T) {
 		}
 		t.Logf("%s count predicate: %q", mode, report)
 	}
+}
+
+func graphMeasuredSize(t *testing.T, output []byte, name string) uint64 {
+	t.Helper()
+	match := regexp.MustCompile(`(?m)^` + regexp.QuoteMeta(name) + ` (\d+)$`).FindSubmatch(output)
+	if match == nil {
+		t.Fatalf("missing %s: %s", name, output)
+	}
+	size, err := strconv.ParseUint(string(match[1]), 10, 64)
+	if err != nil || size == 0 {
+		t.Fatalf("invalid %s: %s", name, match[1])
+	}
+	return size
 }
