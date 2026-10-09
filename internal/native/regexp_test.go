@@ -175,6 +175,7 @@ int main(int argc,char **argv) {
 }
 
 func TestRegExpBytecodeRandomNode(t *testing.T) {
+	requireNativeShard(t, len(unitRanges(randomRegexCases, randomRegexUnitSize)))
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
 	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}

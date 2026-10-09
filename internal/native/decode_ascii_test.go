@@ -14,6 +14,7 @@ import (
 
 // Not parallel: expands a large byte oracle corpus and runs complete runtime builds serially.
 func TestDecodeASCII(t *testing.T) {
+	requireNativeShard(t, len(decodeTargets)*len(unitRanges(decodePrefixes, decodePrefixUnitSize)))
 	repository, err := filepath.Abs("../..")
 	if err != nil {
 		t.Fatal(err)

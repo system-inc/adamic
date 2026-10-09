@@ -221,6 +221,7 @@ var recordMutationCases = []struct {
 }
 
 func TestRecordMutants(t *testing.T) {
+	requireNativeShard(t, len(recordMutationCases))
 	t.Parallel()
 	shard := currentTestShard(t)
 	for index, mutant := range recordMutationCases {

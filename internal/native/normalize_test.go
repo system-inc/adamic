@@ -211,6 +211,7 @@ var normalizeAlphabet = []string{
 }
 
 func TestNormalizeMatchesNode(t *testing.T) {
+	requireNativeShard(t, len(unitRanges(0x110000, normalizePointUnitSize))+1)
 	t.Parallel()
 	alphabet := strings.Join(normalizeAlphabet, ", ")
 	repository, err := filepath.Abs("../..")

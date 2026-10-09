@@ -15,6 +15,7 @@ import (
 
 // Not parallel: this test explicitly compares the object cache with its bypass on the same input.
 func TestSplitTSGoAgrees(t *testing.T) {
+	requireNativeShard(t, len(splitCacheModes))
 	archive := os.Getenv("ADAMIC_CLANG_TSGO_ARCHIVE")
 	if archive == "" {
 		t.Skip("set ADAMIC_CLANG_TSGO_ARCHIVE to a built checker archive")
