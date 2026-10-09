@@ -1,0 +1,33 @@
+timing-comparison-1 0 12.908509652999783 []
+timing-comparison-2 0 9.23048230600034 []
+timing-comparison-3 0 7.7001998990017455 []
+timing-killed-1 0 3.813955645000533 []
+timing-killed-2 0 3.6427327490018797 []
+timing-killed-3 0 3.628155209000397 []
+timing-planted-1 0 3.4709351130004507 []
+timing-planted-2 0 3.714775569998892 []
+timing-planted-3 0 3.5122763100007433 []
+timing-setup-1 0 3.228958217001491 []
+timing-setup-2 0 3.3222760030002974 []
+timing-setup-3 0 3.294692131999909 []
+timing-product-1 0 3.267081877998862 []
+timing-product-2 0 3.3048254499990435 []
+timing-product-3 0 3.2866884079994634 []
+Traceback (most recent call last):
+  File "/workspace/adamic/review/test-audit/stage1-cohere-lint-yepesta_independent_shards/run_audit.py", line 24, in <module>
+    f=root/m['file'];original=f.read_text();assert original.count(m['from'])==1
+                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+M2 0 92.78141851500186 []
+M3 0 87.44788539000001 []
+M4 1 96.09900581599868 []
+M4-warm-lowered 0 27.93309815900284 []
+P1 1 12.128821815000265 ['TestMutantsReactJsxNoCommentTextnodes_009', 'TestMutantsReactJsxNoCommentTextnodesLoweredSetup', 'TestMutantsReactJsxNoCommentTextnodesOracleSetup', 'TestMutantsReactJsxNoCommentTextnodes_003', 'TestMutantsReactJsxNoCommentTextnodes_008', 'TestMutantsReactJsxNoCommentTextnodes_007', 'TestMutantsReactJsxNoCommentTextnodes_006', 'TestMutantsReactJsxNoCommentTextnodesUnion', 'TestMutantsReactJsxNoCommentTextnodes_015', 'TestMutantsReactJsxNoCommentTextnodes_004', 'TestMutantsReactJsxNoCommentTextnodes_Setup', 'TestMutantsReactJsxNoCommentTextnodes_001', 'TestMutantsReactJsxNoCommentTextnodesPlantedFailure', 'TestMutantsReactJsxNoCommentTextnodes_002', 'TestMutantsReactJsxNoCommentTextnodes_000', 'TestMutantsReactJsxNoCommentTextnodes_012', 'TestMutantsReactJsxNoCommentTextnodes_013', 'TestMutantsReactJsxNoCommentTextnodesNativeSetup', 'TestMutantsReactJsxNoCommentTextnodes_010', 'TestMutantsReactJsxNoCommentTextnodes_014', 'TestMutantsReactJsxNoCommentTextnodesMutantKilled', 'TestMutantsReactJsxNoCommentTextnodes_011', 'TestMutantsReactJsxNoCommentTextnodes_005']
+W1-vet 0 0.5785737720034376 []
+W1 1 15.222459521002747 ['TestMutantsReactJsxNoCommentTextnodesPlantedFailure']
+W2-vet 0 0.44174431999999797 []
+W2 1 15.116917183000623 ['TestMutantsReactJsxNoCommentTextnodesMutantKilled']
+S1-vet 0 0.47557994299859274 []
+S1 1 10.629920559000311 ['TestMutantsReactJsxNoCommentTextnodes_Setup', 'TestMutantsReactJsxNoCommentTextnodesNativeSetup', 'TestMutantsReactJsxNoCommentTextnodesLoweredSetup', 'TestMutantsReactJsxNoCommentTextnodesOracleSetup']
+S2-vet 0 0.4988830879992747 []
+S2 0 22.956471546000103 []

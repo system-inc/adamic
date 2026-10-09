@@ -234,3 +234,5 @@ Successful product misses (nested times, do not add to test wall again):
 Setup was skipped; npm ci and registry generation ran before baseline. No named row skipped. Mutated sources are restored. Patches M1-M4/W1-W2/S1-S2 apply against the starting commit; all completed products compiled and all Go scratch edits passed vet. The whole package, other packages, a dynamic complete call graph, and empty-answer behavior remain uncovered. P1’s unvalidated diff is retained only for diagnosis, not as a validated replay mutant.
 
 Initial baselines add 90.382 + 90.049 + 26.918 = 207.349 binary seconds to the runner aggregate, for 865.423 logged binary seconds overall. Cancelled probe time is not included. Unit wall work was about 29 minutes.
+
+Final restored-source named baseline passed in 7.896 binary seconds. Raw .log evidence is explicitly included despite the repository log ignore rule.
