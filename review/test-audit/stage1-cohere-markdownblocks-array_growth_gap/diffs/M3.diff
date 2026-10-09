@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/inputChunks.ts
++++ b/stage1/cohere/markdownblocks/inputChunks.ts
+@@ -46,7 +46,7 @@
+                 column++;
+             }
+             else if(code === 9) {
+-                const next = Math.ceil(column / 4) * 4;
++                const next = Math.ceil(column / 4) * 8;
+                 chunks.push(codeChunk(-2));
+                 while(column < next) {
+                     chunks.push(codeChunk(-1));

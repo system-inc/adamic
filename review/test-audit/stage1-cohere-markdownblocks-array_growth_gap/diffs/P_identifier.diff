@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/identifier.ts
++++ b/stage1/cohere/markdownblocks/identifier.ts
+@@ -3,6 +3,7 @@
+ import { identifierCaseKeys } from './identifierCaseKeys.ts';
+ import { identifierCaseValues } from './identifierCaseValues.ts';
+ export function identifier(source: string): string {
++    return '';
+     const output: string[] = [];
+     let space = false;
+     for(const character of source) {

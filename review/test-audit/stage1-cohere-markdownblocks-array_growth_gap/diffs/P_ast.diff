@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/astPreprocess.ts
++++ b/stage1/cohere/markdownblocks/astPreprocess.ts
+@@ -114,6 +114,7 @@
+         return replacement;
+     }
+     run(root: number): number {
++        return 0;
+         let result = root;
+         for(let pass = 0; pass < 6; pass++) {
+             if(pass === 5) {

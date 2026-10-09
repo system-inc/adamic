@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/inputChunks.ts
++++ b/stage1/cohere/markdownblocks/inputChunks.ts
+@@ -11,6 +11,7 @@
+     return { text, code: 0, isText: true };
+ }
+ export function inputChunks(units: readonly number[]): InputChunkInterface[] {
++    return [];
+     const chunks: InputChunkInterface[] = [];
+     let column = 1;
+     let carriage = false;

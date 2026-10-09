@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -53,7 +53,7 @@
+     if(frame.kind === 'emphasis' || frame.kind === 'strong' || frame.kind === 'delete') {
+         const marker =
+             frame.kind === 'strong'
+-                ? '**'
++                ? '__'
+                 : frame.kind === 'delete'
+                   ? '~~'
+                   : (frame.flags & 1) !== 0

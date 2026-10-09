@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -33,6 +33,7 @@
+     return arena.add('g', '', 0, [contents]);
+ }
+ export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {
++    return 0;
+     const contents = arena.concat(frame.children.map((child) => child.doc));
+     if(frame.kind === 'preservedLabel') return printPreservedLabel(arena, frame.source);
+     if(frame.kind === 'ignored') {

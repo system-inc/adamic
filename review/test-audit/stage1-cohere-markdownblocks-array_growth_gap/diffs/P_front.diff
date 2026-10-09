@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/frontmatter.ts
++++ b/stage1/cohere/markdownblocks/frontmatter.ts
+@@ -51,6 +51,7 @@
+     return parts.join('');
+ }
+ export function parseFrontMatter(text: string): FrontMatterResultInterface {
++    return {frontMatter: undefined, content: ''};
+     const startDelimiter = text.slice(0, 3);
+     if(startDelimiter !== '---' && startDelimiter !== '+++') return { frontMatter: undefined, content: text };
+     const firstBreak = text.indexOf('\n', 3);

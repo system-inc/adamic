@@ -1,0 +1,11 @@
+--- a/internal/native/emit_branches.go
++++ b/internal/native/emit_branches.go
+@@ -79,7 +79,7 @@
+ 
+ // conditional emits ?:, evaluating only the branch JavaScript takes.
+ func (e *emitter) conditional(conditional ir.Conditional) string {
+-	condition := e.value(conditional.Condition)
++	condition := "!(" + e.value(conditional.Condition) + ")"
+ 	trueText, whenTrue, trueOwned := e.aside(conditional.WhenTrue)
+ 	notText, whenNot, notOwned := e.aside(conditional.WhenNot)
+ 	if trueText == "" && notText == "" && len(trueOwned) == 0 && len(notOwned) == 0 {

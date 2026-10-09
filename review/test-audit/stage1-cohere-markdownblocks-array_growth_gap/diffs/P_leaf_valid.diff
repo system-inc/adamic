@@ -1,0 +1,149 @@
+--- a/stage1/cohere/markdownblocks/leaves.ts
++++ b/stage1/cohere/markdownblocks/leaves.ts
+@@ -33,145 +33,5 @@
+     return arena.add('g', '', 0, [contents]);
+ }
+ export function printLeaf(arena: DocumentArena, frame: LeafFrameInterface): number {
+-    const contents = arena.concat(frame.children.map((child) => child.doc));
+-    if(frame.kind === 'preservedLabel') return printPreservedLabel(arena, frame.source);
+-    if(frame.kind === 'ignored') {
+-        if(frame.value === 'list' && (frame.flags & 1) !== 0) {
+-            const start = frame.source.lastIndexOf('\n>');
+-            if(start >= 0 && frame.source.slice(start + 2).trim() === '')
+-                return arena.text(frame.source.slice(0, start));
+-        }
+-        return arena.text(frame.source);
+-    }
+-    if(frame.kind === 'frontMatter' || frame.kind === 'inlineMath') return arena.text(frame.source);
+-    if(frame.kind === 'text' || frame.kind === 'liquidNode') return lines(arena, frame.value);
+-    if(frame.kind === 'inlineCode') return arena.text(printInlineCode(frame.value, true, (frame.flags & 1) !== 0));
+-    if(frame.kind === 'wikiLink') {
+-        if((frame.flags & 1) !== 0) panic('markdown: a wiki link with no target');
+-        return arena.text(printWikiLink(frame.value, true));
+-    }
+-    if(frame.kind === 'emphasis' || frame.kind === 'strong' || frame.kind === 'delete') {
+-        const marker =
+-            frame.kind === 'strong'
+-                ? '**'
+-                : frame.kind === 'delete'
+-                  ? '~~'
+-                  : (frame.flags & 1) !== 0
+-                    ? frame.source.slice(0, 1)
+-                    : (frame.flags & 14) !== 0
+-                      ? '*'
+-                      : '_';
+-        return arena.concat([arena.text(marker), contents, arena.text(marker)]);
+-    }
+-    if(frame.kind === 'link') {
+-        if(frame.source.startsWith('<')) {
+-            const url =
+-                frame.url.startsWith('mailto:') && frame.source.slice(1, 8) !== 'mailto:'
+-                    ? frame.url.slice(7)
+-                    : frame.url;
+-            return arena.concat([arena.text('<'), arena.text(url), arena.text('>')]);
+-        }
+-        if(!frame.source.startsWith('[')) return arena.text(frame.source);
+-        const destination = frame.url === '' ? '<>' : printURL(frame.url, ')');
+-        const title = printTitle(frame.title, true);
+-        return arena.concat([
+-            arena.text('['),
+-            contents,
+-            arena.text(']('),
+-            arena.text(destination),
+-            arena.text(title === '' ? '' : ` ${title}`),
+-            arena.text(')'),
+-        ]);
+-    }
+-    if(frame.kind === 'image') {
+-        const destination = frame.url === '' ? '<>' : printURL(frame.url, ')');
+-        const title = printTitle(frame.title, true);
+-        return arena.concat([
+-            arena.text('!['),
+-            arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),
+-            arena.text(']('),
+-            arena.text(destination),
+-            arena.text(title === '' ? '' : ` ${title}`),
+-            arena.text(')'),
+-        ]);
+-    }
+-    if(frame.kind === 'linkReference') {
+-        const suffix =
+-            frame.referenceType === 'full'
+-                ? printReference(frame.label)
+-                : frame.referenceType === 'collapsed'
+-                  ? '[]'
+-                  : '';
+-        return arena.concat([arena.text('['), contents, arena.text(']'), arena.text(suffix)]);
+-    }
+-    if(frame.kind === 'imageReference') {
+-        if(frame.referenceType === 'full')
+-            return arena.concat([
+-                arena.text('!['),
+-                arena.text(frame.originalAlt !== '' ? frame.originalAlt : frame.alt),
+-                arena.text(']'),
+-                arena.text(printReference(frame.label)),
+-            ]);
+-        return arena.concat([
+-            arena.text('!'),
+-            arena.text(printReference(frame.label)),
+-            arena.text(frame.referenceType === 'collapsed' ? '[]' : ''),
+-        ]);
+-    }
+-    if(frame.kind === 'definition') {
+-        const destination = frame.url === '' ? '<>' : printURL(frame.url, '');
+-        const title = frame.hasTitle
+-            ? arena.concat([arena.text(' '), arena.text(printTitle(frame.title, true))])
+-            : arena.text('');
+-        return group(
+-            arena,
+-            arena.concat([
+-                arena.text(printReference(frame.label)),
+-                arena.text(':'),
+-                arena.add('i', '', 0, [arena.concat([arena.text(' '), arena.text(destination), title])]),
+-            ]),
+-        );
+-    }
+-    if(frame.kind === 'footnoteReference') return arena.text(`[^${frame.label}]`);
+-    if(frame.kind === 'footnoteDefinition') {
+-        const first = frame.children[0];
+-        const prefix = arena.concat([arena.text(`[^${frame.label}]`), arena.text(': ')]);
+-        if(
+-            frame.children.length === 1 &&
+-            first !== undefined &&
+-            first.kind === 'paragraph' &&
+-            first.start === first.end
+-        )
+-            return arena.concat([prefix, printBlockChildren(arena, frame.children)]);
+-        const children = frame.children.map((child, index) => ({
+-            kind: child.kind,
+-            doc: index === 0 ? group(arena, arena.concat([arena.add('h', '', 0, [], 1), child.doc])) : child.doc,
+-            start: child.start,
+-            end: child.end,
+-            column: child.column,
+-            indented: child.indented,
+-            ignoreNext: child.ignoreNext,
+-        }));
+-        return arena.concat([prefix, group(arena, arena.align('    ', printBlockChildren(arena, children)))]);
+-    }
+-    if(frame.kind === 'thematicBreak') return arena.text(frame.sibling >= 0 && frame.sibling % 2 === 0 ? '***' : '---');
+-    if(frame.kind === 'break') {
+-        if(frame.source !== '' && frame.source.slice(0, 1).trim() === '') {
+-            const literal = arena.concat([arena.add('h', '', 0, [], 6), arena.add('p', '', 0, [])]);
+-            return arena.concat([arena.text('  '), arena.add('r', '', 0, [literal])]);
+-        }
+-        return arena.concat([arena.text('\\'), arena.hardline()]);
+-    }
+-    if(frame.kind === 'math') {
+-        const value = frame.value === '' ? arena.text('') : arena.concat([lines(arena, frame.value), arena.hardline()]);
+-        return arena.concat([
+-            arena.text('$$'),
+-            arena.text(frame.metadata === '' ? '' : ` ${frame.metadata}`),
+-            arena.hardline(),
+-            value,
+-            arena.text('$$'),
+-        ]);
+-    }
+-    if(frame.kind === 'tableCell') return contents;
+-    return panic(`unported Markdown leaf ${frame.kind}`);
++    return 0;
+ }

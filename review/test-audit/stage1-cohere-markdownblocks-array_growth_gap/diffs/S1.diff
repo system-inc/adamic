@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/preflight_shards_test.go
++++ b/stage1/cohere/markdownblocks/preflight_shards_test.go
+@@ -323,7 +323,7 @@
+ 		inputs, files = selectedMarkdownInputs(inputs, files, selection)
+ 		fixture := &wholeDocumentPreflightFixture{root: root, inputs: inputs, products: prepareWholeDocumentPreflight(t, root, budget)}
+ 		for index, input := range inputs {
+-			shard := preflightShard(input.Name)
++			shard := (preflightShard(input.Name) + 1) % testWholeDocumentOraclePreflightShards
+ 			fixture.shards[shard] = append(fixture.shards[shard], input)
+ 			if index < files {
+ 				fixture.physical[shard]++

@@ -1,0 +1,10 @@
+--- a/stage1/cohere/markdownblocks/decodeString.ts
++++ b/stage1/cohere/markdownblocks/decodeString.ts
+@@ -56,6 +56,7 @@
+     return String.fromCodePoint(code);
+ }
+ export function decodeString(value: string): string {
++    return '';
+     const output: string[] = [];
+     let index = 0;
+     let start = 0;

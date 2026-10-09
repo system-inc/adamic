@@ -1,0 +1,2143 @@
+{
+  "assigned_count": 534,
+  "package_count": 763,
+  "missing": [],
+  "members": {
+    "TestArrayGrowthWitness": {
+      "file": "stage1/cohere/markdownblocks/array_growth_gap_test.go",
+      "line": 10
+    },
+    "TestMarkdownASTPreprocessing": {
+      "file": "stage1/cohere/markdownblocks/ast_test.go",
+      "line": 18
+    },
+    "TestWholeDocumentOraclePreflight_Setup": {
+      "file": "stage1/cohere/markdownblocks/audit_test.go",
+      "line": 114
+    },
+    "TestMicromarkInputChunks": {
+      "file": "stage1/cohere/markdownblocks/chunks_test.go",
+      "line": 17
+    },
+    "TestMarkdownSourceDecoding": {
+      "file": "stage1/cohere/markdownblocks/decode_test.go",
+      "line": 21
+    },
+    "TestTokenizerEventShardUnion": {
+      "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+      "line": 108
+    },
+    "TestTokenizerEventShardPlantedDisagreement": {
+      "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+      "line": 126
+    },
+    "TestTokenizerEventShardGrowth": {
+      "file": "stage1/cohere/markdownblocks/tokenizer_events_union_test.go",
+      "line": 167
+    },
+    "TestTokenizerEventsUnion": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 74
+    },
+    "TestTokenizerEvents_000": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 84
+    },
+    "TestTokenizerEvents_001": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 85
+    },
+    "TestTokenizerEvents_002": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 86
+    },
+    "TestTokenizerEvents_003": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 87
+    },
+    "TestTokenizerEvents_004": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 88
+    },
+    "TestTokenizerEvents_005": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 89
+    },
+    "TestTokenizerEvents_006": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 90
+    },
+    "TestTokenizerEvents_007": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 91
+    },
+    "TestTokenizerEvents_008": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 92
+    },
+    "TestTokenizerEvents_009": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 93
+    },
+    "TestTokenizerEvents_010": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 94
+    },
+    "TestTokenizerEvents_011": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 95
+    },
+    "TestTokenizerEvents_012": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 96
+    },
+    "TestTokenizerEvents_013": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 97
+    },
+    "TestTokenizerEvents_014": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 98
+    },
+    "TestTokenizerEvents_015": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 99
+    },
+    "TestTokenizerEvents_016": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 100
+    },
+    "TestTokenizerEvents_017": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 101
+    },
+    "TestTokenizerEvents_018": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 102
+    },
+    "TestTokenizerEvents_019": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 103
+    },
+    "TestTokenizerEvents_020": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 104
+    },
+    "TestTokenizerEvents_021": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 105
+    },
+    "TestTokenizerEvents_022": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 106
+    },
+    "TestTokenizerEvents_023": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 107
+    },
+    "TestTokenizerEvents_024": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 108
+    },
+    "TestTokenizerEvents_025": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 109
+    },
+    "TestTokenizerEvents_026": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 110
+    },
+    "TestTokenizerEvents_027": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 111
+    },
+    "TestTokenizerEvents_028": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 112
+    },
+    "TestTokenizerEvents_029": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 113
+    },
+    "TestTokenizerEvents_030": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 114
+    },
+    "TestTokenizerEvents_031": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 115
+    },
+    "TestTokenizerEvents_032": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 116
+    },
+    "TestTokenizerEvents_033": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 117
+    },
+    "TestTokenizerEvents_034": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 118
+    },
+    "TestTokenizerEvents_035": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 119
+    },
+    "TestTokenizerEvents_036": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 120
+    },
+    "TestTokenizerEvents_037": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 121
+    },
+    "TestTokenizerEvents_038": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 122
+    },
+    "TestTokenizerEvents_039": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 123
+    },
+    "TestTokenizerEvents_040": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 124
+    },
+    "TestTokenizerEvents_041": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 125
+    },
+    "TestTokenizerEvents_042": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 126
+    },
+    "TestTokenizerEvents_043": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 127
+    },
+    "TestTokenizerEvents_044": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 128
+    },
+    "TestTokenizerEvents_045": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 129
+    },
+    "TestTokenizerEvents_046": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 130
+    },
+    "TestTokenizerEvents_047": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 131
+    },
+    "TestTokenizerEvents_048": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 132
+    },
+    "TestTokenizerEvents_049": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 133
+    },
+    "TestTokenizerEvents_050": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 134
+    },
+    "TestTokenizerEvents_051": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 135
+    },
+    "TestTokenizerEvents_052": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 136
+    },
+    "TestTokenizerEvents_053": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 137
+    },
+    "TestTokenizerEvents_054": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 138
+    },
+    "TestTokenizerEvents_055": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 139
+    },
+    "TestTokenizerEvents_056": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 140
+    },
+    "TestTokenizerEvents_057": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 141
+    },
+    "TestTokenizerEvents_058": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 142
+    },
+    "TestTokenizerEvents_059": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 143
+    },
+    "TestTokenizerEvents_060": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 144
+    },
+    "TestTokenizerEvents_061": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 145
+    },
+    "TestTokenizerEvents_062": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 146
+    },
+    "TestTokenizerEvents_063": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 147
+    },
+    "TestTokenizerEvents_064": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 148
+    },
+    "TestTokenizerEvents_065": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 149
+    },
+    "TestTokenizerEvents_066": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 150
+    },
+    "TestTokenizerEvents_067": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 151
+    },
+    "TestTokenizerEvents_068": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 152
+    },
+    "TestTokenizerEvents_069": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 153
+    },
+    "TestTokenizerEvents_070": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 154
+    },
+    "TestTokenizerEvents_071": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 155
+    },
+    "TestTokenizerEvents_072": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 156
+    },
+    "TestTokenizerEvents_073": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 157
+    },
+    "TestTokenizerEvents_074": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 158
+    },
+    "TestTokenizerEvents_075": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 159
+    },
+    "TestTokenizerEvents_076": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 160
+    },
+    "TestTokenizerEvents_077": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 161
+    },
+    "TestTokenizerEvents_078": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 162
+    },
+    "TestTokenizerEvents_079": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 163
+    },
+    "TestTokenizerEvents_080": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 164
+    },
+    "TestTokenizerEvents_081": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 165
+    },
+    "TestTokenizerEvents_082": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 166
+    },
+    "TestTokenizerEvents_083": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 167
+    },
+    "TestTokenizerEvents_084": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 168
+    },
+    "TestTokenizerEvents_085": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 169
+    },
+    "TestTokenizerEvents_086": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 170
+    },
+    "TestTokenizerEvents_087": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 171
+    },
+    "TestTokenizerEvents_088": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 172
+    },
+    "TestTokenizerEvents_089": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 173
+    },
+    "TestTokenizerEvents_090": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 174
+    },
+    "TestTokenizerEvents_091": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 175
+    },
+    "TestTokenizerEvents_092": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 176
+    },
+    "TestTokenizerEvents_093": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 177
+    },
+    "TestTokenizerEvents_094": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 178
+    },
+    "TestTokenizerEvents_095": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 179
+    },
+    "TestTokenizerEvents_096": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 180
+    },
+    "TestTokenizerEvents_097": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 181
+    },
+    "TestTokenizerEvents_098": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 182
+    },
+    "TestTokenizerEvents_099": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 183
+    },
+    "TestTokenizerEvents_100": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 184
+    },
+    "TestTokenizerEvents_101": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 185
+    },
+    "TestTokenizerEvents_102": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 186
+    },
+    "TestTokenizerEvents_103": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 187
+    },
+    "TestTokenizerEvents_104": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 188
+    },
+    "TestTokenizerEvents_105": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 189
+    },
+    "TestTokenizerEvents_106": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 190
+    },
+    "TestTokenizerEvents_107": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 191
+    },
+    "TestTokenizerEvents_108": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 192
+    },
+    "TestTokenizerEvents_109": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 193
+    },
+    "TestTokenizerEvents_110": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 194
+    },
+    "TestTokenizerEvents_111": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 195
+    },
+    "TestTokenizerEvents_112": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 196
+    },
+    "TestTokenizerEvents_113": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 197
+    },
+    "TestTokenizerEvents_114": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 198
+    },
+    "TestTokenizerEvents_115": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 199
+    },
+    "TestTokenizerEvents_116": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 200
+    },
+    "TestTokenizerEvents_117": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 201
+    },
+    "TestTokenizerEvents_118": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 202
+    },
+    "TestTokenizerEvents_119": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 203
+    },
+    "TestTokenizerEvents_120": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 204
+    },
+    "TestTokenizerEvents_121": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 205
+    },
+    "TestTokenizerEvents_122": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 206
+    },
+    "TestTokenizerEvents_123": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 207
+    },
+    "TestTokenizerEvents_124": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 208
+    },
+    "TestTokenizerEvents_125": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 209
+    },
+    "TestTokenizerEvents_126": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 210
+    },
+    "TestTokenizerEvents_127": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 211
+    },
+    "TestTokenizerEvents_128": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 212
+    },
+    "TestTokenizerEvents_129": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 213
+    },
+    "TestTokenizerEvents_130": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 214
+    },
+    "TestTokenizerEvents_131": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 215
+    },
+    "TestTokenizerEvents_132": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 216
+    },
+    "TestTokenizerEvents_133": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 217
+    },
+    "TestTokenizerEvents_134": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 218
+    },
+    "TestTokenizerEvents_135": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 219
+    },
+    "TestTokenizerEvents_136": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 220
+    },
+    "TestTokenizerEvents_137": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 221
+    },
+    "TestTokenizerEvents_138": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 222
+    },
+    "TestTokenizerEvents_139": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 223
+    },
+    "TestTokenizerEvents_140": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 224
+    },
+    "TestTokenizerEvents_141": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 225
+    },
+    "TestTokenizerEvents_142": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 226
+    },
+    "TestTokenizerEvents_143": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 227
+    },
+    "TestTokenizerEvents_144": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 228
+    },
+    "TestTokenizerEvents_145": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 229
+    },
+    "TestTokenizerEvents_146": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 230
+    },
+    "TestTokenizerEvents_147": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 231
+    },
+    "TestTokenizerEvents_148": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 232
+    },
+    "TestTokenizerEvents_149": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 233
+    },
+    "TestTokenizerEvents_150": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 234
+    },
+    "TestTokenizerEvents_151": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 235
+    },
+    "TestTokenizerEvents_152": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 236
+    },
+    "TestTokenizerEvents_153": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 237
+    },
+    "TestTokenizerEvents_154": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 238
+    },
+    "TestTokenizerEvents_155": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 239
+    },
+    "TestTokenizerEvents_156": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 240
+    },
+    "TestTokenizerEvents_157": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 241
+    },
+    "TestTokenizerEvents_158": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 242
+    },
+    "TestTokenizerEvents_159": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 243
+    },
+    "TestTokenizerEvents_160": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 244
+    },
+    "TestTokenizerEvents_161": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 245
+    },
+    "TestTokenizerEvents_162": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 246
+    },
+    "TestTokenizerEvents_163": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 247
+    },
+    "TestTokenizerEvents_164": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 248
+    },
+    "TestTokenizerEvents_165": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 249
+    },
+    "TestTokenizerEvents_166": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 250
+    },
+    "TestTokenizerEvents_167": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 251
+    },
+    "TestTokenizerEvents_168": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 252
+    },
+    "TestTokenizerEvents_169": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 253
+    },
+    "TestTokenizerEvents_170": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 254
+    },
+    "TestTokenizerEvents_171": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 255
+    },
+    "TestTokenizerEvents_172": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 256
+    },
+    "TestTokenizerEvents_173": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 257
+    },
+    "TestTokenizerEvents_174": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 258
+    },
+    "TestTokenizerEvents_175": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 259
+    },
+    "TestTokenizerEvents_176": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 260
+    },
+    "TestTokenizerEvents_177": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 261
+    },
+    "TestTokenizerEvents_178": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 262
+    },
+    "TestTokenizerEvents_179": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 263
+    },
+    "TestTokenizerEvents_180": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 264
+    },
+    "TestTokenizerEvents_181": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 265
+    },
+    "TestTokenizerEvents_182": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 266
+    },
+    "TestTokenizerEvents_183": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 267
+    },
+    "TestTokenizerEvents_184": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 268
+    },
+    "TestTokenizerEvents_185": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 269
+    },
+    "TestTokenizerEvents_186": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 270
+    },
+    "TestTokenizerEvents_187": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 271
+    },
+    "TestTokenizerEvents_188": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 272
+    },
+    "TestTokenizerEvents_189": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 273
+    },
+    "TestTokenizerEvents_190": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 274
+    },
+    "TestTokenizerEvents_191": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 275
+    },
+    "TestTokenizerEvents_192": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 276
+    },
+    "TestTokenizerEvents_193": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 277
+    },
+    "TestTokenizerEvents_194": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 278
+    },
+    "TestTokenizerEvents_195": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 279
+    },
+    "TestTokenizerEvents_196": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 280
+    },
+    "TestTokenizerEvents_197": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 281
+    },
+    "TestTokenizerEvents_198": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 282
+    },
+    "TestTokenizerEvents_199": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 283
+    },
+    "TestTokenizerEvents_200": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 284
+    },
+    "TestTokenizerEvents_201": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 285
+    },
+    "TestTokenizerEvents_202": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 286
+    },
+    "TestTokenizerEvents_203": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 287
+    },
+    "TestTokenizerEvents_204": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 288
+    },
+    "TestTokenizerEvents_205": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 289
+    },
+    "TestTokenizerEvents_206": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 290
+    },
+    "TestTokenizerEvents_207": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 291
+    },
+    "TestTokenizerEvents_208": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 292
+    },
+    "TestTokenizerEvents_209": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 293
+    },
+    "TestTokenizerEvents_210": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 294
+    },
+    "TestTokenizerEvents_211": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 295
+    },
+    "TestTokenizerEvents_212": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 296
+    },
+    "TestTokenizerEvents_213": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 297
+    },
+    "TestTokenizerEvents_214": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 298
+    },
+    "TestTokenizerEvents_215": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 299
+    },
+    "TestTokenizerEvents_216": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 300
+    },
+    "TestTokenizerEvents_217": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 301
+    },
+    "TestTokenizerEvents_218": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 302
+    },
+    "TestTokenizerEvents_219": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 303
+    },
+    "TestTokenizerEvents_220": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 304
+    },
+    "TestTokenizerEvents_221": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 305
+    },
+    "TestTokenizerEvents_222": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 306
+    },
+    "TestTokenizerEvents_223": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 307
+    },
+    "TestTokenizerEvents_224": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 308
+    },
+    "TestTokenizerEvents_225": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 309
+    },
+    "TestTokenizerEvents_226": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 310
+    },
+    "TestTokenizerEvents_227": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 311
+    },
+    "TestTokenizerEvents_228": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 312
+    },
+    "TestTokenizerEvents_229": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 313
+    },
+    "TestTokenizerEvents_230": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 314
+    },
+    "TestTokenizerEvents_231": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 315
+    },
+    "TestTokenizerEvents_232": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 316
+    },
+    "TestTokenizerEvents_233": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 317
+    },
+    "TestTokenizerEvents_234": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 318
+    },
+    "TestTokenizerEvents_235": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 319
+    },
+    "TestTokenizerEvents_236": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 320
+    },
+    "TestTokenizerEvents_237": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 321
+    },
+    "TestTokenizerEvents_238": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 322
+    },
+    "TestTokenizerEvents_239": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 323
+    },
+    "TestTokenizerEvents_240": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 324
+    },
+    "TestTokenizerEvents_241": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 325
+    },
+    "TestTokenizerEvents_242": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 326
+    },
+    "TestTokenizerEvents_243": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 327
+    },
+    "TestTokenizerEvents_244": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 328
+    },
+    "TestTokenizerEvents_245": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 329
+    },
+    "TestTokenizerEvents_246": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 330
+    },
+    "TestTokenizerEvents_247": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 331
+    },
+    "TestTokenizerEvents_248": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 332
+    },
+    "TestTokenizerEvents_249": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 333
+    },
+    "TestTokenizerEvents_250": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 334
+    },
+    "TestTokenizerEvents_251": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 335
+    },
+    "TestTokenizerEvents_252": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 336
+    },
+    "TestTokenizerEvents_253": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 337
+    },
+    "TestTokenizerEvents_254": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 338
+    },
+    "TestTokenizerEvents_255": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 339
+    },
+    "TestTokenizerEvents_256": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 340
+    },
+    "TestTokenizerEvents_257": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 341
+    },
+    "TestTokenizerEvents_258": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 342
+    },
+    "TestTokenizerEvents_259": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 343
+    },
+    "TestTokenizerEvents_260": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 344
+    },
+    "TestTokenizerEvents_261": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 345
+    },
+    "TestTokenizerEvents_262": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 346
+    },
+    "TestTokenizerEvents_263": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 347
+    },
+    "TestTokenizerEvents_264": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 348
+    },
+    "TestTokenizerEvents_265": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 349
+    },
+    "TestTokenizerEvents_266": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 350
+    },
+    "TestTokenizerEvents_267": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 351
+    },
+    "TestTokenizerEvents_268": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 352
+    },
+    "TestTokenizerEvents_269": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 353
+    },
+    "TestTokenizerEvents_270": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 354
+    },
+    "TestTokenizerEvents_271": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 355
+    },
+    "TestTokenizerEvents_272": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 356
+    },
+    "TestTokenizerEvents_273": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 357
+    },
+    "TestTokenizerEvents_274": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 358
+    },
+    "TestTokenizerEvents_275": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 359
+    },
+    "TestTokenizerEvents_276": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 360
+    },
+    "TestTokenizerEvents_277": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 361
+    },
+    "TestTokenizerEvents_278": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 362
+    },
+    "TestTokenizerEvents_279": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 363
+    },
+    "TestTokenizerEvents_280": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 364
+    },
+    "TestTokenizerEvents_281": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 365
+    },
+    "TestTokenizerEvents_282": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 366
+    },
+    "TestTokenizerEvents_283": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 367
+    },
+    "TestTokenizerEvents_284": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 368
+    },
+    "TestTokenizerEvents_285": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 369
+    },
+    "TestTokenizerEvents_286": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 370
+    },
+    "TestTokenizerEvents_287": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 371
+    },
+    "TestTokenizerEvents_288": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 372
+    },
+    "TestTokenizerEvents_289": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 373
+    },
+    "TestTokenizerEvents_290": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 374
+    },
+    "TestTokenizerEvents_291": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 375
+    },
+    "TestTokenizerEvents_292": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 376
+    },
+    "TestTokenizerEvents_293": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 377
+    },
+    "TestTokenizerEvents_294": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 378
+    },
+    "TestTokenizerEvents_295": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 379
+    },
+    "TestTokenizerEvents_296": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 380
+    },
+    "TestTokenizerEvents_297": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 381
+    },
+    "TestTokenizerEvents_298": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 382
+    },
+    "TestTokenizerEvents_299": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 383
+    },
+    "TestTokenizerEvents_300": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 384
+    },
+    "TestTokenizerEvents_301": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 385
+    },
+    "TestTokenizerEvents_302": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 386
+    },
+    "TestTokenizerEvents_303": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 387
+    },
+    "TestTokenizerEvents_304": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 388
+    },
+    "TestTokenizerEvents_305": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 389
+    },
+    "TestTokenizerEvents_306": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 390
+    },
+    "TestTokenizerEvents_307": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 391
+    },
+    "TestTokenizerEvents_308": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 392
+    },
+    "TestTokenizerEvents_309": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 393
+    },
+    "TestTokenizerEvents_310": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 394
+    },
+    "TestTokenizerEvents_311": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 395
+    },
+    "TestTokenizerEvents_312": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 396
+    },
+    "TestTokenizerEvents_313": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 397
+    },
+    "TestTokenizerEvents_314": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 398
+    },
+    "TestTokenizerEvents_315": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 399
+    },
+    "TestTokenizerEvents_316": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 400
+    },
+    "TestTokenizerEvents_317": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 401
+    },
+    "TestTokenizerEvents_318": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 402
+    },
+    "TestTokenizerEvents_319": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 403
+    },
+    "TestTokenizerEvents_320": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 404
+    },
+    "TestTokenizerEvents_321": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 405
+    },
+    "TestTokenizerEvents_322": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 406
+    },
+    "TestTokenizerEvents_323": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 407
+    },
+    "TestTokenizerEvents_324": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 408
+    },
+    "TestTokenizerEvents_325": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 409
+    },
+    "TestTokenizerEvents_326": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 410
+    },
+    "TestTokenizerEvents_327": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 411
+    },
+    "TestTokenizerEvents_328": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 412
+    },
+    "TestTokenizerEvents_329": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 413
+    },
+    "TestTokenizerEvents_330": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 414
+    },
+    "TestTokenizerEvents_331": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 415
+    },
+    "TestTokenizerEvents_332": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 416
+    },
+    "TestTokenizerEvents_333": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 417
+    },
+    "TestTokenizerEvents_334": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 418
+    },
+    "TestTokenizerEvents_335": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 419
+    },
+    "TestTokenizerEvents_336": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 420
+    },
+    "TestTokenizerEvents_337": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 421
+    },
+    "TestTokenizerEvents_338": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 422
+    },
+    "TestTokenizerEvents_339": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 423
+    },
+    "TestTokenizerEvents_340": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 424
+    },
+    "TestTokenizerEvents_341": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 425
+    },
+    "TestTokenizerEvents_342": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 426
+    },
+    "TestTokenizerEvents_343": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 427
+    },
+    "TestTokenizerEvents_344": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 428
+    },
+    "TestTokenizerEvents_345": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 429
+    },
+    "TestTokenizerEvents_346": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 430
+    },
+    "TestTokenizerEvents_347": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 431
+    },
+    "TestTokenizerEvents_348": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 432
+    },
+    "TestTokenizerEvents_349": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 433
+    },
+    "TestTokenizerEvents_350": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 434
+    },
+    "TestTokenizerEvents_351": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 435
+    },
+    "TestTokenizerEvents_352": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 436
+    },
+    "TestTokenizerEvents_353": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 437
+    },
+    "TestTokenizerEvents_354": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 438
+    },
+    "TestTokenizerEvents_355": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 439
+    },
+    "TestTokenizerEvents_356": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 440
+    },
+    "TestTokenizerEvents_357": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 441
+    },
+    "TestTokenizerEvents_358": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 442
+    },
+    "TestTokenizerEvents_359": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 443
+    },
+    "TestTokenizerEvents_360": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 444
+    },
+    "TestTokenizerEvents_361": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 445
+    },
+    "TestTokenizerEvents_362": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 446
+    },
+    "TestTokenizerEvents_363": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 447
+    },
+    "TestTokenizerEvents_364": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 448
+    },
+    "TestTokenizerEvents_365": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 449
+    },
+    "TestTokenizerEvents_366": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 450
+    },
+    "TestTokenizerEvents_367": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 451
+    },
+    "TestTokenizerEvents_368": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 452
+    },
+    "TestTokenizerEvents_369": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 453
+    },
+    "TestTokenizerEvents_370": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 454
+    },
+    "TestTokenizerEvents_371": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 455
+    },
+    "TestTokenizerEvents_372": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 456
+    },
+    "TestTokenizerEvents_373": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 457
+    },
+    "TestTokenizerEvents_374": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 458
+    },
+    "TestTokenizerEvents_375": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 459
+    },
+    "TestTokenizerEvents_376": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 460
+    },
+    "TestTokenizerEvents_377": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 461
+    },
+    "TestTokenizerEvents_378": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 462
+    },
+    "TestTokenizerEvents_379": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 463
+    },
+    "TestTokenizerEvents_380": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 464
+    },
+    "TestTokenizerEvents_381": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 465
+    },
+    "TestTokenizerEvents_382": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 466
+    },
+    "TestTokenizerEvents_383": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 467
+    },
+    "TestTokenizerEvents_384": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 468
+    },
+    "TestTokenizerEvents_385": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 469
+    },
+    "TestTokenizerEvents_386": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 470
+    },
+    "TestTokenizerEvents_387": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 471
+    },
+    "TestTokenizerEvents_388": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 472
+    },
+    "TestTokenizerEvents_389": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 473
+    },
+    "TestTokenizerEvents_390": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 474
+    },
+    "TestTokenizerEvents_391": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 475
+    },
+    "TestTokenizerEvents_392": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 476
+    },
+    "TestTokenizerEvents_393": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 477
+    },
+    "TestTokenizerEvents_394": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 478
+    },
+    "TestTokenizerEvents_395": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 479
+    },
+    "TestTokenizerEvents_396": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 480
+    },
+    "TestTokenizerEvents_397": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 481
+    },
+    "TestTokenizerEvents_398": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 482
+    },
+    "TestTokenizerEvents_399": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 483
+    },
+    "TestTokenizerEvents_400": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 484
+    },
+    "TestTokenizerEvents_401": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 485
+    },
+    "TestTokenizerEvents_402": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 486
+    },
+    "TestTokenizerEvents_403": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 487
+    },
+    "TestTokenizerEvents_404": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 488
+    },
+    "TestTokenizerEvents_405": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 489
+    },
+    "TestTokenizerEvents_406": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 490
+    },
+    "TestTokenizerEvents_407": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 491
+    },
+    "TestTokenizerEvents_408": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 492
+    },
+    "TestTokenizerEvents_409": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 493
+    },
+    "TestTokenizerEvents_410": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 494
+    },
+    "TestTokenizerEvents_411": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 495
+    },
+    "TestTokenizerEvents_412": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 496
+    },
+    "TestTokenizerEvents_413": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 497
+    },
+    "TestTokenizerEvents_414": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 498
+    },
+    "TestTokenizerEvents_415": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 499
+    },
+    "TestTokenizerEvents_416": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 500
+    },
+    "TestTokenizerEvents_417": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 501
+    },
+    "TestTokenizerEvents_418": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 502
+    },
+    "TestTokenizerEvents_419": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 503
+    },
+    "TestTokenizerEvents_420": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 504
+    },
+    "TestTokenizerEvents_421": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 505
+    },
+    "TestTokenizerEvents_422": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 506
+    },
+    "TestTokenizerEvents_423": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 507
+    },
+    "TestTokenizerEvents_424": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 508
+    },
+    "TestTokenizerEvents_425": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 509
+    },
+    "TestTokenizerEvents_426": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 510
+    },
+    "TestTokenizerEvents_427": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 511
+    },
+    "TestTokenizerEvents_428": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 512
+    },
+    "TestTokenizerEvents_429": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 513
+    },
+    "TestTokenizerEvents_430": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 514
+    },
+    "TestTokenizerEvents_431": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 515
+    },
+    "TestTokenizerEvents_432": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 516
+    },
+    "TestTokenizerEvents_433": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 517
+    },
+    "TestTokenizerEvents_434": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 518
+    },
+    "TestTokenizerEvents_435": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 519
+    },
+    "TestTokenizerEvents_436": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 520
+    },
+    "TestTokenizerEvents_437": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 521
+    },
+    "TestTokenizerEvents_438": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 522
+    },
+    "TestTokenizerEvents_439": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 523
+    },
+    "TestTokenizerEvents_440": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 524
+    },
+    "TestTokenizerEvents_441": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 525
+    },
+    "TestTokenizerEvents_442": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 526
+    },
+    "TestTokenizerEvents_443": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 527
+    },
+    "TestTokenizerEvents_444": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 528
+    },
+    "TestTokenizerEvents_445": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 529
+    },
+    "TestTokenizerEvents_446": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 530
+    },
+    "TestTokenizerEvents_447": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 531
+    },
+    "TestTokenizerEvents_448": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 532
+    },
+    "TestTokenizerEvents_449": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 533
+    },
+    "TestTokenizerEvents_450": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 534
+    },
+    "TestTokenizerEvents_451": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 535
+    },
+    "TestTokenizerEvents_452": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 536
+    },
+    "TestTokenizerEvents_453": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 537
+    },
+    "TestTokenizerEvents_454": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 538
+    },
+    "TestTokenizerEvents_455": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 539
+    },
+    "TestTokenizerEvents_456": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 540
+    },
+    "TestTokenizerEvents_457": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 541
+    },
+    "TestTokenizerEvents_458": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 542
+    },
+    "TestTokenizerEvents_459": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 543
+    },
+    "TestTokenizerEvents_460": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 544
+    },
+    "TestTokenizerEvents_461": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 545
+    },
+    "TestTokenizerEvents_462": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 546
+    },
+    "TestTokenizerEvents_463": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 547
+    },
+    "TestTokenizerEvents_464": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 548
+    },
+    "TestTokenizerEvents_465": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 549
+    },
+    "TestTokenizerEvents_466": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 550
+    },
+    "TestTokenizerEvents_467": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 551
+    },
+    "TestTokenizerEvents_468": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 552
+    },
+    "TestTokenizerEvents_469": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 553
+    },
+    "TestTokenizerEvents_470": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 554
+    },
+    "TestTokenizerEvents_471": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 555
+    },
+    "TestTokenizerEvents_472": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 556
+    },
+    "TestTokenizerEvents_473": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 557
+    },
+    "TestTokenizerEvents_474": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 558
+    },
+    "TestTokenizerEvents_475": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 559
+    },
+    "TestTokenizerEvents_476": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 560
+    },
+    "TestTokenizerEvents_477": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 561
+    },
+    "TestTokenizerEvents_478": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 562
+    },
+    "TestTokenizerEvents_479": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 563
+    },
+    "TestTokenizerEvents_480": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 564
+    },
+    "TestTokenizerEvents_481": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 565
+    },
+    "TestTokenizerEvents_482": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 566
+    },
+    "TestTokenizerEvents_483": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 567
+    },
+    "TestTokenizerEvents_484": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 568
+    },
+    "TestTokenizerEvents_485": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 569
+    },
+    "TestTokenizerEvents_486": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 570
+    },
+    "TestTokenizerEvents_487": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 571
+    },
+    "TestTokenizerEvents_488": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 572
+    },
+    "TestTokenizerEvents_489": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 573
+    },
+    "TestTokenizerEvents_490": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 574
+    },
+    "TestTokenizerEvents_491": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 575
+    },
+    "TestTokenizerEvents_492": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 576
+    },
+    "TestTokenizerEvents_493": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 577
+    },
+    "TestTokenizerEvents_494": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 578
+    },
+    "TestTokenizerEvents_495": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 579
+    },
+    "TestTokenizerEvents_496": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 580
+    },
+    "TestTokenizerEvents_497": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 581
+    },
+    "TestTokenizerEvents_498": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 582
+    },
+    "TestTokenizerEvents_499": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 583
+    },
+    "TestTokenizerEvents_500": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 584
+    },
+    "TestTokenizerEvents_501": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 585
+    },
+    "TestTokenizerEvents_502": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 586
+    },
+    "TestTokenizerEvents_503": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 587
+    },
+    "TestTokenizerEvents_504": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 588
+    },
+    "TestTokenizerEvents_505": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 589
+    },
+    "TestTokenizerEvents_506": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 590
+    },
+    "TestTokenizerEvents_507": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 591
+    },
+    "TestTokenizerEvents_508": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 592
+    },
+    "TestTokenizerEvents_509": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 593
+    },
+    "TestTokenizerEvents_510": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 594
+    },
+    "TestTokenizerEvents_511": {
+      "file": "stage1/cohere/markdownblocks/events_units_test.go",
+      "line": 595
+    },
+    "TestFrontMatterStage": {
+      "file": "stage1/cohere/markdownblocks/frontmatter_test.go",
+      "line": 17
+    },
+    "TestParserRepresentationProbes": {
+      "file": "stage1/cohere/markdownblocks/gaps_test.go",
+      "line": 15
+    },
+    "TestMdastIdentifierScalars": {
+      "file": "stage1/cohere/markdownblocks/identifier_independent_test.go",
+      "line": 13
+    },
+    "TestMarkdownLeafComposition_Setup": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 55
+    },
+    "TestMarkdownLeafCompositionUnion": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 108
+    },
+    "TestMarkdownLeafCompositionPlantedDisagreement": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 113
+    },
+    "TestMarkdownLeafComposition_000": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 202
+    },
+    "TestMarkdownLeafComposition_001": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 203
+    },
+    "TestMarkdownLeafComposition_002": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 204
+    },
+    "TestMarkdownLeafComposition_003": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 205
+    },
+    "TestMarkdownLeafComposition_004": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 206
+    },
+    "TestMarkdownLeafComposition_005": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 207
+    },
+    "TestMarkdownLeafComposition_006": {
+      "file": "stage1/cohere/markdownblocks/leaf_composition_independent_test.go",
+      "line": 208
+    }
+  }
+}
