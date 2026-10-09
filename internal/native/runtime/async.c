@@ -124,9 +124,12 @@ static void abandon(adamic_async_promise *promise, bool cancelling) {
 /* Low-level subscription cancellation only. Source cancellation/finally is not implemented. */
 void adamic_async_cancel(adamic_async_promise *promise) { abandon(promise, true); }
 static void drain_jobs(void);
+static int timer_wait_ms(void);
 #include "async_host_impl.h"
+#include "timers_impl.h"
 
 void adamic_async_teardown(void) {
+    timer_shutdown();
     host_shutdown();
     while (subscriptions != NULL) abandon(subscriptions->promise, false);
 }
@@ -143,7 +146,8 @@ static void drain_jobs(void) {
 void adamic_async_run(void) {
     for (;;) {
         adamic_host_process_completions();
-        if (!host_live()) break;
+        if (!host_live() && !timer_live()) break;
+        if (timers != NULL && timer_dispatch()) continue;
         host_wait_hook();
     }
     adamic_async_teardown();

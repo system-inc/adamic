@@ -82,12 +82,15 @@ static void host_default_wake(void) {
 static void host_default_wait(void) {
     /* The queue is the predicate. A byte published before poll stays readable. */
     host_lock();
-    bool ready = host_completions != NULL || host_requests == NULL;
+    int timeout = timer_wait_ms();
+    bool ready = host_completions != NULL || (host_requests == NULL && timeout < 0);
     host_unlock();
     if (ready) return;
     struct pollfd descriptor = {.fd = host_pipe[0], .events = POLLIN};
     int result;
-    do { result = poll(&descriptor, 1, -1); } while (result == -1 && errno == EINTR);
+    do { result = poll(&descriptor, 1, timeout);
+        if (result == -1 && errno == EINTR) timeout = timer_wait_ms();
+    } while (result == -1 && errno == EINTR);
     if (result < 0 || (descriptor.revents & (POLLERR | POLLNVAL))) abort();
 }
 #endif

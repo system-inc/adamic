@@ -455,3 +455,18 @@ allocated per owning array. A subarray retains its ultimate owner and points
 into that buffer. The generic iterator retains the array. Existing heap freeing
 releases owners, buffers and iterators; no new global cache or static counter is
 introduced. This entry records this extension, not an inventory of earlier units.
+
+## Native CLI timers
+
+- `runtime-file:timers.h`: declarations only, no storage.
+- `runtime-file:timers_impl.h`: included only by async.c. Provider is const.
+
+| Audit key | Holds / writers and timing | Classification |
+|---|---|---|
+| `timers_impl.h:timers:1` | Registration list owning callbacks and arguments; start, cancel, dispatch and teardown mutate | Loop confined. Every public operation checks host_loop_thread; no worker publishes timers |
+| `timers_impl.h:timer_next_identity:1` | Monotonic registration identity; start increments, never reused | Loop confined under the same guard |
+
+The native wait uses the existing host pipe and the nearest timer deadline; it
+never creates a delivery thread. Custom host loop hooks with timers are named
+NotYet. Timer entry destruction runs on the loop and dispatches graph references
+through ordinary adamic_release.
