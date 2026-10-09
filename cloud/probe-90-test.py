@@ -263,6 +263,9 @@ class DryRunTests(unittest.TestCase):
         self.assertEqual(added[0], '+')
         self.assertTrue(added[1].startswith('+// probe-90 '), added)
         self.assertIn('Co-Authored-By: Ahra <ahra@ahra.ai>', self.git('log', '-1', '--format=%B', sha, cwd=self.tools))
+        # The watcher's poolTier reads these as git trailers: tier 30 at Loom, and the task.
+        self.assertEqual(self.git('log', '-1', '--format=%(trailers:key=Gate-tier,valueonly)', sha, cwd=self.tools).strip(), '30')
+        self.assertEqual(self.git('log', '-1', '--format=%(trailers:key=Task,valueonly)', sha, cwd=self.tools).strip(), '#c89weq5')
         self.assertIn('dry run: not pushed', result.stdout)
         # Nothing reached origin, and the tools checkout's tree is untouched.
         self.assertNotIn('probe-90', self.git('ls-remote', 'origin', cwd=self.tools))

@@ -73,6 +73,8 @@ main=$(git -C "${here}" ls-remote origin refs/heads/main | cut -f1)
 [[ ${main} =~ ^[0-9a-f]{40}$ ]] || { say "not probing: origin's main is unreadable"; exit 1; }
 git -C "${here}" cat-file -e "${main}^{commit}" 2> /dev/null || git -C "${here}" fetch -q --no-write-fetch-head origin "${main}" || exit 1
 
+# Tier 30 at Loom (the watcher's poolTier reads the Gate-tier trailer): at the default 10 the first run waited 35 minutes
+# behind 31 side jobs and never started (Oct 9 16:50Z), which timed the queue, not the gate.
 # The commit is made from main's tree in a scratch index, so no checkout moves and the watcher's own tree is untouched.
 scratch=$(mktemp -d)
 pushed=""
@@ -98,7 +100,9 @@ sha=$(GIT_AUTHOR_NAME=kirkouimet GIT_AUTHOR_EMAIL=kirk@kirkouimet.com GIT_COMMIT
   git -C "${here}" -c commit.gpgSign=false commit-tree "${tree}" -p "${main}" \
   -m "Probe-90 (${mode}): one comment line in ${file}, gated to time the 90-second verdict" \
   -m "Throwaway: cloud/probe-90.sh deletes this branch once its record publishes. Never merge it." \
-  -m "Co-Authored-By: Ahra <ahra@ahra.ai>") || exit 1
+  -m "Gate-tier: 30
+Task: #c89weq5
+Co-Authored-By: Ahra <ahra@ahra.ai>") || exit 1
 say "${branch} ${sha}: ${mode} probe of ${file} on main ${main:0:12}"
 if [ "${dryRun}" = yes ]; then
   say "dry run: not pushed"
