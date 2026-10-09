@@ -1,0 +1,64 @@
+=== RUN   TestCheckedViewElementP01
+=== PAUSE TestCheckedViewElementP01
+=== RUN   TestCheckedViewElementP05
+=== PAUSE TestCheckedViewElementP05
+=== RUN   TestCheckedViewElementP06
+=== PAUSE TestCheckedViewElementP06
+=== RUN   TestCheckedViewElementP07
+=== PAUSE TestCheckedViewElementP07
+=== RUN   TestCheckedViewLiteralTypedKey
+=== PAUSE TestCheckedViewLiteralTypedKey
+=== CONT  TestCheckedViewElementP01
+=== CONT  TestCheckedViewElementP07
+=== CONT  TestCheckedViewElementP05
+=== CONT  TestCheckedViewLiteralTypedKey
+=== CONT  TestCheckedViewElementP06
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:10: gate cache node miss
+=== NAME  TestCheckedViewElementP05
+    view_element_reads_test.go:15: gate cache node miss
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:20: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:31: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    view_element_reads_test.go:25: gate cache node miss
+    view_element_reads_test.go:25: gate cache node miss
+=== NAME  TestCheckedViewElementP06
+    view_element_reads_test.go:20: gate cache node miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    view_element_reads_test.go:31: gate cache node miss
+=== NAME  TestCheckedViewElementP01
+    view_element_reads_test.go:10: gate cache node miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewElementP06
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP05
+    view_element_reads_test.go:15: gate cache node miss
+=== NAME  TestCheckedViewElementP01
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP07
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestCheckedViewElementP05
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedViewLiteralTypedKey
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewElementP06 (1.15s)
+--- PASS: TestCheckedViewElementP07 (1.19s)
+--- PASS: TestCheckedViewElementP01 (1.21s)
+--- PASS: TestCheckedViewLiteralTypedKey (1.35s)
+=== NAME  TestCheckedViewElementP05
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewElementP05 (1.51s)
+PASS
+gate cache: native hits=0 misses=10
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.527s

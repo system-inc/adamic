@@ -1,0 +1,3304 @@
+panic: test timed out after 1m30s
+	running tests:
+		TestCountsAreRecorded (1m30s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/nested_assignment_return.a (0s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/nested_mixed.a (0s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/nested_pattern_parameter.a (0s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/notyet_library_regex_callback.a (4s)
+		TestCountsAreRecorded/fixtures/internal/oracle/testdata/notyet_library_regex_offset.a (4s)
+
+goroutine 4682 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 1 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x24c4973d8b48, 0x24c49737bae8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xd3bac5, 0x1c}, {0xd582ea, 0x2c}, 0x24c49705d758, {0x1ec3220, 0xc6, 0xc6}, {0xc2aa5765ba8f40f9, 0x14f5430765, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x24c4974557c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+github.com/system-inc/adamic/internal/oracle.TestMain(0x1f0f8c0?)
+	/workspace/adamic/internal/oracle/cache_test.go:452 +0x1f
+main.main()
+	_testmain.go:442 +0xa5
+
+goroutine 8 [chan receive, 1 minutes]:
+testing.(*T).Run(0x24c4973d8d88, {0xd1c95d?, 0x0?}, 0x24c49705d800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2266 +0x4f2
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded(0x24c4973d8d88)
+	/workspace/adamic/internal/oracle/counts_test.go:142 +0x145
+testing.tRunner(0x24c4973d8d88, 0x1e2b690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 9 [chan receive]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x24c4973d8fc8, 0x24c49705d800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+created by testing.(*T).Run in goroutine 8
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 4639 [IO wait]:
+internal/poll.runtime_pollWait(0x7fe4ec68ce00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x24c498339440?, 0x24c49716a800?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x24c498339440, {0x24c49716a800, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x24c49928e010, {0x24c49716a800?, 0x24c49750bd38?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x24c49ca56540, {0x1e1e308, 0x24c49928e010})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1e1e788, 0x24c49ca56540}, {0x1e1e308, 0x24c49928e010}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x24c49928e010?, {0x1e1e788?, 0x24c49ca56540?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x24c49928e010, {0x1e1e788, 0x24c49ca56540})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1e1e788, 0x24c49ca56540}, {0x1e1e388, 0x24c49928e010}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x24c497f80e00?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 758
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 576 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497709d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497709d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497709d48, 0x24c4976b1940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 603 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497737b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497737b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497737b08, 0x24c497738100)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 604 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497737d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497737d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497737d48, 0x24c497738140)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 605 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744008, 0x24c497738180)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 606 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744248, 0x24c4977381c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 607 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744488, 0x24c497738200)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 608 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977446c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977446c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977446c8, 0x24c497738240)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 609 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744908, 0x24c497738280)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 610 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744b48, 0x24c4977382c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 611 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744d88, 0x24c497738300)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 612 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497744fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497744fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497744fc8, 0x24c497738340)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 613 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497745208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497745208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497745208, 0x24c497738380)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 614 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497745448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497745448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497745448, 0x24c4977383c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 615 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497745688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497745688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497745688, 0x24c497738400)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 616 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977458c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977458c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977458c8, 0x24c497738440)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 617 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497745b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497745b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497745b08, 0x24c497738480)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 618 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497745d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497745d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497745d48, 0x24c4977384c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 619 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774c008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774c008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774c008, 0x24c497738500)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 620 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774c248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774c248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774c248, 0x24c497738540)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 621 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774c488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774c488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774c488, 0x24c497738580)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 622 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774c6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774c6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774c6c8, 0x24c4977385c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 623 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774c908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774c908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774c908, 0x24c497738600)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 624 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774cb48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774cb48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774cb48, 0x24c497738640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 625 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774cd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774cd88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774cd88, 0x24c497738680)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 626 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774cfc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774cfc8, 0x24c4977386c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 627 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774d208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774d208, 0x24c497738700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 628 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774d448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774d448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774d448, 0x24c497738740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 629 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774d688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774d688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774d688, 0x24c497738780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 630 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774d8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774d8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774d8c8, 0x24c4977387c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 631 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774db08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774db08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774db08, 0x24c497738800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 632 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49774dd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49774dd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49774dd48, 0x24c497738840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 633 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760008, 0x24c497738880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 634 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760248, 0x24c4977388c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 635 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760488, 0x24c497738900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 636 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977606c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977606c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977606c8, 0x24c497738940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 637 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760908, 0x24c497738980)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 638 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760b48, 0x24c4977389c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 639 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760d88, 0x24c497738a00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 640 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497760fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497760fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497760fc8, 0x24c497738a40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 641 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497761208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497761208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497761208, 0x24c497738a80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 642 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497761448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497761448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497761448, 0x24c497738ac0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 643 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497761688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497761688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497761688, 0x24c497738b00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 644 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977618c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977618c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977618c8, 0x24c497738b40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 645 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497761b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497761b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497761b08, 0x24c497738b80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 646 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497761d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497761d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497761d48, 0x24c497738bc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 647 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772008, 0x24c497738c00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 648 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772248, 0x24c497738c40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 649 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772488, 0x24c497738c80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 650 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977726c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977726c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977726c8, 0x24c497738cc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 651 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772908, 0x24c497738d00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 652 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772b48, 0x24c497738d40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 653 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772d88, 0x24c497738d80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 654 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497772fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497772fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497772fc8, 0x24c497738dc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 655 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497773208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497773208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497773208, 0x24c497738e00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 656 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497773448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497773448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497773448, 0x24c497738e40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 657 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497773688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497773688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497773688, 0x24c497738e80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 658 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977738c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977738c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977738c8, 0x24c497738ec0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 659 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497773b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497773b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497773b08, 0x24c497738f00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 660 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497773d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497773d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497773d48, 0x24c497738f40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 661 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780008, 0x24c497738f80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 662 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780248, 0x24c497738fc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 663 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780488, 0x24c497739000)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 664 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977806c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977806c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977806c8, 0x24c497739040)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 665 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780908, 0x24c497739080)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 666 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780b48, 0x24c4977390c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 667 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780d88, 0x24c497739100)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 668 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497780fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497780fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497780fc8, 0x24c497739140)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 669 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497781208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497781208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497781208, 0x24c497739180)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 670 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497781448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497781448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497781448, 0x24c4977391c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 671 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497781688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497781688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497781688, 0x24c497739200)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 672 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977818c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977818c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977818c8, 0x24c497739240)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 673 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497781b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497781b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497781b08, 0x24c497739280)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 674 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497781d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497781d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497781d48, 0x24c4977392c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 675 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792008, 0x24c497739300)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 676 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792248, 0x24c497739340)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 677 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792488, 0x24c497739380)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 678 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977926c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977926c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977926c8, 0x24c4977393c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 679 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792908, 0x24c497739400)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 680 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792b48, 0x24c497739440)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 681 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792d88, 0x24c497739480)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 682 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497792fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497792fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497792fc8, 0x24c4977394c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 683 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497793208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497793208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497793208, 0x24c497739500)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 684 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497793448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497793448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497793448, 0x24c497739540)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 685 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497793688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497793688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497793688, 0x24c497739580)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 686 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977938c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977938c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977938c8, 0x24c4977395c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 687 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497793b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497793b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497793b08, 0x24c497739600)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 688 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497793d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497793d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497793d48, 0x24c497739640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 689 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4008, 0x24c497739680)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 690 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4248, 0x24c4977396c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 691 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4488, 0x24c497739700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 692 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a46c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a46c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a46c8, 0x24c497739740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 693 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4908, 0x24c497739780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 694 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4b48, 0x24c4977397c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 695 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4d88, 0x24c497739800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 696 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a4fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a4fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a4fc8, 0x24c497739840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 697 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a5208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a5208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a5208, 0x24c497739880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 698 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a5448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a5448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a5448, 0x24c4977398c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 699 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a5688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a5688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a5688, 0x24c497739900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 700 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a58c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a58c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a58c8, 0x24c497739940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 701 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a5b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a5b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a5b08, 0x24c497739980)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 702 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977a5d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977a5d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977a5d48, 0x24c4977399c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 703 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6008, 0x24c497739a00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 704 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6248, 0x24c497739a40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 707 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6908, 0x24c497739b00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 708 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6b48, 0x24c497739b40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 709 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6d88, 0x24c497739b80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 710 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b6fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b6fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b6fc8, 0x24c497739bc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 711 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b7208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b7208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b7208, 0x24c497739c00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 712 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b7448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b7448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b7448, 0x24c497739c40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 713 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b7688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b7688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b7688, 0x24c497739c80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 714 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b78c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b78c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b78c8, 0x24c497739cc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 715 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b7b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b7b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b7b08, 0x24c497739d00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 716 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977b7d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977b7d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977b7d48, 0x24c497739d40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 717 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bc008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bc008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bc008, 0x24c497739d80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 718 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bc248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bc248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bc248, 0x24c497739dc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 719 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bc488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bc488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bc488, 0x24c497739e00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 720 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bc6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bc6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bc6c8, 0x24c497739e40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 721 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bc908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bc908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bc908, 0x24c497739e80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 723 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bcd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bcd88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bcd88, 0x24c4977cc000)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 724 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4977bcfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bcfc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4977bcfc8, 0x24c4977cc040)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 725 [copystack]:
+github.com/microsoft/TypeScript/tsc/internal/compiler.NewProgram({{0x24c4980b4000, 0x0, 0x2, {0x0, 0x0}, {0x0, 0x0}, 0x0}, {{0x1e21e00, 0x24c498370000}, ...}, ...})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:314 +0x6d
+github.com/system-inc/adamic/internal/load.load({0x24c498379b78, 0x1, 0x1?}, 0x0)
+	/workspace/adamic/internal/load/load.go:121 +0x6ed
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/oracle.lowered(0x24c4977bd208, {0x24c4971a48c0, 0x39})
+	/workspace/adamic/internal/oracle/oracle_test.go:563 +0x65
+github.com/system-inc/adamic/internal/oracle.counted(0x24c4977bd208, {0x24c4972e5aa0, 0x27}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:74 +0x132
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bd208)
+	/workspace/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x24c4977bd208, 0x24c4977cc080)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 726 [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getConditionalFlowTypeOfType(0x24c49982d508, 0x24c49bda2690, 0x1dfc4d0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:25489 +0xac
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNode(0x24c49982d508, 0x24c49a130750)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:23296 +0x2f
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).tryGetTypeFromTypeNode(0x24c49982d508, 0x24c49875ad80?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:23290 +0x32
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeForVariableLikeDeclaration(0x24c49982d508, 0x24c49973aa08, 0xe8?, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:17063 +0x186
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getWidenedTypeForVariableLikeDeclaration(0x24c49982d508, 0x24c49973aa08, 0x1)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:17034 +0x28
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrPropertyWorker(0x24c49982d508, 0x24c499a6a188)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16996 +0x27a
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrProperty(0x24c49982d508, 0x24c499a6a188)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16933 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol(0x24c49982d508?, 0x24c49973aa08?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16896 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableLikeDeclaration(0x24c49982d508, 0x24c49973aa08)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:6098 +0x31d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParameter(0x24c49982d508, 0x24c49973aa08)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2722 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x24c49982d508, 0x24c49973aa08)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2334 +0x116
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x24c49982d508, 0x24c4996ab698?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x24c49982d508, {0x24c4996a0070, 0x4, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x24c49982d508, 0x24c4996ab658)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2806 +0x172
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x24c49982d508, 0x24c4996ab658)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2340 +0x179
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x24c49982d508, 0x24c49973aa78?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableLikeDeclaration(0x24c49982d508, 0x24c49973aa78)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5999 +0xa8
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParameter(0x24c49982d508, 0x24c49973aa78)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2722 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x24c49982d508, 0x24c49973aa78)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2334 +0x116
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x24c49982d508, 0x884b85?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x24c49982d508, {0x24c4996a0090, 0x2, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x24c49982d508, 0x24c499701400)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2806 +0x172
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionOrMethodDeclaration(0x24c49982d508, 0x24c499701400)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:3458 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMethodDeclaration(0x24c49982d508, 0x24c499701400)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2868 +0x11e
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x24c49982d508, 0x24c499701400)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2342 +0x139
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x24c49982d508, 0x83b29c?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x24c49982d508, {0x24c4996a01f8, 0x20, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration(0x24c49982d508, 0x24c49963aee8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5151 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x24c49982d508, 0x24c49963aee8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2424 +0x34c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x24c49982d508, 0x93?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x24c49982d508, {0x24c499741b08, 0x93, 0x24c498e2ecb8?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile(0x24c49982d508, {0x1e210e8?, 0x1f0f8c0?}, 0x24c49961d888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2266 +0x1f3
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics(0x24c49982d508, {0x1e210e8?, 0x1f0f8c0?}, 0x24c49961d888, 0x24c49982d750)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14237 +0x67
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14227
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker(0x24c497c0ee08, {0x1e210e8, 0x1f0f8c0}, 0x24c49982d508, 0x24c49961d888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1526 +0xfb
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker(0x24c497c0ee08, {0x1e210e8?, 0x1f0f8c0?}, 0x24c4994934e8?, 0x24c49961d888)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1506 +0x31
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1(0x7fe535bc74e8?, 0x0, 0x1?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:748 +0x47
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:487 +0x159
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x24c49839efc0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo(0x24c4995b9d40, {0x1dd97a8?, 0x24c49839ef90?}, {0x24c499143b08, 0x47, 0x47}, 0x1, 0x24c499a48b00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:492 +0x17a
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles(0x24c497c0ee08, {0x1e210e8, 0x1f0f8c0}, {0x24c499143b08, 0x47, 0x47}, 0x24c49b6f6970)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:747 +0x1d8
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics(0x10?, {0x1e210e8?, 0x1f0f8c0?}, 0x97df8a?, 0x24c4995b9d40?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:729 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics(0x24c497c0ee08, {0x1e210e8, 0x1f0f8c0}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:823 +0x7d
+github.com/system-inc/adamic/internal/load.(*Program).diagnostics(0x24c49b56a720, {0x1e210e8, 0x1f0f8c0})
+	/workspace/adamic/internal/load/load.go:233 +0x32a
+github.com/system-inc/adamic/internal/load.load({0x24c499493b78, 0x1, 0x1?}, 0x0)
+	/workspace/adamic/internal/load/load.go:147 +0xb05
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/oracle.lowered(0x24c4977bd448, {0x24c49a25ae10, 0x45})
+	/workspace/adamic/internal/oracle/oracle_test.go:563 +0x65
+github.com/system-inc/adamic/internal/oracle.counted(0x24c4977bd448, {0x24c49731d980, 0x33}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:74 +0x132
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bd448)
+	/workspace/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x24c4977bd448, 0x24c4977cc0c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 729 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xe, 0x24c49a079318, 0x4, 0x24c497901e60, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x24c49a079346?, 0x24c49a079470?, 0x5394ab?, 0x18?, 0x1dc3ca8?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x24c4998db340)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x1b?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x24c497d4fa00)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x24c497d4fa00)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x24c497d4fa00)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.Build({0x24c4973ba600, 0x1909}, {0x24c499042a80, 0x62}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	/workspace/adamic/internal/native/native.go:150 +0xd73
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	/workspace/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x24c4977bdb08, {0x24c49731da40, 0x33}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977bdb08)
+	/workspace/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x24c4977bdb08, 0x24c4977cc180)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 758 [syscall]:
+syscall.Syscall6(0xf7, 0x3, 0xb, 0x24c499948c08, 0x4, 0x24c49a2c8a20, 0x0)
+	/workspace/adamic-tools/go/src/syscall/syscall_linux.go:96 +0x39
+internal/syscall/unix.Waitid(0x24c499948c36?, 0x24c499948d60?, 0x5394ab?, 0x18?, 0x1dc3ca8?)
+	/workspace/adamic-tools/go/src/internal/syscall/unix/waitid_linux.go:18 +0x39
+os.(*Process).pidfdWait.func1(...)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:108
+os.ignoringEINTR(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:263
+os.(*Process).pidfdWait(0x24c4993a0040)
+	/workspace/adamic-tools/go/src/os/pidfd_linux.go:107 +0x1cf
+os.(*Process).wait(0x4220e5?)
+	/workspace/adamic-tools/go/src/os/exec_unix.go:25 +0x1a
+os.(*Process).Wait(...)
+	/workspace/adamic-tools/go/src/os/exec.go:347
+os/exec.(*Cmd).Wait(0x24c49cdbc340)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:944 +0x45
+os/exec.(*Cmd).Run(0x24c49cdbc340)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:643 +0x2d
+os/exec.(*Cmd).CombinedOutput(0x24c49cdbc340)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:1061 +0x8f
+github.com/system-inc/adamic/internal/native.cachedRuntime({0x24c499a97008, 0x53, 0x0?}, {0x24c49a0af760, 0x10, 0x7fe4ec495be8?}, {0x24c4972e4cf0, 0x21}, {0x24c498a38f70, 0xc9}, ...)
+	/workspace/adamic/internal/native/library.go:188 +0xdbc
+github.com/system-inc/adamic/internal/native.runtimeLibrary({0x0, 0x0}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, 0x1, {0x0, ...}, ...}, ...)
+	/workspace/adamic/internal/native/library.go:99 +0x90d
+github.com/system-inc/adamic/internal/native.RuntimeLibraryForSource({0x0, 0x0}, {0x24c49b12c000?, 0x1?}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	/workspace/adamic/internal/native/library.go:33 +0x7d
+github.com/system-inc/adamic/internal/native.Build({0x24c49b12c000, 0x7c59}, {0x24c49a321dc0, 0x62}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	/workspace/adamic/internal/native/native.go:123 +0x2ab
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	/workspace/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x24c4977e1d48, {0xd6ffbf, 0x38}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977e1d48)
+	/workspace/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x24c4977e1d48, 0x24c4977cc8c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 759 [sync.Mutex.Lock]:
+internal/sync.runtime_SemacquireMutex(0x1d651b8?, 0x60?, 0x514778?)
+	/workspace/adamic-tools/go/src/runtime/sema.go:95 +0x25
+internal/sync.(*Mutex).lockSlow(0x24c49a4bd670)
+	/workspace/adamic-tools/go/src/internal/sync/mutex.go:149 +0x15a
+internal/sync.(*Mutex).Lock(...)
+	/workspace/adamic-tools/go/src/internal/sync/mutex.go:70
+sync.(*Mutex).Lock(...)
+	/workspace/adamic-tools/go/src/sync/mutex.go:46
+github.com/system-inc/adamic/internal/native.cachedRuntime({0x24c4980bb008, 0x53, 0x0?}, {0x24c49acf0b00, 0x10, 0x7fe4ec7542a8?}, {0x24c49dee6a50, 0x21}, {0x24c49a9fa9c0, 0xc9}, ...)
+	/workspace/adamic/internal/native/library.go:148 +0x1b8
+github.com/system-inc/adamic/internal/native.runtimeLibrary({0x0, 0x0}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, 0x1, {0x0, ...}, ...}, ...)
+	/workspace/adamic/internal/native/library.go:99 +0x90d
+github.com/system-inc/adamic/internal/native.RuntimeLibraryForSource({0x0, 0x0}, {0x24c49b6e0000?, 0x1?}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	/workspace/adamic/internal/native/library.go:33 +0x7d
+github.com/system-inc/adamic/internal/native.Build({0x24c49b6e0000, 0x5bf0}, {0x24c49a19c310, 0x61}, {{0x0, 0x0}, 0x0, 0x0, 0x0, 0x0, ...})
+	/workspace/adamic/internal/native/native.go:123 +0x2ab
+github.com/system-inc/adamic/internal/oracle.counted.func1()
+	/workspace/adamic/internal/oracle/counts_test.go:116 +0xa77
+github.com/system-inc/adamic/internal/oracle.counted(0x24c4977f0008, {0xd6c71a, 0x36}, 0x0, {0x0, 0x0, 0x0}, 0x0, 0x0)
+	/workspace/adamic/internal/oracle/counts_test.go:126 +0x56b
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4977f0008)
+	/workspace/adamic/internal/oracle/counts_test.go:149 +0x73
+testing.tRunner(0x24c4977f0008, 0x24c4977cc900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 4723 [IO wait]:
+internal/poll.runtime_pollWait(0x7fe4ec3b1a00, 0x72)
+	/workspace/adamic-tools/go/src/runtime/netpoll.go:351 +0x85
+internal/poll.(*pollDesc).wait(0x24c49a7f04e0?, 0x24c49716b400?, 0x1)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:84 +0x27
+internal/poll.(*pollDesc).waitRead(...)
+	/workspace/adamic-tools/go/src/internal/poll/fd_poll_runtime.go:89
+internal/poll.(*FD).Read(0x24c49a7f04e0, {0x24c49716b400, 0x200, 0x200})
+	/workspace/adamic-tools/go/src/internal/poll/fd_unix.go:170 +0x2a8
+os.(*File).read(...)
+	/workspace/adamic-tools/go/src/os/file_posix.go:30
+os.(*File).Read(0x24c499020630, {0x24c49716b400?, 0x24c497509d38?, 0x0?})
+	/workspace/adamic-tools/go/src/os/file.go:144 +0x4f
+bytes.(*Buffer).ReadFrom(0x24c4996584b0, {0x1e1e308, 0x24c499020630})
+	/workspace/adamic-tools/go/src/bytes/buffer.go:229 +0x98
+io.copyBuffer({0x1e1e788, 0x24c4996584b0}, {0x1e1e308, 0x24c499020630}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:415 +0x151
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os.genericWriteTo(0x24c499020630?, {0x1e1e788?, 0x24c4996584b0?})
+	/workspace/adamic-tools/go/src/os/file.go:295 +0x35
+os.(*File).WriteTo(0x24c499020630, {0x1e1e788, 0x24c4996584b0})
+	/workspace/adamic-tools/go/src/os/file.go:273 +0x9c
+io.copyBuffer({0x1e1e788, 0x24c4996584b0}, {0x1e1e388, 0x24c499020630}, {0x0, 0x0, 0x0})
+	/workspace/adamic-tools/go/src/io/io.go:411 +0x9d
+io.Copy(...)
+	/workspace/adamic-tools/go/src/io/io.go:388
+os/exec.(*Cmd).writerDescriptor.func1()
+	/workspace/adamic-tools/go/src/os/exec/exec.go:613 +0x34
+os/exec.(*Cmd).Start.func2(0x24c49acc3490?)
+	/workspace/adamic-tools/go/src/os/exec/exec.go:768 +0x2c
+created by os/exec.(*Cmd).Start in goroutine 729
+	/workspace/adamic-tools/go/src/os/exec/exec.go:767 +0x92b
+
+goroutine 846 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762ab48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762ab48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762ab48, 0x24c4977cc700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 847 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762ad88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762ad88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762ad88, 0x24c4977cc740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 848 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762afc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762afc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762afc8, 0x24c4977cc780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 849 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762b208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762b208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762b208, 0x24c4977cc7c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 850 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762b448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762b448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762b448, 0x24c4977cc800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 851 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762b688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762b688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762b688, 0x24c4977cc840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 852 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762b8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762b8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762b8c8, 0x24c4977cc880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 853 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762bb08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762bb08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762bb08, 0x24c4977cc8c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 854 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49762bd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49762bd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49762bd48, 0x24c4977cd0c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 855 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638008, 0x24c4977cd100)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 856 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638248, 0x24c4977cd140)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 857 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638488, 0x24c4977cd180)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 858 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4976386c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4976386c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4976386c8, 0x24c4977cd1c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 859 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638908, 0x24c4977cd200)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 860 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638b48, 0x24c4977cd240)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 861 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638d88, 0x24c4977cd280)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 862 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497638fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497638fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497638fc8, 0x24c4977cd2c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 863 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497639208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497639208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497639208, 0x24c4977cd300)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 864 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497639448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497639448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497639448, 0x24c4977cd340)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 865 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497639688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497639688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497639688, 0x24c4977cd380)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 866 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4976398c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4976398c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4976398c8, 0x24c4977cd3c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 867 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497639b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497639b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497639b08, 0x24c4977cd400)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 868 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497639d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497639d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497639d48, 0x24c4977cd440)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 869 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646008, 0x24c4977cd480)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 870 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646248, 0x24c4977cd4c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 871 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646488, 0x24c4977cd500)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 872 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4976466c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4976466c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4976466c8, 0x24c4977cd540)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 873 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646908, 0x24c4977cd580)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 874 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646b48, 0x24c4977cd5c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 875 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646d88, 0x24c4977cd600)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 876 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497646fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497646fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497646fc8, 0x24c4977cd640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 877 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497647208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497647208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497647208, 0x24c4977cd680)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 878 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497647448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497647448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497647448, 0x24c4977cd6c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 879 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497647688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497647688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497647688, 0x24c4977cd700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 880 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4976478c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4976478c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4976478c8, 0x24c4977cd740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 881 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497647b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497647b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497647b08, 0x24c4977cd780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 882 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497647d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497647d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497647d48, 0x24c4977cd7c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 883 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764a008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764a008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764a008, 0x24c4977cd800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 884 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764a248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764a248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764a248, 0x24c4977cd840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 885 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764a488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764a488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764a488, 0x24c4977cd880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 886 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764a6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764a6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764a6c8, 0x24c4977cd8c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 887 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764a908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764a908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764a908, 0x24c4977cd900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 888 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764ab48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764ab48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764ab48, 0x24c4977cd940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 889 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764ad88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764ad88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764ad88, 0x24c4977cd980)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 890 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764afc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764afc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764afc8, 0x24c4977cd9c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 891 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764b208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764b208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764b208, 0x24c4977cda00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 892 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764b448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764b448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764b448, 0x24c4977cda40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 893 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764b688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764b688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764b688, 0x24c4977cda80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 894 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764b8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764b8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764b8c8, 0x24c4977cdac0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 895 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764bb08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764bb08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764bb08, 0x24c4977cdb00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 896 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49764bd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49764bd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49764bd48, 0x24c4977cdb40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 897 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765c008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765c008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765c008, 0x24c4977cdb80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 898 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765c248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765c248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765c248, 0x24c4977cdbc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 899 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765c488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765c488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765c488, 0x24c4977cdc00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 900 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765c6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765c6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765c6c8, 0x24c4977cdc40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 901 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765c908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765c908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765c908, 0x24c4977cdc80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 902 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765cb48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765cb48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765cb48, 0x24c4977cdcc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 903 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765cd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765cd88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765cd88, 0x24c4977cdd00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 904 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765cfc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765cfc8, 0x24c4977cdd40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 905 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765d208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765d208, 0x24c4977cdd80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 906 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765d448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765d448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765d448, 0x24c4977cddc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 907 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765d688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765d688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765d688, 0x24c4977cde00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 908 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765d8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765d8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765d8c8, 0x24c4977cde40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 909 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765db08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765db08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765db08, 0x24c4977cde80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 910 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49765dd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49765dd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49765dd48, 0x24c4977cdec0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 911 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766c008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766c008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766c008, 0x24c497882400)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 912 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766c248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766c248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766c248, 0x24c497882440)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 913 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766c488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766c488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766c488, 0x24c497882480)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 914 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766c6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766c6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766c6c8, 0x24c4978824c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 915 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766c908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766c908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766c908, 0x24c497882500)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 916 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766cb48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766cb48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766cb48, 0x24c497882540)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 917 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766cd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766cd88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766cd88, 0x24c497882580)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 918 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766cfc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766cfc8, 0x24c4978825c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 919 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766d208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766d208, 0x24c497882600)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 920 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766d448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766d448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766d448, 0x24c497882640)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 921 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766d688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766d688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766d688, 0x24c497882680)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 922 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766d8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766d8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766d8c8, 0x24c4978826c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 923 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766db08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766db08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766db08, 0x24c497882700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 924 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49766dd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49766dd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49766dd48, 0x24c497882740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 925 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767c008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767c008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767c008, 0x24c497882780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 926 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767c248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767c248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767c248, 0x24c4978827c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 927 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767c488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767c488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767c488, 0x24c497882800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 928 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767c6c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767c6c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767c6c8, 0x24c497882840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 929 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767c908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767c908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767c908, 0x24c497882880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 930 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767cb48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767cb48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767cb48, 0x24c4978828c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 931 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767cd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767cd88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767cd88, 0x24c497882900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 932 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767cfc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767cfc8, 0x24c497882940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 933 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767d208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767d208, 0x24c497882980)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 934 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767d448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767d448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767d448, 0x24c4978829c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 935 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767d688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767d688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767d688, 0x24c497882a00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 936 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767d8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767d8c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767d8c8, 0x24c497882a40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 937 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767db08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767db08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767db08, 0x24c497882a80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 938 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c49767dd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c49767dd48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c49767dd48, 0x24c497882ac0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 939 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136008, 0x24c497882b00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 940 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136248, 0x24c497882b40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 941 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136488, 0x24c497882b80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 942 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971366c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4971366c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4971366c8, 0x24c497882bc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 943 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136908, 0x24c497882c00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 944 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136b48, 0x24c497882c40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 945 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136d88, 0x24c497882c80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 946 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497136fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497136fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497136fc8, 0x24c497882cc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 947 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497137208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497137208)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497137208, 0x24c497882d00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 948 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497137448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497137448)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497137448, 0x24c497882d40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 949 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497137688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497137688)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497137688, 0x24c497882d80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 950 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971378c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4971378c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4971378c8, 0x24c497882dc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 951 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497137b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497137b08)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497137b08, 0x24c497882e00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 952 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497137d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497137d48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497137d48, 0x24c497882e40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 953 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196008)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196008, 0x24c497882e80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 954 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196248)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196248, 0x24c497882ec0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 955 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196488)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196488, 0x24c497882f00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 956 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971966c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c4971966c8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c4971966c8, 0x24c497882f40)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 957 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196908)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196908, 0x24c497882f80)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 958 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196b48)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196b48, 0x24c497882fc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 959 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196d88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196d88)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196d88, 0x24c497883000)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 960 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497196fc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.1(0x24c497196fc8)
+	/workspace/adamic/internal/oracle/counts_test.go:148 +0x4c
+testing.tRunner(0x24c497196fc8, 0x24c497883040)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 961 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497197208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c497197208)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c497197208, 0x24c49766edc0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 962 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497197448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c497197448)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c497197448, 0x24c49766ee60)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 963 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497197688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c497197688)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c497197688, 0x24c49766ef00)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 964 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971978c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c4971978c8)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c4971978c8, 0x24c49766efa0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 965 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497197b08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c497197b08)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c497197b08, 0x24c49766f040)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 966 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c497197d48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c497197d48)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c497197d48, 0x24c49766f0e0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 967 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a2008)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c4971a2008)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c4971a2008, 0x24c49766f180)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 968 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a2248)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.2(0x24c4971a2248)
+	/workspace/adamic/internal/oracle/counts_test.go:157 +0x3c
+testing.tRunner(0x24c4971a2248, 0x24c49766f220)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 969 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a2488)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.3(0x24c4971a2488)
+	/workspace/adamic/internal/oracle/counts_test.go:167 +0x4c
+testing.tRunner(0x24c4971a2488, 0x24c497266ab0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 970 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a26c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.3(0x24c4971a26c8)
+	/workspace/adamic/internal/oracle/counts_test.go:167 +0x4c
+testing.tRunner(0x24c4971a26c8, 0x24c497266b10)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 971 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a2908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.3(0x24c4971a2908)
+	/workspace/adamic/internal/oracle/counts_test.go:167 +0x4c
+testing.tRunner(0x24c4971a2908, 0x24c497266b70)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 972 [chan receive, 1 minutes]:
+testing.(*testState).waitParallel(0x24c497452690)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x24c4971a2b48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/oracle.TestCountsAreRecorded.func1.3(0x24c4971a2b48)
+	/workspace/adamic/internal/oracle/counts_test.go:167 +0x4c
+testing.tRunner(0x24c4971a2b48, 0x24c497266bd0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 9
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/oracle	90.106s
+FAIL

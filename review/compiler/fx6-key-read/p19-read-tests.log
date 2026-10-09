@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewElementP19Read
+=== PAUSE TestCheckedViewElementP19Read
+=== CONT  TestCheckedViewElementP19Read
+    view_element_reads_test.go:175: gate cache node miss
+    view_element_reads_test.go:175: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+--- PASS: TestCheckedViewElementP19Read (0.55s)
+PASS
+gate cache: native hits=0 misses=2
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.556s

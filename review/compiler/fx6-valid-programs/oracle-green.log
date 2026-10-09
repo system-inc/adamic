@@ -1,0 +1,103 @@
+=== RUN   TestFX6P35
+=== PAUSE TestFX6P35
+=== RUN   TestFX6P36
+=== PAUSE TestFX6P36
+=== RUN   TestFX6P37
+=== PAUSE TestFX6P37
+=== RUN   TestFX6P38
+=== PAUSE TestFX6P38
+=== RUN   TestFX6P51
+=== PAUSE TestFX6P51
+=== RUN   TestFX6P53
+=== PAUSE TestFX6P53
+=== RUN   TestFX6P49
+=== PAUSE TestFX6P49
+=== CONT  TestFX6P35
+=== CONT  TestFX6P51
+=== CONT  TestFX6P37
+=== CONT  TestFX6P38
+=== CONT  TestFX6P49
+=== NAME  TestFX6P35
+    fx6_valid_test.go:56: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:96: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:136: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:116: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:176: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:137: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P49
+    fx6_valid_test.go:177: Node: exit=0 stdout="object\n" stderr=""
+=== NAME  TestFX6P37
+    fx6_valid_test.go:97: Node: exit=0 stdout="3 / number 5\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:57: Node: exit=0 stdout="3 / number 5\n" stderr=""
+=== NAME  TestFX6P38
+    fx6_valid_test.go:117: Node: exit=0 stdout="3 / string five\n" stderr=""
+=== NAME  TestFX6P35
+    fx6_valid_test.go:58: gate cache node miss
+=== NAME  TestFX6P51
+    fx6_valid_test.go:138: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:118: gate cache node miss
+=== NAME  TestFX6P37
+    fx6_valid_test.go:98: gate cache node miss
+=== NAME  TestFX6P49
+    fx6_valid_test.go:178: gate cache node miss
+=== NAME  TestFX6P35
+    fx6_valid_test.go:59: native: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:59: sanitized: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:59: javascript: exit=0 stdout="3 / number 5\n" stderr=""
+--- PASS: TestFX6P35 (0.58s)
+=== CONT  TestFX6P53
+=== NAME  TestFX6P51
+    fx6_valid_test.go:139: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:139: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:139: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P51 (0.59s)
+=== CONT  TestFX6P36
+=== NAME  TestFX6P37
+    fx6_valid_test.go:99: native: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:99: sanitized: exit=0 stdout="3 / number 5\n" stderr=""
+    fx6_valid_test.go:99: javascript: exit=0 stdout="3 / number 5\n" stderr=""
+--- PASS: TestFX6P37 (0.64s)
+=== NAME  TestFX6P49
+    fx6_valid_test.go:179: native: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of { readonly n: number; } | { readonly s: string; }; expected { readonly n: number; } | { readonly s: string; }, found object\n"
+    fx6_valid_test.go:179: sanitized: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of { readonly n: number; } | { readonly s: string; }; expected { readonly n: number; } | { readonly s: string; }, found object\n"
+    fx6_valid_test.go:179: javascript: exit=70 stdout="" stderr="adamic: panic: field read failed: value (field value) matches no member of { readonly n: number; } | { readonly s: string; }; expected { readonly n: number; } | { readonly s: string; }, found object\n"
+--- PASS: TestFX6P49 (0.64s)
+=== NAME  TestFX6P53
+    fx6_valid_test.go:156: gate cache node miss
+=== NAME  TestFX6P38
+    fx6_valid_test.go:119: native: exit=0 stdout="3 / string five\n" stderr=""
+    fx6_valid_test.go:119: sanitized: exit=0 stdout="3 / string five\n" stderr=""
+    fx6_valid_test.go:119: javascript: exit=0 stdout="3 / string five\n" stderr=""
+--- PASS: TestFX6P38 (0.65s)
+=== NAME  TestFX6P36
+    fx6_valid_test.go:76: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:157: Node: exit=0 stdout="n5\n" stderr=""
+=== NAME  TestFX6P36
+    fx6_valid_test.go:77: Node: exit=0 stdout="3 / undefined undefined\n" stderr=""
+=== NAME  TestFX6P53
+    fx6_valid_test.go:158: gate cache node miss
+=== NAME  TestFX6P36
+    fx6_valid_test.go:78: gate cache node miss
+=== NAME  TestFX6P53
+    fx6_valid_test.go:159: native: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:159: sanitized: exit=0 stdout="n5\n" stderr=""
+    fx6_valid_test.go:159: javascript: exit=0 stdout="n5\n" stderr=""
+--- PASS: TestFX6P53 (0.42s)
+=== NAME  TestFX6P36
+    fx6_valid_test.go:79: sanitized: exit=0 stdout="3 / undefined undefined\n" stderr=""
+    fx6_valid_test.go:79: javascript: exit=0 stdout="3 / undefined undefined\n" stderr=""
+    fx6_valid_test.go:79: native: exit=0 stdout="3 / undefined undefined\n" stderr=""
+--- PASS: TestFX6P36 (0.42s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.026s
