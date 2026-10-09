@@ -1,0 +1,27 @@
+=== RUN   TestSwitchConditionalBreakFallsThrough
+=== PAUSE TestSwitchConditionalBreakFallsThrough
+=== RUN   TestSwitchEmptyElseFallsThrough
+=== PAUSE TestSwitchEmptyElseFallsThrough
+=== RUN   TestSwitchEmptyCaseFallsThrough
+=== PAUSE TestSwitchEmptyCaseFallsThrough
+=== RUN   TestSwitchEmptyBlockFallsThrough
+=== PAUSE TestSwitchEmptyBlockFallsThrough
+=== CONT  TestSwitchConditionalBreakFallsThrough
+=== CONT  TestSwitchEmptyCaseFallsThrough
+=== CONT  TestSwitchEmptyBlockFallsThrough
+=== CONT  TestSwitchEmptyElseFallsThrough
+=== NAME  TestSwitchConditionalBreakFallsThrough
+    switch_test.go:7: JavaScript backend stdout = "A\n", source Node = "AB\n"
+--- FAIL: TestSwitchConditionalBreakFallsThrough (0.17s)
+=== NAME  TestSwitchEmptyElseFallsThrough
+    switch_test.go:25: JavaScript backend stdout = "A\n", source Node = "AB\n"
+--- FAIL: TestSwitchEmptyElseFallsThrough (0.17s)
+=== NAME  TestSwitchEmptyCaseFallsThrough
+    switch_test.go:43: JavaScript backend stdout = "A\n", source Node = "AB\n"
+--- FAIL: TestSwitchEmptyCaseFallsThrough (0.17s)
+=== NAME  TestSwitchEmptyBlockFallsThrough
+    switch_test.go:59: JavaScript backend stdout = "A\n", source Node = "AB\n"
+--- FAIL: TestSwitchEmptyBlockFallsThrough (0.18s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.193s
+FAIL

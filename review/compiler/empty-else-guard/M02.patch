@@ -1,0 +1,11 @@
+--- a/internal/lower/switch.go
++++ b/internal/lower/switch.go
+@@ -15,7 +15,7 @@
+ // selects the general lowering; it never removes a possible fallthrough edge.
+ func switchBodyLeaves(body []ir.Statement) bool {
+ 	if len(body) == 0 {
+-		return false
++		return true
+ 	}
+ 	switch statement := body[len(body)-1].(type) {
+ 	case ir.Break, ir.Continue, ir.Return, ir.Throw, ir.Panic:

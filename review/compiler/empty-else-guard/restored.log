@@ -1,0 +1,18 @@
+=== RUN   TestSwitchConditionalBreakFallsThrough
+=== PAUSE TestSwitchConditionalBreakFallsThrough
+=== RUN   TestSwitchEmptyElseFallsThrough
+=== PAUSE TestSwitchEmptyElseFallsThrough
+=== RUN   TestSwitchEmptyCaseFallsThrough
+=== PAUSE TestSwitchEmptyCaseFallsThrough
+=== RUN   TestSwitchEmptyBlockFallsThrough
+=== PAUSE TestSwitchEmptyBlockFallsThrough
+=== CONT  TestSwitchConditionalBreakFallsThrough
+=== CONT  TestSwitchEmptyCaseFallsThrough
+=== CONT  TestSwitchEmptyBlockFallsThrough
+=== CONT  TestSwitchEmptyElseFallsThrough
+--- PASS: TestSwitchEmptyElseFallsThrough (0.22s)
+--- PASS: TestSwitchConditionalBreakFallsThrough (0.24s)
+--- PASS: TestSwitchEmptyCaseFallsThrough (0.24s)
+--- PASS: TestSwitchEmptyBlockFallsThrough (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.282s
