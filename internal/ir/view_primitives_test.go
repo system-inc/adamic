@@ -3,6 +3,7 @@ package ir
 import "testing"
 
 func TestPrimitiveViewMembers(t *testing.T) {
+	t.Parallel()
 	p := &Program{ViewContracts: []ViewContract{
 		{Kind: ViewScalar, Of: String}, {Kind: ViewScalar, Of: Boolean, Allowed: []ViewLiteral{{Of: Boolean, Boolean: false}}},
 		{Kind: ViewUndefined, Undefined: true}, {Kind: ViewUnion, Of: Union, Members: []ViewContractID{1, 2, 3}},
