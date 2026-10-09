@@ -1,0 +1,7 @@
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly length: number; }
+const pair: [string, number] = ['first', 1];
+const raw = { kind: 'Holder' as const, length: pair.length };
+const base: Root = raw;
+const viewed = base as View;
+console.log(`${viewed.length}`);

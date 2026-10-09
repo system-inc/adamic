@@ -1,0 +1,55 @@
+=== RUN   TestReviewProgramsAgreeWithNode
+=== PAUSE TestReviewProgramsAgreeWithNode
+=== RUN   TestReviewProgramsNoLooseFiles
+=== PAUSE TestReviewProgramsNoLooseFiles
+=== CONT  TestReviewProgramsAgreeWithNode
+=== CONT  TestReviewProgramsNoLooseFiles
+--- PASS: TestReviewProgramsNoLooseFiles (0.00s)
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== RUN   TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a
+    review_test.go:153: gate cache node miss
+    review_test.go:153: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestReviewProgramsAgreeWithNode (12.75s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p04_undefined_slot_write.a (3.38s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p06_undefined_other_name.a (2.21s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p08_null_array_write.a (1.85s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p59_map_null_write.a (1.82s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p75_unviewed_undefined_read.a (1.60s)
+    --- PASS: TestReviewProgramsAgreeWithNode/fxspptb_oct9_native_p77_unviewed_undefined_read_scalar_view.a (1.81s)
+PASS
+gate cache: native hits=6 misses=12
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.852s

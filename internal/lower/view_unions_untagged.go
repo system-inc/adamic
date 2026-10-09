@@ -248,16 +248,21 @@ func (l *lowering) prepareUntaggedStructuralRead(node *ast.Node, target *checker
 	}
 }
 
-// Reuse closureRecords' checker proof and lane 5's code-identity registry. Exact
-// logical identity is conservative: physical Closure/Object tags alone do not
-// certify higher-order arguments or object results.
+// Reuse closureRecords' checker proof and the code-identity registry.
+// Assignability is sufficient only when the scalar calling convention agrees.
 func (l *lowering) certifyUntaggedCallableProducers() {
 	for id, target := range l.untaggedCallableTargets {
 		contract := &l.result.ViewContracts[id-1]
 		contract.ProducerCertified = true
 		contract.Functions = nil
 		for _, producer := range l.closureRecords {
-			if checker.Checker_isTypeIdenticalTo(l.checker, producer.proven, target) {
+			function := l.result.Functions[producer.function]
+			// Named functions also have a direct-call record. Only their closure
+			// thunk has the code convention registered by the callable adapter.
+			if !function.Closure || function.Receiver {
+				continue
+			}
+			if l.checker.IsTypeAssignableTo(producer.proven, target) && l.untaggedCallableABI(producer.function, *contract) {
 				contract.Functions = append(contract.Functions, producer.function)
 			}
 		}

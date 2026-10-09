@@ -1,0 +1,22 @@
+=== RUN   TestScalarUnionViewMaybeNumber
+=== PAUSE TestScalarUnionViewMaybeNumber
+=== RUN   TestScalarUnionViewMaybeBoolean
+=== PAUSE TestScalarUnionViewMaybeBoolean
+=== RUN   TestScalarUnionViewMaybeString
+=== PAUSE TestScalarUnionViewMaybeString
+=== RUN   TestScalarUnionViewMaybeNumberTransitions
+=== PAUSE TestScalarUnionViewMaybeNumberTransitions
+=== RUN   TestScalarUnionViewMaybeBooleanTransitions
+=== PAUSE TestScalarUnionViewMaybeBooleanTransitions
+=== CONT  TestScalarUnionViewMaybeNumber
+=== CONT  TestScalarUnionViewMaybeNumberTransitions
+=== CONT  TestScalarUnionViewMaybeBooleanTransitions
+=== CONT  TestScalarUnionViewMaybeString
+=== CONT  TestScalarUnionViewMaybeBoolean
+--- PASS: TestScalarUnionViewMaybeString (0.89s)
+--- PASS: TestScalarUnionViewMaybeNumberTransitions (1.20s)
+--- PASS: TestScalarUnionViewMaybeNumber (1.31s)
+--- PASS: TestScalarUnionViewMaybeBoolean (1.40s)
+--- PASS: TestScalarUnionViewMaybeBooleanTransitions (1.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.557s
