@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "082_unusedDestructuring",
+  "configuration": "",
+  "cause": "diagnostic locations",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 194,
+      "expected_size": 767,
+      "actual_size": 768,
+      "expected_context": "b\"is never read.\\nunusedDestructuring.ts(6,7): error TS6133: 'e' is declared but its value is never read.\\nunusedDestructuri\"",
+      "actual_context": "b\"is never read.\\nunusedDestructuring.ts(6,9): error TS6133: 'e' is declared but its value is never read.\\nunusedDestructuri\""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/082_unusedDestructuring",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/082_unusedDestructuring"
+}

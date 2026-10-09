@@ -1,0 +1,18 @@
+{
+  "groups": [
+    {
+      "group": "case-host",
+      "inputs": 4,
+      "configurations": 4,
+      "A_passed": 4,
+      "A_failed": 0,
+      "B_total": 1,
+      "B_failed": 1,
+      "fixture_A_passed": 1,
+      "mutant_source": "input.a",
+      "mutant_configuration": "",
+      "catch": "stdout diagnostic bytes only, exactly one byte changed"
+    }
+  ],
+  "proved": true
+}

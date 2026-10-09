@@ -16,6 +16,10 @@ if targets:
     target = names[-1] if Path.cwd().parent.name == 'baselines' else names[0]
 if target is None or any(Path(name).exists() for name in target.split(',')):
     position = output.find(b'error TS')
+    if position < 0:
+        position = output.find(b'error\x1b[0m\x1b[90m TS')
+    if position < 0:
+        position = output.find(b'message TS')
     if position >= 0:
         output = output[:position] + b'E' + output[position + 1:]
 sys.stdout.buffer.write(output)

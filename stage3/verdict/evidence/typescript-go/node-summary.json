@@ -1,0 +1,36 @@
+{
+  "schema_version": 1,
+  "tsc": "/workspace/adamic/stage3/verdict/standins/node.sh",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "success": true,
+  "harness_errors": [],
+  "suites": {
+    "baselines": {
+      "total": 13453,
+      "passed": 13453,
+      "failed": 0,
+      "excluded": 834,
+      "deferred": 0,
+      "failures": []
+    },
+    "acceptance": {
+      "total": 301,
+      "passed": 301,
+      "failed": 0,
+      "excluded": 0,
+      "failures": []
+    },
+    "tiny": {
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "excluded": 0,
+      "failures": []
+    }
+  },
+  "capture_reuse": {
+    "upstream": "prior fully byte-checked observations from unit 6f744d6d; artifact/options/source/reference/expected hashes checked; all stored streams rechecked",
+    "acceptance_and_tiny": "fresh this unit",
+    "adapted_cli_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983"
+  }
+}

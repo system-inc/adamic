@@ -1,0 +1,30 @@
+{
+  "suite": "acceptance",
+  "case": "106_interfaceMergeWithNonGenericTypeArguments",
+  "configuration": "",
+  "cause": "checker diagnostic set",
+  "streams": [
+    "stdout",
+    "exit"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 103,
+      "expected_size": 213,
+      "actual_size": 103,
+      "expected_context": "b\"5: Type 'SomeBaseClass' is not generic.\\ninterfaceMergeWithNonGenericTypeArguments.ts(6,3): error TS2346: Call target doe\"",
+      "actual_context": "b\"5: Type 'SomeBaseClass' is not generic.\\n\""
+    },
+    "exit": {
+      "byte_offset": 0,
+      "expected_size": 2,
+      "actual_size": 2,
+      "expected_context": "b'2\\n'",
+      "actual_context": "b'1\\n'"
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/acceptance/106_interfaceMergeWithNonGenericTypeArguments",
+  "right_capture": "/tmp/verdict-compare-go/acceptance/106_interfaceMergeWithNonGenericTypeArguments"
+}

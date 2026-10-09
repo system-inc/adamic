@@ -1,0 +1,22 @@
+{
+  "suite": "baselines",
+  "case": "tests/cases/compiler/SystemModuleForStatementNoInitializer.ts",
+  "configuration": "",
+  "cause": "unsupported CLI option/value",
+  "streams": [
+    "stdout"
+  ],
+  "differences": {
+    "stdout": {
+      "byte_offset": 9,
+      "expected_size": 172,
+      "actual_size": 215,
+      "expected_context": "b\"error TS5107: Option 'module=System' is deprecated and will stop functioning in TypeScrip\"",
+      "actual_context": "b\"error TS5095: Option 'bundler' can only be used when 'module' is set to 'preserve', 'comm\""
+    }
+  },
+  "left_oracle_pass": true,
+  "right_oracle_pass": false,
+  "left_capture": "/tmp/verdict-compare-node-reused/baselines/00032_SystemModuleForStatementNoInitializer",
+  "right_capture": "/tmp/verdict-compare-go/baselines/00032_SystemModuleForStatementNoInitializer"
+}

@@ -1,0 +1,30 @@
+{
+  "base": "98d2269a7e9931d1757bac86069cb34c1e5fb0ff",
+  "performance_merged_commit": "afb0651c",
+  "merge_commit": "d39b22e7ef5edd6bedd19a672a73538515c62cf1",
+  "command_exits": {
+    "A": 0,
+    "B": 1,
+    "C": 1
+  },
+  "standin": "Node forwarder, not an Adamic native checker",
+  "fresh_correctness": true,
+  "baseline_configurations": 13693,
+  "mutant_targets": [
+    "argument.ts",
+    "ArrowFunctionExpression1.ts"
+  ],
+  "compiler_bar_seconds": 1.78,
+  "focused_tests_passed": 34,
+  "setup_seconds": 31.561,
+  "nproc": 5,
+  "cpu_max": "400000 100000",
+  "adapted_cli_sha256": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+  "harness_sha256": {
+    "final.sh": "e96571c5d9588c58cba8c601010d4e7b52bd821f191333dc038ace05f8186710",
+    "final.py": "c9f3289348283ebed1d6add402b3275fed2aa9aa5ae6dc7fef7cefc044563b32",
+    "prove_final.py": "b330d8e46d15ee7ded1e7777f82fb8a12c626fd407ab0d65ff50dc58466f93d0",
+    "test_final.py": "e4f96620f94aacd24b2809af6e61c283d8dd6285757299738d0daa88f4630f35"
+  },
+  "scheduling": "A orchestration parent paused until B completed; correctness children ran concurrently; performance ran afterwards"
+}

@@ -1,0 +1,29 @@
+{
+  "total": 1,
+  "passed": 0,
+  "failed": 1,
+  "excluded": 0,
+  "deferred": 0,
+  "selected_inputs": 1,
+  "configurations": 1,
+  "excluded_configurations": 0,
+  "census_total": 1,
+  "exclusion_reasons": {},
+  "failures": [
+    {
+      "case": "tests/cases/conformance/importAssertion/importAssertion1.ts",
+      "configuration": "module=esnext",
+      "capture": "00001_importAssertion1",
+      "differences": {
+        "stdout": {
+          "byte_offset": 12,
+          "expected_size": 252,
+          "actual_size": 252,
+          "expected_context": "b'3.ts(8,11): message TS1450: Dynamic imports can only accept a module specifier and an option'",
+          "actual_context": "b'3.ts(8,11): Eessage TS1450: Dynamic imports can only accept a module specifier and an option'"
+        }
+      }
+    }
+  ],
+  "seconds": 2.063
+}

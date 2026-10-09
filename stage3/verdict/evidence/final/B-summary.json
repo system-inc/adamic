@@ -1,0 +1,98 @@
+{
+  "schema_version": 1,
+  "tsc": "/workspace/adamic/stage3/verdict/standins/mutant.sh",
+  "tsc_sha256": "da41e514219cb26bacc5617d569b7a1f73a6dcdbedc44555f6179b55a6bd8504",
+  "oracle": "unchanged TypeScript 6.0.3 on Node goldens and upstream diagnostic summaries",
+  "correctness": {
+    "schema_version": 1,
+    "tsc": "/workspace/adamic/stage3/verdict/standins/mutant.sh",
+    "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+    "success": false,
+    "suites": {
+      "acceptance": {
+        "total": 301,
+        "passed": 300,
+        "failed": 1,
+        "excluded": 0,
+        "failures": [
+          {
+            "case": "tiny",
+            "differences": {
+              "stdout": {
+                "byte_offset": 18,
+                "expected_size": 192,
+                "actual_size": 192,
+                "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+                "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+              }
+            }
+          }
+        ],
+        "seconds": 124.707
+      },
+      "tiny": {
+        "total": 1,
+        "passed": 0,
+        "failed": 1,
+        "excluded": 0,
+        "failures": [
+          {
+            "case": "tiny",
+            "differences": {
+              "stdout": {
+                "byte_offset": 18,
+                "expected_size": 192,
+                "actual_size": 192,
+                "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+                "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+              }
+            }
+          }
+        ],
+        "seconds": 0.981
+      },
+      "baselines": {
+        "total": 13693,
+        "passed": 13692,
+        "failed": 1,
+        "excluded": 614,
+        "deferred": 0,
+        "selected_inputs": 11830,
+        "configurations": 13693,
+        "excluded_configurations": 1274,
+        "census_total": 12444,
+        "exclusion_reasons": {
+          "API compiler version override @typescriptversion: 5.0": 3,
+          "API compiler version override @typescriptversion: 5.5": 1,
+          "all configurations need API diagnostic collection or harness formatting": 608,
+          "case-insensitive canonical path aliases require the API host": 1,
+          "harness directive @capturesuggestions: true": 1
+        },
+        "failures": [
+          {
+            "case": "tests/cases/compiler/ArrowFunctionExpression1.ts",
+            "configuration": "",
+            "capture": "00012_ArrowFunctionExpression1",
+            "differences": {
+              "stdout": {
+                "byte_offset": 35,
+                "expected_size": 119,
+                "actual_size": 119,
+                "expected_context": "b'ArrowFunctionExpression1.ts(1,10): error TS2369: A parameter property is only allowed in a constructor implementati'",
+                "actual_context": "b'ArrowFunctionExpression1.ts(1,10): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+              }
+            }
+          }
+        ],
+        "seconds": 5135.988
+      }
+    },
+    "harness_errors": []
+  },
+  "performance": {
+    "status": "skipped",
+    "reason": "one or more correctness suites failed"
+  },
+  "compiler_bar_seconds": 1.78,
+  "success": false
+}

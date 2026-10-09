@@ -1,0 +1,3418 @@
+{
+  "schema_version": 1,
+  "tsc": "/workspace/adamic/stage3/verdict/standins/mutant.sh",
+  "upstream_commit": "050880ce59e30b356b686bd3144efe24f875ebc8",
+  "success": false,
+  "suites": {
+    "acceptance": {
+      "total": 301,
+      "passed": 60,
+      "failed": 241,
+      "excluded": 0,
+      "failures": [
+        {
+          "case": "061_constEnumErrors",
+          "differences": {
+            "stdout": {
+              "byte_offset": 26,
+              "expected_size": 2019,
+              "actual_size": 2019,
+              "expected_context": "b'constEnumErrors.ts(1,12): error TS2567: Enum declarations can only merge with namespace or other enum decl'",
+              "actual_context": "b'constEnumErrors.ts(1,12): Error TS2567: Enum declarations can only merge with namespace or other enum decl'"
+            }
+          }
+        },
+        {
+          "case": "062_interfaceDeclaration1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 1219,
+              "actual_size": 1219,
+              "expected_context": "b\"interfaceDeclaration1.ts(2,5): error TS2300: Duplicate identifier 'item'.\\ninterfaceDeclaration1.ts(3,5): error \"",
+              "actual_context": "b\"interfaceDeclaration1.ts(2,5): Error TS2300: Duplicate identifier 'item'.\\ninterfaceDeclaration1.ts(3,5): error \""
+            }
+          }
+        },
+        {
+          "case": "063_didYouMeanSuggestionErrors",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 4101,
+              "actual_size": 4101,
+              "expected_context": "b\"didYouMeanSuggestionErrors.ts(1,1): error TS2593: Cannot find name 'describe'. Do you need to install type definitio\"",
+              "actual_context": "b\"didYouMeanSuggestionErrors.ts(1,1): Error TS2593: Cannot find name 'describe'. Do you need to install type definitio\""
+            }
+          }
+        },
+        {
+          "case": "064_recursiveFunctionTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 2519,
+              "actual_size": 2519,
+              "expected_context": "b\"recursiveFunctionTypes.ts(1,28): error TS2322: Type 'number' is not assignable to type '() => typeof fn'.\\nrecursi\"",
+              "actual_context": "b\"recursiveFunctionTypes.ts(1,28): Error TS2322: Type 'number' is not assignable to type '() => typeof fn'.\\nrecursi\""
+            }
+          }
+        },
+        {
+          "case": "065_callOverloads2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 24,
+              "expected_size": 559,
+              "actual_size": 559,
+              "expected_context": "b\"callOverloads2.ts(1,7): error TS2813: Class declaration cannot implement overload list for 'Foo'.\\ncallOv\"",
+              "actual_context": "b\"callOverloads2.ts(1,7): Error TS2813: Class declaration cannot implement overload list for 'Foo'.\\ncallOv\""
+            }
+          }
+        },
+        {
+          "case": "066_decoratorUsedBeforeDeclaration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 2185,
+              "actual_size": 2185,
+              "expected_context": "b\"decoratorUsedBeforeDeclaration.ts(1,2): error TS2448: Block-scoped variable 'lambda' used before its declaration.\\ndecora\"",
+              "actual_context": "b\"decoratorUsedBeforeDeclaration.ts(1,2): Error TS2448: Block-scoped variable 'lambda' used before its declaration.\\ndecora\""
+            }
+          }
+        },
+        {
+          "case": "067_undefinedTypeAssignment4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 423,
+              "actual_size": 423,
+              "expected_context": "b\"undefinedTypeAssignment4.ts(1,7): error TS2414: Class name cannot be 'undefined'.\\nundefinedTypeAssignment4.ts(2,2)\"",
+              "actual_context": "b\"undefinedTypeAssignment4.ts(1,7): Error TS2414: Class name cannot be 'undefined'.\\nundefinedTypeAssignment4.ts(2,2)\""
+            }
+          }
+        },
+        {
+          "case": "068_emitCapturingThisInTupleDestructuring1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 49,
+              "expected_size": 1257,
+              "actual_size": 1257,
+              "expected_context": "b\"ringThisInTupleDestructuring1.ts(1,18): error TS7010: 'wrapper', which lacks return-type annotation, implicitly has an '\"",
+              "actual_context": "b\"ringThisInTupleDestructuring1.ts(1,18): Error TS7010: 'wrapper', which lacks return-type annotation, implicitly has an '\""
+            }
+          }
+        },
+        {
+          "case": "069_computedPropertiesInDestructuring1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 2522,
+              "actual_size": 2522,
+              "expected_context": "b\"utedPropertiesInDestructuring1.ts(3,7): error TS2537: Type '{ bar: string; }' has no matching index signature for type '\"",
+              "actual_context": "b\"utedPropertiesInDestructuring1.ts(3,7): Error TS2537: Type '{ bar: string; }' has no matching index signature for type '\""
+            }
+          }
+        },
+        {
+          "case": "070_assignmentToReferenceTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 374,
+              "actual_size": 374,
+              "expected_context": "b\"assignmentToReferenceTypes.ts(5,1): error TS2708: Cannot use namespace 'M' as a value.\\nassignmentToReferenceTypes.ts\"",
+              "actual_context": "b\"assignmentToReferenceTypes.ts(5,1): Error TS2708: Cannot use namespace 'M' as a value.\\nassignmentToReferenceTypes.ts\""
+            }
+          }
+        },
+        {
+          "case": "071_overloadModifiersMustAgree",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 434,
+              "actual_size": 434,
+              "expected_context": "b'overloadModifiersMustAgree.ts(2,12): error TS2385: Overload signatures must all be public, private or protected.\\nover'",
+              "actual_context": "b'overloadModifiersMustAgree.ts(2,12): Error TS2385: Overload signatures must all be public, private or protected.\\nover'"
+            }
+          }
+        },
+        {
+          "case": "072_noImplicitAnyForIn",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 667,
+              "actual_size": 667,
+              "expected_context": "b\"noImplicitAnyForIn.ts(7,18): error TS7053: Element implicitly has an 'any' type because expression of type 's\"",
+              "actual_context": "b\"noImplicitAnyForIn.ts(7,18): Error TS7053: Element implicitly has an 'any' type because expression of type 's\""
+            }
+          }
+        },
+        {
+          "case": "073_superNewCall1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 23,
+              "expected_size": 371,
+              "actual_size": 371,
+              "expected_context": "b\"superNewCall1.ts(8,5): error TS2377: Constructors for derived classes must contain a 'super' call.\\nsupe\"",
+              "actual_context": "b\"superNewCall1.ts(8,5): Error TS2377: Constructors for derived classes must contain a 'super' call.\\nsupe\""
+            }
+          }
+        },
+        {
+          "case": "074_parseInvalidNullableTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 2433,
+              "actual_size": 2433,
+              "expected_context": "b\"parseInvalidNullableTypes.ts(1,30): error TS2677: A type predicate's type must be assignable to its parameter's type\"",
+              "actual_context": "b\"parseInvalidNullableTypes.ts(1,30): Error TS2677: A type predicate's type must be assignable to its parameter's type\""
+            }
+          }
+        },
+        {
+          "case": "075_recursiveConditionalCrash4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 637,
+              "actual_size": 637,
+              "expected_context": "b\"recursiveConditionalCrash4.ts(7,16): error TS2503: Cannot find namespace 'StrIter'.\\nrecursiveConditionalCrash4.ts(8,5\"",
+              "actual_context": "b\"recursiveConditionalCrash4.ts(7,16): Error TS2503: Cannot find namespace 'StrIter'.\\nrecursiveConditionalCrash4.ts(8,5\""
+            }
+          }
+        },
+        {
+          "case": "076_interfacedeclWithIndexerErrors",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 1043,
+              "actual_size": 1043,
+              "expected_context": "b\"nterfacedeclWithIndexerErrors.ts(12,5): error TS2411: Property 'p2' of type 'string' is not assignable to 'string' index\"",
+              "actual_context": "b\"nterfacedeclWithIndexerErrors.ts(12,5): Error TS2411: Property 'p2' of type 'string' is not assignable to 'string' index\""
+            }
+          }
+        },
+        {
+          "case": "077_objectLitIndexerContextualType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 1110,
+              "actual_size": 1110,
+              "expected_context": "b\"jectLitIndexerContextualType.ts(12,13): error TS2362: The left-hand side of an arithmetic operation must be of type 'any\"",
+              "actual_context": "b\"jectLitIndexerContextualType.ts(12,13): Error TS2362: The left-hand side of an arithmetic operation must be of type 'any\""
+            }
+          }
+        },
+        {
+          "case": "078_weakType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 20,
+              "expected_size": 1360,
+              "actual_size": 1360,
+              "expected_context": "b\"weakType.ts(15,13): error TS2560: Value of type '() => { timeout: number; }' has no properties in co\"",
+              "actual_context": "b\"weakType.ts(15,13): Error TS2560: Value of type '() => { timeout: number; }' has no properties in co\""
+            }
+          }
+        },
+        {
+          "case": "079_nullableFunctionError",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 305,
+              "actual_size": 305,
+              "expected_context": "b\"nullableFunctionError.ts(1,1): error TS2721: Cannot invoke an object which is possibly 'null'.\\nnullableFunction\"",
+              "actual_context": "b\"nullableFunctionError.ts(1,1): Error TS2721: Cannot invoke an object which is possibly 'null'.\\nnullableFunction\""
+            }
+          }
+        },
+        {
+          "case": "080_builtinIterator",
+          "differences": {
+            "stdout": {
+              "byte_offset": 26,
+              "expected_size": 4390,
+              "actual_size": 4390,
+              "expected_context": "b'builtinIterator.ts(38,1): error TS2511: Cannot create an instance of an abstract class.\\nbuiltinIterator.ts'",
+              "actual_context": "b'builtinIterator.ts(38,1): Error TS2511: Cannot create an instance of an abstract class.\\nbuiltinIterator.ts'"
+            }
+          }
+        },
+        {
+          "case": "081_errorForUsingPropertyOfTypeAsType03",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 1071,
+              "actual_size": 1071,
+              "expected_context": "b\"rUsingPropertyOfTypeAsType03.ts(11,13): error TS2749: 'Color.Red.toString' refers to a value, but is being used as a typ\"",
+              "actual_context": "b\"rUsingPropertyOfTypeAsType03.ts(11,13): Error TS2749: 'Color.Red.toString' refers to a value, but is being used as a typ\""
+            }
+          }
+        },
+        {
+          "case": "082_unusedDestructuring",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 767,
+              "actual_size": 767,
+              "expected_context": "b'unusedDestructuring.ts(3,7): error TS6198: All destructured elements are unused.\\nunusedDestructuring.ts(4,9):'",
+              "actual_context": "b'unusedDestructuring.ts(3,7): Error TS6198: All destructured elements are unused.\\nunusedDestructuring.ts(4,9):'"
+            }
+          }
+        },
+        {
+          "case": "083_indirectSelfReferenceGeneric",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 334,
+              "actual_size": 334,
+              "expected_context": "b\"indirectSelfReferenceGeneric.ts(1,7): error TS2506: 'a' is referenced directly or indirectly in its own base expressio\"",
+              "actual_context": "b\"indirectSelfReferenceGeneric.ts(1,7): Error TS2506: 'a' is referenced directly or indirectly in its own base expressio\""
+            }
+          }
+        },
+        {
+          "case": "084_thisInModule",
+          "differences": {
+            "stdout": {
+              "byte_offset": 22,
+              "expected_size": 208,
+              "actual_size": 208,
+              "expected_context": "b\"thisInModule.ts(3,5): error TS2331: 'this' cannot be referenced in a module or namespace body.\\nthisInM\"",
+              "actual_context": "b\"thisInModule.ts(3,5): Error TS2331: 'this' cannot be referenced in a module or namespace body.\\nthisInM\""
+            }
+          }
+        },
+        {
+          "case": "085_narrowSwitchOptionalChainContainmentEvolvingArrayNoCrash1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 67,
+              "expected_size": 307,
+              "actual_size": 307,
+              "expected_context": "b\"ntainmentEvolvingArrayNoCrash1.ts(1,5): error TS7034: Variable 'foo' implicitly has type 'any[]' in some locations where\"",
+              "actual_context": "b\"ntainmentEvolvingArrayNoCrash1.ts(1,5): Error TS7034: Variable 'foo' implicitly has type 'any[]' in some locations where\""
+            }
+          }
+        },
+        {
+          "case": "086_noImplicitSymbolToString",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 2016,
+              "actual_size": 2016,
+              "expected_context": "b\"noImplicitSymbolToString.ts(6,30): error TS2731: Implicit conversion of a 'symbol' to a 'string' will fail at runti\"",
+              "actual_context": "b\"noImplicitSymbolToString.ts(6,30): Error TS2731: Implicit conversion of a 'symbol' to a 'string' will fail at runti\""
+            }
+          }
+        },
+        {
+          "case": "087_strictModeInConstructor",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 376,
+              "actual_size": 376,
+              "expected_context": "b\"strictModeInConstructor.ts(27,5): error TS2376: A 'super' call must be the first statement in the constructor to r\"",
+              "actual_context": "b\"strictModeInConstructor.ts(27,5): Error TS2376: A 'super' call must be the first statement in the constructor to r\""
+            }
+          }
+        },
+        {
+          "case": "088_baseConstraintOfDecorator",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 465,
+              "actual_size": 465,
+              "expected_context": "b\"baseConstraintOfDecorator.ts(2,5): error TS2322: Type 'typeof decoratorFunc' is not assignable to type 'TFunction'.\"",
+              "actual_context": "b\"baseConstraintOfDecorator.ts(2,5): Error TS2322: Type 'typeof decoratorFunc' is not assignable to type 'TFunction'.\""
+            }
+          }
+        },
+        {
+          "case": "089_moduleVisibilityTest3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 317,
+              "actual_size": 317,
+              "expected_context": "b\"moduleVisibilityTest3.ts(20,22): error TS2709: Cannot use namespace 'modes' as a type.\\nmoduleVisibilityTest3.ts(2\"",
+              "actual_context": "b\"moduleVisibilityTest3.ts(20,22): Error TS2709: Cannot use namespace 'modes' as a type.\\nmoduleVisibilityTest3.ts(2\""
+            }
+          }
+        },
+        {
+          "case": "090_constraintWithIndexedAccess",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 3130,
+              "actual_size": 3130,
+              "expected_context": "b\"constraintWithIndexedAccess.ts(23,90): error TS2344: Type 'TypeHardcodedAsParameterWithoutReturnType<T, F>' does not sa\"",
+              "actual_context": "b\"constraintWithIndexedAccess.ts(23,90): Error TS2344: Type 'TypeHardcodedAsParameterWithoutReturnType<T, F>' does not sa\""
+            }
+          }
+        },
+        {
+          "case": "091_excessivelyLargeTupleSpread",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 341,
+              "actual_size": 341,
+              "expected_context": "b'excessivelyLargeTupleSpread.ts(6,10): error TS2799: Type produces a tuple type that is too large to represent.\\nexcessi'",
+              "actual_context": "b'excessivelyLargeTupleSpread.ts(6,10): Error TS2799: Type produces a tuple type that is too large to represent.\\nexcessi'"
+            }
+          }
+        },
+        {
+          "case": "092_omittedExpressionForOfLoop",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 442,
+              "actual_size": 442,
+              "expected_context": "b\"omittedExpressionForOfLoop.ts(1,19): error TS2304: Cannot find name 'doesNotExist'.\\nomittedExpressionForOfLoop.ts(4,1\"",
+              "actual_context": "b\"omittedExpressionForOfLoop.ts(1,19): Error TS2304: Cannot find name 'doesNotExist'.\\nomittedExpressionForOfLoop.ts(4,1\""
+            }
+          }
+        },
+        {
+          "case": "093_typeOfEnumAndVarRedeclarations",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 681,
+              "actual_size": 681,
+              "expected_context": "b'typeOfEnumAndVarRedeclarations.ts(8,5): error TS2403: Subsequent variable declarations must have the same type.  Variabl'",
+              "actual_context": "b'typeOfEnumAndVarRedeclarations.ts(8,5): Error TS2403: Subsequent variable declarations must have the same type.  Variabl'"
+            }
+          }
+        },
+        {
+          "case": "094_assignmentToParenthesizedExpression1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 46,
+              "expected_size": 271,
+              "actual_size": 271,
+              "expected_context": "b'mentToParenthesizedExpression1.ts(2,1): error TS2364: The left-hand side of an assignment expression must be a variable '",
+              "actual_context": "b'mentToParenthesizedExpression1.ts(2,1): Error TS2364: The left-hand side of an assignment expression must be a variable '"
+            }
+          }
+        },
+        {
+          "case": "095_interfaceExtendsClassWithPrivate1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 375,
+              "actual_size": 375,
+              "expected_context": "b\"rfaceExtendsClassWithPrivate1.ts(21,1): error TS2741: Property 'other' is missing in type 'C' but required in type 'I'.\\n\"",
+              "actual_context": "b\"rfaceExtendsClassWithPrivate1.ts(21,1): Error TS2741: Property 'other' is missing in type 'C' but required in type 'I'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "096_importDeclRefereingExternalModuleWithNoResolve",
+          "differences": {
+            "stdout": {
+              "byte_offset": 57,
+              "expected_size": 431,
+              "actual_size": 431,
+              "expected_context": "b\"ngExternalModuleWithNoResolve.ts(1,20): error TS2307: Cannot find module 'externalModule' or its corresponding type decl\"",
+              "actual_context": "b\"ngExternalModuleWithNoResolve.ts(1,20): Error TS2307: Cannot find module 'externalModule' or its corresponding type decl\""
+            }
+          }
+        },
+        {
+          "case": "097_mappedTypeGenericWithKnownKeys",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 347,
+              "actual_size": 347,
+              "expected_context": "b\"mappedTypeGenericWithKnownKeys.ts(9,9): error TS2551: Property 'unknownLiteralKey' does not exist on type 'Record<keyof \"",
+              "actual_context": "b\"mappedTypeGenericWithKnownKeys.ts(9,9): Error TS2551: Property 'unknownLiteralKey' does not exist on type 'Record<keyof \""
+            }
+          }
+        },
+        {
+          "case": "098_moduleAugmentationGlobal7_1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 330,
+              "actual_size": 330,
+              "expected_context": "b'moduleAugmentationGlobal7_1.ts(2,5): error TS2669: Augmentations for the global scope can only be directly nested in '",
+              "actual_context": "b'moduleAugmentationGlobal7_1.ts(2,5): Error TS2669: Augmentations for the global scope can only be directly nested in '"
+            }
+          }
+        },
+        {
+          "case": "099_untypedFunctionCallsWithTypeParameters1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 50,
+              "expected_size": 1131,
+              "actual_size": 1131,
+              "expected_context": "b'ctionCallsWithTypeParameters1.ts(3,12): error TS2558: Expected 0 type arguments, but got 1.\\nuntypedFunctionCallsWithType'",
+              "actual_context": "b'ctionCallsWithTypeParameters1.ts(3,12): Error TS2558: Expected 0 type arguments, but got 1.\\nuntypedFunctionCallsWithType'"
+            }
+          }
+        },
+        {
+          "case": "100_scopeCheckExtendedClassInsidePublicMethod2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 52,
+              "expected_size": 257,
+              "actual_size": 257,
+              "expected_context": "b\"tendedClassInsidePublicMethod2.ts(4,7): error TS2663: Cannot find name 'v'. Did you mean the instance member 'this.v'?\\ns\"",
+              "actual_context": "b\"tendedClassInsidePublicMethod2.ts(4,7): Error TS2663: Cannot find name 'v'. Did you mean the instance member 'this.v'?\\ns\""
+            }
+          }
+        },
+        {
+          "case": "101_noUncheckedIndexedAccessCompoundAssignments",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 1233,
+              "actual_size": 1233,
+              "expected_context": "b\"dexedAccessCompoundAssignments.ts(3,1): error TS18048: 'stringMap.foo' is possibly 'undefined'.\\nnoUncheckedIndexedAccess\"",
+              "actual_context": "b\"dexedAccessCompoundAssignments.ts(3,1): Error TS18048: 'stringMap.foo' is possibly 'undefined'.\\nnoUncheckedIndexedAccess\""
+            }
+          }
+        },
+        {
+          "case": "102_implicitAnyDeclareTypePropertyWithoutType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 52,
+              "expected_size": 705,
+              "actual_size": 705,
+              "expected_context": "b\"eclareTypePropertyWithoutType.ts(6,10): error TS7008: Member 'y' implicitly has an 'any' type.\\nimplicitAnyDeclareTypePro\"",
+              "actual_context": "b\"eclareTypePropertyWithoutType.ts(6,10): Error TS7008: Member 'y' implicitly has an 'any' type.\\nimplicitAnyDeclareTypePro\""
+            }
+          }
+        },
+        {
+          "case": "103_circularReferenceInReturnType2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 415,
+              "actual_size": 415,
+              "expected_context": "b\"ircularReferenceInReturnType2.ts(39,7): error TS7022: 'A' implicitly has type 'any' because it does not have a type anno\"",
+              "actual_context": "b\"ircularReferenceInReturnType2.ts(39,7): Error TS7022: 'A' implicitly has type 'any' because it does not have a type anno\""
+            }
+          }
+        },
+        {
+          "case": "104_mixedStaticAndInstanceClassMembers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 283,
+              "actual_size": 283,
+              "expected_context": "b'dStaticAndInstanceClassMembers.ts(4,5): error TS2387: Function overload must be static.\\nmixedStaticAndInstanceClassMembe'",
+              "actual_context": "b'dStaticAndInstanceClassMembers.ts(4,5): Error TS2387: Function overload must be static.\\nmixedStaticAndInstanceClassMembe'"
+            }
+          }
+        },
+        {
+          "case": "105_exportDefaultTypeClassAndValue",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 507,
+              "actual_size": 507,
+              "expected_context": "b\"exportDefaultTypeClassAndValue.ts(2,1): error TS2323: Cannot redeclare exported variable 'default'.\\nexportDefaultTypeCla\"",
+              "actual_context": "b\"exportDefaultTypeClassAndValue.ts(2,1): Error TS2323: Cannot redeclare exported variable 'default'.\\nexportDefaultTypeCla\""
+            }
+          }
+        },
+        {
+          "case": "106_interfaceMergeWithNonGenericTypeArguments",
+          "differences": {
+            "stdout": {
+              "byte_offset": 52,
+              "expected_size": 213,
+              "actual_size": 213,
+              "expected_context": "b\"geWithNonGenericTypeArguments.ts(4,34): error TS2315: Type 'SomeBaseClass' is not generic.\\ninterfaceMergeWithNonGenericT\"",
+              "actual_context": "b\"geWithNonGenericTypeArguments.ts(4,34): Error TS2315: Type 'SomeBaseClass' is not generic.\\ninterfaceMergeWithNonGenericT\""
+            }
+          }
+        },
+        {
+          "case": "107_objectFreeze",
+          "differences": {
+            "stdout": {
+              "byte_offset": 22,
+              "expected_size": 282,
+              "actual_size": 282,
+              "expected_context": "b\"objectFreeze.ts(9,1): error TS2322: Type 'string' is not assignable to type 'number'.\\nobjectFreeze.ts(\"",
+              "actual_context": "b\"objectFreeze.ts(9,1): Error TS2322: Type 'string' is not assignable to type 'number'.\\nobjectFreeze.ts(\""
+            }
+          }
+        },
+        {
+          "case": "108_redeclareParameterInCatchBlock",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 513,
+              "actual_size": 513,
+              "expected_context": "b\"edeclareParameterInCatchBlock.ts(4,11): error TS2492: Cannot redeclare identifier 'e' in catch clause.\\nredeclareParamete\"",
+              "actual_context": "b\"edeclareParameterInCatchBlock.ts(4,11): Error TS2492: Cannot redeclare identifier 'e' in catch clause.\\nredeclareParamete\""
+            }
+          }
+        },
+        {
+          "case": "109_classExtendsNull2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 238,
+              "actual_size": 238,
+              "expected_context": "b\"classExtendsNull2.ts(5,7): error TS2417: Class static side 'typeof C' incorrectly extends base class static\"",
+              "actual_context": "b\"classExtendsNull2.ts(5,7): Error TS2417: Class static side 'typeof C' incorrectly extends base class static\""
+            }
+          }
+        },
+        {
+          "case": "110_importDeclWithExportModifierAndExportAssignment",
+          "differences": {
+            "stdout": {
+              "byte_offset": 58,
+              "expected_size": 372,
+              "actual_size": 372,
+              "expected_context": "b\"rtModifierAndExportAssignment.ts(5,19): error TS2708: Cannot use namespace 'x' as a value.\\nimportDeclWithExportModifierA\"",
+              "actual_context": "b\"rtModifierAndExportAssignment.ts(5,19): Error TS2708: Cannot use namespace 'x' as a value.\\nimportDeclWithExportModifierA\""
+            }
+          }
+        },
+        {
+          "case": "111_circularlyReferentialInterfaceAccessNoCrash",
+          "differences": {
+            "stdout": {
+              "byte_offset": 54,
+              "expected_size": 370,
+              "actual_size": 370,
+              "expected_context": "b\"rentialInterfaceAccessNoCrash.ts(1,12): error TS4109: Type arguments for 'Mx' circularly reference themselves.\\ncircularl\"",
+              "actual_context": "b\"rentialInterfaceAccessNoCrash.ts(1,12): Error TS4109: Type arguments for 'Mx' circularly reference themselves.\\ncircularl\""
+            }
+          }
+        },
+        {
+          "case": "112_noImplicitAnyParametersInInterface",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 2917,
+              "actual_size": 2917,
+              "expected_context": "b'plicitAnyParametersInInterface.ts(3,5): error TS7020: Call signature, which lacks return-type annotation, implicitly has'",
+              "actual_context": "b'plicitAnyParametersInInterface.ts(3,5): Error TS7020: Call signature, which lacks return-type annotation, implicitly has'"
+            }
+          }
+        },
+        {
+          "case": "113_duplicateSymbolsExportMatching",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 2553,
+              "actual_size": 2553,
+              "expected_context": "b\"plicateSymbolsExportMatching.ts(24,15): error TS2395: Individual declarations in merged declaration 'I' must be all expo\"",
+              "actual_context": "b\"plicateSymbolsExportMatching.ts(24,15): Error TS2395: Individual declarations in merged declaration 'I' must be all expo\""
+            }
+          }
+        },
+        {
+          "case": "114_truthinessPromiseCoercion",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 687,
+              "actual_size": 687,
+              "expected_context": "b\"truthinessPromiseCoercion.ts(7,9): error TS2801: This condition will always return true since this 'Promise<number>\"",
+              "actual_context": "b\"truthinessPromiseCoercion.ts(7,9): Error TS2801: This condition will always return true since this 'Promise<number>\""
+            }
+          }
+        },
+        {
+          "case": "115_unusedClassesinNamespace4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 84,
+              "actual_size": 84,
+              "expected_context": "b\"unusedClassesinNamespace4.ts(10,11): error TS6196: 'c3' is declared but never used.\\n\"",
+              "actual_context": "b\"unusedClassesinNamespace4.ts(10,11): Error TS6196: 'c3' is declared but never used.\\n\""
+            }
+          }
+        },
+        {
+          "case": "116_recursivelyExpandingUnionNoStackoverflow",
+          "differences": {
+            "stdout": {
+              "byte_offset": 51,
+              "expected_size": 281,
+              "actual_size": 281,
+              "expected_context": "b'ExpandingUnionNoStackoverflow.ts(3,10): error TS2589: Type instantiation is excessively deep and possibly infinite.\\nrecu'",
+              "actual_context": "b'ExpandingUnionNoStackoverflow.ts(3,10): Error TS2589: Type instantiation is excessively deep and possibly infinite.\\nrecu'"
+            }
+          }
+        },
+        {
+          "case": "117_typeUsedAsTypeLiteralIndex",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 546,
+              "actual_size": 546,
+              "expected_context": "b\"typeUsedAsTypeLiteralIndex.ts(3,6): error TS2690: 'K' only refers to a type, but is being used as a value here. Did \"",
+              "actual_context": "b\"typeUsedAsTypeLiteralIndex.ts(3,6): Error TS2690: 'K' only refers to a type, but is being used as a value here. Did \""
+            }
+          }
+        },
+        {
+          "case": "118_anyMappedTypesError",
+          "differences": {
+            "stdout": {
+              "byte_offset": 30,
+              "expected_size": 102,
+              "actual_size": 102,
+              "expected_context": "b\"anyMappedTypesError.ts(1,12): error TS7039: Mapped object type implicitly has an 'any' template type.\\n\"",
+              "actual_context": "b\"anyMappedTypesError.ts(1,12): Error TS7039: Mapped object type implicitly has an 'any' template type.\\n\""
+            }
+          }
+        },
+        {
+          "case": "119_yieldExpressionInFlowLoop",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 170,
+              "actual_size": 170,
+              "expected_context": "b\"yieldExpressionInFlowLoop.ts(4,18): error TS7057: 'yield' expression implicitly results in an 'any' type because its\"",
+              "actual_context": "b\"yieldExpressionInFlowLoop.ts(4,18): Error TS7057: 'yield' expression implicitly results in an 'any' type because its\""
+            }
+          }
+        },
+        {
+          "case": "120_excessPropertyCheckWithSpread",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 140,
+              "actual_size": 140,
+              "expected_context": "b\"excessPropertyCheckWithSpread.ts(1,25): error TS2842: 'number' is an unused renaming of 'a'. Did you intend to use it as\"",
+              "actual_context": "b\"excessPropertyCheckWithSpread.ts(1,25): Error TS2842: 'number' is an unused renaming of 'a'. Did you intend to use it as\""
+            }
+          }
+        },
+        {
+          "case": "121_switchCasesExpressionTypeMismatch",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 647,
+              "actual_size": 647,
+              "expected_context": "b\"chCasesExpressionTypeMismatch.ts(4,10): error TS2678: Type 'typeof Foo' is not comparable to type '0'.\\nswitchCasesExpres\"",
+              "actual_context": "b\"chCasesExpressionTypeMismatch.ts(4,10): Error TS2678: Type 'typeof Foo' is not comparable to type '0'.\\nswitchCasesExpres\""
+            }
+          }
+        },
+        {
+          "case": "122_literalsInComputedProperties1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 388,
+              "actual_size": 388,
+              "expected_context": "b'literalsInComputedProperties1.ts(39,5): error TS2452: An enum member cannot have a numeric name.\\nliteralsInComputedPrope'",
+              "actual_context": "b'literalsInComputedProperties1.ts(39,5): Error TS2452: An enum member cannot have a numeric name.\\nliteralsInComputedPrope'"
+            }
+          }
+        },
+        {
+          "case": "123_narrowByEquality",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 447,
+              "actual_size": 447,
+              "expected_context": "b\"narrowByEquality.ts(41,5): error TS2839: This condition will always return 'false' since JavaScript compare\"",
+              "actual_context": "b\"narrowByEquality.ts(41,5): Error TS2839: This condition will always return 'false' since JavaScript compare\""
+            }
+          }
+        },
+        {
+          "case": "124_this_inside-enum-should-not-be-allowed",
+          "differences": {
+            "stdout": {
+              "byte_offset": 49,
+              "expected_size": 504,
+              "actual_size": 504,
+              "expected_context": "b\"de-enum-should-not-be-allowed.ts(2,36): error TS2332: 'this' cannot be referenced in current location.\\nthis_inside-enum-\"",
+              "actual_context": "b\"de-enum-should-not-be-allowed.ts(2,36): Error TS2332: 'this' cannot be referenced in current location.\\nthis_inside-enum-\""
+            }
+          }
+        },
+        {
+          "case": "125_noMappedGetSet",
+          "differences": {
+            "stdout": {
+              "byte_offset": 24,
+              "expected_size": 243,
+              "actual_size": 243,
+              "expected_context": "b\"noMappedGetSet.ts(2,9): error TS2464: A computed property name must be of type 'string', 'number', 'symb\"",
+              "actual_context": "b\"noMappedGetSet.ts(2,9): Error TS2464: A computed property name must be of type 'string', 'number', 'symb\""
+            }
+          }
+        },
+        {
+          "case": "126_restInvalidArgumentType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 1182,
+              "actual_size": 1182,
+              "expected_context": "b'restInvalidArgumentType.ts(30,13): error TS2700: Rest types may only be created from object types.\\nrestInvalidArgum'",
+              "actual_context": "b'restInvalidArgumentType.ts(30,13): Error TS2700: Rest types may only be created from object types.\\nrestInvalidArgum'"
+            }
+          }
+        },
+        {
+          "case": "127_forInStatement4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 26,
+              "expected_size": 115,
+              "actual_size": 115,
+              "expected_context": "b\"forInStatement4.ts(2,10): error TS2404: The left-hand side of a 'for...in' statement cannot use a type ann\"",
+              "actual_context": "b\"forInStatement4.ts(2,10): Error TS2404: The left-hand side of a 'for...in' statement cannot use a type ann\""
+            }
+          }
+        },
+        {
+          "case": "128_noImplicitAnyUnionNormalizedObjectLiteral1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 254,
+              "actual_size": 254,
+              "expected_context": "b\"UnionNormalizedObjectLiteral1.ts(16,3): error TS7018: Object literal's property 'p' implicitly has an 'any' type.\\nnoImpl\"",
+              "actual_context": "b\"UnionNormalizedObjectLiteral1.ts(16,3): Error TS7018: Object literal's property 'p' implicitly has an 'any' type.\\nnoImpl\""
+            }
+          }
+        },
+        {
+          "case": "129_enumWithPrimitiveName",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 222,
+              "actual_size": 222,
+              "expected_context": "b\"enumWithPrimitiveName.ts(1,6): error TS2431: Enum name cannot be 'string'.\\nenumWithPrimitiveName.ts(2,6): error\"",
+              "actual_context": "b\"enumWithPrimitiveName.ts(1,6): Error TS2431: Enum name cannot be 'string'.\\nenumWithPrimitiveName.ts(2,6): error\""
+            }
+          }
+        },
+        {
+          "case": "130_inheritedStringIndexersFromDifferentBaseTypes2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 58,
+              "expected_size": 153,
+              "actual_size": 153,
+              "expected_context": "b\"exersFromDifferentBaseTypes2.ts(18,11): error TS2413: 'number' index type '{}' is not assignable to 'string' index type \"",
+              "actual_context": "b\"exersFromDifferentBaseTypes2.ts(18,11): Error TS2413: 'number' index type '{}' is not assignable to 'string' index type \""
+            }
+          }
+        },
+        {
+          "case": "131_errorsForCallAndAssignmentAreSimilar",
+          "differences": {
+            "stdout": {
+              "byte_offset": 48,
+              "expected_size": 298,
+              "actual_size": 298,
+              "expected_context": "b'rCallAndAssignmentAreSimilar.ts(11,11): error TS2820: Type \\'\"hdpvd\"\\' is not assignable to type \\'\"hddvd\" | \"bluray\"\\'. Did'",
+              "actual_context": "b'rCallAndAssignmentAreSimilar.ts(11,11): Error TS2820: Type \\'\"hdpvd\"\\' is not assignable to type \\'\"hddvd\" | \"bluray\"\\'. Did'"
+            }
+          }
+        },
+        {
+          "case": "132_missingCommaInTemplateStringsArray",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 208,
+              "actual_size": 208,
+              "expected_context": "b'ingCommaInTemplateStringsArray.ts(2,5): error TS2796: It is likely that you are missing a comma to separate these two te'",
+              "actual_context": "b'ingCommaInTemplateStringsArray.ts(2,5): Error TS2796: It is likely that you are missing a comma to separate these two te'"
+            }
+          }
+        },
+        {
+          "case": "133_forInStatement2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 26,
+              "expected_size": 173,
+              "actual_size": 173,
+              "expected_context": "b\"forInStatement2.ts(2,15): error TS2407: The right-hand side of a 'for...in' statement must be of type 'any\"",
+              "actual_context": "b\"forInStatement2.ts(2,15): Error TS2407: The right-hand side of a 'for...in' statement must be of type 'any\""
+            }
+          }
+        },
+        {
+          "case": "134_augmentedTypesEnum",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 1404,
+              "actual_size": 1404,
+              "expected_context": "b'augmentedTypesEnum.ts(2,6): error TS2567: Enum declarations can only merge with namespace or other enum decl'",
+              "actual_context": "b'augmentedTypesEnum.ts(2,6): Error TS2567: Enum declarations can only merge with namespace or other enum decl'"
+            }
+          }
+        },
+        {
+          "case": "135_narrowingTruthyObject",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 70,
+              "actual_size": 70,
+              "expected_context": "b\"narrowingTruthyObject.ts(3,9): error TS18047: 'x' is possibly 'null'.\\n\"",
+              "actual_context": "b\"narrowingTruthyObject.ts(3,9): Error TS18047: 'x' is possibly 'null'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "136_nestedFreshLiteral",
+          "differences": {
+            "stdout": {
+              "byte_offset": 30,
+              "expected_size": 173,
+              "actual_size": 173,
+              "expected_context": "b\"nestedFreshLiteral.ts(12,21): error TS2561: Object literal may only specify known properties, but 'colour' doe\"",
+              "actual_context": "b\"nestedFreshLiteral.ts(12,21): Error TS2561: Object literal may only specify known properties, but 'colour' doe\""
+            }
+          }
+        },
+        {
+          "case": "137_duplicateErrorNameNotFound",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 113,
+              "actual_size": 113,
+              "expected_context": "b\"duplicateErrorNameNotFound.ts(4,5): error TS2552: Cannot find name 'RoomInterface'. Did you mean 'RoomInterfae'?\\n\"",
+              "actual_context": "b\"duplicateErrorNameNotFound.ts(4,5): Error TS2552: Cannot find name 'RoomInterface'. Did you mean 'RoomInterfae'?\\n\""
+            }
+          }
+        },
+        {
+          "case": "138_voidAsOperator",
+          "differences": {
+            "stdout": {
+              "byte_offset": 24,
+              "expected_size": 158,
+              "actual_size": 158,
+              "expected_context": "b'voidAsOperator.ts(1,6): error TS2873: This kind of expression is always falsy.\\nvoidAsOperator.ts(6,6): e'",
+              "actual_context": "b'voidAsOperator.ts(1,6): Error TS2873: This kind of expression is always falsy.\\nvoidAsOperator.ts(6,6): e'"
+            }
+          }
+        },
+        {
+          "case": "139_typeParametersInStaticAccessors",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 327,
+              "actual_size": 327,
+              "expected_context": "b'peParametersInStaticAccessors.ts(2,29): error TS2302: Static members cannot reference class type parameters.\\ntypeParamet'",
+              "actual_context": "b'peParametersInStaticAccessors.ts(2,29): Error TS2302: Static members cannot reference class type parameters.\\ntypeParamet'"
+            }
+          }
+        },
+        {
+          "case": "140_arrayAssignmentTest5",
+          "differences": {
+            "stdout": {
+              "byte_offset": 32,
+              "expected_size": 418,
+              "actual_size": 418,
+              "expected_context": "b'arrayAssignmentTest5.ts(21,66): error TS2366: Function lacks ending return statement and return type does not in'",
+              "actual_context": "b'arrayAssignmentTest5.ts(21,66): Error TS2366: Function lacks ending return statement and return type does not in'"
+            }
+          }
+        },
+        {
+          "case": "141_forInStrictNullChecksNoError",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 92,
+              "actual_size": 92,
+              "expected_context": "b\"forInStrictNullChecksNoError.ts(5,5): error TS18049: 'x' is possibly 'null' or 'undefined'.\\n\"",
+              "actual_context": "b\"forInStrictNullChecksNoError.ts(5,5): Error TS18049: 'x' is possibly 'null' or 'undefined'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "142_spreadUnionPropOverride",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 351,
+              "actual_size": 351,
+              "expected_context": "b\"spreadUnionPropOverride.ts(30,5): error TS2783: 'x' is specified more than once, so this usage will be overwritten\"",
+              "actual_context": "b\"spreadUnionPropOverride.ts(30,5): Error TS2783: 'x' is specified more than once, so this usage will be overwritten\""
+            }
+          }
+        },
+        {
+          "case": "143_enumPropertyAccessBeforeInitalisation",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 421,
+              "actual_size": 421,
+              "expected_context": "b\"pertyAccessBeforeInitalisation.ts(2,9): error TS2565: Property 'A' is used before being assigned.\\nenumPropertyAccessBefo\"",
+              "actual_context": "b\"pertyAccessBeforeInitalisation.ts(2,9): Error TS2565: Property 'A' is used before being assigned.\\nenumPropertyAccessBefo\""
+            }
+          }
+        },
+        {
+          "case": "144_inheritedStringIndexersFromDifferentBaseTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 57,
+              "expected_size": 442,
+              "actual_size": 442,
+              "expected_context": "b\"dexersFromDifferentBaseTypes.ts(13,11): error TS2430: Interface 'E' incorrectly extends interface 'D'.\\n  'string' index \"",
+              "actual_context": "b\"dexersFromDifferentBaseTypes.ts(13,11): Error TS2430: Interface 'E' incorrectly extends interface 'D'.\\n  'string' index \""
+            }
+          }
+        },
+        {
+          "case": "145_ClassDeclaration10",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 204,
+              "actual_size": 204,
+              "expected_context": "b'ClassDeclaration10.ts(2,4): error TS2390: Constructor implementation is missing.\\nClassDeclaration10.ts(3,4):'",
+              "actual_context": "b'ClassDeclaration10.ts(2,4): Error TS2390: Constructor implementation is missing.\\nClassDeclaration10.ts(3,4):'"
+            }
+          }
+        },
+        {
+          "case": "146_noImplicitAnyIndexing",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 463,
+              "actual_size": 463,
+              "expected_context": "b\"noImplicitAnyIndexing.ts(12,37): error TS7015: Element implicitly has an 'any' type because index expression is n\"",
+              "actual_context": "b\"noImplicitAnyIndexing.ts(12,37): Error TS7015: Element implicitly has an 'any' type because index expression is n\""
+            }
+          }
+        },
+        {
+          "case": "147_genericMappedTypeAsClause",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 960,
+              "actual_size": 960,
+              "expected_context": "b\"genericMappedTypeAsClause.ts(11,36): error TS2322: Type 'string' is not assignable to type 'number'.\\ngenericMappedTyp\"",
+              "actual_context": "b\"genericMappedTypeAsClause.ts(11,36): Error TS2322: Type 'string' is not assignable to type 'number'.\\ngenericMappedTyp\""
+            }
+          }
+        },
+        {
+          "case": "148_nonArrayRestArgs",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 84,
+              "actual_size": 84,
+              "expected_context": "b'nonArrayRestArgs.ts(1,14): error TS2370: A rest parameter must be of an array type.\\n'",
+              "actual_context": "b'nonArrayRestArgs.ts(1,14): Error TS2370: A rest parameter must be of an array type.\\n'"
+            }
+          }
+        },
+        {
+          "case": "149_undefinedTypeAssignment1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 87,
+              "actual_size": 87,
+              "expected_context": "b\"undefinedTypeAssignment1.ts(1,6): error TS2457: Type alias name cannot be 'undefined'.\\n\"",
+              "actual_context": "b\"undefinedTypeAssignment1.ts(1,6): Error TS2457: Type alias name cannot be 'undefined'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "150_useUnknownInCatchVariables01",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 240,
+              "actual_size": 240,
+              "expected_context": "b\"useUnknownInCatchVariables01.ts(6,10): error TS18046: 'e' is of type 'unknown'.\\nuseUnknownInCatchVariables01.ts(7,10): \"",
+              "actual_context": "b\"useUnknownInCatchVariables01.ts(6,10): Error TS18046: 'e' is of type 'unknown'.\\nuseUnknownInCatchVariables01.ts(7,10): \""
+            }
+          }
+        },
+        {
+          "case": "151_normalizedIntersectionTooComplex",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 227,
+              "actual_size": 227,
+              "expected_context": "b\"alizedIntersectionTooComplex.ts(36,40): error TS7006: Parameter 'x' implicitly has an 'any' type.\\nnormalizedIntersection\"",
+              "actual_context": "b\"alizedIntersectionTooComplex.ts(36,40): Error TS7006: Parameter 'x' implicitly has an 'any' type.\\nnormalizedIntersection\""
+            }
+          }
+        },
+        {
+          "case": "152_errorOnEnumReferenceInCondition",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 789,
+              "actual_size": 789,
+              "expected_context": "b\"rorOnEnumReferenceInCondition.ts(6,11): error TS2845: This condition will always return 'false'.\\nerrorOnEnumReferenceInC\"",
+              "actual_context": "b\"rorOnEnumReferenceInCondition.ts(6,11): Error TS2845: This condition will always return 'false'.\\nerrorOnEnumReferenceInC\""
+            }
+          }
+        },
+        {
+          "case": "153_returnTypeTypeArguments",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 5732,
+              "actual_size": 5732,
+              "expected_context": "b\"returnTypeTypeArguments.ts(2,5): error TS2564: Property 'value' has no initializer and is not definitely assigned\"",
+              "actual_context": "b\"returnTypeTypeArguments.ts(2,5): Error TS2564: Property 'value' has no initializer and is not definitely assigned\""
+            }
+          }
+        },
+        {
+          "case": "154_emitThisInSuperMethodCall",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 429,
+              "actual_size": 429,
+              "expected_context": "b\"emitThisInSuperMethodCall.ts(10,17): error TS2660: 'super' can only be referenced in members of derived classes or ob\"",
+              "actual_context": "b\"emitThisInSuperMethodCall.ts(10,17): Error TS2660: 'super' can only be referenced in members of derived classes or ob\""
+            }
+          }
+        },
+        {
+          "case": "155_varianceReferences",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 1572,
+              "actual_size": 1572,
+              "expected_context": "b'varianceReferences.ts(3,32): error TS2637: Variance annotations are only supported in type aliases for object'",
+              "actual_context": "b'varianceReferences.ts(3,32): Error TS2637: Variance annotations are only supported in type aliases for object'"
+            }
+          }
+        },
+        {
+          "case": "156_misspelledNewMetaProperty",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 129,
+              "actual_size": 129,
+              "expected_context": "b\"misspelledNewMetaProperty.ts(1,20): error TS17012: 'targ' is not a valid meta-property for keyword 'new'. Did you me\"",
+              "actual_context": "b\"misspelledNewMetaProperty.ts(1,20): Error TS17012: 'targ' is not a valid meta-property for keyword 'new'. Did you me\""
+            }
+          }
+        },
+        {
+          "case": "157_varNameConflictsWithImportInDifferentPartOfModule",
+          "differences": {
+            "stdout": {
+              "byte_offset": 59,
+              "expected_size": 133,
+              "actual_size": 133,
+              "expected_context": "b\"hImportInDifferentPartOfModule.ts(6,5): error TS2440: Import declaration conflicts with local declaration of 'q'.\\n\"",
+              "actual_context": "b\"hImportInDifferentPartOfModule.ts(6,5): Error TS2440: Import declaration conflicts with local declaration of 'q'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "158_incorrectRecursiveMappedTypeConstraint",
+          "differences": {
+            "stdout": {
+              "byte_offset": 49,
+              "expected_size": 342,
+              "actual_size": 342,
+              "expected_context": "b\"RecursiveMappedTypeConstraint.ts(2,24): error TS2313: Type parameter 'T' has a circular constraint.\\nincorrectRecursiveMa\"",
+              "actual_context": "b\"RecursiveMappedTypeConstraint.ts(2,24): Error TS2313: Type parameter 'T' has a circular constraint.\\nincorrectRecursiveMa\""
+            }
+          }
+        },
+        {
+          "case": "159_objectBindingPattern_restElementWithPropertyName",
+          "differences": {
+            "stdout": {
+              "byte_offset": 59,
+              "expected_size": 117,
+              "actual_size": 117,
+              "expected_context": "b'n_restElementWithPropertyName.ts(1,15): error TS2566: A rest element cannot have a property name.\\n'",
+              "actual_context": "b'n_restElementWithPropertyName.ts(1,15): Error TS2566: A rest element cannot have a property name.\\n'"
+            }
+          }
+        },
+        {
+          "case": "160_incompatibleAssignmentOfIdenticallyNamedTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 55,
+              "expected_size": 411,
+              "actual_size": 411,
+              "expected_context": "b\"ignmentOfIdenticallyNamedTypes.ts(4,5): error TS2564: Property 'x' has no initializer and is not definitely assigned in \"",
+              "actual_context": "b\"ignmentOfIdenticallyNamedTypes.ts(4,5): Error TS2564: Property 'x' has no initializer and is not definitely assigned in \""
+            }
+          }
+        },
+        {
+          "case": "161_didYouMeanElaborationsForExpressionsWhichCouldBeCalled",
+          "differences": {
+            "stdout": {
+              "byte_offset": 65,
+              "expected_size": 684,
+              "actual_size": 684,
+              "expected_context": "b\"ExpressionsWhichCouldBeCalled.ts(10,8): error TS2741: Property 'x' is missing in type 'typeof Bar' but required in type \"",
+              "actual_context": "b\"ExpressionsWhichCouldBeCalled.ts(10,8): Error TS2741: Property 'x' is missing in type 'typeof Bar' but required in type \""
+            }
+          }
+        },
+        {
+          "case": "162_instanceofWithPrimitiveUnion",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 320,
+              "actual_size": 320,
+              "expected_context": "b\"instanceofWithPrimitiveUnion.ts(2,9): error TS2358: The left-hand side of an 'instanceof' expression must be of type '\"",
+              "actual_context": "b\"instanceofWithPrimitiveUnion.ts(2,9): Error TS2358: The left-hand side of an 'instanceof' expression must be of type '\""
+            }
+          }
+        },
+        {
+          "case": "163_ArrowFunctionExpression1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 119,
+              "actual_size": 119,
+              "expected_context": "b'ArrowFunctionExpression1.ts(1,10): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ArrowFunctionExpression1.ts(1,10): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "164_staticOffOfInstance1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 152,
+              "actual_size": 152,
+              "expected_context": "b\"staticOffOfInstance1.ts(3,10): error TS2576: Property 'Foo' does not exist on type 'List'. Did you mean to acce\"",
+              "actual_context": "b\"staticOffOfInstance1.ts(3,10): Error TS2576: Property 'Foo' does not exist on type 'List'. Did you mean to acce\""
+            }
+          }
+        },
+        {
+          "case": "165_defaultValueInConstructorOverload1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 45,
+              "expected_size": 144,
+              "actual_size": 144,
+              "expected_context": "b'ltValueInConstructorOverload1.ts(2,17): error TS2371: A parameter initializer is only allowed in a function or construct'",
+              "actual_context": "b'ltValueInConstructorOverload1.ts(2,17): Error TS2371: A parameter initializer is only allowed in a function or construct'"
+            }
+          }
+        },
+        {
+          "case": "166_inheritanceMemberFuncOverridingProperty",
+          "differences": {
+            "stdout": {
+              "byte_offset": 49,
+              "expected_size": 174,
+              "actual_size": 174,
+              "expected_context": "b\"ceMemberFuncOverridingProperty.ts(6,5): error TS2425: Class 'a' defines instance member property 'x', but extended class\"",
+              "actual_context": "b\"ceMemberFuncOverridingProperty.ts(6,5): Error TS2425: Class 'a' defines instance member property 'x', but extended class\""
+            }
+          }
+        },
+        {
+          "case": "167_compareTypeParameterConstrainedByLiteralToLiteral",
+          "differences": {
+            "stdout": {
+              "byte_offset": 59,
+              "expected_size": 166,
+              "actual_size": 166,
+              "expected_context": "b\"rConstrainedByLiteralToLiteral.ts(5,5): error TS2367: This comparison appears to be unintentional because the types 'T' \"",
+              "actual_context": "b\"rConstrainedByLiteralToLiteral.ts(5,5): Error TS2367: This comparison appears to be unintentional because the types 'T' \""
+            }
+          }
+        },
+        {
+          "case": "168_importedModuleAddToGlobal",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 96,
+              "actual_size": 96,
+              "expected_context": "b\"importedModuleAddToGlobal.ts(15,23): error TS2833: Cannot find namespace 'b'. Did you mean 'B'?\\n\"",
+              "actual_context": "b\"importedModuleAddToGlobal.ts(15,23): Error TS2833: Cannot find namespace 'b'. Did you mean 'B'?\\n\""
+            }
+          }
+        },
+        {
+          "case": "169_spreadInvalidArgumentType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 1133,
+              "actual_size": 1133,
+              "expected_context": "b'spreadInvalidArgumentType.ts(32,16): error TS2698: Spread types may only be created from object types.\\nspreadInvalidA'",
+              "actual_context": "b'spreadInvalidArgumentType.ts(32,16): Error TS2698: Spread types may only be created from object types.\\nspreadInvalidA'"
+            }
+          }
+        },
+        {
+          "case": "170_decrementAndIncrementOperators",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 1894,
+              "actual_size": 1894,
+              "expected_context": "b'decrementAndIncrementOperators.ts(4,1): error TS2357: The operand of an increment or decrement operator must be a variab'",
+              "actual_context": "b'decrementAndIncrementOperators.ts(4,1): Error TS2357: The operand of an increment or decrement operator must be a variab'"
+            }
+          }
+        },
+        {
+          "case": "171_extendPrivateConstructorClass",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 127,
+              "actual_size": 127,
+              "expected_context": "b\"extendPrivateConstructorClass.ts(7,17): error TS2675: Cannot extend a class 'abc.XYZ'. Class constructor is marked as pr\"",
+              "actual_context": "b\"extendPrivateConstructorClass.ts(7,17): Error TS2675: Cannot extend a class 'abc.XYZ'. Class constructor is marked as pr\""
+            }
+          }
+        },
+        {
+          "case": "172_constDeclarationShadowedByVarDeclaration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 50,
+              "expected_size": 480,
+              "actual_size": 480,
+              "expected_context": "b\"rationShadowedByVarDeclaration.ts(6,9): error TS2481: Cannot initialize outer scoped variable 'x' in the same scope as b\"",
+              "actual_context": "b\"rationShadowedByVarDeclaration.ts(6,9): Error TS2481: Cannot initialize outer scoped variable 'x' in the same scope as b\""
+            }
+          }
+        },
+        {
+          "case": "173_selfReferencesInFunctionParameters",
+          "differences": {
+            "stdout": {
+              "byte_offset": 45,
+              "expected_size": 393,
+              "actual_size": 393,
+              "expected_context": "b\"eferencesInFunctionParameters.ts(1,26): error TS2372: Parameter 'x' cannot reference itself.\\nselfReferencesInFunctionPar\"",
+              "actual_context": "b\"eferencesInFunctionParameters.ts(1,26): Error TS2372: Parameter 'x' cannot reference itself.\\nselfReferencesInFunctionPar\""
+            }
+          }
+        },
+        {
+          "case": "174_baseExpressionTypeParameters",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 117,
+              "actual_size": 117,
+              "expected_context": "b'baseExpressionTypeParameters.ts(10,27): error TS2562: Base class expressions cannot reference class type parameters.\\n'",
+              "actual_context": "b'baseExpressionTypeParameters.ts(10,27): Error TS2562: Base class expressions cannot reference class type parameters.\\n'"
+            }
+          }
+        },
+        {
+          "case": "175_propertyOrdering",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 446,
+              "actual_size": 446,
+              "expected_context": "b\"propertyOrdering.ts(6,23): error TS2301: Initializer of instance member variable '_store' cannot reference \"",
+              "actual_context": "b\"propertyOrdering.ts(6,23): Error TS2301: Initializer of instance member variable '_store' cannot reference \""
+            }
+          }
+        },
+        {
+          "case": "176_exportSpecifierReferencingOuterDeclaration1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 54,
+              "expected_size": 142,
+              "actual_size": 142,
+              "expected_context": "b\"rReferencingOuterDeclaration1.ts(3,14): error TS2661: Cannot export 'X'. Only local declarations can be exported from a \"",
+              "actual_context": "b\"rReferencingOuterDeclaration1.ts(3,14): Error TS2661: Cannot export 'X'. Only local declarations can be exported from a \""
+            }
+          }
+        },
+        {
+          "case": "177_readonlyTupleAndArrayElaboration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 4106,
+              "actual_size": 4106,
+              "expected_context": "b\"onlyTupleAndArrayElaboration.ts(10,20): error TS2345: Argument of type 'readonly [3, 4]' is not assignable to parameter \"",
+              "actual_context": "b\"onlyTupleAndArrayElaboration.ts(10,20): Error TS2345: Argument of type 'readonly [3, 4]' is not assignable to parameter \""
+            }
+          }
+        },
+        {
+          "case": "178_bitwiseCompoundAssignmentOperators",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 1240,
+              "actual_size": 1240,
+              "expected_context": "b\"iseCompoundAssignmentOperators.ts(3,1): error TS2447: The '^=' operator is not allowed for boolean types. Consider using\"",
+              "actual_context": "b\"iseCompoundAssignmentOperators.ts(3,1): Error TS2447: The '^=' operator is not allowed for boolean types. Consider using\""
+            }
+          }
+        },
+        {
+          "case": "179_callOnClass",
+          "differences": {
+            "stdout": {
+              "byte_offset": 21,
+              "expected_size": 108,
+              "actual_size": 108,
+              "expected_context": "b\"callOnClass.ts(2,9): error TS2348: Value of type 'typeof C' is not callable. Did you mean to include \"",
+              "actual_context": "b\"callOnClass.ts(2,9): Error TS2348: Value of type 'typeof C' is not callable. Did you mean to include \""
+            }
+          }
+        },
+        {
+          "case": "180_keywordExpressionInternalComments",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 111,
+              "actual_size": 111,
+              "expected_context": "b\"ordExpressionInternalComments.ts(4,20): error TS2790: The operand of a 'delete' operator must be optional.\\n\"",
+              "actual_context": "b\"ordExpressionInternalComments.ts(4,20): Error TS2790: The operand of a 'delete' operator must be optional.\\n\""
+            }
+          }
+        },
+        {
+          "case": "181_noImplicitAnyDestructuringParameterDeclaration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 57,
+              "expected_size": 696,
+              "actual_size": 696,
+              "expected_context": "b\"ructuringParameterDeclaration.ts(1,14): error TS7031: Binding element 'a' implicitly has an 'any' type.\\nnoImplicitAnyDes\"",
+              "actual_context": "b\"ructuringParameterDeclaration.ts(1,14): Error TS7031: Binding element 'a' implicitly has an 'any' type.\\nnoImplicitAnyDes\""
+            }
+          }
+        },
+        {
+          "case": "182_propertyAccessibility1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 32,
+              "expected_size": 117,
+              "actual_size": 117,
+              "expected_context": "b\"propertyAccessibility1.ts(5,3): error TS2341: Property 'privProp' is private and only accessible within class 'F\"",
+              "actual_context": "b\"propertyAccessibility1.ts(5,3): Error TS2341: Property 'privProp' is private and only accessible within class 'F\""
+            }
+          }
+        },
+        {
+          "case": "183_internalImportInstantiatedModuleNotReferencingInstance",
+          "differences": {
+            "stdout": {
+              "byte_offset": 65,
+              "expected_size": 143,
+              "actual_size": 143,
+              "expected_context": "b\"dModuleNotReferencingInstance.ts(8,16): error TS2437: Module 'A' is hidden by a local declaration with the same name.\\n\"",
+              "actual_context": "b\"dModuleNotReferencingInstance.ts(8,16): Error TS2437: Module 'A' is hidden by a local declaration with the same name.\\n\""
+            }
+          }
+        },
+        {
+          "case": "184_bindingPatternCannotBeOnlyInferenceSource",
+          "differences": {
+            "stdout": {
+              "byte_offset": 51,
+              "expected_size": 595,
+              "actual_size": 595,
+              "expected_context": "b\"ernCannotBeOnlyInferenceSource.ts(2,7): error TS2571: Object is of type 'unknown'.\\nbindingPatternCannotBeOnlyInferenceSo\"",
+              "actual_context": "b\"ernCannotBeOnlyInferenceSource.ts(2,7): Error TS2571: Object is of type 'unknown'.\\nbindingPatternCannotBeOnlyInferenceSo\""
+            }
+          }
+        },
+        {
+          "case": "185_restParamsWithNonRestParams",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 93,
+              "actual_size": 93,
+              "expected_context": "b'restParamsWithNonRestParams.ts(4,1): error TS2555: Expected at least 1 arguments, but got 0.\\n'",
+              "actual_context": "b'restParamsWithNonRestParams.ts(4,1): Error TS2555: Expected at least 1 arguments, but got 0.\\n'"
+            }
+          }
+        },
+        {
+          "case": "186_superInConstructorParam1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 365,
+              "actual_size": 365,
+              "expected_context": "b\"superInConstructorParam1.ts(8,3): error TS2377: Constructors for derived classes must contain a 'super' call.\\nsupe\"",
+              "actual_context": "b\"superInConstructorParam1.ts(8,3): Error TS2377: Constructors for derived classes must contain a 'super' call.\\nsupe\""
+            }
+          }
+        },
+        {
+          "case": "187_deleteReadonlyInStrictNullChecks",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 123,
+              "actual_size": 123,
+              "expected_context": "b\"leteReadonlyInStrictNullChecks.ts(3,8): error TS2704: The operand of a 'delete' operator cannot be a read-only property.\"",
+              "actual_context": "b\"leteReadonlyInStrictNullChecks.ts(3,8): Error TS2704: The operand of a 'delete' operator cannot be a read-only property.\""
+            }
+          }
+        },
+        {
+          "case": "188_uncalledFunctionChecksInConditional",
+          "differences": {
+            "stdout": {
+              "byte_offset": 45,
+              "expected_size": 1541,
+              "actual_size": 1541,
+              "expected_context": "b'ledFunctionChecksInConditional.ts(5,5): error TS2774: This condition will always return true since this function is alwa'",
+              "actual_context": "b'ledFunctionChecksInConditional.ts(5,5): Error TS2774: This condition will always return true since this function is alwa'"
+            }
+          }
+        },
+        {
+          "case": "189_circularModuleImports",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 86,
+              "actual_size": 86,
+              "expected_context": "b\"circularModuleImports.ts(5,5): error TS2303: Circular definition of import alias 'A'.\\n\"",
+              "actual_context": "b\"circularModuleImports.ts(5,5): Error TS2303: Circular definition of import alias 'A'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "190_interfaceMayNotBeExtendedWitACall",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 146,
+              "actual_size": 146,
+              "expected_context": "b'rfaceMayNotBeExtendedWitACall.ts(3,24): error TS2499: An interface can only extend an identifier/qualified-name with opt'",
+              "actual_context": "b'rfaceMayNotBeExtendedWitACall.ts(3,24): Error TS2499: An interface can only extend an identifier/qualified-name with opt'"
+            }
+          }
+        },
+        {
+          "case": "191_extendedInterfacesWithDuplicateTypeParameters",
+          "differences": {
+            "stdout": {
+              "byte_offset": 56,
+              "expected_size": 498,
+              "actual_size": 498,
+              "expected_context": "b\"esWithDuplicateTypeParameters.ts(1,42): error TS2300: Duplicate identifier 'A'.\\nextendedInterfacesWithDuplicateTypeParam\"",
+              "actual_context": "b\"esWithDuplicateTypeParameters.ts(1,42): Error TS2300: Duplicate identifier 'A'.\\nextendedInterfacesWithDuplicateTypeParam\""
+            }
+          }
+        },
+        {
+          "case": "192_constructorOverloads1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 1120,
+              "actual_size": 1120,
+              "expected_context": "b'constructorOverloads1.ts(2,5): error TS2392: Multiple constructor implementations are not allowed.\\nconstructorO'",
+              "actual_context": "b'constructorOverloads1.ts(2,5): Error TS2392: Multiple constructor implementations are not allowed.\\nconstructorO'"
+            }
+          }
+        },
+        {
+          "case": "193_capturedParametersInInitializers1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 45,
+              "expected_size": 372,
+              "actual_size": 372,
+              "expected_context": "b\"redParametersInInitializers1.ts(18,20): error TS2373: Parameter 'y' cannot reference identifier 'z' declared after it.\\nc\"",
+              "actual_context": "b\"redParametersInInitializers1.ts(18,20): Error TS2373: Parameter 'y' cannot reference identifier 'z' declared after it.\\nc\""
+            }
+          }
+        },
+        {
+          "case": "194_reachabilityChecks1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 354,
+              "actual_size": 354,
+              "expected_context": "b'reachabilityChecks1.ts(2,1): error TS7027: Unreachable code detected.\\nreachabilityChecks1.ts(47,5): error TS7'",
+              "actual_context": "b'reachabilityChecks1.ts(2,1): Error TS7027: Unreachable code detected.\\nreachabilityChecks1.ts(47,5): error TS7'"
+            }
+          }
+        },
+        {
+          "case": "195_inheritanceMemberAccessorOverridingProperty",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 156,
+              "actual_size": 156,
+              "expected_context": "b\"mberAccessorOverridingProperty.ts(6,9): error TS2611: 'x' is defined as a property in class 'a', but is overridden here \"",
+              "actual_context": "b\"mberAccessorOverridingProperty.ts(6,9): Error TS2611: 'x' is defined as a property in class 'a', but is overridden here \""
+            }
+          }
+        },
+        {
+          "case": "196_typeArgumentDefaultUsesConstraintOnCircularDefault",
+          "differences": {
+            "stdout": {
+              "byte_offset": 61,
+              "expected_size": 326,
+              "actual_size": 326,
+              "expected_context": "b'esConstraintOnCircularDefault.ts(1,30): error TS2744: Type parameter defaults can only reference previously declared typ'",
+              "actual_context": "b'esConstraintOnCircularDefault.ts(1,30): Error TS2744: Type parameter defaults can only reference previously declared typ'"
+            }
+          }
+        },
+        {
+          "case": "197_classExtendsInterfaceInModule",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 357,
+              "actual_size": 357,
+              "expected_context": "b\"classExtendsInterfaceInModule.ts(5,18): error TS2689: Cannot extend an interface 'M.I1'. Did you mean 'implements'?\\nclas\"",
+              "actual_context": "b\"classExtendsInterfaceInModule.ts(5,18): Error TS2689: Cannot extend an interface 'M.I1'. Did you mean 'implements'?\\nclas\""
+            }
+          }
+        },
+        {
+          "case": "198_shadowPrivateMembers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 30,
+              "expected_size": 161,
+              "actual_size": 161,
+              "expected_context": "b\"shadowPrivateMembers.ts(2,7): error TS2415: Class 'derived' incorrectly extends base class 'base'.\\n  Types hav\"",
+              "actual_context": "b\"shadowPrivateMembers.ts(2,7): Error TS2415: Class 'derived' incorrectly extends base class 'base'.\\n  Types hav\""
+            }
+          }
+        },
+        {
+          "case": "199_getterMissingReturnError",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 87,
+              "actual_size": 87,
+              "expected_context": "b\"getterMissingReturnError.ts(2,16): error TS2378: A 'get' accessor must return a value.\\n\"",
+              "actual_context": "b\"getterMissingReturnError.ts(2,16): Error TS2378: A 'get' accessor must return a value.\\n\""
+            }
+          }
+        },
+        {
+          "case": "200_instantiationExpressionErrorNoCrash",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 497,
+              "actual_size": 497,
+              "expected_context": "b\"iationExpressionErrorNoCrash.ts(15,38): error TS2344: Type 'typeof createCacheReducer<QR>' does not satisfy the constrai\"",
+              "actual_context": "b\"iationExpressionErrorNoCrash.ts(15,38): Error TS2344: Type 'typeof createCacheReducer<QR>' does not satisfy the constrai\""
+            }
+          }
+        },
+        {
+          "case": "201_thisPredicateInObjectLiteral",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 134,
+              "actual_size": 134,
+              "expected_context": "b\"thisPredicateInObjectLiteral.ts(10,28): error TS2526: A 'this' type is available only in a non-static member of a class \"",
+              "actual_context": "b\"thisPredicateInObjectLiteral.ts(10,28): Error TS2526: A 'this' type is available only in a non-static member of a class \""
+            }
+          }
+        },
+        {
+          "case": "202_reservedNameOnInterfaceImport",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 86,
+              "actual_size": 86,
+              "expected_context": "b\"reservedNameOnInterfaceImport.ts(5,12): error TS2438: Import name cannot be 'string'.\\n\"",
+              "actual_context": "b\"reservedNameOnInterfaceImport.ts(5,12): Error TS2438: Import name cannot be 'string'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "203_incrementOnTypeParameter",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 259,
+              "actual_size": 259,
+              "expected_context": "b\"incrementOnTypeParameter.ts(4,9): error TS2356: An arithmetic operand must be of type 'any', 'number', 'bigint' or\"",
+              "actual_context": "b\"incrementOnTypeParameter.ts(4,9): Error TS2356: An arithmetic operand must be of type 'any', 'number', 'bigint' or\""
+            }
+          }
+        },
+        {
+          "case": "204_classExpressionExtendingAbstractClass",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 158,
+              "actual_size": 158,
+              "expected_context": "b'pressionExtendingAbstractClass.ts(5,9): error TS2653: Non-abstract class expression does not implement inherited abstrac'",
+              "actual_context": "b'pressionExtendingAbstractClass.ts(5,9): Error TS2653: Non-abstract class expression does not implement inherited abstrac'"
+            }
+          }
+        },
+        {
+          "case": "205_noImplicitReturnsInAsync2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 171,
+              "actual_size": 171,
+              "expected_context": "b'noImplicitReturnsInAsync2.ts(2,16): error TS7030: Not all code paths return a value.\\nnoImplicitReturnsInAsync2.ts(24'",
+              "actual_context": "b'noImplicitReturnsInAsync2.ts(2,16): Error TS7030: Not all code paths return a value.\\nnoImplicitReturnsInAsync2.ts(24'"
+            }
+          }
+        },
+        {
+          "case": "206_recursiveResolveTypeMembers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 253,
+              "actual_size": 253,
+              "expected_context": "b'recursiveResolveTypeMembers.ts(4,49): error TS2577: Return type annotation circularly references itself.\\nrecursiveReso'",
+              "actual_context": "b'recursiveResolveTypeMembers.ts(4,49): Error TS2577: Return type annotation circularly references itself.\\nrecursiveReso'"
+            }
+          }
+        },
+        {
+          "case": "207_uniqueSymbolAllowsIndexInObjectWithIndexSignature",
+          "differences": {
+            "stdout": {
+              "byte_offset": 61,
+              "expected_size": 162,
+              "actual_size": 162,
+              "expected_context": "b'exInObjectWithIndexSignature.ts(10,13): error TS2418: Type of computed property\\'s value is \\'\"str\"\\', which is not assigna'",
+              "actual_context": "b'exInObjectWithIndexSignature.ts(10,13): Error TS2418: Type of computed property\\'s value is \\'\"str\"\\', which is not assigna'"
+            }
+          }
+        },
+        {
+          "case": "208_importAliasInModuleAugmentation",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 384,
+              "actual_size": 384,
+              "expected_context": "b'portAliasInModuleAugmentation.ts(12,5): error TS2667: Imports are not permitted in module augmentations. Consider moving'",
+              "actual_context": "b'portAliasInModuleAugmentation.ts(12,5): Error TS2667: Imports are not permitted in module augmentations. Consider moving'"
+            }
+          }
+        },
+        {
+          "case": "209_genericSpecializations2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 1402,
+              "actual_size": 1402,
+              "expected_context": "b\"genericSpecializations2.ts(3,9): error TS2322: Type 'null' is not assignable to type 'T'.\\n  'T' could be instanti\"",
+              "actual_context": "b\"genericSpecializations2.ts(3,9): Error TS2322: Type 'null' is not assignable to type 'T'.\\n  'T' could be instanti\""
+            }
+          }
+        },
+        {
+          "case": "210_illegalSuperCallsInConstructor",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 1005,
+              "actual_size": 1005,
+              "expected_context": "b\"illegalSuperCallsInConstructor.ts(2,5): error TS2564: Property 'x' has no initializer and is not definitely assigned in \"",
+              "actual_context": "b\"illegalSuperCallsInConstructor.ts(2,5): Error TS2564: Property 'x' has no initializer and is not definitely assigned in \""
+            }
+          }
+        },
+        {
+          "case": "211_functionParameterArityMismatch",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 952,
+              "actual_size": 952,
+              "expected_context": "b'functionParameterArityMismatch.ts(3,1): error TS2554: Expected 1-3 arguments, but got 0.\\nfunctionParameterArityMismatch.'",
+              "actual_context": "b'functionParameterArityMismatch.ts(3,1): Error TS2554: Expected 1-3 arguments, but got 0.\\nfunctionParameterArityMismatch.'"
+            }
+          }
+        },
+        {
+          "case": "212_duplicateIdentifierDifferentModifiers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 48,
+              "expected_size": 469,
+              "actual_size": 469,
+              "expected_context": "b\"eIdentifierDifferentModifiers.ts(2,15): error TS2687: All declarations of 'x' must have identical modifiers.\\nduplicateId\"",
+              "actual_context": "b\"eIdentifierDifferentModifiers.ts(2,15): Error TS2687: All declarations of 'x' must have identical modifiers.\\nduplicateId\""
+            }
+          }
+        },
+        {
+          "case": "213_inheritanceMemberPropertyOverridingAccessor",
+          "differences": {
+            "stdout": {
+              "byte_offset": 54,
+              "expected_size": 167,
+              "actual_size": 167,
+              "expected_context": "b\"berPropertyOverridingAccessor.ts(12,5): error TS2610: 'x' is defined as an accessor in class 'a', but is overridden here\"",
+              "actual_context": "b\"berPropertyOverridingAccessor.ts(12,5): Error TS2610: 'x' is defined as an accessor in class 'a', but is overridden here\""
+            }
+          }
+        },
+        {
+          "case": "214_ambientExternalModuleWithRelativeModuleName",
+          "differences": {
+            "stdout": {
+              "byte_offset": 54,
+              "expected_size": 264,
+              "actual_size": 264,
+              "expected_context": "b'lModuleWithRelativeModuleName.ts(1,16): error TS2436: Ambient module declaration cannot specify relative module name.\\nam'",
+              "actual_context": "b'lModuleWithRelativeModuleName.ts(1,16): Error TS2436: Ambient module declaration cannot specify relative module name.\\nam'"
+            }
+          }
+        },
+        {
+          "case": "215_classImplementsPrimitive",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 1392,
+              "actual_size": 1392,
+              "expected_context": "b\"classImplementsPrimitive.ts(3,20): error TS2864: A class cannot implement a primitive type like 'number'. It can on\"",
+              "actual_context": "b\"classImplementsPrimitive.ts(3,20): Error TS2864: A class cannot implement a primitive type like 'number'. It can on\""
+            }
+          }
+        },
+        {
+          "case": "216_functionTypeArgumentArityErrors",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 978,
+              "actual_size": 978,
+              "expected_context": "b'unctionTypeArgumentArityErrors.ts(4,4): error TS2743: No overload expects 2 type arguments, but overloads do exist that '",
+              "actual_context": "b'unctionTypeArgumentArityErrors.ts(4,4): Error TS2743: No overload expects 2 type arguments, but overloads do exist that '"
+            }
+          }
+        },
+        {
+          "case": "217_fallFromLastCase2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 139,
+              "actual_size": 139,
+              "expected_context": "b'fallFromLastCase2.ts(8,9): error TS7029: Fallthrough case in switch.\\nfallFromLastCase2.ts(21,9): error TS70'",
+              "actual_context": "b'fallFromLastCase2.ts(8,9): Error TS7029: Fallthrough case in switch.\\nfallFromLastCase2.ts(21,9): error TS70'"
+            }
+          }
+        },
+        {
+          "case": "218_shorthandPropertyUndefined",
+          "differences": {
+            "stdout": {
+              "byte_offset": 37,
+              "expected_size": 155,
+              "actual_size": 155,
+              "expected_context": "b\"shorthandPropertyUndefined.ts(1,11): error TS18004: No value exists in scope for the shorthand property 'b'. Either d\"",
+              "actual_context": "b\"shorthandPropertyUndefined.ts(1,11): Error TS18004: No value exists in scope for the shorthand property 'b'. Either d\""
+            }
+          }
+        },
+        {
+          "case": "219_classImplementsClass4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 327,
+              "actual_size": 327,
+              "expected_context": "b\"classImplementsClass4.ts(5,7): error TS2720: Class 'C' incorrectly implements class 'A'. Did you mean to extend\"",
+              "actual_context": "b\"classImplementsClass4.ts(5,7): Error TS2720: Class 'C' incorrectly implements class 'A'. Did you mean to extend\""
+            }
+          }
+        },
+        {
+          "case": "220_bigIntWithTargetLessThanES2016",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 328,
+              "actual_size": 328,
+              "expected_context": "b\"bigIntWithTargetLessThanES2016.ts(1,1): error TS2791: Exponentiation cannot be performed on 'bigint' values unless the '\"",
+              "actual_context": "b\"bigIntWithTargetLessThanES2016.ts(1,1): Error TS2791: Exponentiation cannot be performed on 'bigint' values unless the '\""
+            }
+          }
+        },
+        {
+          "case": "221_unusedParameterProperty2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 203,
+              "actual_size": 203,
+              "expected_context": "b\"unusedParameterProperty2.ts(2,25): error TS6138: Property 'used' is declared but its value is never read.\\nunusedPar\"",
+              "actual_context": "b\"unusedParameterProperty2.ts(2,25): Error TS6138: Property 'used' is declared but its value is never read.\\nunusedPar\""
+            }
+          }
+        },
+        {
+          "case": "222_staticPrototypeProperty",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 401,
+              "actual_size": 401,
+              "expected_context": "b\"staticPrototypeProperty.ts(2,11): error TS2300: Duplicate identifier 'prototype'.\\nstaticPrototypeProperty.ts(2,11)\"",
+              "actual_context": "b\"staticPrototypeProperty.ts(2,11): Error TS2300: Duplicate identifier 'prototype'.\\nstaticPrototypeProperty.ts(2,11)\""
+            }
+          }
+        },
+        {
+          "case": "223_instanceofOnInstantiationExpression",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 456,
+              "actual_size": 456,
+              "expected_context": "b\"eofOnInstantiationExpression.ts(10,21): error TS2848: The right-hand side of an 'instanceof' expression must not be an i\"",
+              "actual_context": "b\"eofOnInstantiationExpression.ts(10,21): Error TS2848: The right-hand side of an 'instanceof' expression must not be an i\""
+            }
+          }
+        },
+        {
+          "case": "224_newFunctionImplicitAny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 137,
+              "actual_size": 137,
+              "expected_context": "b\"newFunctionImplicitAny.ts(4,12): error TS7009: 'new' expression, whose target lacks a construct signature, implic\"",
+              "actual_context": "b\"newFunctionImplicitAny.ts(4,12): Error TS7009: 'new' expression, whose target lacks a construct signature, implic\""
+            }
+          }
+        },
+        {
+          "case": "225_returnInConstructor1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 1269,
+              "actual_size": 1269,
+              "expected_context": "b\"returnInConstructor1.ts(11,9): error TS2322: Type 'number' is not assignable to type 'B'.\\nreturnInConstructor1.\"",
+              "actual_context": "b\"returnInConstructor1.ts(11,9): Error TS2322: Type 'number' is not assignable to type 'B'.\\nreturnInConstructor1.\""
+            }
+          }
+        },
+        {
+          "case": "226_assigningFromObjectToAnythingElse",
+          "differences": {
+            "stdout": {
+              "byte_offset": 43,
+              "expected_size": 706,
+              "actual_size": 706,
+              "expected_context": "b\"igningFromObjectToAnythingElse.ts(3,1): error TS2696: The 'Object' type is assignable to very few other types. Did you m\"",
+              "actual_context": "b\"igningFromObjectToAnythingElse.ts(3,1): Error TS2696: The 'Object' type is assignable to very few other types. Did you m\""
+            }
+          }
+        },
+        {
+          "case": "227_classFieldSuperNotAccessible",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 149,
+              "actual_size": 149,
+              "expected_context": "b\"classFieldSuperNotAccessible.ts(6,15): error TS2855: Class field 'field' defined by the parent class is not accessible \"",
+              "actual_context": "b\"classFieldSuperNotAccessible.ts(6,15): Error TS2855: Class field 'field' defined by the parent class is not accessible \""
+            }
+          }
+        },
+        {
+          "case": "228_inKeywordAndUnknown",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 154,
+              "actual_size": 154,
+              "expected_context": "b\"inKeywordAndUnknown.ts(12,18): error TS2638: Type '{}' may represent a primitive value, which is not permitted \"",
+              "actual_context": "b\"inKeywordAndUnknown.ts(12,18): Error TS2638: Type '{}' may represent a primitive value, which is not permitted \""
+            }
+          }
+        },
+        {
+          "case": "229_awaitCallExpressionInSyncFunction",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 133,
+              "actual_size": 133,
+              "expected_context": "b\"tCallExpressionInSyncFunction.ts(2,16): error TS2311: Cannot find name 'await'. Did you mean to write this in an async f\"",
+              "actual_context": "b\"tCallExpressionInSyncFunction.ts(2,16): Error TS2311: Cannot find name 'await'. Did you mean to write this in an async f\""
+            }
+          }
+        },
+        {
+          "case": "230_parameterPropertyInConstructor3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 115,
+              "actual_size": 115,
+              "expected_context": "b\"rameterPropertyInConstructor3.ts(2,22): error TS2398: 'constructor' cannot be used as a parameter property name.\\n\"",
+              "actual_context": "b\"rameterPropertyInConstructor3.ts(2,22): Error TS2398: 'constructor' cannot be used as a parameter property name.\\n\""
+            }
+          }
+        },
+        {
+          "case": "231_circularReferenceInReturnType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 415,
+              "actual_size": 415,
+              "expected_context": "b\"circularReferenceInReturnType.ts(3,7): error TS7022: 'res1' implicitly has type 'any' because it does not have a type a\"",
+              "actual_context": "b\"circularReferenceInReturnType.ts(3,7): Error TS7022: 'res1' implicitly has type 'any' because it does not have a type a\""
+            }
+          }
+        },
+        {
+          "case": "232_neverNullishThroughParentheses",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 1070,
+              "actual_size": 1070,
+              "expected_context": "b'everNullishThroughParentheses.ts(6,13): error TS2869: Right operand of ?? is unreachable because the left operand is nev'",
+              "actual_context": "b'everNullishThroughParentheses.ts(6,13): Error TS2869: Right operand of ?? is unreachable because the left operand is nev'"
+            }
+          }
+        },
+        {
+          "case": "233_noImplicitAnyNamelessParameter",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 1053,
+              "actual_size": 1053,
+              "expected_context": "b\"oImplicitAnyNamelessParameter.ts(2,20): error TS7051: Parameter has a name but no type. Did you mean 'arg0: string[]'?\\nn\"",
+              "actual_context": "b\"oImplicitAnyNamelessParameter.ts(2,20): Error TS7051: Parameter has a name but no type. Did you mean 'arg0: string[]'?\\nn\""
+            }
+          }
+        },
+        {
+          "case": "234_superCallFromClassThatHasNoBaseType1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 112,
+              "actual_size": 112,
+              "expected_context": "b\"llFromClassThatHasNoBaseType1.ts(8,21): error TS2335: 'super' can only be referenced in a derived class.\\n\"",
+              "actual_context": "b\"llFromClassThatHasNoBaseType1.ts(8,21): Error TS2335: 'super' can only be referenced in a derived class.\\n\""
+            }
+          }
+        },
+        {
+          "case": "235_reachabilityChecks3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 174,
+              "actual_size": 174,
+              "expected_context": "b'reachabilityChecks3.ts(2,1): error TS7028: Unused label.\\nreachabilityChecks3.ts(11,5): error TS7028: Unused l'",
+              "actual_context": "b'reachabilityChecks3.ts(2,1): Error TS7028: Unused label.\\nreachabilityChecks3.ts(11,5): error TS7028: Unused l'"
+            }
+          }
+        },
+        {
+          "case": "236_returnValueInSetter",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 74,
+              "actual_size": 74,
+              "expected_context": "b'returnValueInSetter.ts(3,9): error TS2408: Setters cannot return a value.\\n'",
+              "actual_context": "b'returnValueInSetter.ts(3,9): Error TS2408: Setters cannot return a value.\\n'"
+            }
+          }
+        },
+        {
+          "case": "237_gettersAndSettersAccessibility",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 230,
+              "actual_size": 230,
+              "expected_context": "b'ettersAndSettersAccessibility.ts(2,14): error TS2808: A get accessor must be at least as accessible as the setter\\ngetter'",
+              "actual_context": "b'ettersAndSettersAccessibility.ts(2,14): Error TS2808: A get accessor must be at least as accessible as the setter\\ngetter'"
+            }
+          }
+        },
+        {
+          "case": "238_typeParameterAsBaseClass",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 225,
+              "actual_size": 225,
+              "expected_context": "b\"typeParameterAsBaseClass.ts(1,20): error TS2304: Cannot find name 'T'.\\ntypeParameterAsBaseClass.ts(2,24): error TS2\"",
+              "actual_context": "b\"typeParameterAsBaseClass.ts(1,20): Error TS2304: Cannot find name 'T'.\\ntypeParameterAsBaseClass.ts(2,24): error TS2\""
+            }
+          }
+        },
+        {
+          "case": "239_expressionWithJSDocTypeArguments",
+          "differences": {
+            "stdout": {
+              "byte_offset": 43,
+              "expected_size": 3103,
+              "actual_size": 3103,
+              "expected_context": "b'ressionWithJSDocTypeArguments.ts(9,21): error TS8020: JSDoc types can only be used inside documentation comments.\\nexpres'",
+              "actual_context": "b'ressionWithJSDocTypeArguments.ts(9,21): Error TS8020: JSDoc types can only be used inside documentation comments.\\nexpres'"
+            }
+          }
+        },
+        {
+          "case": "240_indexedAccessPrivateMemberOfGenericConstraint",
+          "differences": {
+            "stdout": {
+              "byte_offset": 56,
+              "expected_size": 733,
+              "actual_size": 733,
+              "expected_context": "b\"vateMemberOfGenericConstraint.ts(2,11): error TS2564: Property 'a' has no initializer and is not definitely assigned in \"",
+              "actual_context": "b\"vateMemberOfGenericConstraint.ts(2,11): Error TS2564: Property 'a' has no initializer and is not definitely assigned in \""
+            }
+          }
+        },
+        {
+          "case": "241_implicitAnyGetAndSetAccessorWithAnyReturnType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 57,
+              "expected_size": 304,
+              "actual_size": 304,
+              "expected_context": "b\"SetAccessorWithAnyReturnType.ts(15,16): error TS7032: Property 'haveOnlySet' implicitly has type 'any', because its set \"",
+              "actual_context": "b\"SetAccessorWithAnyReturnType.ts(15,16): Error TS7032: Property 'haveOnlySet' implicitly has type 'any', because its set \""
+            }
+          }
+        },
+        {
+          "case": "242_constDeclarations-access2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 1643,
+              "actual_size": 1643,
+              "expected_context": "b\"constDeclarations-access2.ts(4,1): error TS2588: Cannot assign to 'x' because it is a constant.\\nconstDeclarations-a\"",
+              "actual_context": "b\"constDeclarations-access2.ts(4,1): Error TS2588: Cannot assign to 'x' because it is a constant.\\nconstDeclarations-a\""
+            }
+          }
+        },
+        {
+          "case": "243_classExtendsNull3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 136,
+              "actual_size": 136,
+              "expected_context": "b\"classExtendsNull3.ts(3,5): error TS2531: Object is possibly 'null'.\\nclassExtendsNull3.ts(9,5): error TS2531\"",
+              "actual_context": "b\"classExtendsNull3.ts(3,5): Error TS2531: Object is possibly 'null'.\\nclassExtendsNull3.ts(9,5): error TS2531\""
+            }
+          }
+        },
+        {
+          "case": "244_modularizeLibrary_ErrorFromUsingES6FeaturesWithOnlyES5Lib",
+          "differences": {
+            "stdout": {
+              "byte_offset": 68,
+              "expected_size": 2627,
+              "actual_size": 2627,
+              "expected_context": "b\"singES6FeaturesWithOnlyES5Lib.ts(4,18): error TS2550: Property 'from' does not exist on type 'ArrayConstructor'. Do you \"",
+              "actual_context": "b\"singES6FeaturesWithOnlyES5Lib.ts(4,18): Error TS2550: Property 'from' does not exist on type 'ArrayConstructor'. Do you \""
+            }
+          }
+        },
+        {
+          "case": "245_inheritanceMemberFuncOverridingAccessor",
+          "differences": {
+            "stdout": {
+              "byte_offset": 50,
+              "expected_size": 379,
+              "actual_size": 379,
+              "expected_context": "b\"eMemberFuncOverridingAccessor.ts(11,5): error TS2416: Property 'x' in type 'b' is not assignable to the same property in\"",
+              "actual_context": "b\"eMemberFuncOverridingAccessor.ts(11,5): Error TS2416: Property 'x' in type 'b' is not assignable to the same property in\""
+            }
+          }
+        },
+        {
+          "case": "246_noCrashOnMixin",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 134,
+              "actual_size": 134,
+              "expected_context": "b\"noCrashOnMixin.ts(21,9): error TS2674: Constructor of class 'Abstract' is protected and only accessible w\"",
+              "actual_context": "b\"noCrashOnMixin.ts(21,9): Error TS2674: Constructor of class 'Abstract' is protected and only accessible w\""
+            }
+          }
+        },
+        {
+          "case": "247_missingDomElements",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 871,
+              "actual_size": 871,
+              "expected_context": "b\"missingDomElements.ts(6,24): error TS2812: Property 'textContent' does not exist on type 'Element'. Try chang\"",
+              "actual_context": "b\"missingDomElements.ts(6,24): Error TS2812: Property 'textContent' does not exist on type 'Element'. Try chang\""
+            }
+          }
+        },
+        {
+          "case": "248_relationComplexityError",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 224,
+              "actual_size": 224,
+              "expected_context": "b\"relationComplexityError.ts(12,5): error TS2859: Excessive complexity comparing types 'T1 & T2' and 'T1 | null'.\\nre\"",
+              "actual_context": "b\"relationComplexityError.ts(12,5): Error TS2859: Excessive complexity comparing types 'T1 & T2' and 'T1 | null'.\\nre\""
+            }
+          }
+        },
+        {
+          "case": "249_mergedClassNamespaceRecordCast",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 740,
+              "actual_size": 740,
+              "expected_context": "b\"mergedClassNamespaceRecordCast.ts(3,1): error TS2352: Conversion of type 'C1' to type 'Record<string, unknown>' may be a\"",
+              "actual_context": "b\"mergedClassNamespaceRecordCast.ts(3,1): Error TS2352: Conversion of type 'C1' to type 'Record<string, unknown>' may be a\""
+            }
+          }
+        },
+        {
+          "case": "250_parseInvalidNonNullableTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 2027,
+              "actual_size": 2027,
+              "expected_context": "b\"parseInvalidNonNullableTypes.ts(1,30): error TS17019: '!' at the end of a type is not valid TypeScript syntax. Did you \"",
+              "actual_context": "b\"parseInvalidNonNullableTypes.ts(1,30): Error TS17019: '!' at the end of a type is not valid TypeScript syntax. Did you \""
+            }
+          }
+        },
+        {
+          "case": "251_decoratorMetadataGenericTypeVariable",
+          "differences": {
+            "stdout": {
+              "byte_offset": 46,
+              "expected_size": 237,
+              "actual_size": 237,
+              "expected_context": "b\"torMetadataGenericTypeVariable.ts(2,4): error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariable.\"",
+              "actual_context": "b\"torMetadataGenericTypeVariable.ts(2,4): Error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariable.\""
+            }
+          }
+        },
+        {
+          "case": "252_unusedFunctionsinNamespaces3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 208,
+              "actual_size": 208,
+              "expected_context": "b\"unusedFunctionsinNamespaces3.ts(2,9): error TS6133: 'function1' is declared but its value is never read.\\nunusedFunctio\"",
+              "actual_context": "b\"unusedFunctionsinNamespaces3.ts(2,9): Error TS6133: 'function1' is declared but its value is never read.\\nunusedFunctio\""
+            }
+          }
+        },
+        {
+          "case": "253_correctOrderOfPromiseMethod",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 263,
+              "actual_size": 263,
+              "expected_context": "b'correctOrderOfPromiseMethod.ts(29,56): error TS2352: Conversion of type \\'undefined\\' to type \\'readonly [\"a\", \"b\", \"c\"]\\' '",
+              "actual_context": "b'correctOrderOfPromiseMethod.ts(29,56): Error TS2352: Conversion of type \\'undefined\\' to type \\'readonly [\"a\", \"b\", \"c\"]\\' '"
+            }
+          }
+        },
+        {
+          "case": "254_parseTypes",
+          "differences": {
+            "stdout": {
+              "byte_offset": 20,
+              "expected_size": 1671,
+              "actual_size": 1671,
+              "expected_context": "b\"parseTypes.ts(1,9): error TS2352: Conversion of type 'null' to type '() => number' may be a mistake \"",
+              "actual_context": "b\"parseTypes.ts(1,9): Error TS2352: Conversion of type 'null' to type '() => number' may be a mistake \""
+            }
+          }
+        },
+        {
+          "case": "255_keyRemappingKeyofResult",
+          "differences": {
+            "stdout": {
+              "byte_offset": 34,
+              "expected_size": 203,
+              "actual_size": 203,
+              "expected_context": "b\"keyRemappingKeyofResult.ts(69,5): error TS2322: Type 'string' is not assignable to type 'keyof Remapped'.\\n  Type '\"",
+              "actual_context": "b\"keyRemappingKeyofResult.ts(69,5): Error TS2322: Type 'string' is not assignable to type 'keyof Remapped'.\\n  Type '\""
+            }
+          }
+        },
+        {
+          "case": "256_namespaceDisambiguationInUnion",
+          "differences": {
+            "stdout": {
+              "byte_offset": 41,
+              "expected_size": 481,
+              "actual_size": 481,
+              "expected_context": "b\"amespaceDisambiguationInUnion.ts(10,7): error TS2322: Type '{ type: string; }' is not assignable to type 'Foo.Yep | Bar.\"",
+              "actual_context": "b\"amespaceDisambiguationInUnion.ts(10,7): Error TS2322: Type '{ type: string; }' is not assignable to type 'Foo.Yep | Bar.\""
+            }
+          }
+        },
+        {
+          "case": "257_generatorES6_5",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 183,
+              "actual_size": 183,
+              "expected_context": "b\"generatorES6_5.ts(2,11): error TS2304: Cannot find name 'a'.\\ngeneratorES6_5.ts(2,15): error TS2304: Canno\"",
+              "actual_context": "b\"generatorES6_5.ts(2,11): Error TS2304: Cannot find name 'a'.\\ngeneratorES6_5.ts(2,15): error TS2304: Canno\""
+            }
+          }
+        },
+        {
+          "case": "258_decoratorMetadataGenericTypeVariableInScope",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 251,
+              "actual_size": 251,
+              "expected_context": "b\"dataGenericTypeVariableInScope.ts(5,4): error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariableI\"",
+              "actual_context": "b\"dataGenericTypeVariableInScope.ts(5,4): Error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariableI\""
+            }
+          }
+        },
+        {
+          "case": "259_conditionalAnyCheckTypePicksBothBranches",
+          "differences": {
+            "stdout": {
+              "byte_offset": 50,
+              "expected_size": 104,
+              "actual_size": 104,
+              "expected_context": "b\"lAnyCheckTypePicksBothBranches.ts(9,1): error TS2322: Type '0' is not assignable to type '1'.\\n\"",
+              "actual_context": "b\"lAnyCheckTypePicksBothBranches.ts(9,1): Error TS2322: Type '0' is not assignable to type '1'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "260_unusedFunctionsinNamespaces6",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 107,
+              "actual_size": 107,
+              "expected_context": "b\"unusedFunctionsinNamespaces6.ts(13,14): error TS6133: 'function4' is declared but its value is never read.\\n\"",
+              "actual_context": "b\"unusedFunctionsinNamespaces6.ts(13,14): Error TS6133: 'function4' is declared but its value is never read.\\n\""
+            }
+          }
+        },
+        {
+          "case": "261_promiseIdentity2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 199,
+              "actual_size": 199,
+              "expected_context": "b'promiseIdentity2.ts(11,5): error TS2403: Subsequent variable declarations must have the same type.  Variabl'",
+              "actual_context": "b'promiseIdentity2.ts(11,5): Error TS2403: Subsequent variable declarations must have the same type.  Variabl'"
+            }
+          }
+        },
+        {
+          "case": "262_decoratorMetadataConditionalType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 43,
+              "expected_size": 288,
+              "actual_size": 288,
+              "expected_context": "b\"oratorMetadataConditionalType.ts(4,12): error TS2564: Property 'attributes' has no initializer and is not definitely ass\"",
+              "actual_context": "b\"oratorMetadataConditionalType.ts(4,12): Error TS2564: Property 'attributes' has no initializer and is not definitely ass\""
+            }
+          }
+        },
+        {
+          "case": "263_keyofIsLiteralContexualType",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 301,
+              "actual_size": 301,
+              "expected_context": "b'keyofIsLiteralContexualType.ts(5,37): error TS2322: Type \\'string\\' is not assignable to type \\'keyof T\\'.\\n  Type \\'\"c\"\\' is'",
+              "actual_context": "b'keyofIsLiteralContexualType.ts(5,37): Error TS2322: Type \\'string\\' is not assignable to type \\'keyof T\\'.\\n  Type \\'\"c\"\\' is'"
+            }
+          }
+        },
+        {
+          "case": "264_unusedVariablesinNamespaces3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 109,
+              "actual_size": 109,
+              "expected_context": "b\"unusedVariablesinNamespaces3.ts(3,11): error TS6133: 'numberRegexp' is declared but its value is never read.\\n\"",
+              "actual_context": "b\"unusedVariablesinNamespaces3.ts(3,11): Error TS6133: 'numberRegexp' is declared but its value is never read.\\n\""
+            }
+          }
+        },
+        {
+          "case": "265_promiseIdentity",
+          "differences": {
+            "stdout": {
+              "byte_offset": 26,
+              "expected_size": 200,
+              "actual_size": 200,
+              "expected_context": "b'promiseIdentity.ts(21,5): error TS2403: Subsequent variable declarations must have the same type.  Variabl'",
+              "actual_context": "b'promiseIdentity.ts(21,5): Error TS2403: Subsequent variable declarations must have the same type.  Variabl'"
+            }
+          }
+        },
+        {
+          "case": "266_decoratorMetadataGenericTypeVariableDefault",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 251,
+              "actual_size": 251,
+              "expected_context": "b\"dataGenericTypeVariableDefault.ts(2,4): error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariableD\"",
+              "actual_context": "b\"dataGenericTypeVariableDefault.ts(2,4): Error TS2304: Cannot find name 'Decorate'.\\ndecoratorMetadataGenericTypeVariableD\""
+            }
+          }
+        },
+        {
+          "case": "267_reverseMappedTypeContextualTypeNotCircular",
+          "differences": {
+            "stdout": {
+              "byte_offset": 53,
+              "expected_size": 234,
+              "actual_size": 234,
+              "expected_context": "b\"TypeContextualTypeNotCircular.ts(10,3): error TS2322: Type '(state: any, props: any) => {}' is not assignable to type 'S\"",
+              "actual_context": "b\"TypeContextualTypeNotCircular.ts(10,3): Error TS2322: Type '(state: any, props: any) => {}' is not assignable to type 'S\""
+            }
+          }
+        },
+        {
+          "case": "268_incorrectNumberOfTypeArgumentsDuringErrorReporting",
+          "differences": {
+            "stdout": {
+              "byte_offset": 61,
+              "expected_size": 135,
+              "actual_size": 135,
+              "expected_context": "b\"ArgumentsDuringErrorReporting.ts(18,4): error TS2559: Type 'MyObjA' has no properties in common with type 'ObjA'.\\n\"",
+              "actual_context": "b\"ArgumentsDuringErrorReporting.ts(18,4): Error TS2559: Type 'MyObjA' has no properties in common with type 'ObjA'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "269_unusedFunctionsinNamespaces5",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 213,
+              "actual_size": 213,
+              "expected_context": "b\"unusedFunctionsinNamespaces5.ts(9,14): error TS6133: 'function3' is declared but its value is never read.\\nunusedFunctio\"",
+              "actual_context": "b\"unusedFunctionsinNamespaces5.ts(9,14): Error TS6133: 'function3' is declared but its value is never read.\\nunusedFunctio\""
+            }
+          }
+        },
+        {
+          "case": "270_promiseChaining1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 186,
+              "actual_size": 186,
+              "expected_context": "b\"promiseChaining1.ts(7,55): error TS2322: Type 'string' is not assignable to type 'Function'.\\npromiseChainin\"",
+              "actual_context": "b\"promiseChaining1.ts(7,55): Error TS2322: Type 'string' is not assignable to type 'Function'.\\npromiseChainin\""
+            }
+          }
+        },
+        {
+          "case": "271_enumUsedBeforeDeclaration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 92,
+              "actual_size": 92,
+              "expected_context": "b\"enumUsedBeforeDeclaration.ts(1,18): error TS2450: Enum 'Color' used before its declaration.\\n\"",
+              "actual_context": "b\"enumUsedBeforeDeclaration.ts(1,18): Error TS2450: Enum 'Color' used before its declaration.\\n\""
+            }
+          }
+        },
+        {
+          "case": "272_conditionalExpressionNewLine3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 225,
+              "actual_size": 225,
+              "expected_context": "b\"conditionalExpressionNewLine3.ts(1,9): error TS2304: Cannot find name 'a'.\\nconditionalExpressionNewLine3.ts(2,3): error\"",
+              "actual_context": "b\"conditionalExpressionNewLine3.ts(1,9): Error TS2304: Cannot find name 'a'.\\nconditionalExpressionNewLine3.ts(2,3): error\""
+            }
+          }
+        },
+        {
+          "case": "273_stringMappingAssignability",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 232,
+              "actual_size": 232,
+              "expected_context": "b\"stringMappingAssignability.ts(1,7): error TS2322: Type 'number' is not assignable to type 'Uppercase<string>'.\\nstrin\"",
+              "actual_context": "b\"stringMappingAssignability.ts(1,7): Error TS2322: Type 'number' is not assignable to type 'Uppercase<string>'.\\nstrin\""
+            }
+          }
+        },
+        {
+          "case": "274_ipromise3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 20,
+              "expected_size": 79,
+              "actual_size": 79,
+              "expected_context": "b\"ipromise3.ts(9,29): error TS2454: Variable 'p1' is used before being assigned.\\n\"",
+              "actual_context": "b\"ipromise3.ts(9,29): Error TS2454: Variable 'p1' is used before being assigned.\\n\""
+            }
+          }
+        },
+        {
+          "case": "275_unusedInterfaceinNamespace1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 85,
+              "actual_size": 85,
+              "expected_context": "b\"unusedInterfaceinNamespace1.ts(2,15): error TS6196: 'i1' is declared but never used.\\n\"",
+              "actual_context": "b\"unusedInterfaceinNamespace1.ts(2,15): Error TS6196: 'i1' is declared but never used.\\n\""
+            }
+          }
+        },
+        {
+          "case": "276_intersectionsAndOptionalProperties",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 864,
+              "actual_size": 864,
+              "expected_context": "b\"rsectionsAndOptionalProperties.ts(5,1): error TS2322: Type '{ a: null; b: string; }' is not assignable to type '{ a?: nu\"",
+              "actual_context": "b\"rsectionsAndOptionalProperties.ts(5,1): Error TS2322: Type '{ a: null; b: string; }' is not assignable to type '{ a?: nu\""
+            }
+          }
+        },
+        {
+          "case": "277_useBeforeDeclaration_destructuring",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 215,
+              "actual_size": 215,
+              "expected_context": "b\"eforeDeclaration_destructuring.ts(1,1): error TS2448: Block-scoped variable 'a' used before its declaration.\\nuseBeforeDe\"",
+              "actual_context": "b\"eforeDeclaration_destructuring.ts(1,1): Error TS2448: Block-scoped variable 'a' used before its declaration.\\nuseBeforeDe\""
+            }
+          }
+        },
+        {
+          "case": "278_typeOfOperator1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 141,
+              "actual_size": 141,
+              "expected_context": "b\"typeOfOperator1.ts(3,5): error TS2322: Type 'string' is not assignable to type 'number'.\\n  Type 'string' \"",
+              "actual_context": "b\"typeOfOperator1.ts(3,5): Error TS2322: Type 'string' is not assignable to type 'number'.\\n  Type 'string' \""
+            }
+          }
+        },
+        {
+          "case": "279_enumAssignmentCompat",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 645,
+              "actual_size": 645,
+              "expected_context": "b\"enumAssignmentCompat.ts(26,5): error TS2322: Type 'typeof W' is not assignable to type 'number'.\\nenumAssignment\"",
+              "actual_context": "b\"enumAssignmentCompat.ts(26,5): Error TS2322: Type 'typeof W' is not assignable to type 'number'.\\nenumAssignment\""
+            }
+          }
+        },
+        {
+          "case": "280_unusedClassesinNamespace2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 83,
+              "actual_size": 83,
+              "expected_context": "b\"unusedClassesinNamespace2.ts(2,11): error TS6196: 'c1' is declared but never used.\\n\"",
+              "actual_context": "b\"unusedClassesinNamespace2.ts(2,11): Error TS6196: 'c1' is declared but never used.\\n\""
+            }
+          }
+        },
+        {
+          "case": "281_doubleUnderStringLiteralAssignability",
+          "differences": {
+            "stdout": {
+              "byte_offset": 47,
+              "expected_size": 120,
+              "actual_size": 120,
+              "expected_context": "b'nderStringLiteralAssignability.ts(2,5): error TS2322: Type \\'\"no_dunder\"\\' is not assignable to type \\'\"__dunder\"\\'.\\n'",
+              "actual_context": "b'nderStringLiteralAssignability.ts(2,5): Error TS2322: Type \\'\"no_dunder\"\\' is not assignable to type \\'\"__dunder\"\\'.\\n'"
+            }
+          }
+        },
+        {
+          "case": "282_ipromise4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 20,
+              "expected_size": 92,
+              "actual_size": 92,
+              "expected_context": "b\"ipromise4.ts(11,5): error TS2322: Type 'null' is not assignable to type 'IPromise<number>'.\\n\"",
+              "actual_context": "b\"ipromise4.ts(11,5): Error TS2322: Type 'null' is not assignable to type 'IPromise<number>'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "283_errorsWithInvokablesInUnions01",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 713,
+              "actual_size": 713,
+              "expected_context": "b\"rorsWithInvokablesInUnions01.ts(14,12): error TS2322: Type '(x: string) => void' is not assignable to type 'Constructabl\"",
+              "actual_context": "b\"rorsWithInvokablesInUnions01.ts(14,12): Error TS2322: Type '(x: string) => void' is not assignable to type 'Constructabl\""
+            }
+          }
+        },
+        {
+          "case": "284_exhaustiveSwitchCheckCircularity",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 131,
+              "actual_size": 131,
+              "expected_context": "b'ustiveSwitchCheckCircularity.ts(14,26): error TS2345: Argument of type \\'\"bbb\"\\' is not assignable to parameter of type \\'n'",
+              "actual_context": "b'ustiveSwitchCheckCircularity.ts(14,26): Error TS2345: Argument of type \\'\"bbb\"\\' is not assignable to parameter of type \\'n'"
+            }
+          }
+        },
+        {
+          "case": "285_numberAssignableToEnumInsideUnion",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 102,
+              "actual_size": 102,
+              "expected_context": "b\"erAssignableToEnumInsideUnion.ts(3,22): error TS2454: Variable 'n' is used before being assigned.\\n\"",
+              "actual_context": "b\"erAssignableToEnumInsideUnion.ts(3,22): Error TS2454: Variable 'n' is used before being assigned.\\n\""
+            }
+          }
+        },
+        {
+          "case": "286_conditionalExpressionNewLine9",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 527,
+              "actual_size": 527,
+              "expected_context": "b\"conditionalExpressionNewLine9.ts(1,9): error TS2304: Cannot find name 'a'.\\nconditionalExpressionNewLine9.ts(2,5): error\"",
+              "actual_context": "b\"conditionalExpressionNewLine9.ts(1,9): Error TS2304: Cannot find name 'a'.\\nconditionalExpressionNewLine9.ts(2,5): error\""
+            }
+          }
+        },
+        {
+          "case": "287_unusedFunctionsinNamespaces2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 105,
+              "actual_size": 105,
+              "expected_context": "b\"unusedFunctionsinNamespaces2.ts(2,9): error TS6133: 'function1' is declared but its value is never read.\\n\"",
+              "actual_context": "b\"unusedFunctionsinNamespaces2.ts(2,9): Error TS6133: 'function1' is declared but its value is never read.\\n\""
+            }
+          }
+        },
+        {
+          "case": "288_numberOnLeftSideOfInExpression",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 101,
+              "actual_size": 101,
+              "expected_context": "b\"numberOnLeftSideOfInExpression.ts(3,1): error TS2454: Variable 'left' is used before being assigned.\\n\"",
+              "actual_context": "b\"numberOnLeftSideOfInExpression.ts(3,1): Error TS2454: Variable 'left' is used before being assigned.\\n\""
+            }
+          }
+        },
+        {
+          "case": "289_awaitedTypeStrictNull",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 346,
+              "actual_size": 346,
+              "expected_context": "b'awaitedTypeStrictNull.ts(22,12): error TS2589: Type instantiation is excessively deep and possibly infinite.\\nawai'",
+              "actual_context": "b'awaitedTypeStrictNull.ts(22,12): Error TS2589: Type instantiation is excessively deep and possibly infinite.\\nawai'"
+            }
+          }
+        },
+        {
+          "case": "290_contextuallyTypingOrOperator",
+          "differences": {
+            "stdout": {
+              "byte_offset": 39,
+              "expected_size": 95,
+              "actual_size": 95,
+              "expected_context": "b'contextuallyTypingOrOperator.ts(1,39): error TS2872: This kind of expression is always truthy.\\n'",
+              "actual_context": "b'contextuallyTypingOrOperator.ts(1,39): Error TS2872: This kind of expression is always truthy.\\n'"
+            }
+          }
+        },
+        {
+          "case": "291_nonexistentPropertyOnUnion",
+          "differences": {
+            "stdout": {
+              "byte_offset": 36,
+              "expected_size": 191,
+              "actual_size": 191,
+              "expected_context": "b\"nonexistentPropertyOnUnion.ts(2,7): error TS2339: Property 'toLowerCase' does not exist on type 'string | Promise<st\"",
+              "actual_context": "b\"nonexistentPropertyOnUnion.ts(2,7): Error TS2339: Property 'toLowerCase' does not exist on type 'string | Promise<st\""
+            }
+          }
+        },
+        {
+          "case": "292_scopingInCatchBlocks",
+          "differences": {
+            "stdout": {
+              "byte_offset": 30,
+              "expected_size": 68,
+              "actual_size": 68,
+              "expected_context": "b\"scopingInCatchBlocks.ts(9,9): error TS2304: Cannot find name 'ex1'.\\n\"",
+              "actual_context": "b\"scopingInCatchBlocks.ts(9,9): Error TS2304: Cannot find name 'ex1'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "293_augmentedTypesEnum2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 479,
+              "actual_size": 479,
+              "expected_context": "b'augmentedTypesEnum2.ts(2,6): error TS2567: Enum declarations can only merge with namespace or other enum decl'",
+              "actual_context": "b'augmentedTypesEnum2.ts(2,6): Error TS2567: Enum declarations can only merge with namespace or other enum decl'"
+            }
+          }
+        },
+        {
+          "case": "294_mappedTypeWithCombinedTypeMappers",
+          "differences": {
+            "stdout": {
+              "byte_offset": 44,
+              "expected_size": 125,
+              "actual_size": 125,
+              "expected_context": "b\"edTypeWithCombinedTypeMappers.ts(18,7): error TS2322: Type 'string' is not assignable to type '{ important: boolean; }'.\"",
+              "actual_context": "b\"edTypeWithCombinedTypeMappers.ts(18,7): Error TS2322: Type 'string' is not assignable to type '{ important: boolean; }'.\""
+            }
+          }
+        },
+        {
+          "case": "295_unusedFunctionsinNamespaces4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 105,
+              "actual_size": 105,
+              "expected_context": "b\"unusedFunctionsinNamespaces4.ts(2,9): error TS6133: 'function1' is declared but its value is never read.\\n\"",
+              "actual_context": "b\"unusedFunctionsinNamespaces4.ts(2,9): Error TS6133: 'function1' is declared but its value is never read.\\n\""
+            }
+          }
+        },
+        {
+          "case": "296_numberToString",
+          "differences": {
+            "stdout": {
+              "byte_offset": 24,
+              "expected_size": 201,
+              "actual_size": 201,
+              "expected_context": "b\"numberToString.ts(2,5): error TS2322: Type 'number' is not assignable to type 'string'.\\nnumberToString.t\"",
+              "actual_context": "b\"numberToString.ts(2,5): Error TS2322: Type 'number' is not assignable to type 'string'.\\nnumberToString.t\""
+            }
+          }
+        },
+        {
+          "case": "297_promiseIdentityWithAny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 33,
+              "expected_size": 209,
+              "actual_size": 209,
+              "expected_context": "b'promiseIdentityWithAny.ts(10,5): error TS2403: Subsequent variable declarations must have the same type.  Variabl'",
+              "actual_context": "b'promiseIdentityWithAny.ts(10,5): Error TS2403: Subsequent variable declarations must have the same type.  Variabl'"
+            }
+          }
+        },
+        {
+          "case": "298_destructuringAssignmentWithDefault2",
+          "differences": {
+            "stdout": {
+              "byte_offset": 46,
+              "expected_size": 516,
+              "actual_size": 516,
+              "expected_context": "b\"cturingAssignmentWithDefault2.ts(11,4): error TS2322: Type 'number | undefined' is not assignable to type 'number'.\\n  Ty\"",
+              "actual_context": "b\"cturingAssignmentWithDefault2.ts(11,4): Error TS2322: Type 'number | undefined' is not assignable to type 'number'.\\n  Ty\""
+            }
+          }
+        },
+        {
+          "case": "299_contextualTypingOfArrayLiterals1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 43,
+              "expected_size": 105,
+              "actual_size": 105,
+              "expected_context": "b\"textualTypingOfArrayLiterals1.ts(5,26): error TS2322: Type 'number' is not assignable to type 'Date'.\\n\"",
+              "actual_context": "b\"textualTypingOfArrayLiterals1.ts(5,26): Error TS2322: Type 'number' is not assignable to type 'Date'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "300_errorMessageOnIntersectionsWithDiscriminants01",
+          "differences": {
+            "stdout": {
+              "byte_offset": 56,
+              "expected_size": 388,
+              "actual_size": 388,
+              "expected_context": "b\"tersectionsWithDiscriminants01.ts(8,1): error TS2322: Type 'A' is not assignable to type 'B'.\\n  Type '{ test: true; } & \"",
+              "actual_context": "b\"tersectionsWithDiscriminants01.ts(8,1): Error TS2322: Type 'A' is not assignable to type 'B'.\\n  Type '{ test: true; } & \""
+            }
+          }
+        },
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 101.617
+    },
+    "tiny": {
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "excluded": 0,
+      "failures": [
+        {
+          "case": "tiny",
+          "differences": {
+            "stdout": {
+              "byte_offset": 18,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b\"argument.ts(2,6): error TS2345: Argument of type 'string' is not assignable to parameter of type '\"",
+              "actual_context": "b\"argument.ts(2,6): Error TS2345: Argument of type 'string' is not assignable to parameter of type '\""
+            }
+          }
+        }
+      ],
+      "seconds": 0.676
+    },
+    "baselines": {
+      "total": 40,
+      "passed": 7,
+      "failed": 33,
+      "excluded": 834,
+      "deferred": 13413,
+      "selected_inputs": 11610,
+      "configurations": 13453,
+      "excluded_configurations": 1268,
+      "census_total": 12444,
+      "exclusion_reasons": {
+        "API compiler version override @typescriptversion: 5.0": 3,
+        "API compiler version override @typescriptversion: 5.5": 1,
+        "Windows virtual paths require drive and separator semantics unavailable on Linux": 23,
+        "absolute package/config paths require mounted virtual roots; source text is preserved": 14,
+        "absolute source references require mounted virtual roots; source text is preserved": 172,
+        "all configurations need API diagnostic collection or harness formatting": 603,
+        "case-insensitive virtual filesystem differs from Linux": 4,
+        "harness directive @capturesuggestions: true": 1,
+        "harness directive @suppressoutputpathcheck: true": 13
+      },
+      "failures": [
+        {
+          "case": "tests/cases/compiler/ArrowFunctionExpression1.ts",
+          "configuration": "",
+          "capture": "00002_ArrowFunctionExpression1",
+          "differences": {
+            "stdout": {
+              "byte_offset": 35,
+              "expected_size": 119,
+              "actual_size": 119,
+              "expected_context": "b'ArrowFunctionExpression1.ts(1,10): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ArrowFunctionExpression1.ts(1,10): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration10.ts",
+          "configuration": "",
+          "capture": "00003_ClassDeclaration10",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 204,
+              "actual_size": 204,
+              "expected_context": "b'ClassDeclaration10.ts(2,4): error TS2390: Constructor implementation is missing.\\nClassDeclaration10.ts(3,4):'",
+              "actual_context": "b'ClassDeclaration10.ts(2,4): Error TS2390: Constructor implementation is missing.\\nClassDeclaration10.ts(3,4):'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration11.ts",
+          "configuration": "",
+          "capture": "00004_ClassDeclaration11",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 81,
+              "actual_size": 81,
+              "expected_context": "b'ClassDeclaration11.ts(2,4): error TS2390: Constructor implementation is missing.\\n'",
+              "actual_context": "b'ClassDeclaration11.ts(2,4): Error TS2390: Constructor implementation is missing.\\n'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration13.ts",
+          "configuration": "",
+          "capture": "00005_ClassDeclaration13",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 86,
+              "actual_size": 86,
+              "expected_context": "b\"ClassDeclaration13.ts(3,4): error TS2389: Function implementation name must be 'foo'.\\n\"",
+              "actual_context": "b\"ClassDeclaration13.ts(3,4): Error TS2389: Function implementation name must be 'foo'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration14.ts",
+          "configuration": "",
+          "capture": "00006_ClassDeclaration14",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 204,
+              "actual_size": 204,
+              "expected_context": "b'ClassDeclaration14.ts(2,4): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'ClassDeclaration14.ts(2,4): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration15.ts",
+          "configuration": "",
+          "capture": "00007_ClassDeclaration15",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 123,
+              "actual_size": 123,
+              "expected_context": "b'ClassDeclaration15.ts(2,4): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'ClassDeclaration15.ts(2,4): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration21.ts",
+          "configuration": "",
+          "capture": "00008_ClassDeclaration21",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 84,
+              "actual_size": 84,
+              "expected_context": "b\"ClassDeclaration21.ts(3,5): error TS2389: Function implementation name must be '0'.\\n\"",
+              "actual_context": "b\"ClassDeclaration21.ts(3,5): Error TS2389: Function implementation name must be '0'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration22.ts",
+          "configuration": "",
+          "capture": "00009_ClassDeclaration22",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 88,
+              "actual_size": 88,
+              "expected_context": "b'ClassDeclaration22.ts(3,5): error TS2389: Function implementation name must be \\'\"foo\"\\'.\\n'",
+              "actual_context": "b'ClassDeclaration22.ts(3,5): Error TS2389: Function implementation name must be \\'\"foo\"\\'.\\n'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration24.ts",
+          "configuration": "",
+          "capture": "00010_ClassDeclaration24",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 70,
+              "actual_size": 70,
+              "expected_context": "b\"ClassDeclaration24.ts(1,7): error TS2414: Class name cannot be 'any'.\\n\"",
+              "actual_context": "b\"ClassDeclaration24.ts(1,7): Error TS2414: Class name cannot be 'any'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration25.ts",
+          "configuration": "",
+          "capture": "00011_ClassDeclaration25",
+          "differences": {
+            "stdout": {
+              "byte_offset": 28,
+              "expected_size": 246,
+              "actual_size": 246,
+              "expected_context": "b'ClassDeclaration25.ts(6,5): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'ClassDeclaration25.ts(6,5): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration26.ts",
+          "configuration": "",
+          "capture": "00012_ClassDeclaration26",
+          "differences": {
+            "stdout": {
+              "byte_offset": 29,
+              "expected_size": 405,
+              "actual_size": 405,
+              "expected_context": "b'ClassDeclaration26.ts(2,18): error TS1440: Variable declaration not allowed at this location.\\nClassDeclaratio'",
+              "actual_context": "b'ClassDeclaration26.ts(2,18): Error TS1440: Variable declaration not allowed at this location.\\nClassDeclaratio'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration8.ts",
+          "configuration": "",
+          "capture": "00013_ClassDeclaration8",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 80,
+              "actual_size": 80,
+              "expected_context": "b'ClassDeclaration8.ts(2,3): error TS2390: Constructor implementation is missing.\\n'",
+              "actual_context": "b'ClassDeclaration8.ts(2,3): Error TS2390: Constructor implementation is missing.\\n'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclaration9.ts",
+          "configuration": "",
+          "capture": "00014_ClassDeclaration9",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 122,
+              "actual_size": 122,
+              "expected_context": "b'ClassDeclaration9.ts(2,4): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'ClassDeclaration9.ts(2,4): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ClassDeclarationWithInvalidConstOnPropertyDeclaration.ts",
+          "configuration": "",
+          "capture": "00015_ClassDeclarationWithInvalidConstOnPropertyDeclaration",
+          "differences": {
+            "stdout": {
+              "byte_offset": 64,
+              "expected_size": 126,
+              "actual_size": 126,
+              "expected_context": "b\"lidConstOnPropertyDeclaration.ts(2,16): error TS1248: A class member cannot have the 'const' keyword.\\n\"",
+              "actual_context": "b\"lidConstOnPropertyDeclaration.ts(2,16): Error TS1248: A class member cannot have the 'const' keyword.\\n\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ExportAssignment7.ts",
+          "configuration": "",
+          "capture": "00018_ExportAssignment7",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 183,
+              "actual_size": 183,
+              "expected_context": "b'ExportAssignment7.ts(4,1): error TS2309: An export assignment cannot be used in a module with other exporte'",
+              "actual_context": "b'ExportAssignment7.ts(4,1): Error TS2309: An export assignment cannot be used in a module with other exporte'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ExportAssignment8.ts",
+          "configuration": "",
+          "capture": "00019_ExportAssignment8",
+          "differences": {
+            "stdout": {
+              "byte_offset": 27,
+              "expected_size": 183,
+              "actual_size": 183,
+              "expected_context": "b'ExportAssignment8.ts(1,1): error TS2309: An export assignment cannot be used in a module with other exporte'",
+              "actual_context": "b'ExportAssignment8.ts(1,1): Error TS2309: An export assignment cannot be used in a module with other exporte'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/FunctionDeclaration3.ts",
+          "configuration": "",
+          "capture": "00020_FunctionDeclaration3",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 251,
+              "actual_size": 251,
+              "expected_context": "b'FunctionDeclaration3.ts(1,10): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'FunctionDeclaration3.ts(1,10): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/FunctionDeclaration4.ts",
+          "configuration": "",
+          "capture": "00021_FunctionDeclaration4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 214,
+              "actual_size": 214,
+              "expected_context": "b\"FunctionDeclaration4.ts(1,10): error TS7010: 'foo', which lacks return-type annotation, implicitly has an 'any'\"",
+              "actual_context": "b\"FunctionDeclaration4.ts(1,10): Error TS7010: 'foo', which lacks return-type annotation, implicitly has an 'any'\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/FunctionDeclaration6.ts",
+          "configuration": "",
+          "capture": "00022_FunctionDeclaration6",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 214,
+              "actual_size": 214,
+              "expected_context": "b\"FunctionDeclaration6.ts(2,14): error TS7010: 'foo', which lacks return-type annotation, implicitly has an 'any'\"",
+              "actual_context": "b\"FunctionDeclaration6.ts(2,14): Error TS7010: 'foo', which lacks return-type annotation, implicitly has an 'any'\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/FunctionDeclaration7.ts",
+          "configuration": "",
+          "capture": "00023_FunctionDeclaration7",
+          "differences": {
+            "stdout": {
+              "byte_offset": 31,
+              "expected_size": 251,
+              "actual_size": 251,
+              "expected_context": "b'FunctionDeclaration7.ts(2,13): error TS2391: Function implementation is missing or not immediately following th'",
+              "actual_context": "b'FunctionDeclaration7.ts(2,13): Error TS2391: Function implementation is missing or not immediately following th'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/InterfaceDeclaration8.ts",
+          "configuration": "",
+          "capture": "00024_InterfaceDeclaration8",
+          "differences": {
+            "stdout": {
+              "byte_offset": 32,
+              "expected_size": 81,
+              "actual_size": 81,
+              "expected_context": "b\"InterfaceDeclaration8.ts(1,11): error TS2427: Interface name cannot be 'string'.\\n\"",
+              "actual_context": "b\"InterfaceDeclaration8.ts(1,11): Error TS2427: Interface name cannot be 'string'.\\n\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/MemberAccessorDeclaration15.ts",
+          "configuration": "",
+          "capture": "00025_MemberAccessorDeclaration15",
+          "differences": {
+            "stdout": {
+              "byte_offset": 38,
+              "expected_size": 122,
+              "actual_size": 122,
+              "expected_context": "b'MemberAccessorDeclaration15.ts(2,12): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'MemberAccessorDeclaration15.ts(2,12): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList13.ts",
+          "configuration": "",
+          "capture": "00026_ParameterList13",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 327,
+              "actual_size": 327,
+              "expected_context": "b'ParameterList13.ts(2,5): error TS7013: Construct signature, which lacks return-type annotation, implicitl'",
+              "actual_context": "b'ParameterList13.ts(2,5): Error TS7013: Construct signature, which lacks return-type annotation, implicitl'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList4.ts",
+          "configuration": "",
+          "capture": "00027_ParameterList4",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b'ParameterList4.ts(1,12): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ParameterList4.ts(1,12): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList5.ts",
+          "configuration": "",
+          "capture": "00028_ParameterList5",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 386,
+              "actual_size": 386,
+              "expected_context": "b\"ParameterList5.ts(1,15): error TS2355: A function whose declared type is neither 'undefined', 'void', nor\"",
+              "actual_context": "b\"ParameterList5.ts(1,15): Error TS2355: A function whose declared type is neither 'undefined', 'void', nor\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList6.ts",
+          "configuration": "",
+          "capture": "00029_ParameterList6",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 192,
+              "actual_size": 192,
+              "expected_context": "b'ParameterList6.ts(2,19): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ParameterList6.ts(2,19): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList7.ts",
+          "configuration": "",
+          "capture": "00030_ParameterList7",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 218,
+              "actual_size": 218,
+              "expected_context": "b'ParameterList7.ts(2,14): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ParameterList7.ts(2,14): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/ParameterList8.ts",
+          "configuration": "",
+          "capture": "00031_ParameterList8",
+          "differences": {
+            "stdout": {
+              "byte_offset": 25,
+              "expected_size": 327,
+              "actual_size": 327,
+              "expected_context": "b'ParameterList8.ts(2,14): error TS2369: A parameter property is only allowed in a constructor implementati'",
+              "actual_context": "b'ParameterList8.ts(2,14): Error TS2369: A parameter property is only allowed in a constructor implementati'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/SystemModuleForStatementNoInitializer.ts",
+          "configuration": "",
+          "capture": "00032_SystemModuleForStatementNoInitializer",
+          "differences": {
+            "stdout": {
+              "byte_offset": 0,
+              "expected_size": 172,
+              "actual_size": 172,
+              "expected_context": "b\"error TS5107: Option 'module=System' is deprecated and will stop functioning in \"",
+              "actual_context": "b\"Error TS5107: Option 'module=System' is deprecated and will stop functioning in \""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/abstractClassInLocalScopeIsAbstract.ts",
+          "configuration": "",
+          "capture": "00034_abstractClassInLocalScopeIsAbstract",
+          "differences": {
+            "stdout": {
+              "byte_offset": 45,
+              "expected_size": 107,
+              "actual_size": 107,
+              "expected_context": "b'actClassInLocalScopeIsAbstract.ts(4,5): error TS2511: Cannot create an instance of an abstract class.\\n'",
+              "actual_context": "b'actClassInLocalScopeIsAbstract.ts(4,5): Error TS2511: Cannot create an instance of an abstract class.\\n'"
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/abstractClassUnionInstantiation.ts",
+          "configuration": "",
+          "capture": "00035_abstractClassUnionInstantiation",
+          "differences": {
+            "stdout": {
+              "byte_offset": 42,
+              "expected_size": 801,
+              "actual_size": 801,
+              "expected_context": "b\"stractClassUnionInstantiation.ts(3,28): error TS2564: Property 'a' has no initializer and is not definitely assigned in \"",
+              "actual_context": "b\"stractClassUnionInstantiation.ts(3,28): Error TS2564: Property 'a' has no initializer and is not definitely assigned in \""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/abstractPropertyBasics.ts",
+          "configuration": "target=es5",
+          "capture": "00038_abstractPropertyBasics",
+          "differences": {
+            "stdout": {
+              "byte_offset": 0,
+              "expected_size": 169,
+              "actual_size": 169,
+              "expected_context": "b\"error TS5107: Option 'target=ES5' is deprecated and will stop functioning in Typ\"",
+              "actual_context": "b\"Error TS5107: Option 'target=ES5' is deprecated and will stop functioning in Typ\""
+            }
+          }
+        },
+        {
+          "case": "tests/cases/compiler/abstractPropertyInConstructor.ts",
+          "configuration": "",
+          "capture": "00040_abstractPropertyInConstructor",
+          "differences": {
+            "stdout": {
+              "byte_offset": 40,
+              "expected_size": 1745,
+              "actual_size": 1745,
+              "expected_context": "b\"abstractPropertyInConstructor.ts(4,24): error TS2715: Abstract property 'prop' in class 'AbstractClass' cannot be access\"",
+              "actual_context": "b\"abstractPropertyInConstructor.ts(4,24): Error TS2715: Abstract property 'prop' in class 'AbstractClass' cannot be access\""
+            }
+          }
+        }
+      ],
+      "seconds": 14.11
+    }
+  },
+  "harness_errors": []
+}
