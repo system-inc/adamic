@@ -1,107 +1,72 @@
 [
   {
-    "test": "TestCallTarget family",
+    "test": "TestCheckedCastRunsNoCatchOrFinally",
     "package": "internal/oracle",
-    "prior_verdict": "untrue",
-    "subsumed_by": null,
+    "prior_verdict": "subsumed",
+    "prior_subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "subsumed_by": [
+      "TestCallTargetThrowAgreesWithNode",
+      "TestNativeAgreesWithNode"
+    ],
     "defense": "not defended",
     "unique_mutant": null,
-    "bounded_unique_mutant": null,
     "attempts": [
       {
-        "mutant": "D05",
-        "file_line": "internal/native/emit_statements.go:173",
-        "change": "Flip direct void-call exception propagation condition",
+        "mutant": "D2",
+        "file_line": "internal/javascript/javascript.go:575",
+        "change": "drop catch-body emission statement",
+        "rows_failed": [
+          "TestCallTargetThrowAgreesWithNode",
+          "TestCheckedCastRunsNoCatchOrFinally",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/javascript/javascript.go:580",
+        "change": "drop finally-body emission statement",
+        "rows_failed": [
+          "TestCallTargetThrowAgreesWithNode",
+          "TestCheckedCastRunsNoCatchOrFinally",
+          "TestNativeAgreesWithNode"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/javascript/javascript.go:575",
+        "change": "swap catch and finally body arguments",
         "rows_failed": [
           "TestCallTargetThrowAgreesWithNode",
           "TestNativeAgreesWithNode"
         ]
-      },
-      {
-        "mutant": "D06",
-        "file_line": "internal/native/exceptions.go:154",
-        "change": "Drop the three explicit try-finally body emission statements",
-        "rows_failed": [
-          "TestCallTargetThrowAgreesWithNode",
-          "TestNativeAgreesWithNode"
-        ]
-      },
-      {
-        "mutant": "D07",
-        "file_line": "internal/native/emit_functions.go:314",
-        "change": "Drop the direct closure-call fast path by flipping its condition",
-        "rows_failed": [
-          "TestDirectClosureCallAgreesWithNode",
-          "TestNativeAgreesWithNode"
-        ]
       }
     ],
-    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/arguments-defend/cache/D07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLength.*|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCast.*|TestUncheckableCastAdmission|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted)$; call_targets_guards_test.go:15: native release: stdout differs: exit 0, stdout \"true false 22\\ntrue false 24\\n\", stderr \"\"",
-    "bounded": true,
-    "scope": "selectors.json; exact passed, failed, skipped subtests in results.json"
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast) > D3-casts.log 2>&1; cast_test.go:87: missing finally instrumentation site. D4 passed this row; both neighbor catchers failed.",
+    "bounded": true
   },
   {
-    "test": "TestCheckedCastFlushesOutput",
+    "test": "TestCheckedCastFailureContract",
     "package": "internal/oracle",
     "prior_verdict": "subsumed",
-    "subsumed_by": "TestCheckedCastRunsNoCatchOrFinally",
-    "defense": "not defended",
-    "unique_mutant": null,
-    "bounded_unique_mutant": null,
+    "prior_subsumed_by": [
+      "TestCheckedCastFlushesOutput"
+    ],
+    "subsumed_by": [],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/cast_proof.go:311",
     "attempts": [
       {
-        "mutant": "D01",
-        "file_line": "internal/native/runtime/adamic.c:93",
-        "change": "Off by one: large direct stdout writes omit their final byte",
+        "mutant": "D1",
+        "file_line": "internal/lower/cast_proof.go:311",
+        "change": "off by one: omit final byte of class-cast panic text",
         "rows_failed": [
-          "TestCheckedCastFlushesOutput",
-          "TestNativeAgreesWithNode"
-        ]
-      },
-      {
-        "mutant": "D02",
-        "file_line": "internal/native/runtime/adamic.c:195",
-        "change": "Drop the panic stdout flush statement",
-        "rows_failed": [
-          "TestCheckedCastFailureContract",
-          "TestCheckedCastFlushesOutput",
-          "TestNativeAgreesWithNode"
-        ]
-      },
-      {
-        "mutant": "D03",
-        "file_line": "internal/native/runtime/adamic.c:93",
-        "change": "Change large-write descriptor from stdout to stderr",
-        "rows_failed": [
-          "TestCheckedCastFlushesOutput",
-          "TestNativeAgreesWithNode"
+          "TestCheckedCastFailureContract"
         ]
       }
     ],
-    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/arguments-defend/cache/D03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLength.*|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCast.*|TestUncheckableCastAdmission|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted)$; cast_test.go:43: native: panic must flush 340009 bytes, got 9, exit 70 stderr \"preceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\npreceding stdout\\nprec",
-    "bounded": true,
-    "scope": "selectors.json; exact passed, failed, skipped subtests in results.json"
-  },
-  {
-    "test": "TestUncheckableCastAdmission",
-    "package": "internal/oracle",
-    "prior_verdict": "subsumed",
-    "subsumed_by": "TestCheckedCastFlushesOutput",
-    "defense": "cannot-judge",
-    "unique_mutant": null,
-    "bounded_unique_mutant": "D04 internal/lower/cast_proof.go:213",
-    "attempts": [
-      {
-        "mutant": "D04",
-        "file_line": "internal/lower/cast_proof.go:213",
-        "change": "Off by one: omit the last previous tag from duplicate comparison",
-        "rows_failed": [
-          "TestUncheckableCastAdmission"
-        ]
-      }
-    ],
-    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/arguments-defend/cache/D04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestArgumentsLength.*|TestCallTargetThrowAgreesWithNode|TestDirectClosureCallAgreesWithNode|TestCheckedCast.*|TestUncheckableCastAdmission|TestOneFileHoldsNodesOrder|TestClosedStdoutEndsAsOnNode|TestFileWritesLandInNodesOrder|TestAPromptComesBeforeTheRead|TestASignalLeavesWhatWasPrinted)$; cast_test.go:72: uncheckable cast admitted: Node exit 0 stdout \"wrongwrong1\\n\"; native exit 70 stdout \"\" stderr \"adamic: panic: field read failed: cast({ kind: Kind.B, n: 'wrong'.repeat(2) }).n is not a number; expected number, found string\\n\"; exit codes differ",
-    "bounded": true,
-    "scope": "selectors.json; exact passed, failed, skipped subtests in results.json"
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-args/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedCast|TestUncheckableCast|TestCallTarget|TestDirectClosure|TestInterfaceCast) > D1-casts.log 2>&1; cast_test.go:148: native: exit 70, stdout \"casting\\n\", stderr \"adamic: panic: cast failed: this Base<number> is not a Box<number\\n\"; want panic/70 and \"adamic: panic: cast failed: this Base<number> is not a Box<number>\\n\"",
+    "bounded": true
   }
 ]

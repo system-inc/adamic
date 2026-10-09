@@ -1,0 +1,21 @@
+{
+  "starting_commit": "619e7a4cf33741cc04bc78dc4c0c8ba0e31d73fb",
+  "top_level_tests": [
+    "TestCallTargetThrowAgreesWithNode",
+    "TestCheckedCastFailureContract",
+    "TestCheckedCastFlushesOutput",
+    "TestCheckedCastMutants",
+    "TestCheckedCastRunsNoCatchOrFinally",
+    "TestDirectClosureCallAgreesWithNode",
+    "TestInterfaceCastChecksMalformedRead",
+    "TestInterfaceCastImportedConstruction",
+    "TestInterfaceCastOracle",
+    "TestInterfaceCastRuntimeMutants",
+    "TestInterfaceCastScalarTags",
+    "TestNativeAgreesWithNode",
+    "TestUncheckableCastAdmission"
+  ],
+  "aggregate_subcases": "TestNativeAgreesWithNode/internal/oracle/testdata/(cast|exceptions|try|finally)",
+  "bounded": true,
+  "unknown": "Every other oracle row and other aggregate fixture subcase; repository-wide uniqueness."
+}
