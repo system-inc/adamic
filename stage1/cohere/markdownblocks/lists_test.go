@@ -21,8 +21,8 @@ import (
 // Not parallel: list-layout fixture and markdown memory configuration.
 // Not parallel: shared layout fixtures and memory-budget admission are handled by the setup helper.
 func TestMarkdownListLayout(t *testing.T) {
-	parallelMarkdown(t)
-	listLayoutSetup(t)
+	t.Parallel()
+	buildListLayoutSetup(t)
 }
 
 // Not parallel: quote lowered and Go build products initialized before parallel shards.
