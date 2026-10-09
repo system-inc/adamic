@@ -1,0 +1,9 @@
+FIRST FAILURE (tests, at 98.4 s):
+github.com/system-inc/adamic/stage1/cohere/lint TestWitnessScriptKind
+=== RUN   TestWitnessScriptKind
+=== PAUSE TestWitnessScriptKind
+=== CONT  TestWitnessScriptKind
+    harness_test.go:58: shared witness setup is not ready; select TestWitnessScriptKind_Setup together with the leaves
+--- FAIL: TestWitnessScriptKind (0.00s)
+
+(box load 29.6 on 64 cores at first failure)
