@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"slices"
 	"sort"
 	"strings"
 	"testing"
@@ -29,6 +30,9 @@ func GoBuild(t testing.TB, output, pkg string, arguments []string, environment .
 		t.Fatalf("build %s: %v", pkg, err)
 	}
 	root, _ := repositoryRoot()
+	if slices.Contains(inputs.Flags, rebuildEverything) {
+		arguments = append([]string{"-a"}, arguments...)
+	}
 	directory := Product(t, inputs, func(directory string) error {
 		command := exec.Command("go", append(append(append([]string{"build"}, arguments...), "-o", filepath.Join(directory, output)), pkg)...)
 		command.Dir = root
@@ -55,6 +59,13 @@ func reproducible(arguments []string) []string {
 	}
 	return append(kept, arguments...)
 }
+
+// rebuildEverything is the flag a key carries when the build reads a header through '#cgo CFLAGS: -I' outside the
+// package's own directory. Go's build cache keys a package by its own directory's files, so after such a header
+// changes, go build alone links the object compiled from the old one (measured Oct 9 by
+// TestProductIdentityAfterAHeaderOutsideThePackageChanges): the key moved, the product didn't. GoBuild builds such a
+// product with -a, which compiles every package again, and the flag in the key retires a product built without it.
+const rebuildEverything = "go build -a: a header outside its package"
 
 // The go env values a build reads beyond its sources, resolved by go itself so a default counts like a setting.
 var goEnvironment = []string{"GOOS", "GOARCH", "GOAMD64", "GOARM64", "GOEXPERIMENT", "GOFLAGS", "GOWORK", "CGO_ENABLED", "CC", "CXX",
@@ -107,6 +118,7 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		return Inputs{}, err
 	}
 	files := map[string]bool{}
+	outsideHeaders := false
 	add := func(directory string, names []string) error {
 		for _, name := range names {
 			relative, err := filepath.Rel(root, filepath.Join(directory, name))
@@ -155,6 +167,9 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 					if err := add(root, []string{mustRelative(root, include)}); err != nil {
 						return Inputs{}, err
 					}
+					if filepath.Clean(include) != filepath.Clean(listed.Dir) {
+						outsideHeaders = true
+					}
 				}
 			}
 		}
@@ -177,6 +192,9 @@ func GoInputs(output, pkg string, arguments []string, environment []string) (Inp
 		files[target] = true
 	}
 	inputs := Inputs{Name: "go build " + pkg + " " + output, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
+	if outsideHeaders {
+		inputs.Flags = append(inputs.Flags, rebuildEverything)
+	}
 	for index, name := range goEnvironment {
 		if index < len(values) {
 			inputs.Flags = append(inputs.Flags, name+"="+values[index])
