@@ -362,11 +362,9 @@ func compilerAgreementShard(t *testing.T, shard int) {
 		binary = compilerAgreementNative(t, side == 4)
 	}
 	t.Logf("preparation: %.3fs", time.Since(setupStarted).Seconds())
-	// This deadline measures only work; go test/Loom's 90s ceiling also covers
-	// preparation and remains authoritative for the complete top-level unit.
+	// Own work is logged, not asserted: every child runs under execute's testguard budget and ceiling,
+	// so a hang is bounded there and by Loom's 90 s unit kill. A panic here would end the whole package.
 	workStarted := time.Now()
-	deadline := time.AfterFunc(90*time.Second, func() { panic(t.Name() + ": own work exceeded 90s") })
-	defer deadline.Stop()
 	defer func() { t.Logf("own work: %.3fs", time.Since(workStarted).Seconds()) }()
 	want := compilerAgreementOracle(t, owner, path)
 	if side == 0 {
