@@ -1,0 +1,60 @@
+github.com/system-inc/adamic/stage1/cohere/lint	TestCheckerCacheSourceByte	1132.26	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDotARename	1003.24	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestDecodedOptionsAndMutant	913.43	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestCompleteSuggestionSerialization	898.19	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestSixRuleAgreementAndMutants	869.47	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestRulesAgree	783.03	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProfileCompilation	552.62	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeProfileAgreementAndMutants	505.26	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestOwnedWitnesses	500.54	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestSuggestionAlongsideAutomaticFix	483.59	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestEmittedJavaScriptMismatch	482.35	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeConfigGuardAndMutant	466.44	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants (setup)	454.02	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestTypeAwareAgreementAndMutants	414.73	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/react	TestReactAgreement	290.84	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestShadowIndexMissingBinding	206.36	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestExpressionsAgainstGoAndPrettier	202.94	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default (setup)	192.50	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/native	191.54	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow (setup)	191.08	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownWhitespaceLayout (setup)	158.15	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths (setup)	138.57	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_declarations_lose_their_semicolons	130.15	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_groups_ignore_the_remaining_width	127.32	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_declarations_lose_their_semicolons	115.32	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/default/catches_rule_bodies_lose_indentation	113.02	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_rule_bodies_lose_indentation	103.89	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/scope-locals	101.81	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo/narrow/catches_groups_ignore_the_remaining_width	100.52	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/symbol-origin	93.38	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/attribute_name.a	92.75	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/call-returns	85.68	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/element_parts.a	83.09	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/match_exactly.a	80.71	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestTSCCorpusAgreement/expressions	80.61	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants (setup)	78.82	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/type-origin	78.44	pass
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestTSCCorpusAgreement/statements	77.97	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/match_ignoring_case.a	75.76	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/assignable-types	74.70	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/has_attribute_named.a	70.42	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/reference-pragma	68.92	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/property-shape	68.82	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/contextual-shape	68.66	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/mapped-constraint	68.35	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/widened-shape	68.16	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/property-info	67.77	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestThreePortMutants/member-computed	66.73	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers	TestJsxHelpersAndMutants/intrinsic_element_named.a	66.42	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/enum-types	65.00	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestSyntaxMutants/erasure-precedence	64.38	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/apparent-shape	63.46	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/base-shapes	62.29	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/type-symbol	61.94	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/call-count	57.91	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeAgreementAndMutants/call-parameters	55.72	pass
+github.com/system-inc/adamic/stage1/cohere/estree	TestThreePortMutants/logical-rebalance	54.74	pass
+github.com/system-inc/adamic/internal/native	TestDecodeASCII/wasi	51.99	pass
+github.com/system-inc/adamic/stage1/cohere/lint/regex	TestShapeFixtures (setup)	42.69	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestCSSPrinterAgreesWithGo (setup)	38.55	pass
