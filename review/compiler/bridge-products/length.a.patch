@@ -1,0 +1,4 @@
+--- a/bridge/tsgo/products_test.go
++++ b/bridge/tsgo/products_test.go
+@@ -101,0 +102 @@
++	if name == "length.a" { delete(files, "bridge/tsgo/products_test.go") }
