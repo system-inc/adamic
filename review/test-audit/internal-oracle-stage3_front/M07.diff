@@ -1,0 +1,11 @@
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -213,7 +213,7 @@
+ 		if current.Type() != ir.Number {
+ 			return nil, l.notYet(target, "incrementing a non-null field whose checked value is not a number")
+ 		}
+-		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
++		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 2}}
+ 		return []ir.Statement{ir.Block{Body: []ir.Statement{
+ 			ir.Declare{Local: held, Value: object},
+ 			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)},

@@ -1,0 +1,10 @@
+--- a/internal/oracle/testdata/typed_arrays_workers_stats.a
++++ b/internal/oracle/testdata/typed_arrays_workers_stats.a
+@@ -33,6 +33,7 @@
+ 	return values[index] ?? panic('stats index out of bounds');
+ }
+ function summarize(values: Float64Array): StatsBody {
++    return {count: 0, mean: 0, median: 0, p95: 0, min: 0, max: 0, standardDeviation: 0};
+ 	const count = values.length;
+ 	let sum = 0;
+ 	for (let index = 0; index < count; index += 1) sum = sum + numberAt(values, index);

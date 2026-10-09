@@ -1,0 +1,23 @@
+{
+  "origin_commit": "09fe4b54913753188a9357982bfd47cdf36ef97c",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "npm_seconds": 0.6502419420030492,
+  "go_switch_build_seconds": {
+    "command": [
+      "go",
+      "test",
+      "-c",
+      "-o",
+      "/tmp/u070/oracle.test",
+      "./internal/oracle/"
+    ],
+    "exit": 0,
+    "wall_seconds": 13.166111651000392
+  },
+  "timing_command_wall_seconds": 111.40143020499818,
+  "matrix_wall_seconds": 215.05129318698891,
+  "validation_wall_seconds": 22.364297899988742,
+  "baseline_seconds": 92.554842502,
+  "extra_subset_median": 2.089
+}

@@ -1,0 +1,11 @@
+--- a/internal/oracle/testdata/typed_arrays_workers_stats.a
++++ b/internal/oracle/testdata/typed_arrays_workers_stats.a
+@@ -40,7 +40,7 @@
+ 	const sorted = sortedCopy(values);
+ 	const middle = Math.floor(count / 2);
+ 	const median = count % 2 === 1 ? numberAt(sorted, middle) : (numberAt(sorted, middle - 1) + numberAt(sorted, middle)) / 2;
+-	const p95 = numberAt(sorted, Math.ceil(0.95 * count) - 1);
++	const p95 = numberAt(sorted, Math.ceil(0.50 * count) - 1);
+ 	let squaredSum = 0;
+ 	for (let index = 0; index < count; index += 1) {
+ 		const difference = numberAt(values, index) - mean;

@@ -1,0 +1,323 @@
+[
+  {
+    "test": "TestStage3EnumFallthrough",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3EnumFallthrough$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.6388525090005714
+  },
+  {
+    "test": "TestStage3EnumFallthrough",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3EnumFallthrough$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.587800680001237
+  },
+  {
+    "test": "TestStage3EnumFallthrough",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3EnumFallthrough$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.542521776002104
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3FixtureHook$'",
+    "env": {
+      "ADAMIC_STAGE3_FIXTURE": "/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a",
+      "ADAMIC_STAGE3_RESULT": "/tmp/u070/hook-timing-0.json"
+    },
+    "exit": 0,
+    "wall_seconds": 2.403938420000486
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3FixtureHook$'",
+    "env": {
+      "ADAMIC_STAGE3_FIXTURE": "/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a",
+      "ADAMIC_STAGE3_RESULT": "/tmp/u070/hook-timing-1.json"
+    },
+    "exit": 0,
+    "wall_seconds": 2.480226619998575
+  },
+  {
+    "test": "TestStage3FixtureHook",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStage3FixtureHook$'",
+    "env": {
+      "ADAMIC_STAGE3_FIXTURE": "/workspace/adamic/internal/oracle/testdata/switch_case_declarations/fallthrough.a",
+      "ADAMIC_STAGE3_RESULT": "/tmp/u070/hook-timing-2.json"
+    },
+    "exit": 0,
+    "wall_seconds": 2.2781315780011937
+  },
+  {
+    "test": "TestStatementsSmallRulings",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallRulings$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.502546354000515
+  },
+  {
+    "test": "TestStatementsSmallRulings",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallRulings$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.6634230180025043
+  },
+  {
+    "test": "TestStatementsSmallRulings",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallRulings$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.568424484001298
+  },
+  {
+    "test": "TestStatementsSmallTypeScriptIncrement",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallTypeScriptIncrement$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.01878234600008
+  },
+  {
+    "test": "TestStatementsSmallTypeScriptIncrement",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallTypeScriptIncrement$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.049163977997523
+  },
+  {
+    "test": "TestStatementsSmallTypeScriptIncrement",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestStatementsSmallTypeScriptIncrement$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.963368499000353
+  },
+  {
+    "test": "TestSwitchCaseDeadZoneStop",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeadZoneStop$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.3400758809984836
+  },
+  {
+    "test": "TestSwitchCaseDeadZoneStop",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeadZoneStop$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.167930711999361
+  },
+  {
+    "test": "TestSwitchCaseDeadZoneStop",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeadZoneStop$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.166171402997861
+  },
+  {
+    "test": "TestSwitchCaseDeclarationMutants",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.5266366750001907
+  },
+  {
+    "test": "TestSwitchCaseDeclarationMutants",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.3779963020024297
+  },
+  {
+    "test": "TestSwitchCaseDeclarationMutants",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 4.7812734590006585
+  },
+  {
+    "test": "TestSwitchCaseOverloadIsNotYet",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseOverloadIsNotYet$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.879138457999943
+  },
+  {
+    "test": "TestSwitchCaseOverloadIsNotYet",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseOverloadIsNotYet$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.7489232890002313
+  },
+  {
+    "test": "TestSwitchCaseOverloadIsNotYet",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchCaseOverloadIsNotYet$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.663499027999933
+  },
+  {
+    "test": "TestSwitchTrailingEmptyMutant",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchTrailingEmptyMutant$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.848397229001421
+  },
+  {
+    "test": "TestSwitchTrailingEmptyMutant",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchTrailingEmptyMutant$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.3783360669985996
+  },
+  {
+    "test": "TestSwitchTrailingEmptyMutant",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSwitchTrailingEmptyMutant$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.273546245000034
+  },
+  {
+    "test": "TestSyntaxModuleDeclarationMutants",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxModuleDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.194726198002172
+  },
+  {
+    "test": "TestSyntaxModuleDeclarationMutants",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxModuleDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.2293146869997145
+  },
+  {
+    "test": "TestSyntaxModuleDeclarationMutants",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxModuleDeclarationMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.4020166160007648
+  },
+  {
+    "test": "TestSyntaxSubstrMutants",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxSubstrMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.078200834999734
+  },
+  {
+    "test": "TestSyntaxSubstrMutants",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxSubstrMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.138088453000819
+  },
+  {
+    "test": "TestSyntaxSubstrMutants",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestSyntaxSubstrMutants$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.289320717998635
+  },
+  {
+    "test": "TestTypedArrayWriteStopIsPinned",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWriteStopIsPinned$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.64494900599675
+  },
+  {
+    "test": "TestTypedArrayWriteStopIsPinned",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWriteStopIsPinned$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.3643232750000607
+  },
+  {
+    "test": "TestTypedArrayWriteStopIsPinned",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWriteStopIsPinned$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.49968161599827
+  },
+  {
+    "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWorkersStatsMatchesPlatforms$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.7423750279995147
+  },
+  {
+    "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWorkersStatsMatchesPlatforms$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.809472362998349
+  },
+  {
+    "test": "TestTypedArrayWorkersStatsMatchesPlatforms",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWorkersStatsMatchesPlatforms$'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 2.9317192809976405
+  },
+  {
+    "test": "TestNativeAgreesWithNode-subset",
+    "trial": 0,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(switch_case_declarations|93122fa_s[12]|switch_empty_neighbors|syntax_module_declarations|syntax_substr|typed_arrays_(stop|workers_stats))'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 4.302048326997465
+  },
+  {
+    "test": "TestNativeAgreesWithNode-subset",
+    "trial": 1,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(switch_case_declarations|93122fa_s[12]|switch_empty_neighbors|syntax_module_declarations|syntax_substr|typed_arrays_(stop|workers_stats))'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.947045816003083
+  },
+  {
+    "test": "TestNativeAgreesWithNode-subset",
+    "trial": 2,
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestNativeAgreesWithNode$/internal/oracle/testdata/(switch_case_declarations|93122fa_s[12]|switch_empty_neighbors|syntax_module_declarations|syntax_substr|typed_arrays_(stop|workers_stats))'",
+    "env": {},
+    "exit": 0,
+    "wall_seconds": 3.9790429759996186
+  }
+]

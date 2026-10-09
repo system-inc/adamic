@@ -1,0 +1,11 @@
+--- a/internal/lower/switch.go
++++ b/internal/lower/switch.go
+@@ -41,7 +41,7 @@
+ 	if unmatchedCheck != nil {
+ 		// An open enum can reach a checker-never default only when no case matched.
+ 		// Falling through from a matched case must still execute the default body.
+-		dispatch.Default = []ir.Statement{unmatchedCheck}
++		/* dropped unmatched enum check */
+ 	}
+ 	bodies := []ir.Statement{}
+ 	for index, group := range groups {

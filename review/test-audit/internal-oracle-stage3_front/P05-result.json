@@ -1,0 +1,9 @@
+{
+  "command": "ADAMIC_MUTANT=P05 ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u070/cache/P05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run '^TestTypedArrayWriteStopIsPinned$' > P05.log 2>&1",
+  "failed_rows": [
+    "TestTypedArrayWriteStopIsPinned"
+  ],
+  "binary_seconds": 14.351,
+  "compile_exit": 0,
+  "compile_command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I internal/native/runtime -c standalone-P05.c -o P05.o"
+}

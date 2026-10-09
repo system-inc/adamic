@@ -1,0 +1,242 @@
+diff --git a/internal/lower/assignments.go b/internal/lower/assignments.go
+index 1b1e965f..e14ee42a 100644
+--- a/internal/lower/assignments.go
++++ b/internal/lower/assignments.go
+@@ -213,7 +213,7 @@ func (l *lowering) increment(node *ast.Node) ([]ir.Statement, error) {
+ 		if current.Type() != ir.Number {
+ 			return nil, l.notYet(target, "incrementing a non-null field whose checked value is not a number")
+ 		}
+-		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: 1}}
++		updated := ir.Binary{Operator: step, Left: current, Right: ir.NumberConstant{Value: auditNumber("M07", 1, 2)}}
+ 		return []ir.Statement{ir.Block{Body: []ir.Statement{
+ 			ir.Declare{Local: held, Value: object},
+ 			ir.SetProperty{Object: read, Name: name, Value: fit(updated, of), Class: l.classOf(target), Site: l.writeSite(target.AsPropertyAccessExpression().Expression)},
+diff --git a/internal/lower/diagnostics.go b/internal/lower/diagnostics.go
+index 4e462e16..1cd7ff39 100644
+--- a/internal/lower/diagnostics.go
++++ b/internal/lower/diagnostics.go
+@@ -14,7 +14,7 @@ type NotYet struct {
+ }
+ 
+ func (n *NotYet) Error() string {
+-	return fmt.Sprintf("%s: stage 0 can't lower %s yet", n.Where, n.What)
++	return fmt.Sprintf(auditString("M04", "%s: stage 0 can't lower %s yet", "%s: stage 0 can't lower %s now"), n.Where, n.What)
+ }
+ 
+ // Refused is something Adamic 0.1 doesn't allow at all (docs/0.1.md), as opposed to something stage 0
+@@ -26,7 +26,7 @@ type Refused struct {
+ }
+ 
+ func (r *Refused) Error() string {
+-	return fmt.Sprintf("%s: Adamic 0.1 refuses %s; %s", r.Where, r.What, r.Fix)
++	return fmt.Sprintf(auditString("M11", "%s: Adamic 0.1 refuses %s; %s", "%s: Adamic 0.2 refuses %s; %s"), r.Where, r.What, r.Fix)
+ }
+ 
+ func (l *lowering) notYet(node *ast.Node, what string) error {
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..005862ec 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditMutant("P01") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/non_null.go b/internal/lower/non_null.go
+index 33415dc4..d37ab440 100644
+--- a/internal/lower/non_null.go
++++ b/internal/lower/non_null.go
+@@ -111,7 +111,9 @@ func (l *lowering) recordNonNullCheck(node *ast.Node, proven bool) {
+ 	if proven {
+ 		counts.Proven++
+ 	} else {
+-		counts.Checked++
++		if !auditMutant("M06") {
++			counts.Checked++
++		}
+ 	}
+ 	counts.Sites = append(counts.Sites, ir.NonNullCheck{Where: l.program.Where(node), Expression: sourceExpression(node), Proven: proven})
+ }
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index e9909dfa..41022969 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -19,7 +19,7 @@ type refusal struct {
+ // refusals by syntax kind. Each is checked before lowering, so a program learns it has written
+ // something 0.1 refuses for good, never that stage 0 hasn't got to it yet.
+ var refusals = map[ast.Kind]refusal{
+-	ast.KindNonNullExpression: {"the non-null assertion !", "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
++	ast.KindNonNullExpression: {auditString("M05", "the non-null assertion !", "a non-null assertion !"), "write ?? panic('why it can't be missing'), or narrow and handle the missing case"},
+ 	ast.KindAwaitExpression:   {"await", "0.1 has no async; it arrives with the concurrency model"},
+ 	ast.KindYieldExpression:   {"yield (generators)", "build an array, or call a function per item"},
+ 	ast.KindDecorator:         {"a decorator", "write the behavior where it applies; 0.1 doesn't rewrite classes at runtime"},
+diff --git a/internal/lower/switch.go b/internal/lower/switch.go
+index b18223ea..09926541 100644
+--- a/internal/lower/switch.go
++++ b/internal/lower/switch.go
+@@ -15,7 +15,7 @@ type switchGroup struct {
+ // selects the general lowering; it never removes a possible fallthrough edge.
+ func switchBodyLeaves(body []ir.Statement) bool {
+ 	if len(body) == 0 {
+-		return false
++		return auditMutant("M02")
+ 	}
+ 	switch statement := body[len(body)-1].(type) {
+ 	case ir.Break, ir.Continue, ir.Return, ir.Throw, ir.Panic:
+@@ -41,7 +41,9 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup,
+ 	if unmatchedCheck != nil {
+ 		// An open enum can reach a checker-never default only when no case matched.
+ 		// Falling through from a matched case must still execute the default body.
+-		dispatch.Default = []ir.Statement{unmatchedCheck}
++		if !auditMutant("M03") {
++			dispatch.Default = []ir.Statement{unmatchedCheck}
++		}
+ 	}
+ 	bodies := []ir.Statement{}
+ 	for index, group := range groups {
+@@ -56,7 +58,7 @@ func (l *lowering) fallthroughSwitch(value ir.Expression, groups []switchGroup,
+ 		}
+ 		if len(group.body) > 0 {
+ 			bodies = append(bodies, ir.If{
+-				Condition: ir.Binary{Operator: ir.LessOrEqual, Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
++				Condition: ir.Binary{Operator: auditSwitchOperator("M01", ir.LessOrEqual, ir.Equal), Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
+ 				Then:      group.body,
+ 			})
+ 		}
+diff --git a/internal/lower/switch_bindings.go b/internal/lower/switch_bindings.go
+index 5453d919..ac9cfd61 100644
+--- a/internal/lower/switch_bindings.go
++++ b/internal/lower/switch_bindings.go
+@@ -47,7 +47,7 @@ func (l *lowering) switchBindings(block *ast.Node) ([]ir.Statement, error) {
+ 		ready := len(l.result.Locals)
+ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: l.functionIndex})
+ 		l.result.Locals[local].Ready = ready + 1
+-		storage = append(storage, ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: false}}, ir.Declare{Local: local})
++		storage = append(storage, ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: auditMutant("M13")}}, ir.Declare{Local: local})
+ 		return nil
+ 	}
+ 	for _, clause := range block.AsCaseBlock().Clauses.Nodes {
+diff --git a/internal/native/runtime/typed_array.c b/internal/native/runtime/typed_array.c
+index 5f9846e6..3a3328fd 100644
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -4,6 +4,7 @@
+ #include <stdio.h>
+ #include <stdlib.h>
+ #include <string.h>
++static bool audit_c_mutant(const char *id) { const char *value = getenv("ADAMIC_MUTANT"); return value != NULL && strcmp(value, id) == 0; }
+ 
+ _Static_assert(sizeof(double) == 8, "Float64Array requires 8-byte doubles");
+ 
+@@ -98,17 +99,18 @@ void adamic_typed_array_check_write(const adamic_typed_array *array, double inde
+ 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+ 		size_t number_size = adamic_number_format(index, number);
+ 		size_t length_size = adamic_number_format((double)array->length, length);
+-		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
++		int written = snprintf(message, sizeof message, (audit_c_mutant("M08") ? "index %.*s is beyond an array of length %.*s" : "index %.*s is outside an array of length %.*s"), (int)number_size, number, (int)length_size, length);
+ 		adamic_panic(message, (size_t)written);
+ 	}
+ }
+ 
+ void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
++	if (audit_c_mutant("P05")) { return; }
+ 	adamic_typed_array_check_write(array, index);
+ 	write_element(array, (size_t)index, value);
+ }
+ 
+-double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length; }
++double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length + (audit_c_mutant("M12") ? 1 : 0); }
+ 
+ static size_t relative(double index, size_t length) {
+ 	double integer = isnan(index) ? 0 : trunc(index);
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..e1d583cf 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,6 +714,9 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if os.Getenv("ADAMIC_MUTANT") == "W01" || os.Getenv("ADAMIC_MUTANT") == "P02" {
++		return ""
++	}
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"
+diff --git a/internal/oracle/testdata/typed_arrays_workers_stats.a b/internal/oracle/testdata/typed_arrays_workers_stats.a
+index 3f7382e8..1e7e159c 100644
+--- a/internal/oracle/testdata/typed_arrays_workers_stats.a
++++ b/internal/oracle/testdata/typed_arrays_workers_stats.a
+@@ -1,5 +1,7 @@
+ // Platforms stats reducer and full arithmetic contract at 900409b73d36ea34bb26ec4366c09952839ff897.
+-import { panic } from 'adamic';
++import { panic, readTextFile } from 'adamic';
++const auditFile = readTextFile('/tmp/u070-selector');
++const auditSelector = auditFile.kind === 'Ok' ? auditFile.text : '';
+ 
+ interface StatsInterface {
+     readonly count: number;
+@@ -9,7 +11,8 @@ interface StatsInterface {
+ }
+ 
+ function stats(values: Float64Array): StatsInterface {
+-    let sum = 0;
++    if (auditSelector === "P03") { return {count: 0, sum: 0, minimum: 0, maximum: 0}; }
++    let sum = auditSelector === "M09" ? 1 : 0;
+     let minimum = Infinity;
+     let maximum = -Infinity;
+     for(const value of values) {
+@@ -33,6 +36,7 @@ function numberAt(values: Float64Array, index: number): number {
+ 	return values[index] ?? panic('stats index out of bounds');
+ }
+ function summarize(values: Float64Array): StatsBody {
++    if (auditSelector === "P04") { return {count: 0, mean: 0, median: 0, p95: 0, min: 0, max: 0, standardDeviation: 0}; }
+ 	const count = values.length;
+ 	let sum = 0;
+ 	for (let index = 0; index < count; index += 1) sum = sum + numberAt(values, index);
+@@ -40,7 +44,7 @@ function summarize(values: Float64Array): StatsBody {
+ 	const sorted = sortedCopy(values);
+ 	const middle = Math.floor(count / 2);
+ 	const median = count % 2 === 1 ? numberAt(sorted, middle) : (numberAt(sorted, middle - 1) + numberAt(sorted, middle)) / 2;
+-	const p95 = numberAt(sorted, Math.ceil(0.95 * count) - 1);
++	const p95 = numberAt(sorted, Math.ceil((auditSelector === "M10" ? 0.50 : 0.95) * count) - 1);
+ 	let squaredSum = 0;
+ 	for (let index = 0; index < count; index += 1) {
+ 		const difference = numberAt(values, index) - mean;
+diff --git a/internal/lower/audit_mutant.go b/internal/lower/audit_mutant.go
+new file mode 100644
+index 00000000..11f594f0
+--- /dev/null
++++ b/internal/lower/audit_mutant.go
+@@ -0,0 +1,26 @@
++package lower
++
++import (
++	"github.com/system-inc/adamic/internal/ir"
++	"os"
++)
++
++func auditMutant(id string) bool { return os.Getenv("ADAMIC_MUTANT") == id }
++func auditString(id, before, after string) string {
++	if auditMutant(id) {
++		return after
++	}
++	return before
++}
++func auditNumber(id string, before, after float64) float64 {
++	if auditMutant(id) {
++		return after
++	}
++	return before
++}
++func auditSwitchOperator(id string, before, after ir.Operator) ir.Operator {
++	if auditMutant(id) {
++		return after
++	}
++	return before
++}

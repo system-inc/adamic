@@ -1,0 +1,12 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-c",
+    "-o",
+    "/tmp/u070/oracle.test",
+    "./internal/oracle/"
+  ],
+  "exit": 0,
+  "wall_seconds": 13.166111651000392
+}

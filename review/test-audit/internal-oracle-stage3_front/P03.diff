@@ -1,0 +1,10 @@
+--- a/internal/oracle/testdata/typed_arrays_workers_stats.a
++++ b/internal/oracle/testdata/typed_arrays_workers_stats.a
+@@ -9,6 +9,7 @@
+ }
+ 
+ function stats(values: Float64Array): StatsInterface {
++    return {count: 0, sum: 0, minimum: 0, maximum: 0};
+     let sum = 0;
+     let minimum = Infinity;
+     let maximum = -Infinity;

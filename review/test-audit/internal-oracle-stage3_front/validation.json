@@ -1,0 +1,388 @@
+[
+  {
+    "id": "M01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M01",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M01.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 1.7906873419997282
+  },
+  {
+    "id": "M02",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M02",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M02.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M02.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.9563537309986714
+  },
+  {
+    "id": "M03",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M03",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M03.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M03.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.8895573890004016
+  },
+  {
+    "id": "M04",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M04",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M04.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M04.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.7598837449986604
+  },
+  {
+    "id": "M05",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M05",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M05.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M05.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.7318002360007085
+  },
+  {
+    "id": "M06",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M06",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M06.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M06.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 1.58376582100027
+  },
+  {
+    "id": "M07",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M07",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M07.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M07.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 1.425470515001507
+  },
+  {
+    "id": "M08",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M08",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M08.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-c",
+      "/tmp/u070/validation/M08/internal/native/runtime/typed_array.c",
+      "-o",
+      "/tmp/u070/validation/M08.o"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.1796379569968849
+  },
+  {
+    "id": "M09",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M09",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M09.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070/validation/M09/internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "/tmp/u070/validation/M09-port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 8.086560997999186
+  },
+  {
+    "id": "M10",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M10",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M10.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070/validation/M10/internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "/tmp/u070/validation/M10-port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.4200399629989988
+  },
+  {
+    "id": "M11",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M11",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M11.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M11.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.6286110629989707
+  },
+  {
+    "id": "M12",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M12",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M12.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "/workspace/adamic/internal/native/runtime",
+      "-c",
+      "/tmp/u070/validation/M12/internal/native/runtime/typed_array.c",
+      "-o",
+      "/tmp/u070/validation/M12.o"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.09523553799954243
+  },
+  {
+    "id": "M13",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/M13",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/M13.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/M13.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 1.3746835509991797
+  },
+  {
+    "id": "W01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/W01",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/W01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/W01.json",
+      "./internal/oracle/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.7128237199976866
+  },
+  {
+    "id": "P01",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/P01",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/P01.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/P01.json",
+      "./internal/lower/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 1.5815593170009379
+  },
+  {
+    "id": "P02",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/P02",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/P02.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "vet",
+      "-overlay=/tmp/u070/validation/P02.json",
+      "./internal/oracle/"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.2669506879974506
+  },
+  {
+    "id": "P03",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/P03",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/P03.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070/validation/P03/internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "/tmp/u070/validation/P03-port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.5038424409976869
+  },
+  {
+    "id": "P04",
+    "apply_command": [
+      "git",
+      "apply",
+      "--unsafe-paths",
+      "--directory=/tmp/u070/validation/P04",
+      "/workspace/adamic/review/test-audit/internal-oracle-stage3_front/P04.diff"
+    ],
+    "apply_exit": 0,
+    "compile_command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070/validation/P04/internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "/tmp/u070/validation/P04-port"
+    ],
+    "compile_exit": 0,
+    "wall_seconds": 0.3768338850022701
+  }
+]

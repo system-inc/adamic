@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -108,7 +108,7 @@
+ 	write_element(array, (size_t)index, value);
+ }
+ 
+-double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length; }
++double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length + 1; }
+ 
+ static size_t relative(double index, size_t length) {
+ 	double integer = isnan(index) ? 0 : trunc(index);

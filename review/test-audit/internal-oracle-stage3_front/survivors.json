@@ -1,0 +1,82 @@
+[
+  {
+    "label": "M02-node",
+    "mutant": "",
+    "command": [
+      "node",
+      "--disable-warning=ExperimentalWarning",
+      "oracle/node.mjs",
+      "/tmp/u070-survivor-switch.a"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.0895821900012379
+  },
+  {
+    "label": "M02-build-control",
+    "mutant": "",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070-survivor-switch.a",
+      "/tmp/u070/switch-control"
+    ],
+    "exit": 0,
+    "wall_seconds": 5.673757352000393
+  },
+  {
+    "label": "M02-control",
+    "mutant": "",
+    "command": [
+      "/tmp/u070/switch-control"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.008642665001389105
+  },
+  {
+    "label": "M02-build-mutant",
+    "mutant": "M02",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "/tmp/u070-survivor-switch.a",
+      "/tmp/u070/switch-M02"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.2844246540007589
+  },
+  {
+    "label": "M02-mutant",
+    "mutant": "M02",
+    "command": [
+      "/tmp/u070/switch-M02"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.00683022900193464
+  },
+  {
+    "label": "M11-control",
+    "mutant": "",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "diagnostic"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.08838062200084096
+  },
+  {
+    "label": "M11-mutant",
+    "mutant": "M11",
+    "command": [
+      "go",
+      "run",
+      "./.audit-u070",
+      "diagnostic"
+    ],
+    "exit": 0,
+    "wall_seconds": 0.1009299010001996
+  }
+]

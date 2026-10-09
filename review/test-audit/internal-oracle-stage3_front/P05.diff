@@ -1,0 +1,12 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -104,8 +104,7 @@
+ }
+ 
+ void adamic_typed_array_set(adamic_typed_array *array, double index, double value) {
+-	adamic_typed_array_check_write(array, index);
+-	write_element(array, (size_t)index, value);
++	return;
+ }
+ 
+ double adamic_typed_array_length(const adamic_typed_array *array) { return (double)array->length; }

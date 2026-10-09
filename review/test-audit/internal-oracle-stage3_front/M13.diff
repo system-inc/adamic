@@ -1,0 +1,11 @@
+--- a/internal/lower/switch_bindings.go
++++ b/internal/lower/switch_bindings.go
+@@ -47,7 +47,7 @@
+ 		ready := len(l.result.Locals)
+ 		l.result.Locals = append(l.result.Locals, ir.Local{Name: name.Text() + "_ready", Type: ir.Boolean, Function: l.functionIndex})
+ 		l.result.Locals[local].Ready = ready + 1
+-		storage = append(storage, ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: false}}, ir.Declare{Local: local})
++		storage = append(storage, ir.Declare{Local: ready, Value: ir.BooleanConstant{Value: true}}, ir.Declare{Local: local})
+ 		return nil
+ 	}
+ 	for _, clause := range block.AsCaseBlock().Clauses.Nodes {

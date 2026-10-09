@@ -1,0 +1,3 @@
+package main
+import("context";"fmt";"encoding/json";"os";"time";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/lower";"github.com/system-inc/adamic/internal/native")
+func main(){if os.Args[1]=="diagnostic" { fmt.Println((&lower.Refused{Where:"probe.a:1:1",What:"the non-null assertion !",Fix:"use a guard"}).Error());return };start:=time.Now();p,e:=load.Load([]string{os.Args[1]});if e!=nil{panic(e)};ir,e:=lower.Lower(context.Background(),p);if e!=nil{panic(e)};elapsed:=time.Since(start).Seconds();start=time.Now();e=native.Build(native.C(ir),os.Args[2],native.Options{Sanitize:true});if e!=nil{panic(e)};json.NewEncoder(os.Stdout).Encode(map[string]float64{"load_lower_seconds":elapsed,"native_build_seconds":time.Since(start).Seconds()})}

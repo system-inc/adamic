@@ -1,0 +1,31 @@
+internal/oracle/library_map_set_iterator_test.go:40:					var refusal *lower.NotYet
+internal/oracle/checked_views_optional_read_test.go:47:					t.Errorf("compiler panic instead of the pinned NotYet boundary: %v", value)
+internal/oracle/checked_views_optional_read_test.go:57:				t.Fatal("optional checked read escaped the V1 NotYet boundary")
+internal/oracle/checked_views_optional_read_test.go:59:			var notYet *lower.NotYet
+internal/oracle/checked_views_optional_read_test.go:61:				t.Fatalf("want optional checked-read NotYet, got %v", err)
+internal/oracle/notyet_library_regex_callback_test.go:15:func TestNotYetLibraryRegexCallbackMutants(t *testing.T) {
+internal/oracle/checked_views_v2_migration_test.go:43:	if unsupported, ok := err.(*lower.NotYet); !ok || !strings.Contains(unsupported.What, "views-v3: array element kind") {
+internal/oracle/checked_views_v2_source_test.go:210:			if unsupported, ok := err.(*lower.NotYet); !ok || !(strings.Contains(unsupported.What, "views-v3: array element kind") || variant == "empty" && unsupported.What == "an array of never") {
+internal/oracle/checked_views_v2_source_test.go:211:				t.Fatalf("array admission must stay NotYet: %v", err)
+internal/oracle/imported_const_case_test.go:21:func TestImportedNonliteralConstCaseIsNotYet(t *testing.T) {
+internal/oracle/imported_const_case_test.go:32:	var notYet *lower.NotYet
+internal/oracle/notyet_library_regex_offset_test.go:14:func TestNotYetLibraryRegexOffsetMutants(t *testing.T) {
+internal/oracle/statements_small_rulings_test.go:39:			var notYet *lower.NotYet
+internal/oracle/element_access_boundaries_test.go:15:		// The shared fixture list reads a non-lowering fixture as a NotYet stop. string_dictionary
+internal/oracle/element_access_boundaries_test.go:50:				var stop *lower.NotYet
+internal/oracle/element_access_boundaries_test.go:56:					t.Fatalf("expected explicit NotYet representation/read boundary, got %v", err)
+internal/oracle/switch_case_declaration_test.go:129:func TestSwitchCaseOverloadIsNotYet(t *testing.T) {
+internal/oracle/switch_case_declaration_test.go:140:	var notYet *lower.NotYet
+internal/oracle/enum_initialization_reach_test.go:61:			var gap *lower.NotYet
+internal/oracle/wasi_test.go:57:				var notYet *lower.NotYet
+internal/oracle/wasi_test.go:59:					t.Fatalf("want NotYet, got %v", err)
+internal/oracle/notyet_library_object_entries_const_test.go:17:func TestNotYetLibraryObjectEntriesConstMutant(t *testing.T) {
+internal/oracle/oracle_test.go:743:				var notYet *lower.NotYet
+internal/oracle/predicate_refusals_test.go:50:				var pending *lower.NotYet
+internal/oracle/notyet_library_string_bounds_test.go:19:func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
+internal/oracle/new_expression_test.go:23:func TestNewExpressionUint16RemainsNotYet(t *testing.T) {
+internal/oracle/new_expression_test.go:34:	var notYet *lower.NotYet
+internal/oracle/new_expression_test.go:36:		t.Fatalf("want Uint16Array element-type NotYet, got %v", err)
+internal/oracle/new_expression_test.go:42:func TestNewExpressionCacheCaptureRemainsNotYet(t *testing.T) {
+internal/oracle/new_expression_test.go:53:	var notYet *lower.NotYet
+internal/oracle/new_expression_test.go:55:		t.Fatalf("want additional-capture NotYet, got %v", err)

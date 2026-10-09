@@ -1,0 +1,11 @@
+--- a/internal/lower/switch.go
++++ b/internal/lower/switch.go
+@@ -56,7 +56,7 @@
+ 		}
+ 		if len(group.body) > 0 {
+ 			bodies = append(bodies, ir.If{
+-				Condition: ir.Binary{Operator: ir.LessOrEqual, Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
++				Condition: ir.Binary{Operator: ir.Equal, Left: ir.Read{Local: entry, Of: ir.Number}, Right: position},
+ 				Then:      group.body,
+ 			})
+ 		}

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/typed_array.c
++++ b/internal/native/runtime/typed_array.c
+@@ -98,7 +98,7 @@
+ 		char number[ADAMIC_NUMBER_FORMAT_MAX], length[ADAMIC_NUMBER_FORMAT_MAX], message[128];
+ 		size_t number_size = adamic_number_format(index, number);
+ 		size_t length_size = adamic_number_format((double)array->length, length);
+-		int written = snprintf(message, sizeof message, "index %.*s is outside an array of length %.*s", (int)number_size, number, (int)length_size, length);
++		int written = snprintf(message, sizeof message, "index %.*s is beyond an array of length %.*s", (int)number_size, number, (int)length_size, length);
+ 		adamic_panic(message, (size_t)written);
+ 	}
+ }

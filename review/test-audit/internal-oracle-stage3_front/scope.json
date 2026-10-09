@@ -1,0 +1,17 @@
+{
+  "rows": [
+    "TestStage3EnumFallthrough",
+    "TestStage3FixtureHook",
+    "TestStatementsSmallRulings",
+    "TestStatementsSmallTypeScriptIncrement",
+    "TestSwitchCaseDeadZoneStop",
+    "TestSwitchCaseDeclarationMutants",
+    "TestSwitchCaseOverloadIsNotYet",
+    "TestSwitchTrailingEmptyMutant",
+    "TestSyntaxModuleDeclarationMutants",
+    "TestSyntaxSubstrMutants",
+    "TestTypedArrayWriteStopIsPinned",
+    "TestTypedArrayWorkersStatsMatchesPlatforms"
+  ],
+  "extra_pattern": "^TestNativeAgreesWithNode$/internal/oracle/testdata/(switch_case_declarations|93122fa_s[12]|switch_empty_neighbors|syntax_module_declarations|syntax_substr|typed_arrays_(stop|workers_stats))"
+}
