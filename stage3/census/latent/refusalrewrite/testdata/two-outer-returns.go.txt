@@ -1,0 +1,27 @@
+package lower
+import "probe/ast"
+func (l *lowering) refuse(module *ast.SourceFile) error {
+ if len(module.CommentDirectives)>0 {
+  directive:=module.CommentDirectives[0]
+  return &Refused{What:directive.Name}
+ }
+ var contractError error
+ var contracts ast.Visitor
+ contracts=func(node *ast.Node) bool {
+  if contractError!=nil{return true}
+  if node.Kind==ast.KindCallExpression {contractError=l.predicateArguments(node)}
+  if contractError==nil {node.ForEachChild(contracts)}
+  return contractError!=nil
+ }
+ module.AsNode().ForEachChild(contracts)
+ var found error
+ var visit ast.Visitor
+ visit=func(node *ast.Node) bool {
+  if found!=nil{return true}
+  if err:=l.nodeRefusal(node);err!=nil{found=err;return true}
+  node.ForEachChild(visit)
+  return false
+ }
+ module.AsNode().ForEachChild(visit)
+ return found
+}
