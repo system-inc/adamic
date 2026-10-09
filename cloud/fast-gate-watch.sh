@@ -100,6 +100,12 @@ judgeMutant() {
   cause=$(voidCause "${log}")
   [ -n "${cause}" ] && { echo "void ${cause}"; return; }
   verdict=$(grep -E '^(green|red): ' "${log}" | tail -1)
+  # Step thin: a canary input whose landings select too little must read as a thin canary, never green (hole 5).
+  if [ "${step}" = thin ]; then
+    if [[ ${verdict} == "green: ${sha} "* ]] && [ -n "$(thinCanary "${log}")" ]; then echo ok
+    else echo "wrong ${verdict:0:200} (expected a canary green under ${canaryMinPass} passed tests, which reads void)"; fi
+    return
+  fi
   if [[ ${verdict} != "red: ${sha} "* ]] || ! echo "${verdict}" | grep -qE "first failure at ${step}([ ,(]|$)"; then
     echo "wrong ${verdict:0:200} (expected red at ${step})"
     return

@@ -27,7 +27,9 @@ gateBase() {
   # Main's canary (#k1n98kx): main gated against itself selects no test (Oct 9 10:42Z: tests=0.0s, and that green
   # promoted tools). It is gated against main ten landings back, so it selects what those landings touched: a real
   # selection whose answer main already holds.
-  if [ "${branch}" = canary/main ]; then
+  # A canary-shaped gate mutant (gate-mutants/canary-*, #fyvmsy8 hole 5) is gated the same way, so the suite can plant a
+  # canary input whose ten landings select nothing.
+  if [ "${branch}" = canary/main ] || [[ ${branch} == gate-mutant/canary-* ]]; then
     haveCommits "${sha}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" 2> /dev/null
     echo "main~10 $(git -C "${here}" rev-parse "${sha}~10")"
     return

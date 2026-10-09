@@ -1157,6 +1157,25 @@ class WatchTests(unittest.TestCase):
         self.assertIn('plain: void three times: fast gate, box box0 lacks a declared tool: tsc', w.read('output'))
         self.assertFalse((w.state / 'storm').exists())
 
+    def test_a_canary_shaped_mutant_must_read_thin(self):
+        # Hole 5: a canary input whose landings select nothing reads green on almost nothing; a correct gate calls it thin.
+        thin = 'thin\t' + 'f' * 40 + '\tthin\t\n'
+        w = self.mutantsStaged(mutants=self.suite + thin)
+        w.put('mutant-plain', self.redAtTests)
+        w.put('mutant-census', self.redAtCensus)
+        w.put('mutant-thin', 'green: SHA fast gate in 9.0 s, 1 packages, 12 pass, 0 skip, smoke 1 fixtures\n')
+        w.put('initial', 'pass')
+        w.wait(lambda: 'promoted tools tools-one' in w.read('output'))
+        # The same input read green on enough tests means the floor is gone: the suite holds the tools.
+        w2 = self.mutantsStaged(mutants=self.suite + thin)
+        w2.put('mutant-plain', self.redAtTests)
+        w2.put('mutant-census', self.redAtCensus)
+        w2.put('mutant-thin', self.green)
+        w2.put('initial', 'pass')
+        w2.wait(lambda: 'held tools tools-one' in w2.read('output'))
+        self.assertIn('thin: green: ' + 'f' * 40, w2.read('output'))
+        self.assertIn('expected a canary green under 500 passed tests', w2.read('output'))
+
     def test_a_missing_suite_holds_promotion(self):
         w = self.mutantsStaged(mutants=None)
         w.put('initial', 'pass')
