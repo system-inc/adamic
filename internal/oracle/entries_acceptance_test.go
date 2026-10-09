@@ -33,7 +33,7 @@ func TestEntriesAcceptance(t *testing.T) {
 	}
 	contents, err := os.ReadFile(filepath.Join(directory, "expectations.json"))
 	if errors.Is(err, os.ErrNotExist) {
-		t.Skip("acceptance dependency: codex/step12-entries-fixtures 8d864f9c")
+		t.Skip("awaits codex/step12-entries-fixtures: typescript's Object.entries acceptance programs (8d864f9c), stage3/fixtures/entries")
 	}
 	if err != nil {
 		t.Fatal(err)
