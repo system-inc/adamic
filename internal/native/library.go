@@ -122,7 +122,8 @@ func runtimeKey(files []runtimeFile, flags []string, compiler string, version st
 	hash := sha256.New()
 	// Length prefixes preserve flag boundaries, order and arbitrary source bytes.
 	part := func(value string) { fmt.Fprintf(hash, "%d:", len(value)); hash.Write([]byte(value)) }
-	part("adamic-runtime-v1")
+	// v2: objects no longer carry the build directory (-ffile-prefix-map), so a v1 archive built without it is never reused.
+	part("adamic-runtime-v2")
 	part(goruntime.GOOS)
 	part(goruntime.GOARCH)
 	part(compiler)
@@ -184,8 +185,13 @@ func cachedRuntime(files []runtimeFile, flags []string, compiler string, version
 			continue
 		}
 		object := filepath.Join(temporary, strings.TrimSuffix(file.name, ".c")+".o")
-		arguments := append(append([]string{}, flags...), "-c", filepath.Join(temporary, file.name), "-o", object)
-		if output, err := exec.Command(compiler, arguments...).CombinedOutput(); err != nil {
+		// The build directory is random and the cache sits under each machine's home, so neither may reach an object:
+		// mapped, and compiled from inside it, the archive's bytes are a function of its key (Oct 9: a native product
+		// carried ~/.cache/adamic/runtime/.build-<random> in its debug info and never matched a rebuild).
+		arguments := append(append([]string{}, flags...), "-ffile-prefix-map="+temporary+"=/adamic-runtime", "-c", file.name, "-o", object)
+		command := exec.Command(compiler, arguments...)
+		command.Dir = temporary
+		if output, err := command.CombinedOutput(); err != nil {
 			return "", fmt.Errorf("native: compiling runtime %s: %w\n%s", file.name, err, output)
 		}
 		objects = append(objects, object)
