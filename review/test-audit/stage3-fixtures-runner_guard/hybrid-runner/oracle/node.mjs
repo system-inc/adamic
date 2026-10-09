@@ -1,0 +1,1 @@
+stripTypeScriptTypes(source, { mode: 'transform' });stripTypeScriptTypes(source, { mode: 'unknown' });new URL('./adamic.mjs', import.meta.url)

@@ -1,0 +1,11 @@
+Fixed plan before any mutation outcome. The three scoped rows are a helper, a guard witness, and a setup check. No compiler, port, actual Node oracle, or manifest is mutated.
+W1: weaken the complete transformedNodeRunner shape guard to impossible erasable+transformedCalls < 0.
+W2: weaken runtime URL count from != 1 to > 1, accepting zero URLs.
+W3: weaken total stripTypeScriptTypes prefix count from != 1 to > 2, accepting an extra unrecognized call alongside a recognized one.
+S1: drop TestFixturesAssertions's sole call statement, leaving an empty body.
+S2: change TestFixturesCycles's directory constant from cycles to enums.
+S3: return early from TestFixturesTaste by replacing its sole call with return.
+These are the explicit witness/setup exceptions to harness/test edits.
+P1: empty callable entry transformedNodeRunner returns an empty path; observe active hook and parent separately.
+P2: empty construction removes all eleven fixture unit declarations; this is an empty-registry probe, not a callable-entry probe, so setup vacuity remains null.
+Standalone mutations are replayed separately. A runtime switch in a fixture declaration would itself change the AST shape inspected by the setup check, even when disabled.

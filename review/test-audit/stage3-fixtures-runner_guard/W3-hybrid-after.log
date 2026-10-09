@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T13:58:15.843508558Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-09T13:58:15.855174997Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:58:15.855250498Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== RUN   TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:15.855282486Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== PAUSE TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:15.855284839Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:58:15.855286993Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:58:15.855288595Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== CONT  TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:15.855348994Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"--- PASS: TestTransformedNodeRunnerGuardHook (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:15.855355023Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Elapsed":0}
+{"Time":"2026-10-09T13:58:15.855382113Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:58:15.855513407Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"ok  \tgithub.com/system-inc/adamic/stage3/fixtures\t0.012s\n"}
+{"Time":"2026-10-09T13:58:15.855533386Z","Action":"pass","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":0.012}

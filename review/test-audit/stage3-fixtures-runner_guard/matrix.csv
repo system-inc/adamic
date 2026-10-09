@@ -1,0 +1,8 @@
+row,W1,W2,W3,S1,S2,S3
+TestFixtures family,pass,pass,pass,pass,pass,pass
+TestPrepareFixtureOracleHook,pass,pass,pass,pass,pass,pass
+TestFixturePaths,pass,pass,pass,pass,pass,pass
+TestFixtureShardManifest,pass,pass,pass,pass,pass,pass
+TestTransformedNodeRunnerGuardHook,skip,skip,skip,skip,skip,skip
+TestTransformedNodeRunnerGuard,fail,fail,pass,pass,pass,pass
+TestFixtureDirectoriesHaveTopLevelTests,pass,pass,pass,fail,fail,fail

@@ -1,0 +1,83 @@
+[
+  {
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "iteration": 1,
+    "seconds": 0.01,
+    "wall": 2.309288218000802,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "helper_environment": "/workspace/adamic",
+    "exit": 0
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "iteration": 2,
+    "seconds": 0.01,
+    "wall": 2.238920462999886,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "helper_environment": "/workspace/adamic",
+    "exit": 0
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "iteration": 3,
+    "seconds": 0.009,
+    "wall": 2.241194489000918,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "helper_environment": "/workspace/adamic",
+    "exit": 0
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuard",
+    "iteration": 1,
+    "seconds": 0.054,
+    "wall": 2.4089838870004314,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuard$'",
+    "helper_environment": null,
+    "exit": 0
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuard",
+    "iteration": 2,
+    "seconds": 0.072,
+    "wall": 2.377283031999468,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuard$'",
+    "helper_environment": null,
+    "exit": 0
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuard",
+    "iteration": 3,
+    "seconds": 0.038,
+    "wall": 2.467778272000942,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuard$'",
+    "helper_environment": null,
+    "exit": 0
+  },
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "iteration": 1,
+    "seconds": 0.021,
+    "wall": 2.0590132050001557,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestFixtureDirectoriesHaveTopLevelTests$'",
+    "helper_environment": null,
+    "exit": 0
+  },
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "iteration": 2,
+    "seconds": 0.013,
+    "wall": 2.1741878199991334,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestFixtureDirectoriesHaveTopLevelTests$'",
+    "helper_environment": null,
+    "exit": 0
+  },
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "iteration": 3,
+    "seconds": 0.013,
+    "wall": 1.9832513540004584,
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestFixtureDirectoriesHaveTopLevelTests$'",
+    "helper_environment": null,
+    "exit": 0
+  }
+]

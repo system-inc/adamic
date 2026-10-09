@@ -1,0 +1,11 @@
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -146,7 +146,7 @@
+ }
+ 
+ func TestFixturesAssertions(t *testing.T)      { testFixtureDirectory(t, "assertions") }
+-func TestFixturesCycles(t *testing.T)          { testFixtureDirectory(t, "cycles") }
++func TestFixturesCycles(t *testing.T)          { testFixtureDirectory(t, "enums") }
+ func TestFixturesEnums(t *testing.T)           { testFixtureDirectory(t, "enums") }
+ func TestFixturesHost(t *testing.T)            { testFixtureDirectory(t, "host") }
+ func TestFixturesNamespaces(t *testing.T)      { testFixtureDirectory(t, "namespaces") }

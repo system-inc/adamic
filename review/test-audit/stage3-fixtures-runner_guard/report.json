@@ -1,0 +1,110 @@
+[
+  {
+    "test": "TestTransformedNodeRunnerGuardHook",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/runner_guard_test.go:10",
+    "seconds": 0.01,
+    "oracle": "Self-written output text shape assertions. Active helper reads the derived runner; it never executes Node. Default whole-package entry skips unless its parent supplies ADAMIC_RUNNER_GUARD_REPOSITORY.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "helper",
+    "parent": "TestTransformedNodeRunnerGuard",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestTransformedNodeRunnerGuard",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "ADAMIC_RUNNER_GUARD_REPOSITORY=/workspace/adamic timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$' > P1-hook.log 2>&1; runner_guard_test.go:19: open : no such file or directory",
+    "timing_mode": "helper activated with repository environment"
+  },
+  {
+    "test": "TestTransformedNodeRunnerGuard",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/runner_guard_test.go:27",
+    "seconds": 0.054,
+    "oracle": "Self-written nine-input accepted/rejected table. Valid inputs require successful child exit. Invalid inputs require failed child exit and the exact shape-guard diagnostic marker, so a later hook failure is rejected. No Node execution.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "witness_kills": [
+      "W1",
+      "W2"
+    ],
+    "last_proven_fail": "W2 runner_guard_test.go:62: unexpected runner must fail at the shape guard: {Stdout:--- FAIL: TestTransformedNodeRunnerGuardHook (0.00s)",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestTransformedNodeRunnerGuard",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run . > W2.log 2>&1; runner_guard_test.go:62: unexpected runner must fail at the shape guard: {Stdout:--- FAIL: TestTransformedNodeRunnerGuardHook (0.00s)",
+    "surviving_weakenings": [
+      "W3"
+    ]
+  },
+  {
+    "test": "TestFixtureDirectoriesHaveTopLevelTests",
+    "package": "stage3/fixtures",
+    "file": "stage3/fixtures/units_test.go:19",
+    "seconds": 0.013,
+    "oracle": "Self-written suite-construction rule: every fixture directory has one direct top-level TestFixtures declaration naming its literal directory; actual declarations are parsed and compared to filesystem directories and status rows.",
+    "oracle_kind": "self",
+    "kills": [
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "unique_kills": [
+      "S1",
+      "S2",
+      "S3"
+    ],
+    "last_proven_fail": "S3 units_test.go:51: TestFixturesTaste must call testFixtureDirectory directly",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 6,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": false,
+    "matrix_rows": [
+      "TestFixtures family",
+      "TestPrepareFixtureOracleHook",
+      "TestFixturePaths",
+      "TestFixtureShardManifest",
+      "TestTransformedNodeRunnerGuardHook",
+      "TestTransformedNodeRunnerGuard",
+      "TestFixtureDirectoriesHaveTopLevelTests"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run . > S3.log 2>&1; units_test.go:51: TestFixturesTaste must call testFixtureDirectory directly",
+    "probe_note": "P2 empties the static unit declaration registry. This is not a callable-entry probe, so callable-entry vacuity is not assigned."
+  }
+]

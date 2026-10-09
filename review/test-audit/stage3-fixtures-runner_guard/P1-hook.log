@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T13:59:27.694313734Z","Action":"start","Package":"github.com/system-inc/adamic/stage3/fixtures"}
+{"Time":"2026-10-09T13:59:27.703672263Z","Action":"run","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:59:27.703797909Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== RUN   TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703833061Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== PAUSE TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703835585Z","Action":"pause","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:59:27.703837939Z","Action":"cont","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook"}
+{"Time":"2026-10-09T13:59:27.703839591Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"=== CONT  TestTransformedNodeRunnerGuardHook\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703842425Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"    runner_guard_test.go:19: open : no such file or directory\n","OutputType":"error"}
+{"Time":"2026-10-09T13:59:27.703850077Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Output":"--- FAIL: TestTransformedNodeRunnerGuardHook (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703851919Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Test":"TestTransformedNodeRunnerGuardHook","Elapsed":0}
+{"Time":"2026-10-09T13:59:27.703862395Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703905739Z","Action":"output","Package":"github.com/system-inc/adamic/stage3/fixtures","Output":"FAIL\tgithub.com/system-inc/adamic/stage3/fixtures\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:59:27.703913711Z","Action":"fail","Package":"github.com/system-inc/adamic/stage3/fixtures","Elapsed":0.01}

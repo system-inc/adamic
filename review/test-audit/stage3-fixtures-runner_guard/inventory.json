@@ -1,0 +1,26 @@
+{
+  "helper_entry": [
+    "stage3/fixtures/runner_guard_test.go:10 TestTransformedNodeRunnerGuardHook",
+    "stage3/fixtures/fixtures_test.go:122 transformedNodeRunner"
+  ],
+  "witness": [
+    "stage3/fixtures/runner_guard_test.go:27 TestTransformedNodeRunnerGuard",
+    "stage3/fixtures/fixtures_test.go:51 execute",
+    "child TestTransformedNodeRunnerGuardHook",
+    "transformedNodeRunner"
+  ],
+  "construction": [
+    "stage3/fixtures/fixtures_test.go:148 TestFixturesAssertions",
+    "stage3/fixtures/fixtures_test.go:149 TestFixturesCycles",
+    "stage3/fixtures/fixtures_test.go:150 TestFixturesEnums",
+    "stage3/fixtures/fixtures_test.go:151 TestFixturesHost",
+    "stage3/fixtures/fixtures_test.go:152 TestFixturesNamespaces",
+    "stage3/fixtures/fixtures_test.go:153 TestFixturesNestedFunctions",
+    "stage3/fixtures/fixtures_test.go:154 TestFixturesObjects",
+    "stage3/fixtures/fixtures_test.go:155 TestFixturesPredicates",
+    "stage3/fixtures/fixtures_test.go:156 TestFixturesRecords",
+    "stage3/fixtures/fixtures_test.go:157 TestFixturesRunner",
+    "stage3/fixtures/fixtures_test.go:158 TestFixturesTaste"
+  ],
+  "construction_checker": "stage3/fixtures/units_test.go:19 TestFixtureDirectoriesHaveTopLevelTests parses the declarations and compares them to filesystem fixture directories; it does not execute testFixtureDirectory"
+}

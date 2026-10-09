@@ -1,0 +1,20 @@
+--- a/stage3/fixtures/fixtures_test.go
++++ b/stage3/fixtures/fixtures_test.go
+@@ -145,17 +145,6 @@
+ 	return transformed
+ }
+ 
+-func TestFixturesAssertions(t *testing.T)      { testFixtureDirectory(t, "assertions") }
+-func TestFixturesCycles(t *testing.T)          { testFixtureDirectory(t, "cycles") }
+-func TestFixturesEnums(t *testing.T)           { testFixtureDirectory(t, "enums") }
+-func TestFixturesHost(t *testing.T)            { testFixtureDirectory(t, "host") }
+-func TestFixturesNamespaces(t *testing.T)      { testFixtureDirectory(t, "namespaces") }
+-func TestFixturesNestedFunctions(t *testing.T) { testFixtureDirectory(t, "nested-functions") }
+-func TestFixturesObjects(t *testing.T)         { testFixtureDirectory(t, "objects") }
+-func TestFixturesPredicates(t *testing.T)      { testFixtureDirectory(t, "predicates") }
+-func TestFixturesRecords(t *testing.T)         { testFixtureDirectory(t, "records") }
+-func TestFixturesRunner(t *testing.T)          { testFixtureDirectory(t, "runner") }
+-func TestFixturesTaste(t *testing.T)           { testFixtureDirectory(t, "taste") }
+ 
+ func testFixtureDirectory(t *testing.T, directory string) {
+ 	t.Helper()

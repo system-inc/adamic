@@ -1,0 +1,179 @@
+[
+  {
+    "id": "W3-hybrid-before",
+    "command": "ADAMIC_RUNNER_GUARD_REPOSITORY=/tmp/u164/hybrid-runner timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "wall": 2.0671,
+    "exit": 1,
+    "environment": {
+      "ADAMIC_RUNNER_GUARD_REPOSITORY": "/tmp/u164/hybrid-runner"
+    }
+  },
+  {
+    "id": "W1-apply-check",
+    "command": "git apply --check /tmp/u164/W1.diff",
+    "wall": 0.0021,
+    "exit": 0
+  },
+  {
+    "id": "W1-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.2677,
+    "exit": 0
+  },
+  {
+    "id": "W1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 22.9661,
+    "exit": 1
+  },
+  {
+    "id": "W2-apply-check",
+    "command": "git apply --check /tmp/u164/W2.diff",
+    "wall": 0.0018,
+    "exit": 0
+  },
+  {
+    "id": "W2-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1594,
+    "exit": 0
+  },
+  {
+    "id": "W2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 22.5901,
+    "exit": 1
+  },
+  {
+    "id": "W3-apply-check",
+    "command": "git apply --check /tmp/u164/W3.diff",
+    "wall": 0.004,
+    "exit": 0
+  },
+  {
+    "id": "W3-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1627,
+    "exit": 0
+  },
+  {
+    "id": "W3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 22.0252,
+    "exit": 0
+  },
+  {
+    "id": "W3-hybrid-after",
+    "command": "ADAMIC_RUNNER_GUARD_REPOSITORY=/tmp/u164/hybrid-runner timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "wall": 2.0123,
+    "exit": 0,
+    "environment": {
+      "ADAMIC_RUNNER_GUARD_REPOSITORY": "/tmp/u164/hybrid-runner"
+    }
+  },
+  {
+    "id": "S1-apply-check",
+    "command": "git apply --check /tmp/u164/S1.diff",
+    "wall": 0.0018,
+    "exit": 0
+  },
+  {
+    "id": "S1-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.168,
+    "exit": 0
+  },
+  {
+    "id": "S1",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 21.3809,
+    "exit": 1
+  },
+  {
+    "id": "S2-apply-check",
+    "command": "git apply --check /tmp/u164/S2.diff",
+    "wall": 0.0021,
+    "exit": 0
+  },
+  {
+    "id": "S2-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1972,
+    "exit": 0
+  },
+  {
+    "id": "S2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 23.2638,
+    "exit": 1
+  },
+  {
+    "id": "S3-apply-check",
+    "command": "git apply --check /tmp/u164/S3.diff",
+    "wall": 0.0018,
+    "exit": 0
+  },
+  {
+    "id": "S3-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1518,
+    "exit": 0
+  },
+  {
+    "id": "S3",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 20.3984,
+    "exit": 1
+  },
+  {
+    "id": "P1-apply-check",
+    "command": "git apply --check /tmp/u164/P1.diff",
+    "wall": 0.0018,
+    "exit": 0
+  },
+  {
+    "id": "P1-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1767,
+    "exit": 0
+  },
+  {
+    "id": "P1-hook",
+    "command": "ADAMIC_RUNNER_GUARD_REPOSITORY=/workspace/adamic timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuardHook$'",
+    "wall": 6.0875,
+    "exit": 1,
+    "environment": {
+      "ADAMIC_RUNNER_GUARD_REPOSITORY": "/workspace/adamic"
+    }
+  },
+  {
+    "id": "P1-parent",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestTransformedNodeRunnerGuard$'",
+    "wall": 2.2994,
+    "exit": 1
+  },
+  {
+    "id": "P2-apply-check",
+    "command": "git apply --check /tmp/u164/P2.diff",
+    "wall": 0.0025,
+    "exit": 0
+  },
+  {
+    "id": "P2-vet",
+    "command": "timeout 90 go vet ./stage3/fixtures/",
+    "wall": 0.1876,
+    "exit": 0
+  },
+  {
+    "id": "P2",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run '^TestFixtureDirectoriesHaveTopLevelTests$'",
+    "wall": 5.8526,
+    "exit": 1
+  },
+  {
+    "id": "restored-baseline",
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./stage3/fixtures/ -run .",
+    "wall": 18.914,
+    "exit": 0
+  }
+]

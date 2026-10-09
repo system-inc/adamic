@@ -1,0 +1,94 @@
+{
+  "base": "cf735d9fba9e38de6368575e5630e44375a86eaf",
+  "scope": [
+    "TestTransformedNodeRunnerGuardHook",
+    "TestTransformedNodeRunnerGuard",
+    "TestFixtureDirectoriesHaveTopLevelTests"
+  ],
+  "matrix_rows": [
+    "TestFixtures family",
+    "TestPrepareFixtureOracleHook",
+    "TestFixturePaths",
+    "TestFixtureShardManifest",
+    "TestTransformedNodeRunnerGuardHook",
+    "TestTransformedNodeRunnerGuard",
+    "TestFixtureDirectoriesHaveTopLevelTests"
+  ],
+  "family_members": [
+    "TestFixturesAssertions",
+    "TestFixturesCycles",
+    "TestFixturesEnums",
+    "TestFixturesHost",
+    "TestFixturesNamespaces",
+    "TestFixturesNestedFunctions",
+    "TestFixturesObjects",
+    "TestFixturesPredicates",
+    "TestFixturesRecords",
+    "TestFixturesRunner",
+    "TestFixturesTaste"
+  ],
+  "mutant_kinds": {
+    "W1": "weakened witness check",
+    "W2": "weakened witness check",
+    "W3": "weakened witness check",
+    "S1": "construction",
+    "S2": "construction",
+    "S3": "construction"
+  },
+  "results": {
+    "W1": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "fail",
+      "TestFixtureDirectoriesHaveTopLevelTests": "pass"
+    },
+    "W2": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "fail",
+      "TestFixtureDirectoriesHaveTopLevelTests": "pass"
+    },
+    "W3": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "pass",
+      "TestFixtureDirectoriesHaveTopLevelTests": "pass"
+    },
+    "S1": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "pass",
+      "TestFixtureDirectoriesHaveTopLevelTests": "fail"
+    },
+    "S2": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "pass",
+      "TestFixtureDirectoriesHaveTopLevelTests": "fail"
+    },
+    "S3": {
+      "TestFixtures family": "pass",
+      "TestPrepareFixtureOracleHook": "pass",
+      "TestFixturePaths": "pass",
+      "TestFixtureShardManifest": "pass",
+      "TestTransformedNodeRunnerGuardHook": "skip",
+      "TestTransformedNodeRunnerGuard": "pass",
+      "TestFixtureDirectoriesHaveTopLevelTests": "fail"
+    }
+  }
+}
