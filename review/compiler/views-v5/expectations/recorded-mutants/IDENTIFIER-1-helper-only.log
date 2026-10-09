@@ -1,0 +1,7 @@
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier
+=== PAUSE TestCheckedViewIntersectionOriginalIdentifier
+=== CONT  TestCheckedViewIntersectionOriginalIdentifier
+    checked_views_intersections_identifier_test.go:16: awaits lane 4 inventory: lefthandsideexpression & identifier-good.a
+--- SKIP: TestCheckedViewIntersectionOriginalIdentifier (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.027s

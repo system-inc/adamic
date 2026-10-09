@@ -1,0 +1,16 @@
+[
+  {
+    "fixture": "stage3/interface-downcasts/lane7/emit-root-wrong.a",
+    "baseline": "97c69648",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:11:7: stage 0 can't lower a value of type EmitNode & { readonly autoGenerate: AutoGenerateInfo; } yet\n",
+    "seconds": 0.128
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/deferred-member-read.a",
+    "baseline": "97c69648",
+    "exit": 1,
+    "stderr": "adamic: /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-read.a:10:7: stage 0 can't lower a value of type Named & Counted yet\n",
+    "seconds": 0.125
+  }
+]

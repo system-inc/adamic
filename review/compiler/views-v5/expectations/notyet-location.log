@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionDeferredMember
+=== PAUSE TestCheckedViewIntersectionDeferredMember
+=== CONT  TestCheckedViewIntersectionDeferredMember
+=== RUN   TestCheckedViewIntersectionDeferredMember/read
+    checked_views_intersections_deferred_test.go:23: want NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-read.a:7:35: an array of never; , got /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-read.a:7:35:mutant: stage 0 can't lower an array of never yet
+--- FAIL: TestCheckedViewIntersectionDeferredMember (0.03s)
+    --- FAIL: TestCheckedViewIntersectionDeferredMember/read (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.039s
+FAIL

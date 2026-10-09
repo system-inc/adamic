@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionCompoundDemand
+=== PAUSE TestCheckedViewIntersectionCompoundDemand
+=== CONT  TestCheckedViewIntersectionCompoundDemand
+=== RUN   TestCheckedViewIntersectionCompoundDemand/compound-unread
+    checked_views_intersections_test.go:257: want Refused at /workspace/adamic/stage3/interface-downcasts/lane7/compound-unread.a:9:14: checked intersection view with unsupported member Target.value (object union intersection handoff); prove or implement the complete member contract before creating this view, got <nil>
+=== RUN   TestCheckedViewIntersectionCompoundDemand/compound-untagged-read
+    checked_views_intersections_test.go:257: want Refused at /workspace/adamic/stage3/interface-downcasts/lane7/compound-untagged-read.a:9:14: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view, got /workspace/adamic/stage3/interface-downcasts/lane7/compound-untagged-read.a:10:14: Adamic 0.1 refuses checked view read of field value with unsupported union intersection contract; prove or implement the union intersection contract before reading this field
+--- FAIL: TestCheckedViewIntersectionCompoundDemand (0.05s)
+    --- FAIL: TestCheckedViewIntersectionCompoundDemand/compound-unread (0.03s)
+    --- FAIL: TestCheckedViewIntersectionCompoundDemand/compound-untagged-read (0.02s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.062s
+FAIL

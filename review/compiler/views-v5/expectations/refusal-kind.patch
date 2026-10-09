@@ -1,0 +1,11 @@
+--- a/internal/lower/view_intersections.go
++++ b/internal/lower/view_intersections.go
+@@ -621,7 +621,7 @@
+ }
+ func (l *lowering) checkCompleteIntersectionView(node *ast.Node, id ir.ViewContractID, path string, seen map[ir.ViewContractID]bool) error {
+ 	refused := func(family string) error {
+-		return &Refused{Where: l.program.Where(node), What: "checked intersection view with unsupported member " + path + " (" + family + ")", Fix: "prove or implement the complete member contract before creating this view"}
++		return &NotYet{Where: l.program.Where(node), What: "checked intersection view with unsupported member " + path + " (" + family + ")", Fix: "prove or implement the complete member contract before creating this view"}
+ 	}
+ 	if id <= 0 || int(id) > len(l.result.ViewContracts) {
+ 		return refused("unavailable")

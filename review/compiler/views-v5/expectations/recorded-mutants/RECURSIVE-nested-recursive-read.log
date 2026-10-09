@@ -1,0 +1,15 @@
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+=== PAUSE TestCheckedViewIntersectionRecursiveDemand
+=== CONT  TestCheckedViewIntersectionRecursiveDemand
+    checked_views_intersections_test.go:270: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-unread.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:272: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-read
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-read.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+--- PASS: TestCheckedViewIntersectionRecursiveDemand (0.67s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-read (0.24s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.731s

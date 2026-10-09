@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":20:21",
+  "what": "checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalBindable__bindable-static-expression-wrong__bindable-static-expression-wrong.a",
+  "source_sha256": "3eb421341d0ad0e3c3b757622a20761f8fe198c1477189e9e56aea7917c5a8e8"
+}

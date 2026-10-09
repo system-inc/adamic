@@ -71,7 +71,7 @@ func intersectionOriginalInputs(t *testing.T) (string, intersectionOriginalManif
 	return declarations, manifest
 }
 
-func intersectionOriginalProgram(t *testing.T, declarations, name, source string) (*ir.Program, string) {
+func intersectionOriginalProgram(t *testing.T, declarations, name, source string) (*ir.Program, string, bool) {
 	t.Helper()
 	input, err := os.ReadFile(checkedViewFixturePath("../../stage3/interface-downcasts/lane7/original/" + name + ".a"))
 	if err != nil {
@@ -86,10 +86,13 @@ func intersectionOriginalProgram(t *testing.T, declarations, name, source string
 		t.Fatal("Node: " + difference)
 	}
 	program, err := lowered(t, file)
+	if intersectionExpectedStop(t, file, err) {
+		return nil, file, true
+	}
 	if err != nil {
 		t.Fatal(err)
 	}
-	return program, file
+	return program, file, false
 }
 
 func requireIntersectionOriginalFields(t *testing.T, program *ir.Program, manifest intersectionOriginalManifest) {
@@ -140,7 +143,10 @@ func TestCheckedViewIntersectionOriginalPairs(t *testing.T) {
 		{"tracker-root-wrong", "true\n", "field read failed: tracker?.moduleResolverHost matches no member of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined; expected (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined, found string"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			program, _ := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			program, _, stopped := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			if stopped {
+				return
+			}
 			requireIntersectionOriginalFields(t, program, manifest)
 			if kind := os.Getenv("ADAMIC_INTERSECTION_ORIGINAL_MUTANT"); kind != "" {
 				intersectionOriginalMutant(t, program, kind)
@@ -281,7 +287,10 @@ func TestCheckedViewIntersectionOriginalBindable(t *testing.T) {
 		{"bindable-access-expression-this", "true\n", "field read failed: node.left.expression.expression.kind expected SyntaxKind.Identifier | SyntaxKind.PropertyAccessExpression, found number 110", access},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			program, _ := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			program, _, stopped := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			if stopped {
+				return
+			}
 			requireIntersectionOriginalBindable(t, program, manifest, test.pairs...)
 			if kind := os.Getenv("ADAMIC_INTERSECTION_ORIGINAL_MUTANT"); kind != "" {
 				intersectionOriginalBindableMutant(t, program, kind)
@@ -410,7 +419,10 @@ func TestCheckedViewIntersectionOriginalNodes(t *testing.T) {
 		{"class-implements-arguments", "true\n", "field read failed: n.class.typeArguments is not a NodeArray<TypeNode> | undefined; expected NodeArray<TypeNode> | undefined, found string", class, []int{8882}},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			program, _ := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			program, _, stopped := intersectionOriginalProgram(t, declarations, test.name, test.source)
+			if stopped {
+				return
+			}
 			requireIntersectionOriginalComplete(t, program, manifest, test.names, test.pairs...)
 			if kind := os.Getenv("ADAMIC_INTERSECTION_ORIGINAL_MUTANT"); kind != "" {
 				intersectionOriginalBindableMutant(t, program, kind)

@@ -1,0 +1,15 @@
+interface Left { readonly value: number; readonly left: number }
+interface Right { readonly value: number; readonly right: string }
+interface Named { readonly descendant: Left | Right }
+interface Counted { readonly count: number; readonly items: readonly number[] }
+interface Carrier { readonly value: object }
+interface Target extends Carrier { readonly value: Named & Counted }
+const actual = { count: 1, items: [], descendant: { value: 42 } };
+const carrier: Carrier = { value: actual };
+const view = carrier as Target;
+const root = view.value;
+function identity(node: Named & Counted): Named & Counted { return node; }
+function select(node: Named & Counted): Left | Right { return node.descendant; }
+const stored = identity(root);
+const selected = select(stored);
+console.log(`${selected.value}`);

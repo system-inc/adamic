@@ -1,0 +1,25 @@
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers
+=== PAUSE TestCheckedViewIntersectionOriginalIsolatedMembers
+=== CONT  TestCheckedViewIntersectionOriginalIsolatedMembers
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9454/good
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+    checked_views_intersections_isolated_members_test.go:44: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalIsolatedMembers9454good3421004600/001/isolated-9454-good.a:15:23: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9454/wrong
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+    checked_views_intersections_isolated_members_test.go:44: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalIsolatedMembers9454wrong3596290798/001/isolated-9454-wrong.a:16:23: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+    checked_views_intersections_isolated_members_test.go:44: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalIsolatedMembers9657good3566121228/001/isolated-9657-good.a:16:23: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+    checked_views_intersections_isolated_members_test.go:44: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalIsolatedMembers9657wrong3037806701/001/isolated-9657-wrong.a:16:23: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers (1.43s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9454/good (0.39s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9454/wrong (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong (0.33s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.437s

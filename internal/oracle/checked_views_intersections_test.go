@@ -139,9 +139,12 @@ func TestCheckedViewIntersectionSource(t *testing.T) {
 		{"nested", "name:bad\n", "field read failed: view.value.child.count is not a number; expected number, found string"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lane7/"+probe.name)
+			program, path, stopped := intersectionLaneFixture(t, "lane7/"+probe.name)
 			if difference := disagreement(run{stdout: []byte(probe.node)}, onNode(t, path)); difference != "" {
 				t.Fatal("Node: " + difference)
+			}
+			if stopped {
+				return
 			}
 			kind := os.Getenv("ADAMIC_INTERSECTION_SOURCE_MUTANT")
 			if probe.name == "emit-root-wrong" && (kind == "skip" || kind == "shape") || probe.name == "emit-root-nested" && kind == "nested" {
@@ -208,7 +211,18 @@ func TestCheckedViewIntersectionProductionMutants(t *testing.T) {
 	t.Parallel()
 	for _, test := range []struct{ kind, fixture string }{{"skip", "emit-root-wrong"}, {"shape", "emit-root-wrong"}, {"nested", "emit-root-nested"}} {
 		t.Run(test.kind, func(t *testing.T) {
-			program, _ := interfaceFixture(t, "lane7/"+test.fixture)
+			program, path, stopped := intersectionLaneFixture(t, "lane7/"+test.fixture)
+			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
+				t.Fatal("Node: " + difference)
+			}
+			if stopped {
+				fixture, member := "v5-root-wrong", "flags"
+				if test.kind == "nested" {
+					fixture, member = "v5-root-nested", "autoGenerate.id"
+				}
+				v5IntersectionSourceCounterfactual(t, test.kind, fixture, member)
+				return
+			}
 			intersectionSourceMutant(t, program, test.kind)
 			for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
 				if got.exitCode != 0 || string(got.stdout) != "true\n" {
@@ -235,38 +249,34 @@ func TestCheckedViewIntersectionRootConjunctionProbe(t *testing.T) {
 	}
 }
 
-// Lazy admission must stay intact while compound runtime selection is unwired.
+// Every unsupported union intersection refuses the complete view at creation.
 func TestCheckedViewIntersectionCompoundDemand(t *testing.T) {
 	t.Parallel()
-	program, path := interfaceFixture(t, "lane7/compound-unread")
-	want := run{stdout: []byte("ok\n")}
-	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
-		}
-	}
-	readPath, pathErr := filepath.Abs(checkedViewFixturePath(filepath.Join(repository, "stage3/interface-downcasts/lane7/compound-untagged-read.a")))
-	if pathErr != nil {
-		t.Fatal(pathErr)
-	}
-	_, err := lowered(t, readPath)
-	if err == nil || !strings.Contains(err.Error(), "field value with unsupported union intersection") {
-		t.Fatalf("compound demand must refuse, got %v", err)
-	}
-	// The runtime control is valid JavaScript; the compiler's refusal prevents a
-	// silent success until selection validates the matching intersection arm.
-	if got := onNode(t, readPath); got.exitCode != 0 || string(got.stdout) != "true\n" {
-		t.Fatalf("Node: %#v", got)
+	for _, sample := range []struct{ name, output string }{{"compound-unread", "ok\n"}, {"compound-untagged-read", "true\n"}} {
+		t.Run(sample.name, func(t *testing.T) {
+			_, path, stopped := intersectionLaneFixture(t, "lane7/"+sample.name)
+			if difference := disagreement(run{stdout: []byte(sample.output)}, onNode(t, path)); difference != "" {
+				t.Fatal("Node: " + difference)
+			}
+			if !stopped {
+				t.Fatal("whole union-intersection view must refuse at creation")
+			}
+		})
 	}
 }
 
 func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 	t.Parallel()
-	program, path := interfaceFixture(t, "lane7/recursive-unread")
+	program, path, stopped := intersectionLaneFixture(t, "lane7/recursive-unread")
 	want := run{stdout: []byte("ok\n")}
-	for _, got := range []run{onNode(t, path), releasedUncached(t, program), onJavaScriptBackend(t, program)} {
-		if difference := disagreement(want, got); difference != "" {
-			t.Fatal(difference)
+	if difference := disagreement(want, onNode(t, path)); difference != "" {
+		t.Fatal("Node: " + difference)
+	}
+	if !stopped {
+		for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
+			if difference := disagreement(want, got); difference != "" {
+				t.Fatal(difference)
+			}
 		}
 	}
 	for _, test := range []struct{ name, diagnostic string }{
@@ -282,9 +292,12 @@ func TestCheckedViewIntersectionRecursiveDemand(t *testing.T) {
 		{"recursive-object-wrong", "field read failed: view.value.next is not a Link | undefined; expected Link | undefined, found boolean"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lane7/"+test.name)
+			program, path, stopped := intersectionLaneFixture(t, "lane7/"+test.name)
 			if got := onNode(t, path); got.exitCode != 0 || string(got.stdout) != "true\n" {
 				t.Fatalf("Node: %#v", got)
+			}
+			if stopped {
+				return
 			}
 			if kind := os.Getenv("ADAMIC_INTERSECTION_RECURSIVE_MUTANT"); kind != "" && (test.name == "recursive-read" || kind == "optional" && test.name == "recursive-optional-root" || kind == "literal-mode" && test.name == "recursive-literal-wrong" || kind == "literal-code" && test.name == "recursive-number-literal" || kind == "literal-enabled" && test.name == "recursive-boolean-literal") {
 				intersectionRecursiveMutant(t, program, kind)
@@ -319,9 +332,12 @@ func TestCheckedViewIntersectionSelectedArms(t *testing.T) {
 		{"compound-read", "field read failed: view.value.common is not a number; expected number, found boolean"},
 	} {
 		t.Run(test.name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lane7/"+test.name)
+			program, path, stopped := intersectionLaneFixture(t, "lane7/"+test.name)
 			if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
 				t.Fatal("Node: " + difference)
+			}
+			if stopped {
+				return
 			}
 			if kind := os.Getenv("ADAMIC_INTERSECTION_ARM_MUTANT"); kind != "" && (test.name == "leading-access-wrong" || kind == "tag" && test.name == "leading-access-unknown-tag") {
 				intersectionArmMutant(t, program, kind)

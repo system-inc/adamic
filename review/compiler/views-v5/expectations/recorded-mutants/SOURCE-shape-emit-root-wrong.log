@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionSource
+=== PAUSE TestCheckedViewIntersectionSource
+=== CONT  TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-root-wrong
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSource (0.36s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-wrong (0.36s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.375s

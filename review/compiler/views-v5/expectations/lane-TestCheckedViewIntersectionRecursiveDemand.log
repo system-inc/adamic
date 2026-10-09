@@ -1,0 +1,67 @@
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+=== PAUSE TestCheckedViewIntersectionRecursiveDemand
+=== CONT  TestCheckedViewIntersectionRecursiveDemand
+    checked_views_intersections_test.go:270: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-unread.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:272: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-good
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-good.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-absent
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-absent.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-optional-absent.a:8:14: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-null-root-absent.a:8:14: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-null-root-wrong.a:8:14: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-optional-root.a:8:14: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-literal-good.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-literal-wrong.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-number-literal.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-boolean-literal.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-read
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-read.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-deep-wrong.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-missing
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-missing.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong
+    checked_views_intersections_test.go:295: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/recursive-object-wrong.a:8:14: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+--- PASS: TestCheckedViewIntersectionRecursiveDemand (1.40s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-good (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-absent (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong (0.08s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good (0.13s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-read (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong (0.08s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-missing (0.08s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong (0.09s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=15
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.409s

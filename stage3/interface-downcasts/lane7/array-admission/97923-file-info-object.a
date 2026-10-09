@@ -1,0 +1,4 @@
+// a-check: type error TS2307
+import type { IncrementalMultiFileEmitBuildInfoFileInfo, IncrementalBundleEmitBuildInfoFileInfo } from 'original-tsc-types';
+function visit(fileInfos: readonly IncrementalMultiFileEmitBuildInfoFileInfo[]): void { fileInfos.forEach(() => console.log('item')); }
+visit([{version: 'v', signature: 's', affectsGlobalScope: undefined, impliedFormat: undefined}]);

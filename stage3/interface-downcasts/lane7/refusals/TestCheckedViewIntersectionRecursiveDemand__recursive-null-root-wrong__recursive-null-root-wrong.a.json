@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":8:14",
+  "what": "checked intersection view with unsupported member Target.value (union intersection)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionRecursiveDemand__recursive-null-root-wrong__recursive-null-root-wrong.a",
+  "source_sha256": "d04c1e748a9c567faaa233fb2dd4a41fa04e874d19d21275431d63f73e369cdc"
+}

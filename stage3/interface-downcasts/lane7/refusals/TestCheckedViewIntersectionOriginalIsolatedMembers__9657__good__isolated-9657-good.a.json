@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":16:23",
+  "what": "checked intersection view with unsupported member CheckedReceiver (representation conversion)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalIsolatedMembers__9657__good__isolated-9657-good.a",
+  "source_sha256": "300949247f3e3da2c2c2999a178ebed8ad390b5702a0b90fa9c3fcd1f35cc7e5"
+}

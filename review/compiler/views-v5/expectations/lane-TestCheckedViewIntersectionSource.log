@@ -1,0 +1,76 @@
+=== RUN   TestCheckedViewIntersectionSource
+=== PAUSE TestCheckedViewIntersectionSource
+=== CONT  TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-good
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-good.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-absent
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-absent.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-wrong
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-wrong.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-nested
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-nested.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-wrong
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-nested
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-nested.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/brand-good
+    checked_views_intersections_test.go:143: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/brand-wrong
+    checked_views_intersections_test.go:143: gate cache node miss
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/duplicate-good
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/duplicate-good.a:8:67: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/duplicate-absent
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/duplicate-absent.a:8:67: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/duplicate-wrong
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/duplicate-wrong.a:8:67: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/duplicate-literal
+    checked_views_intersections_test.go:142: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/duplicate-literal.a:8:67: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/good
+    checked_views_intersections_test.go:143: gate cache node hit
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/absent
+    checked_views_intersections_test.go:143: gate cache node hit
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/wrong
+    checked_views_intersections_test.go:143: gate cache node hit
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/nested
+    checked_views_intersections_test.go:143: gate cache node hit
+    checked_views_intersections_test.go:163: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSource (3.24s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-good (0.13s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-absent (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-wrong (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-nested (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-wrong (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-nested (0.08s)
+    --- PASS: TestCheckedViewIntersectionSource/brand-good (0.50s)
+    --- PASS: TestCheckedViewIntersectionSource/brand-wrong (0.36s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-good (0.11s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-wrong (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-literal (0.09s)
+    --- PASS: TestCheckedViewIntersectionSource/good (0.46s)
+    --- PASS: TestCheckedViewIntersectionSource/absent (0.42s)
+    --- PASS: TestCheckedViewIntersectionSource/wrong (0.28s)
+    --- PASS: TestCheckedViewIntersectionSource/nested (0.27s)
+PASS
+gate cache: native hits=0 misses=3
+gate cache: node hits=4 misses=18
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.250s

@@ -1,0 +1,23 @@
+=== RUN   TestV5IntersectionSourceSkip
+=== PAUSE TestV5IntersectionSourceSkip
+=== RUN   TestV5IntersectionSourceShape
+=== PAUSE TestV5IntersectionSourceShape
+=== RUN   TestV5IntersectionSourceNested
+=== PAUSE TestV5IntersectionSourceNested
+=== CONT  TestV5IntersectionSourceSkip
+=== CONT  TestV5IntersectionSourceNested
+=== CONT  TestV5IntersectionSourceShape
+=== NAME  TestV5IntersectionSourceSkip
+    checked_views_intersections_v5_test.go:35: skip mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceSkip (0.37s)
+=== NAME  TestV5IntersectionSourceShape
+    checked_views_intersections_v5_test.go:39: shape mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceShape (0.38s)
+=== NAME  TestV5IntersectionSourceNested
+    checked_views_intersections_v5_test.go:43: nested mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceNested (0.38s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=9
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.392s

@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":18:21",
+  "what": "a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost \u0026 { getCommonSourceDirectory(): string; }) | undefined would replace",
+  "fix": "keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalPairs__tracker-root-wrong__tracker-root-wrong.a",
+  "source_sha256": "e58ff98f78eb7361be3b5ba4904525f419da42fa4054d6782b08c6393dce9465"
+}

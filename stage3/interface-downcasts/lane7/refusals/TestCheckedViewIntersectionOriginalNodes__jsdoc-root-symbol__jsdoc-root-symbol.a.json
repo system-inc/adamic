@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":13:17",
+  "what": "checked intersection view with unsupported member JSDoc (representation conversion)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalNodes__jsdoc-root-symbol__jsdoc-root-symbol.a",
+  "source_sha256": "ae8d14c2c78f7707ce2b7509bc9873d00b5a980047053fd2bd6334e00bc9d107"
+}

@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":12:24",
+  "what": "checked intersection view with unsupported member GeneratedIdentifier (representation conversion)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalNodes__emit-original-ranges-good__emit-original-ranges-good.a",
+  "source_sha256": "06caeccf4d3a1c67c85db685d374b4db2756ab12c0559a6c1770ba05b0af555c"
+}

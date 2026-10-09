@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalBindable
+=== PAUSE TestCheckedViewIntersectionOriginalBindable
+=== CONT  TestCheckedViewIntersectionOriginalBindable
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-expr2546636086/001/bindable-access-expression-this.a:20:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalBindable (0.53s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this (0.52s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.539s

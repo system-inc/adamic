@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalPairs
+=== PAUSE TestCheckedViewIntersectionOriginalPairs
+=== CONT  TestCheckedViewIntersectionOriginalPairs
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-absent
+    checked_views_intersections_original_test.go:146: gate cache node miss
+    checked_views_intersections_original_test.go:146: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalPairstracker-absent2270875244/001/tracker-absent.a:17:20: optional property moduleResolverHost in Base absent from structural source {}, which can hide fields; declare moduleResolverHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+--- PASS: TestCheckedViewIntersectionOriginalPairs (0.60s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-absent (0.59s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.612s

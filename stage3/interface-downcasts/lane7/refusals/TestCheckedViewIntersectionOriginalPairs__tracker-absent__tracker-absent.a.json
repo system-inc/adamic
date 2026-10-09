@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":17:20",
+  "what": "optional property moduleResolverHost in Base absent from structural source {}, which can hide fields",
+  "fix": "declare moduleResolverHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalPairs__tracker-absent__tracker-absent.a",
+  "source_sha256": "4074cfdaa7ceea1f6558a4cb0f60b6640dda3a377f00354e8d93d2b8c14f1524"
+}

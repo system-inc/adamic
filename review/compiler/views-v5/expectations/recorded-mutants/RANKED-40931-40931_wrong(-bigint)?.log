@@ -1,0 +1,9 @@
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands
+=== PAUSE TestCheckedViewIntersectionOriginalRankedOperands
+=== CONT  TestCheckedViewIntersectionOriginalRankedOperands
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands/40931
+    checked_views_intersections_ranked_test.go:30: awaits lane 4 inventory: read-demand-pairs.json.gz
+--- PASS: TestCheckedViewIntersectionOriginalRankedOperands (0.00s)
+    --- SKIP: TestCheckedViewIntersectionOriginalRankedOperands/40931 (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.020s

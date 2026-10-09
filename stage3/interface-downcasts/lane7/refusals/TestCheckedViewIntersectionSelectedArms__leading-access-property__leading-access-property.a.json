@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":29:29",
+  "what": "checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionSelectedArms__leading-access-property__leading-access-property.a",
+  "source_sha256": "35e340fc1b2d83df7ce929c9b4e3f95f3e8c5af133a319437cbc8e170a3c6090"
+}

@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption
+=== PAUSE TestCheckedViewIntersectionOriginalAbsorption
+=== CONT  TestCheckedViewIntersectionOriginalAbsorption
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/wrong
+    checked_views_intersections_absorption_test.go:33: gate cache node miss
+    checked_views_intersections_absorption_test.go:37: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalAbsorptionwrong1787228386/001/jsdoc-union-parent-wrong.a:14:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalAbsorption (0.81s)
+    --- PASS: TestCheckedViewIntersectionOriginalAbsorption/wrong (0.80s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.823s

@@ -1,0 +1,8 @@
+--- FAIL: TestCountsAreRecorded (67.92s)
+    counts_test.go:180: Rel: can't make /tmp/adamic-gate/TestCountsAreRecorded1692015265/050/97923-string.a relative to ../..
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	67.935s
+FAIL

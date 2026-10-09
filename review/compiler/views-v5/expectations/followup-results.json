@@ -1,0 +1,27 @@
+{
+  "branch": "compiler/views-v5",
+  "parent": "7db6f5e5375d3c7d2ddc19a7fc882ba303dbafe7",
+  "compiler_changes": false,
+  "stops": {
+    "Refused": 78,
+    "NotYet": 23
+  },
+  "commands": 64,
+  "command_failures": [],
+  "lower_shards": 37,
+  "lane_selections": 24,
+  "checked_view_selections": 3,
+  "counts_seconds": 72.323,
+  "counts_numerical_changes": 0,
+  "counts_rows_reordered": 9,
+  "diagnostic_mutants": 7,
+  "runtime_component_mutants": 6,
+  "source_mutants": 3,
+  "recorded_mutants": {
+    "blocked-at-preexisting-NotYet": 7,
+    "blocked-at-refused-creation": 50,
+    "pending-lane-4-inventory": 6
+  },
+  "lane_checks_main_exit": 1,
+  "lane_checks_v4_scope_exit": 0
+}

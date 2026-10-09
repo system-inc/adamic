@@ -1,0 +1,110 @@
+[
+  {
+    "fixture": "stage3/interface-downcasts/lane7/absent.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/absent.a | 5 | 5 | 8 | 13 | 5 | 0 |",
+      "index": 1054
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/absent.a | 5 | 5 | 8 | 13 | 5 | 0 |",
+      "index": 1004
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/brand-good.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/brand-good.a | 5 | 5 | 8 | 13 | 5 | 0 |",
+      "index": 1057
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/brand-good.a | 5 | 5 | 8 | 13 | 5 | 0 |",
+      "index": 1007
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/brand-wrong.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/brand-wrong.a | 3 | 0 | 3 | 4 | 3 | 0 |",
+      "index": 1058
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/brand-wrong.a | 3 | 0 | 3 | 4 | 3 | 0 |",
+      "index": 1008
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/good.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/good.a | 5 | 5 | 9 | 13 | 5 | 0 |",
+      "index": 1053
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/good.a | 5 | 5 | 9 | 13 | 5 | 0 |",
+      "index": 1003
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/nested.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/nested.a | 3 | 0 | 6 | 4 | 3 | 0 |",
+      "index": 1056
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/nested.a | 3 | 0 | 6 | 4 | 3 | 0 |",
+      "index": 1006
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/root-only-wrong.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/root-only-wrong.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1059
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/root-only-wrong.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1009
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/v5-root-nested.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/v5-root-nested.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1061
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/v5-root-nested.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1011
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/v5-root-wrong.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/v5-root-wrong.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1060
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/v5-root-wrong.a | 3 | 0 | 4 | 4 | 3 | 0 |",
+      "index": 1010
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  },
+  {
+    "fixture": "stage3/interface-downcasts/lane7/wrong.a",
+    "before": {
+      "line": "| stage3/interface-downcasts/lane7/wrong.a | 3 | 0 | 5 | 4 | 3 | 0 |",
+      "index": 1055
+    },
+    "after": {
+      "line": "| stage3/interface-downcasts/lane7/wrong.a | 3 | 0 | 5 | 4 | 3 | 0 |",
+      "index": 1005
+    },
+    "reason": "Full updater emits the nine measured V5 rows at additionalFixtureCounts registration order. Numeric counts are unchanged."
+  }
+]

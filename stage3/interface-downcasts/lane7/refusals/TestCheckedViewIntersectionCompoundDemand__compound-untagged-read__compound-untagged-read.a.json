@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":9:14",
+  "what": "checked intersection view with unsupported member Target.value (union intersection)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionCompoundDemand__compound-untagged-read__compound-untagged-read.a",
+  "source_sha256": "c0f74543ab074635eeb423988f5aae6be56a5728e97fd4d4c8f3aedc60242b22"
+}

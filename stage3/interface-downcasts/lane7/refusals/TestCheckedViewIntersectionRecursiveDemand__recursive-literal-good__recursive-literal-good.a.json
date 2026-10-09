@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":8:14",
+  "what": "checked intersection view with unsupported member Target.value.next (object union intersection handoff)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionRecursiveDemand__recursive-literal-good__recursive-literal-good.a",
+  "source_sha256": "1949679ee6387d5e0a1561e8325e6f5f6f55c4717a15c456cfa6fa52c276d2cd"
+}

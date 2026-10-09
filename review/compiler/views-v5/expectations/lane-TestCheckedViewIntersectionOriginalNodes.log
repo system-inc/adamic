@@ -1,0 +1,93 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-good3805578794/001/emit-original-good.a:12:24: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-ranges-go294749907/001/emit-original-ranges-good.a:12:24: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-missing2821497974/001/emit-original-missing.a:12:24: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-wrong1614135422/001/emit-original-wrong.a:12:24: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesemit-original-range-wro3945829782/001/emit-original-range-wrong.a:12:24: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-good2268112298/001/class-augments-good.a:22:21: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-good638591443/001/class-implements-good.a:21:23: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-kind703026528/001/class-augments-kind.a:17:27: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-name
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-name1429581028/001/class-augments-name.a:17:27: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-augments-symbol971842337/001/class-augments-symbol.a:17:27: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-kind564918950/001/class-implements-kind.a:17:28: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-symbol2285293283/001/class-implements-symbol.a:17:28: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-good3361120158/001/jsdoc-parent-good.a:14:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-function-g3280800517/001/jsdoc-parent-function-good.a:15:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-kind4054907083/001/jsdoc-parent-kind.a:14:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-parameters1004319705/001/jsdoc-parent-parameters.a:15:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-parent-symbol3614133400/001/jsdoc-parent-symbol.a:15:21: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-good2654507401/001/jsdoc-root-good.a:11:17: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-symbol2632041750/001/jsdoc-root-symbol.a:13:17: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-kind1692990779/001/jsdoc-root-kind.a:12:17: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesclass-implements-argume2962173372/001/class-implements-arguments.a:17:28: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalNodes (6.02s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-good (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-missing (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-wrong (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-good (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-good (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-kind (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-name (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-symbol (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-kind (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-symbol (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good (0.27s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol (0.27s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind (0.26s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-arguments (0.30s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=21
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	6.037s

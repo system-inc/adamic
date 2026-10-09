@@ -20,10 +20,13 @@ func TestCheckedViewIntersectionDeferredMember(t *testing.T) {
 		{"destructure", "42\n", "descendant: selected (field descendant)"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
-			program, path := interfaceFixture(t, "lane7/deferred-member-"+sample.name)
+			program, path, stopped := intersectionLaneFixture(t, "lane7/deferred-member-"+sample.name)
 			truth := run{stdout: []byte(sample.output)}
 			if difference := disagreement(truth, onNode(t, path)); difference != "" {
 				t.Fatal("Node: " + difference)
+			}
+			if stopped {
+				return
 			}
 			bounded := false
 			descendant := ir.ViewContractID(0)
@@ -69,7 +72,18 @@ func viewIntersectionDeferredCounts(t *testing.T) []string {
 	t.Helper()
 	var rows []string
 	for _, name := range []string{"unread", "read", "helper", "callback", "destructure"} {
-		rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane7/deferred-member-"+name+".a"), false, nil, false, false))
+		_, _, stopped := intersectionLaneFixture(t, "lane7/deferred-member-"+name)
+		if stopped {
+			data, err := os.ReadFile(filepath.Join(repository, "internal/oracle/counts.md"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			if strings.Contains(string(data), "| stage3/interface-downcasts/lane7/deferred-member-"+name+".a |") {
+				t.Fatal("a refused fixture cannot have fabricated execution counts")
+			}
+		} else {
+			rows = append(rows, counted(t, checkedViewFixturePath("stage3/interface-downcasts/lane7/deferred-member-"+name+".a"), false, nil, false, false))
+		}
 	}
 	return rows
 }

@@ -1,0 +1,31 @@
+	if os.Getenv("ADAMIC_RECORD_INTERSECTION_STOPS") == "1" && err != nil {
+		if actual.Kind == "" {
+			t.Fatalf("unexpected diagnostic: %v", err)
+		}
+		if !strings.HasPrefix(actual.Where, path+":") {
+			t.Fatalf("stop is outside its fixture: %v", err)
+		}
+		actual.Where = strings.TrimPrefix(actual.Where, path)
+		input, readErr := os.ReadFile(path)
+		if readErr != nil {
+			t.Fatal(readErr)
+		}
+		source := intersectionCanonicalSource(string(input))
+		actual.SourceSHA = fmt.Sprintf("%x", sha256.Sum256([]byte(source)))
+		actual.Fixture = "stage3/interface-downcasts/lane7/refusals/" + key
+		if mkdirErr := os.MkdirAll(base, 0755); mkdirErr != nil {
+			t.Fatal(mkdirErr)
+		}
+		if writeErr := os.WriteFile(filepath.Join(base, key), []byte(source), 0644); writeErr != nil {
+			t.Fatal(writeErr)
+		}
+		encoded, marshalErr := json.MarshalIndent(actual, "", "  ")
+		if marshalErr != nil {
+			t.Fatal(marshalErr)
+		}
+		if writeErr := os.WriteFile(expectationPath, append(encoded, '\n'), 0644); writeErr != nil {
+			t.Fatal(writeErr)
+		}
+		t.Logf("recorded %s: %s; %s", actual.Kind, actual.What, actual.Fix)
+		return true
+	}

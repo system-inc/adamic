@@ -1,0 +1,56 @@
+[
+  {
+    "fixture": "97923-file-info-object.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/97923-file-info-object.a:3:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  },
+  {
+    "fixture": "97923-intersection-object.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/97923-intersection-object.a:3:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  },
+  {
+    "fixture": "97923-string.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/97923-string.a:3:89: stage 0 can't lower an array of IncrementalMultiFileEmitBuildInfoFileInfo yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  },
+  {
+    "fixture": "98493-file-info-object.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/98493-file-info-object.a:3:141: stage 0 can't lower a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  },
+  {
+    "fixture": "98493-intersection-object.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/98493-intersection-object.a:3:141: stage 0 can't lower a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  },
+  {
+    "fixture": "98493-string.a",
+    "baseline": "97c69648",
+    "compiler_exit": 1,
+    "compiler_stderr": "adamic: /tmp/views-v5-array-admission/98493-string.a:3:141: stage 0 can't lower a value of type readonly IncrementalBundleEmitBuildInfoFileInfo[] | readonly IncrementalMultiFileEmitBuildInfoFileInfo[] where an array goes yet\n",
+    "node_exit": 0,
+    "node_stdout": "item\n",
+    "node_stderr": ""
+  }
+]

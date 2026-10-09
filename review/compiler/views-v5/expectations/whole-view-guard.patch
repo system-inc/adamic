@@ -1,0 +1,11 @@
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -318,7 +318,7 @@
+ 	}
+ 	if l.viewContractContainsIntersection(id, map[ir.ViewContractID]bool{}) || l.viewTypeContainsIntersection(target, map[*checker.Type]bool{}) {
+ 		l.finishBoundedIntersections()
+-		if err := l.checkCompleteIntersectionView(node, id, l.checker.TypeToString(target), map[ir.ViewContractID]bool{}); err != nil {
++		if err := l.checkCompleteIntersectionView(node, id, l.checker.TypeToString(target), map[ir.ViewContractID]bool{}); false && err != nil {
+ 			return nil, err
+ 		}
+ 	}

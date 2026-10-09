@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionSelectedArms
+=== PAUSE TestCheckedViewIntersectionSelectedArms
+=== CONT  TestCheckedViewIntersectionSelectedArms
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag
+    checked_views_intersections_test.go:335: pinned Refused at /workspace/adamic/stage3/interface-downcasts/lane7/leading-access-unknown-tag.a:29:29: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSelectedArms (0.28s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag (0.28s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.287s

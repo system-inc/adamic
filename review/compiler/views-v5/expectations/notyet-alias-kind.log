@@ -1,0 +1,10 @@
+=== RUN   TestCheckedViewIntersectionSource
+=== PAUSE TestCheckedViewIntersectionSource
+=== CONT  TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-root-wrong
+    checked_views_intersections_test.go:142: want NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: a checked field alias requiring an optional, accessor, or representation conversion; , got /workspace/adamic/stage3/interface-downcasts/lane7/emit-root-wrong.a:6:68: Adamic 0.1 refuses a checked field alias requiring an optional, accessor, or representation conversion; 
+--- FAIL: TestCheckedViewIntersectionSource (0.03s)
+    --- FAIL: TestCheckedViewIntersectionSource/emit-root-wrong (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.039s
+FAIL

@@ -1,0 +1,13 @@
+=== RUN   TestV5IntersectionSourceSkip
+=== PAUSE TestV5IntersectionSourceSkip
+=== CONT  TestV5IntersectionSourceSkip
+    checked_views_intersections_v5_test.go:35: gate cache node hit
+    checked_views_intersections_v5_test.go:35: gate cache node hit
+    checked_views_intersections_v5_test.go:35: gate cache node hit
+    checked_views_intersections_v5_test.go:35: skip mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestV5IntersectionSourceSkip (0.19s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=3 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.195s

@@ -1,0 +1,45 @@
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers
+=== PAUSE TestCheckedViewIntersectionOriginalArrayBlockers
+=== CONT  TestCheckedViewIntersectionOriginalArrayBlockers
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/string
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 97923/string agrees with Node; old lane expected "an array of IncrementalMultiFileEmitBuildInfoFileInfo"
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 97923/intersection-object agrees with Node; old lane expected "an array of IncrementalMultiFileEmitBuildInfoFileInfo"
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 97923/file-info-object agrees with Node; old lane expected "an array of IncrementalMultiFileEmitBuildInfoFileInfo"
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/string
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 98493/string agrees with Node; old lane expected "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo"
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 98493/intersection-object agrees with Node; old lane expected "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo"
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object
+    checked_views_intersections_array_blockers_test.go:39: gate cache node miss
+    oracle_test.go:603: gate cache native miss
+    checked_views_intersections_array_blockers_test.go:51: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:56: admitted 98493/file-info-object agrees with Node; old lane expected "an array of string | FileInfo | IncrementalMultiFileEmitBuildInfoBuilderStateFileInfo"
+--- PASS: TestCheckedViewIntersectionOriginalArrayBlockers (4.11s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/string (0.74s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object (0.67s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object (0.68s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/string (0.65s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object (0.68s)
+    --- PASS: TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object (0.68s)
+PASS
+gate cache: native hits=0 misses=6
+gate cache: node hits=0 misses=12
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.114s

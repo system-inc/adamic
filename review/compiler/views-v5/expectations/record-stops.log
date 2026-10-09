@@ -1,0 +1,714 @@
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption
+=== PAUSE TestCheckedViewIntersectionOriginalAbsorption
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers
+=== PAUSE TestCheckedViewIntersectionOriginalArrayBlockers
+=== RUN   TestCheckedViewIntersectionDeferredMember
+=== PAUSE TestCheckedViewIntersectionDeferredMember
+=== RUN   TestCheckedViewIntersectionDeferredCounts
+    checked_views_intersections_deferred_test.go:85: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:85: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:85: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:85: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:85: recorded NotYet: an array of never; 
+--- PASS: TestCheckedViewIntersectionDeferredCounts (0.14s)
+=== RUN   TestCheckedViewIntersectionOriginalHeritageUnion
+=== PAUSE TestCheckedViewIntersectionOriginalHeritageUnion
+=== RUN   TestCheckedViewIntersectionOriginalIdentifier
+=== PAUSE TestCheckedViewIntersectionOriginalIdentifier
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers
+=== PAUSE TestCheckedViewIntersectionOriginalIsolatedMembers
+=== RUN   TestCheckedViewIntersectionOriginalPairs
+=== PAUSE TestCheckedViewIntersectionOriginalPairs
+=== RUN   TestCheckedViewIntersectionOriginalBindable
+=== PAUSE TestCheckedViewIntersectionOriginalBindable
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalRankedImport
+=== PAUSE TestCheckedViewIntersectionOriginalRankedImport
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands
+=== PAUSE TestCheckedViewIntersectionOriginalRankedOperands
+=== RUN   TestCheckedViewIntersectionConjunction
+=== PAUSE TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionComponentMutants
+=== PAUSE TestCheckedViewIntersectionComponentMutants
+=== RUN   TestCheckedViewIntersectionSource
+=== PAUSE TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionProductionMutants
+=== PAUSE TestCheckedViewIntersectionProductionMutants
+=== RUN   TestCheckedViewIntersectionRootConjunctionProbe
+=== PAUSE TestCheckedViewIntersectionRootConjunctionProbe
+=== RUN   TestCheckedViewIntersectionCompoundDemand
+=== PAUSE TestCheckedViewIntersectionCompoundDemand
+=== RUN   TestCheckedViewIntersectionRecursiveDemand
+=== PAUSE TestCheckedViewIntersectionRecursiveDemand
+=== RUN   TestCheckedViewIntersectionSelectedArms
+=== PAUSE TestCheckedViewIntersectionSelectedArms
+=== CONT  TestCheckedViewIntersectionOriginalAbsorption
+=== CONT  TestCheckedViewIntersectionOriginalRankedOperands
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands/8920
+    checked_views_intersections_ranked_test.go:30: awaits lane 4 inventory: read-demand-pairs.json.gz
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands/40931
+    checked_views_intersections_ranked_test.go:30: awaits lane 4 inventory: read-demand-pairs.json.gz
+=== RUN   TestCheckedViewIntersectionOriginalRankedOperands/8923
+    checked_views_intersections_ranked_test.go:30: awaits lane 4 inventory: read-demand-pairs.json.gz
+--- PASS: TestCheckedViewIntersectionOriginalRankedOperands (0.00s)
+    --- SKIP: TestCheckedViewIntersectionOriginalRankedOperands/8920 (0.00s)
+    --- SKIP: TestCheckedViewIntersectionOriginalRankedOperands/40931 (0.00s)
+    --- SKIP: TestCheckedViewIntersectionOriginalRankedOperands/8923 (0.00s)
+=== CONT  TestCheckedViewIntersectionRootConjunctionProbe
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/good
+=== NAME  TestCheckedViewIntersectionRootConjunctionProbe
+    checked_views_intersections_test.go:241: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalAbsorption/good
+    checked_views_intersections_absorption_test.go:33: gate cache node miss
+=== NAME  TestCheckedViewIntersectionRootConjunctionProbe
+    checked_views_intersections_test.go:245: gate cache node miss
+--- PASS: TestCheckedViewIntersectionRootConjunctionProbe (0.21s)
+=== CONT  TestCheckedViewIntersectionSelectedArms
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-identifier
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-element
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalAbsorption/good
+    checked_views_intersections_absorption_test.go:37: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalAbsorption/wrong
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-property
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalAbsorption/wrong
+    checked_views_intersections_absorption_test.go:33: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-wrong
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalAbsorption/wrong
+    checked_views_intersections_absorption_test.go:37: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalAbsorption (0.68s)
+    --- PASS: TestCheckedViewIntersectionOriginalAbsorption/good (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalAbsorption/wrong (0.32s)
+=== CONT  TestCheckedViewIntersectionRecursiveDemand
+    checked_views_intersections_test.go:270: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:272: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSelectedArms/leading-access-missing
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member BindableStaticAccessExpression.expression (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-good
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSelectedArms/compound-read
+    checked_views_intersections_test.go:335: recorded Refused: checked intersection view with unsupported member Target.value (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:336: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-absent
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSelectedArms (0.69s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-identifier (0.10s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-element (0.10s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-property (0.09s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-wrong (0.10s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-unknown-tag (0.10s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/leading-access-missing (0.10s)
+    --- PASS: TestCheckedViewIntersectionSelectedArms/compound-read (0.10s)
+=== CONT  TestCheckedViewIntersectionCompoundDemand
+=== RUN   TestCheckedViewIntersectionCompoundDemand/compound-unread
+    checked_views_intersections_test.go:257: recorded Refused: checked intersection view with unsupported member Target.value (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:258: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionCompoundDemand/compound-untagged-read
+    checked_views_intersections_test.go:257: recorded Refused: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:258: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+--- PASS: TestCheckedViewIntersectionCompoundDemand (0.20s)
+    --- PASS: TestCheckedViewIntersectionCompoundDemand/compound-unread (0.10s)
+    --- PASS: TestCheckedViewIntersectionCompoundDemand/compound-untagged-read (0.10s)
+=== CONT  TestCheckedViewIntersectionSource
+=== RUN   TestCheckedViewIntersectionSource/emit-good
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-absent
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value (union intersection); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-wrong
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-nested
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-wrong
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/emit-root-nested
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/brand-good
+    checked_views_intersections_test.go:143: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-read
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/brand-good
+    oracle_test.go:603: gate cache native miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-missing
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+=== RUN   TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong
+    checked_views_intersections_test.go:295: recorded Refused: checked intersection view with unsupported member Target.value.next (object union intersection handoff); prove or implement the complete member contract before creating this view
+    checked_views_intersections_test.go:296: gate cache node miss
+--- PASS: TestCheckedViewIntersectionRecursiveDemand (1.50s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-good (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-null-root-wrong (0.09s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-optional-root (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-good (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-literal-wrong (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-number-literal (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-boolean-literal (0.11s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-read (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-deep-wrong (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-missing (0.10s)
+    --- PASS: TestCheckedViewIntersectionRecursiveDemand/recursive-object-wrong (0.10s)
+=== CONT  TestCheckedViewIntersectionProductionMutants
+=== RUN   TestCheckedViewIntersectionProductionMutants/skip
+=== NAME  TestCheckedViewIntersectionSource/brand-good
+    checked_views_intersections_test.go:163: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/skip
+    checked_views_intersections_test.go:214: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:215: gate cache node hit
+=== RUN   TestCheckedViewIntersectionSource/brand-wrong
+=== NAME  TestCheckedViewIntersectionProductionMutants/skip
+    checked_views_intersections_test.go:223: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/brand-wrong
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/skip
+    checked_views_intersections_test.go:223: gate cache node miss
+    checked_views_intersections_test.go:223: gate cache node miss
+    checked_views_intersections_test.go:223: skip mutant caught by native and JavaScript exit-70 pins
+=== RUN   TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:214: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:215: gate cache node hit
+=== NAME  TestCheckedViewIntersectionSource/brand-wrong
+    checked_views_intersections_test.go:163: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:223: gate cache node hit
+=== RUN   TestCheckedViewIntersectionSource/duplicate-good
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:223: gate cache node hit
+=== RUN   TestCheckedViewIntersectionSource/duplicate-absent
+=== NAME  TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:223: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/duplicate-absent
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/shape
+    checked_views_intersections_test.go:223: shape mutant caught by native and JavaScript exit-70 pins
+=== RUN   TestCheckedViewIntersectionProductionMutants/nested
+=== RUN   TestCheckedViewIntersectionSource/duplicate-wrong
+=== NAME  TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:214: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:215: gate cache node hit
+=== NAME  TestCheckedViewIntersectionSource/duplicate-wrong
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:223: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/duplicate-literal
+    checked_views_intersections_test.go:142: recorded NotYet: a checked field alias requiring an optional, accessor, or representation conversion; 
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:223: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/good
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionProductionMutants/nested
+    checked_views_intersections_test.go:223: gate cache node miss
+    checked_views_intersections_test.go:223: nested mutant caught by native and JavaScript exit-70 pins
+--- PASS: TestCheckedViewIntersectionProductionMutants (0.98s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/skip (0.35s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/shape (0.26s)
+    --- PASS: TestCheckedViewIntersectionProductionMutants/nested (0.36s)
+=== CONT  TestCheckedViewIntersectionOriginalIsolatedMembers
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9454/good
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/good
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9454/good
+    checked_views_intersections_isolated_members_test.go:44: recorded Refused: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9454/wrong
+=== NAME  TestCheckedViewIntersectionSource/good
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/absent
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9454/wrong
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+    checked_views_intersections_isolated_members_test.go:44: recorded Refused: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good
+=== NAME  TestCheckedViewIntersectionSource/absent
+    oracle_test.go:603: gate cache native miss
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/absent
+    checked_views_intersections_test.go:163: gate cache node miss
+=== RUN   TestCheckedViewIntersectionSource/wrong
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good
+    checked_views_intersections_isolated_members_test.go:44: recorded Refused: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong
+=== NAME  TestCheckedViewIntersectionSource/wrong
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong
+    checked_views_intersections_isolated_members_test.go:40: gate cache node miss
+=== NAME  TestCheckedViewIntersectionSource/wrong
+    checked_views_intersections_test.go:163: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong
+    checked_views_intersections_isolated_members_test.go:44: recorded Refused: checked intersection view with unsupported member CheckedReceiver (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers (1.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9454/good (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9454/wrong (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9657/good (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalIsolatedMembers/9657/wrong (0.33s)
+=== CONT  TestCheckedViewIntersectionOriginalRankedImport
+    checked_views_intersections_ranked_test.go:19: awaits lane 4 inventory: read-demand-pairs.json.gz
+--- SKIP: TestCheckedViewIntersectionOriginalRankedImport (0.00s)
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionSource/nested
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-good
+=== NAME  TestCheckedViewIntersectionSource/nested
+    checked_views_intersections_test.go:143: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+=== NAME  TestCheckedViewIntersectionSource/nested
+    checked_views_intersections_test.go:163: gate cache node miss
+--- PASS: TestCheckedViewIntersectionSource (3.70s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-good (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-wrong (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-nested (0.11s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-wrong (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/emit-root-nested (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/brand-good (0.53s)
+    --- PASS: TestCheckedViewIntersectionSource/brand-wrong (0.37s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-good (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-absent (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-wrong (0.11s)
+    --- PASS: TestCheckedViewIntersectionSource/duplicate-literal (0.10s)
+    --- PASS: TestCheckedViewIntersectionSource/good (0.55s)
+    --- PASS: TestCheckedViewIntersectionSource/absent (0.53s)
+    --- PASS: TestCheckedViewIntersectionSource/wrong (0.35s)
+    --- PASS: TestCheckedViewIntersectionSource/nested (0.36s)
+=== CONT  TestCheckedViewIntersectionOriginalBindable
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-missing
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-wrong
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-element-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member GeneratedIdentifier (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-good
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-element-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-good
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-kind
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-name
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-name
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-name
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-augments-symbol
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-kind
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-symbol
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+    checked_views_intersections_original_test.go:290: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+=== NAME  TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+    checked_views_intersections_original_test.go:290: recorded Refused: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalBindable (5.78s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-good (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-good (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-good (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this (0.36s)
+=== CONT  TestCheckedViewIntersectionOriginalPairs
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-good
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-good
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-absent
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+    checked_views_intersections_original_test.go:422: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-absent
+    checked_views_intersections_original_test.go:146: gate cache node miss
+    checked_views_intersections_original_test.go:146: recorded Refused: optional property moduleResolverHost in Base absent from structural source {}, which can hide fields; declare moduleResolverHost on the source type, or build a fresh object with known fields (adamic/no-optional-widening)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-undefined
+=== NAME  TestCheckedViewIntersectionOriginalNodes/class-implements-arguments
+    checked_views_intersections_original_test.go:422: recorded Refused: checked intersection view with unsupported member JSDocImplementsTag (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalNodes (7.07s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-good (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-ranges-good (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-missing (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-wrong (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/emit-original-range-wrong (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-good (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-good (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-kind (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-name (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-augments-symbol (0.36s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-kind (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-symbol (0.35s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-good (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-function-good (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-kind (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-parameters (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-parent-symbol (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-good (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-symbol (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/class-implements-arguments (0.34s)
+=== CONT  TestCheckedViewIntersectionComponentMutants
+=== RUN   TestCheckedViewIntersectionComponentMutants/skip_check
+    checked_views_intersections_test.go:78: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-undefined
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== NAME  TestCheckedViewIntersectionComponentMutants/skip_check
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/accept_wrong_shape
+    checked_views_intersections_test.go:78: gate cache node miss
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:true\n"
+=== RUN   TestCheckedViewIntersectionComponentMutants/drop_nested_adapter
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-undefined
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-wrong
+=== NAME  TestCheckedViewIntersectionComponentMutants/drop_nested_adapter
+    checked_views_intersections_test.go:78: gate cache node miss
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+    checked_views_intersections_test.go:82: component refusal pin catches mutant: exit 0, stdout "name:bad\n"
+--- PASS: TestCheckedViewIntersectionComponentMutants (0.30s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/skip_check (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/accept_wrong_shape (0.10s)
+    --- PASS: TestCheckedViewIntersectionComponentMutants/drop_nested_adapter (0.10s)
+=== CONT  TestCheckedViewIntersectionConjunction
+=== RUN   TestCheckedViewIntersectionConjunction/good
+    checked_views_intersections_test.go:39: gate cache node hit
+    checked_views_intersections_test.go:47: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-wrong
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/wrong
+    checked_views_intersections_test.go:39: gate cache node hit
+    checked_views_intersections_test.go:47: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/nested
+    checked_views_intersections_test.go:39: gate cache node hit
+    checked_views_intersections_test.go:47: gate cache node miss
+=== RUN   TestCheckedViewIntersectionConjunction/absent
+    checked_views_intersections_test.go:39: gate cache node hit
+    checked_views_intersections_test.go:47: gate cache node miss
+--- PASS: TestCheckedViewIntersectionConjunction (0.21s)
+    --- PASS: TestCheckedViewIntersectionConjunction/good (0.03s)
+    --- PASS: TestCheckedViewIntersectionConjunction/wrong (0.05s)
+    --- PASS: TestCheckedViewIntersectionConjunction/nested (0.03s)
+    --- PASS: TestCheckedViewIntersectionConjunction/absent (0.03s)
+=== CONT  TestCheckedViewIntersectionOriginalHeritageUnion
+=== RUN   TestCheckedViewIntersectionOriginalHeritageUnion/good
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-wrong
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong
+=== NAME  TestCheckedViewIntersectionOriginalHeritageUnion/good
+    checked_views_intersections_heritage_union_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalHeritageUnion/good
+    checked_views_intersections_heritage_union_test.go:36: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalHeritageUnion/wrong
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-missing
+=== NAME  TestCheckedViewIntersectionOriginalHeritageUnion/wrong
+    checked_views_intersections_heritage_union_test.go:32: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-missing
+    checked_views_intersections_original_test.go:146: gate cache node miss
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+=== RUN   TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong
+=== NAME  TestCheckedViewIntersectionOriginalHeritageUnion/wrong
+    checked_views_intersections_heritage_union_test.go:36: recorded Refused: checked intersection view with unsupported member JSDocAugmentsTag (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalHeritageUnion (0.71s)
+    --- PASS: TestCheckedViewIntersectionOriginalHeritageUnion/good (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalHeritageUnion/wrong (0.37s)
+=== CONT  TestCheckedViewIntersectionOriginalIdentifier
+    checked_views_intersections_identifier_test.go:16: awaits lane 4 inventory: lefthandsideexpression & identifier-good.a
+--- SKIP: TestCheckedViewIntersectionOriginalIdentifier (0.00s)
+=== CONT  TestCheckedViewIntersectionOriginalArrayBlockers
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/string
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong
+    checked_views_intersections_original_test.go:146: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalArrayBlockers/97923/string
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+=== NAME  TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong
+    checked_views_intersections_original_test.go:146: recorded Refused: a value of type Base seen as SymbolTracker, whose readonly field moduleResolverHost becomes writable: a readonly field may hold something narrower than string | object | undefined, which a write of (ModuleSpecifierResolutionHost & { getCommonSourceDirectory(): string; }) | undefined would replace; keep moduleResolverHost readonly in the type it's seen as, or copy the value ({ ...value }) (adamic/invariant-mutable)
+--- PASS: TestCheckedViewIntersectionOriginalPairs (2.48s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-good (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-helpers-good (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-absent (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-undefined (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-wrong (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-helpers-wrong (0.34s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-missing (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalPairs/tracker-root-wrong (0.33s)
+=== CONT  TestCheckedViewIntersectionDeferredMember
+=== RUN   TestCheckedViewIntersectionDeferredMember/unread
+    checked_views_intersections_deferred_test.go:23: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:25: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+=== RUN   TestCheckedViewIntersectionDeferredMember/read
+    checked_views_intersections_deferred_test.go:23: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:25: gate cache node miss
+=== RUN   TestCheckedViewIntersectionDeferredMember/helper
+    checked_views_intersections_deferred_test.go:23: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:25: gate cache node miss
+=== NAME  TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+=== RUN   TestCheckedViewIntersectionDeferredMember/callback
+    checked_views_intersections_deferred_test.go:23: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:25: gate cache node miss
+=== RUN   TestCheckedViewIntersectionDeferredMember/destructure
+=== NAME  TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+=== NAME  TestCheckedViewIntersectionDeferredMember/destructure
+    checked_views_intersections_deferred_test.go:23: recorded NotYet: an array of never; 
+    checked_views_intersections_deferred_test.go:25: gate cache node miss
+--- PASS: TestCheckedViewIntersectionDeferredMember (0.50s)
+    --- PASS: TestCheckedViewIntersectionDeferredMember/unread (0.10s)
+    --- PASS: TestCheckedViewIntersectionDeferredMember/read (0.10s)
+    --- PASS: TestCheckedViewIntersectionDeferredMember/helper (0.10s)
+    --- PASS: TestCheckedViewIntersectionDeferredMember/callback (0.10s)
+    --- PASS: TestCheckedViewIntersectionDeferredMember/destructure (0.09s)
+=== NAME  TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/string
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+=== RUN   TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object
+    checked_views_intersections_array_blockers_test.go:31: gate cache node miss
+    checked_views_intersections_array_blockers_test.go:36: expected original mixed-element storage refusal, got <nil>
+--- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers (1.82s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/string (0.31s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/intersection-object (0.30s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/97923/file-info-object (0.33s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/string (0.29s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/intersection-object (0.30s)
+    --- FAIL: TestCheckedViewIntersectionOriginalArrayBlockers/98493/file-info-object (0.28s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=9 misses=127
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	14.720s
+FAIL

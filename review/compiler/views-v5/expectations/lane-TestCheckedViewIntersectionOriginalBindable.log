@@ -1,0 +1,77 @@
+=== RUN   TestCheckedViewIntersectionOriginalBindable
+=== PAUSE TestCheckedViewIntersectionOriginalBindable
+=== CONT  TestCheckedViewIntersectionOriginalBindable
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-good3593391874/001/bindable-static-good.a:20:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-chai985459511/001/bindable-static-chain-good.a:20:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-help4103594266/001/bindable-static-helpers-good.a:17:24: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-element-goo3430765183/001/bindable-element-good.a:19:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-left779425662/001/bindable-static-left-wrong.a:17:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-help506878204/001/bindable-static-helpers-wrong.a:17:24: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-left519619524/001/bindable-static-left-kind.a:17:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-expr3008814999/001/bindable-static-expression-wrong.a:20:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-static-expr279151046/001/bindable-static-expression-this.a:20:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-element-arg1812389896/001/bindable-element-argument-wrong.a:20:21: checked intersection view with unsupported member BindableStaticPropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-good532846719/001/bindable-access-good.a:18:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-chai2605316170/001/bindable-access-chain-good.a:20:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-left1621555416/001/bindable-access-left-wrong.a:17:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-left1148455847/001/bindable-access-left-symbol.a:17:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-left1006071044/001/bindable-access-left-kind.a:17:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-expr2296595102/001/bindable-access-expression-wrong.a:20:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+=== RUN   TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this
+    checked_views_intersections_original_test.go:290: gate cache node miss
+    checked_views_intersections_original_test.go:290: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalBindablebindable-access-expr752994466/001/bindable-access-expression-this.a:20:21: checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalBindable (5.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-good (0.38s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-chain-good (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-good (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-good (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-wrong (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-helpers-wrong (0.33s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-left-kind (0.32s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-wrong (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-static-expression-this (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-element-argument-wrong (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-good (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-chain-good (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-wrong (0.31s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-symbol (0.29s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-left-kind (0.28s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-wrong (0.30s)
+    --- PASS: TestCheckedViewIntersectionOriginalBindable/bindable-access-expression-this (0.31s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=17
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.291s

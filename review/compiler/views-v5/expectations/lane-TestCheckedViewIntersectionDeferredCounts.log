@@ -1,0 +1,9 @@
+=== RUN   TestCheckedViewIntersectionDeferredCounts
+    checked_views_intersections_deferred_test.go:93: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-unread.a:7:35: an array of never; 
+    checked_views_intersections_deferred_test.go:93: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-read.a:7:35: an array of never; 
+    checked_views_intersections_deferred_test.go:93: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-helper.a:7:35: an array of never; 
+    checked_views_intersections_deferred_test.go:93: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-callback.a:7:35: an array of never; 
+    checked_views_intersections_deferred_test.go:93: pinned NotYet at /workspace/adamic/stage3/interface-downcasts/lane7/deferred-member-destructure.a:7:35: an array of never; 
+--- PASS: TestCheckedViewIntersectionDeferredCounts (0.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.370s

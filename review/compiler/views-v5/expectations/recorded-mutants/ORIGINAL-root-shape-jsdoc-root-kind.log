@@ -1,0 +1,13 @@
+=== RUN   TestCheckedViewIntersectionOriginalNodes
+=== PAUSE TestCheckedViewIntersectionOriginalNodes
+=== CONT  TestCheckedViewIntersectionOriginalNodes
+=== RUN   TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind
+    checked_views_intersections_original_test.go:422: gate cache node miss
+    checked_views_intersections_original_test.go:422: pinned Refused at /tmp/adamic-gate/TestCheckedViewIntersectionOriginalNodesjsdoc-root-kind2278659439/001/jsdoc-root-kind.a:12:17: checked intersection view with unsupported member JSDoc (representation conversion); prove or implement the complete member contract before creating this view
+--- PASS: TestCheckedViewIntersectionOriginalNodes (0.99s)
+    --- PASS: TestCheckedViewIntersectionOriginalNodes/jsdoc-root-kind (0.97s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	1.016s

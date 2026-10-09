@@ -1,0 +1,8 @@
+{
+  "kind": "Refused",
+  "where": ":17:21",
+  "what": "checked intersection view with unsupported member BindablePropertyAssignmentExpression (representation conversion)",
+  "fix": "prove or implement the complete member contract before creating this view",
+  "fixture": "stage3/interface-downcasts/lane7/refusals/TestCheckedViewIntersectionOriginalBindable__bindable-access-left-symbol__bindable-access-left-symbol.a",
+  "source_sha256": "86259815882618e1f49b0b5f428c1401fbe33c5fea2dec8944a2dba7ba8769fe"
+}

@@ -34,6 +34,9 @@ func TestCheckedViewIntersectionOriginalRankedOperands(t *testing.T) {
 
 func checkIntersectionRankedRead(t *testing.T, manifestFile string, id, reads int, input, field string) {
 	t.Helper()
+	if _, err := os.Stat("../../stage3/interface-downcasts/lane4/read-demand-pairs.json.gz"); os.IsNotExist(err) {
+		t.Skip("awaits lane 4 inventory: read-demand-pairs.json.gz")
+	}
 	declarations, original := intersectionOriginalInputs(t)
 	data, err := os.ReadFile(filepath.Join(declarations, manifestFile))
 	if err != nil {

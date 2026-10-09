@@ -1,0 +1,7 @@
+{"mutant": "whole-view-guard", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionCompoundDemand$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 10.566}
+{"mutant": "refusal-kind", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionCompoundDemand$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 10.449}
+{"mutant": "refusal-location", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionCompoundDemand$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 11.054}
+{"mutant": "refusal-member", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionCompoundDemand$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 10.546}
+{"mutant": "refusal-fix", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionCompoundDemand$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 10.852}
+{"mutant": "notyet-location", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionDeferredMember$/^read$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 12.004}
+{"mutant": "notyet-alias-kind", "command": ["go", "test", "./internal/oracle", "-run", "^TestCheckedViewIntersectionSource$/^emit-root-wrong$", "-count=1", "-timeout=80s", "-v"], "exit": 1, "caught": true, "seconds": 10.992}

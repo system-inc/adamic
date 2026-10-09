@@ -41,6 +41,9 @@ func TestCheckedViewIntersectionOriginalIsolatedMembers(t *testing.T) {
 					t.Fatal("Node: " + difference)
 				}
 				program, err := lowered(t, path)
+				if intersectionExpectedStop(t, path, err) {
+					return
+				}
 				if err != nil {
 					t.Fatal(err)
 				}
