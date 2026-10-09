@@ -192,8 +192,7 @@ func ownedWitnessUnit(t *testing.T, shard int) {
 		}
 		return
 	}
-	// Standalone shard selectors prepare under the setup budget as well.
-	// The case deadline starts only after all shared inputs are ready.
+	// A shard selected alone prepares the shared inputs itself, before its own deadline starts.
 	ownedWitnessSetup(t)
 	oracle, binary, module := ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
@@ -249,9 +248,9 @@ func ownedWitnessSetup(t *testing.T) {
 	if ownedWitnessShared.oracle != "" {
 		return
 	}
+	// No deadline of its own: setup is the build phase's to make fast, and Loom's 90 s kill still covers
+	// the unit (@system_adamic's ruling). A shard's clock starts only after this returns.
 	started := time.Now()
-	deadline := time.AfterFunc(90*time.Second, func() { fmt.Fprintln(os.Stderr, "cooked: TestOwnedWitnesses_Setup exceeded 90s"); os.Exit(124) })
-	defer deadline.Stop()
 	directory, err := filepath.Abs(".")
 	if err != nil {
 		t.Fatal(err)
