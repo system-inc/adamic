@@ -1,3 +1,4 @@
+// a-check: type error TS1064
 export async function asyncGuard<T>(value: T): T {
     return await value;
 }

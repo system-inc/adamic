@@ -32,11 +32,11 @@ def check(rows):
     for kind, reason in [('NotYet', 'a WithStatement'), ('Refused', 'with')]:
         actual = [(int(f['where'].rsplit(':', 2)[1]), f['depth']) for f in findings
                   if f['kind'] == kind and f['reason'] == reason]
-        assert actual == [(2, 0), (3, 1)], actual
+        assert actual == [(3, 0), (4, 1)], actual
     for kind, reason in [('NotYet', 'a DebuggerStatement'), ('Refused', 'debugger')]:
         actual = [(int(f['where'].rsplit(':', 2)[1]), f['depth']) for f in findings
                   if f['kind'] == kind and f['reason'] == reason]
-        assert actual == [(4, 2), (7, 0)], actual
+        assert actual == [(5, 2), (8, 0)], actual
     assert all(f['root_kind'] == f['reason'] for f in findings)
     assert all(r['speculative_coverage']['unvisited_nodes'] == 0 for r in rows[1:])
     return sum(f['kind'] in ('NotYet', 'Refused') for f in findings)

@@ -1,3 +1,4 @@
+// a-check: type error TS1101
 export function target<T>(value: T): T {
     with ({}) { debugger; }
     return value;

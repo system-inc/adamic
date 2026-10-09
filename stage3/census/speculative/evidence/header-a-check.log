@@ -1,0 +1,11 @@
+{
+  "gate_sha": "3bf2489e2a5e09ab59d2926b1c0ff374dfa1fa45",
+  "files": 5,
+  "mismatches": 0,
+  "outcomes": {
+    "type error": 4,
+    "checked": 1
+  },
+  "mutant_method": "unchanged Gate.aCheck header predicate against captured real in-place compiler diagnostics; every header restored"
+}
+PASS: all speculative .a files checked in place; zero mismatches; 8 missing/wrong-code header mutants caught
