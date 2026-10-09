@@ -10,8 +10,9 @@ def events(name):
  return out
 def seconds(name):
  for e in reversed(events(name)):
-  m=re.search(r'\tok?\s*',e.get('Output',''))
-  if e.get('Action')=='pass' and not e.get('Test'):return e.get('Elapsed')
+  if e.get('Output','').startswith('ok'):
+   m=re.search(r'\t([0-9.]+)s', e['Output'])
+   if m:return float(m.group(1))
  return None
 def fails(name):return [e['Test'] for e in events(name) if e.get('Action')=='fail' and e.get('Test') and '/' not in e['Test']]
 def fail_line(name,test):

@@ -10,7 +10,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestInspectRequestRefusals",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/inspect_shards_test.go:17",
-    "seconds": 32.358,
+    "seconds": 32.356,
     "oracle": "Self-written exit 0 validity control and exit 70 plus named refusal substrings. Validity does not check returned facts or their count.",
     "oracle_kind": "self",
     "kills": [
@@ -38,9 +38,9 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestInspectRequestRefusals|TestSixRuleAgreementAndMutants_000)$' > M4.log 2>&1; inspect_shards_test.go:73: wrong-kind-mutant-run: exit status 70",
     "control_kills": [],
     "timing_observations": [
-      70.449,
+      70.448,
       30.81,
-      32.358
+      32.356
     ],
     "vacuous_subcases": [
       "TestInspectRequestRefusals/shard-003",
@@ -52,7 +52,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestShadowIndexMissingBinding_000",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/profile_test.go:51",
-    "seconds": 4.294,
+    "seconds": 4.293,
     "oracle": "Self-written exit 70 and missing binding index substring for a native built-in mutant; fresh guard weakening proves the witness.",
     "oracle_kind": "self",
     "kills": [],
@@ -74,8 +74,8 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     ],
     "timing_observations": [
       61.738,
-      4.228,
-      4.294
+      4.226,
+      4.293
     ]
   },
   {
@@ -96,7 +96,15 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestSharedProductPublication"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > S1.log 2>&1; shared_test.go:154: different keys shared a product: /tmp/adamic-gate/typeaware-products-276804829/product-2149593182/ready, <nil>",
     "control_kills": [
@@ -112,7 +120,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestSixBuildCallbackUsesProductDirectory",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/six_builds_test.go:342",
-    "seconds": 0.041,
+    "seconds": 0.04,
     "oracle": "Hand-written expected construction results, errors or process markers",
     "oracle_kind": "self",
     "kills": [],
@@ -126,16 +134,24 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestSixBuildCallbackUsesProductDirectory"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > S2.log 2>&1; six_builds_test.go:368: callback wrote outside product directory: <nil>",
     "control_kills": [
       "S2"
     ],
     "timing_observations": [
-      0.041,
-      0.15,
-      0.025
+      0.04,
+      0.149,
+      0.024
     ]
   },
   {
@@ -156,15 +172,23 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestSixShardUnionRejectsLossAndDuplication"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > W1.log 2>&1; six_shards_test.go:254: invalid union accepted: [{left [a] <nil>} {right [c] <nil>}]",
     "control_kills": [
       "W1"
     ],
     "timing_observations": [
-      0.013,
-      0.024,
+      0.012,
+      0.023,
       0.019
     ]
   },
@@ -172,7 +196,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestSixShardPlantedDisagreement",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/six_shards_test.go:268",
-    "seconds": 0.075,
+    "seconds": 0.074,
     "oracle": "Hand-written expected construction results, errors or process markers",
     "oracle_kind": "self",
     "kills": [],
@@ -186,16 +210,24 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestSixShardPlantedDisagreement"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > W2.log 2>&1; six_shards_test.go:308: holding shard failed to catch planted case: <nil>",
     "control_kills": [
       "W2"
     ],
     "timing_observations": [
-      0.075,
+      0.074,
       0.078,
-      0.056
+      0.055
     ]
   },
   {
@@ -441,7 +473,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestSixRuleAgreementAndMutants_Setup",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/six_top_shards_test.go:104",
-    "seconds": 15.758,
+    "seconds": 15.755,
     "oracle": "Hand-written expected construction results, errors or process markers",
     "oracle_kind": "self",
     "kills": [],
@@ -462,9 +494,9 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
       "S3"
     ],
     "timing_observations": [
-      16.606,
-      15.758,
-      12.862
+      16.605,
+      15.755,
+      12.861
     ]
   },
   {
@@ -491,7 +523,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "control_kills": [],
     "timing_observations": [
       0.014,
-      0.011,
+      0.01,
       0.012
     ],
     "reason": "A mutation of the Go constants would change the authority; no permitted port mutation can reach these assertions."
@@ -500,7 +532,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestFactsDecoderGuards",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/suite_test.go:516",
-    "seconds": 4.107,
+    "seconds": 4.106,
     "oracle": "Self-written valid stdout 64 plus exit 70 and named malformed-frame errors. Strict/present boolean inversion M2 passes this row.",
     "oracle_kind": "self",
     "kills": [
@@ -529,9 +561,9 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestFactsDecoderGuards|TestSixRuleAgreementAndMutants_000)$' > M3.log 2>&1; suite_test.go:545: decoder-valid: exit status 70",
     "control_kills": [],
     "timing_observations": [
-      4.107,
-      6.077,
-      4.013
+      4.106,
+      6.076,
+      4.012
     ],
     "subsumption_basis_mutants": 2,
     "subsumer_timing_status": "Complete family exceeded 90 s; no valid median."
@@ -540,7 +572,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestTypeAwareUnitDeadline",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/setup_deadline_typeaware_test.go:22",
-    "seconds": 1.3639999999999999,
+    "seconds": 1.352,
     "oracle": "Hand-written expected construction results, errors or process markers",
     "oracle_kind": "self",
     "kills": [],
@@ -554,16 +586,24 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestTypeAwareUnitDeadline"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > W3.log 2>&1; setup_deadline_typeaware_test.go:64: cooked unit left its subprocess alive: <nil>",
     "control_kills": [
       "W3"
     ],
     "timing_observations": [
-      1.445,
-      1.3639999999999999,
-      1.274
+      1.432,
+      1.352,
+      1.273
     ]
   },
   {
@@ -604,7 +644,7 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "test": "TestTypeAwareContextKillsCompilerGroup",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/typeaware_commands_test.go:134",
-    "seconds": 1.324,
+    "seconds": 1.323,
     "oracle": "Hand-written expected construction results, errors or process markers",
     "oracle_kind": "self",
     "kills": [],
@@ -618,23 +658,31 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "vacuous": null,
     "bounded": true,
     "matrix_rows": [
-      "TestTypeAwareContextKillsCompilerGroup"
+      "TestSharedProductPublication",
+      "TestSixBuildCallbackUsesProductDirectory",
+      "TestSixShardUnionRejectsLossAndDuplication",
+      "TestSixShardPlantedDisagreement",
+      "TestTypeAwareUnitDeadline",
+      "TestTypeAwareContextKillsCompilerGroup",
+      "TestSixPinnedFlags",
+      "TestPinnedTypeFlags",
+      "TestTypeAwareNativeBuildChild"
     ],
     "evidence": "timeout 120 go test -overlay /tmp/u145/controls-overlay.json -json -count=1 -timeout 90s ./stage1/cohere/typeaware/ -run '^(TestSharedProductPublication|TestSixBuildCallbackUsesProductDirectory|TestSixShardUnionRejectsLossAndDuplication|TestSixShardPlantedDisagreement|TestTypeAwareUnitDeadline|TestTypeAwareContextKillsCompilerGroup|TestSixPinnedFlags|TestPinnedTypeFlags|TestTypeAwareNativeBuildChild)$' > W4.log 2>&1; typeaware_commands_test.go:163: context left compiler descendant alive: <nil>",
     "control_kills": [
       "W4"
     ],
     "timing_observations": [
-      1.324,
-      1.331,
-      1.321
+      1.323,
+      1.33,
+      1.32
     ]
   },
   {
     "test": "TestPinnedTypeFlags",
     "package": "stage1/cohere/typeaware",
     "file": "stage1/cohere/typeaware/typeaware_test.go:636",
-    "seconds": 0.013,
+    "seconds": 0.012,
     "oracle": "Pinned Go cohere TypeScript checker TypeFlags constants. Checked union=1<<27=134217728 and mask sum=334017 against source and successful tests. These rows do not execute port constants.",
     "oracle_kind": "external-authority",
     "kills": [],
@@ -653,9 +701,9 @@ Evidence pushed on test-audit/stage1-cohere-typeaware-inspect_shards under revie
     "evidence": null,
     "control_kills": [],
     "timing_observations": [
-      0.018,
-      0.013,
-      0.012
+      0.015,
+      0.012,
+      0.011
     ],
     "reason": "A mutation of the Go constants would change the authority; no permitted port mutation can reach these assertions."
   }
