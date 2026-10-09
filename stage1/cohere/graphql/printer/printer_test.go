@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strings"
 	"testing"
 	"time"
@@ -18,37 +19,35 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 	if err != nil {
 		t.Fatal(err)
 	}
-	var sources []string
-	// No .graphql documents exist in this checkout. Cases come from these
-	// pinned Go test sources and the generator's explicit controls instead.
+	// Validate the pinned enumeration on cache hits as well as misses.
 	corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
 		[]string{"internal/format/graphql"}, []string{"*_test.go"})
 	t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
-	directory := t.TempDir()
-	cases := filepath.Join(directory, "cases.txt")
-	answers := filepath.Join(directory, "answers.txt")
-	request, _ := json.Marshal(map[string]any{"Sources": sources, "Cases": cases, "Answers": answers, "Mode": mode, "Coverage": filepath.Join(directory, "coverage.json")})
-	path := filepath.Join(directory, "request.json")
-	if err = os.WriteFile(path, request, 0644); err != nil {
-		t.Fatal(err)
+	if len(oracle) == 0 {
+		oracle = []string{printerOracle(t)}
 	}
-	side, _ := filepath.Abs("testdata/cohere_side_test.go")
-	generator, _ := filepath.Abs("../testdata/cohere_side_test.go")
-	cohere := filepath.Join(root, "cohere")
-	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{filepath.Join(cohere, "internal/format/graphql/adamic_printer_test.go"): side, filepath.Join(cohere, "internal/format/graphql/adamic_generator_test.go"): generator}})
-	overlayPath := filepath.Join(directory, "overlay.json")
-	if err = os.WriteFile(overlayPath, overlay, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, "go", "test", "-count=1", "-overlay="+overlayPath, "-run=^TestAdamicPrinter$", "./internal/format/graphql")
-	if len(oracle) != 0 {
-		command = bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
-	}
-	command.Dir = cohere
-	command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go oracle: %v\n%s", err, output)
-	}
+	directory := printerBuild(t, printerBuildInputs{
+		Name:  "GraphQL printer oracle outputs",
+		Files: []string{oracle[0], root + "/stage1/cohere/graphql/printer/printer_test.go", root + "/stage1/cohere/graphql/printer/shards_test.go"},
+		Flags: []string{"mode=" + mode, "test-run=TestAdamicPrinter"}, Toolchain: runtime.Version(),
+	}, func(directory string) error {
+		request, err := json.Marshal(map[string]any{"Sources": []string(nil), "Cases": directory + "/cases.txt", "Answers": directory + "/answers.txt", "Mode": mode, "Coverage": directory + "/coverage.json"})
+		if err != nil {
+			return err
+		}
+		path := filepath.Join(t.TempDir(), "request.json")
+		if err := os.WriteFile(path, request, 0644); err != nil {
+			return err
+		}
+		command := bounded(t, oracle[0], "-test.run=^TestAdamicPrinter$", "-test.count=1", "-test.timeout=0")
+		command.Dir = root + "/cohere"
+		command.Env = append(os.Environ(), "ADAMIC_PRINTER_REQUEST="+path)
+		if output, err := combinedOutput(command); err != nil {
+			return fmt.Errorf("Go oracle: %w\n%s", err, output)
+		}
+		return nil
+	})
+	cases, answers := directory+"/cases.txt", directory+"/answers.txt"
 	data, err := os.ReadFile(answers)
 	if err != nil {
 		t.Fatal(err)
@@ -235,9 +234,9 @@ func TestPrinterFileDriver(t *testing.T) {
 		t.Fatal(err)
 	}
 	path, _ := filepath.Abs("main.ts")
-	program := lowered(t, path)
+	products := preparePrinterProducts(t, path)
 	want := "query {\n    hello(a: 1, b: 2)\n}\n"
-	for _, side := range []run{onNode(t, path, source), nativelyRun(t, program, source)} {
+	for _, side := range []run{onNode(t, path, source), execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, source)} {
 		if side.exitCode != 0 || string(side.stdout) != want {
 			t.Fatalf("driver: exit %d, stdout %q, stderr %q", side.exitCode, side.stdout, side.stderr)
 		}

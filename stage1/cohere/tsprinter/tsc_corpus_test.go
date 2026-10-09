@@ -15,26 +15,8 @@ type printerCase struct{ Label, Source, Want string }
 
 func tscCorpus(t *testing.T, root string, files []string, family string, statements bool, oracle string) ([]printerCase, string) {
 	t.Helper()
-	directory := t.TempDir()
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
-	requestPath := filepath.Join(directory, "request.json")
-	if err := os.WriteFile(requestPath, request, 0644); err != nil {
-		t.Fatal(err)
-	}
-	command := bounded(t, oracle, "-test.v", "-test.count=1", "-test.run=^TestAdamicExpressionCorpus$", "-test.timeout=0")
-	variable := "ADAMIC_TS_EXPRESSION_REQUEST"
-	if statements {
-		command = bounded(t, oracle, "-test.v", "-test.count=1", "-test.run=^TestAdamicStatementCorpus$", "-test.timeout=0")
-		variable = "ADAMIC_TS_STATEMENT_REQUEST"
-	}
-	command.Dir = root + "/cohere"
-	command.Env = append(os.Environ(), variable+"="+requestPath)
-	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go %s corpus: %v\n%s", family, err, output)
-	} else {
-		t.Log(string(output))
-	}
+	directory := tsPrinterOracleOutputs(t, root, files, gaps, family, oracle)
 	data, err := os.ReadFile(filepath.Join(directory, "cases.json"))
 	if err != nil {
 		t.Fatal(err)

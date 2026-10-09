@@ -8,6 +8,7 @@ import (
 	"runtime"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
@@ -18,28 +19,27 @@ func tscOracle(t *testing.T, root string) string {
 	expressionSide, _ := filepath.Abs("testdata/expressions_side_test.go")
 	statementSide, _ := filepath.Abs("testdata/statements_side_test.go")
 	cohere := root + "/cohere"
-	return expressionBuild(t, printerBuildInputs{
-		Name: "Go TSC printer oracle", Files: append([]string{expressionSide, statementSide}, expressionInputFiles(t, cohere, root+"/go.mod", root+"/go.work")...), Flags: []string{"go test -c", "overlay: expression and statement corpus tests"}, Toolchain: runtime.Version(),
-	}, func(dir string) error {
-		overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
-			cohere + "/internal/format/javascript/adamic_expressions_test.go": expressionSide,
-			cohere + "/internal/format/javascript/adamic_statements_test.go":  statementSide,
-		}})
-		if err != nil {
-			return err
-		}
-		path := dir + "/overlay.json"
-		if err := os.WriteFile(path, overlay, 0644); err != nil {
-			return err
-		}
-		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/javascript")
-		command.Dir = cohere
-		output, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, output)
-		}
-		return nil
-	}) + "/oracle"
+	dir := t.TempDir()
+	overlay, err := json.Marshal(map[string]any{"Replace": map[string]string{
+		cohere + "/internal/format/javascript/adamic_expressions_test.go": expressionSide,
+		cohere + "/internal/format/javascript/adamic_statements_test.go":  statementSide,
+	}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := dir + "/overlay.json"
+	if err := os.WriteFile(path, overlay, 0644); err != nil {
+		t.Fatal(err)
+	}
+	start := time.Now()
+	// No hand-listed build inputs: overlay Go builds remain private.
+	command := bounded(t, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/javascript")
+	command.Dir = cohere
+	if output, err := combinedOutput(command); err != nil {
+		t.Fatalf("Go TSC printer oracle: %v\n%s", err, output)
+	}
+	t.Logf("build Go TSC printer oracle cold wall %.3fs (overlay, uncached)", time.Since(start).Seconds())
+	return dir + "/oracle"
 }
 
 type tsPrinterProducts struct{ source, backend, sanitized, release string }

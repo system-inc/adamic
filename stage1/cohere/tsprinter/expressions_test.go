@@ -18,37 +18,25 @@ import (
 
 func expressionCorpus(t *testing.T, processPlan ...bool) (string, string, string) {
 	t.Helper()
-	directory := t.TempDir()
 	root, _ := filepath.Abs(repository)
 	files := printerCorpusFiles(t)
 	gaps, _ := filepath.Abs("testdata/notyet.json")
-	request, _ := json.Marshal(map[string]any{"Files": files, "Directory": directory, "Gaps": gaps})
-	if err := os.WriteFile(directory+"/request.json", request, 0644); err != nil {
-		t.Fatal(err)
-	}
+	private := t.TempDir()
 	side, _ := filepath.Abs("testdata/expressions_side_test.go")
 	overlay, _ := json.Marshal(map[string]any{"Replace": map[string]string{root + "/cohere/internal/format/javascript/adamic_expressions_test.go": side}})
-	path := directory + "/overlay.json"
+	path := private + "/overlay.json"
 	if err := os.WriteFile(path, overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	oracle := expressionBuild(t, printerBuildInputs{Name: "Go expression oracle", Files: append([]string{side}, expressionInputFiles(t, root+"/cohere", root+"/go.mod", root+"/go.work")...), Flags: []string{"-overlay=" + path}, Toolchain: runtime.Version()}, func(dir string) error {
-		command := bounded(t, "go", "test", "-c", "-o="+dir+"/oracle", "-overlay="+path, "./internal/format/javascript")
-		command.Dir = root + "/cohere"
-		data, err := combinedOutput(command)
-		if err != nil {
-			return fmt.Errorf("%w: %s", err, data)
-		}
-		return nil
-	})
-	command := bounded(t, oracle+"/oracle", "-test.v", "-test.run=^TestAdamicExpressionCorpus$", "-test.count=1", "-test.timeout=0")
+	start := time.Now()
+	// Go builds stay private until the GoBuild API covers this test overlay.
+	command := bounded(t, "go", "test", "-c", "-trimpath", "-ldflags=-buildid=", "-o="+private+"/oracle", "-overlay="+path, "./internal/format/javascript")
 	command.Dir = root + "/cohere"
-	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json")
 	if output, err := combinedOutput(command); err != nil {
-		t.Fatalf("Go expression corpus %v\n%s", err, output)
-	} else {
-		t.Log(string(output))
+		t.Fatalf("Go expression oracle: %v\n%s", err, output)
 	}
+	t.Logf("build Go expression oracle cold wall %.3fs (overlay, uncached)", time.Since(start).Seconds())
+	directory := tsPrinterOracleOutputs(t, root, files, gaps, "expressions", private+"/oracle")
 	answers, err := os.ReadFile(directory + "/answers.txt")
 	if err != nil {
 		t.Fatal(err)
@@ -202,7 +190,7 @@ func TestExpressionsAgainstGoAndPrettier(t *testing.T) {
 	}
 }
 
-// Inputs describe read-only shared products; overlay oracles are built privately.
+// Inputs describe non-Go read-only shared products; Go builds stay separate.
 type printerBuildInputs struct {
 	Name         string
 	Files, Flags []string
@@ -211,18 +199,6 @@ type printerBuildInputs struct {
 
 func expressionBuild(t *testing.T, inputs printerBuildInputs, build func(dir string) error) string {
 	t.Helper()
-	// Overlay oracle builds remain private: GoBuild deliberately refuses overlays.
-	for _, flag := range inputs.Flags {
-		if strings.Contains(flag, "overlay") {
-			dir := t.TempDir()
-			start := time.Now()
-			if err := build(dir); err != nil {
-				t.Fatalf("build %s: %v", inputs.Name, err)
-			}
-			t.Logf("build %s cold wall %.3fs (overlay, uncached)", inputs.Name, time.Since(start).Seconds())
-			return dir
-		}
-	}
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
