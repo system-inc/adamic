@@ -1,0 +1,6 @@
+=== RUN   TestCheckedJSONRecordRemainsUnsupported
+--- PASS: TestCheckedJSONRecordRemainsUnsupported (0.15s)
+=== RUN   TestCheckedJSONCycleStopsAtDepth
+--- PASS: TestCheckedJSONCycleStopsAtDepth (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.305s

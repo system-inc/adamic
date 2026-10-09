@@ -1,0 +1,11 @@
+--- internal/lower/refusals.go
++++ internal/lower/refusals.go
+@@ -90,7 +90,7 @@
+ 				return true
+ 			}
+ 		}
+-		if node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
++		if false && node.Kind == ast.KindAnyKeyword && l.program.FileName(module) != module.FileName().AsString() {
+ 			found = &Refused{Where: l.program.Where(node), What: "explicit any in .a", Fix: "use unknown and validate it before a typed use"}
+ 			return true
+ 		}

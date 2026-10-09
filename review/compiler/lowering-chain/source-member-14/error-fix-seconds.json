@@ -1,0 +1,24 @@
+{
+  "positive_leaves_seconds": {
+    "TestMiscompile2AErrorSpread": 0.88,
+    "TestMiscompile2AConstructorNumberArrow": 1.21,
+    "TestMiscompile2ADerivedSymbol": 1.25,
+    "TestMiscompile2AErrorSubclassSpread": 1.17,
+    "TestMiscompile2AMarkerUndefined": 2.78,
+    "TestMiscompile2AUndefinedError": 2.79,
+    "TestMiscompile2AMarker": 2.26,
+    "TestMiscompile2AMaybeSetter": 0.79,
+    "TestMiscompile2AControls": 2.13,
+    "TestMiscompile2AConstructorArrow": 0.68,
+    "TestMiscompile2ALongName": 0.69,
+    "TestMiscompile2AOverrideSource": 0.45,
+    "TestMiscompile2AOptionalError": 0.94,
+    "TestRuntimeFieldLayoutsAreIncluded": 0.01,
+    "TestErrorUndefinedMessageHasNoOwnProperty": 1.42
+  },
+  "runtime_mutant_leaves_seconds": {
+    "TestMiscompile2AOptionalError": 1.04,
+    "TestMiscompile2AMarkerUndefined": 4.19,
+    "TestErrorUndefinedMessageHasNoOwnProperty": 1.18
+  }
+}

@@ -98,7 +98,7 @@
     },
     "stage0": {
       "outcome": "Refused",
-      "what": "stage3/fixtures/enums/06_set_node_flags.a:79:10: Adamic 0.1 refuses a value of type T seen as Mutable<T>, which can write T[\"flags\"] where NodeFlags is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable); use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)"
+      "what": "stage3/fixtures/enums/06_set_node_flags.a:79:9: Adamic 0.1 refuses generic body assignment into slot T[\"flags\"] from source NodeFlags is not proven for every allowed type argument; checker constraint: T extends Node; read a value of the same dependent type from the type parameter, or use the concrete constraint type for the slot (adamic/generic-body-relations)"
     }
   },
   {

@@ -1,0 +1,4 @@
+interface MapLike<T> { [key: string]: T; }
+function convert(raw: any): MapLike<any> { return raw; }
+const raw: any = { option: 14 };
+console.log(String(convert(raw) === raw));

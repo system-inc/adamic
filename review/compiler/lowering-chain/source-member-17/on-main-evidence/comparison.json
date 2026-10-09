@@ -1,0 +1,195 @@
+{
+  "lower": {
+    "base": {
+      "pass": 1226,
+      "skip": 2
+    },
+    "feature": {
+      "pass": 1220,
+      "skip": 2
+    },
+    "changed_common": {},
+    "added": [
+      "TestStep21LibraryAdmission"
+    ],
+    "removed": [
+      "TestNodeBufferRefusals/catch",
+      "TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat",
+      "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_stored_Error",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number",
+      "TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string"
+    ]
+  },
+  "ir": {
+    "base": {
+      "pass": 5
+    },
+    "feature": {
+      "pass": 5
+    },
+    "changed_common": {},
+    "added": [],
+    "removed": []
+  },
+  "flow": {
+    "base": {
+      "pass": 2034
+    },
+    "feature": {
+      "pass": 2082
+    },
+    "changed_common": {},
+    "added": [
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_builtin_narrow_terminal.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_catch_callback.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_dynamic.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_dynamic_uncaught.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_error_subclasses.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_finally_callback.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_finally_completion.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_library_failures.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_library_host.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_library_types.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_liveness.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_object_uncaught.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_region_payload.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_rethrow.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_saved_error.a",
+      "TestEveryMutationIsInItsRange/programs/../oracle/testdata/step21_soundness_terminal.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_builtin_narrow_terminal.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_catch_callback.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_dynamic.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_dynamic_uncaught.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_error_subclasses.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_finally_callback.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_finally_completion.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_library_failures.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_library_host.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_library_types.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_liveness.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_object_uncaught.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_region_payload.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_rethrow.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_saved_error.a",
+      "TestEveryPathNodeTakesIsInTheGraph/../oracle/testdata/step21_soundness_terminal.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_builtin_narrow_terminal.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_catch_callback.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_dynamic.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_dynamic_uncaught.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_error_subclasses.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_finally_callback.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_finally_completion.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_library_failures.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_library_host.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_library_types.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_liveness.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_object_uncaught.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_region_payload.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_rethrow.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_saved_error.a",
+      "TestLivenessHoldsOnEveryPath/programs/../oracle/testdata/step21_soundness_terminal.a"
+    ],
+    "removed": []
+  },
+  "oracle": {
+    "base": {
+      "pass": 2034,
+      "skip": 5
+    },
+    "feature": {
+      "pass": 2091,
+      "skip": 5
+    },
+    "changed_common": {},
+    "added": [
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_catch_callback.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_dynamic.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_dynamic_uncaught.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_error_subclasses.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_finally_callback.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_finally_completion.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_library_failures.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_library_host.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_library_types.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_liveness.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_object_uncaught.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_region_payload.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_rethrow.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_saved_error.a",
+      "TestCountsAreRecorded/fixtures/internal/oracle/testdata/step21_soundness_terminal.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic_uncaught.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_types.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_object_uncaught.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_region_payload.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a",
+      "TestNativeAgreesWithNode/internal/oracle/testdata/step21_soundness_terminal.a",
+      "TestStep21ErrorBoundaries",
+      "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);",
+      "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');",
+      "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');",
+      "TestStep21FixtureMutants",
+      "TestStep21FixtureMutants/catch_callback",
+      "TestStep21FixtureMutants/finally_callback",
+      "TestStep21FixtureMutants/finally_completion",
+      "TestStep21FixtureMutants/liveness",
+      "TestStep21FixtureMutants/rethrow",
+      "TestStep21ProposalOutcomes",
+      "TestStep21ProposalOutcomes/unknown_read",
+      "TestStep21ReadinessIsTerminal",
+      "TestStep21TerminalOracleDependencyHash",
+      "TestStep21TerminalOracleSourceHash",
+      "TestStep21ThrowPathLiveness",
+      "TestStep21TypeScriptExtension",
+      "TestStep21Uncaught",
+      "TestStep21Uncaught/closures_throw_uncaught",
+      "TestStep21Uncaught/exceptions_uncaught",
+      "TestStep21Uncaught/step21_dynamic_uncaught",
+      "TestStep21Uncaught/step21_object_uncaught",
+      "TestStep21UnknownAssertions",
+      "TestStep21UnknownAssertions/()_=>_string",
+      "TestStep21UnknownAssertions/{_readonly_message:_string_}"
+    ],
+    "removed": []
+  },
+  "stage3": {
+    "base": {
+      "skip": 1,
+      "pass": 608
+    },
+    "feature": {
+      "skip": 1,
+      "pass": 608
+    },
+    "changed": 0,
+    "skipped": [
+      "TestTransformedNodeRunnerGuardHook"
+    ]
+  },
+  "stage3-all-platforms": {
+    "base": {
+      "skip": 1,
+      "pass": 608
+    },
+    "feature": {
+      "skip": 1,
+      "pass": 608
+    },
+    "changed": 0,
+    "skipped": [
+      "TestTransformedNodeRunnerGuardHook"
+    ]
+  }
+}

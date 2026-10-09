@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T18:21:19.101600384Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:19.144622563Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T18:21:19.1446781Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== RUN   TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.144706009Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== PAUSE TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.144709931Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T18:21:19.144725495Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T18:21:19.144728531Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== RUN   TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.14473194Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== PAUSE TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.14473485Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T18:21:19.144738342Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode"}
+{"Time":"2026-10-09T18:21:19.144740914Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode","Output":"=== RUN   TestParameterPropertyValueMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.14474441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode","Output":"=== PAUSE TestParameterPropertyValueMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.144746827Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode"}
+{"Time":"2026-10-09T18:21:19.144749792Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts"}
+{"Time":"2026-10-09T18:21:19.144752922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"=== CONT  TestParameterPropertyCheckerContracts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.14683288Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode"}
+{"Time":"2026-10-09T18:21:19.146851456Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode","Output":"=== CONT  TestParameterPropertyValueMatchesNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.152177322Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver"}
+{"Time":"2026-10-09T18:21:19.152198022Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"=== CONT  TestParameterPropertyCallbackReceiver\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:19.438494016Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Output":"--- PASS: TestParameterPropertyCallbackReceiver (0.29s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.283625849Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCallbackReceiver","Elapsed":0.29}
+{"Time":"2026-10-09T18:21:20.283679008Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Output":"--- PASS: TestParameterPropertyCheckerContracts (1.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.60018792Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyCheckerContracts","Elapsed":1.14}
+{"Time":"2026-10-09T18:21:20.600259975Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode","Output":"--- PASS: TestParameterPropertyValueMatchesNode (1.45s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.600269462Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestParameterPropertyValueMatchesNode","Elapsed":1.45}
+{"Time":"2026-10-09T18:21:20.600272723Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:20.606539579Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.505}

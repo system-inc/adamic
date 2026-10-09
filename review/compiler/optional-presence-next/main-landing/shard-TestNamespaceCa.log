@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T18:20:36.93431652Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:36.947147542Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork"}
+{"Time":"2026-10-09T18:20:36.947276708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork","Output":"=== RUN   TestNamespaceCallGraphLinearWork\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.947323823Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork","Output":"=== PAUSE TestNamespaceCallGraphLinearWork\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.947328237Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork"}
+{"Time":"2026-10-09T18:20:36.947332036Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-09T18:20:36.947334498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== RUN   TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.947337927Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== PAUSE TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.9473402Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-09T18:20:36.947342921Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork"}
+{"Time":"2026-10-09T18:20:36.947345032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork","Output":"=== CONT  TestNamespaceCallGraphLinearWork\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.947347362Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/12"}
+{"Time":"2026-10-09T18:20:36.947349388Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/12","Output":"=== RUN   TestNamespaceCallGraphLinearWork/12\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:36.947356023Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion"}
+{"Time":"2026-10-09T18:20:36.947358102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"=== CONT  TestNamespaceCallGraphCycleUnion\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.06494153Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/12","Output":"--- PASS: TestNamespaceCallGraphLinearWork/12 (0.12s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.064987073Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/12","Elapsed":0.12}
+{"Time":"2026-10-09T18:20:37.069359416Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/24"}
+{"Time":"2026-10-09T18:20:37.069387123Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/24","Output":"=== RUN   TestNamespaceCallGraphLinearWork/24\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.077456617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Output":"--- PASS: TestNamespaceCallGraphCycleUnion (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.135115667Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphCycleUnion","Elapsed":0.13}
+{"Time":"2026-10-09T18:20:37.135148543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/24","Output":"--- PASS: TestNamespaceCallGraphLinearWork/24 (0.07s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.135162776Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork/24","Elapsed":0.07}
+{"Time":"2026-10-09T18:20:37.135166568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork","Output":"--- PASS: TestNamespaceCallGraphLinearWork (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.135168773Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceCallGraphLinearWork","Elapsed":0.19}
+{"Time":"2026-10-09T18:20:37.13517107Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:37.142103861Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.208}

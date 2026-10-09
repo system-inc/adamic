@@ -100,6 +100,8 @@ func logicalConverted(from, to ir.Type, value string) (string, bool) {
 
 func (e *emitter) effects(expression ir.Effects) string {
 	savedOwned, savedAt := e.owned, e.at
+	depth := len(e.scopes)
+	e.scopes = append(e.scopes, nil)
 	e.outerOwned = append(e.outerOwned, savedOwned)
 	e.owned, e.at = nil, nil
 	for _, statement := range expression.Body {
@@ -108,5 +110,13 @@ func (e *emitter) effects(expression ir.Effects) string {
 	e.end()
 	e.owned, e.at = savedOwned, savedAt
 	e.outerOwned = e.outerOwned[:len(e.outerOwned)-1]
-	return e.value(expression.Result)
+	value := e.value(expression.Result)
+	// Effects locals can be declared inside a conditional arm. Keep the result
+	// alive while releasing that expression's locals in their actual scope.
+	if expression.Result.Type().IsReference() {
+		value = e.own(expression.Result.Type(), retained(value))
+	}
+	e.releaseScopes(depth)
+	e.scopes = e.scopes[:depth]
+	return value
 }

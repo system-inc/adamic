@@ -1,0 +1,14 @@
+=== RUN   TestCheckedAny
+=== RUN   TestCheckedAny/property
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:41: gate cache node miss
+    checked_any_test.go:76: source Node stdout="node\n" stderr="" exit=0; backends stdout="node\n" stderr="" exit=0
+    checked_any_test.go:78: .a must refuse explicit any: <nil>
+--- FAIL: TestCheckedAny (0.40s)
+    --- FAIL: TestCheckedAny/property (0.40s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.414s
+FAIL

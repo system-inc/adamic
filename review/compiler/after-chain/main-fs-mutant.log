@@ -1,0 +1,8 @@
+=== RUN   TestFSStatThrowsByDefault
+=== PAUSE TestFSStatThrowsByDefault
+=== CONT  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:51: JavaScript backend stdout = "absent\nstat returned instead of throwing\n", source Node = "absent\n"
+--- FAIL: TestFSStatThrowsByDefault (0.37s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.383s
+FAIL

@@ -1,0 +1,5 @@
+interface Config { run: () => number; }
+function convert(raw: any): Config { return raw; }
+const raw: any = { run: () => 14 };
+convert(raw);
+console.log("passed");

@@ -1,0 +1,31 @@
+{"Time":"2026-10-09T19:58:26.937968885Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:27.001250053Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T19:58:27.00134767Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== RUN   TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.003735868Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== PAUSE TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.003764274Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T19:58:27.043106634Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T19:58:27.043129633Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== RUN   TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.043137703Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== PAUSE TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.043140867Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T19:58:27.043144009Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud"}
+{"Time":"2026-10-09T19:58:27.043146909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"=== CONT  TestNestedFunctionGapsAreLoud\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.043150067Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block"}
+{"Time":"2026-10-09T19:58:27.043152738Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"=== RUN   TestNestedFunctionGapsAreLoud/block\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.043170092Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused"}
+{"Time":"2026-10-09T19:58:27.04317276Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"=== CONT  TestNestedFunctionCycleIsRefused\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.465398441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Output":"--- PASS: TestNestedFunctionGapsAreLoud/block (0.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.465466694Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/block","Elapsed":0.46}
+{"Time":"2026-10-09T19:58:27.465487311Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic"}
+{"Time":"2026-10-09T19:58:27.465491081Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"=== RUN   TestNestedFunctionGapsAreLoud/generic\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.548724998Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Output":"--- PASS: TestNestedFunctionCycleIsRefused (0.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.905629644Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionCycleIsRefused","Elapsed":0.51}
+{"Time":"2026-10-09T19:58:27.905675017Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Output":"--- PASS: TestNestedFunctionGapsAreLoud/generic (0.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:27.905693388Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/generic","Elapsed":0.44}
+{"Time":"2026-10-09T19:58:27.905697362Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this"}
+{"Time":"2026-10-09T19:58:27.905700144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"=== RUN   TestNestedFunctionGapsAreLoud/dynamic_this\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:28.383159122Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Output":"--- PASS: TestNestedFunctionGapsAreLoud/dynamic_this (0.47s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:28.383357877Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud/dynamic_this","Elapsed":0.47}
+{"Time":"2026-10-09T19:58:28.383369362Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Output":"--- PASS: TestNestedFunctionGapsAreLoud (1.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:28.383373803Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNestedFunctionGapsAreLoud","Elapsed":1.37}
+{"Time":"2026-10-09T19:58:28.383377169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:28.395705043Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.458}

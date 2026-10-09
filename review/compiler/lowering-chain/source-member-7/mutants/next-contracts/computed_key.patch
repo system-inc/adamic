@@ -1,0 +1,11 @@
+--- a/internal/lower/checked_json.go
++++ b/internal/lower/checked_json.go
+@@ -239,7 +239,7 @@
+ 	}
+ 	if l.result.JSONCheckedDictionaries && node.Kind == ast.KindPropertyAssignment && node.Name() != nil {
+ 		if node.Name().Kind == ast.KindComputedPropertyName {
+-			return "a computed key in a checked JSON dictionary (own-key metadata)"
++			return "" // Mutant: bypass the computed-key refusal without querying its unsupported Text()
+ 		}
+ 		name := node.Name().Text()
+ 		if strings.ContainsRune(name, 0) {

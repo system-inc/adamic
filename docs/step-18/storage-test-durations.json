@@ -1,0 +1,41 @@
+{
+  "cpuQuota": "400000/100000 = 4 CPUs",
+  "nproc": 5,
+  "tests": [
+    {
+      "test": "TestStep18CallableReceiverContract",
+      "seconds": 0.13,
+      "log": "/tmp/storage-shape3-lower.jsonl"
+    },
+    {
+      "test": "TestStep18UnknownDetachedCallable",
+      "seconds": 0.18,
+      "log": "/tmp/storage-shape3-lower.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedCallableOrigins",
+      "seconds": 0.25,
+      "log": "/tmp/storage-shape3-lower.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries",
+      "seconds": 0,
+      "log": "/tmp/storage-shape3-lower.jsonl"
+    },
+    {
+      "test": "TestCallTargetReaders",
+      "seconds": 16.12,
+      "log": "/tmp/storage-shape3-ir.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedMethod",
+      "seconds": 0.65,
+      "log": "/tmp/storage-shape3-controls.jsonl"
+    },
+    {
+      "test": "TestStep18StorageTypeLie",
+      "seconds": 1.25,
+      "log": "/tmp/storage-shape3-controls.jsonl"
+    }
+  ]
+}

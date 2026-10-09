@@ -1,0 +1,41 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "1\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "before middle super|root field|root body 4|middle field|middle body|before leaf super|before middle super|root field|root body 7|middle field|middle body|leaf field|leaf body|\nroot/middle/middle 13\ntrue true false\nroot/leaf/middle/leaf 113\ntrue true true\nroot/middle/middle 13\nroot field117|middle field142|leaf field165|root field117/copy\nroot/leaf/middle/leaf 113 true true\nfalse\nbase1/child2\n", stderr ""
+        native: exit 70, stdout "", stderr "adamic: panic: compiler bug: a field the checker proved is there is missing\n"
+    oracle_test.go:603: gate cache native hit
+--- FAIL: TestNativeAgreesWithNode (0.02s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/inherited_fields_guard.a (0.54s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance.a (0.70s)
+FAIL
+gate cache: native hits=2 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.732s
+FAIL

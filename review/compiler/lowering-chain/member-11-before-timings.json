@@ -1,0 +1,30 @@
+[
+  {
+    "name": "release-cold",
+    "wall_seconds": 6.245212847999937,
+    "test_seconds": 3.89,
+    "node_stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "exit": 0
+  },
+  {
+    "name": "release-repeat",
+    "wall_seconds": 6.08807929699833,
+    "test_seconds": 3.87,
+    "node_stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "exit": 0
+  },
+  {
+    "name": "sanitized-cold",
+    "wall_seconds": 9.28903403699951,
+    "test_seconds": 7.03,
+    "node_stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "exit": 0
+  },
+  {
+    "name": "sanitized-repeat",
+    "wall_seconds": 8.69058242400206,
+    "test_seconds": 6.65,
+    "node_stdout": "0:0\n1:1\n1:9\n0:0\n1:1\n0 1 8\n3:,2,\n3:,2,\n0 1 8\n0 1 8\n0\n1:9\n0\n",
+    "exit": 0
+  }
+]

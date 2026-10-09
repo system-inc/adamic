@@ -2,7 +2,6 @@ package native
 
 import (
 	"context"
-	"errors"
 	"os"
 	"path/filepath"
 	"regexp"
@@ -81,7 +80,7 @@ console.log((missing?.steady ?? -3).toString());
 	generated := C(program)
 	// Semantic parity alone would also pass if the optimization disappeared entirely.
 	lookup := func(name string) bool {
-		return regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
+		return regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(generated)
 	}
 	// Required reads keep the uniform-slot proof. Writes also guard presence and may
 	// contain a checked fallback in their slot declaration.
@@ -90,7 +89,7 @@ console.log((missing?.steady ?? -3).toString());
 			if strings.HasPrefix(strings.TrimSpace(line), "adamic_value *") {
 				continue
 			}
-			if regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
+			if regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, ` + strconv.Quote(name) + `, &adamic_cache_`).MatchString(line) {
 				return true
 			}
 		}
@@ -195,7 +194,7 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 		t.Fatal(err)
 	}
 	generated := C(program)
-	if !regexp.MustCompile(`adamic_object_(?:data_)?field\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
+	if !regexp.MustCompile(`adamic_object_(?:(?:data_)?field|maybe_number)\([^\n]+, "uniform", &adamic_cache_`).MatchString(generated) {
 		t.Fatal("regex program specialized a field before named-group layouts entered the proof")
 	}
 	want := runWithInput(t, "", "node", "--disable-warning=ExperimentalWarning", path)
@@ -210,13 +209,8 @@ func TestRegexProgramsKeepCheckedFieldReads(t *testing.T) {
 	}
 }
 
-// Fixed layouts cannot yet create a missing optional property. Preserve the explicit
-// failure instead of turning this already unsupported write into an out-of-bounds store.
-// This is a safety fixture, not a claim of Node parity: Node creates the field. A literal typed
-// Optional that leaves missing out has no slot for it, so stage 0 refuses the write rather than
-// let it reach the runtime's missing-slot panic, which stays behind it in object.c. An object
-// reaching set with no such type is refused earlier, as optional widening.
-func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
+// Contextual literals reserve optional slots even when passed directly to a function.
+func TestOptionalWriteReservedSlotMatchesNode(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs("testdata/field_write_absent.a")
 	if err != nil {
@@ -235,9 +229,17 @@ func TestOptionalWriteMissingSlotRemainsChecked(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), loaded)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "field_write_absent.a:5:2: stage 0 can't lower writing a possibly absent optional own field yet") {
-		t.Fatalf("missing-slot write must be refused before it reaches C, got %v", err)
+	program, err := lower.Lower(context.Background(), loaded)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, sanitize := range []bool{true, false} {
+		binary := filepath.Join(t.TempDir(), "absent-write")
+		if err := Build(C(program), binary, Options{Sanitize: sanitize}); err != nil {
+			t.Fatal(err)
+		}
+		if output := runWithInput(t, "", binary); output != wantNode {
+			t.Fatalf("sanitize %v: reserved-slot write: got %q, Node %q", sanitize, output, wantNode)
+		}
 	}
 }

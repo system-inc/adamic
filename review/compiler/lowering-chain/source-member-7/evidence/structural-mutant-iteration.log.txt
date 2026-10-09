@@ -1,0 +1,8 @@
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/json_iteration
+    checked_any_test.go:177: unsafe contract became accepted: <nil>
+--- FAIL: TestCheckedAnyUnsupportedContracts (0.03s)
+    --- FAIL: TestCheckedAnyUnsupportedContracts/json_iteration (0.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.042s
+FAIL

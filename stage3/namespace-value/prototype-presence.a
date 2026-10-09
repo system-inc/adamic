@@ -1,0 +1,5 @@
+namespace State { export let value = 1; }
+const held = State;
+console.log(String("hasOwnProperty" in held));
+console.log(String(held.hasOwnProperty("hasOwnProperty")));
+console.log(Object.keys(held).join(","));

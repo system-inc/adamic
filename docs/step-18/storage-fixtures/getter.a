@@ -1,0 +1,32 @@
+let gets = 0;
+let argumentsRun = 0;
+class Host {
+    readonly label: string;
+    constructor(label: string) { this.label = label; }
+    get callback(): ((value: string) => string) | undefined {
+        gets += 1;
+        console.log('get');
+        if (this.label === 'absent') return undefined;
+        return function(this: {readonly label: string}, value: string): string { return `${this.label}:${value}`; };
+    }
+}
+function argument(): string { argumentsRun += 1; console.log('argument'); return `value${argumentsRun}`; }
+function invoke(host: Host | undefined): void { console.log(host?.callback?.(argument()) ?? 'absent'); }
+invoke(undefined);
+invoke(new Host('absent'));
+invoke(new Host(`owner${1}`));
+const host = new Host(`direct${2}`);
+console.log(host.callback?.(argument()) ?? 'absent');
+console.log(`${gets}:${argumentsRun}`);
+const literal = {
+    label: `literal${3}`,
+    get callback(): ((value: string) => string) | undefined {
+        console.log('literal-get');
+        return function(this: {readonly label: string}, value: string): string { return `${this.label}:${value}`; };
+    },
+};
+function structural(value: {readonly callback: ((value: string) => string) | undefined} | undefined): void {
+    console.log(value?.callback?.(argument()) ?? 'absent');
+}
+structural(undefined);
+structural(literal);

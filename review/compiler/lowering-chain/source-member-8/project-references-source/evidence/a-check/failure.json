@@ -1,0 +1,75 @@
+{
+  "sha": "932d3bf88bebe9767bff24eb53af36edf092c488",
+  "failure": {
+    "step": "a-check",
+    "detail": "a-check failed for 4 files:\nstage3/project-loader/fixture/app/main.a: type error, expected checked (stage3/project-loader/fixture/app/main.a:2:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.)\nstage3/project-references-source/fixture/chain/app/main.a: type error, expected checked (stage3/project-references-source/fixture/chain/app/main.a:2:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'.)\nstage3/project-references-source/fixture/types/app/main.a: type error, expected checked (stage3/project-references-source/fixture/types/app/main.a:2:15: error TS2304: Cannot find name 'EntryNumber'.)\nstage3/project-references-source/fixture/types/dependency/value.a: type error, expected checked (stage3/project-references-source/fixture/types/dependency/value.a:1:14: error TS2304: Cannot find name 'DependencyNumber'.)",
+    "after_seconds": 25.6
+  },
+  "a_check": {
+    "stage3/project-loader/fixture/app/main.a": {
+      "outcome": "type error",
+      "expected": "checked",
+      "first": "stage3/project-loader/fixture/app/main.a:2:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'."
+    },
+    "stage3/project-loader/fixture/dependency/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/app/main-print.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/app/main.a": {
+      "outcome": "type error",
+      "expected": "checked",
+      "first": "stage3/project-references-source/fixture/chain/app/main.a:2:13: error TS2345: Argument of type 'number' is not assignable to parameter of type 'string'."
+    },
+    "stage3/project-references-source/fixture/chain/leaf/base.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/leaf/unused.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/chain/middle/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/two/app/main.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/two/dependency/value.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/app/main.a": {
+      "outcome": "type error",
+      "expected": "checked",
+      "first": "stage3/project-references-source/fixture/types/app/main.a:2:15: error TS2304: Cannot find name 'EntryNumber'."
+    },
+    "stage3/project-references-source/fixture/types/dependency/value.a": {
+      "outcome": "type error",
+      "expected": "checked",
+      "first": "stage3/project-references-source/fixture/types/dependency/value.a:1:14: error TS2304: Cannot find name 'DependencyNumber'."
+    },
+    "stage3/project-references-source/fixture/types/packages/dependency.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/project-references-source/fixture/types/packages/entry.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    }
+  }
+}

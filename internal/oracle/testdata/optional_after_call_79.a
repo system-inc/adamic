@@ -1,0 +1,30 @@
+// Seed 79, shrunk by adamic-fuzz.
+interface Holder {
+    value: number;
+    name: string;
+    list: number[];
+}
+class BaseCounter {
+    count = 0;
+    bump(amount: number): number {
+        return this.count + amount;
+    }
+}
+class ChildCounter extends BaseCounter {
+    extra = 1;
+    override bump(amount: number): number {
+        const carried = super.bump(amount);
+        chain = chain?.next;
+        return carried + this.extra;
+    }
+}
+const holder: Holder = { value: 10, name: 'hello', list: [7, 2.25] };
+const counter = new ChildCounter();
+interface Link {
+    value: number;
+    label: string;
+    readonly next: Link | undefined;
+}
+let chain: Link | undefined = { value: 1.5, label: '世界', next: undefined };
+holder.list.splice(counter.bump(0), 0);
+chain = chain?.next;

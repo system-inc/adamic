@@ -1,0 +1,43 @@
+// Adapted from test262, revision 2e0a56762801e275a9fdf96dc49d90ba0cddcf63:
+// language/statements/for-of/array-contract-expand.js, array-expand-contract.js,
+// array-expand.js, and head-const-fresh-binding-per-iteration.js.
+// Copyright (C) 2011, 2015 the V8 project authors. BSD license, test262/LICENSE.
+interface ArrayView<T> extends ReadonlyArray<T> {}
+function same(actual: number, expected: number): void {
+    if (actual !== expected) { throw new Error('test262 array iteration assertion'); }
+}
+const expanded: number[] = [0];
+const expandedView: ArrayView<number> = expanded;
+let expandedCount = 0;
+for (const value of expandedView) {
+    same(value, expandedCount);
+    if (expandedCount === 0) { expanded.push(1); }
+    expandedCount++;
+}
+same(expandedCount, 2);
+const replaced: number[] = [0, 1];
+const replacedView: ArrayView<number> = replaced;
+let replacedCount = 0;
+for (const value of replacedView) {
+    same(value, replacedCount);
+    if (replacedCount === 0) { replaced.pop(); replaced.push(1); }
+    replacedCount++;
+}
+same(replacedCount, 2);
+const contracted: number[] = [0];
+const contractedView: ArrayView<number> = contracted;
+let contractedCount = 0;
+for (const value of contractedView) {
+    same(value, 0);
+    contracted.push(1); contracted.pop();
+    contractedCount++;
+}
+same(contractedCount, 1);
+const bindings: (() => number)[] = [];
+const input: ArrayView<number> = [1, 2, 3];
+let sum = 0;
+for (const value of input) { sum += value; bindings.push(() => value); }
+same(sum, 6);
+let expected = 1;
+for (const get of bindings) { same(get(), expected); expected++; }
+console.log('test262 array views passed');

@@ -1,0 +1,12 @@
+=== RUN   TestParserConstructionSource
+=== RUN   TestParserConstructionSource/node-array-unset
+    parser_construction_test.go:18: gate cache node miss
+    parser_construction_test.go:27: gate cache node miss
+    parser_construction_test.go:35: source Node, native sanitizers, leak check and JavaScript agree; pending codex/placeholder-nonnull integration
+--- PASS: TestParserConstructionSource (0.42s)
+    --- PASS: TestParserConstructionSource/node-array-unset (0.42s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.429s

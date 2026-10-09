@@ -1,0 +1,40 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/miscompile_2a/controls.a",
+      "after": [
+        "39",
+        "39",
+        "37",
+        "58",
+        "13",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a",
+      "after": [
+        "3",
+        "3",
+        "6",
+        "5",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/miscompile_2a/error_undefined_message.a",
+      "after": [
+        "9",
+        "9",
+        "15",
+        "15",
+        "3",
+        "0"
+      ]
+    }
+  ],
+  "changed": [],
+  "removed": [],
+  "rows": 1206
+}

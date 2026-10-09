@@ -1,0 +1,50 @@
+=== RUN   TestImportCycleRuntimeCalls
+    import_cycles_test.go:66: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    oracle_test.go:615: gate cache native hit
+    oracle_test.go:601: gate cache native miss
+--- PASS: TestImportCycleRuntimeCalls (0.43s)
+=== RUN   TestImportCycleLoadTimeReads
+=== RUN   TestImportCycleLoadTimeReads/read/a.a
+    import_cycles_test.go:98: gate cache node miss
+    import_cycles_test.go:113: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    import_cycles_test.go:120: Node stdout="" exit=1; native and JavaScript agree
+=== RUN   TestImportCycleLoadTimeReads/classes/c.a
+    import_cycles_test.go:98: gate cache node miss
+    import_cycles_test.go:113: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    import_cycles_test.go:120: Node stdout="" exit=1; native and JavaScript agree
+=== RUN   TestImportCycleLoadTimeReads/classes/a.a
+    import_cycles_test.go:98: gate cache node miss
+    import_cycles_test.go:113: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    import_cycles_test.go:120: Node stdout="base\nmiddle\nleaf\n" exit=0; native and JavaScript agree
+=== RUN   TestImportCycleLoadTimeReads/indirect/b.a
+    import_cycles_test.go:98: gate cache node miss
+    import_cycles_test.go:113: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    import_cycles_test.go:120: Node stdout="" exit=1; native and JavaScript agree
+=== RUN   TestImportCycleLoadTimeReads/hoisted/a.a
+    import_cycles_test.go:98: gate cache node miss
+    import_cycles_test.go:113: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    import_cycles_test.go:120: Node stdout="1\n" exit=0; native and JavaScript agree
+--- PASS: TestImportCycleLoadTimeReads (1.73s)
+    --- PASS: TestImportCycleLoadTimeReads/read/a.a (0.33s)
+    --- PASS: TestImportCycleLoadTimeReads/classes/c.a (0.37s)
+    --- PASS: TestImportCycleLoadTimeReads/classes/a.a (0.29s)
+    --- PASS: TestImportCycleLoadTimeReads/indirect/b.a (0.37s)
+    --- PASS: TestImportCycleLoadTimeReads/hoisted/a.a (0.36s)
+=== RUN   TestNonliteralInitializerCannotSkipCheck
+=== PAUSE TestNonliteralInitializerCannotSkipCheck
+=== CONT  TestNonliteralInitializerCannotSkipCheck
+    readiness_test.go:292: gate cache node miss
+    readiness_test.go:292: gate cache node miss
+    readiness_test.go:292: drop-check mutant caught for non_null_lazy_initialized.ts: stdout "scanner\nscanner\nassigned 1\n0 false\n0 2\nstatic\ndefault\n"
+--- PASS: TestNonliteralInitializerCannotSkipCheck (0.49s)
+PASS
+gate cache: native hits=1 misses=7
+gate cache: node hits=0 misses=13
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.663s

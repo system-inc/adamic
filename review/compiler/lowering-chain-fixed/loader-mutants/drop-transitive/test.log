@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesTransitive
+=== PAUSE TestProjectReferencesTransitive
+=== CONT  TestProjectReferencesTransitive
+    project_references_test.go:40: transitive configured source leaf/unused.ts was dropped
+--- FAIL: TestProjectReferencesTransitive (0.25s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.261s
+FAIL

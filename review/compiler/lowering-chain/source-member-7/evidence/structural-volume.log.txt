@@ -1,0 +1,57 @@
+=== RUN   TestVolumeAgreementAndMutants
+    volume_test.go:118: controls: 26054 identical finding bytes; findings 73
+    volume_test.go:126: controls-asan: 26054 identical finding bytes; findings 73
+=== RUN   TestVolumeAgreementAndMutants/assignable-types
+    volume_test.go:162: assignable-types mutant: byte oracle catches byte 81; findings 67
+=== RUN   TestVolumeAgreementAndMutants/widened-shape
+    volume_test.go:162: widened-shape mutant: byte oracle catches byte 562; findings 74
+=== RUN   TestVolumeAgreementAndMutants/enum-types
+    volume_test.go:162: enum-types mutant: byte oracle catches byte 6039; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-symbol
+    volume_test.go:162: type-symbol mutant: byte oracle catches byte 21217; findings 73
+=== RUN   TestVolumeAgreementAndMutants/scope-locals
+    volume_test.go:162: scope-locals mutant: byte oracle catches byte 8652; findings 71
+=== RUN   TestVolumeAgreementAndMutants/call-returns
+    volume_test.go:162: call-returns mutant: byte oracle catches byte 13238; findings 77
+=== RUN   TestVolumeAgreementAndMutants/property-shape
+    volume_test.go:162: property-shape mutant: byte oracle catches byte 7557; findings 72
+=== RUN   TestVolumeAgreementAndMutants/contextual-shape
+    volume_test.go:162: contextual-shape mutant: byte oracle catches byte 8118; findings 72
+=== RUN   TestVolumeAgreementAndMutants/symbol-origin
+    volume_test.go:162: symbol-origin mutant: byte oracle catches byte 26042; findings 74
+=== RUN   TestVolumeAgreementAndMutants/type-origin
+    volume_test.go:162: type-origin mutant: byte oracle catches byte 25376; findings 75
+=== RUN   TestVolumeAgreementAndMutants/property-info
+    volume_test.go:162: property-info mutant: byte oracle catches byte 21519; findings 63
+=== RUN   TestVolumeAgreementAndMutants/call-count
+    volume_test.go:162: call-count mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/call-parameters
+    volume_test.go:162: call-parameters mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/apparent-shape
+    volume_test.go:162: apparent-shape mutant: byte oracle catches byte 16475; findings 75
+=== RUN   TestVolumeAgreementAndMutants/base-shapes
+    volume_test.go:162: base-shapes mutant: byte oracle catches byte 25376; findings 74
+=== NAME  TestVolumeAgreementAndMutants
+    volume_test.go:180: released program queried with new question: panic 70, invalid or released checker handle
+    volume_test.go:185: released registry mutant: exit 0 caught by required panic 70
+--- PASS: TestVolumeAgreementAndMutants (606.57s)
+    --- PASS: TestVolumeAgreementAndMutants/assignable-types (32.07s)
+    --- PASS: TestVolumeAgreementAndMutants/widened-shape (31.92s)
+    --- PASS: TestVolumeAgreementAndMutants/enum-types (32.79s)
+    --- PASS: TestVolumeAgreementAndMutants/type-symbol (31.85s)
+    --- PASS: TestVolumeAgreementAndMutants/scope-locals (30.99s)
+    --- PASS: TestVolumeAgreementAndMutants/call-returns (31.62s)
+    --- PASS: TestVolumeAgreementAndMutants/property-shape (31.32s)
+    --- PASS: TestVolumeAgreementAndMutants/contextual-shape (30.68s)
+    --- PASS: TestVolumeAgreementAndMutants/symbol-origin (31.76s)
+    --- PASS: TestVolumeAgreementAndMutants/type-origin (31.16s)
+    --- PASS: TestVolumeAgreementAndMutants/property-info (37.59s)
+    --- PASS: TestVolumeAgreementAndMutants/call-count (38.88s)
+    --- PASS: TestVolumeAgreementAndMutants/call-parameters (37.99s)
+    --- PASS: TestVolumeAgreementAndMutants/apparent-shape (37.80s)
+    --- PASS: TestVolumeAgreementAndMutants/base-shapes (38.18s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/typeaware	606.572s
+
+wall_seconds=607.511
+exit=0

@@ -1,0 +1,92 @@
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (0.57s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	0.588s
+=== RUN   TestMultiPushGap
+=== PAUSE TestMultiPushGap
+=== RUN   TestMultiPushPortMatchesGo
+=== PAUSE TestMultiPushPortMatchesGo
+=== CONT  TestMultiPushGap
+=== CONT  TestMultiPushPortMatchesGo
+    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/format/css/testdata/prettier pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 247
+    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8
+--- PASS: TestMultiPushGap (0.76s)
+=== NAME  TestMultiPushPortMatchesGo
+    gaps_test.go:51: build cssstrings_Go_oracle 2928b491ee55 hit 1.82
+    setup_products_test.go:28: build cssstrings_port_lowering_and_backends 2bfc780bb33f miss 1.33
+    gaps_test.go:54: build cssstrings_sanitized b4efc76b27bf hit 0.02
+    gaps_test.go:66: 9591 texts, both quote preferences agree with Go
+--- PASS: TestMultiPushPortMatchesGo (4.08s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	4.092s
+=== RUN   TestDocumentedStageZeroGaps
+=== PAUSE TestDocumentedStageZeroGaps
+=== CONT  TestDocumentedStageZeroGaps
+--- PASS: TestDocumentedStageZeroGaps (0.74s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	0.821s
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestFSStatThrowsByDefault
+=== PAUSE TestFSStatThrowsByDefault
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (3.10s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.52s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.52s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.41s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.44s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.40s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.39s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.42s)
+=== RUN   TestOptionalIndexingMapShapeRefused
+=== PAUSE TestOptionalIndexingMapShapeRefused
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== PAUSE TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestOptionalIndexingMapShapeRefused
+=== CONT  TestOptionalIndexingKeepsUnsupportedStorageNotYet
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation
+=== CONT  TestFSStatThrowsByDefault
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.09s)
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key
+--- PASS: TestOptionalIndexingMapShapeRefused (0.11s)
+=== NAME  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:125: Node main.a: exit 1, stdout "missing\n"
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record
+=== RUN   TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation
+--- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet (0.29s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/typed_ordinary_property_continuation (0.09s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/string_numeric_key (0.04s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/sparse_literal (0.06s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/open_record (0.05s)
+    --- PASS: TestOptionalIndexingKeepsUnsupportedStorageNotYet/index_after_ordinary_continuation (0.06s)
+=== NAME  TestFSStatThrowsByDefault
+    fs_method_guards_test.go:125: Node generated.mjs: exit 1, stdout "missing\n"
+--- PASS: TestFSStatThrowsByDefault (0.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.608s
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (1.35s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	1.381s
+=== RUN   TestEnumCleanupMutant
+=== PAUSE TestEnumCleanupMutant
+=== CONT  TestEnumCleanupMutant
+    enums_test.go:151: gate cache node hit
+    enums_test.go:154: skipped enum cleanup caught only by LeakSanitizer; Node stdout unchanged
+--- PASS: TestEnumCleanupMutant (0.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=1 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.584s

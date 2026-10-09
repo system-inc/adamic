@@ -1,0 +1,20 @@
+=== RUN   TestElementAccessNodeArrayAgreement
+=== PAUSE TestElementAccessNodeArrayAgreement
+=== RUN   TestElementAccessSortedAgreement
+=== PAUSE TestElementAccessSortedAgreement
+=== RUN   TestElementAccessTemplateAgreement
+=== PAUSE TestElementAccessTemplateAgreement
+=== CONT  TestElementAccessNodeArrayAgreement
+=== CONT  TestElementAccessTemplateAgreement
+=== CONT  TestElementAccessSortedAgreement
+    element_access_boundaries_test.go:39: /workspace/adamic/internal/oracle/testdata/notyet_element_access/sorted.a:3:112: stage 0 can't lower an ElementAccessExpression yet
+--- FAIL: TestElementAccessSortedAgreement (0.06s)
+=== NAME  TestElementAccessNodeArrayAgreement
+    element_access_boundaries_test.go:35: /workspace/adamic/internal/oracle/testdata/notyet_element_access/nodearray.a:4:84: stage 0 can't lower an ElementAccessExpression yet
+--- FAIL: TestElementAccessNodeArrayAgreement (0.07s)
+=== NAME  TestElementAccessTemplateAgreement
+    element_access_boundaries_test.go:43: /workspace/adamic/internal/oracle/testdata/notyet_element_access/template.a:2:89: stage 0 can't lower an ElementAccessExpression yet
+--- FAIL: TestElementAccessTemplateAgreement (0.07s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.084s
+FAIL

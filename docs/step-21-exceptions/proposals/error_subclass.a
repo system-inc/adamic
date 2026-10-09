@@ -1,0 +1,4 @@
+// Generalizes program.ts:2848's cancellation class to builtin Error ancestry.
+class Cancelled extends Error {}
+try { throw new Cancelled('cancelled'); }
+catch (error: unknown) { console.log(`${error instanceof Cancelled}`); }

@@ -1,0 +1,2 @@
+function read(config: any): string { return config.value; }
+console.log(read({ value: 14 }));

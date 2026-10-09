@@ -1,0 +1,13 @@
+# Item 6 and the checked-any spec directory
+
+Ordinary file builds select Adamic's fixed options even when an ancestor tsconfig exists. Project-owned loading is selected only for a configuration with references. The mixed `.ts` root importing `.a`, and explicit mixed roots, load and retain the `.a` type check. Ownership/noCheck and composite-root controls now explicitly include references, preserving their project-only meaning. Typeaware sources and drivers are unchanged.
+
+Focused loader tests pass in 6.795 seconds. New TestMixedAdamicAndTypeScriptWithoutReferences: 0.25 seconds. The mixed-file oracle compares source Node, JavaScript, native release, ASan/UBSan and leaks: package 0.519 seconds, no mismatch. All thirteen original loader mutant classes are caught; the new old-selection mutant is caught in 8.94 seconds. Logs and overlays are retained under loader-mutants/. The first project-node experiment changed only path selection and retained all roots; the corrected mutation restores the original dropped-root behavior and fails the intended root-retention assertion. Initial invalid mutations are retained as failed experiments, never counted as catcher results.
+
+TestFactsDecoderGuards passes through its unchanged driver, 14.60 seconds. On main ea41d314 it passes in 3.19 seconds. The full TestVolumeAgreementAndMutants reaches native compilation on the fixed loader, then exceeds the 90-second bound while preparing its Go oracle. The equivalent volumeProfileControlsLowered build product passes via TestProduct_profile_controls_lowered in 45.16 seconds; TestProduct_volume_oracle passes in 4.34 seconds. TestProduct_corpus_lowered is absent on this base, so an empty selection is not acceptance evidence. Further bounded volume checks continue after this green item.
+
+The spec-load test previously assumed every fixture directory contained main.ts. checked_any instead contains individual .a programs. It now loads every .a in that directory independently, preserving legacy main.ts project entries. TestTheProgramsInTheSpecLoad passes.
+
+Commands use GOMAXPROCS=4, -p 1, -parallel 4, -timeout 90s, -count=1 and JSON output files, with 120-second outer bounds. Each overlay subprocess is bounded to 120 seconds. No oracle fixture registration or counts row is added by this loader item. Counts will be regenerated once with the readiness item. No full gate was run.
+
+The lane analyzer found one stale inherited serial-baseline entry: TestTSCCorpusAgreement already calls Parallel. Remove that obsolete entry; no tsprinter test behavior changes. The newly added stage3 wrapper explains that its directory helper owns the single Parallel call.

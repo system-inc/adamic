@@ -1,0 +1,292 @@
+[
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorReentrant",
+    "seconds": 1.45
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorMapIterator",
+    "seconds": 1.6
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorChecker",
+    "seconds": 2.68
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorDefaultError",
+    "seconds": 2.89
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorParameterBorrowMutant",
+    "seconds": 3.08
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorRegExpTreeResultCompatibility",
+    "seconds": 0.8
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorCaptures",
+    "seconds": 2.78
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorRegExpIteratorResultCompatibility",
+    "seconds": 2.07
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorOwned",
+    "seconds": 3.7
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorThrow",
+    "seconds": 1.93
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorFirstReference",
+    "seconds": 2.49
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorCompletions",
+    "seconds": 4.02
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorClose",
+    "seconds": 3.0
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorBasic",
+    "seconds": 2.98
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorCycleFrame",
+    "seconds": 0.13
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 5.53
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorDefaults",
+    "seconds": 4.5
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorCancellation",
+    "seconds": 3.03
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorLocalBorrowMutant",
+    "seconds": 2.13
+  },
+  {
+    "package": "internal/oracle",
+    "test": "TestGeneratorDelegate",
+    "seconds": 10.17
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorProtocolReplacementRemainsExplicit",
+    "seconds": 0.22
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorDestructuredParameterCycle",
+    "seconds": 0.25
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorNextPromiseNeedsResumeProof",
+    "seconds": 0.27
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorEmptyBodyUsesOwnedFrame",
+    "seconds": 0.3
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorNestedFrameCaptureRemainsExplicit",
+    "seconds": 0.2
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorOpaqueReceiverRemainsExplicit",
+    "seconds": 0.24
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestGeneratorPrimitiveThrowRemainsExplicit",
+    "seconds": 0.23
+  },
+  {
+    "package": "internal/lower",
+    "test": "TestAsyncGeneratorsAreRefusedEvenWithoutYield",
+    "seconds": 0.54
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorReentrant",
+    "seconds": 0.78
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorDefaults",
+    "seconds": 0.8
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorBasic",
+    "seconds": 0.84
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorMapIterator",
+    "seconds": 0.86
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 0.9
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorDefaultError",
+    "seconds": 0.29
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorFirstReference",
+    "seconds": 0.4
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorCaptures",
+    "seconds": 0.45
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorCompletions",
+    "seconds": 0.42
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorOwned",
+    "seconds": 0.56
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorChecker",
+    "seconds": 0.43
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorThrow",
+    "seconds": 0.32
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorClose",
+    "seconds": 0.3
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorCancellation",
+    "seconds": 0.45
+  },
+  {
+    "package": "internal/flow",
+    "test": "TestGeneratorDelegate",
+    "seconds": 1.11
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorReentrant",
+    "seconds": 0.26
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorClose",
+    "seconds": 0.26
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorDelegateThrow",
+    "seconds": 0.28
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorOwned",
+    "seconds": 0.31
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorBasic",
+    "seconds": 0.34
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorDefaults",
+    "seconds": 0.26
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorThrow",
+    "seconds": 0.31
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorChecker",
+    "seconds": 0.26
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorDelegate",
+    "seconds": 0.4
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorCompletions",
+    "seconds": 0.35
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorFirstReference",
+    "seconds": 0.15
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorDefaultError",
+    "seconds": 0.18
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorMapIterator",
+    "seconds": 0.19
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorCancellation",
+    "seconds": 0.15
+  },
+  {
+    "package": "internal/fresh",
+    "test": "TestGeneratorCaptures",
+    "seconds": 0.13
+  }
+]

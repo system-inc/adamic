@@ -297,7 +297,7 @@ Additional compiler gap programs, held by `TestLexerGaps`:
 | [stringFallback.ts](gaps/stringFallback.ts) | one space | Closed by compiler/area-next | Explicit empty-string comparison |
 | [valuePresence.ts](gaps/valuePresence.ts) | `false` | Closed by `cdddfee346e70a5cba3e982f808b9ebe426a6dfb` | Direct optional-object truthiness restored in scalar block-line iteration |
 | [valueConjunction.ts](gaps/valueConjunction.ts) | `true` | Lowers on compiler/area-next, but emitting its C panics (`native: no conversion from 4 to 9`) | Separate presence and value branches |
-| [multiplePush.ts](gaps/multiplePush.ts) | `2` | `push with other than one value` | Push one value per call |
+| [multiplePush.ts](gaps/multiplePush.ts) | `2` | Closed by spread-shorthand | Multiple arguments admitted; Node agrees with both backends |
 
 ### Closed native runtime gap
 
@@ -434,7 +434,7 @@ that as its failure rather than letting the panic end the package, and it is the
 compiler's to fix or refuse. The port's workarounds still stand; retiring each is
 its own change against the corpus. compiler/area-stack (views slice 1) closes two more,
 prefixIncrement and emptyAlternative, and `TestClosedLexerGaps` holds them the same way.
-`TestLexerGaps` keeps the one that still stops, multiplePush.
+`TestLexerGaps` holds the now-closed multiplePush witness to Node in both backends with sanitizers.
 
 Labels and logical assignment operators are explicit 0.1 refusals, not newly
 observed language gaps. The port uses ordinary loop control and assignments.

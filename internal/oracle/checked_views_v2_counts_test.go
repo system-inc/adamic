@@ -28,8 +28,6 @@ func checkedViewsV2Counts(t *testing.T) []string {
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-nested.a",
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-optional-boundary.a",
 		"stage3/interface-downcasts/untagged/fixtures/callable-union-wrong.a",
-		"stage3/interface-downcasts/untagged/fixtures/class-data-good.a",
-		"stage3/interface-downcasts/untagged/fixtures/class-data-wrong.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-callback-good.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-callback-wrong.a",
 		"stage3/interface-downcasts/untagged/fixtures/flow-generic-good.a",

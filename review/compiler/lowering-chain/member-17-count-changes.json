@@ -1,0 +1,2484 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/step21_catch_callback.a",
+      "after": [
+        "17",
+        "17",
+        "12",
+        "24",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_finally_callback.a",
+      "after": [
+        "19",
+        "19",
+        "18",
+        "34",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_rethrow.a",
+      "after": [
+        "13",
+        "13",
+        "22",
+        "32",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_finally_completion.a",
+      "after": [
+        "17",
+        "17",
+        "6",
+        "19",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_liveness.a",
+      "after": [
+        "12",
+        "12",
+        "9",
+        "17",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_dynamic.a",
+      "after": [
+        "65",
+        "65",
+        "49",
+        "100",
+        "6",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_region_payload.a",
+      "after": [
+        "3",
+        "3",
+        "3",
+        "5",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_dynamic_uncaught.a",
+      "after": [
+        "0",
+        "0",
+        "1",
+        "2",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_object_uncaught.a",
+      "after": [
+        "3",
+        "3",
+        "2",
+        "4",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_library_failures.a",
+      "after": [
+        "35",
+        "35",
+        "56",
+        "82",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_library_types.a",
+      "after": [
+        "22",
+        "22",
+        "36",
+        "51",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_library_host.a",
+      "after": [
+        "25",
+        "25",
+        "31",
+        "48",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_error_subclasses.a",
+      "after": [
+        "16",
+        "16",
+        "37",
+        "45",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_saved_error.a",
+      "after": [
+        "20",
+        "20",
+        "37",
+        "47",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_soundness_terminal.a",
+      "after": [
+        "3",
+        "2",
+        "3",
+        "5",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "after": [
+        "6",
+        "4",
+        "8",
+        "9",
+        "5",
+        "0"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "row": "internal/oracle/testdata/string_views_throw.a",
+      "before": [
+        "55",
+        "55",
+        "62",
+        "76",
+        "14",
+        "0"
+      ],
+      "after": [
+        "55",
+        "55",
+        "65",
+        "79",
+        "14",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/route_targets_try_loop.a",
+      "before": [
+        "68",
+        "66",
+        "41",
+        "85",
+        "9",
+        "2"
+      ],
+      "after": [
+        "68",
+        "66",
+        "44",
+        "88",
+        "9",
+        "2"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_keys.a",
+      "before": [
+        "391",
+        "391",
+        "363",
+        "674",
+        "25",
+        "0"
+      ],
+      "after": [
+        "391",
+        "391",
+        "364",
+        "675",
+        "25",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_keys.a",
+      "before": [
+        "285",
+        "285",
+        "242",
+        "477",
+        "16",
+        "0"
+      ],
+      "after": [
+        "285",
+        "285",
+        "243",
+        "478",
+        "16",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_keep.a",
+      "before": [
+        "516",
+        "516",
+        "625",
+        "931",
+        "35",
+        "0"
+      ],
+      "after": [
+        "516",
+        "516",
+        "626",
+        "932",
+        "35",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_keep.a",
+      "before": [
+        "290",
+        "290",
+        "385",
+        "520",
+        "18",
+        "0"
+      ],
+      "after": [
+        "290",
+        "290",
+        "386",
+        "521",
+        "18",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_objects.a",
+      "before": [
+        "732",
+        "732",
+        "834",
+        "1076",
+        "63",
+        "0"
+      ],
+      "after": [
+        "732",
+        "732",
+        "835",
+        "1077",
+        "63",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_objects.a",
+      "before": [
+        "368",
+        "368",
+        "515",
+        "586",
+        "30",
+        "0"
+      ],
+      "after": [
+        "368",
+        "368",
+        "516",
+        "587",
+        "30",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_closures.a",
+      "before": [
+        "816",
+        "816",
+        "1044",
+        "1277",
+        "87",
+        "0"
+      ],
+      "after": [
+        "816",
+        "816",
+        "1045",
+        "1278",
+        "87",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_closures.a",
+      "before": [
+        "411",
+        "411",
+        "634",
+        "705",
+        "39",
+        "0"
+      ],
+      "after": [
+        "411",
+        "411",
+        "635",
+        "706",
+        "39",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_numbers.a",
+      "before": [
+        "373",
+        "373",
+        "155",
+        "478",
+        "14",
+        "0"
+      ],
+      "after": [
+        "373",
+        "373",
+        "156",
+        "479",
+        "14",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_numbers.a",
+      "before": [
+        "214",
+        "214",
+        "140",
+        "317",
+        "11",
+        "0"
+      ],
+      "after": [
+        "214",
+        "214",
+        "141",
+        "318",
+        "11",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_arrays.a",
+      "before": [
+        "995",
+        "995",
+        "932",
+        "1355",
+        "95",
+        "0"
+      ],
+      "after": [
+        "995",
+        "995",
+        "933",
+        "1356",
+        "95",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_arrays.a",
+      "before": [
+        "516",
+        "516",
+        "524",
+        "713",
+        "58",
+        "0"
+      ],
+      "after": [
+        "516",
+        "516",
+        "525",
+        "714",
+        "58",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_named_more.a",
+      "before": [
+        "395",
+        "395",
+        "569",
+        "819",
+        "36",
+        "0"
+      ],
+      "after": [
+        "395",
+        "395",
+        "570",
+        "820",
+        "36",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_named_more.a",
+      "before": [
+        "179",
+        "179",
+        "297",
+        "378",
+        "26",
+        "0"
+      ],
+      "after": [
+        "179",
+        "179",
+        "298",
+        "379",
+        "26",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_named_objects.a",
+      "before": [
+        "165",
+        "165",
+        "207",
+        "278",
+        "31",
+        "0"
+      ],
+      "after": [
+        "165",
+        "165",
+        "208",
+        "279",
+        "31",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_named_objects.a",
+      "before": [
+        "87",
+        "87",
+        "110",
+        "149",
+        "22",
+        "0"
+      ],
+      "after": [
+        "87",
+        "87",
+        "111",
+        "150",
+        "22",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_named_closures.a",
+      "before": [
+        "117",
+        "117",
+        "179",
+        "219",
+        "29",
+        "0"
+      ],
+      "after": [
+        "117",
+        "117",
+        "180",
+        "220",
+        "29",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/set_foreach_named_closures.a",
+      "before": [
+        "95",
+        "95",
+        "155",
+        "187",
+        "28",
+        "0"
+      ],
+      "after": [
+        "95",
+        "95",
+        "156",
+        "188",
+        "28",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_fnexpr.a",
+      "before": [
+        "44",
+        "44",
+        "64",
+        "100",
+        "15",
+        "0"
+      ],
+      "after": [
+        "44",
+        "44",
+        "65",
+        "101",
+        "15",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/map_foreach_named_numbers.a",
+      "before": [
+        "117",
+        "117",
+        "73",
+        "177",
+        "12",
+        "0"
+      ],
+      "after": [
+        "117",
+        "117",
+        "74",
+        "178",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/borrow_chain_coverage_finally.a",
+      "before": [
+        "13",
+        "13",
+        "9",
+        "13",
+        "6",
+        "0"
+      ],
+      "after": [
+        "13",
+        "13",
+        "12",
+        "16",
+        "6",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_object_freeze.a",
+      "before": [
+        "16",
+        "16",
+        "10",
+        "27",
+        "5",
+        "0"
+      ],
+      "after": [
+        "16",
+        "16",
+        "10",
+        "28",
+        "5",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Validation wrapper releases its argument/result temporaries, including absent results; allocations unchanged. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_object_freeze_write.a",
+      "before": [
+        "2",
+        "1",
+        "5",
+        "6",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "7",
+        "11",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_object_freeze_alias.a",
+      "before": [
+        "4",
+        "1",
+        "7",
+        "8",
+        "3",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "9",
+        "14",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_object_freeze_assign.a",
+      "before": [
+        "4",
+        "2",
+        "6",
+        "8",
+        "2",
+        "0"
+      ],
+      "after": [
+        "10",
+        "10",
+        "10",
+        "18",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_array_with.a",
+      "before": [
+        "68",
+        "68",
+        "43",
+        "109",
+        "10",
+        "0"
+      ],
+      "after": [
+        "68",
+        "68",
+        "64",
+        "130",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `48f01bea`, `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_array_flat_map.a",
+      "before": [
+        "50",
+        "50",
+        "60",
+        "109",
+        "17",
+        "0"
+      ],
+      "after": [
+        "50",
+        "50",
+        "61",
+        "110",
+        "17",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_array_spliced.a",
+      "before": [
+        "72",
+        "72",
+        "40",
+        "114",
+        "12",
+        "0"
+      ],
+      "after": [
+        "72",
+        "72",
+        "41",
+        "115",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_function_expressions.a",
+      "before": [
+        "56",
+        "56",
+        "49",
+        "96",
+        "19",
+        "0"
+      ],
+      "after": [
+        "56",
+        "56",
+        "50",
+        "97",
+        "19",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/number_formats.a",
+      "before": [
+        "225",
+        "225",
+        "55",
+        "262",
+        "18",
+        "0"
+      ],
+      "after": [
+        "225",
+        "225",
+        "97",
+        "304",
+        "18",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/precision_range.a",
+      "before": [
+        "4",
+        "3",
+        "1",
+        "4",
+        "2",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "4",
+        "9",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/radix_range.a",
+      "before": [
+        "3",
+        "3",
+        "0",
+        "3",
+        "1",
+        "0"
+      ],
+      "after": [
+        "4",
+        "4",
+        "3",
+        "6",
+        "1",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/narrowed_reads.a",
+      "before": [
+        "6",
+        "5",
+        "6",
+        "9",
+        "4",
+        "0"
+      ],
+      "after": [
+        "6",
+        "6",
+        "5",
+        "10",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/narrowed_methods.a",
+      "before": [
+        "4",
+        "3",
+        "6",
+        "8",
+        "3",
+        "0"
+      ],
+      "after": [
+        "4",
+        "4",
+        "5",
+        "9",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/narrowed_fields.a",
+      "before": [
+        "5",
+        "3",
+        "7",
+        "8",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "6",
+        "9",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/fill_length.a",
+      "before": [
+        "2",
+        "2",
+        "0",
+        "2",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "3",
+        "5",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/array_from_length.a",
+      "before": [
+        "5",
+        "3",
+        "3",
+        "7",
+        "3",
+        "0"
+      ],
+      "after": [
+        "6",
+        "6",
+        "6",
+        "12",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/fresh_writes.a",
+      "before": [
+        "330",
+        "330",
+        "369",
+        "485",
+        "132",
+        "0"
+      ],
+      "after": [
+        "330",
+        "330",
+        "370",
+        "486",
+        "132",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/exceptions.a",
+      "before": [
+        "133",
+        "133",
+        "163",
+        "229",
+        "20",
+        "0"
+      ],
+      "after": [
+        "133",
+        "133",
+        "186",
+        "252",
+        "20",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/exceptions_uncaught.a",
+      "before": [
+        "3",
+        "1",
+        "3",
+        "5",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "3",
+        "6",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Owned tagged payload and cleanup on the catch or uncaught exit-1 path. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/exceptions_empty.a",
+      "before": [
+        "2",
+        "1",
+        "6",
+        "4",
+        "2",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "8",
+        "8",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Owned tagged payload and cleanup on the catch or uncaught exit-1 path. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/closures_throw.a",
+      "before": [
+        "418",
+        "418",
+        "1566",
+        "1801",
+        "142",
+        "0"
+      ],
+      "after": [
+        "418",
+        "418",
+        "1585",
+        "1820",
+        "142",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/closures_throw_uncaught.a",
+      "before": [
+        "31",
+        "29",
+        "20",
+        "36",
+        "13",
+        "0"
+      ],
+      "after": [
+        "31",
+        "31",
+        "20",
+        "37",
+        "13",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Owned tagged payload and cleanup on the catch or uncaught exit-1 path. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/finally_leaves.a",
+      "before": [
+        "157",
+        "157",
+        "59",
+        "174",
+        "10",
+        "0"
+      ],
+      "after": [
+        "157",
+        "157",
+        "64",
+        "179",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/param_assigned_in_try.a",
+      "before": [
+        "46",
+        "46",
+        "29",
+        "64",
+        "12",
+        "0"
+      ],
+      "after": [
+        "46",
+        "46",
+        "31",
+        "66",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/named_function_values.a",
+      "before": [
+        "116",
+        "116",
+        "127",
+        "222",
+        "25",
+        "0"
+      ],
+      "after": [
+        "116",
+        "116",
+        "128",
+        "223",
+        "25",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/string_too_long.a",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "1",
+        "3",
+        "3",
+        "1",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/normalize_form.a",
+      "before": [
+        "3",
+        "2",
+        "0",
+        "3",
+        "3",
+        "0"
+      ],
+      "after": [
+        "4",
+        "4",
+        "3",
+        "7",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/long_literals.a",
+      "before": [
+        "6117",
+        "6117",
+        "85",
+        "14610",
+        "8",
+        "0"
+      ],
+      "after": [
+        "6117",
+        "6117",
+        "86",
+        "14611",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_as_interface.a",
+      "before": [
+        "372",
+        "372",
+        "317",
+        "489",
+        "58",
+        "0"
+      ],
+      "after": [
+        "372",
+        "372",
+        "318",
+        "490",
+        "58",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/regions_throw.a",
+      "before": [
+        "124",
+        "95",
+        "9",
+        "99",
+        "31",
+        "29"
+      ],
+      "after": [
+        "124",
+        "95",
+        "15",
+        "105",
+        "31",
+        "29"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/borrow_loop.a",
+      "before": [
+        "128",
+        "126",
+        "110",
+        "181",
+        "14",
+        "2"
+      ],
+      "after": [
+        "128",
+        "126",
+        "116",
+        "187",
+        "14",
+        "2"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/borrow_loop_calls.a",
+      "before": [
+        "263",
+        "261",
+        "176",
+        "342",
+        "25",
+        "2"
+      ],
+      "after": [
+        "263",
+        "261",
+        "179",
+        "345",
+        "25",
+        "2"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/borrow_element_throw.a",
+      "before": [
+        "38",
+        "38",
+        "30",
+        "50",
+        "8",
+        "0"
+      ],
+      "after": [
+        "38",
+        "38",
+        "36",
+        "56",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/move_throw.a",
+      "before": [
+        "42",
+        "42",
+        "22",
+        "50",
+        "9",
+        "0"
+      ],
+      "after": [
+        "42",
+        "42",
+        "24",
+        "52",
+        "9",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/library_map_set_group_by.a",
+      "before": [
+        "115",
+        "115",
+        "117",
+        "201",
+        "36",
+        "0"
+      ],
+      "after": [
+        "115",
+        "115",
+        "118",
+        "202",
+        "36",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/generic_method_return.a",
+      "before": [
+        "23",
+        "15",
+        "28",
+        "36",
+        "5",
+        "6"
+      ],
+      "after": [
+        "23",
+        "17",
+        "30",
+        "39",
+        "5",
+        "6"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Owned tagged payload and cleanup on the catch or uncaught exit-1 path. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/search_from_sweep.a",
+      "before": [
+        "133",
+        "133",
+        "33",
+        "154",
+        "10",
+        "0"
+      ],
+      "after": [
+        "133",
+        "133",
+        "34",
+        "155",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/reuse_throw.a",
+      "before": [
+        "26",
+        "26",
+        "24",
+        "41",
+        "8",
+        "0"
+      ],
+      "after": [
+        "26",
+        "26",
+        "27",
+        "44",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/reuse_narrowed.a",
+      "before": [
+        "8",
+        "5",
+        "9",
+        "10",
+        "5",
+        "0"
+      ],
+      "after": [
+        "8",
+        "8",
+        "8",
+        "11",
+        "5",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp.a",
+      "before": [
+        "437",
+        "437",
+        "383",
+        "418",
+        "58",
+        "0"
+      ],
+      "after": [
+        "437",
+        "437",
+        "382",
+        "417",
+        "58",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_matchall_nonglobal.a",
+      "before": [
+        "1",
+        "0",
+        "2",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "5",
+        "4",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replaceall_nonglobal.a",
+      "before": [
+        "1",
+        "0",
+        "2",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "5",
+        "4",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_null_narrowed.a",
+      "before": [
+        "5",
+        "4",
+        "11",
+        "7",
+        "3",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "10",
+        "8",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replace.a",
+      "before": [
+        "625",
+        "625",
+        "206",
+        "336",
+        "113",
+        "0"
+      ],
+      "after": [
+        "625",
+        "625",
+        "205",
+        "335",
+        "113",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_features_static.a",
+      "before": [
+        "110",
+        "110",
+        "55",
+        "162",
+        "28",
+        "0"
+      ],
+      "after": [
+        "110",
+        "110",
+        "58",
+        "165",
+        "28",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_features_static_private.a",
+      "before": [
+        "42",
+        "42",
+        "53",
+        "94",
+        "12",
+        "0"
+      ],
+      "after": [
+        "42",
+        "42",
+        "73",
+        "114",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_features_accessors.a",
+      "before": [
+        "67",
+        "67",
+        "47",
+        "104",
+        "21",
+        "0"
+      ],
+      "after": [
+        "67",
+        "67",
+        "49",
+        "106",
+        "21",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_inheritance_exceptions.a",
+      "before": [
+        "29",
+        "29",
+        "19",
+        "39",
+        "8",
+        "0"
+      ],
+      "after": [
+        "29",
+        "29",
+        "23",
+        "43",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_inheritance_conditional.a",
+      "before": [
+        "164",
+        "164",
+        "146",
+        "249",
+        "35",
+        "0"
+      ],
+      "after": [
+        "164",
+        "164",
+        "157",
+        "260",
+        "35",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/class_instance_key_throw.a",
+      "before": [
+        "6",
+        "5",
+        "5",
+        "10",
+        "5",
+        "1"
+      ],
+      "after": [
+        "6",
+        "5",
+        "7",
+        "12",
+        "5",
+        "1"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/debugger_fail.a",
+      "before": [
+        "2",
+        "2",
+        "4",
+        "4",
+        "2",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "5",
+        "5",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Unknown catch storage and checked nominal Error narrowing add one balanced pair."
+    },
+    {
+      "row": "internal/oracle/testdata/devirtualize.a",
+      "before": [
+        "43",
+        "39",
+        "22",
+        "62",
+        "10",
+        "4"
+      ],
+      "after": [
+        "43",
+        "39",
+        "24",
+        "64",
+        "10",
+        "4"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/element_access_presence.a",
+      "before": [
+        "5",
+        "3",
+        "8",
+        "10",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "7",
+        "11",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/entries_record_alias.a",
+      "before": [
+        "65",
+        "65",
+        "89",
+        "118",
+        "28",
+        "0"
+      ],
+      "after": [
+        "65",
+        "65",
+        "90",
+        "119",
+        "28",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The dynamic repeat call now uses the checked library wrapper, adding one balanced pair."
+    },
+    {
+      "row": "internal/oracle/testdata/fallthrough_exceptions.a",
+      "before": [
+        "26",
+        "26",
+        "10",
+        "29",
+        "5",
+        "0"
+      ],
+      "after": [
+        "26",
+        "26",
+        "12",
+        "31",
+        "5",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/generators/reentrant.a",
+      "before": [
+        "14",
+        "14",
+        "53",
+        "54",
+        "11",
+        "0"
+      ],
+      "after": [
+        "14",
+        "14",
+        "54",
+        "55",
+        "11",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Generator reentrancy throws TypeError into a tagged catch; checked Error narrowing adds a balanced retain/release. Earlier generator state-machine lowering is retained."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/body_throw.a",
+      "before": [
+        "22",
+        "22",
+        "17",
+        "24",
+        "12",
+        "0"
+      ],
+      "after": [
+        "22",
+        "22",
+        "18",
+        "25",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/next_throw.a",
+      "before": [
+        "12",
+        "12",
+        "13",
+        "16",
+        "7",
+        "0"
+      ],
+      "after": [
+        "12",
+        "12",
+        "14",
+        "17",
+        "7",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/close_throw_body.a",
+      "before": [
+        "22",
+        "22",
+        "20",
+        "26",
+        "12",
+        "0"
+      ],
+      "after": [
+        "22",
+        "22",
+        "21",
+        "27",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/close_throw_break.a",
+      "before": [
+        "20",
+        "20",
+        "16",
+        "21",
+        "10",
+        "0"
+      ],
+      "after": [
+        "20",
+        "20",
+        "17",
+        "22",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/done_throw.a",
+      "before": [
+        "13",
+        "13",
+        "14",
+        "16",
+        "10",
+        "0"
+      ],
+      "after": [
+        "13",
+        "13",
+        "15",
+        "17",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration-dispatch/value_throw.a",
+      "before": [
+        "13",
+        "13",
+        "14",
+        "16",
+        "10",
+        "0"
+      ],
+      "after": [
+        "13",
+        "13",
+        "15",
+        "17",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The iterator body/protocol failure reaches a tagged catch. Catch storage and cleanup in lower/exceptions.go and native/exceptions.go add one balanced retain/release; iterator dispatch remains unchanged."
+    },
+    {
+      "row": "internal/oracle/testdata/user_iterators.a",
+      "before": [
+        "1050",
+        "1050",
+        "677",
+        "994",
+        "97",
+        "0"
+      ],
+      "after": [
+        "1050",
+        "1050",
+        "688",
+        "1005",
+        "97",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/method_coverage_format_failure.a",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "1",
+        "1",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "4",
+        "6",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/method_coverage_string_repeat.a",
+      "before": [
+        "2",
+        "2",
+        "3",
+        "6",
+        "2",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "5",
+        "8",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/047cb0d_n_element_plain.a",
+      "before": [
+        "5",
+        "3",
+        "8",
+        "10",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "7",
+        "11",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/047cb0d_n_element.a",
+      "before": [
+        "5",
+        "3",
+        "9",
+        "10",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "8",
+        "11",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/047cb0d_n_element_method.a",
+      "before": [
+        "5",
+        "3",
+        "9",
+        "11",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "8",
+        "12",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/047cb0d_n_arrayindex.a",
+      "before": [
+        "2",
+        "1",
+        "4",
+        "4",
+        "1",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "3",
+        "5",
+        "1",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "internal/oracle/testdata/node_buffer_finalized.a",
+      "before": [
+        "4",
+        "2",
+        "4",
+        "6",
+        "3",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "7",
+        "10",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Nominal library error construction and cleanup on the now catchable/exit-1 path. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/optional_after_call_required.a",
+      "before": [
+        "3",
+        "3",
+        "5",
+        "7",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "8",
+        "10",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Required-read TypeError now uses the kind-specific constructor; tagged catch storage and checked nominal Error reads add balanced retains/releases. Lowering: exceptions.go catchLocal, native reuse.go checkDefined, native exceptions.go cleanup."
+    },
+    {
+      "row": "internal/oracle/testdata/optional_after_call_propagation.a",
+      "before": [
+        "18",
+        "18",
+        "13",
+        "20",
+        "7",
+        "0"
+      ],
+      "after": [
+        "18",
+        "18",
+        "18",
+        "25",
+        "7",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Required-read TypeError now uses the kind-specific constructor; tagged catch storage and checked nominal Error reads add balanced retains/releases. Lowering: exceptions.go catchLocal, native reuse.go checkDefined, native exceptions.go cleanup."
+    },
+    {
+      "row": "internal/oracle/testdata/regexp_replace/throw.a",
+      "before": [
+        "13",
+        "13",
+        "11",
+        "14",
+        "11",
+        "0"
+      ],
+      "after": [
+        "13",
+        "13",
+        "12",
+        "15",
+        "11",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/statements_small_throw.a",
+      "before": [
+        "5",
+        "5",
+        "9",
+        "13",
+        "4",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "16",
+        "20",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Saved Error payloads use tagged catch storage and checked nominal field reads; both dynamic repeat calls use checked library wrappers. Seven balanced pairs are added."
+    },
+    {
+      "row": "stage3/fixtures/generics/10_identifier_multimap.a",
+      "before": [
+        "11",
+        "11",
+        "29",
+        "38",
+        "9",
+        "0"
+      ],
+      "after": [
+        "11",
+        "11",
+        "30",
+        "39",
+        "9",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The earlier generic/iteration fixture now catches its thrown Error in tagged storage. Step 21 catch lowering and cleanup add one balanced retain/release."
+    },
+    {
+      "row": "docs/step-18/fixtures/runtime-chain-parentheses.a",
+      "before": [
+        "3",
+        "2",
+        "5",
+        "4",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "4",
+        "5",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "docs/step-18/fixtures/runtime-chain-present-undefined.a",
+      "before": [
+        "3",
+        "2",
+        "8",
+        "8",
+        "2",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "7",
+        "8",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The required nullish read now constructs TypeError directly instead of constructing Error and replacing its name. Step 21 uncaught cleanup releases the thrown payload and live values through the exit-1 path. Lowering: native/reuse.go checkDefined and native/runtime/exceptions.c adamic_uncaught."
+    },
+    {
+      "row": "docs/step-18/storage-fixtures/getter-throw.a",
+      "before": [
+        "2",
+        "2",
+        "5",
+        "6",
+        "2",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "6",
+        "7",
+        "2",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The optional-call getter throws Error into a tagged catch. Step 21 catch lowering and cleanup add one balanced retain/release; getter evaluation order remains unchanged."
+    },
+    {
+      "row": "stage3/fixtures/iteration/array_view_stress.a",
+      "before": [
+        "34",
+        "34",
+        "50",
+        "72",
+        "16",
+        "0"
+      ],
+      "after": [
+        "34",
+        "34",
+        "51",
+        "73",
+        "16",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: The earlier generic/iteration fixture now catches its thrown Error in tagged storage. Step 21 catch lowering and cleanup add one balanced retain/release."
+    },
+    {
+      "row": "stage3/fixtures/taste/24_proportional_conditions.a",
+      "before": [
+        "43",
+        "43",
+        "89",
+        "131",
+        "14",
+        "0"
+      ],
+      "after": [
+        "43",
+        "43",
+        "92",
+        "134",
+        "14",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/taste_comma.a",
+      "before": [
+        "51",
+        "51",
+        "5",
+        "56",
+        "4",
+        "0"
+      ],
+      "after": [
+        "51",
+        "51",
+        "6",
+        "57",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/taste_void.a",
+      "before": [
+        "39",
+        "39",
+        "8",
+        "46",
+        "4",
+        "0"
+      ],
+      "after": [
+        "39",
+        "39",
+        "9",
+        "47",
+        "4",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_views.a",
+      "before": [
+        "83",
+        "83",
+        "40",
+        "111",
+        "13",
+        "0"
+      ],
+      "after": [
+        "83",
+        "83",
+        "40",
+        "115",
+        "13",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Validation wrapper releases its argument/result temporaries, including absent results; allocations unchanged. Source subcommits `48f01bea`, `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_order.a",
+      "before": [
+        "34",
+        "34",
+        "12",
+        "50",
+        "8",
+        "0"
+      ],
+      "after": [
+        "34",
+        "34",
+        "12",
+        "51",
+        "8",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Validation wrapper releases its argument/result temporaries, including absent results; allocations unchanged. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_stats.a",
+      "before": [
+        "54",
+        "54",
+        "14",
+        "61",
+        "10",
+        "0"
+      ],
+      "after": [
+        "54",
+        "54",
+        "14",
+        "66",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Validation wrapper releases its argument/result temporaries, including absent results; allocations unchanged. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/typed_arrays_workers_stats.a",
+      "before": [
+        "513",
+        "513",
+        "82",
+        "584",
+        "23",
+        "0"
+      ],
+      "after": [
+        "513",
+        "513",
+        "82",
+        "600",
+        "23",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Validation wrapper releases its argument/result temporaries, including absent results; allocations unchanged. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/unknown_narrowing.a",
+      "before": [
+        "31",
+        "31",
+        "42",
+        "63",
+        "3",
+        "0"
+      ],
+      "after": [
+        "31",
+        "31",
+        "43",
+        "64",
+        "3",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/walk.a",
+      "before": [
+        "222",
+        "222",
+        "117",
+        "288",
+        "36",
+        "0"
+      ],
+      "after": [
+        "222",
+        "222",
+        "131",
+        "302",
+        "36",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Library argument ownership; balanced retain/release change. Source subcommits `df121a79`."
+    },
+    {
+      "row": "internal/oracle/testdata/node_fs_file_close.a",
+      "before": [
+        "27",
+        "27",
+        "13",
+        "30",
+        "7",
+        "0"
+      ],
+      "after": [
+        "27",
+        "27",
+        "16",
+        "33",
+        "7",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/node_fs_file_write_file.a",
+      "before": [
+        "31",
+        "31",
+        "11",
+        "36",
+        "9",
+        "0"
+      ],
+      "after": [
+        "31",
+        "31",
+        "13",
+        "38",
+        "9",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/node_fs_file_mkdir.a",
+      "before": [
+        "61",
+        "61",
+        "24",
+        "81",
+        "10",
+        "0"
+      ],
+      "after": [
+        "61",
+        "61",
+        "29",
+        "86",
+        "10",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    },
+    {
+      "row": "internal/oracle/testdata/node_fs_file_write_buffer.a",
+      "before": [
+        "34",
+        "34",
+        "11",
+        "45",
+        "12",
+        "0"
+      ],
+      "after": [
+        "34",
+        "34",
+        "15",
+        "49",
+        "12",
+        "0"
+      ],
+      "reason": "Member 17, compiler/exceptions-21-main 205586a0: Tagged catch and throwing-call ownership; balanced retain/release change. Source subcommits `48f01bea`."
+    }
+  ],
+  "removed": [],
+  "rows": 1272
+}

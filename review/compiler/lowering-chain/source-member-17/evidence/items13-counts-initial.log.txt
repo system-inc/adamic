@@ -1,0 +1,33 @@
+--- FAIL: TestCountsAreRecorded (42.30s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/closure_convention_host24.a (3.14s)
+            counts_test.go:114: native: compiling runtime node_host.c: exit status 1
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:149:20: error: redefinition of 'error' with a different type: 'adamic_object *' (aka 'struct adamic_object *') vs 'int'
+                  149 |     adamic_object *error = adamic_object_new(&shape);
+                      |                    ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:115:38: note: previous definition is here
+                  115 | static void host_directory_error(int error, const char *operation, const adamic_string *from, const adamic_string *to) {
+                      |                                      ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:150:12: error: member reference type 'int' is not a pointer
+                  150 |     error->class = &adamic_host_error_class;
+                      |     ~~~~~  ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:151:29: error: member reference type 'int' is not a pointer
+                  151 |     adamic_thrown = &error->heap;
+                      |                      ~~~~~  ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:153:12: error: member reference type 'int' is not a pointer
+                  153 |     error->slots[0].reference = &error_name;
+                      |     ~~~~~  ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:154:12: error: member reference type 'int' is not a pointer
+                  154 |     error->slots[1].reference = message;
+                      |     ~~~~~  ^
+                /home/agent/.cache/adamic/runtime/.build-154340951/node_host.c:155:12: error: member reference type 'int' is not a pointer
+                  155 |     error->slots[2].reference = prefix;
+                      |     ~~~~~  ^
+                6 errors generated.
+                
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	42.315s
+FAIL

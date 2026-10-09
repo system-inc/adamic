@@ -381,7 +381,8 @@ func (l *lowering) optionalTupleElement(node *ast.Node, object ir.Expression, in
 // everyKnown reports whether every type has a representation.
 func (l *lowering) everyKnown(types []*checker.Type) bool {
 	for _, each := range types {
-		if _, isKnown := l.representation(each); !isKnown {
+		// as const contextual placeholders are any, not stored tuple types.
+		if _, isKnown := l.representation(each); !isKnown || each.Flags()&checker.TypeFlagsAny != 0 {
 			return false
 		}
 	}

@@ -1,0 +1,17 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a
+    oracle_test.go:792: stdout differs
+        node:   exit 0, stdout "undefined true\nundefined\n", stderr ""
+        native: exit 0, stdout "0 false\n0\n", stderr ""
+--- FAIL: TestNativeAgreesWithNode (0.03s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/e4eec87_u01_undefined_field_widened.a (0.48s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.513s
+FAIL

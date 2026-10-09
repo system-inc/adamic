@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:35.27334461Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:35.344011048Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T18:20:35.344070377Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== RUN   TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.344094701Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== PAUSE TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.344097948Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T18:20:35.344111738Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T18:20:35.344115335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== CONT  TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.540583771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"--- PASS: TestMixedUnionContractRecursiveMember (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.540624275Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Elapsed":0.2}
+{"Time":"2026-10-09T18:20:35.540639152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:35.542451684Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.269}

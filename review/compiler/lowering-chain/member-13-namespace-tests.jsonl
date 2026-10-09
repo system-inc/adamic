@@ -1,0 +1,23 @@
+{"Time":"2026-10-09T06:48:56.882525757Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T06:48:56.892147345Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage"}
+{"Time":"2026-10-09T06:48:56.892246324Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage","Output":"=== RUN   TestPlaceholderNamespaceStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.892272783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage","Output":"=== PAUSE TestPlaceholderNamespaceStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.892275147Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage"}
+{"Time":"2026-10-09T06:48:56.89227739Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:48:56.892279834Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== RUN   TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.892282117Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== PAUSE TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.89228364Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:48:56.892285773Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage"}
+{"Time":"2026-10-09T06:48:56.892287175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage","Output":"=== CONT  TestPlaceholderNamespaceStorage\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:56.892289128Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse"}
+{"Time":"2026-10-09T06:48:56.89229067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"=== CONT  TestPlaceholderNamespaceUnsetUse\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:57.322332214Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Output":"--- PASS: TestPlaceholderNamespaceUnsetUse (0.43s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:58.535955521Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceUnsetUse","Elapsed":0.43}
+{"Time":"2026-10-09T06:48:58.536028541Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage","Output":"--- PASS: TestPlaceholderNamespaceStorage (1.64s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:58.536035441Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestPlaceholderNamespaceStorage","Elapsed":1.64}
+{"Time":"2026-10-09T06:48:58.536037705Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T06:48:58.536040499Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=1\n"}
+{"Time":"2026-10-09T06:48:58.536042472Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=3\n"}
+{"Time":"2026-10-09T06:48:58.536058976Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T06:48:58.540449958Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t1.658s\n"}
+{"Time":"2026-10-09T06:48:58.540492752Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":1.658}

@@ -16,6 +16,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	refused := func(reason string) (ir.Expression, bool, error) {
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
+	if len(written) > 0 && l.hasNamespaceObjects() && (name == "freeze" || name == "defineProperty" || name == "defineProperties" || name == "getOwnPropertyDescriptor" || name == "getOwnPropertyDescriptors") {
+		return nil, true, l.notYet(node, "descriptor reflection on an escaped namespace object (Object."+name+")")
+	}
 	switch name {
 	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
 		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
@@ -61,6 +64,20 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		}
 		call.Arguments = []ir.Expression{fit(value, ir.Union)}
 	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				value, err := l.expression(written[0])
+				if err != nil {
+					return nil, true, err
+				}
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
+		}
+		if l.errorAncestry(l.checker.GetTypeAtLocation(written[0])) {
+			return nil, true, l.notYet(written[0], "Object."+name+" on Error (its inherited name and non-enumerable own descriptors need presence representation)")
+		}
 		// Assignment and freezing retain their existing exact-shape requirement.
 		// A plain const's literal initializer proves the complete shape, including field presence.
 		shape := ast.SkipParentheses(written[0])
@@ -70,17 +87,24 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				shape = ast.SkipParentheses(assertion.Expression)
 			}
 		}
-		if name == "keys" || name == "values" || name == "entries" {
+		if (name == "keys" || name == "values" || name == "entries") && !(name == "keys" && l.enumerationDataObject(written[0], 0)) {
 			if err := l.enumerationDescriptors(node, false); err != nil {
 				return nil, true, err
 			}
 		}
-		if name != "keys" && name != "values" && name != "entries" && !l.exactObject(shape, 0) && !(name == "hasOwn" && isClassInstance(l.checker.GetTypeAtLocation(written[0]))) {
+		if name != "keys" && name != "values" && name != "entries" && !(name == "hasOwn" && l.namespaceType(l.checker.GetTypeAtLocation(written[0]))) && !l.exactObject(shape, 0) && !(name == "assign" && l.literalDataObject(written[0], 0)) && !(name == "hasOwn" && (isClassInstance(l.checker.GetTypeAtLocation(written[0])) || l.literalDataObject(written[0], 0))) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on a shape not proven by a plain literal or its const binding")
 		}
 		value, err := l.expression(written[0])
 		if err != nil {
 			return nil, true, err
+		}
+		if name == "keys" && value.Type() == ir.Array {
+			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+				call.Arguments = []ir.Expression{value}
+				call.Returns = ir.Array
+				return call, true, nil
+			}
 		}
 		if value.Type() != ir.Object || l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) || checker.IsTupleType(l.checker.GetTypeAtLocation(written[0])) {
 			return nil, true, l.notYet(written[0], "Object."+name+" on other than a present plain object")
@@ -89,7 +113,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		switch name {
 		case "hasOwn":
 			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
+			if key.Kind != ast.KindStringLiteral || strings.ContainsRune(key.Text(), 0) || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
 				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
 			}
 			keyValue, err := l.expression(key)
@@ -121,7 +145,7 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 				element = pair[1]
 			}
 			call.Element, _ = l.representation(element)
-			if call.Element != ir.Number && call.Element != ir.String && call.Element != ir.Boolean {
+			if call.Element != ir.Number && call.Element != ir.MaybeNumber && call.Element != ir.String && call.Element != ir.Boolean {
 				return refused("tsc's result must have one homogeneous number, string or boolean value type; any and widened field views are unsound")
 			}
 			if declaration := l.enumObject(written[0]); declaration != nil {
@@ -146,6 +170,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 			call.Allowed = l.viewLiterals(element)
 			if l.openNumericEnumType(element) {
 				call.Allowed = nil
+			}
+			if call.Checked && call.Element == ir.MaybeNumber && l.exactObject(written[0], 0) {
+				call.Checked = false
 			}
 			if call.Checked && !interfaceScalar(element) {
 				return nil, true, l.notYet(node, "checked Object enumeration of a non-primitive value contract")
@@ -172,6 +199,9 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 						return nil, true, l.notYet(argument, "Object.assign adding a field to its target's fixed shape")
 					}
 					fromType, toType := l.checker.GetTypeOfSymbol(field), l.checker.GetTypeOfSymbol(into)
+					if into.Flags&ast.SymbolFlagsOptional != 0 {
+						toType = l.checker.GetNonNullableType(toType)
+					}
 					of, known := l.representation(fromType)
 					if !known || (of != ir.Number && of != ir.Boolean && of != ir.String) || !l.enumAssignable(fromType, toType) || !l.enumAssignable(toType, fromType) || !l.checker.IsTypeAssignableTo(fromType, toType) || !l.checker.IsTypeAssignableTo(toType, fromType) {
 						return refused("source and target field types must agree in both directions with tsc's intersection result; widening, conflicting fields and reference cycles are refused")
@@ -233,8 +263,34 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	return l.exactObject(variable.Initializer, depth+1)
 }
 
+// literalDataObject follows const aliases through annotations to plain data
+// initializers. Getter literals and constructor views need different own-property
+// descriptors; proving only their names would not make hasOwn sound.
+func (l *lowering) literalDataObject(node *ast.Node, depth int) bool {
+	if depth > 16 {
+		return false
+	}
+	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindObjectLiteralExpression {
+		return l.exactObject(node, 0)
+	}
+	if !ast.IsIdentifier(node) {
+		return false
+	}
+	symbol := l.symbol(node)
+	if symbol == nil || len(symbol.Declarations) != 1 {
+		return false
+	}
+	declaration := symbol.Declarations[0]
+	if declaration.Kind != ast.KindVariableDeclaration || declaration.Parent == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+		return false
+	}
+	initializer := declaration.AsVariableDeclaration().Initializer
+	return initializer != nil && l.literalDataObject(initializer, depth+1)
+}
+
 // objectCanFreeze is conservative across aliases and calls. A try around a write in a program
-// that freezes objects is NotYet until library TypeErrors participate in exception cleanup.
+// that freezes objects needs checked writes and catchable library TypeErrors.
 func (l *lowering) objectCanFreeze() bool {
 	found := false
 	walk(l.result.Main, func(node any) bool {

@@ -1,0 +1,254 @@
+[
+  {
+    "path": "internal/lower/testdata/callback_widening/array_structural.a",
+    "outcome": "refused",
+    "expected": "refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter",
+    "passed": true,
+    "stderr": "adamic: /workspace/adamic/internal/lower/testdata/callback_widening/array_structural.a:3:31: Adamic 0.1 refuses an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter; annotate parameter x as the element type number[]\n"
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/boolean-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/library-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-arguments.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-capture.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-every.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-filter.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-find.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-findIndex.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-findLast.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-forEach.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-generic-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-generic.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-index.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-named-sort.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-reduce-accumulator.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-reduce.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-some.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-sort.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-throw.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/number-toSorted.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-every.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-filter.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-find.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-forEach.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-generic-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-generic.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-reduce.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-some.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/object-sort.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/optional-number-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/optional-object-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  },
+  {
+    "path": "internal/oracle/testdata/callback_widening/string-map.a",
+    "outcome": "checked",
+    "expected": "checked",
+    "passed": true,
+    "stderr": ""
+  }
+]

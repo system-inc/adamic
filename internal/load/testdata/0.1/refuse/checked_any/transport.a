@@ -1,0 +1,3 @@
+function pass(value: any): any { return value; }
+console.log(typeof pass(14));
+console.log(typeof pass('node'));

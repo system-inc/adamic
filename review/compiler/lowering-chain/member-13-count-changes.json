@@ -1,0 +1,659 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_namespace.a",
+      "after": [
+        "8",
+        "8",
+        "24",
+        "36",
+        "8",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_scanner.a",
+      "after": [
+        "4",
+        "4",
+        "9",
+        "8",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_local.a",
+      "after": [
+        "12",
+        "12",
+        "11",
+        "24",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_field.a",
+      "after": [
+        "9",
+        "9",
+        "15",
+        "23",
+        "5",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_observe.a",
+      "after": [
+        "27",
+        "27",
+        "48",
+        "79",
+        "9",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_equality.a",
+      "after": [
+        "4",
+        "4",
+        "10",
+        "16",
+        "2",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_loose.a",
+      "after": [
+        "10",
+        "10",
+        "23",
+        "35",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_truthiness.a",
+      "after": [
+        "1",
+        "1",
+        "7",
+        "10",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_typeof.a",
+      "after": [
+        "3",
+        "3",
+        "9",
+        "11",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_coalesce.a",
+      "after": [
+        "8",
+        "8",
+        "15",
+        "27",
+        "4",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_optional.a",
+      "after": [
+        "6",
+        "6",
+        "16",
+        "25",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_copy.a",
+      "after": [
+        "26",
+        "26",
+        "102",
+        "121",
+        "7",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_json.a",
+      "after": [
+        "5",
+        "5",
+        "0",
+        "6",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_namespace_before_use.a",
+      "after": [
+        "3",
+        "0",
+        "3",
+        "4",
+        "3",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_before_use.a",
+      "after": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_saved_leak.a",
+      "after": [
+        "1",
+        "0",
+        "3",
+        "4",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_before_use.a",
+      "after": [
+        "0",
+        "0",
+        "2",
+        "1",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a",
+      "after": [
+        "1",
+        "0",
+        "4",
+        "4",
+        "1",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_assignment_result.a",
+      "after": [
+        "0",
+        "0",
+        "2",
+        "3",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_return_assignment.a",
+      "after": [
+        "0",
+        "0",
+        "2",
+        "3",
+        "0",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/placeholder_nonnull_alias_reset.a",
+      "after": [
+        "2",
+        "1",
+        "6",
+        "7",
+        "2",
+        "0"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "row": "internal/oracle/testdata/non_null_initialized.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "55",
+        "55",
+        "50",
+        "109",
+        "18",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Literal placeholders in locals, parameters and fields no longer stop at initialization. Boxed storage and typed-use checks let the initialization writes and the rest of this program execute."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_field.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "3",
+        "2",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Class field null! is stored as a tagged placeholder. Construction and field-read retention now run before the consuming check, rather than stopping in the initializer."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_capture.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "2",
+        "0",
+        "2",
+        "0",
+        "2",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! becomes tagged storage in a captured cell. Cell/closure construction now precedes the captured-value use check."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_exception.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "1",
+        "3",
+        "2",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The undefined! local is installed without an assertion trap. Error construction, throw/catch cleanup and the later placeholder use now execute."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_loop.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "0",
+        "0",
+        "1",
+        "0",
+        "0",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The null! local survives initialization; the zero-iteration path reaches its tagged read instead of stopping at the initializer."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_const.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "0",
+        "0",
+        "2",
+        "1",
+        "0",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The constant stores the null tag and reaches its later read instead of stopping at null!. Tagged reads add retain/release operations."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_static_initialized.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "1",
+        "1",
+        "0"
+      ],
+      "after": [
+        "9",
+        "9",
+        "12",
+        "22",
+        "6",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Static placeholder fields retain tagged storage and accept the subsequent real writes. The rest of the initialized static/inherited-read program now executes."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_static_uninitialized.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "1",
+        "1",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "3",
+        "2",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The static field stores the null tag before the read. Its tagged field read changes retention before the unset consumption check."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_optional.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "3",
+        "3",
+        "2",
+        "6",
+        "3",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Optional field undefined! remains an observable undefined payload. The ?? fallback can execute instead of an initializer assertion stopping construction."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_spread.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "2",
+        "0",
+        "5",
+        "5",
+        "2",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Undefined! field initialization is deferred to typed use. Spread now copies the tagged slot and readiness before the copied-value use."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_literal_assignment.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "1",
+        "2",
+        "2",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): A literal null! reset now writes the null tag into placeholder storage, instead of executing a non-null assertion. Its later observation runs."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_iteration.ts",
+      "before": [
+        "1",
+        "0",
+        "0",
+        "1",
+        "1",
+        "0"
+      ],
+      "after": [
+        "6",
+        "1",
+        "10",
+        "8",
+        "6",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): Loop-local undefined! is stored in the captured placeholder representation. Iteration, per-iteration cells, closures and the selected closure read now precede consumption."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_interface.ts",
+      "before": [
+        "1",
+        "0",
+        "1",
+        "0",
+        "1",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "2",
+        "1",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The initialized object carries an undefined placeholder. The interface view reads its tagged slot before the consuming check, changing retained reads."
+    },
+    {
+      "row": "internal/oracle/testdata/non_null_uninitialized_map_entry.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "0",
+        "0",
+        "1",
+        "1",
+        "0",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The local undefined! is installed without trapping; the container-element consuming check is reached, with its own tagged read retention."
+    },
+    {
+      "row": "stage3/interface-downcasts/default-staged.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "6",
+        "7",
+        "2",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The escapedText placeholder is reserved in the object, then the real string write and checked cast/view read execute. The old initializer trap prevented those allocations."
+    },
+    {
+      "row": "stage3/interface-downcasts/default-boxed-write.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "5",
+        "12",
+        "4",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The boxed union field begins as an undefined placeholder. The checked NumberNode write keeps the boxed slot representation, and the checked read and identity observation now execute."
+    },
+    {
+      "row": "stage3/interface-downcasts/default-read-before-set.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "4",
+        "2",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object stores its undefined escapedText slot. The checked downcast/view read reaches the unset-use stop after construction, instead of trapping before object allocation."
+    },
+    {
+      "row": "stage3/interface-downcasts/readiness-identifier.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "2",
+        "2",
+        "6",
+        "8",
+        "2",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The object reserves tagged escapedText storage; its subsequent string write initializes it and the completed factory/read path executes."
+    },
+    {
+      "row": "stage3/interface-downcasts/readiness-identifier-uninitialized.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "4",
+        "3",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory can return the object with honest undefined storage. The later required-string use stops after object construction and retained field reads."
+    },
+    {
+      "row": "stage3/interface-downcasts/readiness-number.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "5",
+        "5",
+        "5",
+        "10",
+        "5",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves null! as a tagged number placeholder, then boxes the real zero write and performs the initialized number read."
+    },
+    {
+      "row": "stage3/interface-downcasts/readiness-number-uninitialized.ts",
+      "before": [
+        "0",
+        "0",
+        "0",
+        "0",
+        "0",
+        "0"
+      ],
+      "after": [
+        "1",
+        "0",
+        "5",
+        "3",
+        "1",
+        "0"
+      ],
+      "reason": "Member 13 (placeholder-nonnull-main bafb9ef4): The factory preserves the null tag and returns the object. The later required-number use stops after construction and tagged field-read retention."
+    }
+  ],
+  "removed": [],
+  "rows": 1184
+}

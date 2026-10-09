@@ -1,0 +1,24 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a
+    oracle_test.go:754: the release build: exit codes differ
+        sanitized: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40: runtime error: member access within null pointer of type 'const adamic_array' (aka 'const struct adamic_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40 \n"
+        release:   exit -1, stdout "", stderr ""
+    oracle_test.go:770: exit codes differ
+        node:   exit 0, stdout "original1,added2\noriginal1\nfailure3\noriginal1\n", stderr ""
+        native: exit 1, stdout "", stderr "/home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40: runtime error: member access within null pointer of type 'const adamic_array' (aka 'const struct adamic_array')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40 \n"
+    oracle_test.go:783: leaks:
+        exit 1
+        /home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40: runtime error: member access within null pointer of type 'const adamic_array' (aka 'const struct adamic_array')
+        SUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/.build-1233712921/array.c:50:40 
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a (0.50s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.527s
+FAIL

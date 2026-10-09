@@ -1,0 +1,43 @@
+Actual gate dependency reader accepted both parent maps; new/changed undeclared consumers: []
+{
+  "candidate": {
+    "version": 1,
+    "packages": {
+      "stage3/checked-any/probe": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ],
+      "stage3/project-loader/probe": [
+        "internal/load"
+      ],
+      "cmd/adamic-gocacheprog": [
+        "internal/load",
+        "internal/lower",
+        "internal/native",
+        "internal/javascript",
+        "internal/ir",
+        "internal/flow",
+        "cmd/adamic"
+      ]
+    }
+  },
+  "census": {
+    "compiler_consumers_undeclared_on_base": [
+      "stage1/cohere/formatfiles/testdata/cohere_side_test.go",
+      "stage1/cohere/gitignore/testdata/cohere_side_test.go",
+      "stage1/cohere/lint/inventory/testdata/engine.go",
+      "stage1/cohere/lint/regex/testdata/shapes/gate.go",
+      "stage3/drivers/parser/build-metrics/main.go",
+      "stage3/drivers/scanner/build-metrics.go"
+    ],
+    "compiler_dependency_map": {
+      "root": "/workspace/scratch/landing-gate-tools + /workspace/adamic",
+      "path": "cloud/fast-gate/compiler-dependencies.json"
+    }
+  }
+}

@@ -1,0 +1,148 @@
+diff --git a/internal/native/wasm_test.go b/internal/native/wasm_test.go
+index 0cab6756..fec03dd6 100644
+--- a/internal/native/wasm_test.go
++++ b/internal/native/wasm_test.go
+@@ -41,9 +41,6 @@ var wasiFixtures = []string{
+ 	"internal/oracle/testdata/closures_throw.a",
+ 	"internal/oracle/testdata/write_stdout_order.a",
+ 	"internal/oracle/testdata/write_stderr_order.a",
+-	"internal/oracle/testdata/arguments_length_extended.a",
+-	"internal/oracle/testdata/closure_convention_regexp_count.a",
+-	"internal/oracle/testdata/closure_convention_nested.a",
+ }
+ 
+ func runWASIUnit(t *testing.T, unit int) {
+@@ -60,6 +57,7 @@ func runWASIUnit(t *testing.T, unit int) {
+ 			t.Skipf("WASI toolchain missing: %s: %v", tool, err)
+ 		}
+ 	}
++	phase := time.Now()
+ 	directory := t.TempDir()
+ 	setupDirectory := directory
+ 	repository, err := filepath.Abs("../..")
+@@ -77,6 +75,8 @@ func runWASIUnit(t *testing.T, unit int) {
+ 		"import {WASI} from 'node:wasi'; import {registerHooks} from 'node:module'; new WASI({version:'preview1'}); if (!registerHooks || Number(process.versions.node.split('.')[0]) < 24) process.exit(1)").CombinedOutput(); err != nil {
+ 		t.Skipf("WASI toolchain missing: Node 24 with node:wasi and source oracle hooks required: %v\n%s", err, output)
+ 	}
++	t.Logf("WASI toolchain probe phase %.3fs", time.Since(phase).Seconds())
++	phase = time.Now()
+ 	// Compile every translation unit without the generated-C unused warnings exemptions.
+ 	files, err := readRuntime(runtime, "runtime")
+ 	if err != nil {
+@@ -97,8 +97,13 @@ func runWASIUnit(t *testing.T, unit int) {
+ 	if err != nil {
+ 		t.Fatal(err)
+ 	}
+-	runtimeBuild := func(features string, count bool) (string, []string) {
+-		compileFlags := append(append([]string{}, flags...), featureFlags(features)...)
++	t.Logf("WASI runtime inputs and cache identity phase %.3fs", time.Since(phase).Seconds())
++	runtimeBuild := func(count bool) (string, []string) {
++		started := time.Now()
++		defer func() {
++			t.Logf("WASI runtime build/cache phase counted=%t %.3fs", count, time.Since(started).Seconds())
++		}()
++		compileFlags := append([]string{}, flags...)
+ 		if count {
+ 			compileFlags = append(compileFlags, "-DADAMIC_COUNT")
+ 		}
+@@ -133,21 +138,26 @@ func runWASIUnit(t *testing.T, unit int) {
+ 		return built, objects
+ 	}
+ 	var objects []string
+-	directory, objects = runtimeBuild("", false)
++	directory, objects = runtimeBuild(false)
+ 	t.Logf("strict C11 runtime: %d translation units compiled", len(objects))
++	phase = time.Now()
+ 	compiler := filepath.Join(setupDirectory, "adamic")
+ 	command := exec.Command("go", "build", "-o", compiler, "./cmd/adamic")
+ 	command.Dir = repository
+ 	if output, err := cache.Command(command, setupDirectory); err != nil {
+ 		t.Fatalf("compiler setup: %v\n%s", err, output)
+ 	}
++	t.Logf("WASI compiler build/cache phase %.3fs", time.Since(phase).Seconds())
+ 	generate := func(t *testing.T, fixture string) string {
+ 		t.Helper()
++		started := time.Now()
++		defer func() { t.Logf("WASI generate phase %.3fs", time.Since(started).Seconds()) }()
+ 		return string(wasiCommand(t, repository, compiler, "c", fixture))
+ 	}
+-	link := func(t *testing.T, source, output, features string, count bool, extra ...string) {
++	link := func(t *testing.T, source, output string, extra ...string) {
+ 		t.Helper()
+-		directory, objects := runtimeBuild(features, count)
++		started := time.Now()
++		defer func() { t.Logf("WASI link/cache phase %.3fs", time.Since(started).Seconds()) }()
+ 		arguments := append(append([]string{}, flags...), "-Wno-unused-variable", "-Wno-unused-but-set-variable", "-Wno-unused-function", "-Wno-unused-parameter", "-Wno-self-assign",
+ 			"-I", directory, "-Wl,-z,stack-size=131072", "-Wl,--export=__stack_low", "-o", output, source)
+ 		arguments = append(arguments, extra...)
+@@ -173,7 +183,7 @@ func runWASIUnit(t *testing.T, unit int) {
+ 	}
+ 
+ 	passed := 0
+-	shard := testShard{unit, 39}
++	shard := testShard{unit, 36}
+ 	for index, fixture := range wasiFixtures {
+ 		if !shard.owns(index) {
+ 			continue
+@@ -181,10 +191,9 @@ func runWASIUnit(t *testing.T, unit int) {
+ 		t.Run(fixture, func(t *testing.T) {
+ 			scratch := t.TempDir()
+ 			source := filepath.Join(scratch, "main.c")
+-			code := generate(t, fixture)
+-			writeWASIFile(t, source, code)
++			writeWASIFile(t, source, generate(t, fixture))
+ 			module := filepath.Join(scratch, "main.wasm")
+-			link(t, source, module, code, false)
++			link(t, source, module)
+ 			working := repository
+ 			if strings.HasSuffix(fixture, "read_files.a") {
+ 				working = filepath.Join(repository, "internal/oracle/testdata")
+@@ -196,8 +205,12 @@ func runWASIUnit(t *testing.T, unit int) {
+ 				}
+ 				writeWASIFile(t, filepath.Join(scratch, "files/input.txt"), "héllo 世界\n")
+ 			}
++			started := time.Now()
+ 			node := observeWASI(t, working, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), filepath.Join(repository, fixture))
++			t.Logf("WASI source Node phase %.3fs", time.Since(started).Seconds())
++			started = time.Now()
+ 			wasm := observeWASI(t, working, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "internal/native/wasm/run.mjs"), module)
++			t.Logf("WASI execution phase %.3fs", time.Since(started).Seconds())
+ 			if !bytes.Equal(node.stdout, wasm.stdout) || !bytes.Equal(node.stderr, wasm.stderr) || node.exit != wasm.exit {
+ 				t.Fatalf("Node exit=%d stdout=%q stderr=%q; WASI exit=%d stdout=%q stderr=%q", node.exit, node.stdout, node.stderr, wasm.exit, wasm.stdout, wasm.stderr)
+ 			}
+@@ -210,6 +223,7 @@ func runWASIUnit(t *testing.T, unit int) {
+ 	}
+ 	t.Run("requests", func(t *testing.T) {
+ 		// Counters are for the memory probe only; oracle command stderr stays untouched.
++		directory, objects = runtimeBuild(true)
+ 		scratch := t.TempDir()
+ 		code := generate(t, "internal/native/wasm/request.a")
+ 		if !strings.Contains(code, "adamic_region_end(") {
+@@ -221,7 +235,7 @@ func runWASIUnit(t *testing.T, unit int) {
+ 		}
+ 		writeWASIFile(t, filepath.Join(scratch, "program.c"), code)
+ 		module := filepath.Join(scratch, "request.wasm")
+-		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, code, true, "-I", scratch,
++		link(t, filepath.Join(repository, "internal/native/wasm/request-abi.c"), module, "-I", scratch,
+ 			"-DADAMIC_HANDLER="+handler[1], "-mexec-model=reactor", "-Wl,--export=malloc", "-Wl,--export=free", "-Wl,--export=adamic_release")
+ 		output := wasiCommand(t, repository, "node", "--disable-warning=ExperimentalWarning", "internal/native/wasm/request-host.mjs", module, "internal/native/wasm/request.a")
+ 		t.Logf("request benchmark: %s", output)
+@@ -461,18 +475,3 @@ func TestWASIUnit34(t *testing.T) {
+ func TestWASIUnit35(t *testing.T) {
+ 	runWASIUnit(t, 35)
+ }
+-
+-// Not parallel: this unit uses the WASI toolchain and shared build cache.
+-func TestWASIUnit36(t *testing.T) {
+-	runWASIUnit(t, 36)
+-}
+-
+-// Not parallel: this unit uses the WASI toolchain and shared build cache.
+-func TestWASIUnit37(t *testing.T) {
+-	runWASIUnit(t, 37)
+-}
+-
+-// Not parallel: this unit uses the WASI toolchain and shared build cache.
+-func TestWASIUnit38(t *testing.T) {
+-	runWASIUnit(t, 38)
+-}

@@ -1,0 +1,13 @@
+=== RUN   TestCheckedJSONNext
+=== RUN   TestCheckedJSONNext/json_nullable
+    checked_json_next_test.go:29: gate cache node hit
+    checked_json_next_test.go:34: gate cache node hit
+    checked_json_next_test.go:40: native exit codes differ: got {stdout:[116 114 117 101 10 102 97 108 115 101 10 102 97 108 115 101 10 116 114 117 101 10 118 97 108 117 101 10 116 114 117 101 10 116 114 117 101 10 49 52 10] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 100 121 110 97 109 105 99 32 112 114 111 112 101 114 116 121 32 114 101 97 100 32 111 110 32 110 117 108 108 32 111 114 32 117 110 100 101 102 105 110 101 100 10] exitCode:70} want {stdout:[116 114 117 101 10 102 97 108 115 101 10 102 97 108 115 101 10 116 114 117 101 10 118 97 108 117 101 10 116 114 117 101 10 116 114 117 101 10 49 52 10 48 10 48 10 48 10 53 10 109 105 115 115 105 110 103 10 109 105 115 115 105 110 103 10 118 97 108 117 101 10 111 98 106 101 99 116 10 117 110 100 101 102 105 110 101 100 10] stderr:[] exitCode:0}
+--- FAIL: TestCheckedJSONNext (0.27s)
+    --- FAIL: TestCheckedJSONNext/json_nullable (0.27s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.282s
+FAIL

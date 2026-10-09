@@ -1,0 +1,240 @@
+package load
+
+import (
+	"context"
+	"fmt"
+	"path/filepath"
+	"sort"
+
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/bundled"
+	"github.com/microsoft/TypeScript/tsc/shim/compiler"
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/cachedvfs"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs/osvfs"
+)
+
+// OptionSite is a diagnostic introduced by stricter options, identified by the
+// same file, byte position and code used by the stage 3 checker ledger. Line
+// and column use UTF-16 units. A site
+// is evidence requiring a check, never evidence that a check has been emitted.
+type OptionSite struct {
+	Position int      `json:"position"`
+	File     string   `json:"file"`
+	Line     int      `json:"line"`
+	Column   int      `json:"column"`
+	Code     int      `json:"code"`
+	Message  string   `json:"message"`
+	Options  []string `json:"options"`
+}
+
+// ProjectOptionReport keeps ordinary project errors separate from diagnostics
+// introduced by Adamic's stricter flags. It does not authorize lowering either.
+type ProjectOptionReport struct {
+	ProjectErrors []string     `json:"project_errors"`
+	Sites         []OptionSite `json:"sites"`
+	// RemainingSites is populated by production probes, not the audit.
+	RemainingSites []OptionSite `json:"remaining_sites,omitempty"`
+}
+
+var stricterOptionNames = []string{
+	"noUncheckedIndexedAccess",
+	"exactOptionalPropertyTypes",
+	"useUnknownInCatchVariables",
+	"strictBindCallApply",
+}
+
+// AuditProjectOptions checks the project's actual options and libraries, then
+// changes only the four soundness options measured by the stage 3 ledger. One
+// ablation per flag records every flag responsible for a site; a diagnostic
+// which survives all ablations is retained with an empty Options list. This
+// deliberately uses the project's declarations, keeping declaration differences
+// out of option attribution. The production loader still refuses these sites
+// until their checks have a backend and runtime witness.
+func AuditProjectOptions(ctx context.Context, configName string) (*ProjectOptionReport, error) {
+	return auditProjectOptions(ctx, configName, osvfs.FS(), nil)
+}
+
+func auditProjectOptions(ctx context.Context, configName string, source vfs.FS, additionalRoots []tspath.RootedFilePath) (*ProjectOptionReport, error) {
+	absolute, err := filepath.Abs(configName)
+	if err != nil {
+		return nil, err
+	}
+	fs := cachedvfs.From(bundled.WrapFS(source))
+	configPath := tspath.RootedFilePathFromAbsolute(absolute)
+	if !fs.FileExists(configPath) {
+		return nil, fmt.Errorf("load: no tsconfig at %s", absolute)
+	}
+	config, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(configPath, &core.CompilerOptions{}, nil, fs, nil)
+	formatter := &Program{fs: &sourceFS{FS: fs}}
+	if config != nil {
+		diagnostics = append(diagnostics, config.GetConfigFileParsingDiagnostics()...)
+	}
+	if len(diagnostics) != 0 {
+		messages := make([]string, 0, len(diagnostics))
+		for _, diagnostic := range diagnostics {
+			messages = append(messages, formatter.formatDiagnostic(diagnostic))
+		}
+		return nil, &CheckError{Diagnostics: messages}
+	}
+	if config == nil {
+		return nil, fmt.Errorf("load: %s parsed to no project", absolute)
+	}
+	roots := append([]tspath.RootedFilePath{}, config.FileNames()...)
+	flatten := len(config.ProjectReferences()) != 0
+	types := config.CompilerOptions().Types
+	if flatten {
+		var referenceError error
+		roots, _, types, referenceError = projectSourceRoots(fs, config)
+		if referenceError != nil {
+			return nil, referenceError
+		}
+	}
+	included := make(map[tspath.RootedFilePath]bool)
+	for _, root := range roots {
+		included[root] = true
+	}
+	for _, root := range additionalRoots {
+		if !included[root] {
+			roots = append(roots, root)
+			included[root] = true
+		}
+	}
+	roots = uniqueSourceRoots(fs, roots)
+	base := config.CompilerOptions().Clone()
+	if flatten {
+		base = sourceProgramOptions(base, roots)
+		base.Types = types
+		// The shared ambient scope must be checked even when separate projects
+		// skip their declaration files. Otherwise union conflicts disappear.
+		if len(types) != 0 {
+			base.SkipLibCheck = core.TSFalse
+		}
+	}
+	directory := tspath.RootedDirectoryPathFromAbsolute(filepath.Dir(absolute))
+	run := func(options *core.CompilerOptions) ([]*ast.Diagnostic, error) {
+		parsed := tsoptions.NewParsedCommandLine(options, roots, nil, directory, fs.CaseSensitivity())
+		parsed.ConfigFile = config.ConfigFile
+		host := compiler.NewCachedFSCompilerHost(fs, bundled.LibPath(), nil, nil, nil)
+		program := compiler.NewProgram(compiler.ProgramOptions{Config: parsed, Host: host, SingleThreaded: core.TSTrue})
+		if program == nil {
+			return nil, fmt.Errorf("load: checker built no project for %s", absolute)
+		}
+		all := program.GetSyntacticDiagnostics(ctx, nil)
+		if len(all) == 0 {
+			all = append(all, program.GetConfigFileParsingDiagnostics()...)
+			all = append(all, program.GetProgramDiagnostics()...)
+			all = append(all, program.GetGlobalDiagnostics(ctx)...)
+			all = append(all, program.GetBindDiagnostics(ctx, nil)...)
+			all = append(all, program.GetSemanticDiagnostics(ctx, nil)...)
+			if options.GetEmitDeclarations() {
+				all = append(all, program.GetDeclarationDiagnostics(ctx, nil)...)
+			}
+		}
+		return all, nil
+	}
+	ordinary, err := run(base)
+	if err != nil {
+		return nil, err
+	}
+	report := &ProjectOptionReport{ProjectErrors: []string{}, Sites: []OptionSite{}}
+	ordinaryKeys := diagnosticKeys(ordinary)
+	for _, diagnostic := range ordinary {
+		report.ProjectErrors = append(report.ProjectErrors, formatter.formatDiagnostic(diagnostic))
+	}
+	strict := base.Clone()
+	strict.NoUncheckedIndexedAccess = core.TSTrue
+	strict.ExactOptionalPropertyTypes = core.TSTrue
+	strict.UseUnknownInCatchVariables = core.TSTrue
+	strict.StrictBindCallApply = core.TSTrue
+	stronger, err := run(strict)
+	if err != nil {
+		return nil, err
+	}
+	ablations := make([]map[optionDiagnosticKey]bool, len(stricterOptionNames))
+	for index := range stricterOptionNames {
+		options := strict.Clone()
+		switch index {
+		case 0:
+			options.NoUncheckedIndexedAccess = base.NoUncheckedIndexedAccess
+		case 1:
+			options.ExactOptionalPropertyTypes = base.ExactOptionalPropertyTypes
+		case 2:
+			options.UseUnknownInCatchVariables = base.UseUnknownInCatchVariables
+		case 3:
+			options.StrictBindCallApply = base.StrictBindCallApply
+		}
+		diagnostics, err := run(options)
+		if err != nil {
+			return nil, err
+		}
+		ablations[index] = diagnosticKeys(diagnostics)
+	}
+	seen := map[optionDiagnosticKey]bool{}
+	for _, diagnostic := range stronger {
+		key := optionKey(diagnostic)
+		if ordinaryKeys[key] || seen[key] {
+			continue
+		}
+		seen[key] = true
+		site := OptionSite{Position: diagnostic.Pos(), Code: int(diagnostic.Code()), Message: formatter.formatDiagnostic(diagnostic), Options: []string{}}
+		if file := diagnostic.File(); file != nil {
+			site.File = file.FileName().AsString()
+			site.Line, site.Column = formatter.lineAndColumn(file, diagnostic.Pos())
+		}
+		for index, option := range stricterOptionNames {
+			if !ablations[index][key] {
+				site.Options = append(site.Options, option)
+			}
+		}
+		report.Sites = append(report.Sites, site)
+	}
+	sort.Strings(report.ProjectErrors)
+	sort.Slice(report.Sites, func(i, j int) bool {
+		a, b := report.Sites[i], report.Sites[j]
+		if a.File != b.File {
+			return a.File < b.File
+		}
+		if a.Line != b.Line {
+			return a.Line < b.Line
+		}
+		if a.Column != b.Column {
+			return a.Column < b.Column
+		}
+		return a.Code < b.Code
+	})
+	return report, nil
+}
+
+type optionDiagnosticKey struct {
+	file           string
+	position, code int
+}
+
+func optionKey(diagnostic *ast.Diagnostic) optionDiagnosticKey {
+	key := optionDiagnosticKey{position: diagnostic.Pos(), code: int(diagnostic.Code())}
+	if diagnostic.File() != nil {
+		key.file = diagnostic.File().FileName().AsString()
+	}
+	return key
+}
+
+func diagnosticKeys(diagnostics []*ast.Diagnostic) map[optionDiagnosticKey]bool {
+	keys := make(map[optionDiagnosticKey]bool, len(diagnostics))
+	for _, diagnostic := range diagnostics {
+		keys[optionKey(diagnostic)] = true
+	}
+	return keys
+}
+
+// alreadyStricter avoids shadow programs when their effective options cannot
+// differ. Inherited strict defaults count, not only explicit flag spellings.
+func alreadyStricter(options *core.CompilerOptions) bool {
+	return options.NoUncheckedIndexedAccess == core.TSTrue &&
+		options.ExactOptionalPropertyTypes == core.TSTrue &&
+		options.GetStrictOptionValue(options.UseUnknownInCatchVariables) &&
+		options.GetStrictOptionValue(options.StrictBindCallApply)
+}

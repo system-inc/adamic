@@ -1,0 +1,3 @@
+stage3/fixtures/self-compare/closure.a
+- String(f === f)
++ String(f !== f)

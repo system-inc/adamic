@@ -1,0 +1,21 @@
+// Original decodeEntities declaration from TypeScript 050880ce, jsx.ts:623.
+// The imported values have concrete local implementations for this semantic witness.
+function utf16EncodeAsString(code: number): string { return String.fromCodePoint(code); }
+const entities = new Map<string, number>();
+entities.set('nbsp', 160);
+    function decodeEntities(text: string): string {
+        return text.replace(/&((#((\d+)|x([\da-fA-F]+)))|(\w+));/g, (match, _all, _number, _digits, decimal, hex, word) => {
+            if (decimal) {
+                return utf16EncodeAsString(parseInt(decimal, 10));
+            }
+            else if (hex) {
+                return utf16EncodeAsString(parseInt(hex, 16));
+            }
+            else {
+                const ch = entities.get(word);
+                // If this is not a valid entity, then just use `match` (replace it with itself, i.e. don't replace)
+                return ch ? utf16EncodeAsString(ch) : match;
+            }
+        });
+    }
+console.log(decodeEntities('&#65; &#x42; &nbsp; &missing;'));

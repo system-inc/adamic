@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:55:34.470050741Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:55:34.509937487Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness"}
+{"Time":"2026-10-09T19:55:34.50999957Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness","Output":"=== RUN   TestAgreementInheritedFieldWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:34.510040078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness","Output":"=== PAUSE TestAgreementInheritedFieldWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:34.510044394Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness"}
+{"Time":"2026-10-09T19:55:34.510048354Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness"}
+{"Time":"2026-10-09T19:55:34.510051237Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness","Output":"=== CONT  TestAgreementInheritedFieldWitness\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:35.560254838Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness","Output":"--- PASS: TestAgreementInheritedFieldWitness (1.05s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:35.560340832Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestAgreementInheritedFieldWitness","Elapsed":1.05}
+{"Time":"2026-10-09T19:55:35.560378894Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:35.567133779Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.097}

@@ -1,0 +1,51 @@
+[compiler/placeholder-nonnull-main 6416a497e] Preserve placeholder nullish values and check every typed use
+ Date: Thu Oct 8 23:46:47 2026 +0000
+ 75 files changed, 1723 insertions(+), 206 deletions(-)
+ create mode 100644 internal/lower/placeholder_test.go
+ create mode 100644 internal/lower/testdata/placeholders/nonliteral.a
+ create mode 100644 internal/native/placeholder.go
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_before_use.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_copy.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_equality.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_json.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_loose.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_optional.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_observe.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+ create mode 100644 internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-alias-proof-mutant.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-a-check.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-cli.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-counts-check.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-counts-update.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-flow.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-host.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-lower.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-stage3.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-copy-vet.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-drop-flow-mutant.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-json-assertion-mutant.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-loose-twice-mutant.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-oracles.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-weak-admission-mutant.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/placeholder-lowering.md
+[compiler/placeholder-nonnull-main 6458bff12] Initialize placeholder state for standalone refusal passes
+ Date: Thu Oct 8 23:51:58 2026 +0000
+ 9 files changed, 7 insertions(+)
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-refusal-lower.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-final-refusal-vet.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-refusal-final-a-check.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-refusal-final-host.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-refusal-final-oracles.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-refusal-final-stage3.log.gz
+ create mode 100644 stage3/scouts/step09/nonnull/evidence/placeholder-refusal-state-mutant.log.gz
+[compiler/placeholder-nonnull-main 28af90505] Refresh catalog patches for placeholder lowering
+ Date: Fri Oct 9 01:45:45 2026 +0000
+ 3 files changed, 9 insertions(+), 9 deletions(-)

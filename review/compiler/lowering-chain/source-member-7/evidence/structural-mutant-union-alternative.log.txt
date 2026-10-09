@@ -1,0 +1,13 @@
+=== RUN   TestCheckedJSON
+=== RUN   TestCheckedJSON/json_union_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:44: native exit codes differ: got {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0} want {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 46 116 121 112 101 32 110 101 101 100 115 32 34 108 105 115 116 34 32 124 32 34 111 98 106 101 99 116 34 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+--- FAIL: TestCheckedJSON (0.45s)
+    --- FAIL: TestCheckedJSON/json_union_misfit (0.45s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.464s
+FAIL

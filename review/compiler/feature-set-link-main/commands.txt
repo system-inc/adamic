@@ -1,0 +1,11 @@
+source /workspace/adamic-tools/env.sh
+export GOPROXY='https://proxy.golang.org|direct'
+ADAMIC_CLANG_TSGO_ARCHIVE=/tmp/c2-pair-tsgo.a timeout 150s go test ./internal/native -run '^TestRuntimeFeature|^TestSplitTSGoRuntimeFeatures$|^TestClosureConventionRuntimeDropCount$' -count=1 -v -timeout 90s
+timeout 150s go test ./internal/oracle -run '^TestRegExpReplacement(NodeMutants|TypeGuardMutants)|^TestNotYetLibraryRegex(Callback|Offset)Mutants$' -count=1 -v -timeout 90s
+timeout 180s go test ./internal/fuzz ./cmd/adamic-test262 ./stage1/cohere/markdownblocks -run '^TestFuzzerFeatureMismatchStopsAtLink$|^TestRunnerFeatureMismatchStopsAtLink$|^TestFuzzerSharesRuntimeLibrary$|^TestNativeMutantUsesProgramsFeatures$' -count=1 -v -timeout 90s
+ADAMIC_TEST_WASI=1 PATH=/workspace/adamic-tools/wasi-sdk/bin:$PATH timeout 210s go test ./internal/native -run '^TestWASIUnit' -count=1 -v -timeout 180s
+ADAMIC_CLANG_TSGO_ARCHIVE=/tmp/c2-pair-tsgo.a timeout 210s go test ./internal/native -run '^TestSplitTSGoAgreesUnit|^TestTSGoBuildSeesTheProgramsFeatures$' -count=1 -v -timeout 180s
+ADAMIC_CLANG_TSGO_ARCHIVE=/tmp/c2-pair-tsgo.a timeout 600s python3 internal/native/testdata/run-feature-set-link-mutants.py
+timeout 210s go test ./internal/oracle -run '^TestCountsAreRecorded$' -count=1 -timeout 180s -args -update-counts
+timeout 60s git fetch -q origin main devtools/fast-gate cloud/merge-tree
+timeout 150s bash -o pipefail -c 'git show origin/cloud/merge-tree:cloud/integration/lane-checks.py | python3 -'

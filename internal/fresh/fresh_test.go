@@ -7,7 +7,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/system-inc/adamic/internal/flow"
 	"github.com/system-inc/adamic/internal/fresh"
+	"github.com/system-inc/adamic/internal/ir"
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
 )
@@ -66,6 +68,7 @@ func checkFreshProgram(t *testing.T, path string) {
 		t.Logf("Lower declined: %v", err)
 		return
 	}
+	untyped := runtimeWriteCounts(lowered)
 	for _, write := range fresh.ProveWrites(lowered) {
 		writes++
 		if write.Proven {
@@ -75,7 +78,12 @@ func checkFreshProgram(t *testing.T, path string) {
 			t.Errorf("%s: %s", path, write.Why)
 		}
 		if write.Site == 0 && write.Kind != fresh.WriteUnknown {
-			t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
+			key := runtimeWriteKey{write.Function, write.Name}
+			if write.Kind == fresh.WriteField && untyped[key] > 0 {
+				untyped[key]--
+			} else {
+				t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
+			}
 		}
 	}
 	if needsWrites && writes == 0 {
@@ -104,4 +112,40 @@ func TestMethodKeepsArgument(t *testing.T) {
 	if !strings.Contains(refused.Error(), "(adamic/cycle-capable)") || !strings.Contains(refused.Error(), "the write at "+path+":15:") {
 		t.Fatalf("refusal does not name the cycle-closing push: %v", refused)
 	}
+}
+
+// Namespace containers have no checker holder type. Builtin Error initializers
+// likewise synthesize their string prefix without a source receiver. These stores
+// still enter ProveWrites; only the source-site census classifies them separately.
+type runtimeWriteKey struct {
+	function int
+	name     string
+}
+
+func runtimeWriteCounts(program *ir.Program) map[runtimeWriteKey]int {
+	counts := map[runtimeWriteKey]int{}
+	for function := -1; function < len(program.Functions); function++ {
+		builtin := false
+		for _, class := range program.Classes {
+			if class.BuiltinError != "" && function == class.Constructor+1 && program.Functions[function].Name == "builtin_"+class.BuiltinError+"_initialize" {
+				builtin = true
+			}
+		}
+		for _, instruction := range flow.Build(program, function).Instructions {
+			if instruction.At == nil {
+				continue
+			}
+			store, ok := (*instruction.At).(ir.SetProperty)
+			if !ok || store.Site != 0 {
+				continue
+			}
+			receiver, read := store.Object.(ir.Read)
+			namespace := read && receiver.Local >= 0 && receiver.Local < len(program.Locals) && program.Locals[receiver.Local].NamespaceObject && store.Record
+			prefix := builtin && (store.Name == "name" || store.Name == "message") && store.Value.Type() == ir.String
+			if namespace || prefix {
+				counts[runtimeWriteKey{function, store.Name}]++
+			}
+		}
+	}
+	return counts
 }

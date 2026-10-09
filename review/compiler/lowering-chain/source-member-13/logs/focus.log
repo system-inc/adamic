@@ -1,0 +1,1192 @@
+=== RUN   TestDefiniteAssignmentUsesReadiness
+=== PAUSE TestDefiniteAssignmentUsesReadiness
+=== RUN   TestNonNullAssertionLowersToNullishPanic
+=== PAUSE TestNonNullAssertionLowersToNullishPanic
+=== RUN   TestNonNullAssertionOnPresentTypeIsErased
+=== PAUSE TestNonNullAssertionOnPresentTypeIsErased
+=== RUN   TestOptionalWideningSpreadOverwrite
+=== PAUSE TestOptionalWideningSpreadOverwrite
+=== RUN   TestPlaceholderTypedBoundaries
+=== PAUSE TestPlaceholderTypedBoundaries
+=== RUN   TestPlaceholderWeakSlotStaysNotYet
+=== PAUSE TestPlaceholderWeakSlotStaysNotYet
+=== RUN   TestReadinessElisionRequiresDominatingAssignment
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment
+=== CONT  TestDefiniteAssignmentUsesReadiness
+=== CONT  TestPlaceholderTypedBoundaries
+=== RUN   TestPlaceholderTypedBoundaries/assignment-result
+=== PAUSE TestPlaceholderTypedBoundaries/assignment-result
+=== RUN   TestPlaceholderTypedBoundaries/return-assignment
+=== PAUSE TestPlaceholderTypedBoundaries/return-assignment
+=== RUN   TestPlaceholderTypedBoundaries/alias-reset
+=== PAUSE TestPlaceholderTypedBoundaries/alias-reset
+=== RUN   TestPlaceholderTypedBoundaries/argument
+=== PAUSE TestPlaceholderTypedBoundaries/argument
+=== RUN   TestPlaceholderTypedBoundaries/saved-copy
+=== PAUSE TestPlaceholderTypedBoundaries/saved-copy
+=== RUN   TestPlaceholderTypedBoundaries/property
+=== PAUSE TestPlaceholderTypedBoundaries/property
+=== RUN   TestPlaceholderTypedBoundaries/call
+=== PAUSE TestPlaceholderTypedBoundaries/call
+=== RUN   TestPlaceholderTypedBoundaries/return
+=== PAUSE TestPlaceholderTypedBoundaries/return
+=== RUN   TestPlaceholderTypedBoundaries/typed-local
+=== PAUSE TestPlaceholderTypedBoundaries/typed-local
+=== RUN   TestPlaceholderTypedBoundaries/ordinary-field
+=== PAUSE TestPlaceholderTypedBoundaries/ordinary-field
+=== RUN   TestPlaceholderTypedBoundaries/array-element
+=== PAUSE TestPlaceholderTypedBoundaries/array-element
+=== RUN   TestPlaceholderTypedBoundaries/optional-array-element
+=== PAUSE TestPlaceholderTypedBoundaries/optional-array-element
+=== RUN   TestPlaceholderTypedBoundaries/element-write
+=== PAUSE TestPlaceholderTypedBoundaries/element-write
+=== RUN   TestPlaceholderTypedBoundaries/optional-receiver
+=== PAUSE TestPlaceholderTypedBoundaries/optional-receiver
+=== RUN   TestPlaceholderTypedBoundaries/optional-parameter-later-T-use
+=== PAUSE TestPlaceholderTypedBoundaries/optional-parameter-later-T-use
+=== RUN   TestPlaceholderTypedBoundaries/presence
+=== PAUSE TestPlaceholderTypedBoundaries/presence
+=== RUN   TestPlaceholderTypedBoundaries/dominating-write
+=== PAUSE TestPlaceholderTypedBoundaries/dominating-write
+=== RUN   TestPlaceholderTypedBoundaries/saved-after-write
+=== PAUSE TestPlaceholderTypedBoundaries/saved-after-write
+=== RUN   TestPlaceholderTypedBoundaries/placeholder-field-copy
+=== PAUSE TestPlaceholderTypedBoundaries/placeholder-field-copy
+=== CONT  TestPlaceholderTypedBoundaries/assignment-result
+=== CONT  TestPlaceholderTypedBoundaries/array-element
+=== CONT  TestNonNullAssertionOnPresentTypeIsErased
+=== CONT  TestPlaceholderTypedBoundaries/ordinary-field
+=== CONT  TestReadinessElisionRequiresDominatingAssignment
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/finally-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-write
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-write
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-join
+=== RUN   TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== PAUSE TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestPlaceholderWeakSlotStaysNotYet
+=== CONT  TestPlaceholderTypedBoundaries/placeholder-field-copy
+--- PASS: TestNonNullAssertionOnPresentTypeIsErased (0.23s)
+=== CONT  TestPlaceholderTypedBoundaries/saved-after-write
+=== CONT  TestPlaceholderTypedBoundaries/dominating-write
+--- PASS: TestPlaceholderWeakSlotStaysNotYet (0.13s)
+=== CONT  TestPlaceholderTypedBoundaries/presence
+=== CONT  TestPlaceholderTypedBoundaries/optional-parameter-later-T-use
+=== CONT  TestPlaceholderTypedBoundaries/optional-receiver
+=== CONT  TestPlaceholderTypedBoundaries/element-write
+=== CONT  TestPlaceholderTypedBoundaries/optional-array-element
+=== CONT  TestNonNullAssertionLowersToNullishPanic
+=== CONT  TestPlaceholderTypedBoundaries/saved-copy
+--- PASS: TestDefiniteAssignmentUsesReadiness (0.61s)
+=== CONT  TestPlaceholderTypedBoundaries/typed-local
+=== CONT  TestPlaceholderTypedBoundaries/return
+=== CONT  TestPlaceholderTypedBoundaries/call
+=== CONT  TestPlaceholderTypedBoundaries/property
+--- PASS: TestNonNullAssertionLowersToNullishPanic (0.18s)
+=== CONT  TestPlaceholderTypedBoundaries/alias-reset
+=== CONT  TestPlaceholderTypedBoundaries/argument
+=== CONT  TestOptionalWideningSpreadOverwrite
+=== CONT  TestPlaceholderTypedBoundaries/return-assignment
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/branch-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-missing-join
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-join
+--- PASS: TestOptionalWideningSpreadOverwrite (0.16s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/field-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/finally-write
+--- PASS: TestPlaceholderTypedBoundaries (0.00s)
+    --- PASS: TestPlaceholderTypedBoundaries/array-element (0.22s)
+    --- PASS: TestPlaceholderTypedBoundaries/assignment-result (0.22s)
+    --- PASS: TestPlaceholderTypedBoundaries/ordinary-field (0.23s)
+    --- PASS: TestPlaceholderTypedBoundaries/saved-after-write (0.21s)
+    --- PASS: TestPlaceholderTypedBoundaries/dominating-write (0.22s)
+    --- PASS: TestPlaceholderTypedBoundaries/presence (0.14s)
+    --- PASS: TestPlaceholderTypedBoundaries/placeholder-field-copy (0.28s)
+    --- PASS: TestPlaceholderTypedBoundaries/element-write (0.03s)
+    --- PASS: TestPlaceholderTypedBoundaries/optional-parameter-later-T-use (0.16s)
+    --- PASS: TestPlaceholderTypedBoundaries/optional-receiver (0.16s)
+    --- PASS: TestPlaceholderTypedBoundaries/return (0.08s)
+    --- PASS: TestPlaceholderTypedBoundaries/optional-array-element (0.20s)
+    --- PASS: TestPlaceholderTypedBoundaries/saved-copy (0.14s)
+    --- PASS: TestPlaceholderTypedBoundaries/typed-local (0.19s)
+    --- PASS: TestPlaceholderTypedBoundaries/call (0.19s)
+    --- PASS: TestPlaceholderTypedBoundaries/alias-reset (0.20s)
+    --- PASS: TestPlaceholderTypedBoundaries/property (0.22s)
+    --- PASS: TestPlaceholderTypedBoundaries/argument (0.17s)
+    --- PASS: TestPlaceholderTypedBoundaries/return-assignment (0.16s)
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/catch-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/throw-before-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-read
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/captured-write
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/do-loop
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/loop-body
+=== CONT  TestReadinessElisionRequiresDominatingAssignment/zero-iteration
+--- PASS: TestReadinessElisionRequiresDominatingAssignment (0.00s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/branch-join (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-missing-join (0.18s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-write (0.14s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/field-join (0.18s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/catch-write (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/finally-write (0.15s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-read (0.09s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/captured-write (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/throw-before-write (0.14s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/do-loop (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/loop-body (0.12s)
+    --- PASS: TestReadinessElisionRequiresDominatingAssignment/zero-iteration (0.13s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.353s
+=== RUN   TestEntriesRuntimeReadiness
+=== PAUSE TestEntriesRuntimeReadiness
+=== RUN   TestFieldReadinessRepresentation
+=== PAUSE TestFieldReadinessRepresentation
+=== RUN   TestModuleNamespaceReadinessMutants
+=== RUN   TestModuleNamespaceReadinessMutants/early
+    module_namespace_reads_test.go:57: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    module_namespace_reads_test.go:75: gate cache node miss
+    module_namespace_reads_test.go:79: native treat reaching read as initialized: caught by Node exit 70; mutant exit 0
+    module_namespace_reads_test.go:79: javascript treat reaching read as initialized: caught by Node exit 70; mutant exit 0
+=== RUN   TestModuleNamespaceReadinessMutants/direct_early
+    module_namespace_reads_test.go:57: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+    module_namespace_reads_test.go:75: gate cache node miss
+    module_namespace_reads_test.go:79: native treat reaching read as initialized: caught by Node exit 70; mutant exit 0
+    module_namespace_reads_test.go:79: javascript treat reaching read as initialized: caught by Node exit 70; mutant exit 0
+--- PASS: TestModuleNamespaceReadinessMutants (2.34s)
+    --- PASS: TestModuleNamespaceReadinessMutants/early (1.46s)
+    --- PASS: TestModuleNamespaceReadinessMutants/direct_early (0.88s)
+=== RUN   TestCheckedNonNullTypeScript
+=== PAUSE TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullAdamicRefusal
+=== PAUSE TestCheckedNonNullAdamicRefusal
+=== RUN   TestCheckedNonNullCounts
+=== PAUSE TestCheckedNonNullCounts
+=== RUN   TestImpossibleNonNullFixturesAreRefused
+=== PAUSE TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused
+=== PAUSE TestPossibleNonNullAdamicAssertionsAreRefused
+=== RUN   TestLiteralDefaultPlaceholderAgreesWithNode
+=== PAUSE TestLiteralDefaultPlaceholderAgreesWithNode
+=== RUN   TestMigratedNonNullFixturesRemainCovered
+=== PAUSE TestMigratedNonNullFixturesRemainCovered
+=== RUN   TestNonNullLiteralUnionInitializers
+=== PAUSE TestNonNullLiteralUnionInitializers
+=== RUN   TestParserNonNullSourceExtension
+=== PAUSE TestParserNonNullSourceExtension
+=== RUN   TestNonNullAdamicRefusal
+=== PAUSE TestNonNullAdamicRefusal
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestPlaceholderUseChecks
+=== PAUSE TestPlaceholderUseChecks
+=== RUN   TestPlaceholderNonliteralAssertionStillChecks
+=== PAUSE TestPlaceholderNonliteralAssertionStillChecks
+=== RUN   TestPlaceholderFlowMutants
+=== PAUSE TestPlaceholderFlowMutants
+=== RUN   TestPlaceholderNullTagMutant
+=== PAUSE TestPlaceholderNullTagMutant
+=== RUN   TestPlaceholderSpreadReadinessMutant
+=== PAUSE TestPlaceholderSpreadReadinessMutant
+=== RUN   TestReadinessMutants
+=== PAUSE TestReadinessMutants
+=== RUN   TestUninitializedIsNotNullishMutant
+=== PAUSE TestUninitializedIsNotNullishMutant
+=== RUN   TestNonNullWeakFreedNamesExpression
+=== PAUSE TestNonNullWeakFreedNamesExpression
+=== RUN   TestNarrowedFieldUsesSharedReadiness
+=== PAUSE TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestViewFieldInheritedStaticReadiness
+=== PAUSE TestViewFieldInheritedStaticReadiness
+=== CONT  TestEntriesRuntimeReadiness
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestPossibleNonNullAdamicAssertionsAreRefused
+=== CONT  TestNonNullAdamicRefusal
+=== CONT  TestParserNonNullSourceExtension
+=== RUN   TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== PAUSE TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== RUN   TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== PAUSE TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+=== CONT  TestNonNullLiteralUnionInitializers
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/read
+=== RUN   TestNonNullLiteralUnionInitializers/undefined
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:124: gate cache node miss
+=== CONT  TestMigratedNonNullFixturesRemainCovered
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/every_alias.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/overload_every.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/parser_every_result.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_array.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_boolean.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_capture.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_catch.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_field.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_local.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_field.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_initialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_default.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_field.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_initialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_read.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_static.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_assignment.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_return.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_statement.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_map.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_null.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_initialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_uninitialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_append.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_capture.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_catch.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_const.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_default.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_exception.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_field.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_interface.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_iteration.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_loop.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_map_entry.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_optional.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_spread.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_union.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak_freed.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-boxed-write.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-read-before-set.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-staged.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier-uninitialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number-uninitialized.ts
+=== RUN   TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number.ts
+--- PASS: TestMigratedNonNullFixturesRemainCovered (0.01s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/every_alias.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/overload_every.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/lower/testdata/predicates/parser_every_result.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_array.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_boolean.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_capture.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_catch.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_field.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_definite_local.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_field.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_initialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_default.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_field.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_initialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_read.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_lazy_static.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_assignment.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_return.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_literal_statement.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_map.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_null.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_initialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_static_uninitialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_append.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_capture.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_catch.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_const.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_default.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_exception.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_field.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_interface.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_iteration.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_loop.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_map_entry.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_optional.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_uninitialized_spread.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_union.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/internal/oracle/testdata/non_null_weak_freed.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/fixtures/nested-functions/09_checker_constituent_recursion.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-boxed-write.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-read-before-set.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/default-staged.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier-uninitialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-identifier.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number-uninitialized.ts (0.00s)
+    --- PASS: TestMigratedNonNullFixturesRemainCovered/stage3/interface-downcasts/readiness-number.ts (0.00s)
+=== CONT  TestLiteralDefaultPlaceholderAgreesWithNode
+=== NAME  TestNonNullLiteralUnionInitializers/undefined
+    non_null_migration_test.go:76: gate cache node miss
+=== RUN   TestPossibleNonNullAdamicAssertionsAreRefused/typeerror
+=== NAME  TestParserNonNullSourceExtension
+    non_null_parser_test.go:31: gate cache node miss
+=== NAME  TestLiteralDefaultPlaceholderAgreesWithNode
+    non_null_impossible_test.go:108: gate cache node miss
+--- PASS: TestPossibleNonNullAdamicAssertionsAreRefused (0.37s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/read (0.21s)
+    --- PASS: TestPossibleNonNullAdamicAssertionsAreRefused/typeerror (0.11s)
+=== CONT  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:214: gate cache node miss
+=== NAME  TestNonNullLiteralUnionInitializers/undefined
+    non_null_migration_test.go:78: gate cache node miss
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:127: gate cache node miss
+=== NAME  TestLiteralDefaultPlaceholderAgreesWithNode
+    non_null_impossible_test.go:110: gate cache node miss
+=== RUN   TestNonNullLiteralUnionInitializers/null
+=== NAME  TestParserNonNullSourceExtension
+    non_null_parser_test.go:36: gate cache node miss
+--- PASS: TestLiteralDefaultPlaceholderAgreesWithNode (0.89s)
+=== CONT  TestViewFieldInheritedStaticReadiness
+=== NAME  TestNonNullLiteralUnionInitializers/null
+    non_null_migration_test.go:76: gate cache node miss
+=== NAME  TestViewFieldInheritedStaticReadiness
+    view_fields_test.go:171: gate cache node miss
+=== NAME  TestEntriesRuntimeReadiness
+    entries_provenance_test.go:137: gate cache node miss
+    entries_provenance_test.go:145: unchecked readiness primitive mutant caught by pinned exit/message in both backends
+--- PASS: TestEntriesRuntimeReadiness (1.31s)
+=== CONT  TestNarrowedFieldUsesSharedReadiness
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier
+=== RUN   TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number
+=== RUN   TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== PAUSE TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== CONT  TestNonNullWeakFreedNamesExpression
+    readiness_test.go:256: gate cache node miss
+=== NAME  TestParserNonNullSourceExtension
+    non_null_parser_test.go:54: gate cache node miss
+=== NAME  TestNonNullWeakFreedNamesExpression
+    readiness_test.go:256: gate cache node miss
+=== NAME  TestParserNonNullSourceExtension
+    non_null_parser_test.go:59: parser indexed-value mutant caught by Node stdout in both backends
+--- PASS: TestParserNonNullSourceExtension (1.66s)
+=== CONT  TestUninitializedIsNotNullishMutant
+    readiness_test.go:181: gate cache node miss
+=== NAME  TestNonNullLiteralUnionInitializers/null
+    non_null_migration_test.go:78: gate cache node miss
+=== NAME  TestViewFieldInheritedStaticReadiness
+    view_fields_test.go:173: gate cache node miss
+--- PASS: TestNonNullLiteralUnionInitializers (1.85s)
+    --- PASS: TestNonNullLiteralUnionInitializers/undefined (0.94s)
+    --- PASS: TestNonNullLiteralUnionInitializers/null (0.89s)
+=== CONT  TestReadinessMutants
+=== RUN   TestReadinessMutants/replace-unset-check-with-zero
+=== PAUSE TestReadinessMutants/replace-unset-check-with-zero
+=== RUN   TestReadinessMutants/erase-without-proof
+=== PAUSE TestReadinessMutants/erase-without-proof
+=== RUN   TestReadinessMutants/initialize-to-zero
+=== PAUSE TestReadinessMutants/initialize-to-zero
+=== RUN   TestReadinessMutants/miss-captured-read
+=== PAUSE TestReadinessMutants/miss-captured-read
+=== RUN   TestReadinessMutants/miss-exception-path
+=== PAUSE TestReadinessMutants/miss-exception-path
+=== RUN   TestReadinessMutants/replace-missing-assertion-with-empty
+=== PAUSE TestReadinessMutants/replace-missing-assertion-with-empty
+=== RUN   TestReadinessMutants/weak-generic-message
+=== PAUSE TestReadinessMutants/weak-generic-message
+=== CONT  TestCheckedNonNullAdamicRefusal
+--- PASS: TestCheckedNonNullAdamicRefusal (0.07s)
+=== CONT  TestImpossibleNonNullFixturesAreRefused
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== RUN   TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== PAUSE TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== CONT  TestCheckedNonNullCounts
+--- PASS: TestViewFieldInheritedStaticReadiness (0.93s)
+=== CONT  TestCheckedNonNullTypeScript
+=== RUN   TestCheckedNonNullTypeScript/narrowed
+=== PAUSE TestCheckedNonNullTypeScript/narrowed
+=== RUN   TestCheckedNonNullTypeScript/present
+=== PAUSE TestCheckedNonNullTypeScript/present
+=== RUN   TestCheckedNonNullTypeScript/undefined
+=== PAUSE TestCheckedNonNullTypeScript/undefined
+=== RUN   TestCheckedNonNullTypeScript/null
+=== PAUSE TestCheckedNonNullTypeScript/null
+=== RUN   TestCheckedNonNullTypeScript/initializer
+=== PAUSE TestCheckedNonNullTypeScript/initializer
+=== RUN   TestCheckedNonNullTypeScript/let_initializer
+=== PAUSE TestCheckedNonNullTypeScript/let_initializer
+=== CONT  TestPlaceholderNonliteralAssertionStillChecks
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:160: gate cache native miss
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    placeholder_nonnull_test.go:92: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:160: gate cache native miss
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_present.ts | 2 | 2 | 0 | 2 | 1 | 0 |
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:245: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:160: gate cache native miss
+=== NAME  TestPlaceholderNonliteralAssertionStillChecks
+    placeholder_nonnull_test.go:97: gate cache node miss
+=== NAME  TestPlaceholderSpreadReadinessMutant
+    placeholder_nonnull_test.go:249: copy readiness mutant caught by Node exit 0: native and JavaScript exit 70
+--- PASS: TestPlaceholderSpreadReadinessMutant (2.39s)
+=== CONT  TestPlaceholderNullTagMutant
+--- PASS: TestPlaceholderNonliteralAssertionStillChecks (0.81s)
+=== CONT  TestPlaceholderFlowMutants
+=== RUN   TestPlaceholderFlowMutants/before_use
+=== PAUSE TestPlaceholderFlowMutants/before_use
+=== RUN   TestPlaceholderFlowMutants/saved_leak
+=== PAUSE TestPlaceholderFlowMutants/saved_leak
+=== RUN   TestPlaceholderFlowMutants/null_before_use
+=== PAUSE TestPlaceholderFlowMutants/null_before_use
+=== RUN   TestPlaceholderFlowMutants/null_saved_leak
+=== PAUSE TestPlaceholderFlowMutants/null_saved_leak
+=== RUN   TestPlaceholderFlowMutants/assignment_result
+=== PAUSE TestPlaceholderFlowMutants/assignment_result
+=== RUN   TestPlaceholderFlowMutants/return_assignment
+=== PAUSE TestPlaceholderFlowMutants/return_assignment
+=== RUN   TestPlaceholderFlowMutants/alias_reset
+=== PAUSE TestPlaceholderFlowMutants/alias_reset
+=== CONT  TestPlaceholderUseChecks
+=== RUN   TestPlaceholderUseChecks/before_use
+=== PAUSE TestPlaceholderUseChecks/before_use
+=== RUN   TestPlaceholderUseChecks/saved_leak
+=== PAUSE TestPlaceholderUseChecks/saved_leak
+=== RUN   TestPlaceholderUseChecks/null_before_use
+=== PAUSE TestPlaceholderUseChecks/null_before_use
+=== RUN   TestPlaceholderUseChecks/null_saved_leak
+=== PAUSE TestPlaceholderUseChecks/null_saved_leak
+=== RUN   TestPlaceholderUseChecks/assignment_result
+=== PAUSE TestPlaceholderUseChecks/assignment_result
+=== RUN   TestPlaceholderUseChecks/return_assignment
+=== PAUSE TestPlaceholderUseChecks/return_assignment
+=== RUN   TestPlaceholderUseChecks/alias_reset
+=== PAUSE TestPlaceholderUseChecks/alias_reset
+=== CONT  TestFieldReadinessRepresentation
+    field_readiness_test.go:23: gate cache node miss
+=== NAME  TestNonNullWeakFreedNamesExpression
+    readiness_test.go:282: freed Weak diagnostic mutant caught: adamic: panic: a weak reference was read after what it pointed to was freed
+--- PASS: TestNonNullWeakFreedNamesExpression (1.55s)
+=== CONT  TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:171: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:160: gate cache native miss
+=== CONT  TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a
+--- PASS: TestNonNullAdamicRefusal (0.02s)
+    --- PASS: TestNonNullAdamicRefusal/stage3/census/repro/r05/main.a (0.13s)
+    --- PASS: TestNonNullAdamicRefusal/internal/oracle/testdata/non_null_refused/initialized.a (0.11s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+    non_null_checked_test.go:160: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestUninitializedIsNotNullishMutant
+    readiness_test.go:207: ordinary-nullish initializer mutant caught by Node output: adamic: panic: non-null assertion failed: undefined! is null or undefined
+--- PASS: TestUninitializedIsNotNullishMutant (1.74s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:753: gate cache node hit
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:160: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestFieldReadinessRepresentation
+    field_readiness_test.go:43: drop field check mutant caught by pinned exit and message
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:161: | internal/oracle/testdata/non_null_checked_let_initializer.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestFieldReadinessRepresentation
+    field_readiness_test.go:23: gate cache node miss
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:190: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:168: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestPlaceholderNullTagMutant
+    placeholder_nonnull_test.go:200: null collapsed to undefined caught by Node: stdout "false|true|true|false\nfalse|true\nfalse|false\n"
+--- PASS: TestPlaceholderNullTagMutant (1.30s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:169: | internal/oracle/testdata/non_null_refuse_undefined.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:168: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+    oracle_test.go:753: gate cache node miss
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestCheckedNonNullCounts
+    non_null_checked_test.go:169: | internal/oracle/testdata/non_null_refuse_null.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+--- PASS: TestCheckedNonNullCounts (2.49s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+    oracle_test.go:753: gate cache node miss
+--- PASS: TestFieldReadinessRepresentation (1.75s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+    oracle_test.go:753: gate cache node hit
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+    oracle_test.go:596: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:753: gate cache node miss
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+    oracle_test.go:596: gate cache native miss
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:140: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number
+    view_fields_test.go:140: gate cache node miss
+=== CONT  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a
+    oracle_test.go:589: gate cache native miss
+=== CONT  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number
+    view_fields_test.go:152: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNarrowedFieldUsesSharedReadiness/number-uninitialized
+    view_fields_test.go:152: gate cache node miss
+=== CONT  TestReadinessMutants/replace-unset-check-with-zero
+=== CONT  TestReadinessMutants/miss-exception-path
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier
+    view_fields_test.go:152: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_scanner.a (1.07s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a (1.32s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_coalesce.a (1.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_optional.a (1.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_typeof.a (1.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_truthiness.a (0.98s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_loose.a (1.19s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_equality.a (1.04s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_local.a (1.12s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_saved_leak.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_field.a (1.51s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_observe.a (1.78s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_alias_reset.a (1.20s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_assignment_result.a (0.93s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_saved_leak.a (0.87s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_return_assignment.a (1.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_before_use.a (0.97s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_before_use.a (0.99s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_json.a (1.22s)
+=== CONT  TestReadinessMutants/weak-generic-message
+=== CONT  TestReadinessMutants/replace-missing-assertion-with-empty
+=== NAME  TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized
+    view_fields_test.go:152: gate cache node miss
+--- PASS: TestNarrowedFieldUsesSharedReadiness (0.00s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number (0.85s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/number-uninitialized (0.69s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier (1.08s)
+    --- PASS: TestNarrowedFieldUsesSharedReadiness/identifier-uninitialized (0.62s)
+=== CONT  TestReadinessMutants/initialize-to-zero
+=== NAME  TestReadinessMutants/weak-generic-message
+    readiness_test.go:44: gate cache node miss
+=== NAME  TestReadinessMutants/replace-missing-assertion-with-empty
+    readiness_test.go:44: gate cache node miss
+=== NAME  TestReadinessMutants/replace-unset-check-with-zero
+    readiness_test.go:56: gate cache node miss
+=== NAME  TestReadinessMutants/miss-exception-path
+    readiness_test.go:56: gate cache node miss
+=== NAME  TestReadinessMutants/initialize-to-zero
+    readiness_test.go:56: gate cache node hit
+=== NAME  TestReadinessMutants/replace-missing-assertion-with-empty
+    readiness_test.go:44: gate cache node miss
+=== NAME  TestReadinessMutants/weak-generic-message
+    readiness_test.go:44: gate cache node miss
+=== NAME  TestReadinessMutants/replace-unset-check-with-zero
+    readiness_test.go:166: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestReadinessMutants/miss-captured-read
+=== NAME  TestReadinessMutants/miss-exception-path
+    readiness_test.go:166: caught by pinned output: exit 0 stdout "caught\n0\n" stderr ""
+=== CONT  TestReadinessMutants/erase-without-proof
+=== NAME  TestReadinessMutants/initialize-to-zero
+    readiness_test.go:166: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a
+=== NAME  TestReadinessMutants/replace-missing-assertion-with-empty
+    readiness_test.go:44: drop-check mutant caught for non_null_lazy_read.ts: stdout "before\n\n"
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a
+=== NAME  TestReadinessMutants/weak-generic-message
+    readiness_test.go:44: drop-check mutant caught for non_null_weak.ts: stdout "before\ntrue\n"
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a
+=== NAME  TestReadinessMutants/miss-captured-read
+    readiness_test.go:56: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+    non_null_impossible_test.go:51: gate cache node miss
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+=== CONT  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a
+=== NAME  TestReadinessMutants/erase-without-proof
+    readiness_test.go:56: gate cache node miss
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+    non_null_impossible_test.go:51: gate cache node miss
+=== CONT  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestReadinessMutants/erase-without-proof
+    readiness_test.go:166: caught by pinned output: exit 0 stdout "0\n" stderr ""
+=== CONT  TestCheckedNonNullTypeScript/null
+=== NAME  TestReadinessMutants/miss-captured-read
+    readiness_test.go:166: caught by pinned output: exit 0 stdout "before\n0\n" stderr ""
+--- PASS: TestReadinessMutants (0.00s)
+    --- PASS: TestReadinessMutants/replace-unset-check-with-zero (1.11s)
+    --- PASS: TestReadinessMutants/miss-exception-path (1.07s)
+    --- PASS: TestReadinessMutants/initialize-to-zero (1.00s)
+    --- PASS: TestReadinessMutants/replace-missing-assertion-with-empty (1.12s)
+    --- PASS: TestReadinessMutants/weak-generic-message (1.28s)
+    --- PASS: TestReadinessMutants/erase-without-proof (0.97s)
+    --- PASS: TestReadinessMutants/miss-captured-read (1.08s)
+=== CONT  TestCheckedNonNullTypeScript/let_initializer
+=== NAME  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts
+    non_null_impossible_test.go:56: gate cache node miss
+=== NAME  TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts
+    non_null_impossible_test.go:56: gate cache node miss
+=== CONT  TestCheckedNonNullTypeScript/initializer
+--- PASS: TestImpossibleNonNullFixturesAreRefused (0.00s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_expression.a (0.12s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_element.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_conditional.a (0.08s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_spread.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_logical.a (0.10s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_comparison.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_return.a (0.11s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_argument.a (0.09s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.a (0.07s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_undefined.ts (0.84s)
+    --- PASS: TestImpossibleNonNullFixturesAreRefused/non_null_refuse_null.ts (0.99s)
+=== CONT  TestCheckedNonNullTypeScript/undefined
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/initializer
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:45: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/narrowed
+    non_null_checked_test.go:132: look-through mutant caught before either backend: union return where number is required
+=== CONT  TestCheckedNonNullTypeScript/present
+=== NAME  TestCheckedNonNullTypeScript/null
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:45: gate cache node miss
+=== CONT  TestPlaceholderFlowMutants/before_use
+=== NAME  TestCheckedNonNullTypeScript/let_initializer
+    non_null_checked_test.go:73: gate cache node miss
+=== CONT  TestPlaceholderUseChecks/before_use
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== CONT  TestPlaceholderFlowMutants/alias_reset
+=== NAME  TestCheckedNonNullTypeScript/initializer
+    non_null_checked_test.go:73: gate cache node miss
+=== NAME  TestPlaceholderFlowMutants/before_use
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:73: gate cache node miss
+=== CONT  TestPlaceholderFlowMutants/return_assignment
+=== NAME  TestCheckedNonNullTypeScript/present
+    non_null_checked_test.go:73: gate cache node miss
+=== CONT  TestPlaceholderFlowMutants/assignment_result
+=== NAME  TestPlaceholderFlowMutants/alias_reset
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/before_use
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestCheckedNonNullTypeScript/undefined
+    non_null_checked_test.go:97: no-check mutant caught: stdout "before\ntrue\n" exit 0
+=== CONT  TestPlaceholderFlowMutants/null_saved_leak
+--- PASS: TestCheckedNonNullTypeScript (0.00s)
+    --- PASS: TestCheckedNonNullTypeScript/narrowed (0.93s)
+    --- PASS: TestCheckedNonNullTypeScript/null (0.78s)
+    --- PASS: TestCheckedNonNullTypeScript/let_initializer (0.86s)
+    --- PASS: TestCheckedNonNullTypeScript/initializer (0.92s)
+    --- PASS: TestCheckedNonNullTypeScript/present (0.85s)
+    --- PASS: TestCheckedNonNullTypeScript/undefined (1.36s)
+=== NAME  TestPlaceholderFlowMutants/before_use
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "before\nunset\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderFlowMutants/null_before_use
+=== NAME  TestPlaceholderFlowMutants/return_assignment
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/assignment_result
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/alias_reset
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderFlowMutants/return_assignment
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderFlowMutants/alias_reset
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderFlowMutants/saved_leak
+=== NAME  TestPlaceholderFlowMutants/null_before_use
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/null_saved_leak
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/return_assignment
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/alias_reset
+=== NAME  TestPlaceholderFlowMutants/assignment_result
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderUseChecks/alias_reset
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== CONT  TestPlaceholderUseChecks/return_assignment
+=== NAME  TestPlaceholderFlowMutants/null_saved_leak
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderFlowMutants/assignment_result
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/assignment_result
+=== NAME  TestPlaceholderUseChecks/return_assignment
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== CONT  TestPlaceholderUseChecks/null_saved_leak
+=== NAME  TestPlaceholderFlowMutants/saved_leak
+    placeholder_nonnull_test.go:142: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/null_before_use
+    placeholder_nonnull_test.go:144: gate cache node miss
+=== NAME  TestPlaceholderUseChecks/assignment_result
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== CONT  TestPlaceholderUseChecks/null_before_use
+=== NAME  TestPlaceholderUseChecks/null_saved_leak
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== NAME  TestPlaceholderFlowMutants/null_saved_leak
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "present\n"; caught by baseline exit 70
+=== CONT  TestPlaceholderUseChecks/saved_leak
+=== NAME  TestPlaceholderFlowMutants/null_before_use
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "before\nset\n"; caught by baseline exit 70
+=== NAME  TestPlaceholderUseChecks/null_before_use
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+=== NAME  TestPlaceholderUseChecks/saved_leak
+    placeholder_nonnull_test.go:50: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    placeholder_nonnull_test.go:55: gate cache node hit
+--- PASS: TestPlaceholderUseChecks (0.00s)
+    --- PASS: TestPlaceholderUseChecks/before_use (0.09s)
+    --- PASS: TestPlaceholderUseChecks/alias_reset (0.13s)
+    --- PASS: TestPlaceholderUseChecks/return_assignment (0.14s)
+    --- PASS: TestPlaceholderUseChecks/assignment_result (0.09s)
+    --- PASS: TestPlaceholderUseChecks/null_saved_leak (0.11s)
+    --- PASS: TestPlaceholderUseChecks/null_before_use (0.09s)
+    --- PASS: TestPlaceholderUseChecks/saved_leak (0.06s)
+=== NAME  TestPlaceholderFlowMutants/saved_leak
+    placeholder_nonnull_test.go:144: gate cache node miss
+    placeholder_nonnull_test.go:155: drop flow check lets unset through: exit 0 stdout "missing\n"; caught by baseline exit 70
+--- PASS: TestPlaceholderFlowMutants (0.00s)
+    --- PASS: TestPlaceholderFlowMutants/before_use (1.00s)
+    --- PASS: TestPlaceholderFlowMutants/alias_reset (1.16s)
+    --- PASS: TestPlaceholderFlowMutants/return_assignment (1.04s)
+    --- PASS: TestPlaceholderFlowMutants/assignment_result (1.12s)
+    --- PASS: TestPlaceholderFlowMutants/null_saved_leak (0.95s)
+    --- PASS: TestPlaceholderFlowMutants/null_before_use (0.98s)
+    --- PASS: TestPlaceholderFlowMutants/saved_leak (0.75s)
+PASS
+gate cache: native hits=19 misses=49
+gate cache: node hits=24 misses=102
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	16.190s
+=== RUN   TestPlaceholderExplainChecksOutput
+=== PAUSE TestPlaceholderExplainChecksOutput
+=== RUN   TestNonNullExplainChecks
+=== PAUSE TestNonNullExplainChecks
+=== CONT  TestPlaceholderExplainChecksOutput
+=== RUN   TestPlaceholderExplainChecksOutput/c
+=== PAUSE TestPlaceholderExplainChecksOutput/c
+=== CONT  TestNonNullExplainChecks
+=== RUN   TestPlaceholderExplainChecksOutput/js
+=== PAUSE TestPlaceholderExplainChecksOutput/js
+=== RUN   TestNonNullExplainChecks/narrowed
+=== PAUSE TestNonNullExplainChecks/narrowed
+=== RUN   TestNonNullExplainChecks/present
+=== PAUSE TestNonNullExplainChecks/present
+=== RUN   TestNonNullExplainChecks/undefined
+=== PAUSE TestNonNullExplainChecks/undefined
+=== RUN   TestNonNullExplainChecks/null
+=== PAUSE TestNonNullExplainChecks/null
+=== RUN   TestPlaceholderExplainChecksOutput/build
+=== PAUSE TestPlaceholderExplainChecksOutput/build
+=== CONT  TestPlaceholderExplainChecksOutput/c
+=== CONT  TestPlaceholderExplainChecksOutput/build
+=== CONT  TestPlaceholderExplainChecksOutput/js
+=== RUN   TestNonNullExplainChecks/initializer
+=== PAUSE TestNonNullExplainChecks/initializer
+=== RUN   TestNonNullExplainChecks/let_initializer
+=== PAUSE TestNonNullExplainChecks/let_initializer
+=== RUN   TestNonNullExplainChecks/refuse_undefined
+=== PAUSE TestNonNullExplainChecks/refuse_undefined
+=== RUN   TestNonNullExplainChecks/refuse_null
+=== PAUSE TestNonNullExplainChecks/refuse_null
+=== CONT  TestNonNullExplainChecks/narrowed
+=== RUN   TestNonNullExplainChecks/narrowed/c
+=== PAUSE TestNonNullExplainChecks/narrowed/c
+=== RUN   TestNonNullExplainChecks/narrowed/js
+=== PAUSE TestNonNullExplainChecks/narrowed/js
+=== RUN   TestNonNullExplainChecks/narrowed/build
+=== PAUSE TestNonNullExplainChecks/narrowed/build
+=== CONT  TestNonNullExplainChecks/narrowed/c
+=== CONT  TestNonNullExplainChecks/null
+=== RUN   TestNonNullExplainChecks/null/c
+=== PAUSE TestNonNullExplainChecks/null/c
+=== RUN   TestNonNullExplainChecks/null/js
+=== PAUSE TestNonNullExplainChecks/null/js
+=== RUN   TestNonNullExplainChecks/null/build
+=== PAUSE TestNonNullExplainChecks/null/build
+=== CONT  TestNonNullExplainChecks/refuse_undefined
+=== RUN   TestNonNullExplainChecks/refuse_undefined/c
+=== PAUSE TestNonNullExplainChecks/refuse_undefined/c
+=== RUN   TestNonNullExplainChecks/refuse_undefined/js
+=== PAUSE TestNonNullExplainChecks/refuse_undefined/js
+=== RUN   TestNonNullExplainChecks/refuse_undefined/build
+=== PAUSE TestNonNullExplainChecks/refuse_undefined/build
+=== CONT  TestNonNullExplainChecks/refuse_null
+=== RUN   TestNonNullExplainChecks/refuse_null/c
+=== PAUSE TestNonNullExplainChecks/refuse_null/c
+=== RUN   TestNonNullExplainChecks/refuse_null/js
+=== PAUSE TestNonNullExplainChecks/refuse_null/js
+=== RUN   TestNonNullExplainChecks/refuse_null/build
+=== PAUSE TestNonNullExplainChecks/refuse_null/build
+=== CONT  TestNonNullExplainChecks/present
+=== RUN   TestNonNullExplainChecks/present/c
+=== PAUSE TestNonNullExplainChecks/present/c
+=== RUN   TestNonNullExplainChecks/present/js
+=== PAUSE TestNonNullExplainChecks/present/js
+=== RUN   TestNonNullExplainChecks/present/build
+=== PAUSE TestNonNullExplainChecks/present/build
+=== CONT  TestNonNullExplainChecks/undefined
+=== RUN   TestNonNullExplainChecks/undefined/c
+=== PAUSE TestNonNullExplainChecks/undefined/c
+=== RUN   TestNonNullExplainChecks/undefined/js
+=== PAUSE TestNonNullExplainChecks/undefined/js
+=== RUN   TestNonNullExplainChecks/undefined/build
+=== PAUSE TestNonNullExplainChecks/undefined/build
+=== CONT  TestNonNullExplainChecks/narrowed/build
+=== CONT  TestNonNullExplainChecks/narrowed/js
+=== CONT  TestNonNullExplainChecks/let_initializer
+=== RUN   TestNonNullExplainChecks/let_initializer/c
+=== PAUSE TestNonNullExplainChecks/let_initializer/c
+=== RUN   TestNonNullExplainChecks/let_initializer/js
+=== PAUSE TestNonNullExplainChecks/let_initializer/js
+=== RUN   TestNonNullExplainChecks/let_initializer/build
+=== PAUSE TestNonNullExplainChecks/let_initializer/build
+=== CONT  TestNonNullExplainChecks/initializer
+=== RUN   TestNonNullExplainChecks/initializer/c
+=== PAUSE TestNonNullExplainChecks/initializer/c
+=== RUN   TestNonNullExplainChecks/initializer/js
+=== PAUSE TestNonNullExplainChecks/initializer/js
+=== RUN   TestNonNullExplainChecks/initializer/build
+=== PAUSE TestNonNullExplainChecks/initializer/build
+=== CONT  TestNonNullExplainChecks/null/c
+=== CONT  TestNonNullExplainChecks/refuse_undefined/c
+=== CONT  TestNonNullExplainChecks/null/build
+=== CONT  TestNonNullExplainChecks/null/js
+=== CONT  TestNonNullExplainChecks/refuse_null/c
+=== CONT  TestNonNullExplainChecks/refuse_undefined/build
+=== CONT  TestNonNullExplainChecks/refuse_undefined/js
+--- PASS: TestPlaceholderExplainChecksOutput (0.00s)
+    --- PASS: TestPlaceholderExplainChecksOutput/c (0.08s)
+    --- PASS: TestPlaceholderExplainChecksOutput/js (0.12s)
+    --- PASS: TestPlaceholderExplainChecksOutput/build (0.62s)
+=== CONT  TestNonNullExplainChecks/present/c
+=== CONT  TestNonNullExplainChecks/refuse_null/build
+=== CONT  TestNonNullExplainChecks/refuse_null/js
+=== CONT  TestNonNullExplainChecks/undefined/c
+=== CONT  TestNonNullExplainChecks/present/build
+=== CONT  TestNonNullExplainChecks/present/js
+=== CONT  TestNonNullExplainChecks/undefined/build
+=== CONT  TestNonNullExplainChecks/undefined/js
+=== CONT  TestNonNullExplainChecks/let_initializer/c
+=== CONT  TestNonNullExplainChecks/let_initializer/build
+=== CONT  TestNonNullExplainChecks/let_initializer/js
+=== CONT  TestNonNullExplainChecks/initializer/c
+=== CONT  TestNonNullExplainChecks/initializer/build
+=== CONT  TestNonNullExplainChecks/initializer/js
+--- PASS: TestNonNullExplainChecks (0.00s)
+    --- PASS: TestNonNullExplainChecks/narrowed (0.00s)
+        --- PASS: TestNonNullExplainChecks/narrowed/c (0.13s)
+        --- PASS: TestNonNullExplainChecks/narrowed/js (0.13s)
+        --- PASS: TestNonNullExplainChecks/narrowed/build (14.55s)
+    --- PASS: TestNonNullExplainChecks/null (0.00s)
+        --- PASS: TestNonNullExplainChecks/null/c (0.19s)
+        --- PASS: TestNonNullExplainChecks/null/js (0.16s)
+        --- PASS: TestNonNullExplainChecks/null/build (14.73s)
+    --- PASS: TestNonNullExplainChecks/refuse_null (0.00s)
+        --- PASS: TestNonNullExplainChecks/refuse_null/c (0.20s)
+        --- PASS: TestNonNullExplainChecks/refuse_null/js (0.15s)
+        --- PASS: TestNonNullExplainChecks/refuse_null/build (14.80s)
+    --- PASS: TestNonNullExplainChecks/refuse_undefined (0.00s)
+        --- PASS: TestNonNullExplainChecks/refuse_undefined/c (0.18s)
+        --- PASS: TestNonNullExplainChecks/refuse_undefined/js (0.15s)
+        --- PASS: TestNonNullExplainChecks/refuse_undefined/build (15.04s)
+    --- PASS: TestNonNullExplainChecks/present (0.00s)
+        --- PASS: TestNonNullExplainChecks/present/c (0.18s)
+        --- PASS: TestNonNullExplainChecks/present/js (0.22s)
+        --- PASS: TestNonNullExplainChecks/present/build (14.83s)
+    --- PASS: TestNonNullExplainChecks/undefined (0.00s)
+        --- PASS: TestNonNullExplainChecks/undefined/c (0.17s)
+        --- PASS: TestNonNullExplainChecks/undefined/js (0.21s)
+        --- PASS: TestNonNullExplainChecks/undefined/build (6.91s)
+    --- PASS: TestNonNullExplainChecks/let_initializer (0.00s)
+        --- PASS: TestNonNullExplainChecks/let_initializer/c (0.17s)
+        --- PASS: TestNonNullExplainChecks/let_initializer/js (0.15s)
+        --- PASS: TestNonNullExplainChecks/let_initializer/build (6.62s)
+    --- PASS: TestNonNullExplainChecks/initializer (0.00s)
+        --- PASS: TestNonNullExplainChecks/initializer/c (0.12s)
+        --- PASS: TestNonNullExplainChecks/initializer/js (0.19s)
+        --- PASS: TestNonNullExplainChecks/initializer/build (6.45s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	22.071s

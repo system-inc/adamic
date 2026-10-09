@@ -1,0 +1,27 @@
+{"Time":"2026-10-09T19:58:07.867885749Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:08.000016011Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-09T19:58:08.000101034Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== RUN   TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.000134268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== PAUSE TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.00013813Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-09T19:58:08.000141682Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000145144Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis","Output":"=== RUN   TestLiteralMethodViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.000184141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis","Output":"=== PAUSE TestLiteralMethodViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.000187618Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000191067Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000193902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis","Output":"=== RUN   TestLiteralMethodSignatureViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.00023152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis","Output":"=== PAUSE TestLiteralMethodSignatureViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.00023473Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000237807Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles"}
+{"Time":"2026-10-09T19:58:08.000240463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"=== CONT  TestLiteralMethodCapturesCannotMakeCycles\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.000243616Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000246308Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis","Output":"=== CONT  TestLiteralMethodSignatureViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.000249998Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis"}
+{"Time":"2026-10-09T19:58:08.000252624Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis","Output":"=== CONT  TestLiteralMethodViewsDoNotLoseThis\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:08.381084735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Output":"--- PASS: TestLiteralMethodCapturesCannotMakeCycles (0.38s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:09.197651014Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodCapturesCannotMakeCycles","Elapsed":0.38}
+{"Time":"2026-10-09T19:58:09.197708073Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis","Output":"--- PASS: TestLiteralMethodSignatureViewsDoNotLoseThis (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:09.301100715Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodSignatureViewsDoNotLoseThis","Elapsed":1.2}
+{"Time":"2026-10-09T19:58:09.301159315Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis","Output":"--- PASS: TestLiteralMethodViewsDoNotLoseThis (1.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:09.301598671Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestLiteralMethodViewsDoNotLoseThis","Elapsed":1.3}
+{"Time":"2026-10-09T19:58:09.30161465Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:09.305184723Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.437}

@@ -1,0 +1,92 @@
+[
+  {
+    "mutant": "check-optional-receiver",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-4lcvs2x8/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCall79$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "javascript-required-panic",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-84v0j64i/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "native-required-panic",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-u0mh8gzq/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-flow-throw-edge",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-53r0zhq5/overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestOptionalAfterCallFlowEdges$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-required-propagation",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/scratch/optional-calls-main-tmp/optional-call-mutant-m5cilmg7/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallPropagation$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  }
+]

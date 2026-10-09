@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T17:57:51.488716967Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:51.50869393Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger"}
+{"Time":"2026-10-09T17:57:51.508807859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"=== RUN   TestOriginalCycleLedger\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:51.508852075Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics\n"}
+{"Time":"2026-10-09T17:57:51.508878709Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Output":"--- SKIP: TestOriginalCycleLedger (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:51.508885991Z","Action":"skip","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOriginalCycleLedger","Elapsed":0}
+{"Time":"2026-10-09T17:57:51.508997272Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:51.511361088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.020s\n"}
+{"Time":"2026-10-09T17:57:51.511385673Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.023}

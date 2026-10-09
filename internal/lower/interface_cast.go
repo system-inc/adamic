@@ -60,13 +60,13 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 		if refused != nil {
 			return true
 		}
-		// Optional receivers and optional/accessor slots still need a representation
-		// conversion that the V1 checked read boundary cannot emit.
+		// Optional scalar slots have a checked conversion. Receivers and
+		// accessors still require their own evaluation/storage certificates.
 		if part.Kind == ast.KindPropertyAccessExpression && fields[part.Name().Text()] {
 			access := part.AsPropertyAccessExpression()
 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
 				field := l.checker.GetSymbolAtLocation(part.Name())
-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field)) {
+				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (access.QuestionDotToken != nil || accessorSymbol(field) || (field.Flags&ast.SymbolFlagsOptional != 0 && !l.optionalScalarViewField(field))) {
 					refused = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
 				}
 			}
@@ -95,6 +95,12 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
 	}
 	l.result.ViewOrigins = append(l.result.ViewOrigins, value)
 	return value, nil
+}
+
+func (l *lowering) optionalScalarViewField(field *ast.Symbol) bool {
+	declared := l.checker.GetTypeOfSymbol(field)
+	of, known := l.representation(declared)
+	return known && (of == ir.MaybeNumber || of == ir.MaybeBoolean || of == ir.String)
 }
 
 func interfaceScalar(proven *checker.Type) bool {
@@ -279,6 +285,9 @@ func (l *lowering) viewLiterals(declared *checker.Type) []ir.Expression {
 	if declared.Flags()&checker.TypeFlagsUnion != 0 {
 		var allowed []ir.Expression
 		for _, member := range declared.Types() {
+			if member.Flags()&checker.TypeFlagsUndefined != 0 {
+				continue
+			}
 			values := l.viewLiterals(member)
 			if len(values) == 0 {
 				return nil

@@ -1,0 +1,14 @@
+// Derived from checker.ts:8066's cleanup?.() with a void callback view.
+// TypeScript permits a value-returning function where its result is discarded.
+let calls = 0;
+function value(): number {
+	calls += 1;
+	return 40 + calls;
+}
+function cleanup(callback: (() => void) | undefined): void {
+	callback?.();
+}
+cleanup(undefined);
+cleanup(value);
+cleanup(value);
+console.log(`${calls}`);

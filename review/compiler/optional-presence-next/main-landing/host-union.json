@@ -1,0 +1,30 @@
+{
+  "fixtures": [
+    "01_readFile_utf8.a",
+    "02_readFile_utf16le.a",
+    "03_readFile_utf16be.a",
+    "04_readFile_missing.a",
+    "05_writeFile.a",
+    "06_fileExists.a",
+    "07_directoryExists.a",
+    "08_getDirectories.a",
+    "09_realpath.a",
+    "10_getModifiedTime.a",
+    "11_setModifiedTime.a",
+    "12_deleteFile.a",
+    "13_createDirectory.a",
+    "14_getCurrentDirectory.a",
+    "15_getExecutingFilePath.a",
+    "16_getEnvironmentVariable.a",
+    "17_write.a",
+    "18_exit_0.a",
+    "19_exit_1.a",
+    "20_exit_2.a",
+    "21_createHash.a",
+    "22_createHash_fallback.a",
+    "23_newLine.a",
+    "24_useCaseSensitiveFileNames.a",
+    "25_readDirectory.a"
+  ],
+  "passed": 25
+}

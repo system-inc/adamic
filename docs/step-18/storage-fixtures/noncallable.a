@@ -1,0 +1,9 @@
+// a-check: refused storage not proven callable
+const host: { callback: ((value: number) => void) | number } = { callback: (value: number): void => console.log(`${value}`) };
+function corrupt(): void { host.callback = 42; }
+function argument(): number { console.log('arguments'); return 7; }
+if (typeof host.callback === 'function') {
+    corrupt();
+    host.callback?.(argument());
+}
+console.log('wrong: continued');

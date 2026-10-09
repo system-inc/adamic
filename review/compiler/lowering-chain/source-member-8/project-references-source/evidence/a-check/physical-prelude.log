@@ -1,0 +1,5 @@
+--- FAIL: TestProjectReferencesSharedPrelude (0.06s)
+    project_references_test.go:182: physical prelude console replaced the embedded declaration used by lowering
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.063s
+FAIL

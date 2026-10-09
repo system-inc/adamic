@@ -1,0 +1,13 @@
+=== RUN   TestLoweringChainTDZCatch
+=== PAUSE TestLoweringChainTDZCatch
+=== CONT  TestLoweringChainTDZCatch
+    lowering_chain_fixes_test.go:78: gate cache node miss
+    lowering_chain_fixes_test.go:78: gate cache node miss
+    lowering_chain_fixes_test.go:78: sanitized: exit codes differ; Node {stdout:[82 101 102 101 114 101 110 99 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 118 97 108 117 101 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10 52 50 10] stderr:[] exitCode:0}; backend {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 82 101 102 101 114 101 110 99 101 69 114 114 111 114 58 32 67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 118 97 108 117 101 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] exitCode:70}
+--- FAIL: TestLoweringChainTDZCatch (0.44s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.450s
+FAIL

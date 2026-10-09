@@ -1,0 +1,8 @@
+// Structural use of convertToObject's config result, with a nested options list.
+interface Config { readonly options: { readonly paths: readonly string[]; readonly limit: number }; }
+function convertToObject(raw: any): Config { return raw; }
+const raw: any = { options: { paths: ['one', 'two'], limit: 14 } };
+const config = convertToObject(raw);
+console.log(config.options.paths[0] ?? 'missing');
+console.log(String(config.options.limit));
+console.log(String(config === raw));

@@ -68,7 +68,7 @@ func TestModuleNamespaceReadinessMutants(t *testing.T) {
 				}
 				return value
 			})
-			if !changed || truth.exitCode != 70 {
+			if !changed || truth.exitCode != 1 {
 				t.Fatalf("no firing readiness check: changed=%v Node=%+v", changed, truth)
 			}
 			compiled, _ := natively(t, program)
@@ -76,7 +76,7 @@ func TestModuleNamespaceReadinessMutants(t *testing.T) {
 				if got.exitCode != 0 || disagreement(truth, got) != "exit codes differ" {
 					t.Fatalf("%s removed-readiness mutant survived: %+v", backend, got)
 				}
-				t.Logf("%s treat reaching read as initialized: caught by Node exit 70; mutant exit 0", backend)
+				t.Logf("%s treat reaching read as initialized: caught by Node exit 1; mutant exit 0", backend)
 			}
 		})
 	}

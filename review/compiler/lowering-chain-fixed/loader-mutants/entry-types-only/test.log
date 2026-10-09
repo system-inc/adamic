@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesTypesUnion
+=== PAUSE TestProjectReferencesTypesUnion
+=== CONT  TestProjectReferencesTypesUnion
+    project_references_test.go:188: ambient types union lost a project: /workspace/scratch/optional-calls-main-tmp/TestProjectReferencesTypesUnion3373630168/001/dependency/value.ts:1:21: error TS2304: Cannot find name 'DependencyNumber'.
+--- FAIL: TestProjectReferencesTypesUnion (4.47s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	4.487s
+FAIL

@@ -1,0 +1,9 @@
+// Derived from the assignment/call-result chain at moduleNameResolver.ts:3103.
+interface Package { readonly contents: { readonly packageJsonContent: string } }
+let rootPackageInfo: Package | undefined = undefined;
+function getPackageJsonInfo(): Package {
+	rootPackageInfo = undefined;
+	return { contents: { packageJsonContent: `exports${1}` } };
+}
+console.log((rootPackageInfo = getPackageJsonInfo())?.contents.packageJsonContent ?? 'absent');
+console.log(rootPackageInfo?.contents.packageJsonContent ?? 'absent');

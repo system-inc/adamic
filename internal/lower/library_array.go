@@ -10,6 +10,7 @@ import (
 
 var libraryArrayMethods = map[string]bool{
 	"join": true, "indexOf": true, "includes": true, "lastIndexOf": true,
+	"push": true, "unshift": true,
 	"with": true, "flatMap": true, "copyWithin": true, "toSpliced": true, "flat": true,
 	"findLast": true, "findLastIndex": true, "toReversed": true, "toSorted": true,
 }
@@ -20,6 +21,12 @@ func (l *lowering) libraryArrayMethod(node, receiver *ast.Node, name string) (ir
 }
 
 func (l *lowering) libraryArrayMethodArguments(node, receiver *ast.Node, name string, written []*ast.Node) (ir.Expression, bool, error) {
+	if name == "push" && len(written) == 1 && written[0].Kind != ast.KindSpreadElement {
+		return l.arrayMethodArguments(node, receiver, name, written)
+	}
+	if name == "push" || name == "unshift" {
+		return l.arrayInsertArguments(node, receiver, name, written)
+	}
 	element, err := l.elementType(receiver)
 	if err != nil {
 		return nil, true, err

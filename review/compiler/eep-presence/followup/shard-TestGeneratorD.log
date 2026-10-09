@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T17:33:37.046604674Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:33:37.098443553Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T17:33:37.098616378Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== RUN   TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:37.09864802Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== PAUSE TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:37.098651815Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T17:33:37.098655633Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle"}
+{"Time":"2026-10-09T17:33:37.098658349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"=== CONT  TestGeneratorDestructuredParameterCycle\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:37.333907899Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Output":"--- PASS: TestGeneratorDestructuredParameterCycle (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:37.347091473Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestGeneratorDestructuredParameterCycle","Elapsed":0.22}
+{"Time":"2026-10-09T17:33:37.347161193Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:33:37.349581326Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.303s\n"}
+{"Time":"2026-10-09T17:33:37.349614778Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.303}

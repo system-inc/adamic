@@ -1,0 +1,198 @@
+package load
+
+import (
+	"fmt"
+	"path/filepath"
+	"reflect"
+	"strings"
+
+	"github.com/microsoft/TypeScript/tsc/shim/core"
+	"github.com/microsoft/TypeScript/tsc/shim/tsoptions"
+	"github.com/microsoft/TypeScript/tsc/shim/tspath"
+	"github.com/microsoft/TypeScript/tsc/shim/vfs"
+)
+
+// projectSourceRoots flattens compatible references for one checker. It includes
+// configured files even when imports never reach them, but does not add execution
+// entries. Every edge is checked, including a second edge to a diamond's leaf.
+func projectSourceRoots(fs vfs.FS, entry *tsoptions.ParsedCommandLine) ([]tspath.RootedFilePath, map[string]bool, []string, error) {
+	roots := []tspath.RootedFilePath{}
+	owners := map[string]bool{}
+	types := []string{}
+	seenTypes := map[string]bool{}
+	seenFiles := map[tspath.PathKey]bool{}
+	active := map[string]bool{}
+	var visit func(*tsoptions.ParsedCommandLine) error
+	visit = func(config *tsoptions.ParsedCommandLine) error {
+		name := config.ConfigFileName().AsString()
+		if active[name] {
+			return fmt.Errorf("load: circular project reference at %s cannot share one source program", name)
+		}
+		if owners[name] {
+			return nil
+		}
+		owners[name] = true
+		active[name] = true
+		// Ambient package selection is shared by the program. Keep first-seen
+		// order and let the checker diagnose declarations from the whole union.
+		for _, packageName := range config.CompilerOptions().Types {
+			if !seenTypes[packageName] {
+				types = append(types, packageName)
+				seenTypes[packageName] = true
+			}
+		}
+		for _, file := range config.FileNames() {
+			key := fs.CaseSensitivity().PathKey(file.AsPath())
+			if !seenFiles[key] {
+				roots = append(roots, file)
+				seenFiles[key] = true
+			}
+		}
+		for _, reference := range config.ProjectReferences() {
+			path := core.ResolveProjectReferencePath(reference)
+			dependency, diagnostics := tsoptions.GetParsedCommandLineOfConfigFile(path, &core.CompilerOptions{}, nil, fs, nil)
+			if dependency != nil {
+				diagnostics = append(diagnostics, dependency.GetConfigFileParsingDiagnostics()...)
+			}
+			if len(diagnostics) != 0 {
+				formatter := &Program{fs: &sourceFS{FS: fs}}
+				messages := []string{}
+				for _, diagnostic := range diagnostics {
+					messages = append(messages, formatter.formatDiagnostic(diagnostic))
+				}
+				return &CheckError{Diagnostics: messages}
+			}
+			if dependency == nil {
+				return fmt.Errorf("load: project %s references %s, which parsed to no project", name, path)
+			}
+			if option := conflictingProjectOption(config.CompilerOptions(), dependency.CompilerOptions()); option != "" {
+				return fmt.Errorf("load: project reference options conflict: %s references %s: compiler option %s differs; separate checker ownership is required", name, path, option)
+			}
+			if err := visit(dependency); err != nil {
+				return err
+			}
+		}
+		delete(active, name)
+		return nil
+	}
+	if err := visit(entry); err != nil {
+		return nil, nil, nil, err
+	}
+	return roots, owners, types, nil
+}
+
+// Source roots have no declaration-output boundary or per-project output tree.
+// Keep declaration validation, but remove composite's rootDir/file-list rules.
+func sourceProgramOptions(options *core.CompilerOptions, roots []tspath.RootedFilePath) *core.CompilerOptions {
+	result := options.Clone()
+	if result.GetEmitDeclarations() {
+		result.Declaration = core.TSTrue
+	}
+	result.Composite = core.TSFalse
+	result.Incremental = core.TSFalse
+	// TS6 requires an explicit rootDir when sources cross the config directory.
+	directory := ""
+	for _, root := range roots {
+		if root.IsDeclarationFile() {
+			continue
+		}
+		parent := filepath.Dir(root.AsString())
+		if directory == "" {
+			directory = parent
+		}
+		for {
+			relative, err := filepath.Rel(directory, parent)
+			if err == nil && relative != ".." && !strings.HasPrefix(relative, ".."+string(filepath.Separator)) {
+				break
+			}
+			ancestor := filepath.Dir(directory)
+			if ancestor == directory {
+				break
+			}
+			directory = ancestor
+		}
+	}
+	if directory != "" {
+		result.RootDir = tspath.RootedDirectoryPathFromAbsolute(directory)
+	}
+	result.TsBuildInfoFile = ""
+	return result
+}
+
+// Compare every option by default so a new frontend option fails closed. Only
+// output layout, reporting and build bookkeeping can differ, apart from types,
+// whose union is collected above. Strict defaults are compared before Adamic
+// strengthens null and function checking.
+func conflictingProjectOption(left, right *core.CompilerOptions) string {
+	a, b := reflect.ValueOf(left).Elem(), reflect.ValueOf(right).Elem()
+	for index := 0; index < a.NumField(); index++ {
+		field := a.Type().Field(index)
+		if field.Name == "_" {
+			continue
+		}
+		name := strings.Split(field.Tag.Get("json"), ",")[0]
+		switch name {
+		case "types", "composite", "incremental", "rootDir", "outDir", "outFile", "declarationDir", "tsBuildInfoFile", "configFilePath", "project",
+			"sourceMap", "inlineSourceMap", "inlineSources", "sourceRoot", "mapRoot", "declarationMap", "emitBOM", "newLine", "removeComments",
+			"diagnostics", "extendedDiagnostics", "generateCpuProfile", "generateTrace", "traceResolution", "listFiles", "listFilesOnly", "listEmittedFiles", "explainFiles", "pretty", "locale",
+			"assumeChangesOnlyAffectDirectDependencies", "disableSourceOfProjectReferenceRedirect", "disableSolutionSearching", "disableReferencedProjectLoad", "strict":
+			continue
+		}
+		effective := func(options *core.CompilerOptions, value reflect.Value) any {
+			switch name {
+			case "noImplicitAny", "noImplicitThis", "strictNullChecks", "strictFunctionTypes", "strictBindCallApply", "strictPropertyInitialization", "strictBuiltinIteratorReturn", "useUnknownInCatchVariables", "alwaysStrict":
+				return options.GetStrictOptionValue(value.Interface().(core.Tristate))
+			case "target":
+				return options.GetEmitScriptTarget()
+			case "module":
+				return options.GetEmitModuleKind()
+			case "moduleResolution":
+				return options.GetModuleResolutionKind()
+			case "moduleDetection":
+				return options.GetEmitModuleDetectionKind()
+			case "useDefineForClassFields":
+				return options.GetUseDefineForClassFields()
+			case "resolvePackageJsonExports":
+				return options.GetResolvePackageJsonExports()
+			case "resolvePackageJsonImports":
+				return options.GetResolvePackageJsonImports()
+			case "resolveJsonModule":
+				return options.GetResolveJsonModule()
+			case "allowJs":
+				return options.GetAllowJS()
+			case "allowImportingTsExtensions":
+				return options.GetAllowImportingTsExtensions()
+			case "isolatedModules":
+				return options.GetIsolatedModules()
+			case "preserveConstEnums":
+				return options.ShouldPreserveConstEnums()
+			}
+			// Unknown is not universally false: frontend defaults such as
+			// side-effect import checking and package deduplication are true.
+			// Without a semantic getter, preserve all three option states.
+			return value.Interface()
+		}
+		if !reflect.DeepEqual(effective(left, a.Field(index)), effective(right, b.Field(index))) {
+			return name
+		}
+	}
+	return ""
+}
+
+func uniqueSourceRoots(fs vfs.FS, roots []tspath.RootedFilePath) []tspath.RootedFilePath {
+	result := []tspath.RootedFilePath{}
+	seen := map[tspath.PathKey]bool{}
+	for _, root := range roots {
+		if false {
+			if text, ok := fs.ReadFile(root); ok && text == prelude {
+				continue
+			}
+		}
+		key := fs.CaseSensitivity().PathKey(root.AsPath())
+		if !seen[key] {
+			result = append(result, root)
+			seen[key] = true
+		}
+	}
+	return result
+}

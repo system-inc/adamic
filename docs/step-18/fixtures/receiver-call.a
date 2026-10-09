@@ -1,0 +1,6 @@
+// Reduced from builder.ts:1852, state.seenEmittedFiles?.get(affectedSourceFile.resolvedPath).
+function get(seenEmittedFiles: Map<string, number> | undefined): number {
+	return seenEmittedFiles?.get('file') ?? -1;
+}
+console.log(`${get(undefined)}`);
+console.log(`${get(new Map<string, number>([['file', 2]]))}`);

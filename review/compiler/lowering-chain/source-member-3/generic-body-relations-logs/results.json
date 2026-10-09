@@ -1,0 +1,42 @@
+{
+  "base": "7a10c877667582a15326acb10fa22fa7a0c45fb8",
+  "results": [
+    {
+      "log": "current-main.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "result": "pass",
+      "elapsed_seconds": 42.883
+    },
+    {
+      "log": "current-main.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "result": "pass",
+      "elapsed_seconds": 150.721
+    },
+    {
+      "log": "current-main.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "result": "pass",
+      "elapsed_seconds": 92.038
+    },
+    {
+      "log": "d727-lower-flow.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/lower",
+      "result": "pass",
+      "elapsed_seconds": 69.933
+    },
+    {
+      "log": "d727-lower-flow.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/flow",
+      "result": "pass",
+      "elapsed_seconds": 245.385
+    },
+    {
+      "log": "d727-oracle.jsonl.gz",
+      "package": "github.com/system-inc/adamic/internal/oracle",
+      "result": "pass",
+      "elapsed_seconds": 648.536
+    }
+  ],
+  "event_logs": "Go test JSON events with Time removed. Other fields and ordering are retained. The historical oracle log contains only the oracle package from its recorded command; the historical flow failure was rerun in d727-lower-flow."
+}

@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T19:55:41.359172893Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:55:41.402744237Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T19:55:41.402828007Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== RUN   TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:41.402864227Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== PAUSE TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:41.402868209Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T19:55:41.402871651Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T19:55:41.402874349Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== RUN   TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:41.402877861Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== PAUSE TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:41.402880668Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T19:55:41.402885761Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract"}
+{"Time":"2026-10-09T19:55:41.402888381Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"=== CONT  TestArrayPredicateCannotInventAnElementContract\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:41.407100369Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection"}
+{"Time":"2026-10-09T19:55:41.407128002Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"=== CONT  TestArrayPredicateCoexistsWithUnknownReflection\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:43.379661564Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Output":"--- PASS: TestArrayPredicateCannotInventAnElementContract (1.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:48.092164937Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCannotInventAnElementContract","Elapsed":1.98}
+{"Time":"2026-10-09T19:55:48.09226341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Output":"--- PASS: TestArrayPredicateCoexistsWithUnknownReflection (6.69s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:48.092274311Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestArrayPredicateCoexistsWithUnknownReflection","Elapsed":6.69}
+{"Time":"2026-10-09T19:55:48.092278078Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:55:48.103649744Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":6.744}

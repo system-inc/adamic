@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:58:43.036104006Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:58:43.048743925Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes"}
+{"Time":"2026-10-09T17:58:43.048832073Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes","Output":"=== RUN   TestPrimitiveAdmittingSlotsUseBoxes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.048857869Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes","Output":"=== PAUSE TestPrimitiveAdmittingSlotsUseBoxes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.048860976Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes"}
+{"Time":"2026-10-09T17:58:43.048863591Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T17:58:43.048866413Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== RUN   TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.048896147Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.04889841Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T17:58:43.048900883Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes"}
+{"Time":"2026-10-09T17:58:43.04890287Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes","Output":"=== CONT  TestPrimitiveAdmittingSlotsUseBoxes\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.050962115Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T17:58:43.05097391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== CONT  TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.136514493Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes","Output":"--- PASS: TestPrimitiveAdmittingSlotsUseBoxes (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.292839891Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrimitiveAdmittingSlotsUseBoxes","Elapsed":0.09}
+{"Time":"2026-10-09T17:58:43.292894347Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"--- PASS: TestPrivateAndPublicStaticsAgreeWithNode (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.292902327Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Elapsed":0.24}
+{"Time":"2026-10-09T17:58:43.292911139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:58:43.297714029Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.261s\n"}
+{"Time":"2026-10-09T17:58:43.297755786Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.262}

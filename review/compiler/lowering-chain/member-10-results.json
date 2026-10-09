@@ -1,0 +1,151 @@
+{
+  "branch": "compiler/assignment-proofs-main",
+  "source": "a6f05066866debe937c40062e276fcd385d60363",
+  "tests": [
+    {
+      "test": "TestAssignmentProofWiderTargetMutant",
+      "result": "pass",
+      "seconds": 1.46,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofChained",
+      "result": "pass",
+      "seconds": 1.49,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofIfNarrowingMutant",
+      "result": "pass",
+      "seconds": 1.51,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofScannerKeyword",
+      "result": "pass",
+      "seconds": 1.52,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofWiderTarget",
+      "result": "pass",
+      "seconds": 1.4,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofScannerKeywordMutant",
+      "result": "pass",
+      "seconds": 1.46,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofCompoundMutant",
+      "result": "pass",
+      "seconds": 1.54,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofReturnDefinedMutant",
+      "result": "pass",
+      "seconds": 1.52,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofReturnDefined",
+      "result": "pass",
+      "seconds": 1.4,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofCompound",
+      "result": "pass",
+      "seconds": 1.55,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofChainedMutant",
+      "result": "pass",
+      "seconds": 1.47,
+      "log": "member-10-tests.jsonl"
+    },
+    {
+      "test": "TestAssignmentProofIfNarrowing",
+      "result": "pass",
+      "seconds": 1.56,
+      "log": "member-10-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "stage3/fixtures/assignment-proofs/01_scanner_keyword.a",
+        "after": [
+          "18",
+          "18",
+          "18",
+          "32",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/assignment-proofs/02_if_narrowing.a",
+        "after": [
+          "6",
+          "6",
+          "7",
+          "15",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/assignment-proofs/03_return_defined.a",
+        "after": [
+          "8",
+          "8",
+          "6",
+          "18",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/assignment-proofs/04_chained.a",
+        "after": [
+          "4",
+          "4",
+          "7",
+          "16",
+          "3",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/assignment-proofs/05_compound.a",
+        "after": [
+          "8",
+          "8",
+          "0",
+          "8",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "stage3/fixtures/assignment-proofs/06_wider_target.a",
+        "after": [
+          "4",
+          "4",
+          "0",
+          "4",
+          "4",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1158
+  }
+}

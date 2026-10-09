@@ -1,0 +1,10 @@
+=== RUN   TestParserConstructionNullPlaceholderPending
+    parser_construction_test.go:71: gate cache node miss
+    parser_construction_test.go:77: pending boundary: <nil>
+--- FAIL: TestParserConstructionNullPlaceholderPending (0.17s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.181s
+FAIL

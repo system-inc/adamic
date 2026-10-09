@@ -1,0 +1,101 @@
+[
+  {
+    "revision": "50654a40",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 124,
+    "seconds": 150.013,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestUndecidedCycleReadsUseReadyChecks$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "50654a40",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 1,
+    "seconds": 72.88,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingMapShapeRefused$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "50654a40",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 0,
+    "seconds": 121.469,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 1,
+    "seconds": 134.204,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestUndecidedCycleReadsUseReadyChecks$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 1,
+    "seconds": 4.811,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingMapShapeRefused$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "897d0e79",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 1,
+    "seconds": 2.733,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestUndecidedCycleReadsUseReadyChecks",
+    "status": 1,
+    "seconds": 7.133,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestUndecidedCycleReadsUseReadyChecks$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestOptionalIndexingMapShapeRefused",
+    "status": 1,
+    "seconds": 2.548,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingMapShapeRefused$' -timeout 90s -count=1 -v"
+    ]
+  },
+  {
+    "revision": "5f08a92c",
+    "test": "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+    "status": 1,
+    "seconds": 5.492,
+    "command": [
+      "bash",
+      "-lc",
+      "source /workspace/adamic-tools/env.sh; go test -buildvcs=false ./internal/lower -run '^TestOptionalIndexingKeepsUnsupportedStorageNotYet$' -timeout 90s -count=1 -v"
+    ]
+  }
+]

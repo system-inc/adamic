@@ -1,0 +1,20 @@
+--- a/internal/lower/checked_json.go
++++ b/internal/lower/checked_json.go
+@@ -264,7 +264,7 @@
+ 		}
+ 		if operand != nil {
+ 			operand = ast.SkipParentheses(operand)
+-			if operand.Kind == ast.KindElementAccessExpression || (operand.Kind == ast.KindPropertyAccessExpression && (l.result.JSONCheckedDictionaries || l.result.JSONCheckedFields[operand.Name().Text()])) {
++			if operand.Kind == ast.KindElementAccessExpression || (operand.Kind == ast.KindPropertyAccessExpression && (l.result.JSONCheckedFields[operand.Name().Text()])) {
+ 				return "an update through a checked JSON view alias"
+ 			}
+ 		}
+@@ -280,7 +280,7 @@
+ 	}
+ 	if node.Kind == ast.KindBinaryExpression && ast.IsAssignmentOperator(node.AsBinaryExpression().OperatorToken.Kind) {
+ 		left := ast.SkipParentheses(node.AsBinaryExpression().Left)
+-		if left.Kind == ast.KindElementAccessExpression || (left.Kind == ast.KindPropertyAccessExpression && (l.result.JSONCheckedDictionaries || l.result.JSONCheckedFields[left.Name().Text()])) {
++		if left.Kind == ast.KindElementAccessExpression || (left.Kind == ast.KindPropertyAccessExpression && (l.result.JSONCheckedFields[left.Name().Text()])) {
+ 			return "a write through a checked JSON view alias"
+ 		}
+ 	}

@@ -1,0 +1,33 @@
+// program.ts:2848 cancellation identity, extended with actual Error ancestry.
+function makeMessage(value: number): string { return `message${value}`; }
+function field(value: string): string { console.log(value); return value; }
+class Cancelled extends Error {
+    detail = field(`field${1}`);
+    constructor(message: string) {
+        console.log('before super');
+        super(message);
+        console.log(`${this.name}: ${this.message} ${this.detail}`);
+        this.name = 'Cancelled';
+    }
+}
+class Nested extends Cancelled {
+    reason = field(`reason${2}`);
+}
+class RangeFailure extends RangeError {}
+class Other extends Error {}
+try { throw new Nested(makeMessage(3)); }
+catch (error) {
+    console.log(`${error instanceof Error} ${error instanceof Cancelled} ${error instanceof Nested} ${error instanceof Other}`);
+    if (error instanceof Cancelled) console.log(`${error.name}: ${error.message} ${error.detail}`);
+    try { throw error; }
+    catch (again) { console.log(`${again === error}`); if (again instanceof Nested) console.log(again.reason); }
+}
+try { throw new RangeFailure(); }
+catch (error) { if (error instanceof Error) console.log(`${error.name}: ${error.message} ${error instanceof RangeError}`); }
+function keepMessage(value: number): void {
+    const message = makeMessage(value);
+    try { throw new Other(message); }
+    catch (error) { if (error instanceof Error) console.log(error.message); }
+    console.log(message);
+}
+keepMessage(4);

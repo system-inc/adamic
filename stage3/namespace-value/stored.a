@@ -1,0 +1,9 @@
+namespace State {
+    export let value = 1;
+    export function advance(): void { value += 1; }
+}
+const held = State;
+State.advance();
+console.log(String(held.value));
+held.value = 7;
+console.log(String(State.value));

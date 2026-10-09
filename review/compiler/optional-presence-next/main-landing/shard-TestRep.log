@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T18:21:43.475829731Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:43.534489465Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T18:21:43.534560444Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== RUN   TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.53458815Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== PAUSE TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.534590914Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T18:21:43.534647847Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T18:21:43.534651319Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== RUN   TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.534654745Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== PAUSE TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.534656861Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T18:21:43.534733722Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet"}
+{"Time":"2026-10-09T18:21:43.534736294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"=== CONT  TestRepresentedMethodReplacementIsNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.535198085Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes"}
+{"Time":"2026-10-09T18:21:43.535233751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"=== CONT  TestRepresentationClockSourceCheckedTypes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.755184583Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI\n"}
+{"Time":"2026-10-09T18:21:43.755276468Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Output":"--- PASS: TestRepresentationClockSourceCheckedTypes (0.22s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.781674199Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentationClockSourceCheckedTypes","Elapsed":0.22}
+{"Time":"2026-10-09T18:21:43.781733387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Output":"--- PASS: TestRepresentedMethodReplacementIsNotYet (0.24s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.781740663Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestRepresentedMethodReplacementIsNotYet","Elapsed":0.24}
+{"Time":"2026-10-09T18:21:43.7817433Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:43.781778355Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.306}

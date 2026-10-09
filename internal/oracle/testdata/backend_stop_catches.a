@@ -1,0 +1,13 @@
+try {
+	throw new Error('ordinary');
+} catch {
+	console.log('ordinary error caught');
+}
+try {
+	throw new Error('Maximum call stack size exceeded');
+} catch {
+	console.log('ordinary Error caught');
+} finally {
+	console.log('finally');
+}
+console.log('after');

@@ -1,0 +1,32 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index 2fc4a1f1..d89f48e0 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -343,10 +343,14 @@ typedef struct adamic_slot_cache {
+ } adamic_slot_cache;
+ 
+ adamic_value *adamic_object_read(const adamic_object *object, const char *name, adamic_slot_cache *cache, const char *expression);
++// Reference results are borrowed from the object; the caller retains them if needed.
+ adamic_value adamic_object_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
+ void adamic_view_literal_failure(const char *expression, const char *expected, unsigned char type, adamic_value value);
+ void adamic_object_view_write(adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
++// String results are borrowed, like adamic_object_view; NULL represents undefined.
+ adamic_value adamic_object_optional_view(const adamic_object *object, const char *name, adamic_slot_cache *cache, unsigned char wanted, const char *type, const char *expression);
++// value is given: owned by the call. The store releases the old slot and assigns
++// without retaining; the emitter must pass keptValue, including for self-assignment.
+ void adamic_object_view_store(adamic_object *object, const char *name, adamic_slot_cache *cache, adamic_value value, unsigned char wanted);
+ 
+ // adamic_method is a class's method as a call through an interface calls it: the object as this, and
+diff --git a/internal/native/runtime/object.c b/internal/native/runtime/object.c
+index e3db58c7..7d6b577e 100644
+--- a/internal/native/runtime/object.c
++++ b/internal/native/runtime/object.c
+@@ -438,7 +438,7 @@ void adamic_object_view_store(adamic_object *object, const char *name, adamic_sl
+         incoming = boolean.present ? 2 : 13;
+         value.boolean = boolean.boolean;
+     } else if (wanted == 3 && value.reference == NULL) incoming = 13;
+-    bool fits = (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
++    bool fits = (actual == 3 && incoming == 13) || (actual == incoming && actual >= 1 && actual <= 3) || (actual == 7 && (incoming == 1 || incoming == 13)) || (actual == 9 && (incoming == 2 || incoming == 13)) || (actual == 10 && (incoming == 1 || incoming == 2 || incoming == 3 || incoming == 13));
+     if (!fits) {
+         const char *expected = slot == NULL ? "missing storage" : view_storage_name(actual);
+         const char *found = view_storage_name(incoming);

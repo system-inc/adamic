@@ -8,9 +8,9 @@ import (
 	"strings"
 )
 
-// arrayVisit emits forEach, filter, some, every, find and findIndex as one loop. The length is read
-// once and an index the array has lost is skipped, as JavaScript does (0.1's arrays have no holes, so
-// a lost index is one past a shrunken end). Each element is held across its call, since the callback
+// arrayVisit reads the length once. Searches Get removed indices as undefined,
+// checked at the callback call; the other visits skip removed indices.
+// Each element is held across its call, since the callback
 // may take it out of the array; filter and find hand that hold to what they return.
 func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 	source := e.temporary()
@@ -40,26 +40,52 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("for (size_t %s = 0; %s < %s; %s++) {", index, index, count, index)
 	}
 	e.indent++
-	e.line("if (%s >= %s->length) {", index, source)
-	if visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex" {
-		// The other visits skip an index the callback took away, as JavaScript's do; find and
-		// findIndex call it with undefined there, which the element's type can't hold. A panic, the
-		// same in both backends.
-		e.line("\tstatic const char message[] = \"%s: the array shrank while it was being searched\";", visit.Method)
-		e.line("\tadamic_panic(message, sizeof message - 1);")
+	search := visit.Method == "find" || visit.Method == "findIndex" || visit.Method == "findLast" || visit.Method == "findLastIndex"
+	present := "true"
+	if search {
+		present = e.temporary()
+		e.line("bool %s = %s < %s->length;", present, index, source)
+		if !visit.SearchUndefined {
+			e.declarations = append(e.declarations, "#include <stdio.h>")
+			e.line("if (!(%s)) {", present)
+			e.line("\tchar message[sizeof %s + 128];", cString(visit.SearchElementName))
+			e.line("\tint length = snprintf(message, sizeof message, %s, %s);", cString(visit.Method+": index %zu is undefined; element type %s does not admit undefined"), index+", "+cString(visit.SearchElementName))
+			e.line("\tadamic_panic(message, (size_t)length < sizeof message ? (size_t)length : sizeof message - 1);")
+			e.line("}")
+		}
 	} else {
-		e.line("\tcontinue;")
+		e.line("if (%s >= %s->length) continue;", index, source)
 	}
-	e.line("}")
-	e.line("adamic_value %s = %s->elements[%s];", element, source, index)
+	missing := "{.reference = NULL}"
+	if visit.Element.IsMaybe() {
+		missing = fmt.Sprintf("{.%s = %s}", member(visit.Element), slotted(visit.Element, zero(visit.Element)))
+	}
+	e.line("adamic_value %s = (%s) ? %s->elements[%s] : (adamic_value)%s;", element, present, source, index, missing)
 	if references {
 		e.line("adamic_retain(%s.reference);", element)
 	}
-	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, element, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
-	if visit.Method == "forEach" && !visit.Returns.IsReference() {
+	argument, fresh := element, false
+	if search && visit.SearchFirst != 0 && visit.SearchFirst != visit.Element {
+		value, allocated := converted(visit.Element, visit.SearchFirst, unslotted(visit.Element, element+"."+member(visit.Element)))
+		fresh = allocated
+		argument = e.temporary()
+		absent := missingArgument(visit.SearchFirst)
+		e.line("adamic_value %s = {.%s = %s};", argument, member(visit.SearchFirst), slotted(visit.SearchFirst, fmt.Sprintf("(%s) ? %s : %s", present, value, absent)))
+	}
+	call := e.callbackCall(callback, visit.Callback, visit.CallbackType, argument, fmt.Sprintf("{.number = (double)%s}", index), fmt.Sprintf("{.reference = %s}", source))
+	if visit.Method == "forEach" && visit.Returns == 0 {
+		holds := []string{}
+		if references {
+			holds = append(holds, element+".reference")
+		}
+		e.discardClosureResult(ir.CallClosure{}, callback, "", "", call, holds...)
+	} else if visit.Method == "forEach" && !visit.Returns.IsReference() {
 		e.line("%s;", call)
 	} else {
 		e.line("adamic_value %s = %s;", answer, call)
+	}
+	if fresh {
+		e.line("adamic_release(%s.reference);", argument)
 	}
 	// The element held across the call is let go; what the visit made so far is the statement's.
 	if references {
@@ -91,12 +117,12 @@ func (e *emitter) arrayVisit(visit ir.ArrayVisit) string {
 		e.line("if (%s.boolean) {", answer)
 		if visit.Type().IsMaybe() {
 			found := element + "." + member(visit.Element)
-			if visit.Element == ir.MaybeNumber {
-				found = unslotted(ir.MaybeNumber, found)
+			if visit.Element.IsMaybe() {
+				found = unslotted(visit.Element, found)
 			} else {
 				found = maybe(visit.Type(), found)
 			}
-			e.line("\t%s = %s;", result, found)
+			e.line("\t%s = (%s) ? %s : %s;", result, present, found, zero(visit.Type()))
 		} else {
 			e.line("\t%s = %s.reference;", result, element)
 		}

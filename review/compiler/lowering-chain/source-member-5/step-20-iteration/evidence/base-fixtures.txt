@@ -1,0 +1,94 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestStep20IterationOutcomes
+=== RUN   TestStep20IterationOutcomes/accessor_binding.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: accessor_binding.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/collections.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: collections.a: accepted 
+=== RUN   TestStep20IterationOutcomes/delegated_generator.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: delegated_generator.a: Refused a generator function
+=== RUN   TestStep20IterationOutcomes/generator.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: generator.a: Refused a generator function
+=== RUN   TestStep20IterationOutcomes/iterable_view.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: iterable_view.a: NotYet for...of over an object
+=== RUN   TestStep20IterationOutcomes/object_binding.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: object_binding.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/object_binding_stress.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: object_binding_stress.a: NotYet a for...of destructuring an object
+=== RUN   TestStep20IterationOutcomes/object_iteration.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: object_iteration.a: NotYet for...of over an object
+=== RUN   TestStep20IterationOutcomes/strings.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: strings.a: accepted 
+=== RUN   TestStep20IterationOutcomes/user_forwarding.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: user_forwarding.a: NotYet an iterator method whose concrete origin is erased by a structural signature
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_write.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: intrinsic_iterator_write.a: Refused inherited library member iterator read as an own field
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_alias.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: intrinsic_iterator_alias.a: NotYet a value of type unique symbol
+=== RUN   TestStep20IterationOutcomes/intrinsic_iterator_prototype.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: intrinsic_iterator_prototype.a: Refused inherited library member prototype read as an own field
+=== RUN   TestStep20IterationOutcomes/array_view_stress.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: array_view_stress.a: NotYet for...of over an object
+=== RUN   TestStep20IterationOutcomes/array_view_weak.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: array_view_weak.a: NotYet for...of over an object
+=== RUN   TestStep20IterationOutcomes/test262_array_views.a
+    step20_iteration_test.go:48: gate cache node hit
+    step20_iteration_test.go:64: test262_array_views.a: NotYet for...of over an object
+--- PASS: TestStep20IterationOutcomes (5.45s)
+    --- PASS: TestStep20IterationOutcomes/accessor_binding.a (0.84s)
+    --- PASS: TestStep20IterationOutcomes/collections.a (0.21s)
+    --- PASS: TestStep20IterationOutcomes/delegated_generator.a (0.18s)
+    --- PASS: TestStep20IterationOutcomes/generator.a (0.25s)
+    --- PASS: TestStep20IterationOutcomes/iterable_view.a (0.19s)
+    --- PASS: TestStep20IterationOutcomes/object_binding.a (0.17s)
+    --- PASS: TestStep20IterationOutcomes/object_binding_stress.a (0.22s)
+    --- PASS: TestStep20IterationOutcomes/object_iteration.a (0.29s)
+    --- PASS: TestStep20IterationOutcomes/strings.a (0.26s)
+    --- PASS: TestStep20IterationOutcomes/user_forwarding.a (0.47s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_write.a (0.27s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_alias.a (0.32s)
+    --- PASS: TestStep20IterationOutcomes/intrinsic_iterator_prototype.a (0.37s)
+    --- PASS: TestStep20IterationOutcomes/array_view_stress.a (0.51s)
+    --- PASS: TestStep20IterationOutcomes/array_view_weak.a (0.23s)
+    --- PASS: TestStep20IterationOutcomes/test262_array_views.a (0.66s)
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a
+    oracle_test.go:749: gate cache node hit
+    oracle_test.go:749: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a
+    oracle_test.go:749: gate cache node hit
+    oracle_test.go:749: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    oracle_test.go:589: gate cache native hit
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.18s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/strings.a (0.13s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/iteration/collections.a (0.21s)
+PASS
+gate cache: native hits=6 misses=0
+gate cache: node hits=20 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	5.904s

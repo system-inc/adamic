@@ -1,0 +1,33 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestStep21Uncaught
+=== PAUSE TestStep21Uncaught
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestStep21Uncaught
+=== RUN   TestStep21Uncaught/step21_dynamic_uncaught
+=== PAUSE TestStep21Uncaught/step21_dynamic_uncaught
+=== RUN   TestStep21Uncaught/step21_object_uncaught
+=== PAUSE TestStep21Uncaught/step21_object_uncaught
+=== RUN   TestStep21Uncaught/exceptions_uncaught
+=== PAUSE TestStep21Uncaught/exceptions_uncaught
+=== RUN   TestStep21Uncaught/closures_throw_uncaught
+=== PAUSE TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_dynamic_uncaught
+=== CONT  TestStep21Uncaught/exceptions_uncaught
+=== CONT  TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_object_uncaught
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a
+--- PASS: TestStep21Uncaught (0.00s)
+    --- PASS: TestStep21Uncaught/step21_object_uncaught (0.71s)
+    --- PASS: TestStep21Uncaught/step21_dynamic_uncaught (0.73s)
+    --- PASS: TestStep21Uncaught/exceptions_uncaught (0.73s)
+    --- PASS: TestStep21Uncaught/closures_throw_uncaught (0.76s)
+--- PASS: TestNativeAgreesWithNode (0.06s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a (0.78s)
+PASS
+gate cache: native hits=0 misses=11
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.852s

@@ -1,0 +1,818 @@
+{
+  "branch": "compiler/miscompile-fxspptb-2b",
+  "source": "6de2edb53d6caf66ddae371591fb521d06684084",
+  "tests": [
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/rethrowing_a_mutable_stored_Error",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_passed_where_an_array_goes",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_interpolating_an_object",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_inside_a_function",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_result_weak_in_one_view_only",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_spread_seen_with_a_field_weak_in_one_view_only",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_seen_with_a_parameter_weak_in_one_view_only",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_object_seen_with_a_field_weak_in_one_view_only",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_a_call_that_reaches_toFixed",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_try_around_repeat",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_generic_function_as_a_value",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/assigning_Array.from's_undefined",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_class_field_of_a_union",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_template_of_a_union_with_an_object",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_function_value_capturing_what_it_initializes",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_captured_boolean_|_undefined",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_targets_seen_as_an_array_of_Weak",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_array_of_boolean_|_undefined",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_of_an_array",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/tuples_where_arrays_of_arrays_go",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_with_a_named_callback",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/Array.from_without_a_callback",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/concat_on_an_array_of_arrays",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/an_arrow_returning_never",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_tuple_given_to_a_function_value_taking_an_array",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/a_callback_taking_arrays_given_tuples",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat/join_on_an_array_of_functions",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/held_in_a_variable",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/not_called_on_its_object",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/read_through_this",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/an_array's_method",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/an_interface's_method",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/in_parentheses",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/not_called_in_an_arrow",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/passed_as_a_callback",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_filter",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/not_called_through_parentheses",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_declaration_of_a_readonly_field",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/an_intersection_seen_as_itself",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_method_returning_the_same_type",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_class_seen_as_itself",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused/not_a_field_holding_a_function",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAMethodReadAsAValueIsRefused",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_with_no_type",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_union_target_that_can't_write",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_shorthand_property_that_can't_write",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_new_Map",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_new_Map_passed",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_copies",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_Map_made_from_pairs",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_a_readonly_field",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_conditional_of_fresh_arrays",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_map",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/an_intersection's_array_seen_as_a_readonly_array_with_the_same_tag",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_narrowed_from_undefined,_as_itself",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_type_parameter_as_itself",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_copied_into_a_writable_one",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_copy_made_by_slice",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_as_its_own_type",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_writable_field_seen_as_a_readonly_one",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_readonly_field_seen_wider",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/an_array_seen_as_a_readonly_wider_array",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused/a_destructuring_assignment's_elements_going_into_wider_names",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestAViewThatCantWriteIsNotRefused",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialEach",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialFind",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialHeldUnion",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialMatchingMethods",
+      "result": "pass",
+      "seconds": 0.75,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSingleNarrowed",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialUnionNarrowed",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialViewMethod",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialViewMethodParameter",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p05_helper_second_parameter",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSome",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p06_helper_second_parameter_undefined",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSort",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialReduce",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialMap",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p12_find_undefined_target",
+      "result": "pass",
+      "seconds": 0.23,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData/good",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialBooleanFilter",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData/wrong",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedOwnClassData",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/good",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/empty",
+      "result": "pass",
+      "seconds": 0.17,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p13_filter_wrong_parameter_helper",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/wrong",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/nested",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal/mixed",
+      "result": "pass",
+      "seconds": 0.15,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestCheckedViewUntaggedArrayAnyRefusal",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_view_method.a",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p14_overload_optional_chain_container",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/boolean_filter.a",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p21_find_inferred_number",
+      "result": "pass",
+      "seconds": 0.21,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_parent.a",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p22_filter_inferred_narrowing",
+      "result": "pass",
+      "seconds": 0.22,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/held_union.a",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p23_find_declared_predicate",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/host_array_predicate.a",
+      "result": "pass",
+      "seconds": 0.53,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p24_filter_proven_number",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_miscompiles/matching_methods.a",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p26_assert_nested_if_without_else",
+      "result": "pass",
+      "seconds": 0.2,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/predicate_refusals/representation_controls.a",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/predicate_refusals/oct8_predicates_p27_overload_parameter_rebound.a",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/predicate_refusals/oct8_predicates_p14_overload_optional_chain_container.a",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals/p27_overload_parameter_rebound",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestPredicateMiscompileRefusals",
+      "result": "pass",
+      "seconds": 2.97,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/optional_class_method.a",
+      "result": "pass",
+      "seconds": 0.7,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/class_inheritance_interface.a",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/freed.a",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/weak_narrowed.a",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/reuse.a",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/narrowed.a",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakReadsUndefinedOnceFreed/internal/oracle/testdata/weak/probe_chain.a",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestWeakReadsUndefinedOnceFreed",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/class_as_interface.a",
+      "result": "pass",
+      "seconds": 1.29,
+      "log": "member-12-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-12-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/weak_miscompiles/matching_methods.a",
+        "after": [
+          "11",
+          "11",
+          "13",
+          "21",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/weak_miscompiles/boolean_filter.a",
+        "after": [
+          "12",
+          "12",
+          "22",
+          "28",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/weak_miscompiles/held_union.a",
+        "after": [
+          "5",
+          "5",
+          "13",
+          "17",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_union_narrowed.a",
+        "after": [
+          "4",
+          "2",
+          "5",
+          "6",
+          "4",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/weak_miscompiles/4ddd17f_weak_single_narrowed.a",
+        "after": [
+          "4",
+          "2",
+          "4",
+          "6",
+          "4",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1163
+  }
+}

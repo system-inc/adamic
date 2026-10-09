@@ -1,0 +1,34 @@
+=== RUN   TestEEPPresence0
+=== PAUSE TestEEPPresence0
+=== RUN   TestEEPPresence1
+=== PAUSE TestEEPPresence1
+=== RUN   TestEEPPresence2
+=== PAUSE TestEEPPresence2
+=== RUN   TestEEPPresence3
+=== PAUSE TestEEPPresence3
+=== RUN   TestEEPPresence4
+=== PAUSE TestEEPPresence4
+=== RUN   TestEEPPresence5
+=== PAUSE TestEEPPresence5
+=== RUN   TestEEPPresence6
+=== PAUSE TestEEPPresence6
+=== RUN   TestEEPPresenceSupported
+=== PAUSE TestEEPPresenceSupported
+=== CONT  TestEEPPresence0
+=== CONT  TestEEPPresence4
+=== CONT  TestEEPPresence2
+=== CONT  TestEEPPresence3
+=== CONT  TestEEPPresence6
+--- PASS: TestEEPPresence4 (0.39s)
+=== CONT  TestEEPPresence5
+--- PASS: TestEEPPresence2 (0.45s)
+=== CONT  TestEEPPresence1
+--- PASS: TestEEPPresence6 (0.45s)
+=== CONT  TestEEPPresenceSupported
+--- PASS: TestEEPPresence0 (0.48s)
+--- PASS: TestEEPPresence3 (0.51s)
+--- PASS: TestEEPPresence5 (0.16s)
+--- PASS: TestEEPPresence1 (0.15s)
+--- PASS: TestEEPPresenceSupported (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.627s

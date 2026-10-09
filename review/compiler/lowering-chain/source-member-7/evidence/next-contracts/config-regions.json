@@ -1,0 +1,457 @@
+{
+  "normalizer_anchor": "At this pin the unchanged named declaration starts at line 3835; line 4032 is isExcludedFile, so matched by name rather than shifting stock text.",
+  "records": [
+    {
+      "ambient_contracts": [
+        "JsonConversionNotifier"
+      ],
+      "binding": null,
+      "binding_kind": "SourceFile",
+      "captures": [
+        {
+          "name": "convertToJson",
+          "type": "(sourceFile: JsonSourceFile, rootExpression: Expression | undefined, errors: Diagnostic[], returnValue: boolean, jsonConversionNotifier: JsonConversionNotifier | undefined) => any"
+        }
+      ],
+      "checked_use_helpers": 0,
+      "column": 84,
+      "declaration_end": 96652,
+      "declaration_kind": "FunctionDeclaration",
+      "declaration_name": "convertToObject",
+      "declaration_sha256": "6d0d2f530f7944358450075cea15999eb0e9f3e21708dd3dfcaeb01fca6d4c87",
+      "declaration_start": 96416,
+      "declaration_stop": "/tmp/checked-any-next-sites-v8/042/src/compiler/__any_probe.ts:2468:38: stage 0 can't lower a computed key without an own data field yet",
+      "extraction": "original declaration text unchanged",
+      "file": "src/compiler/commandLineParser.ts",
+      "first_line": 2467,
+      "generic_declaration": false,
+      "imports_stubbed_as": "local ambient bindings with exact stock import-type queries; no runtime dependency modules",
+      "index": 42,
+      "kind": "explicit_any",
+      "last_line": 2469,
+      "line": 2467,
+      "phase": "lowering",
+      "reason": "/tmp/checked-any-next-sites-v8/042/src/compiler/__any_probe.ts:2468:38: stage 0 can't lower a computed key without an own data field yet",
+      "references": [],
+      "source": "/tmp/checked-any-next-sites-v8/042/src/compiler/__any_probe.ts",
+      "source_stock_diagnostics": [],
+      "status": "refused",
+      "stop_kind": "refusal_inside_declaration",
+      "text": "any",
+      "unbound_type_parameters": []
+    },
+    {
+      "ambient_contracts": [],
+      "binding": "value",
+      "binding_kind": "Parameter",
+      "captures": [
+        {
+          "name": "createDiagnosticForNodeInSourceFileOrCompilerDiagnostic",
+          "type": "(sourceFile: TsConfigSourceFile | undefined, node: Node | undefined, message: DiagnosticMessage, ...args: DiagnosticArguments) => Diagnostic"
+        },
+        {
+          "name": "isCompilerOptionsValue",
+          "type": "(option: CommandLineOption | undefined, value: any) => value is CompilerOptionsValue"
+        },
+        {
+          "name": "convertJsonOptionOfListType",
+          "type": "(option: CommandLineOptionOfListType, values: readonly any[], basePath: string, errors: Diagnostic[], propertyAssignment: PropertyAssignment | undefined, valueExpression: ArrayLiteralExpression | undefined, sourceFile: TsConfigSourceFile | undefined) => any[]"
+        },
+        {
+          "name": "convertJsonOptionOfCustomType",
+          "type": "(opt: CommandLineOptionOfCustomType, value: string, errors: Diagnostic[], valueExpression?: Expression, sourceFile?: TsConfigSourceFile) => string | number | undefined"
+        },
+        {
+          "name": "validateJsonOptionValue",
+          "type": "<T extends CompilerOptionsValue>(opt: CommandLineOption, value: T, errors: Diagnostic[], valueExpression?: Expression, sourceFile?: TsConfigSourceFile) => T | undefined"
+        },
+        {
+          "name": "isNullOrUndefined",
+          "type": "(x: any) => x is null | undefined"
+        },
+        {
+          "name": "normalizeNonListOptionValue",
+          "type": "(option: CommandLineOption, basePath: string, value: any) => CompilerOptionsValue"
+        },
+        {
+          "name": "getCompilerOptionValueTypeString",
+          "type": "(option: CommandLineOption) => string"
+        }
+      ],
+      "checked_use_helpers": 0,
+      "column": 5,
+      "declaration_end": 161191,
+      "declaration_kind": "FunctionDeclaration",
+      "declaration_name": "convertJsonOption",
+      "declaration_sha256": "7e5f9186cd5a8a1c857cae034cd283974c7710ff82424a59dab15ccc013e9745",
+      "declaration_start": 159288,
+      "declaration_stop": "/tmp/checked-any-next-sites-v8/087/src/compiler/__any_probe.ts:3816:37: stage 0 can't lower an indirect call of a checked predicate overload yet",
+      "extraction": "original declaration text unchanged",
+      "file": "src/compiler/commandLineParser.ts",
+      "first_line": 3801,
+      "generic_declaration": false,
+      "imports_stubbed_as": "local ambient bindings with exact stock import-type queries; no runtime dependency modules",
+      "index": 87,
+      "kind": "any_declaration",
+      "last_line": 3833,
+      "line": 3803,
+      "phase": "lowering",
+      "reason": "/tmp/checked-any-next-sites-v8/087/src/compiler/__any_probe.ts:3816:37: stage 0 can't lower an indirect call of a checked predicate overload yet",
+      "references": [
+        {
+          "column": 37,
+          "kind": "CallExpression",
+          "line": 3814,
+          "within_declaration": true
+        },
+        {
+          "column": 45,
+          "kind": "CallExpression",
+          "line": 3816,
+          "within_declaration": true
+        },
+        {
+          "column": 53,
+          "kind": "CallExpression",
+          "line": 3817,
+          "within_declaration": true
+        },
+        {
+          "column": 28,
+          "kind": "CallExpression",
+          "line": 3820,
+          "within_declaration": true
+        },
+        {
+          "column": 50,
+          "kind": "CallExpression",
+          "line": 3821,
+          "within_declaration": true
+        },
+        {
+          "column": 48,
+          "kind": "CallExpression",
+          "line": 3822,
+          "within_declaration": true
+        },
+        {
+          "column": 88,
+          "kind": "AsExpression",
+          "line": 3825,
+          "within_declaration": true
+        },
+        {
+          "column": 61,
+          "kind": "CallExpression",
+          "line": 3827,
+          "within_declaration": true
+        }
+      ],
+      "source": "/tmp/checked-any-next-sites-v8/087/src/compiler/__any_probe.ts",
+      "source_stock_diagnostics": [],
+      "status": "refused",
+      "stop_kind": "refusal_inside_declaration",
+      "text": "value: any",
+      "unbound_type_parameters": []
+    },
+    {
+      "ambient_contracts": [],
+      "binding": "value",
+      "binding_kind": "Parameter",
+      "captures": [
+        {
+          "name": "createDiagnosticForNodeInSourceFileOrCompilerDiagnostic",
+          "type": "(sourceFile: TsConfigSourceFile | undefined, node: Node | undefined, message: DiagnosticMessage, ...args: DiagnosticArguments) => Diagnostic"
+        },
+        {
+          "name": "isCompilerOptionsValue",
+          "type": "(option: CommandLineOption | undefined, value: any) => value is CompilerOptionsValue"
+        },
+        {
+          "name": "convertJsonOptionOfListType",
+          "type": "(option: CommandLineOptionOfListType, values: readonly any[], basePath: string, errors: Diagnostic[], propertyAssignment: PropertyAssignment | undefined, valueExpression: ArrayLiteralExpression | undefined, sourceFile: TsConfigSourceFile | undefined) => any[]"
+        },
+        {
+          "name": "convertJsonOptionOfCustomType",
+          "type": "(opt: CommandLineOptionOfCustomType, value: string, errors: Diagnostic[], valueExpression?: Expression, sourceFile?: TsConfigSourceFile) => string | number | undefined"
+        },
+        {
+          "name": "validateJsonOptionValue",
+          "type": "<T extends CompilerOptionsValue>(opt: CommandLineOption, value: T, errors: Diagnostic[], valueExpression?: Expression, sourceFile?: TsConfigSourceFile) => T | undefined"
+        },
+        {
+          "name": "isNullOrUndefined",
+          "type": "(x: any) => x is null | undefined"
+        },
+        {
+          "name": "normalizeNonListOptionValue",
+          "type": "(option: CommandLineOption, basePath: string, value: any) => CompilerOptionsValue"
+        },
+        {
+          "name": "getCompilerOptionValueTypeString",
+          "type": "(option: CommandLineOption) => string"
+        }
+      ],
+      "checked_use_helpers": 0,
+      "column": 12,
+      "declaration_end": 161191,
+      "declaration_kind": "FunctionDeclaration",
+      "declaration_name": "convertJsonOption",
+      "declaration_sha256": "7e5f9186cd5a8a1c857cae034cd283974c7710ff82424a59dab15ccc013e9745",
+      "declaration_start": 159288,
+      "declaration_stop": "/tmp/checked-any-next-sites-v8/088/src/compiler/__any_probe.ts:3816:37: stage 0 can't lower an indirect call of a checked predicate overload yet",
+      "extraction": "original declaration text unchanged",
+      "file": "src/compiler/commandLineParser.ts",
+      "first_line": 3801,
+      "generic_declaration": false,
+      "imports_stubbed_as": "local ambient bindings with exact stock import-type queries; no runtime dependency modules",
+      "index": 88,
+      "kind": "explicit_any",
+      "last_line": 3833,
+      "line": 3803,
+      "phase": "lowering",
+      "reason": "/tmp/checked-any-next-sites-v8/088/src/compiler/__any_probe.ts:3816:37: stage 0 can't lower an indirect call of a checked predicate overload yet",
+      "references": [
+        {
+          "column": 37,
+          "kind": "CallExpression",
+          "line": 3814,
+          "within_declaration": true
+        },
+        {
+          "column": 45,
+          "kind": "CallExpression",
+          "line": 3816,
+          "within_declaration": true
+        },
+        {
+          "column": 53,
+          "kind": "CallExpression",
+          "line": 3817,
+          "within_declaration": true
+        },
+        {
+          "column": 28,
+          "kind": "CallExpression",
+          "line": 3820,
+          "within_declaration": true
+        },
+        {
+          "column": 50,
+          "kind": "CallExpression",
+          "line": 3821,
+          "within_declaration": true
+        },
+        {
+          "column": 48,
+          "kind": "CallExpression",
+          "line": 3822,
+          "within_declaration": true
+        },
+        {
+          "column": 88,
+          "kind": "AsExpression",
+          "line": 3825,
+          "within_declaration": true
+        },
+        {
+          "column": 61,
+          "kind": "CallExpression",
+          "line": 3827,
+          "within_declaration": true
+        }
+      ],
+      "source": "/tmp/checked-any-next-sites-v8/088/src/compiler/__any_probe.ts",
+      "source_stock_diagnostics": [],
+      "status": "refused",
+      "stop_kind": "refusal_inside_declaration",
+      "text": "any",
+      "unbound_type_parameters": []
+    },
+    {
+      "ambient_contracts": [],
+      "binding": "value",
+      "binding_kind": "Parameter",
+      "captures": [
+        {
+          "name": "startsWithConfigDirTemplate",
+          "type": "(value: any) => value is string"
+        }
+      ],
+      "checked_use_helpers": 0,
+      "column": 83,
+      "declaration_end": 161586,
+      "declaration_kind": "FunctionDeclaration",
+      "declaration_name": "normalizeNonListOptionValue",
+      "declaration_sha256": "2a3d2eccdf5980b60eeddddabd729befc19a20bee06d0d35a1db22d01e65b2d0",
+      "declaration_start": 161195,
+      "declaration_stop": "/tmp/checked-any-next-sites-v8/089/src/compiler/__any_probe.ts:3850:65: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "extraction": "original declaration text unchanged",
+      "file": "src/compiler/commandLineParser.ts",
+      "first_line": 3835,
+      "generic_declaration": false,
+      "imports_stubbed_as": "local ambient bindings with exact stock import-type queries; no runtime dependency modules",
+      "index": 89,
+      "kind": "any_declaration",
+      "last_line": 3844,
+      "line": 3835,
+      "phase": "lowering",
+      "reason": "/tmp/checked-any-next-sites-v8/089/src/compiler/__any_probe.ts:3850:65: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "references": [
+        {
+          "column": 9,
+          "kind": "BinaryExpression",
+          "line": 3837,
+          "within_declaration": true
+        },
+        {
+          "column": 34,
+          "kind": "CallExpression",
+          "line": 3837,
+          "within_declaration": true
+        },
+        {
+          "column": 9,
+          "kind": "BinaryExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 46,
+          "kind": "CallExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 81,
+          "kind": "CallExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 100,
+          "kind": "ConditionalExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 13,
+          "kind": "BinaryExpression",
+          "line": 3839,
+          "within_declaration": true
+        },
+        {
+          "column": 13,
+          "kind": "BinaryExpression",
+          "line": 3840,
+          "within_declaration": true
+        },
+        {
+          "column": 12,
+          "kind": "ReturnStatement",
+          "line": 3843,
+          "within_declaration": true
+        }
+      ],
+      "source": "/tmp/checked-any-next-sites-v8/089/src/compiler/__any_probe.ts",
+      "source_stock_diagnostics": [],
+      "status": "not_reached",
+      "stop_kind": "lowering_outside_declaration",
+      "text": "value: any",
+      "unbound_type_parameters": []
+    },
+    {
+      "ambient_contracts": [],
+      "binding": "value",
+      "binding_kind": "Parameter",
+      "captures": [
+        {
+          "name": "startsWithConfigDirTemplate",
+          "type": "(value: any) => value is string"
+        }
+      ],
+      "checked_use_helpers": 0,
+      "column": 90,
+      "declaration_end": 161586,
+      "declaration_kind": "FunctionDeclaration",
+      "declaration_name": "normalizeNonListOptionValue",
+      "declaration_sha256": "2a3d2eccdf5980b60eeddddabd729befc19a20bee06d0d35a1db22d01e65b2d0",
+      "declaration_start": 161195,
+      "declaration_stop": "/tmp/checked-any-next-sites-v8/090/src/compiler/__any_probe.ts:3850:65: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "extraction": "original declaration text unchanged",
+      "file": "src/compiler/commandLineParser.ts",
+      "first_line": 3835,
+      "generic_declaration": false,
+      "imports_stubbed_as": "local ambient bindings with exact stock import-type queries; no runtime dependency modules",
+      "index": 90,
+      "kind": "explicit_any",
+      "last_line": 3844,
+      "line": 3835,
+      "phase": "lowering",
+      "reason": "/tmp/checked-any-next-sites-v8/090/src/compiler/__any_probe.ts:3850:65: Adamic 0.1 refuses a type predicate whose return is not proven (there is no body proving this parameter); inline the check where you use it, or return a discriminant comparison on the unmodified parameter (adamic/no-type-predicate)",
+      "references": [
+        {
+          "column": 9,
+          "kind": "BinaryExpression",
+          "line": 3837,
+          "within_declaration": true
+        },
+        {
+          "column": 34,
+          "kind": "CallExpression",
+          "line": 3837,
+          "within_declaration": true
+        },
+        {
+          "column": 9,
+          "kind": "BinaryExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 46,
+          "kind": "CallExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 81,
+          "kind": "CallExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 100,
+          "kind": "ConditionalExpression",
+          "line": 3838,
+          "within_declaration": true
+        },
+        {
+          "column": 13,
+          "kind": "BinaryExpression",
+          "line": 3839,
+          "within_declaration": true
+        },
+        {
+          "column": 13,
+          "kind": "BinaryExpression",
+          "line": 3840,
+          "within_declaration": true
+        },
+        {
+          "column": 12,
+          "kind": "ReturnStatement",
+          "line": 3843,
+          "within_declaration": true
+        }
+      ],
+      "source": "/tmp/checked-any-next-sites-v8/090/src/compiler/__any_probe.ts",
+      "source_stock_diagnostics": [],
+      "status": "not_reached",
+      "stop_kind": "lowering_outside_declaration",
+      "text": "any",
+      "unbound_type_parameters": []
+    }
+  ],
+  "source_commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+}

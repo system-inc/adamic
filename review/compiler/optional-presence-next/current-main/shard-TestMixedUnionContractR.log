@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:58:11.097527945Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:11.166389767Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T19:58:11.166579361Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== RUN   TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:11.166623794Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== PAUSE TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:11.166627276Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T19:58:11.166689299Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember"}
+{"Time":"2026-10-09T19:58:11.166698379Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"=== CONT  TestMixedUnionContractRecursiveMember\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:11.452757431Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Output":"--- PASS: TestMixedUnionContractRecursiveMember (0.28s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:11.452843678Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestMixedUnionContractRecursiveMember","Elapsed":0.28}
+{"Time":"2026-10-09T19:58:11.452886656Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:11.45292167Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.355}

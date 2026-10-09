@@ -1,0 +1,39 @@
+=== RUN   TestUndecidedCycleReadsUseReadyChecks
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_value
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_value2036415561/001/a.a]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_value2036415561/001/generated.mjs]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_value2036415561/001/native]: stdout "3\n", exit result exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_value
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_value114512923/001/b.a]: stdout "3\n1\n", exit result <nil>
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_value114512923/001/generated.mjs]: stdout "3\n1\n", exit result <nil>
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_value114512923/001/native]: stdout "3\n1\n", exit result <nil>
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/indirect_value
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksindirect_value2990046201/001/b.a]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksindirect_value2990046201/001/generated.mjs]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksindirect_value2990046201/001/native]: stdout "3\n", exit result exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_plain_class
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_plain_class410508035/001/a.a]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_plain_class410508035/001/generated.mjs]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_plain_class410508035/001/native]: stdout "3\n", exit result exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_plain_class2111536175/001/b.a]: stdout "3\n7\n", exit result <nil>
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_plain_class2111536175/001/generated.mjs]: stdout "3\n7\n", exit result <nil>
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_plain_class2111536175/001/native]: stdout "3\n7\n", exit result <nil>
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/early_extends
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_extends238488473/001/a.a]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_extends238488473/001/generated.mjs]: stdout "3\n", exit result exit status 1
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksearly_extends238488473/001/native]: stdout "3\n", exit result exit status 1
+=== RUN   TestUndecidedCycleReadsUseReadyChecks/initialized_extends
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_extends57279601/001/b.a]: stdout "3\nchild\n", exit result <nil>
+    import_cycle_ready_test.go:121: [node --disable-warning=ExperimentalWarning ../../oracle/node.mjs /workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_extends57279601/001/generated.mjs]: stdout "3\nchild\n", exit result <nil>
+    import_cycle_ready_test.go:130: [/workspace/scratch/eep-temp/TestUndecidedCycleReadsUseReadyChecksinitialized_extends57279601/001/native]: stdout "3\nchild\n", exit result <nil>
+--- PASS: TestUndecidedCycleReadsUseReadyChecks (3.95s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_value (0.52s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_value (0.67s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/indirect_value (0.83s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_plain_class (0.47s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_plain_class (0.47s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/early_extends (0.50s)
+    --- PASS: TestUndecidedCycleReadsUseReadyChecks/initialized_extends (0.49s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	3.972s

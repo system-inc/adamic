@@ -1,0 +1,12 @@
+// core.ts:1337 arrayFrom loop, specialized to the concrete string iterable.
+function arrayFrom(iterator: string): string[] {
+    const result: string[] = [];
+    for (const value of iterator) {
+        result.push(value);
+    }
+    return result;
+}
+const text = 'A' + String.fromCharCode(0xd83d, 0xde00, 0xd800) + 'Z';
+for (const value of arrayFrom(text)) {
+    console.log(`${value.length}:${value.charCodeAt(0)}`);
+}

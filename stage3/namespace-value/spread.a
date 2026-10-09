@@ -1,0 +1,4 @@
+namespace State { export let value = 1; }
+const held = State;
+const copy = { ...held };
+console.log(String(copy.value));

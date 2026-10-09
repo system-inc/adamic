@@ -1,0 +1,8 @@
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites/identity
+=== RUN   TestCheckedJSONPreservesIdentityAndOperandWrites/operand_write
+--- PASS: TestCheckedJSONPreservesIdentityAndOperandWrites (0.00s)
+    --- PASS: TestCheckedJSONPreservesIdentityAndOperandWrites/identity (0.00s)
+    --- PASS: TestCheckedJSONPreservesIdentityAndOperandWrites/operand_write (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.011s

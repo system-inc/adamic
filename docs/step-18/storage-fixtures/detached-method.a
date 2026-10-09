@@ -1,0 +1,10 @@
+// a-check: refused method read as a value
+const host = {
+    label: `owner${1}`,
+    report(value: string): string { return `${this.label}:${value}`; },
+};
+console.log('before');
+const callback = host.report;
+function invoke(value: ((text: string) => string) | undefined): void { console.log(value?.('value') ?? 'absent'); }
+invoke(callback);
+console.log('wrong: after');

@@ -1,0 +1,8 @@
+=== RUN   TestStep21ThrowPathLiveness
+=== PAUSE TestStep21ThrowPathLiveness
+=== CONT  TestStep21ThrowPathLiveness
+    step21_exceptions_test.go:179: old text is dead before a callback that throws into a catch reading it
+--- FAIL: TestStep21ThrowPathLiveness (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.050s
+FAIL

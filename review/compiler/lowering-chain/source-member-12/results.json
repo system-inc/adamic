@@ -1,0 +1,425 @@
+{
+  "main": "f54b8bd32ca773fb7533e8cfe481922b3c82ccb3",
+  "main_observations": {
+    "TestWeakDifferentialSome": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250653==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7b6d77fe0098 at pc 0x55e5ab616669 bp 0x7fff7d7511d0 sp 0x7fff7d7511c8\nREAD of size 8 at 0x7b6d77fe0098 thread T0\n    #0 0x55e5ab616668 in adamic_function_2_closure /tmp/adamic-gate/adamic-build-1185214627/main.c:122:89\n    #1 0x55e5ab616048 in adamic_function_0_run /tmp/adamic-gate/adamic-build-1185214627/main.c:77:38\n    #2 0x55e5ab616048 in main /tmp/adamic-gate/adamic-build-1185214627/main.c:137:2\n    #3 0x7f3d78f71ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7f3d78f71d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55e5ab52f460 in _start (/tmp/adamic-gate/TestWeakDifferentialSome2901530390/003/program+0x59460)\n\n0x7b6d77fe0098 is located 8 bytes before 24-byte region [0x7b6d77fe00a0,0x7b6d77fe00b8)\nallocated by thread T0 here:\n    #0 0x55e5ab5d2274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55e5ab628b9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7f3d78f71ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1185214627/main.c:122:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7b6d77fdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b6d77fdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b6d77fdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b6d77fdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7b6d77fe0000: fa fa 00 00 00 fa fa fa 00 00 00 00 fa fa 00 00\n=>0x7b6d77fe0080: 00 fa fa[fa]00 00 00 fa fa fa 00 00 00 fa fa fa\n  0x7b6d77fe0100: fd fd fd fd fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7b6d77fe0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b6d77fe0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b6d77fe0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7b6d77fe0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250653==ABORTING\n"
+      },
+      "seconds": 0.89
+    },
+    "TestWeakDifferentialFind": {
+      "Node": {
+        "exit": 0,
+        "stdout": "b1\nb1\nb1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "b1\nb1\nb1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250651==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7be9e7de0068 at pc 0x55f2dc97d77c bp 0x7fffb5b13b70 sp 0x7fffb5b13b68\nREAD of size 8 at 0x7be9e7de0068 thread T0\n    #0 0x55f2dc97d77b in adamic_function_2_closure /tmp/adamic-gate/adamic-build-2746897802/main.c:172:89\n    #1 0x55f2dc97cfb2 in adamic_function_0_run /tmp/adamic-gate/adamic-build-2746897802/main.c:75:38\n    #2 0x55f2dc97cfb2 in main /tmp/adamic-gate/adamic-build-2746897802/main.c:182:2\n    #3 0x7fb9e8bfeca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fb9e8bfed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55f2dc896460 in _start (/tmp/adamic-gate/TestWeakDifferentialFind1728219836/003/program+0x59460)\n\n0x7be9e7de0068 is located 8 bytes before 24-byte region [0x7be9e7de0070,0x7be9e7de0088)\nallocated by thread T0 here:\n    #0 0x55f2dc939274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55f2dc98fc9f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7fb9e8bfeca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-2746897802/main.c:172:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7be9e7ddfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7be9e7ddfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7be9e7ddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7be9e7ddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7be9e7ddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7be9e7de0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]00 00\n  0x7be9e7de0080: 00 fa fa fa 00 00 00 fa fa fa fd fd fd fd fa fa\n  0x7be9e7de0100: 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7be9e7de0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7be9e7de0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7be9e7de0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250651==ABORTING\n"
+      },
+      "seconds": 0.84
+    },
+    "TestWeakDifferentialReduce": {
+      "Node": {
+        "exit": 0,
+        "stdout": "4\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "4\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250659==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c06a4de0068 at pc 0x56145f641493 bp 0x7fff210d0c50 sp 0x7fff210d0c48\nREAD of size 8 at 0x7c06a4de0068 thread T0\n    #0 0x56145f641492 in adamic_function_2_closure /tmp/adamic-gate/adamic-build-2997505824/main.c:116:89\n    #1 0x56145f640ee8 in adamic_function_0_run /tmp/adamic-gate/adamic-build-2997505824/main.c:73:38\n    #2 0x56145f640ee8 in main /tmp/adamic-gate/adamic-build-2997505824/main.c:126:2\n    #3 0x7fd6a5d1dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fd6a5d1dd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x56145f55a460 in _start (/tmp/adamic-gate/TestWeakDifferentialReduce3298934104/003/program+0x59460)\n\n0x7c06a4de0068 is located 8 bytes before 24-byte region [0x7c06a4de0070,0x7c06a4de0088)\nallocated by thread T0 here:\n    #0 0x56145f5fd274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x56145f6539bf in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7fd6a5d1dca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-2997505824/main.c:116:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7c06a4ddfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c06a4ddfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c06a4ddfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c06a4ddff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c06a4ddff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c06a4de0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]00 00\n  0x7c06a4de0080: 00 fa fa fa 00 00 00 fa fa fa fd fd fd fd fa fa\n  0x7c06a4de0100: 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7c06a4de0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c06a4de0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c06a4de0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250659==ABORTING\n"
+      },
+      "seconds": 0.93
+    },
+    "TestWeakDifferentialSort": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250655==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c2752be0098 at pc 0x55edc1db6312 bp 0x7ffe6464e860 sp 0x7ffe6464e858\nREAD of size 8 at 0x7c2752be0098 thread T0\n    #0 0x55edc1db6311 in adamic_function_2_closure /tmp/adamic-gate/adamic-build-4167197927/main.c:108:89\n    #1 0x55edc1db88fe in adamic_closure_call /home/agent/.cache/adamic/runtime/.build-4277247198/adamic.h:145:9\n    #2 0x55edc1db88fe in adamic_compare_closure /home/agent/.cache/adamic/runtime/.build-4277247198/array.c:198:18\n    #3 0x55edc1e0103f in order /home/agent/.cache/adamic/runtime/.build-4277247198/sort.c:43:16\n    #4 0x55edc1e00256 in count_run /home/agent/.cache/adamic/runtime/.build-4277247198/sort.c:115:16\n    #5 0x55edc1e00256 in sorted /home/agent/.cache/adamic/runtime/.build-4277247198/sort.c:531:19\n    #6 0x55edc1e00256 in sorted_or_stopped /home/agent/.cache/adamic/runtime/.build-4277247198/sort.c:559:2\n    #7 0x55edc1dfffcf in adamic_timsort /home/agent/.cache/adamic/runtime/.build-4277247198/sort.c:575:18\n    #8 0x55edc1db8477 in adamic_array_sort /home/agent/.cache/adamic/runtime/.build-4277247198/array.c:167:7\n    #9 0x55edc1db5dfc in adamic_function_0_run /tmp/adamic-gate/adamic-build-4167197927/main.c:64:2\n    #10 0x55edc1db5dfc in main /tmp/adamic-gate/adamic-build-4167197927/main.c:120:2\n    #11 0x7ff753acaca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #12 0x7ff753acad64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #13 0x55edc1ccf460 in _start (/tmp/adamic-gate/TestWeakDifferentialSort2856265143/003/program+0x59460)\n\n0x7c2752be0098 is located 8 bytes before 24-byte region [0x7c2752be00a0,0x7c2752be00b8)\nallocated by thread T0 here:\n    #0 0x55edc1d72274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55edc1db7336 in adamic_array_new /home/agent/.cache/adamic/runtime/.build-4277247198/array.c:19:21\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-4167197927/main.c:108:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7c2752bdfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2752bdfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2752bdff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2752bdff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c2752be0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa fa 00 00\n=>0x7c2752be0080: 00 fa fa[fa]00 00 00 fa fa fa fd fd fd fd fa fa\n  0x7c2752be0100: 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7c2752be0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2752be0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2752be0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c2752be0300: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250655==ABORTING\n"
+      },
+      "seconds": 0.91
+    },
+    "TestWeakDifferentialViewMethodParameter": {
+      "Node": {
+        "exit": 0,
+        "stdout": "t1 b1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "t1 b1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 0,
+        "stdout": "t1 none\n",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250657==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bec749e0068 at pc 0x5584ebbf61e8 bp 0x7fff8e4122d0 sp 0x7fff8e4122c8\nREAD of size 8 at 0x7bec749e0068 thread T0\n    #0 0x5584ebbf61e7 in adamic_function_2_StrongTaker_take /tmp/adamic-gate/adamic-build-3031548944/main.c:138:142\n    #1 0x5584ebbf61e7 in adamic_method_2 /tmp/adamic-gate/adamic-build-3031548944/main.c:25:37\n    #2 0x5584ebbf5db8 in adamic_function_0_run /tmp/adamic-gate/adamic-build-3031548944/main.c:63:36\n    #3 0x5584ebbf5db8 in main /tmp/adamic-gate/adamic-build-3031548944/main.c:158:2\n    #4 0x7fbc75806ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x7fbc75806d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #6 0x5584ebb0f460 in _start (/tmp/adamic-gate/TestWeakDifferentialViewMethodParameter2078406924/003/program+0x59460)\n\n0x7bec749e0068 is located 16 bytes after 24-byte region [0x7bec749e0040,0x7bec749e0058)\nallocated by thread T0 here:\n    #0 0x5584ebbb2274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x5584ebc0870f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7fbc75806ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-3031548944/main.c:138:142 in adamic_function_2_StrongTaker_take\nShadow bytes around the buggy address:\n  0x7bec749dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bec749dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bec749dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bec749dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bec749dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7bec749e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]fa fa\n  0x7bec749e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bec749e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bec749e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bec749e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bec749e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250657==ABORTING\n"
+      },
+      "seconds": 0.92
+    },
+    "TestWeakDifferentialMap": {
+      "Node": {
+        "exit": 0,
+        "stdout": "a1,b1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "a1,b1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250780==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7bd9631e0068 at pc 0x55f067943530 bp 0x7fff048b4010 sp 0x7fff048b4008\nREAD of size 8 at 0x7bd9631e0068 thread T0\n    #0 0x55f06794352f in adamic_function_2_closure /tmp/adamic-gate/adamic-build-3087098119/main.c:117:89\n    #1 0x55f067943004 in adamic_function_0_run /tmp/adamic-gate/adamic-build-3087098119/main.c:73:38\n    #2 0x55f067943004 in main /tmp/adamic-gate/adamic-build-3087098119/main.c:126:2\n    #3 0x7fa963e2eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fa963e2ed64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55f06785c460 in _start (/tmp/adamic-gate/TestWeakDifferentialMap58960489/003/program+0x59460)\n\n0x7bd9631e0068 is located 8 bytes before 24-byte region [0x7bd9631e0070,0x7bd9631e0088)\nallocated by thread T0 here:\n    #0 0x55f0678ff274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55f067955a4f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7fa963e2eca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-3087098119/main.c:117:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7bd9631dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd9631dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd9631dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd9631dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7bd9631dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7bd9631e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]00 00\n  0x7bd9631e0080: 00 fa fa fa 00 00 00 fa fa fa fd fd fd fd fa fa\n  0x7bd9631e0100: 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7bd9631e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd9631e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7bd9631e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250780==ABORTING\n"
+      },
+      "seconds": 0.8
+    },
+    "TestWeakDifferentialSingleNarrowed": {
+      "Node": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "seconds": 0.69
+    },
+    "TestWeakDifferentialUnionNarrowed": {
+      "Node": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "/tmp/adamic-gate/adamic-build-1696750474/main.c:67:97: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /tmp/adamic-gate/adamic-build-1696750474/main.c:67:97 \n"
+      },
+      "seconds": 0.68
+    },
+    "TestWeakDifferentialEach": {
+      "Node": {
+        "exit": 0,
+        "stdout": "a1\nb1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "a1\nb1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "=================================================================\n==250776==ERROR: AddressSanitizer: heap-buffer-overflow on address 0x7c0b0f9e0068 at pc 0x55de659ff372 bp 0x7ffcad177750 sp 0x7ffcad177748\nREAD of size 8 at 0x7c0b0f9e0068 thread T0\n    #0 0x55de659ff371 in adamic_function_2_closure /tmp/adamic-gate/adamic-build-1250744189/main.c:108:89\n    #1 0x55de659feede in adamic_function_0_run /tmp/adamic-gate/adamic-build-1250744189/main.c:72:3\n    #2 0x55de659feede in main /tmp/adamic-gate/adamic-build-1250744189/main.c:118:2\n    #3 0x7fdb109b4ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fdb109b4d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55de65918460 in _start (/tmp/adamic-gate/TestWeakDifferentialEach3355606081/003/program+0x59460)\n\n0x7c0b0f9e0068 is located 8 bytes before 24-byte region [0x7c0b0f9e0070,0x7c0b0f9e0088)\nallocated by thread T0 here:\n    #0 0x55de659bb274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\n    #1 0x55de65a1189f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:196:10\n    #2 0x7fdb109b4ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n\nSUMMARY: AddressSanitizer: heap-buffer-overflow /tmp/adamic-gate/adamic-build-1250744189/main.c:108:89 in adamic_function_2_closure\nShadow bytes around the buggy address:\n  0x7c0b0f9dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b0f9dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b0f9dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b0f9dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n  0x7c0b0f9dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\n=>0x7c0b0f9e0000: fa fa 00 00 00 fa fa fa 00 00 00 fa fa[fa]00 00\n  0x7c0b0f9e0080: 00 fa fa fa 00 00 00 fa fa fa fd fd fd fd fa fa\n  0x7c0b0f9e0100: 00 00 00 00 fa fa 00 00 00 00 fa fa fa fa fa fa\n  0x7c0b0f9e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b0f9e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\n  0x7c0b0f9e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\nShadow byte legend (one shadow byte represents 8 application bytes):\n  Addressable:           00\n  Partially addressable: 01 02 03 04 05 06 07 \n  Heap left redzone:       fa\n  Freed heap region:       fd\n  Stack left redzone:      f1\n  Stack mid redzone:       f2\n  Stack right redzone:     f3\n  Stack after return:      f5\n  Stack use after scope:   f8\n  Global redzone:          f9\n  Global init order:       f6\n  Poisoned by user:        f7\n  Container overflow:      fc\n  Array cookie:            ac\n  Intra object redzone:    bb\n  ASan internal:           fe\n  Left alloca redzone:     ca\n  Right alloca redzone:    cb\n==250776==ABORTING\n"
+      },
+      "seconds": 0.66
+    },
+    "TestWeakDifferentialViewMethod": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true b1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": -1,
+        "stdout": "",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "AddressSanitizer:DEADLYSIGNAL\n=================================================================\n==250782==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55a145a8471c bp 0x7ffe01b9d540 sp 0x7ffe01b9d490 T0)\n==250782==The signal is caused by a READ memory access.\n==250782==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\n    #0 0x55a145a8471c in adamic_retain /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:226:28\n    #1 0x55a145a71d98 in adamic_function_0_run /tmp/adamic-gate/adamic-build-2726321448/main.c:59:56\n    #2 0x55a145a71d98 in main /tmp/adamic-gate/adamic-build-2726321448/main.c:162:2\n    #3 0x7fc8c19e5ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #4 0x7fc8c19e5d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\n    #5 0x55a14598b460 in _start (/tmp/adamic-gate/TestWeakDifferentialViewMethod2440722203/003/program+0x59460)\n\n==250782==Register values:\nrax = 0xa5a5f004e010f2a0  rbx = 0x00007ffe01b9d4a0  rcx = 0x00007c28c0be0020  rdx = 0x14b4be009c021e54  \nrdi = 0xa5a5f004e010f2a0  rsi = 0x00007c28c0be0030  rbp = 0x00007ffe01b9d540  rsp = 0x00007ffe01b9d490  \n r8 = 0x00000f851817c016   r9 = 0x0000000000000000  r10 = 0x00000f851817c016  r11 = 0x0000000000000000  \nr12 = 0x0000000000000000  r13 = 0x00007c28c0be0080  r14 = 0x00007c28c0be0080  r15 = 0x00007c28c0be0020  \nAddressSanitizer can not provide additional info.\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-4277247198/heap.c:226:28 in adamic_retain\n==250782==ABORTING\n"
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "true b1\n",
+        "stderr": ""
+      },
+      "seconds": 0.72
+    }
+  },
+  "final_observations": {
+    "TestWeakDifferentialEach": {
+      "Node": {
+        "exit": 0,
+        "stdout": "a1\nb1\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_each.a:10:2: stage 0 can't lower forEach callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.92
+    },
+    "TestWeakDifferentialFind": {
+      "Node": {
+        "exit": 0,
+        "stdout": "b1\nb1\nb1\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_find.a:10:16: stage 0 can't lower find callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.89
+    },
+    "TestWeakDifferentialMap": {
+      "Node": {
+        "exit": 0,
+        "stdout": "a1,b1\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_map.a:10:14: stage 0 can't lower map callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.92
+    },
+    "TestWeakDifferentialUnionNarrowed": {
+      "Node": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "sanitized": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "seconds": 1.61
+    },
+    "TestWeakDifferentialSingleNarrowed": {
+      "Node": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "sanitized": {
+        "exit": 70,
+        "stdout": "before\n",
+        "stderr": "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+      },
+      "seconds": 1.31
+    },
+    "TestWeakDifferentialMatchingMethods": {
+      "Node": {
+        "exit": 0,
+        "stdout": "t1 b1\ntrue b1\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "t1 b1\ntrue b1\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 0,
+        "stdout": "t1 b1\ntrue b1\n",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 0,
+        "stdout": "t1 b1\ntrue b1\n",
+        "stderr": ""
+      },
+      "seconds": 1.36
+    },
+    "TestWeakDifferentialViewMethodParameter": {
+      "Node": {
+        "exit": 0,
+        "stdout": "t1 b1\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_view_method_parameter.a:19:27: stage 0 can't lower a StrongTaker seen as a WeakTaker (one keeps something weakly that the other keeps strongly) yet",
+      "seconds": 0.49
+    },
+    "TestWeakDifferentialViewMethod": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true b1\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_view_method.a:19:29: stage 0 can't lower a StrongGetter seen as a WeakGetter (one keeps something weakly that the other keeps strongly) yet",
+      "seconds": 0.64
+    },
+    "TestWeakDifferentialHeldUnion": {
+      "Node": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "javascript": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "release": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 0,
+        "stdout": "before\nafter: nn\n",
+        "stderr": ""
+      },
+      "seconds": 1.57
+    },
+    "TestWeakDifferentialBooleanFilter": {
+      "Node": {
+        "exit": 0,
+        "stdout": "a1\nb1\n",
+        "stderr": ""
+      },
+      "sanitized": {
+        "exit": 70,
+        "stdout": "text a\n",
+        "stderr": "adamic: panic: overload 1 of isText result: predicate x is false\n"
+      },
+      "javascript": {
+        "exit": 70,
+        "stdout": "text a\n",
+        "stderr": "adamic: panic: overload 1 of isText result: predicate x is false\n"
+      },
+      "release": {
+        "exit": 70,
+        "stdout": "text a\n",
+        "stderr": "adamic: panic: overload 1 of isText result: predicate x is false\n"
+      },
+      "seconds": 1.84
+    },
+    "TestWeakDifferentialSome": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_some.a:10:15: stage 0 can't lower some callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.64
+    },
+    "TestWeakDifferentialSort": {
+      "Node": {
+        "exit": 0,
+        "stdout": "true\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_sort.a:10:2: stage 0 can't lower sort callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.54
+    },
+    "TestWeakDifferentialReduce": {
+      "Node": {
+        "exit": 0,
+        "stdout": "4\n",
+        "stderr": ""
+      },
+      "stop": "/workspace/adamic/internal/oracle/testdata/weak_miscompiles/9984394_narrowed_reduce.a:10:16: stage 0 can't lower reduce callback over narrowed Weak elements whose parameter needs handle-to-target conversion; use a loop with an explicit narrowed copy yet",
+      "seconds": 0.55
+    }
+  },
+  "node_observations_unchanged": true
+}

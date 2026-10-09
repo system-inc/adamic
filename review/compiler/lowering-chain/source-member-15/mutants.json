@@ -1,0 +1,112 @@
+[
+  {
+    "mutant": "refusal-revert",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningRefuseMap",
+      "TestCallbackWideningRefuseSome",
+      "TestCallbackWideningRefuseEvery",
+      "TestCallbackWideningRefuseReduce",
+      "TestCallbackWideningRefuseForEach",
+      "TestCallbackWideningRefuseFind",
+      "TestCallbackWideningRefuseFilter",
+      "TestCallbackWideningRefuseSort"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=5m",
+      "-overlay=/tmp/adamic-gate/callback-widening-mutants-xnnyrziu/refusal-revert/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningRefuse"
+    ]
+  },
+  {
+    "mutant": "adaptation-omitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningNumberEvery",
+      "TestCallbackWideningNumberGenericMap",
+      "TestCallbackWideningNumberSome",
+      "TestCallbackWideningNumberReduce",
+      "TestCallbackWideningNumberForEach",
+      "TestCallbackWideningNumberMap",
+      "TestCallbackWideningNumberFind",
+      "TestCallbackWideningNumberFilter",
+      "TestCallbackWideningNumberSort"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=5m",
+      "-overlay=/tmp/adamic-gate/callback-widening-mutants-xnnyrziu/adaptation-omitted/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningNumber(Map|Filter|ForEach|Find|Some|Every|Reduce|Sort|GenericMap)$"
+    ]
+  },
+  {
+    "mutant": "nullable-token-omitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningNullableObjectMap"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=5m",
+      "-overlay=/tmp/adamic-gate/callback-widening-mutants-xnnyrziu/nullable-token-omitted/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningNullableObjectMap$"
+    ]
+  },
+  {
+    "mutant": "unrepresented-parameter-admitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackWideningUnrepresentedParameter"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=5m",
+      "-overlay=/tmp/adamic-gate/callback-widening-mutants-xnnyrziu/unrepresented-parameter-admitted/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestCallbackWideningUnrepresentedParameter$"
+    ]
+  },
+  {
+    "mutant": "adapter-target-omitted",
+    "caught": true,
+    "exit": 1,
+    "catchers": [
+      "TestCallbackAdapterTargets"
+    ],
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout=5m",
+      "-overlay=/tmp/adamic-gate/callback-widening-mutants-xnnyrziu/adapter-target-omitted/overlay.json",
+      "./internal/ir",
+      "-run",
+      "^TestCallbackAdapterTargets$"
+    ]
+  }
+]

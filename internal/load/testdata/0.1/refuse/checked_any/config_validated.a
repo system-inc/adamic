@@ -1,0 +1,15 @@
+// Reduced validation ordering from tsc's public JSON/config boundary.
+function convert(config: any): string {
+    if (typeof config !== 'object' || config === null) return 'diagnostic: expected object';
+    const value = config.value;
+    if (typeof value !== 'string') return 'diagnostic: expected string';
+    return value;
+}
+console.log(convert({ value: 'node' }));
+console.log(convert({ value: 14 }));
+console.log(convert(14));
+console.log(convert(false));
+console.log(convert(null));
+console.log(convert(undefined));
+console.log(convert('text'));
+console.log(convert([14]));

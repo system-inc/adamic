@@ -45,7 +45,6 @@ stage1/cohere/estree/recovery_shards_test.go	TestRecoveryShardProofChild
 stage1/cohere/lint/regex/shapes_test.go	TestShapeFixtures
 stage1/cohere/tsprinter/expression_products_test.go	TestTSPrinterCachedMetadataRelocation
 stage1/cohere/tsprinter/expressions_test.go	TestExpressionsAgainstGoAndPrettier
-stage1/cohere/tsprinter/tsc_corpus_test.go	TestTSCCorpusAgreement
 stage1/cohere/tsprinter/tsc_units_test.go	TestTSCShardPlantedDisagreement
 stage1/cohere/tsprinter/tsc_units_test.go	TestTSCShardUnionRejectsMissingAndRepeated
 stage1/typescript/parser/performance_test.go	TestWholePerformance

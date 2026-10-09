@@ -1,0 +1,6 @@
+=== RUN   TestLexerGaps
+    gaps_test.go:20: /workspace/adamic/stage1/cohere/yaml/gaps/multiplePush.ts:2:1: stage 0 can't lower push with other than one value yet
+--- FAIL: TestLexerGaps (0.13s)
+FAIL
+FAIL	github.com/system-inc/adamic/stage1/cohere/yaml	0.137s
+FAIL

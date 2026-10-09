@@ -1,0 +1,213 @@
+{
+  "added": [
+    {
+      "row": "internal/oracle/testdata/generators/basic.a",
+      "after": [
+        "30",
+        "30",
+        "85",
+        "101",
+        "14",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/cancellation.a",
+      "after": [
+        "23",
+        "23",
+        "65",
+        "74",
+        "14",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/throw.a",
+      "after": [
+        "16",
+        "16",
+        "75",
+        "74",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/defaults.a",
+      "after": [
+        "29",
+        "29",
+        "104",
+        "107",
+        "21",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/close.a",
+      "after": [
+        "27",
+        "27",
+        "57",
+        "59",
+        "13",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/delegate.a",
+      "after": [
+        "89",
+        "89",
+        "316",
+        "332",
+        "51",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/delegate_throw.a",
+      "after": [
+        "28",
+        "28",
+        "158",
+        "151",
+        "22",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/reentrant.a",
+      "after": [
+        "14",
+        "14",
+        "53",
+        "54",
+        "11",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/owned.a",
+      "after": [
+        "32",
+        "32",
+        "132",
+        "130",
+        "21",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/captures.a",
+      "after": [
+        "31",
+        "31",
+        "95",
+        "95",
+        "24",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/default_error.a",
+      "after": [
+        "13",
+        "13",
+        "31",
+        "30",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/map_iterator.a",
+      "after": [
+        "24",
+        "24",
+        "95",
+        "103",
+        "15",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/checker.a",
+      "after": [
+        "20",
+        "20",
+        "104",
+        "93",
+        "16",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/first_reference.a",
+      "after": [
+        "17",
+        "17",
+        "73",
+        "72",
+        "12",
+        "0"
+      ]
+    },
+    {
+      "row": "internal/oracle/testdata/generators/completions.a",
+      "after": [
+        "59",
+        "59",
+        "166",
+        "175",
+        "38",
+        "0"
+      ]
+    }
+  ],
+  "changed": [
+    {
+      "row": "internal/oracle/testdata/regexp.a",
+      "before": [
+        "437",
+        "437",
+        "382",
+        "417",
+        "58",
+        "0"
+      ],
+      "after": [
+        "437",
+        "437",
+        "383",
+        "418",
+        "58",
+        "0"
+      ],
+      "reason": "Conflicts: ir.go retains SourceLength and Generator metadata; iteration.go retains dynamic cached ordinary iterator dispatch, truthy done reads, destructuring type metadata and adds generator next/return with explicit undefined input. Generator close bypasses the zero-argument ordinary protocol adapter after ASan exposed a stack read; freshness treats accessor-capable iterator nodes conservatively as calls. counts.md seeded from ours and regenerated once. Existing regexp rows change because boxed iterator values now own reads, as measured by the source lane; every extra changed row is audited separately. Source generator and native test-split evidence moved under this branch. Focused generator Node comparisons in both backends with sanitizers, analyses and call-target readers pass; cancellation finally omission overlay caught; native artifact reuse and regexp result shape controls pass. Vet passes."
+    },
+    {
+      "row": "internal/fresh/testdata/regexp_tree.ts",
+      "before": [
+        "91",
+        "91",
+        "81",
+        "85",
+        "35",
+        "0"
+      ],
+      "after": [
+        "91",
+        "91",
+        "85",
+        "89",
+        "35",
+        "0"
+      ],
+      "reason": "Conflicts: ir.go retains SourceLength and Generator metadata; iteration.go retains dynamic cached ordinary iterator dispatch, truthy done reads, destructuring type metadata and adds generator next/return with explicit undefined input. Generator close bypasses the zero-argument ordinary protocol adapter after ASan exposed a stack read; freshness treats accessor-capable iterator nodes conservatively as calls. counts.md seeded from ours and regenerated once. Existing regexp rows change because boxed iterator values now own reads, as measured by the source lane; every extra changed row is audited separately. Source generator and native test-split evidence moved under this branch. Focused generator Node comparisons in both backends with sanitizers, analyses and call-target readers pass; cancellation finally omission overlay caught; native artifact reuse and regexp result shape controls pass. Vet passes."
+    }
+  ],
+  "removed": [],
+  "rows": 1256
+}

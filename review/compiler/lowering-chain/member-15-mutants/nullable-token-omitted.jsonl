@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T07:17:06.088546949Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T07:17:06.096430653Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap"}
+{"Time":"2026-10-09T07:17:06.09654883Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Output":"=== RUN   TestCallbackWideningNullableObjectMap\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.096593638Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Output":"=== PAUSE TestCallbackWideningNullableObjectMap\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.096596181Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap"}
+{"Time":"2026-10-09T07:17:06.096610082Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap"}
+{"Time":"2026-10-09T07:17:06.096612376Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Output":"=== CONT  TestCallbackWideningNullableObjectMap\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.605140236Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Output":"    callback_widening_test.go:172: native: exit codes differ; stdout \"\" stderr \"adamic: panic: union member where the checker narrowed it away: a call since the narrowing put it back\\n\" exit 70\n","OutputType":"error"}
+{"Time":"2026-10-09T07:17:06.605918565Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Output":"--- FAIL: TestCallbackWideningNullableObjectMap (0.51s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.605949983Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestCallbackWideningNullableObjectMap","Elapsed":0.51}
+{"Time":"2026-10-09T07:17:06.605999227Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.611558223Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=0\n"}
+{"Time":"2026-10-09T07:17:06.611577292Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T07:17:06.611580176Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T07:17:06.611643541Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.523s\n","OutputType":"frame"}
+{"Time":"2026-10-09T07:17:06.611652485Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.523}

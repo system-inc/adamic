@@ -1,0 +1,17 @@
+{"Time":"2026-10-09T19:58:48.844817214Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T19:58:48.891426Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02"}
+{"Time":"2026-10-09T19:58:48.891493067Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02","Output":"=== RUN   TestRecordMutantsUnit02\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:48.891535724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02","Output":"=== PAUSE TestRecordMutantsUnit02\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:48.891539559Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02"}
+{"Time":"2026-10-09T19:58:48.891543566Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02"}
+{"Time":"2026-10-09T19:58:48.891546115Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02","Output":"=== CONT  TestRecordMutantsUnit02\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:48.891549847Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated"}
+{"Time":"2026-10-09T19:58:48.891560111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated","Output":"=== RUN   TestRecordMutantsUnit02/deleted-key-iterated\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:54.106362405Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated","Output":"    record_test.go:237: adamic: counts: allocations 21 frees 21 retains 10 releases 22 peak 12 regions 0\n"}
+{"Time":"2026-10-09T19:58:54.502232391Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated","Output":"    record_test.go:244: caught by Node\n"}
+{"Time":"2026-10-09T19:58:54.503113562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated","Output":"--- PASS: TestRecordMutantsUnit02/deleted-key-iterated (5.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:54.503142344Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02/deleted-key-iterated","Elapsed":5.61}
+{"Time":"2026-10-09T19:58:54.503182Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02","Output":"--- PASS: TestRecordMutantsUnit02 (5.61s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:54.503186548Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRecordMutantsUnit02","Elapsed":5.61}
+{"Time":"2026-10-09T19:58:54.503190295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:54.542568528Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":5.698}

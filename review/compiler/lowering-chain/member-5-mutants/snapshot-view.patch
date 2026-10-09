@@ -1,0 +1,12 @@
+--- internal/lower/expression.go
++++ internal/lower/expression.go
+@@ -217,6 +217,9 @@
+ 	}
+ 	if err == nil {
+ 		err = l.readonlyArrayValue(node, value)
++		if err == nil && node.Parent != nil && node.Parent.Kind == ast.KindForOfStatement && node.Parent.AsForInOrOfStatement().Expression == node && l.readonlyArrayView(l.checker.GetTypeAtLocation(node)) != nil {
++			value = ir.ArraySlice{Array: value}
++		}
+ 	}
+ 	if err == nil {
+ 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {

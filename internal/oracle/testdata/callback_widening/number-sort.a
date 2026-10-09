@@ -1,0 +1,1 @@
+const cells=[1,2,3];cells.reverse();cells.sort((a:number | string,b:number | string):number => (typeof a==='number'?a:0)-(typeof b==='number'?b:0));console.log(cells.map(x => `${x}`).join(","));

@@ -1,0 +1,92 @@
+[
+  {
+    "mutant": "check-optional-receiver",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/optional-call-mutant-91elz3gc/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCall79$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "javascript-required-panic",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/optional-call-mutant-o2dczrxq/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "native-required-panic",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/optional-call-mutant-mcjtw9r3/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallRequired$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-flow-throw-edge",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/optional-call-mutant-ooi2l0c4/overlay.json",
+      "./internal/flow",
+      "-run",
+      "^TestOptionalAfterCallFlowEdges$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  },
+  {
+    "mutant": "drop-required-propagation",
+    "caught": true,
+    "exit": 1,
+    "command": [
+      "go",
+      "test",
+      "-overlay",
+      "/tmp/adamic-gate/optional-call-mutant-ite0q6fw/overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestOptionalAfterCallPropagation$",
+      "-count=1",
+      "-timeout",
+      "60s",
+      "-v"
+    ]
+  }
+]

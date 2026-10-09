@@ -1,0 +1,50 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:753: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/casts.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.02s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/casts.a (0.50s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/proven_upcasts.a (0.54s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_for_in.a (0.55s)
+PASS
+gate cache: native hits=3 misses=6
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.575s

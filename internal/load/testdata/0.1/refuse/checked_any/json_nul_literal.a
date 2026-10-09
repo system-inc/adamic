@@ -1,0 +1,4 @@
+interface Config { readonly value: '\0'; }
+function convertToObject(raw: any): Config { return raw; }
+const config = convertToObject({value: '\0'});
+console.log(String(config.value.length));

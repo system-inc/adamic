@@ -1,0 +1,34 @@
+=== RUN   TestStep21Uncaught
+=== PAUSE TestStep21Uncaught
+=== CONT  TestStep21Uncaught
+=== RUN   TestStep21Uncaught/step21_dynamic_uncaught
+=== PAUSE TestStep21Uncaught/step21_dynamic_uncaught
+=== RUN   TestStep21Uncaught/step21_object_uncaught
+=== PAUSE TestStep21Uncaught/step21_object_uncaught
+=== RUN   TestStep21Uncaught/exceptions_uncaught
+=== PAUSE TestStep21Uncaught/exceptions_uncaught
+=== RUN   TestStep21Uncaught/closures_throw_uncaught
+=== PAUSE TestStep21Uncaught/closures_throw_uncaught
+=== CONT  TestStep21Uncaught/step21_dynamic_uncaught
+=== CONT  TestStep21Uncaught/exceptions_uncaught
+=== CONT  TestStep21Uncaught/step21_object_uncaught
+=== CONT  TestStep21Uncaught/closures_throw_uncaught
+=== NAME  TestStep21Uncaught/exceptions_uncaught
+    step21_exceptions_test.go:219: uncaught lifetime check: exit 70 stderr ""
+=== NAME  TestStep21Uncaught/step21_dynamic_uncaught
+    step21_exceptions_test.go:219: uncaught lifetime check: exit 70 stderr ""
+=== NAME  TestStep21Uncaught/closures_throw_uncaught
+    step21_exceptions_test.go:219: uncaught lifetime check: exit 70 stderr ""
+=== NAME  TestStep21Uncaught/step21_object_uncaught
+    step21_exceptions_test.go:219: uncaught lifetime check: exit 70 stderr ""
+--- FAIL: TestStep21Uncaught (0.00s)
+    --- FAIL: TestStep21Uncaught/exceptions_uncaught (0.35s)
+    --- FAIL: TestStep21Uncaught/step21_dynamic_uncaught (0.38s)
+    --- FAIL: TestStep21Uncaught/closures_throw_uncaught (0.39s)
+    --- FAIL: TestStep21Uncaught/step21_object_uncaught (0.39s)
+FAIL
+gate cache: native hits=0 misses=4
+gate cache: node hits=0 misses=4
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.402s
+FAIL

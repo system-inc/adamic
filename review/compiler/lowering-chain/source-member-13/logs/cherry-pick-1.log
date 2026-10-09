@@ -1,0 +1,26 @@
+[compiler/placeholder-nonnull-main db195ccd2] Record the first uses of unset TypeScript placeholders
+ Date: Thu Oct 8 21:27:04 2026 +0000
+ 2 files changed, 5073 insertions(+)
+ create mode 100644 stage3/scouts/step09/nonnull/check-read-first.py
+ create mode 100644 stage3/scouts/step09/nonnull/read-first.json
+Auto-merging internal/ir/ir.go
+Auto-merging internal/javascript/javascript.go
+CONFLICT (content): Merge conflict in internal/javascript/javascript.go
+Auto-merging internal/lower/assignments.go
+Auto-merging internal/lower/class.go
+Auto-merging internal/lower/object.go
+Auto-merging internal/lower/readiness.go
+Auto-merging internal/lower/refusals.go
+CONFLICT (content): Merge conflict in internal/lower/refusals.go
+Auto-merging internal/native/emit_statements.go
+CONFLICT (content): Merge conflict in internal/native/emit_statements.go
+Auto-merging internal/oracle/counts.md
+CONFLICT (content): Merge conflict in internal/oracle/counts.md
+error: could not apply 191939326... Preserve placeholder initialization and reset machinery
+hint: After resolving the conflicts, mark them with
+hint: "git add/rm <pathspec>", then run
+hint: "git cherry-pick --continue".
+hint: You can instead skip this commit with "git cherry-pick --skip".
+hint: To abort and get back to the state before "git cherry-pick",
+hint: run "git cherry-pick --abort".
+hint: Disable this message with "git config set advice.mergeConflict false"

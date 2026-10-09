@@ -1,0 +1,42 @@
+{
+  "branch": "compiler/refusal-rulings-main",
+  "base": "7459656e052d7172479a7ce14e35c314b3e622f1",
+  "function_commit": "c3782de63",
+  "tests": {
+    "TestFunctionAdamicUnusedAnnotationRefused": 0.19,
+    "TestMergedFieldAdamicComputedRefused": 0.2,
+    "TestMergedFieldAdamicReadRefused": 0.2,
+    "TestFunctionTypeScriptCallRefused": 0.25,
+    "TestFunctionAdamicCallAnnotationRefused": 0.13,
+    "TestMergedFieldAdamicUnusedRefused": 0.19,
+    "TestMergedFieldAdamicInitializedAgreesWithNode": 0.59,
+    "TestFunctionCallSignatureAgreesWithNode": 0.56,
+    "TestFunctionTypeScriptUnusedAccepted": 0.53,
+    "TestMergedFieldTypeScriptMissingChecked": 0.5,
+    "TestFunctionAdamicLengthAnnotationRefused": 0.16,
+    "TestFunctionTypeScriptLengthAgreesWithNode": 0.6,
+    "TestMergedFieldTypeScriptComputedChecked": 0.52,
+    "TestMergedFieldTypeScriptUnusedAccepted": 0.4,
+    "TestMergedFieldTypeScriptInitializedAgreesWithNode": 0.41
+  },
+  "mutants_caught": [
+    "function-annotation",
+    "function-call",
+    "function-length",
+    "merged-declaration",
+    "merged-read",
+    "merged-computed-read"
+  ],
+  "existing_counts_rows_changed": 0,
+  "new_counts_rows": 8,
+  "ruled_divergences": {
+    "merge_missing.a": "Node undefined; both backends exit 70, promised expected number found missing",
+    "merge_missing_computed.a": "Node undefined; both backends exit 70, promised expected number found missing"
+  },
+  "pending": [],
+  "not_covered": [
+    "constructor reflection through Function",
+    "other Function properties",
+    "full package gate"
+  ]
+}

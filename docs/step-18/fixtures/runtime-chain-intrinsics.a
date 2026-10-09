@@ -1,0 +1,54 @@
+// Reduced from builder.ts:1852's seenEmittedFiles?.get and checker optional array visits.
+let argumentsRun = 0;
+let selected: Map<string, number> | undefined = undefined;
+function key(): string { argumentsRun += 1; selected = undefined; return 'file'; }
+function probe(value: Map<string, number> | undefined): number {
+	selected = value;
+	return selected?.get(key()) ?? -1;
+}
+console.log(`${probe(undefined)}`);
+console.log(`${probe(new Map<string, number>([['file', 7]]))}`);
+console.log(`${argumentsRun} ${selected === undefined}`);
+function find(words: readonly string[] | undefined): string {
+	return words?.find((word: string): boolean => word.length > 2)?.toUpperCase() ?? 'absent';
+}
+console.log(find(undefined));
+console.log(find(['a']));
+console.log(find(['word']));
+function visit(words: readonly string[] | undefined): void {
+	words?.forEach((word: string): void => { console.log(word); });
+}
+visit(undefined);
+visit(['visited']);
+function operate(value: Map<string, number> | undefined): void {
+	console.log(`${value?.has('file') ?? false}`);
+	console.log(`${value?.set('file', 9).size ?? -1}`);
+	console.log(`${value?.delete('file') ?? false}`);
+	value?.clear();
+}
+operate(undefined);
+operate(new Map<string, number>([['file', 7]]));
+// utilities.ts:8257's newMap?.forEach, with the callback chosen only on presence.
+let selectedCallbacks = 0;
+function callback(): (n: number) => void {
+	selectedCallbacks += 1;
+	return (n: number): void => { console.log(`${n}`); };
+}
+function visitMap(value: Map<string, number> | undefined): void { value?.forEach(callback()); }
+visitMap(undefined);
+visitMap(new Map<string, number>([['file', 12]]));
+console.log(`${selectedCallbacks}`);
+function mapWords(words: readonly string[] | undefined): string {
+	return words?.map((word: string): string => word.toUpperCase())?.[0] ?? 'absent';
+}
+console.log(mapWords(undefined));
+console.log(mapWords(['mapped']));
+function dynamic(n: number): string { return `discarded${n}`; }
+function discard(value: Map<string, number> | undefined, action: (n: number) => void): void {
+	value?.forEach(action);
+}
+discard(new Map<string, number>([['file', 14]]), dynamic);
+function discardArray(value: readonly number[] | undefined, action: (n: number) => void): void {
+	value?.forEach(action);
+}
+discardArray([15], dynamic);

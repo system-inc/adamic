@@ -1,0 +1,99 @@
+=== RUN   TestOptionalFieldCheckedViewWrites
+=== PAUSE TestOptionalFieldCheckedViewWrites
+=== RUN   TestOptionalFieldCheckedViewMisfit
+=== PAUSE TestOptionalFieldCheckedViewMisfit
+=== RUN   TestOptionalFieldCheckedViewCatchesDroppedStore
+=== PAUSE TestOptionalFieldCheckedViewCatchesDroppedStore
+=== RUN   TestOptionalFieldCheckedViewCatchesMissingPublication
+=== PAUSE TestOptionalFieldCheckedViewCatchesMissingPublication
+=== RUN   TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== PAUSE TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== RUN   TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== PAUSE TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== RUN   TestOptionalFieldCheckedViewLiteral
+=== PAUSE TestOptionalFieldCheckedViewLiteral
+=== RUN   TestOptionalFieldCheckedViewEnumeration
+=== PAUSE TestOptionalFieldCheckedViewEnumeration
+=== RUN   TestOptionalFieldCheckedViewCatchesBooleanRead
+=== PAUSE TestOptionalFieldCheckedViewCatchesBooleanRead
+=== RUN   TestOptionalFieldCheckedViewCatchesMissingBoxing
+=== PAUSE TestOptionalFieldCheckedViewCatchesMissingBoxing
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestOptionalFieldCheckedViewWrites
+=== CONT  TestOptionalFieldCheckedViewCatchesBooleanRead
+=== CONT  TestOptionalFieldCheckedViewCatchesMissingBoxing
+=== CONT  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== CONT  TestOptionalFieldCheckedViewEnumeration
+=== NAME  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+    optional_field_view_test.go:182: native mutant caught, sanitize=false: exit 0 stdout "0:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:false\n" stderr ""
+=== NAME  TestOptionalFieldCheckedViewCatchesBooleanRead
+    optional_field_view_test.go:257: native mutant caught, sanitize=false: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:true\n" stderr ""
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingBoxing
+    optional_field_view_test.go:266: native mutant caught, sanitize=false: exit 0 stdout "undefined:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\nundefined:false\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewEnumeration (1.34s)
+=== CONT  TestOptionalFieldCheckedViewLiteral
+--- PASS: TestOptionalFieldCheckedViewWrites (1.74s)
+=== CONT  TestOptionalFieldCheckedViewCatchesMissingPublication
+    optional_field_view_test.go:169: native mutant caught, sanitize=false: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+=== NAME  TestOptionalFieldCheckedViewCatchesBooleanRead
+    optional_field_view_test.go:257: native mutant caught, sanitize=true: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:true\n" stderr ""
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingBoxing
+    optional_field_view_test.go:266: native mutant caught, sanitize=true: exit 0 stdout "undefined:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\nundefined:false\n" stderr ""
+=== NAME  TestOptionalFieldCheckedViewCatchesBooleanRead
+    optional_field_view_test.go:257: JavaScript mutant caught: exit 0 stdout "undefined:undefined:undefined\n0:0:true:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:true\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewCatchesBooleanRead (2.59s)
+=== CONT  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingBoxing
+    optional_field_view_test.go:266: JavaScript mutant caught: exit 0 stdout "undefined:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\nundefined:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\nundefined:undefined\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewCatchesMissingBoxing (2.59s)
+=== CONT  TestOptionalFieldCheckedViewCatchesDroppedStore
+=== NAME  TestOptionalFieldCheckedViewCatchesAbsentReadAsZero
+    optional_field_view_test.go:182: native mutant caught, sanitize=true: exit 0 stdout "0:undefined:undefined\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:false\n" stderr ""
+    optional_field_view_test.go:182: JavaScript mutant caught: exit 0 stdout "0:0:0\n0:0:false:storedstored\nkind,slot,flag,text\n0:kind,flag,text\n2:kind,flag,text,slot\n3:2:kind,flag,text,slot\n0:false\nreceiver\nvalue\n4\n5:false\n" stderr ""
+--- PASS: TestOptionalFieldCheckedViewCatchesAbsentReadAsZero (2.74s)
+=== CONT  TestOptionalFieldCheckedViewMisfit
+=== NAME  TestOptionalFieldCheckedViewLiteral
+    optional_field_view_test.go:227: omitted optional literal contract caught by pinned diagnostic in both backends
+--- PASS: TestOptionalFieldCheckedViewLiteral (1.38s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingPublication
+    optional_field_view_test.go:169: native mutant caught, sanitize=true: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+    optional_field_view_test.go:169: JavaScript mutant caught: exit 70 stdout "undefined:undefined:undefined\n" stderr "adamic: panic: undefined where the checker narrowed it away: a call since the narrowing put it back\n"
+--- PASS: TestOptionalFieldCheckedViewCatchesMissingPublication (1.29s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+    optional_field_view_test.go:176: native mutant caught, sanitize=false: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found nullish\n"
+--- PASS: TestOptionalFieldCheckedViewMisfit (0.57s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a
+=== NAME  TestOptionalFieldCheckedViewCatchesDroppedStore
+    optional_field_view_test.go:106: Node catches omitted checked optional store and presence
+--- PASS: TestOptionalFieldCheckedViewCatchesDroppedStore (0.79s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a
+=== NAME  TestOptionalFieldCheckedViewCatchesMissingWriteGuard
+    optional_field_view_test.go:176: native mutant caught, sanitize=true: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found nullish\n"
+    optional_field_view_test.go:176: JavaScript mutant caught: exit 70 stdout "writing\nstored\n" stderr "adamic: panic: field read failed: raw.slot is not a string; expected string, found number\n"
+--- PASS: TestOptionalFieldCheckedViewCatchesMissingWriteGuard (1.41s)
+--- PASS: TestNativeAgreesWithNode (0.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_pending.a (0.67s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_literal.a (0.73s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_misfit.a (0.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view_enumeration.a (0.66s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/optional_field_checked_view.a (0.69s)
+PASS
+gate cache: native hits=0 misses=15
+gate cache: node hits=0 misses=30
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.334s

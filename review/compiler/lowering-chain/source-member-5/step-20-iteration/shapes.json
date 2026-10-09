@@ -1,0 +1,514 @@
+{
+  "source_loop_count": 651,
+  "object_refusal_shapes": [
+    {
+      "where": "binder.ts:1296:36",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "binder.ts:2061:33",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "binder.ts:2809:33",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "binder.ts:2814:33",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "binder.ts:2824:37",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "binder.ts:375:41",
+      "type": "NodeArray<ExportSpecifier>"
+    },
+    {
+      "where": "binder.ts:432:37",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "builderState.ts:522:33",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "checker.ts:11771:39",
+      "type": "NodeArray<BindingElement>"
+    },
+    {
+      "where": "checker.ts:15779:30",
+      "type": "Iterable<Symbol>"
+    },
+    {
+      "where": "checker.ts:21550:29",
+      "type": "ElaborationIterator"
+    },
+    {
+      "where": "checker.ts:21679:28",
+      "type": "NodeArray<JsxAttributeLike>"
+    },
+    {
+      "where": "checker.ts:21861:28",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "checker.ts:28080:36",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "checker.ts:28466:34",
+      "type": "NodeArray<CaseOrDefaultClause>"
+    },
+    {
+      "where": "checker.ts:28480:30",
+      "type": "NodeArray<CaseOrDefaultClause>"
+    },
+    {
+      "where": "checker.ts:33555:28",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "checker.ts:33562:34",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "checker.ts:33962:29",
+      "type": "NodeArray<JsxChild>"
+    },
+    {
+      "where": "checker.ts:37008:35",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "checker.ts:38742:31",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "checker.ts:41285:28",
+      "type": "NodeArray<TemplateSpan>"
+    },
+    {
+      "where": "checker.ts:41390:25",
+      "type": "NodeArray<BindingElement>"
+    },
+    {
+      "where": "checker.ts:42104:31",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "checker.ts:42327:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:42353:30",
+      "type": "NodeArray<TypeElement>"
+    },
+    {
+      "where": "checker.ts:42881:25",
+      "type": "NodeArray<NamedTupleMember | TypeNode>"
+    },
+    {
+      "where": "checker.ts:43023:28",
+      "type": "NodeArray<TemplateLiteralTypeSpan>"
+    },
+    {
+      "where": "checker.ts:44206:32",
+      "type": "NodeArray<ModifierLike>"
+    },
+    {
+      "where": "checker.ts:44238:26",
+      "type": "NodeArray<TypeParameterDeclaration>"
+    },
+    {
+      "where": "checker.ts:44497:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:44942:34",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:46763:34",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:47233:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:47414:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:47764:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "checker.ts:47891:34",
+      "type": "NodeArray<EnumMember>"
+    },
+    {
+      "where": "checker.ts:48244:49",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "checker.ts:48294:38",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "checker.ts:48371:32",
+      "type": "NodeArray<ImportAttribute>"
+    },
+    {
+      "where": "checker.ts:52505:42",
+      "type": "NodeArray<HeritageClause>"
+    },
+    {
+      "where": "checker.ts:52540:42",
+      "type": "NodeArray<HeritageClause>"
+    },
+    {
+      "where": "checker.ts:52600:28",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "checker.ts:52717:28",
+      "type": "NodeArray<JsxAttributeLike>"
+    },
+    {
+      "where": "checker.ts:53209:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "checker.ts:53226:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "checker.ts:53486:28",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "core.ts:333:21",
+      "type": "Iterable<T>"
+    },
+    {
+      "where": "core.ts:438:21",
+      "type": "Iterable<T>"
+    },
+    {
+      "where": "core.ts:510:21",
+      "type": "Iterable<T>"
+    },
+    {
+      "where": "core.ts:97:29",
+      "type": "Iterable<T>"
+    },
+    {
+      "where": "debug.ts:397:49",
+      "type": "SortedReadonlyArray<[number, string]>"
+    },
+    {
+      "where": "debug.ts:411:49",
+      "type": "SortedReadonlyArray<[number, string]>"
+    },
+    {
+      "where": "emitter.ts:3505:33",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "expressionToTypeNode.ts:1006:31",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "expressionToTypeNode.ts:1026:28",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "expressionToTypeNode.ts:1066:28",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "expressionToTypeNode.ts:987:31",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "factory/nodeFactory.ts:7311:25",
+      "type": "MutableNodeArray<Node>"
+    },
+    {
+      "where": "factory/utilities.ts:1710:29",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "moduleNameResolver.ts:2716:35",
+      "type": "SortedReadonlyArray<string>"
+    },
+    {
+      "where": "moduleSpecifiers.ts:800:25",
+      "type": "readonly [\"dependencies\", \"peerDependencies\", \"optionalDependencies\"]"
+    },
+    {
+      "where": "parser.ts:10114:44",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "parser.ts:10124:32",
+      "type": "NodeArray<Node>"
+    },
+    {
+      "where": "parser.ts:10224:44",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "parser.ts:10267:48",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "parser.ts:10297:36",
+      "type": "NodeArray<Node>"
+    },
+    {
+      "where": "program.ts:3202:40",
+      "type": "NodeArray<ModifierLike>"
+    },
+    {
+      "where": "program.ts:3348:28",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "transformers/classFields.ts:1724:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/classFields.ts:2103:34",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/classFields.ts:2122:38",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/declarations.ts:1625:48",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2015.ts:1557:33",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "transformers/es2015.ts:1691:33",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "transformers/es2015.ts:1909:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "transformers/es2015.ts:2255:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/es2015.ts:2739:32",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/es2015.ts:3415:39",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2015.ts:3572:32",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/es2015.ts:4052:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2015.ts:4806:28",
+      "type": "NodeArray<TemplateSpan>"
+    },
+    {
+      "where": "transformers/es2017.ts:578:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2017.ts:616:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2017.ts:640:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/es2017.ts:708:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "transformers/es2018.ts:1148:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "transformers/es2018.ts:1244:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "transformers/es2018.ts:976:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "transformers/esDecorators.ts:604:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/esnext.ts:587:32",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/esnext.ts:625:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/generators.ts:1591:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/generators.ts:737:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/generators.ts:918:28",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "transformers/jsx.ts:271:28",
+      "type": "NodeArray<JsxAttributeLike>"
+    },
+    {
+      "where": "transformers/legacyDecorators.ts:174:30",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "transformers/module/module.ts:1660:37",
+      "type": "NodeArray<ExportSpecifier>"
+    },
+    {
+      "where": "transformers/module/module.ts:1827:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/module.ts:1983:49",
+      "type": "NodeArray<ImportSpecifier>"
+    },
+    {
+      "where": "transformers/module/module.ts:2038:28",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/module.ts:2060:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/module/module.ts:846:32",
+      "type": "NodeArray<ObjectLiteralElementLike>"
+    },
+    {
+      "where": "transformers/module/module.ts:873:32",
+      "type": "NodeArray<Expression>"
+    },
+    {
+      "where": "transformers/module/system.ts:1035:49",
+      "type": "NodeArray<ImportSpecifier>"
+    },
+    {
+      "where": "transformers/module/system.ts:1079:28",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/system.ts:1104:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/module/system.ts:1373:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/system.ts:647:49",
+      "type": "NodeArray<ExportSpecifier>"
+    },
+    {
+      "where": "transformers/module/system.ts:880:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/system.ts:899:36",
+      "type": "NodeArray<VariableDeclaration>"
+    },
+    {
+      "where": "transformers/module/system.ts:924:35",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "transformers/taggedTemplate.ts:68:36",
+      "type": "NodeArray<TemplateSpan>"
+    },
+    {
+      "where": "transformers/utilities.ts:163:27",
+      "type": "NodeArray<ImportSpecifier>"
+    },
+    {
+      "where": "transformers/utilities.ts:194:24",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "transformers/utilities.ts:304:33",
+      "type": "NodeArray<ExportSpecifier>"
+    },
+    {
+      "where": "transformers/utilities.ts:357:31",
+      "type": "NodeArray<BindingElement> | NodeArray<ArrayBindingElement>"
+    },
+    {
+      "where": "utilities.ts:10127:29",
+      "type": "NodeArray<Statement>"
+    },
+    {
+      "where": "utilities.ts:10736:31",
+      "type": "JSDocArray"
+    },
+    {
+      "where": "utilities.ts:11428:28",
+      "type": "NodeArray<TemplateSpan>"
+    },
+    {
+      "where": "utilities.ts:11457:26",
+      "type": "NodeArray<ClassElement>"
+    },
+    {
+      "where": "utilities.ts:3595:33",
+      "type": "NodeArray<ParameterDeclaration>"
+    },
+    {
+      "where": "utilities.ts:5244:30",
+      "type": "NodeArray<HeritageClause>"
+    },
+    {
+      "where": "utilities.ts:9853:31",
+      "type": "SortedReadonlyArray<string>"
+    },
+    {
+      "where": "utilities.ts:9876:31",
+      "type": "SortedReadonlyArray<string>"
+    }
+  ],
+  "counts": {
+    "NodeArray": 106,
+    "JSDocArray": 6,
+    "Iterable": 5,
+    "ElaborationIterator": 1,
+    "SortedReadonlyArray": 5,
+    "MutableNodeArray": 1,
+    "readonly [\"dependencies\", \"peerDependencies\", \"optionalDependencies\"]": 1
+  }
+}

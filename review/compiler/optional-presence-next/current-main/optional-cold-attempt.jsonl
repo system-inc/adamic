@@ -1,0 +1,1 @@
+{"prefix": "TestLiteralOptionalOracleCatchesMutant$", "names": ["TestLiteralOptionalOracleCatchesMutant"], "command": ["go", "test", "-buildvcs=false", "./internal/oracle", "-run", "^TestLiteralOptionalOracleCatchesMutant$", "-count=1", "-timeout", "80s", "-json"], "status": 124, "seconds": 85.048, "events": []}

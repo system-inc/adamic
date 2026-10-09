@@ -3,11 +3,13 @@ package scanner
 import (
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 	"github.com/system-inc/adamic/internal/lower"
+	"github.com/system-inc/adamic/internal/native"
 )
 
 func TestGapStandsWhereGapsMdSays(t *testing.T) {
@@ -28,10 +30,35 @@ func TestGapStandsWhereGapsMdSays(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	_, err = lower.Lower(context.Background(), program)
-	var notYet *lower.NotYet
-	if !errors.As(err, &notYet) || notYet.What != "push with other than one value" {
-		t.Fatalf("gap changed: %v; update GAPS.md and undo gap 1 workaround", err)
+	lowered, err := lower.Lower(context.Background(), program)
+	if err != nil {
+		t.Fatal(err)
+	}
+	binary := filepath.Join(t.TempDir(), "push")
+	if err := native.Build(native.C(lowered), binary, native.Options{Sanitize: true}); err != nil {
+		t.Fatal(err)
+	}
+	observed := execute(t, "", binary)
+	if string(observed.output) != string(result.output) {
+		t.Fatalf("native push: %q, Node: %q", observed.output, result.output)
+	}
+	// Hold the restored two-entry supplementary mapping to Go, including byte
+	// positions for a token following a supplementary identifier.
+	input := filepath.Join(t.TempDir(), "supplementary.a")
+	if err := os.WriteFile(input, []byte("const 𐐀 = 1; 𐐀;"), 0600); err != nil {
+		t.Fatal(err)
+	}
+	want := execute(t, "", goOracle(t), input, "scan")
+	root, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	source := execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(root, "main.ts"), input, "scan")
+	actual := execute(t, "", buildPort(t, ".", true), input, "scan")
+	for _, side := range []execution{source, actual} {
+		if diff := difference(side.output, want.output); diff != "" {
+			t.Fatal(diff)
+		}
 	}
 }
 

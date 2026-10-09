@@ -91,6 +91,11 @@ func (l *lowering) regexReplacementArgument(node *ast.Node) bool {
 
 // A union argument has a box and a mask of the actual kinds its declared type admits.
 func (l *lowering) regexReplacementKind(proven *checker.Type, of ir.Type) int {
+	// Any/unknown accept every value the replacement protocol provides, boxed.
+	// The callback checks its subsequent typed uses.
+	if proven.Flags()&(checker.TypeFlagsAny|checker.TypeFlagsUnknown) != 0 {
+		return 64 | 1 | 2 | 4 | 8
+	}
 	kind := map[ir.Type]int{ir.String: 1, ir.Number: 2, ir.Object: 3}[of]
 	if of == ir.Union {
 		kind = 64

@@ -1,0 +1,20 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a
+    oracle_test.go:774: exit codes differ
+        node:   exit 0, stdout "true|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\ntrue|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\nfalse|true|undefined|fallback\ntrue|false|object|7\ntrue|false|object|true\ntrue|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\nfalse|true|undefined|fallback\ntrue|false|object|7\ntrue|false|object|true\n", stderr ""
+        native: exit 70, stdout "true|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\ntrue|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\nfalse|true|undefined|fallback\ntrue|false|object|7\ntrue|false|object|true\ntrue|false|object|fallback\ntrue|false|object|7\ntrue|false|object|true\n", stderr "adamic: panic: field read failed: view.value is not a string; expected string, found unsupported representation\n"
+    oracle_test.go:787: leaks:
+        exit 70
+        adamic: panic: field read failed: view.value is not a string; expected string, found unsupported representation
+--- FAIL: TestNativeAgreesWithNode (0.14s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/placeholder_nonnull_null_copy.a (0.86s)
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	1.025s
+FAIL

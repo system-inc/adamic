@@ -1,0 +1,15 @@
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index 3bc227978..4eff1ec5f 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -122,6 +122,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 			found = err
+ 			return true
+ 		}
++		if err := l.knownLoweringGap(node); err != nil {
++			found = err
++			return true
++		}
+ 		if node.Kind == ast.KindTypePredicate {
+ 			found = l.predicateRefusal(node)
+ 			return found != nil

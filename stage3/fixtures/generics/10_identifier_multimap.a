@@ -1,0 +1,33 @@
+// Reduced from TypeScript transformers/utilities.ts:389 and :441; pin 050880ce.
+// Identifier keys become strings; getters, reflection and unused methods are removed.
+class IdentifierNameMap<V> {
+    private readonly map = new Map<string, V>();
+    get(key: string): V | undefined { return this.map.get(key); }
+    set(key: string, value: V): void { this.map.set(key, value); }
+}
+class IdentifierNameMultiMap<V> extends IdentifierNameMap<V[]> {
+    add(key: string, value: V): V[] {
+        let values = this.get(key);
+        if (values) {
+            values.push(value);
+        } else {
+            this.set(key, values = [value]);
+        }
+        return values;
+    }
+}
+// Driver additions put the class construction inside an enclosing type parameter.
+function create<V>(value: V): IdentifierNameMultiMap<V> {
+    const map = new IdentifierNameMultiMap<V>();
+    return map;
+}
+function relay<V>(value: V): IdentifierNameMultiMap<V> { return create(value); }
+const text = 'owned'.repeat(3);
+const words = relay(text);
+words.add('value', text);
+const first = words.add('value', 'second'.repeat(2));
+const second = words.add('value', 'third');
+console.log(`${first === second} ${first.join('/')}`);
+const numbers = relay(0);
+numbers.add('value', 0);
+console.log(numbers.add('value', 7).join('/'));

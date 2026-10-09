@@ -1,0 +1,49 @@
+{
+  "head": "e990d7d29a22b1924453d8e789c8add7a64174bd",
+  "a_check": {
+    "stage3/parser-ahead/factories/already-complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/complete.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/escaped.a": {
+      "outcome": "checked",
+      "expected": "checked",
+      "first": ""
+    },
+    "stage3/parser-ahead/factories/scout.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/factories/scout.a:6:12: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-ca"
+    },
+    "stage3/parser-ahead/node-array/fields.a": {
+      "outcome": "refused",
+      "expected": "refused a cast the runtime can't check",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/node-array/fields.a:16:14: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked"
+    },
+    "stage3/parser-ahead/node-array/presence.a": {
+      "outcome": "refused",
+      "expected": "refused an unproven relation",
+      "first": "adamic: /workspace/adamic/stage3/parser-ahead/node-array/presence.a:4:13: Adamic 0.1 refuses an unproven relation from { kind: number; }[] to OptionalNodeArray<Node>: optional field cache has no proven compatible presence/type; keep compatible optional fields in both views, or construct an object wi"
+    }
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null,
+  "scope": "changed .a only; pre-push record, not the full fast gate",
+  "input_sha256": {
+    "stage3/parser-ahead/factories/already-complete.a": "b400f86a6ac87e360617c493e1ba7545cbcea67dd7298b08b19c08eda1d25773",
+    "stage3/parser-ahead/factories/complete.a": "6a10b443d466a76d33b31eced5e0667a2cbcf03f89fac5185f311ad01c062d4f",
+    "stage3/parser-ahead/factories/escaped.a": "5b22fdf6327477f47a88f0288f56b1c520de97d04bec2149940a674364c1c866",
+    "stage3/parser-ahead/factories/scout.a": "6dde0b6585353e1201b1862b0716eb5ee9d94a1d17043dc51f8b1c363f65330f",
+    "stage3/parser-ahead/node-array/fields.a": "d64ed794cab8dfb7da7cba7a0d26ba492b590e0222253022512226c35abd871c",
+    "stage3/parser-ahead/node-array/presence.a": "07aab11483c9cc8761512926d3cfbe8d27ffe3d463b1e351bdb9694d6a58ca1a"
+  },
+  "worktree_status": " M docs/step24-parser-contract.md\n M internal/oracle/parser_ahead_test.go\n M stage3/parser-ahead/REPORT.md\n M stage3/parser-ahead/check-local.py\n M stage3/parser-ahead/evidence/pre-push.json\n?? internal/lower/node_array_layout.go\n?? internal/lower/node_array_layout_test.go\n?? stage3/parser-ahead/evidence/node-array-mutants.json\n?? stage3/parser-ahead/node-array/\n"
+}

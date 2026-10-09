@@ -1,0 +1,7 @@
+--- FAIL: TestCallTargetReaders (22.11s)
+    call_targets_guard_test.go:171: unapproved call-target read internal/lower/exceptions.go:throwsOutReadiness:ArraySort.Comparator at /workspace/adamic/internal/lower/exceptions.go:210:106; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:171: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /workspace/adamic/internal/lower/class_static_guard_test.go:45:13; use CallTargets or ClosureTargets
+    call_targets_guard_test.go:184: stale call-target allowlist entry internal/lower/exceptions.go:throwsOut:ArraySort.Comparator; remove it
+FAIL
+FAIL	github.com/system-inc/adamic/internal/ir	22.124s
+FAIL

@@ -1,0 +1,9 @@
+unknown-authorizes-assertion: exit 1, caught by admission check
+implicit-string-conversion: exit 1, caught by uncaught lifetime check: exit 70
+pending-undefined-lost: exit 1, caught by stdout differs
+catch-assumes-error: exit 1, caught by exit codes differ
+typeof-boolean-is-number: exit 1, caught by stdout differs
+null-is-undefined: exit 1, caught by stdout differs
+finally-releases-twice: exit 1, caught by AddressSanitizer: heap-use-after-free
+region-payload-freed: exit 1, caught by AddressSanitizer: heap-use-after-free
+uncaught-is-panic: exit 1, caught by uncaught lifetime check: exit 70

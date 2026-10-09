@@ -1,0 +1,17 @@
+=== RUN   TestSplitSelfCompareAgreesWithNode
+=== PAUSE TestSplitSelfCompareAgreesWithNode
+=== CONT  TestSplitSelfCompareAgreesWithNode
+    units_self_compare_test.go:49: native: compiling unit functions_0001.c: exit status 1
+        In file included from functions_0001.c:1:
+        ./units.h:40:14: error: inline function 'adamic_unit_adamic_same_number' is not defined [-Werror,-Wundefined-inline]
+           40 | inline _Bool adamic_unit_adamic_same_number(double left, double right);
+              |              ^
+        functions_0001.c:4:37: note: used here
+            4 |  adamic_write_line(adamic_stdout, ((adamic_unit_adamic_same_number(adamic_local_13_value, adamic_local_13_value)) ? &adamic_string_true : &adamic_string_false));
+              |                                     ^
+        1 error generated.
+        
+--- FAIL: TestSplitSelfCompareAgreesWithNode (0.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.187s
+FAIL

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:42.663517017Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:42.743809688Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet"}
+{"Time":"2026-10-09T18:19:42.743972294Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet","Output":"=== RUN   TestFunctionValueUnionViewsStayNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.749519396Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet","Output":"=== PAUSE TestFunctionValueUnionViewsStayNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:42.749546359Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet"}
+{"Time":"2026-10-09T18:19:42.749561835Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet"}
+{"Time":"2026-10-09T18:19:42.749568877Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet","Output":"=== CONT  TestFunctionValueUnionViewsStayNotYet\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.164282937Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet","Output":"--- PASS: TestFunctionValueUnionViewsStayNotYet (1.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.164332912Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFunctionValueUnionViewsStayNotYet","Elapsed":1.41}
+{"Time":"2026-10-09T18:19:44.164346853Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:44.173974886Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.51}

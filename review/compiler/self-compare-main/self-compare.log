@@ -1,0 +1,23 @@
+=== RUN   TestSelfCompareClosure
+=== PAUSE TestSelfCompareClosure
+=== RUN   TestSelfCompareArrayFill
+=== PAUSE TestSelfCompareArrayFill
+=== RUN   TestSelfCompareSweep
+=== PAUSE TestSelfCompareSweep
+=== RUN   TestSelfCompareConstantMutant
+=== PAUSE TestSelfCompareConstantMutant
+=== CONT  TestSelfCompareClosure
+=== CONT  TestSelfCompareSweep
+=== CONT  TestSelfCompareConstantMutant
+=== CONT  TestSelfCompareArrayFill
+=== NAME  TestSelfCompareConstantMutant
+    self_compare_test.go:116: constant self-equality mutant compiled and ran; sweep.a caught NaN: true true instead of false true
+--- PASS: TestSelfCompareConstantMutant (11.99s)
+--- PASS: TestSelfCompareArrayFill (12.32s)
+--- PASS: TestSelfCompareClosure (15.49s)
+--- PASS: TestSelfCompareSweep (15.49s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=7
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	15.503s

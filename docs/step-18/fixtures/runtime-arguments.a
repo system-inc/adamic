@@ -1,0 +1,25 @@
+// Optional invocation retains ordinary default, rest, spread and count dispatch.
+let evaluations = 0;
+function values(): number[] {
+	evaluations += 1;
+	return [2, 3];
+}
+function invoke(callback: ((...items: number[]) => string) | undefined): void {
+	console.log(callback?.(...values()) ?? 'absent');
+}
+invoke(undefined);
+invoke((...items: number[]): string => items.join(','));
+console.log(`${evaluations}`);
+function defaulted(callback: ((value?: number) => number) | undefined): void {
+	console.log(`${callback?.() ?? -1}`);
+	console.log(`${callback?.(undefined) ?? -1}`);
+	console.log(`${callback?.(8) ?? -1}`);
+}
+defaulted(undefined);
+defaulted((value = 6): number => value);
+function counted(callback: ((...items: string[]) => number) | undefined): void {
+	console.log(`${callback?.('a', 'b') ?? -2}`);
+}
+counted(undefined);
+function reader(...items: string[]): number { return arguments.length; }
+counted(reader);

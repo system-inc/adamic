@@ -17,6 +17,9 @@ func (e *emitter) uniformFieldSlot(object, name string) string {
 		e.fieldOffsets = uniformFieldOffsets(e.program)
 	}
 	if index, found := e.fieldOffsets[name]; found && index >= 0 {
+		if _, dynamic := e.fieldOffsets["\x00dynamic"]; dynamic {
+			return fmt.Sprintf("(%s->dynamic_shape ? adamic_object_field(%s, %s, &%s) : &%s->slots[%d])", object, object, cString(name), e.cache(), object, index)
+		}
 		return fmt.Sprintf("(&%s->slots[%d])", object, index)
 	}
 	return ""
@@ -43,7 +46,7 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	// TestRuntimeFieldLayoutsAreIncluded checks this list against the embedded C declarations.
 	offsets := map[string]int{
 		"0": 0, "1": 1, "name": 0, "message": 1, "kind": 0, "text": 1,
-		"names": 1, "type": 1, "size": 2, "symbolicLink": 3,
+		"#message": 1, "names": 1, "type": 1, "size": 2, "symbolicLink": 3,
 	}
 	for _, names := range [][]string{
 		{"name", "message", "code"}, {"_fsFileTime"}, {"size", "mtimeMs", "mtime", "_fsFileMode", "atime"},
@@ -89,8 +92,11 @@ func uniformFieldOffsets(program *ir.Program) map[string]int {
 	}
 	walkExpressions(program, func(expression ir.Expression) {
 		if literal, ok := expression.(ir.ObjectLiteral); ok {
+			if literal.Spread != nil && (len(literal.Missing) != 0 || literal.NoReuse) {
+				offsets["\x00dynamic"] = -1
+			}
 			if literal.Spread == nil {
-				record(literal.Fields)
+				record(append(append([]ir.Field{}, literal.Fields...), literal.Missing...))
 			} else if literal.SpreadMaybeUndefined {
 				record(emptyFields(literal))
 			}

@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:21:46.388093775Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:21:46.409362315Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission"}
+{"Time":"2026-10-09T18:21:46.409471922Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission","Output":"=== RUN   TestStep21LibraryAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:46.409517331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission","Output":"=== PAUSE TestStep21LibraryAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:46.409520687Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission"}
+{"Time":"2026-10-09T18:21:46.409524235Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission"}
+{"Time":"2026-10-09T18:21:46.409526312Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission","Output":"=== CONT  TestStep21LibraryAdmission\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:47.851424269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission","Output":"--- PASS: TestStep21LibraryAdmission (1.44s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:47.851587946Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestStep21LibraryAdmission","Elapsed":1.44}
+{"Time":"2026-10-09T18:21:47.851610088Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:21:47.869842059Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.482}

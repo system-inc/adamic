@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T17:57:53.734489834Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T17:57:53.746003604Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.746079746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.747103859Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.747124099Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.747129205Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.747132129Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== RUN   TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.747136146Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== PAUSE TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.747138835Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.747141894Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.747144551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalNumberRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.747147949Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature"}
+{"Time":"2026-10-09T17:57:53.747150387Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"=== CONT  TestOverrideOptionalRefusesNativeSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.841389611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalNumberRefusesNativeSignature (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.841433875Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalNumberRefusesNativeSignature","Elapsed":0.09}
+{"Time":"2026-10-09T17:57:53.841456615Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Output":"--- PASS: TestOverrideOptionalRefusesNativeSignature (0.09s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.841459759Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestOverrideOptionalRefusesNativeSignature","Elapsed":0.09}
+{"Time":"2026-10-09T17:57:53.841462003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T17:57:53.843000772Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"ok  \tgithub.com/system-inc/adamic/internal/lower\t0.108s\n"}
+{"Time":"2026-10-09T17:57:53.843075939Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.109}

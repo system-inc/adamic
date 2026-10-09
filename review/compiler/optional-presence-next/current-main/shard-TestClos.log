@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:56:11.507969134Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:56:11.56661525Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T19:56:11.566719303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== RUN   TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:11.566770851Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== PAUSE TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:11.566774557Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T19:56:11.566777898Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation"}
+{"Time":"2026-10-09T19:56:11.566780217Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"=== CONT  TestClosedFrameInputRejectsMutation\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:12.539556074Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Output":"--- PASS: TestClosedFrameInputRejectsMutation (0.98s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:12.53963997Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestClosedFrameInputRejectsMutation","Elapsed":0.98}
+{"Time":"2026-10-09T19:56:12.539662141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:56:12.544961492Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.037}

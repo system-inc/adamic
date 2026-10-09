@@ -1,0 +1,4 @@
+function accept(value: string): void { console.log(value === undefined ? "unset" : "set"); }
+let value: string = null!;
+console.log("before");
+accept(value);

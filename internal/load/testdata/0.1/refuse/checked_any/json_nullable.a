@@ -1,0 +1,25 @@
+interface Config { option: string | null | undefined; child: { value: number } | null | undefined; }
+function convert(raw: any): Config { return raw; }
+const one: any = { option: null, child: null };
+const two: any = { option: undefined, child: undefined };
+const three: any = { option: "value", child: { value: 14 } };
+const a = convert(one);
+const b = convert(two);
+const c = convert(three);
+console.log(String(a.option === null));
+console.log(String(a.option === undefined));
+console.log(String(b.option === null));
+console.log(String(b.option === undefined));
+if (typeof c.option === "string") console.log(c.option);
+console.log(String(a.child === null));
+console.log(String(b.child === undefined));
+console.log(String(c.child?.value ?? 0));
+console.log(String(a.child?.value ?? 0));
+console.log(String(b.child?.value ?? 0));
+console.log(String(a.option?.length ?? 0));
+console.log(String(c.option?.length ?? 0));
+console.log(a.option ?? "missing");
+console.log(b.option ?? "missing");
+console.log(c.option ?? "missing");
+console.log(typeof a.option);
+console.log(typeof b.option);

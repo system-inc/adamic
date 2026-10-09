@@ -1,0 +1,84 @@
+{
+  "branch": "compiler/c-portability-main",
+  "source": "ebad12cf",
+  "tests": [
+    {
+      "test": "TestStaticNumberInitializerMutant",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestConstantPortabilityGCC",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestConstantPortabilityClang",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestLongUnicodeLiteralByteCoverage",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestStaticBooleanInitializerMutant",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestLongStringBytesMutant",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestLongUnicodePortabilityClang",
+      "result": "pass",
+      "seconds": 3.09,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestLongUnicodePortabilityGCC",
+      "result": "pass",
+      "seconds": 4.15,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/long_unicode_literals.a",
+      "result": "pass",
+      "seconds": 13.32,
+      "log": "member-1-tests.jsonl"
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-1-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/long_unicode_literals.a",
+        "after": [
+          "32",
+          "32",
+          "17",
+          "51",
+          "5",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 982
+  }
+}

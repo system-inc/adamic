@@ -1,0 +1,11 @@
+=== RUN   TestParserRepresentationProbes
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+=== PAUSE TestParserRepresentationProbes
+=== CONT  TestParserRepresentationProbes
+=== RUN   TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== PAUSE TestParserRepresentationProbes/gaps/10_multiple_push.ts
+=== CONT  TestParserRepresentationProbes/gaps/10_multiple_push.ts
+--- PASS: TestParserRepresentationProbes (0.00s)
+    --- PASS: TestParserRepresentationProbes/gaps/10_multiple_push.ts (0.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	0.340s

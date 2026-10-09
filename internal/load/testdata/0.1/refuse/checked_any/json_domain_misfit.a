@@ -1,0 +1,4 @@
+interface Config { readonly number: number; }
+function convertToObject(raw: any): Config { return raw; }
+const config = convertToObject({number: NaN});
+console.log(String(config.number));

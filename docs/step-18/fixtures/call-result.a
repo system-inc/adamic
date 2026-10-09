@@ -1,0 +1,7 @@
+// Reduced from moduleNameResolver.ts:3103, getPackageJsonInfo(...)?.contents.packageJsonContent.
+interface Package { readonly contents: { readonly packageJsonContent: string } }
+function getPackageJsonInfo(present: boolean): Package | undefined {
+	return present ? { contents: { packageJsonContent: 'exports' } } : undefined;
+}
+console.log(getPackageJsonInfo(false)?.contents.packageJsonContent ?? 'absent');
+console.log(getPackageJsonInfo(true)?.contents.packageJsonContent ?? 'absent');

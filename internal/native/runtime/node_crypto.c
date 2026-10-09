@@ -67,18 +67,20 @@ adamic_object *adamic_node_hash_new(void)
 	hash->slots[0].reference = adamic_array_new(0, false);
 	return hash;
 }
-static void check_finalized(const adamic_object *hash)
+static bool check_finalized(const adamic_object *hash)
 {
-	if (hash->slots[1].number != 0) {
-		static const char message[] =
-			"Error [ERR_CRYPTO_HASH_FINALIZED]: Digest already called";
-		adamic_panic(message, sizeof message - 1);
-	}
+ if (hash->slots[1].number == 0) { return true; }
+ static adamic_string message = ADAMIC_STRING("Digest already called");
+ static adamic_string code = ADAMIC_STRING("ERR_CRYPTO_HASH_FINALIZED");
+ adamic_object *error = adamic_error_new_code(&message, &code);
+ adamic_thrown = &error->heap;
+ adamic_exception_pending = true;
+ return false;
 }
 adamic_object *adamic_node_hash_update(adamic_object *hash,
 									   const adamic_string *text, int encoding)
 {
-	check_finalized(hash);
+	if (!check_finalized(hash)) { return NULL; }
 	adamic_array *input = adamic_node_buffer_from(text, encoding);
 	adamic_array *bytes = hash->slots[0].reference;
 	for (size_t i = 0; i < input->length; i++) {
@@ -89,7 +91,7 @@ adamic_object *adamic_node_hash_update(adamic_object *hash,
 }
 adamic_string *adamic_node_hash_digest(adamic_object *hash)
 {
-	check_finalized(hash);
+	if (!check_finalized(hash)) { return NULL; }
 	hash->slots[1].number = 1;
 	const adamic_array *bytes = hash->slots[0].reference;
 	uint32_t state[8] = {0x6a09e667, 0xbb67ae85, 0x3c6ef372, 0xa54ff53a,

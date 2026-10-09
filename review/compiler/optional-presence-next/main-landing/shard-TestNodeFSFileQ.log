@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:56.089958084Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:56.135716723Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T18:20:56.135772202Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== RUN   TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:56.135803363Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== PAUSE TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:56.135826602Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T18:20:56.135829636Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType"}
+{"Time":"2026-10-09T18:20:56.135831675Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"=== CONT  TestNodeFSFileQualifiedErrorType\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.04737176Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Output":"--- PASS: TestNodeFSFileQualifiedErrorType (0.93s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.04757703Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNodeFSFileQualifiedErrorType","Elapsed":0.93}
+{"Time":"2026-10-09T18:20:57.047601771Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:57.059181295Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.969}

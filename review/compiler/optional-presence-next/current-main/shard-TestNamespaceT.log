@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:58:21.4598367Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:58:21.510523373Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T19:58:21.510570716Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== RUN   TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:21.510594183Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== PAUSE TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:21.510596702Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T19:58:21.510599076Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase"}
+{"Time":"2026-10-09T19:58:21.510600843Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"=== CONT  TestNamespaceTypesErase\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:22.640496049Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Output":"--- PASS: TestNamespaceTypesErase (1.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:22.64054367Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestNamespaceTypesErase","Elapsed":1.13}
+{"Time":"2026-10-09T19:58:22.640556181Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:58:22.646693786Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.187}

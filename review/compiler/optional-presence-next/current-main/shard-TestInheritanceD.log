@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:20.480144066Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:20.591675807Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder"}
+{"Time":"2026-10-09T19:57:20.591777161Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder","Output":"=== RUN   TestInheritanceDerivedFieldOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.592528539Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder","Output":"=== PAUSE TestInheritanceDerivedFieldOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.592611883Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder"}
+{"Time":"2026-10-09T19:57:20.592621526Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder"}
+{"Time":"2026-10-09T19:57:20.592624734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder","Output":"=== CONT  TestInheritanceDerivedFieldOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.856880397Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder","Output":"--- PASS: TestInheritanceDerivedFieldOrder (0.26s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.856938208Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceDerivedFieldOrder","Elapsed":0.26}
+{"Time":"2026-10-09T19:57:20.856957411Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.867147575Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.387}

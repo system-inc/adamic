@@ -1,0 +1,5 @@
+// sys.ts:1549 rethrow with finally; undefined must remain pending across frames.
+function fail(): void { try { throw undefined; } finally { console.log('finally'); } }
+console.log('before');
+fail();
+console.log('unreachable');

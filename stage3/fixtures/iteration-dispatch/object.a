@@ -1,0 +1,10 @@
+interface Step { value: string; done: boolean; }
+interface Cursor { next(): Step; return(): Step; }
+interface Source { [Symbol.iterator](): Cursor; }
+const cursor = {
+ index: 0,
+ next(): Step { this.index += 1; console.log(`step:${this.index}`); return {value: `yield:${this.index}`, done: this.index > 2}; },
+ return(): Step { console.log(`closed:${this.index}`); return {value: 'completion', done: true}; }
+};
+const source: Source = { [Symbol.iterator](): Cursor { return cursor; } };
+for (const value of source) { console.log(value); }

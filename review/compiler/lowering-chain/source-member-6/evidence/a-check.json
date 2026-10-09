@@ -1,0 +1,73 @@
+{
+  "gate_pin": "fbac28c62493f27a788edc02a18bc8edb68de5da",
+  "paths": [
+    "stage3/namespace-value/passed.a",
+    "stage3/namespace-value/qualified-live.a",
+    "stage3/namespace-value/returned.a",
+    "stage3/namespace-value/stored.a",
+    "stage3/namespace-value/tracing-qualified.a"
+  ],
+  "result": {
+    "a_check": {
+      "stage3/namespace-value/passed.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/passed.a:9:28: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/passed.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properti"
+      },
+      "stage3/namespace-value/qualified-live.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      },
+      "stage3/namespace-value/returned.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/returned.a:5:42: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/returned.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged prop"
+      },
+      "stage3/namespace-value/stored.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": "adamic: /workspace/adamic/stage3/namespace-value/stored.a:5:14: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/stored.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properti"
+      },
+      "stage3/namespace-value/tracing-qualified.a": {
+        "outcome": "checked",
+        "expected": "checked",
+        "first": ""
+      }
+    }
+  },
+  "observations": {
+    "stage3/namespace-value/passed.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/passed.a:9:28: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/passed.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use State.member access, or pass fixed namespace functions and explicit state yet\n"
+    },
+    "stage3/namespace-value/qualified-live.a": {
+      "exit": 0,
+      "stdout_bytes": 9928,
+      "stderr": ""
+    },
+    "stage3/namespace-value/returned.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/returned.a:5:42: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/returned.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use State.member access, or pass fixed namespace functions and explicit state yet\n"
+    },
+    "stage3/namespace-value/stored.a": {
+      "exit": 1,
+      "stdout_bytes": 0,
+      "stderr": "adamic: /workspace/adamic/stage3/namespace-value/stored.a:5:14: stage 0 can't lower a namespace object used as a value (State, declared at /workspace/adamic/stage3/namespace-value/stored.a:1:11); no runtime container is emitted, so identity, receiver behavior, live export aliases and staged properties are not represented; use State.member access, or pass fixed namespace functions and explicit state yet\n"
+    },
+    "stage3/namespace-value/tracing-qualified.a": {
+      "exit": 0,
+      "stdout_bytes": 8701,
+      "stderr": ""
+    }
+  },
+  "steps": {
+    "a-check": 2.5
+  },
+  "exits": {
+    "a-check": 0
+  },
+  "failure": null
+}

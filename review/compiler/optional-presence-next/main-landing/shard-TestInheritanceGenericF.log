@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:19:58.566108473Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:19:58.598092151Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T18:19:58.598157409Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== RUN   TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:58.598187179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== PAUSE TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:58.598190922Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T18:19:58.598197336Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T18:19:58.598200216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== CONT  TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:59.434276597Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"--- PASS: TestInheritanceGenericFactoryLayouts (0.84s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:59.434339962Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Elapsed":0.84}
+{"Time":"2026-10-09T18:19:59.434360044Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:19:59.439810802Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.874}

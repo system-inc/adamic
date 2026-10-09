@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T18:20:20.934457747Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T18:20:21.05176255Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys"}
+{"Time":"2026-10-09T18:20:21.051902514Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys","Output":"=== RUN   TestIteratorSymbolKeysAreNotStringKeys\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:21.051943277Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys","Output":"=== PAUSE TestIteratorSymbolKeysAreNotStringKeys\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:21.051947167Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys"}
+{"Time":"2026-10-09T18:20:21.053306703Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys"}
+{"Time":"2026-10-09T18:20:21.053452727Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys","Output":"=== CONT  TestIteratorSymbolKeysAreNotStringKeys\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:21.373973648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys","Output":"--- PASS: TestIteratorSymbolKeysAreNotStringKeys (0.32s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:21.374015202Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestIteratorSymbolKeysAreNotStringKeys","Elapsed":0.32}
+{"Time":"2026-10-09T18:20:21.374041617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:20:21.387282581Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.453}

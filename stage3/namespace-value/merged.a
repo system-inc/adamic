@@ -1,0 +1,14 @@
+namespace State {
+    export let z = 1;
+    export function read(): number { return z; }
+}
+const held = State;
+namespace State {
+    console.log(String(State === held));
+    console.log(Object.keys(held).join(","));
+    export let a = 2;
+    export function advance(): void { State.z += State.a; }
+}
+held.advance();
+console.log(Object.keys(State).join(","));
+console.log(String(held.read()));

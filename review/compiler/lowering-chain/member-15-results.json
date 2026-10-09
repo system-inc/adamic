@@ -1,0 +1,1448 @@
+{
+  "branch": "compiler/callback-widening",
+  "source": "36472529e68f72938c8eaf9d9cf81651367f5760",
+  "tests": [
+    {
+      "test": "TestWeakDifferentialViewMethod",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayKeys",
+      "result": "pass",
+      "seconds": 0.95,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialHeldUnion",
+      "result": "pass",
+      "seconds": 1.16,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialBooleanFilter",
+      "result": "pass",
+      "seconds": 1.29,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSort",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSome",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialMatchingMethods",
+      "result": "pass",
+      "seconds": 1.15,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialReduce",
+      "result": "pass",
+      "seconds": 0.48,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialMap",
+      "result": "pass",
+      "seconds": 0.46,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialFind",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialEach",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialViewMethodParameter",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedMethod",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18StorageTypeLie/.a",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18MethodWritesStayRefused",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialSingleNarrowed",
+      "result": "pass",
+      "seconds": 1.12,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestWeakDifferentialUnionNarrowed",
+      "result": "pass",
+      "seconds": 1.07,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18StorageTypeLie/.ts",
+      "result": "pass",
+      "seconds": 0.87,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18StorageTypeLie",
+      "result": "pass",
+      "seconds": 1,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNamespaceUnsetUse",
+      "result": "pass",
+      "seconds": 0.99,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayLength",
+      "result": "pass",
+      "seconds": 1.16,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18RecordedGaps/number.a",
+      "result": "pass",
+      "seconds": 0.12,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18RecordedGaps",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayUnset",
+      "result": "pass",
+      "seconds": 1.19,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18DiscardedReferencesBalance/runtime-chain-intrinsics.a",
+      "result": "pass",
+      "seconds": 0.47,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18DiscardedReferencesBalance/runtime-discarded-reference.a",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18DiscardedReferencesBalance",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestParserConstructionSourceNodeArrayJson",
+      "result": "pass",
+      "seconds": 1.1,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/call-result.a",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-parentheses-write.a",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-present-undefined.a",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-parentheses.a",
+      "result": "pass",
+      "seconds": 0.38,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-method-continuation.a",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-intrinsics.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-callable.a",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-chain-index.a",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-discarded-reference.a",
+      "result": "pass",
+      "seconds": 0.24,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-bound-method-selection.a",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-bound-method-replacement.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-bound-method-arguments.a",
+      "result": "pass",
+      "seconds": 0.26,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-return-descriptor.a",
+      "result": "pass",
+      "seconds": 0.3,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-cross-chain.a",
+      "result": "pass",
+      "seconds": 0.34,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-bound-methods.a",
+      "result": "pass",
+      "seconds": 0.45,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestPlaceholderNamespaceStorage",
+      "result": "pass",
+      "seconds": 3.98,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-values.a",
+      "result": "pass",
+      "seconds": 0.32,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-arguments.a",
+      "result": "pass",
+      "seconds": 0.26,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-methods.a",
+      "result": "pass",
+      "seconds": 0.34,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/runtime-order.a",
+      "result": "pass",
+      "seconds": 0.37,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/two-guards.a",
+      "result": "pass",
+      "seconds": 0.32,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/number.a",
+      "result": "pass",
+      "seconds": 0.25,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/receiver-call.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/size.a",
+      "result": "pass",
+      "seconds": 0.4,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/function.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/method.a",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/element.a",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines/cross-call.a",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18SourceBaselines",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18CallableReceiverContract",
+      "result": "pass",
+      "seconds": 0.18,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/observed_void",
+      "result": "pass",
+      "seconds": 0.21,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18UnknownDetachedCallable",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/overloaded_callable",
+      "result": "pass",
+      "seconds": 0.11,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/chain_weak_callable_storage",
+      "result": "pass",
+      "seconds": 0.16,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/reference_narrowed_to_present",
+      "result": "pass",
+      "seconds": 0.13,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/erased_marker",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18DetachedCallableOrigins",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries/scalar_without_optional_representation",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestStep18OptionalCallableBoundaries",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-overlap-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningUnrepresentedParameter",
+      "result": "pass",
+      "seconds": 0.27,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberNamedSort",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberEvery",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGenericMap",
+      "result": "pass",
+      "seconds": 0.68,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNullableObjectMap",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningStringMap",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningBooleanMap",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberArguments",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGenericMap",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningLibraryMap",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberToSorted",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindIndex",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindLast",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberCapture",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberThrow",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectEvery",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSort",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSome",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectReduce",
+      "result": "pass",
+      "seconds": 0.56,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectMap",
+      "result": "pass",
+      "seconds": 0.59,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGeneric",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectForEach",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFind",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFilter",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberIndex",
+      "result": "pass",
+      "seconds": 0.55,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberMap",
+      "result": "pass",
+      "seconds": 0.58,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSort",
+      "result": "pass",
+      "seconds": 0.6,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSome",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduce",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberForEach",
+      "result": "pass",
+      "seconds": 0.61,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGeneric",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFind",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFilter",
+      "result": "pass",
+      "seconds": 0.51,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningLibraryMap",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNullableObjectMap",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectEvery",
+      "result": "pass",
+      "seconds": 0.09,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "result": "pass",
+      "seconds": 0.1,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningStringMap",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "result": "pass",
+      "seconds": 0.08,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberArguments",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningBooleanMap",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGenericMap",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSort",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSome",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGenericMap",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectForEach",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGeneric",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectMap",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectReduce",
+      "result": "pass",
+      "seconds": 0.07,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFilter",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberIndex",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberToSorted",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFind",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSort",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberThrow",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSome",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduce",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberMap",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindIndex",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberNamedSort",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberForEach",
+      "result": "pass",
+      "seconds": 0.03,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindLast",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGeneric",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFind",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberEvery",
+      "result": "pass",
+      "seconds": 0.06,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFilter",
+      "result": "pass",
+      "seconds": 0.04,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberCapture",
+      "result": "pass",
+      "seconds": 0.05,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNullableObjectMap",
+      "result": "pass",
+      "seconds": 0.64,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalNumberMap",
+      "result": "pass",
+      "seconds": 0.66,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningOptionalObjectMap",
+      "result": "pass",
+      "seconds": 0.74,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningLibraryMap",
+      "result": "pass",
+      "seconds": 0.9,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberArguments",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningBooleanMap",
+      "result": "pass",
+      "seconds": 0.72,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningStringMap",
+      "result": "pass",
+      "seconds": 0.73,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGenericMap",
+      "result": "pass",
+      "seconds": 0.65,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGenericMap",
+      "result": "pass",
+      "seconds": 0.49,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectReduce",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSort",
+      "result": "pass",
+      "seconds": 0.62,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectSome",
+      "result": "pass",
+      "seconds": 0.63,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectMap",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFind",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectGeneric",
+      "result": "pass",
+      "seconds": 0.42,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectForEach",
+      "result": "pass",
+      "seconds": 0.54,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectFilter",
+      "result": "pass",
+      "seconds": 0.52,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningObjectEvery",
+      "result": "pass",
+      "seconds": 0.41,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberToSorted",
+      "result": "pass",
+      "seconds": 0.44,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberThrow",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSome",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduceAccumulator",
+      "result": "pass",
+      "seconds": 0.35,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberReduce",
+      "result": "pass",
+      "seconds": 0.43,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberSort",
+      "result": "pass",
+      "seconds": 0.57,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberNamedSort",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberIndex",
+      "result": "pass",
+      "seconds": 0.31,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberMap",
+      "result": "pass",
+      "seconds": 0.34,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberGeneric",
+      "result": "pass",
+      "seconds": 0.39,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberForEach",
+      "result": "pass",
+      "seconds": 0.33,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindIndex",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFindLast",
+      "result": "pass",
+      "seconds": 0.34,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFind",
+      "result": "pass",
+      "seconds": 0.29,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberFilter",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberEvery",
+      "result": "pass",
+      "seconds": 0.28,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackWideningNumberCapture",
+      "result": "pass",
+      "seconds": 0.26,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestCallbackAdapterTargets",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-tests.jsonl"
+    },
+    {
+      "test": "TestClosureTargetsBoundOnlyProvenValues",
+      "result": "pass",
+      "seconds": 0,
+      "log": "member-15-tests.jsonl"
+    }
+  ],
+  "counts": {
+    "added": [
+      {
+        "row": "internal/oracle/testdata/callback_widening/boolean-map.a",
+        "after": [
+          "8",
+          "8",
+          "8",
+          "14",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/library-map.a",
+        "after": [
+          "11",
+          "11",
+          "14",
+          "19",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/nullable-object-map.a",
+        "after": [
+          "9",
+          "9",
+          "16",
+          "21",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-arguments.a",
+        "after": [
+          "14",
+          "14",
+          "8",
+          "18",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-capture.a",
+        "after": [
+          "26",
+          "26",
+          "15",
+          "35",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-every.a",
+        "after": [
+          "8",
+          "8",
+          "11",
+          "17",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-filter.a",
+        "after": [
+          "15",
+          "15",
+          "11",
+          "22",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-find.a",
+        "after": [
+          "8",
+          "8",
+          "8",
+          "14",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-findIndex.a",
+        "after": [
+          "10",
+          "10",
+          "8",
+          "16",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-findLast.a",
+        "after": [
+          "10",
+          "10",
+          "8",
+          "16",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-forEach.a",
+        "after": [
+          "13",
+          "13",
+          "11",
+          "25",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-generic-map.a",
+        "after": [
+          "15",
+          "15",
+          "12",
+          "22",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-generic.a",
+        "after": [
+          "13",
+          "13",
+          "8",
+          "18",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-index.a",
+        "after": [
+          "16",
+          "16",
+          "10",
+          "22",
+          "11",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-map.a",
+        "after": [
+          "15",
+          "15",
+          "11",
+          "21",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-named-sort.a",
+        "after": [
+          "13",
+          "13",
+          "15",
+          "27",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-reduce-accumulator.a",
+        "after": [
+          "12",
+          "12",
+          "14",
+          "24",
+          "6",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-reduce.a",
+        "after": [
+          "16",
+          "16",
+          "18",
+          "32",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-some.a",
+        "after": [
+          "7",
+          "7",
+          "8",
+          "13",
+          "5",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-sort.a",
+        "after": [
+          "17",
+          "17",
+          "11",
+          "24",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-throw.a",
+        "after": [
+          "14",
+          "14",
+          "11",
+          "20",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/number-toSorted.a",
+        "after": [
+          "14",
+          "14",
+          "14",
+          "26",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-every.a",
+        "after": [
+          "8",
+          "8",
+          "23",
+          "26",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-filter.a",
+        "after": [
+          "15",
+          "15",
+          "25",
+          "31",
+          "13",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-find.a",
+        "after": [
+          "9",
+          "9",
+          "17",
+          "22",
+          "7",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-forEach.a",
+        "after": [
+          "13",
+          "13",
+          "26",
+          "37",
+          "9",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-generic-map.a",
+        "after": [
+          "15",
+          "15",
+          "24",
+          "31",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-generic.a",
+        "after": [
+          "13",
+          "13",
+          "20",
+          "27",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-map.a",
+        "after": [
+          "15",
+          "15",
+          "23",
+          "30",
+          "12",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-reduce.a",
+        "after": [
+          "16",
+          "16",
+          "33",
+          "44",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-some.a",
+        "after": [
+          "8",
+          "8",
+          "17",
+          "20",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/object-sort.a",
+        "after": [
+          "16",
+          "16",
+          "28",
+          "37",
+          "10",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/optional-number-map.a",
+        "after": [
+          "10",
+          "10",
+          "8",
+          "16",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/optional-object-map.a",
+        "after": [
+          "9",
+          "9",
+          "16",
+          "21",
+          "8",
+          "0"
+        ]
+      },
+      {
+        "row": "internal/oracle/testdata/callback_widening/string-map.a",
+        "after": [
+          "8",
+          "8",
+          "14",
+          "16",
+          "8",
+          "0"
+        ]
+      }
+    ],
+    "changed": [],
+    "removed": [],
+    "rows": 1241
+  }
+}

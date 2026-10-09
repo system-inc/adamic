@@ -1,0 +1,11 @@
+{"Time":"2026-10-09T19:57:20.642872021Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T19:57:20.705330862Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T19:57:20.70539463Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== RUN   TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.705446808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== PAUSE TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:20.705451171Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T19:57:20.705455238Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts"}
+{"Time":"2026-10-09T19:57:20.705458053Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"=== CONT  TestInheritanceGenericFactoryLayouts\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:21.895124909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Output":"--- PASS: TestInheritanceGenericFactoryLayouts (1.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:21.895192714Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestInheritanceGenericFactoryLayouts","Elapsed":1.2}
+{"Time":"2026-10-09T19:57:21.895244886Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T19:57:21.90078228Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":1.258}

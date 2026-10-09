@@ -218,6 +218,21 @@ func TestTheProgramsInTheSpecLoad(t *testing.T) {
 				t.Fatal(err)
 			}
 			if entry.IsDir() {
+				roots, err := filepath.Glob(filepath.Join(path, "*.a"))
+				if err != nil {
+					t.Fatal(err)
+				}
+				if len(roots) != 0 {
+					for _, root := range roots {
+						t.Run(group+"/"+entry.Name()+"/"+filepath.Base(root), func(t *testing.T) {
+							t.Parallel()
+							if _, err := Load([]string{root}); err != nil {
+								t.Errorf("Load: %v", err)
+							}
+						})
+					}
+					continue
+				}
 				path = filepath.Join(path, "main.ts")
 			}
 			t.Run(group+"/"+entry.Name(), func(t *testing.T) {

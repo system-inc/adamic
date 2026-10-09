@@ -1,0 +1,164 @@
+[
+  {
+    "program": "iterators_override_source.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_override_source.a:15:38: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_override_source.a:15:38: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_override_source.a:15:38: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    }
+  },
+  {
+    "program": "4ddd17f_opt_3.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a:1:62: stage 0 can't lower new Error with a possibly undefined message; use message ?? '' yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a:1:62: stage 0 can't lower new Error with a possibly undefined message; use message ?? '' yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a:1:62: stage 0 can't lower new Error with a possibly undefined message; use message ?? '' yet\n"
+    }
+  },
+  {
+    "program": "d7054e9_this_arrow.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    }
+  },
+  {
+    "program": "classfeat_maybe_setter.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a:4:2: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a:4:2: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/classfeat_maybe_setter.a:4:2: stage 0 can't lower a setter with an optional numeric input; use a plain optional numeric field until accessor thunks support two-word arguments yet\n"
+    }
+  },
+  {
+    "program": "d7054e9_this_arrow_number.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/d7054e9_this_arrow_number.a:4:30: Adamic 0.1 refuses this escaping a constructor through a closure before every field is set; assign every field first, then create the closure that reads this\n"
+    }
+  },
+  {
+    "program": "error_subclass_spread.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:2:16: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:2:16: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:2:16: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    }
+  },
+  {
+    "program": "9984394_error_spread.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a:4:25: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a:4:25: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/9984394_error_spread.a:4:25: stage 0 can't lower object spread of Error storage with non-enumerable properties; copy the desired fields explicitly yet\n"
+    }
+  },
+  {
+    "program": "iterators_derived_symbol.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a:3:2: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a:3:2: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/iterators_derived_symbol.a:3:2: stage 0 can't lower a computed member name in a derived class; use a named member until override lookup supports computed names yet\n"
+    }
+  },
+  {
+    "program": "4ddd17f_long_name.a",
+    "c": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a:1:42: stage 0 can't lower a property name longer than 4095 bytes; shorten the name until native metadata supports long strings yet\n"
+    },
+    "javascript": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a:1:42: stage 0 can't lower a property name longer than 4095 bytes; shorten the name until native metadata supports long strings yet\n"
+    },
+    "sanitized_build": {
+      "exit": 1,
+      "stdout": "",
+      "stderr": "adamic: /workspace/adamic/internal/oracle/testdata/miscompile_2a/4ddd17f_long_name.a:1:42: stage 0 can't lower a property name longer than 4095 bytes; shorten the name until native metadata supports long strings yet\n"
+    }
+  }
+]

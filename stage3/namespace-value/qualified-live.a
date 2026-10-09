@@ -1,0 +1,13 @@
+namespace State {
+    export let value = 1;
+    export function read(): number { return value; }
+    export function write(next: number): void { value = next; }
+}
+function retain(read: () => number): () => number { return read; }
+const held = retain(State.read);
+const stored = { read: held };
+State.value = 2;
+console.log(String(stored.read()));
+State.write(7);
+console.log(String(stored.read()));
+console.log(String(held === State.read));

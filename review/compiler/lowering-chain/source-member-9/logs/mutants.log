@@ -1,0 +1,6 @@
+merged-computed-read: caught by ^TestMergedFieldTypeScriptComputedChecked$; /tmp/refusal-rulings-mutants/merged-computed-read.log
+merged-declaration: caught by ^TestMergedFieldAdamicUnusedRefused$; /tmp/refusal-rulings-mutants/merged-declaration.log
+merged-read: caught by ^TestMergedFieldTypeScriptMissingChecked$; /tmp/refusal-rulings-mutants/merged-read.log
+function-annotation: caught by ^TestFunctionAdamicUnusedAnnotationRefused$; /tmp/refusal-rulings-mutants/function-annotation.log
+function-call: caught by ^TestFunctionTypeScriptCallRefused$; /tmp/refusal-rulings-mutants/function-call.log
+function-length: caught by ^TestFunctionTypeScriptLengthAgreesWithNode$; /tmp/refusal-rulings-mutants/function-length.log

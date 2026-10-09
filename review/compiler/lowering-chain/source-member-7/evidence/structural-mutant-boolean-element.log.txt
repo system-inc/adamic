@@ -1,0 +1,13 @@
+=== RUN   TestCheckedJSON
+=== RUN   TestCheckedJSON/json_boolean_list
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:44: native exit codes differ: got {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 91 48 93 32 110 101 101 100 115 32 98 111 111 108 101 97 110 44 32 102 111 117 110 100 32 110 117 109 98 101 114 10] exitCode:70} want {stdout:[102 97 108 115 101 10 116 114 117 101 10] stderr:[] exitCode:0}
+--- FAIL: TestCheckedJSON (0.46s)
+    --- FAIL: TestCheckedJSON/json_boolean_list (0.46s)
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.486s
+FAIL

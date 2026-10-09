@@ -1,0 +1,225 @@
+{
+  "status": "aborted; own controls passed but required counts failed",
+  "tests": [
+    {
+      "test": "TestStep21ThrowPathLiveness",
+      "result": "pass",
+      "seconds": 0.08
+    },
+    {
+      "test": "TestStep21TerminalOracleDependencyHash",
+      "result": "pass",
+      "seconds": 0.11
+    },
+    {
+      "test": "TestStep21UnknownAssertions/{_readonly_message:_string_}",
+      "result": "pass",
+      "seconds": 0.07
+    },
+    {
+      "test": "TestStep21UnknownAssertions/()_=>_string",
+      "result": "pass",
+      "seconds": 0.06
+    },
+    {
+      "test": "TestStep21UnknownAssertions",
+      "result": "pass",
+      "seconds": 0.01
+    },
+    {
+      "test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value.stack_??_'absent');",
+      "result": "pass",
+      "seconds": 0.05
+    },
+    {
+      "test": "TestStep21TerminalOracleSourceHash",
+      "result": "pass",
+      "seconds": 0.23
+    },
+    {
+      "test": "TestStep21Uncaught/step21_dynamic_uncaught",
+      "result": "pass",
+      "seconds": 12.8
+    },
+    {
+      "test": "TestStep21ReadinessIsTerminal",
+      "result": "pass",
+      "seconds": 12.96
+    },
+    {
+      "test": "TestStep21Uncaught/exceptions_uncaught",
+      "result": "pass",
+      "seconds": 12.77
+    },
+    {
+      "test": "TestStep21Uncaught/closures_throw_uncaught",
+      "result": "pass",
+      "seconds": 12.8
+    },
+    {
+      "test": "TestStep21TypeScriptExtension",
+      "result": "pass",
+      "seconds": 13.03
+    },
+    {
+      "test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(`${Object.hasOwn(value,_'name')}`);",
+      "result": "pass",
+      "seconds": 0.08
+    },
+    {
+      "test": "TestStep21ErrorBoundaries/class_Failure_extends_Error_{}_const_value_=_new_Failure('failure');_console.log(value['stack']_??_'absent');",
+      "result": "pass",
+      "seconds": 0.08
+    },
+    {
+      "test": "TestStep21ErrorBoundaries",
+      "result": "pass",
+      "seconds": 0
+    },
+    {
+      "test": "TestStep21ProposalOutcomes/unknown_read",
+      "result": "pass",
+      "seconds": 0.15
+    },
+    {
+      "test": "TestStep21ProposalOutcomes",
+      "result": "pass",
+      "seconds": 0
+    },
+    {
+      "test": "TestStep21FixtureMutants/catch_callback",
+      "result": "pass",
+      "seconds": 0.6
+    },
+    {
+      "test": "TestStep21Uncaught/step21_object_uncaught",
+      "result": "pass",
+      "seconds": 0.67
+    },
+    {
+      "test": "TestStep21Uncaught",
+      "result": "pass",
+      "seconds": 0.01
+    },
+    {
+      "test": "TestStep21FixtureMutants/liveness",
+      "result": "pass",
+      "seconds": 0.6
+    },
+    {
+      "test": "TestStep21FixtureMutants/finally_completion",
+      "result": "pass",
+      "seconds": 0.64
+    },
+    {
+      "test": "TestStep21FixtureMutants/rethrow",
+      "result": "pass",
+      "seconds": 0.68
+    },
+    {
+      "test": "TestStep21FixtureMutants/finally_callback",
+      "result": "pass",
+      "seconds": 0.63
+    },
+    {
+      "test": "TestStep21FixtureMutants",
+      "result": "pass",
+      "seconds": 0
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_object_uncaught.a",
+      "result": "pass",
+      "seconds": 0.53
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_catch_callback.a",
+      "result": "pass",
+      "seconds": 0.6
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_builtin_narrow_terminal.a",
+      "result": "pass",
+      "seconds": 0.53
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_soundness_terminal.a",
+      "result": "pass",
+      "seconds": 0.52
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_error_subclasses.a",
+      "result": "pass",
+      "seconds": 0.75
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_types.a",
+      "result": "pass",
+      "seconds": 0.71
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_failures.a",
+      "result": "pass",
+      "seconds": 0.68
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_library_host.a",
+      "result": "pass",
+      "seconds": 0.97
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_liveness.a",
+      "result": "pass",
+      "seconds": 0.52
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic_uncaught.a",
+      "result": "pass",
+      "seconds": 0.55
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_region_payload.a",
+      "result": "pass",
+      "seconds": 0.59
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_dynamic.a",
+      "result": "pass",
+      "seconds": 0.69
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_rethrow.a",
+      "result": "pass",
+      "seconds": 0.6
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_completion.a",
+      "result": "pass",
+      "seconds": 0.56
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_finally_callback.a",
+      "result": "pass",
+      "seconds": 0.55
+    },
+    {
+      "test": "TestNativeAgreesWithNode/internal/oracle/testdata/step21_saved_error.a",
+      "result": "pass",
+      "seconds": 10.22
+    },
+    {
+      "test": "TestNativeAgreesWithNode",
+      "result": "pass",
+      "seconds": 0.04
+    },
+    {
+      "test": "TestStep21LibraryAdmission",
+      "result": "pass",
+      "seconds": 0.41
+    }
+  ],
+  "counts": {
+    "status": "failed",
+    "acceptedChanges": 0,
+    "seconds": 51.817
+  }
+}

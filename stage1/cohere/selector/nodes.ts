@@ -75,13 +75,11 @@ export function quote(text: string): string {
             escape = '�';
         }
         if(escape !== '') {
-            parts.push(text.slice(start, index));
-            parts.push(escape);
+            parts.push(text.slice(start, index), escape);
             start = index + 1;
         }
     }
-    parts.push(text.slice(start));
-    parts.push('"');
+    parts.push(text.slice(start), '"');
     return parts.join('');
 }
 

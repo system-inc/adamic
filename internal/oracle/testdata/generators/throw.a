@@ -1,0 +1,10 @@
+function* guarded(): Generator<string, string, string> {
+ try { yield 'ready'; }
+ catch (error) { console.log('caught'); yield 'handled'; }
+ finally { console.log('cleanup'); }
+ return 'done';
+}
+const g=guarded();
+console.log(`${g.next().value}`);
+console.log(`${g.throw(new Error('injected')).value}`);
+console.log(`${g.next().value}`);

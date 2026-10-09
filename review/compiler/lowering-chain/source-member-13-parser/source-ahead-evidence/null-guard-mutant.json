@@ -1,0 +1,6 @@
+{
+  "mutation": "drop pending null-placeholder guard",
+  "exit": 1,
+  "catcher": "TestParserConstructionNullPlaceholderPending refuses false undefined observation",
+  "log": "/tmp/step24-null-guard-mutant.log"
+}
