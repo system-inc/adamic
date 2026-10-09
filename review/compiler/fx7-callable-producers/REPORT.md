@@ -23,3 +23,5 @@ Commands, with output archived here:
 This first delivery fixes items 133 and 145. Item 135's assignable but non-identical producers are evaluated separately; no fix for their runtime stops is claimed in this receipt. No protected orchestration files were edited, no cohere source was copied, no full oracle package or repository gate was run, and no PR was opened.
 
 Restored focused run passed in 0.424s; certificate leaf 0.29s, P61 0.36s, P60 0.37s, defensive filter 0.40s, P21 0.41s.
+
+Lane checks PASS 1.7s: gofmt/tools on 23 Go files, parallel rule on 2 test packages, vet 2 packages.
