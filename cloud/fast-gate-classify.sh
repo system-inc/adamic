@@ -30,8 +30,10 @@ gateBase() {
   # A canary-shaped gate mutant (gate-mutants/canary-*, #fyvmsy8 hole 5) is gated the same way, so the suite can plant a
   # canary input whose ten landings select nothing.
   if [ "${branch}" = canary/main ] || [[ ${branch} == gate-mutant/canary-* ]]; then
+    local depth=${ADAMIC_FAST_GATE_CANARY_DEPTH:-10}
+    [[ ${depth} =~ ^([1-9]|10)$ ]] || depth=10
     haveCommits "${sha}" || git -C "${here}" fetch -q --no-write-fetch-head origin "${sha}" 2> /dev/null
-    echo "main~10 $(git -C "${here}" rev-parse "${sha}~10")"
+    echo "main~${depth} $(git -C "${here}" rev-parse "${sha}~${depth}")"
     return
   fi
   if [[ ${branch} != codex/* && ${branch} != devtools/* ]]; then
