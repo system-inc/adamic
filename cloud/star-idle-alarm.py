@@ -40,6 +40,8 @@ mainReds = os.environ.get('ADAMIC_MAIN_REDS', '')  # a file standing in for clou
 verdictLine = re.compile(r'^(\d\d:\d\d:\d\d) done (\S+): (green|red): ([0-9a-f]{40})\b(.*)$')
 pushLine = re.compile(r'^(\d\d:\d\d:\d\d) queued (\S+) ([0-9a-f]{40})\b')
 quietLimit = int(os.environ.get('ADAMIC_CHAIN_QUIET_SECONDS', '1200'))
+# Kirk, Oct 9 04:44Z: nothing in wave 0 sits untouched for 10 minutes, the star or not.
+waveQuietLimit = int(os.environ.get('ADAMIC_WAVE_QUIET_SECONDS', '600'))
 requestsFile = Path(os.environ.get('ADAMIC_FULL_GATE_REQUESTS', os.path.expanduser('~/.adamic-full-gate/requests')))
 
 
@@ -79,7 +81,54 @@ def star():
     for entry in chain:
         entry['ready'] = ready is None or entry['id'] in ready
     first = [entry for entry in chain if waves.get(entry['id']) == 0]
+    global waveZero
+    waveZero = [node for node in waterfall['nodes']
+                if node.get('wave') == 0 and node.get('kind', 'Task') == 'Task' and node.get('status') not in ('Done', 'Cancelled', 'Failed')]
     return (first[0] if first else None), chain
+
+
+# Every open wave-0 task, as the waterfall's nodes: refreshed with the star, once a minute.
+waveZero = []
+waveOwners = {}
+
+
+def waveOwner(identifier):
+    """A task's owner username, read once (ownership rarely moves) from ahra tasks show."""
+    if identifier not in waveOwners:
+        try:
+            waveOwners[identifier] = step(identifier)['owner']
+        except (subprocess.CalledProcessError, OSError):
+            return ''
+    return waveOwners[identifier]
+
+
+def checkWaveZero(now):
+    """(name, key, text, owners, louder) for each wave-0 task that needs a page: no motion for waveQuietLimit seconds
+    (its owner), or a new status saying exactly what the last one said (its owner and the parent, louder: a repeat is a
+    stall wearing a status). Keys change with the task's clock, so each quiet spell or repeat pages once."""
+    alarms = []
+    for node in waveZero:
+        identifier = node['id']
+        touched = int(node.get('lastTouchedAt') or 0) // 1000
+        quiet = now - touched
+        key = 'quiet:%s:%d' % (identifier, touched) if touched and quiet >= waveQuietLimit else None
+        text = ("#%s is in wave 0 and hasn't moved for %d minutes (%s, last status: %s). Kirk's rule: nothing in wave 0 "
+                "sits untouched for 10. Post what is happening this second with an ETA, or reap, split or ask up."
+                % (identifier, quiet // 60, node.get('status'), node.get('statusText') or 'none')) if key else None
+        alarms.append(('wave-quiet-alarmed-' + identifier, key, text, [waveOwner(identifier)] if key else [], False))
+        statusAt, statusText = str(node.get('statusAt') or ''), (node.get('statusText') or '').strip()
+        seen = state / ('wave-status-' + identifier)
+        previous = seen.read_text().split('\t', 1) if seen.exists() else ['', '']
+        repeat = None
+        if statusAt and statusText and statusAt != previous[0]:
+            if statusText == previous[1].strip():
+                repeat = 'repeat:%s:%s' % (identifier, statusAt)
+            seen.write_text(statusAt + '\t' + statusText + '\n')
+        if repeat:
+            alarms.append(('wave-repeat-alarmed-' + identifier, repeat,
+                           '#%s posted the same status twice in a row: "%s". A repeated status is a stall: what changed, '
+                           'and what is the next move this tick?' % (identifier, statusText), [waveOwner(identifier)], True))
+    return alarms
 
 
 def lines(path):
@@ -503,8 +552,8 @@ def checkMain(now):
             % (sha[:12], where, row['fix'], summary), [owner])
 
 
-def page(step, text):
-    for recipient in dict.fromkeys(filter(None, step['owner'].split(',') + ['system_adamic'])):
+def page(step, text, parent=True):
+    for recipient in dict.fromkeys(filter(None, step['owner'].split(',') + (['system_adamic'] if parent else []))):
         try:
             ahra('os', 'send', recipient, text, '--from', 'system_adamic_developer_tools')
         except (subprocess.CalledProcessError, OSError) as error:
@@ -527,15 +576,21 @@ def once(step, chain=()):
               ('main-confirm-alarmed', confirmKey, confirmText, confirmOwners)]
     alarms += [('chain-quiet-alarmed-' + entry['id'], quietKey, quietText, owners)
                for entry, (_, quietKey, quietText, owners) in zip(chain, quiet)]
-    for name, alarmKey, alarmText, owners in alarms:
+    alarms = [alarm + (True,) for alarm in alarms]
+    wave = checkWaveZero(now)
+    print('%s wave 0: %d open, %d quiet' % (time.strftime('%H:%M:%S', time.gmtime()), len(waveZero),
+                                           sum(1 for _, key, _, _, louder in wave if key and not louder)), flush=True)
+    for name, alarmKey, alarmText, owners, parent in alarms + wave:
         alarmed = state / name
         previous = alarmed.read_text().strip() if alarmed.exists() else ''
         if alarmKey is None:
-            alarmed.unlink(missing_ok=True)
+            if not name.startswith('wave-repeat-'):
+                alarmed.unlink(missing_ok=True)
         elif alarmKey != previous:
-            page({'owner': ','.join(owners)}, alarmText)
+            page({'owner': ','.join(owners)}, alarmText, parent)
             alarmed.write_text(alarmKey + '\n')
-            print('%s paged %s and system_adamic' % (time.strftime('%H:%M:%S', time.gmtime()), ', '.join(owners) or 'no owner'), flush=True)
+            print('%s paged %s%s' % (time.strftime('%H:%M:%S', time.gmtime()), ', '.join(owners) or 'no owner',
+                                     ' and system_adamic' if parent else ''), flush=True)
 
 
 def main():
