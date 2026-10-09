@@ -12,6 +12,7 @@ import (
 	"sort"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/system-inc/adamic/internal/childguard"
 	"github.com/system-inc/adamic/internal/corpusfiles"
@@ -49,10 +50,11 @@ func lowered(t *testing.T, path string) *ir.Program {
 	return result
 }
 
-// bounded retains the output guard and adds a hard 90-second group deadline.
+// bounded limits only a shard's own child work, including its process group.
 func bounded(t *testing.T, name string, arguments ...string) *exec.Cmd {
 	t.Helper()
-	command, cancel := inlineCommand(name, arguments...)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	command := inlineCommandContext(ctx, name, arguments...)
 	t.Cleanup(cancel)
 	return command
 }

@@ -16,6 +16,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"syscall"
 	"testing"
 	"time"
@@ -32,12 +33,13 @@ import (
 const testMarkdownInlineShards = 2048
 const inlineModes = "wefnspctrukvhijlboq"
 
-// Products are shared and read-only. Only the Go overlay bridge is built into
-// a parent-owned temporary directory: buildcache.GoBuild refuses overlays.
-// A deadline cancels the whole process group, including compiler descendants.
-// Callers cancel on completion so completed commands release their timer.
+// Setup commands have no test-side deadline. The gate bounds each whole unit.
+// Cancellation still reaches compiler descendants on command completion.
 func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := context.WithCancel(context.Background())
+	return inlineCommandContext(ctx, name, arguments...), cancel
+}
+func inlineCommandContext(ctx context.Context, name string, arguments ...string) *exec.Cmd {
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {
@@ -51,7 +53,7 @@ func inlineCommand(name string, arguments ...string) (*exec.Cmd, context.CancelF
 		return err
 	}
 	command.WaitDelay = 5 * time.Second
-	return command, cancel
+	return command
 }
 func inlineEnvironment(names ...string) []string {
 	var flags []string
@@ -60,23 +62,32 @@ func inlineEnvironment(names ...string) []string {
 	}
 	return flags
 }
+
+type inlineProductSlot struct {
+	once      sync.Once
+	directory string
+}
+
+var inlineProducts sync.Map
+
 func inlineBuild(t *testing.T, in buildcache.Inputs, build func(string) error) string {
 	t.Helper()
-	return buildcache.Product(t, in, build)
+	value, _ := inlineProducts.LoadOrStore(in.Name, &inlineProductSlot{})
+	slot := value.(*inlineProductSlot)
+	slot.once.Do(func() { slot.directory = buildcache.Product(t, in, build) })
+	if slot.directory == "" {
+		t.Fatalf("product %s failed", in.Name)
+	}
+	return slot.directory
 }
 func inlineOverlayBuild(t *testing.T) string {
 	t.Helper()
-	dir, err := os.MkdirTemp("", "markdowninline-overlay-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	inlineSharedOverlayDir = dir
-	start := time.Now()
-	if err := buildInlineGoBridge(dir); err != nil {
-		t.Fatalf("Go overlay bridge: %v", err)
-	}
-	t.Logf("build census: markdowninline Go overlay bridge %.6fs (overlay, uncached)", time.Since(start).Seconds())
-	return dir
+	in := inlineCompilerInputs(t)
+	in.Name = "markdowninline Go overlay bridge"
+	in.Files = append(append([]string{}, in.Files...), "stage1/cohere/markdowninline/testdata/bridge.go", "stage1/cohere/markdowninline/testdata/go_driver.go", "stage1/cohere/markdowninline/inline_build_products_test.go")
+	in.Flags = append(append([]string{}, in.Flags...), "go build -overlay=<product>/overlay.json -o <product>/go-printer cmd/adamic_stage_one/main.go")
+
+	return inlineBuild(t, in, buildInlineGoBridge)
 }
 func inlineWrite(dir, name string, data []byte) error {
 	return os.WriteFile(filepath.Join(dir, name), data, 0644)
@@ -180,16 +191,16 @@ func (m inlineMutation) buildLowered(dir string) error {
 }
 
 // Lowering runs in-process, so its product keys cover the compiler's Go and
-// embedded inputs. This is dependency discovery for a non-Go product, not a Go
-// build cache; the overlay oracle continues to build once into its own directory.
-func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
+// embedded inputs. The overlay Go oracle has its own Product recipe.
+func collectInlineCompilerInputs(t *testing.T) buildcache.Inputs {
 	t.Helper()
 	root, err := filepath.Abs(repository)
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript")
+	command, cancel := inlineCommand("go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "github.com/system-inc/cohere/internal/format/markdown")
 	command.Dir = root
+	defer cancel()
 	listing, err := combinedOutput(command)
 	if err != nil {
 		t.Fatalf("compiler inputs: %v: %s", err, listing)
@@ -265,7 +276,7 @@ func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
 			add(root, name)
 		}
 	}
-	for _, name := range []string{"main.ts", "inline.ts", "classes.ts", "shards_test.go"} {
+	for _, name := range []string{"main.ts", "inline.ts", "classes.ts", "inline_products_shards_test.go"} {
 		add(filepath.Join(root, "stage1/cohere/markdowninline"), name)
 	}
 	in := buildcache.Inputs{Name: "markdowninline compiler inputs", Toolchain: []string{runtime.Version(), buildcache.Tool("go", "version"), buildcache.Tool("clang", "--version")}}
@@ -273,8 +284,9 @@ func inlineCompilerInputs(t *testing.T) buildcache.Inputs {
 		in.Files = append(in.Files, name)
 	}
 	sort.Strings(in.Files)
-	command = bounded(t, "go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT")
+	command, cancel = inlineCommand("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOFLAGS", "CC", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOTOOLCHAIN", "GOEXPERIMENT")
 	command.Dir = root
+	defer cancel()
 	resolved, err := combinedOutput(command)
 	if err != nil {
 		t.Fatalf("compiler environment: %v", err)
@@ -301,12 +313,12 @@ func inlineProductSources(t *testing.T, in buildcache.Inputs, source string, nam
 	return in
 }
 func inlineNativeInputs(t *testing.T, name, source string, sanitize bool) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: []string{"internal/native", "stage1/cohere/markdowninline/shards_test.go"}, Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
+	in := buildcache.Inputs{Name: name, Files: []string{"internal/native", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: native.Flags(native.Options{Sanitize: sanitize}), Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}
 	in.Flags = append(in.Flags, inlineEnvironment("PATH", "HOME", "XDG_CACHE_HOME", "TMPDIR", "LIBRARY_PATH", "CPATH", "C_INCLUDE_PATH", "LANG", "LC_ALL", "SOURCE_DATE_EPOCH", "SDKROOT", "MACOSX_DEPLOYMENT_TARGET", "LD_LIBRARY_PATH", "DYLD_LIBRARY_PATH", "ADAMIC_NATIVE_SPLIT", "ADAMIC_NATIVE_JOBS", "ADAMIC_GATE_UNCACHED")...)
 	return inlineProductSources(t, in, source, "program.c")
 }
 func inlineNodeInputs(t *testing.T, name, source string) buildcache.Inputs {
-	in := buildcache.Inputs{Name: name, Files: []string{"stage1/cohere/markdowninline/testdata/build_node.mjs", "stage1/cohere/markdowninline/shards_test.go"}, Flags: []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, Toolchain: []string{buildcache.Tool("node", "--version")}}
+	in := buildcache.Inputs{Name: name, Files: []string{"stage1/cohere/markdowninline/testdata/build_node.mjs", "stage1/cohere/markdowninline/inline_products_shards_test.go"}, Flags: []string{"--disable-warning=ExperimentalWarning", "stripTypeScriptTypes mode=transform"}, Toolchain: []string{buildcache.Tool("node", "--version")}}
 	in.Flags = append(in.Flags, inlineEnvironment("PATH", "NODE_OPTIONS", "NODE_PATH")...)
 	return inlineProductSources(t, in, source, "main.ts", "inline.ts", "classes.ts")
 }
@@ -475,23 +487,16 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 		t.Fatal(err)
 	}
 	goDir := inlineOverlayBuild(t)
-	compilerInputs := inlineCompilerInputs(t)
 	goBinary := filepath.Join(goDir, "go-printer")
-	source, err := filepath.Abs(".")
-	if err != nil {
-		t.Fatal(err)
-	}
-	nodeDir := inlineBuild(t, inlineNodeInputs(t, "markdowninline Node oracle", source), inlineSource(source).buildNode)
-	lowerDir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline lowered program"), buildInlineLowered)
-	nativeDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline native", lowerDir, false), inlineSource(lowerDir).buildNative)
-	sanitizedDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline sanitized", lowerDir, true), inlineSource(lowerDir).buildSanitized)
+	nodeDir := inlineNodeProduct(t)
+	lowerDir := inlineLoweredProduct(t, -1)
+	nativeDir := inlineNativeProduct(t, -1, false)
+	sanitizedDir := inlineNativeProduct(t, -1, true)
 	fast, sanitized := filepath.Join(nativeDir, "port"), filepath.Join(sanitizedDir, "port")
-	planted := inlineMutation{"one-case disagreement", "main.ts", "console.log(encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));", "console.log(line === 'w😀😀😀😀' ? 'planted disagreement' : encode(formatLeaf(line.slice(0, 1), decode(line.slice(1)))));"}
-	mutantDir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline planted lowered"), planted.buildLowered)
-	mutantNativeDir := inlineBuild(t, inlineNativeInputs(t, "markdowninline planted sanitized", mutantDir, true), inlineSource(mutantDir).buildSanitized)
+	mutantNativeDir := inlineNativeProduct(t, 0, true)
 	mutantFast := fast
 	if runtime.GOOS == "darwin" {
-		mutantFast = filepath.Join(inlineBuild(t, inlineNativeInputs(t, "markdowninline planted native", mutantDir, false), inlineSource(mutantDir).buildNative), "port")
+		mutantFast = filepath.Join(inlineNativeProduct(t, 0, false), "port")
 	}
 	target := -1
 	for text := range texts {
@@ -520,13 +525,13 @@ func prepareInlineShards(t *testing.T, paths, texts []string, files, generatedEn
 	// avoids sending every large repository text through known-wrong programs.
 	type mutantProduct struct{ name, binary, fast, node string }
 	var mutants []mutantProduct
-	for _, m := range []inlineMutation{{"escaped delimiter parity", "inline.ts", "(found.preceding - position) % 2 === 1", "(found.preceding - position) % 2 === 0"}, {"table pipe escaping", "inline.ts", "if(table)", "if(!table)"}, {"minimum absent fence", "inline.ts", "while(runs.includes(count))", "while(runs.includes(count) && count < 1)"}} {
-		dir := inlineBuild(t, inlineProgramInputs(compilerInputs, "markdowninline mutant "+m.name+" lowered"), m.buildLowered)
-		bin := inlineBuild(t, inlineNativeInputs(t, "markdowninline mutant "+m.name+" sanitized", dir, true), inlineSource(dir).buildSanitized)
-		node := inlineBuild(t, inlineNodeInputs(t, "markdowninline mutant "+m.name+" Node", dir), inlineSource(dir).buildNode)
+	for i, m := range inlineMutations[1:] {
+		index := i + 1
+		bin := inlineNativeProduct(t, index, true)
+		node := inlineMutationNodeProduct(t, index)
 		mf := fast
 		if runtime.GOOS == "darwin" {
-			mf = filepath.Join(inlineBuild(t, inlineNativeInputs(t, "markdowninline mutant "+m.name+" native", dir, false), inlineSource(dir).buildNative), "port")
+			mf = filepath.Join(inlineNativeProduct(t, index, false), "port")
 		}
 		mutants = append(mutants, mutantProduct{m.name, filepath.Join(bin, "port"), mf, filepath.Join(node, "main.mjs")})
 	}
