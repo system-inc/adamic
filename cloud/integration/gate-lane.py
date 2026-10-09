@@ -47,7 +47,14 @@ def records(sha):
 
 
 def post(task, text):
-    subprocess.run("%s tasks comment %s --role Agent --text-file -" % (ahra, task), shell=True, input=text, text=True, capture_output=True)
+    # ahra reads a comment from a file, not stdin; a post that fails is logged, never silent.
+    import tempfile
+    with tempfile.NamedTemporaryFile("w", suffix=".md", delete=False) as handle:
+        handle.write(text)
+    ran = subprocess.run("%s tasks comment %s --role Agent --text-file %s" % (ahra, task, handle.name), shell=True, text=True, capture_output=True)
+    os.unlink(handle.name)
+    if ran.returncode != 0 or "Comment added" not in ran.stdout + ran.stderr:
+        print("could not post on %s: %s" % (task, (ran.stdout + ran.stderr).strip()[-300:]), flush=True)
 
 
 def main():

@@ -51,7 +51,9 @@ class GateLaneTests(unittest.TestCase):
         fake.write_text('echo "$@" >> %s\n[ %d = 0 ] && echo "Pushed main aaaa..bbbb"\n[ %d = 1 ] && echo "refused: a real reason" >&2\nexit %d\n'
                         % (self.calls, exitCode, exitCode, exitCode))
         poster = self.root / 'ahra'
-        poster.write_text('#!/usr/bin/env bash\necho "$@" >> %s; cat >> %s; echo >> %s\n' % (self.posts, self.posts, self.posts))
+        # Like ahra: the comment comes from the file after --text-file, and success says "Comment added".
+        poster.write_text('#!/usr/bin/env bash\nfile=""; while [ $# -gt 0 ]; do [ "$1" = --text-file ] && file=$2; shift; done\n'
+                          'cat "$file" >> %s; echo >> %s; echo "Comment added"\n' % (self.posts, self.posts))
         poster.chmod(0o755)
         return subprocess.run(['python3', str(script)], cwd=self.repository, capture_output=True, text=True,
                               env=dict(os.environ, GATE_LANE_CANDIDATES=str(self.candidates), GATE_LANE_STATE=str(self.root / 'state'),
