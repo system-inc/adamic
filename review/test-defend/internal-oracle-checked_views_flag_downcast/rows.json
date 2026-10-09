@@ -1,0 +1,120 @@
+[
+  {
+    "test": "TestCheckedViewOptionalReadBoundary",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewObjectPrimitiveSource"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/interface_cast.go:70,392",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/interface_cast.go:70",
+        "change": "a checked field alias requiring an optional, accessor, or representation conversion -> a checked field alias requiring an optional, accessor, or representation conversion pending",
+        "rows_failed": [
+          "TestCheckedViewOptionalReadBoundary"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$ > D1.log 2>&1; checked_views_optional_read_test.go:65: boundary diagnostic: got \"/workspace/adamic/stage3/interface-downcasts/lane1/optional-read.a:9:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion pending yet\", want \"/workspace/adamic/stage3/interface-downcasts/lane1/optional-read.a:9:13: stage 0 can't lower a checked field alias requiring an optional, accessor, or representation conversion yet\""
+  },
+  {
+    "test": "TestCheckedViewV2ReadsAfterWrites",
+    "package": "internal/oracle",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestCheckedViewV2MovedStage3Results"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D7 internal/javascript/view_unions_untagged.go:83",
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/native/view_unions_read.go:37",
+        "change": "%s = &adamic_null; -> %s = NULL;",
+        "rows_failed": [
+          "TestCheckedViewV2ReadsAfterWrites",
+          "TestCountsAreRecorded"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/view_unions_dispatch.go:25",
+        "change": "if child.Kind == ir.ViewArray { -> if child.Kind == ir.ViewObject {",
+        "rows_failed": [
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewUntaggedOwnClassData",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewUntaggedSourceFlows",
+          "TestCheckedViewV2MembershipMutant",
+          "TestCheckedViewV2MovedStage3Results",
+          "TestCheckedViewV2ReadsAfterWrites"
+        ]
+      },
+      {
+        "mutant": "D6",
+        "file_line": "internal/javascript/view_unions_read.go:35",
+        "change": "if contract.Null && property.Of == contract.Of { -> if !contract.Null && property.Of == contract.Of {",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D7",
+        "file_line": "internal/javascript/view_unions_untagged.go:83",
+        "change": "if(contract.Kind===6) return value===null; -> if(contract.Kind===6) return value!==null;",
+        "rows_failed": [
+          "TestCheckedViewV2ReadsAfterWrites"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D7 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestCountsAreRecorded)$ > D7.log 2>&1; checked_views_v2_migration_test.go:25: javascript: exit codes differ; oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x72, 0x65, 0x61, 0x64, 0x20, 0x66, 0x61, 0x69, 0x6c, 0x65, 0x64, 0x3a, 0x20, 0x76, 0x69, 0x65, 0x77, 0x65, 0x64, 0x2e, 0x76, 0x61, 0x6c, 0x75, 0x65, 0x20, 0x6d, 0x61, 0x74, 0x63, 0x68, 0x65, 0x73, 0x20, 0x6e, 0x6f, 0x20, 0x6d, 0x65, 0x6d, 0x62, 0x65, 0x72, 0x20, 0x6f, 0x66, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x20, 0x7c, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x3b, 0x20, 0x65, 0x78, 0x70, 0x65, 0x63, 0x74, 0x65, 0x64, 0x20, 0x73, 0x74, 0x72, 0x69, 0x6e, 0x67, 0x20, 0x7c, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0x2c, 0x20, 0x66, 0x6f, 0x75, 0x6e, 0x64, 0x20, 0x6e, 0x75, 0x6c, 0x6c, 0xa}, exitCode:70}"
+  },
+  {
+    "test": "TestCheckedViewV2ArrayArmBoundary",
+    "package": "internal/oracle",
+    "prior_verdict": "untrue",
+    "subsumed_by": [],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/view_unions_dispatch.go:25",
+        "change": "if child.Kind == ir.ViewArray { -> if child.Kind == ir.ViewObject {",
+        "rows_failed": [
+          "TestCheckedViewObjectPrimitiveSource",
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewUntaggedOwnClassData",
+          "TestCheckedViewUntaggedRecursive",
+          "TestCheckedViewUntaggedSourceDispatch",
+          "TestCheckedViewUntaggedSourceFlows",
+          "TestCheckedViewV2MembershipMutant",
+          "TestCheckedViewV2MovedStage3Results",
+          "TestCheckedViewV2ReadsAfterWrites"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/view_unions_dispatch.go:26",
+        "change": "contract.Unsupported = \"views-v3: array element kind: \" + child.Name -> (drop statement)",
+        "rows_failed": [
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewV2ArrayArmBoundary"
+        ]
+      },
+      {
+        "mutant": "D5",
+        "file_line": "internal/lower/view_unions_dispatch.go:73",
+        "change": "contract.Kind = ir.ViewArray -> contract.Kind = ir.ViewUnknown",
+        "rows_failed": [
+          "TestCheckedViewUntaggedArrayPending",
+          "TestCheckedViewV2ArrayArmBoundary"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$ > D4.log 2>&1; checked_views_v2_migration_test.go:44: expected named V3 arm, got <nil>"
+  }
+]

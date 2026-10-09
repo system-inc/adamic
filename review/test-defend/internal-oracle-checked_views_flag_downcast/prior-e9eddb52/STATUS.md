@@ -1,0 +1,1 @@
+Work superseded by the arguments_length defense request. Production files restored. The checked-view and broader matrices are preserved as observations; no final defense verdict issued. Broad matrix excludes TestNativeAgreesWithNode and is bounded. D1 changes the dispatch criterion, which requires menu review before counting it as a defense.

@@ -1,0 +1,11 @@
+--- a/internal/javascript/view_unions_untagged.go
++++ b/internal/javascript/view_unions_untagged.go
+@@ -80,7 +80,7 @@
+    return adamicViewCallableSignaturesMatch(recorded,expected);
+   }
+   if(contract.Kind===3) return false; // awaits views-v3: array element kind
+-  if(contract.Kind===6) return value===null;
++  if(contract.Kind===6) return value!==null;
+   if(contract.Kind===7) return value===undefined;
+   if(contract.Kind===4) return (contract.Members || []).some(member=>matches(value,member,depth+1));
+   if(contract.Kind!==2 || value===null || typeof value!=='object' || (!contract.FixedTuple && Array.isArray(value)) || value instanceof Map) return false;

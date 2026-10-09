@@ -1,0 +1,13 @@
+diff --git a/internal/javascript/view_unions_read.go b/internal/javascript/view_unions_read.go
+index fbb1a8db..750df137 100644
+--- a/internal/javascript/view_unions_read.go
++++ b/internal/javascript/view_unions_read.go
+@@ -13,7 +13,7 @@ func readUnionView(e *emitter, property ir.Property) (string, bool) {
+ 		return "", false
+ 	}
+ 	contract := e.program.ViewContracts[id-1]
+-	if contract.Kind != ir.ViewUnion && !contract.FixedTuple && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
++	if contract.Kind != ir.ViewUnion && len(contract.Tuple) == 0 && !(contract.Kind == ir.ViewCallable && contract.ProducerCertified) {
+ 		return "", false
+ 	}
+ 	if contract.Unsupported != "" || property.Optional || property.Absent || property.Method {

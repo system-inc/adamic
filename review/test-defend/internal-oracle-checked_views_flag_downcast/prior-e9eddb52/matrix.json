@@ -1,0 +1,106 @@
+[
+  {
+    "mutant": "D1",
+    "file_line": "internal/javascript/view_unions_read.go:16",
+    "change": "change dispatch option from tuple-identity flag to retained tuple metadata",
+    "rows_failed": [
+      "TestCheckedViewV2TupleIdentityMutant"
+    ],
+    "rows_passed": [
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewV2ArrayArmBoundary",
+      "TestCheckedViewV2CallableProducerMutant",
+      "TestCheckedViewV2MembershipMutant",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2RepresentationMutants",
+      "TestCheckedViewV2WrongFamilyMutant"
+    ],
+    "errors": [
+      "checked_views_v2_migration_test.go:217: tuple flag removal caught by native: exit 0 stdout \"first\\n\"",
+      "checked_views_v2_migration_test.go:217: tuple flag removal caught by native-sanitized: exit 0 stdout \"first\\n\"",
+      "checked_views_v2_migration_test.go:215: tuple mutant must execute the Node counterfactual in javascript: exit codes differ"
+    ],
+    "seconds": 35.77914936700108,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-view/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCheckedView"
+  },
+  {
+    "mutant": "D2",
+    "file_line": "internal/javascript/view_unions_untagged.go:153",
+    "change": "drop entire uncertified-producer early return",
+    "rows_failed": [
+      "TestCheckedViewV2CallableProducerMutant"
+    ],
+    "rows_passed": [
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewV2ArrayArmBoundary",
+      "TestCheckedViewV2MembershipMutant",
+      "TestCheckedViewV2MovedStage3Results",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2RepresentationMutants",
+      "TestCheckedViewV2TupleIdentityMutant",
+      "TestCheckedViewV2WrongFamilyMutant"
+    ],
+    "errors": [
+      "checked_views_v2_migration_test.go:246: producer mutant must execute Node in javascript: exit codes differ"
+    ],
+    "seconds": 28.552613424999436,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-view/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCheckedView"
+  },
+  {
+    "mutant": "D3",
+    "file_line": "internal/javascript/javascript.go:624",
+    "change": "flip post-test loop exit condition",
+    "rows_failed": [
+      "TestCheckedViewV2MovedStage3Results"
+    ],
+    "rows_passed": [
+      "TestCheckedViewFlagDowncast",
+      "TestCheckedViewInterfaces",
+      "TestCheckedViewObjectPrimitiveSource",
+      "TestCheckedViewObjects",
+      "TestCheckedViewOptionalReadBoundary",
+      "TestCheckedViewUntaggedArrayPending",
+      "TestCheckedViewUntaggedCallableUnion",
+      "TestCheckedViewUntaggedOptionalCallableControl",
+      "TestCheckedViewUntaggedOwnClassData",
+      "TestCheckedViewUntaggedRecursive",
+      "TestCheckedViewUntaggedSourceDispatch",
+      "TestCheckedViewUntaggedSourceFlows",
+      "TestCheckedViewV2ArrayArmBoundary",
+      "TestCheckedViewV2CallableProducerMutant",
+      "TestCheckedViewV2MembershipMutant",
+      "TestCheckedViewV2ReadsAfterWrites",
+      "TestCheckedViewV2RepresentationMutants",
+      "TestCheckedViewV2TupleIdentityMutant",
+      "TestCheckedViewV2WrongFamilyMutant"
+    ],
+    "errors": [
+      "checked_views_v2_migration_test.go:273: javascript: stdout differs; oracle.run{stdout:[]uint8{0x74, 0x72, 0x75, 0x65, 0xa, 0x74, 0x72, 0x75, 0x65, 0xa, 0x6f, 0x75, 0x74, 0x65, 0x72, 0xa, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0xa, 0x66, 0x61, 0x6c, 0x73, 0x65, 0xa}, stderr:[]uint8{}, exitCode:0}"
+    ],
+    "seconds": 28.024190070002078,
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/def-view/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestCheckedView"
+  }
+]

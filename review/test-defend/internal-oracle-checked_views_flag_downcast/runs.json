@@ -1,0 +1,62 @@
+[
+  {
+    "id": "clean",
+    "exit": 0,
+    "wall": 17.718071136998333,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/clean timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D1",
+    "exit": 1,
+    "wall": 26.150690619997476,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D2",
+    "exit": 1,
+    "wall": 20.967473060001794,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D3",
+    "exit": 1,
+    "wall": 20.697910775998025,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D4",
+    "exit": 1,
+    "wall": 25.246722953001154,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D5",
+    "exit": 1,
+    "wall": 25.78838723499939,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D5 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D6",
+    "exit": 0,
+    "wall": 42.2102042890001,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D6 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews)$"
+  },
+  {
+    "id": "D1-expanded",
+    "exit": 0,
+    "wall": 55.75744854400182,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCountsAreRecorded)$"
+  },
+  {
+    "id": "D2-expanded",
+    "exit": 1,
+    "wall": 52.89538365699991,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCountsAreRecorded)$"
+  },
+  {
+    "id": "D7-expanded",
+    "exit": 1,
+    "wall": 72.07835240799977,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-checked/cache/D7 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestCheckedViewFlagDowncast|TestCheckedViewInterfaces|TestCheckedViewObjects|TestCheckedViewOptionalReadBoundary|TestCheckedViewV2ReadsAfterWrites|TestCheckedViewV2ArrayArmBoundary|TestCheckedViewV2WrongFamilyMutant|TestCheckedViewV2RepresentationMutants|TestCheckedViewV2MembershipMutant|TestCheckedViewV2TupleIdentityMutant|TestCheckedViewV2CallableProducerMutant|TestCheckedViewV2MovedStage3Results|TestCheckedViewObjectPrimitiveSource|TestCheckedViewUntaggedSourceDispatch|TestCheckedViewUntaggedCallableUnion|TestCheckedViewUntaggedOptionalCallableControl|TestCheckedViewUntaggedSourceFlows|TestCheckedViewUntaggedOwnClassData|TestCheckedViewUntaggedRecursive|TestCheckedViewUntaggedArrayPending|TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestRequiredViewFieldPrimitive|TestRequiredViewFieldOperandOnce|TestViewFieldInheritedStaticReadiness|TestDefaultTaggedSourceViews|TestCountsAreRecorded)$"
+  }
+]
