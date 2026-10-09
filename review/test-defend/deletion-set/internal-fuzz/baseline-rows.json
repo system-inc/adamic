@@ -1,0 +1,20 @@
+{
+  "passed": [
+    "TestExecuteCPUHelper",
+    "TestSourceTreeCutsAtItems",
+    "TestJudgeReadsThePanicLine",
+    "TestExactSignatureRejectsSuffix",
+    "TestBytesSharedRejects63Bytes",
+    "TestShrinkKeepsOnlyWhatFails",
+    "TestSharedSliceCutsShare",
+    "TestReduceRejectsDifferentRefusal",
+    "TestOctoberFeaturesAppear",
+    "TestOwnershipShapes",
+    "TestExecuteCPULimit",
+    "TestOverridesShapesAndLower",
+    "TestUndefinedNumbersShapes",
+    "TestFuzzerSharesRuntimeLibrary",
+    "TestReduceKeepsTheSignature"
+  ],
+  "skipped": []
+}

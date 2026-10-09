@@ -1,0 +1,125 @@
+[
+  {
+    "mutant": "M10",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R001-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOwnershipShapes"
+    ],
+    "failure_lines": [
+      "    fuzz_test.go:242: seed 1: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:212:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+      "    fuzz_test.go:242: seed 2: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:102:59: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'string'.",
+      "    fuzz_test.go:242: seed 3: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:105:10: error TS2393: Duplicate function implementation.",
+      "    fuzz_test.go:242: seed 4: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:202:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+      "    fuzz_test.go:242: seed 5: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:203:7: error TS2451: Cannot redeclare block-scoped variable 'maybeValue0'.",
+      "    fuzz_test.go:242: seed 6: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:110:10: error TS2393: Duplicate function implementation.",
+      "    fuzz_test.go:242: seed 7: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:118:10: error TS2393: Duplicate function implementation.",
+      "    fuzz_test.go:242: seed 8: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2270206702/001/program.a:102:101: error TS2345: Argument of type 'boolean' is not assignable to parameter of type 'number'.",
+      "--- FAIL: TestOwnershipShapes (1.20s)"
+    ]
+  },
+  {
+    "mutant": "G1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R002-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOverridesShapesAndLower"
+    ],
+    "failure_lines": [
+      "    overrides_test.go:89: seed 40: checker: /tmp/adamic-gate/TestOverridesShapesAndLowerseeds-040-0444211033693/001/program.a:36:36: error TS2339: Property 'sliceMissing' does not exist on type 'string[]'.",
+      "--- FAIL: TestOverridesShapesAndLower/seeds-040-044 (0.09s)"
+    ]
+  },
+  {
+    "mutant": "G2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R003-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestUndefinedNumbersShapes"
+    ],
+    "failure_lines": [
+      "    undefined_numbers_test.go:58: seed 34: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-031-0352739249451/001/program.a:112:72: error TS2367: This comparison appears to be unintentional because the types '\"3.5\"' and '\" pad \"' have no overlap.",
+      "--- FAIL: TestUndefinedNumbersShapes/seeds-031-035 (1.10s)"
+    ]
+  },
+  {
+    "mutant": "G3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R004-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestUndefinedNumbersShapes"
+    ],
+    "failure_lines": [
+      "    undefined_numbers_test.go:58: seed 35: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-031-035133156497/001/program.a:105:70: error TS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.",
+      "--- FAIL: TestUndefinedNumbersShapes/seeds-031-035 (0.94s)"
+    ]
+  },
+  {
+    "mutant": "R1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R005-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOwnershipShapes"
+    ],
+    "failure_lines": [
+      "    fuzz_test.go:242: seed 1: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes606810374/001/program.a:458:4: error TS2304: Cannot find name 'finder'.",
+      "    fuzz_test.go:242: seed 2: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes606810374/001/program.a:101:4: error TS2304: Cannot find name 'finder'.",
+      "    fuzz_test.go:242: seed 3: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes606810374/001/program.a:446:3: error TS2304: Cannot find name 'finder'.",
+      "    fuzz_test.go:242: seed 5: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes606810374/001/program.a:425:2: error TS2304: Cannot find name 'finder'.",
+      "    fuzz_test.go:242: seed 8: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes606810374/001/program.a:446:2: error TS2304: Cannot find name 'finder'.",
+      "--- FAIL: TestOwnershipShapes (1.13s)"
+    ]
+  },
+  {
+    "mutant": "R2",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R006-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOwnershipShapes"
+    ],
+    "failure_lines": [
+      "    fuzz_test.go:242: seed 1: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2124781870/001/program.a:93:22: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+      "    fuzz_test.go:242: seed 3: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2124781870/001/program.a:70:22: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+      "    fuzz_test.go:242: seed 4: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2124781870/001/program.a:455:21: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+      "    fuzz_test.go:242: seed 5: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2124781870/001/program.a:473:22: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+      "    fuzz_test.go:242: seed 7: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes2124781870/001/program.a:527:23: error TS2339: Property 'execMissing' does not exist on type 'RegExp'.",
+      "--- FAIL: TestOwnershipShapes (1.81s)"
+    ]
+  },
+  {
+    "mutant": "R3",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R007-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOwnershipShapes"
+    ],
+    "failure_lines": [
+      "    fuzz_test.go:242: seed 2: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes1240644069/001/program.a:492:47: error TS2339: Property 'slice' does not exist on type 'number'.",
+      "    fuzz_test.go:242: seed 3: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes1240644069/001/program.a:81:21: error TS2339: Property 'slice' does not exist on type '2.25'.",
+      "    fuzz_test.go:242: seed 6: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes1240644069/001/program.a:493:73: error TS2339: Property 'slice' does not exist on type 'number'.",
+      "    fuzz_test.go:242: seed 7: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes1240644069/001/program.a:501:111: error TS2339: Property 'slice' does not exist on type 'number'.",
+      "    fuzz_test.go:242: seed 8: the checker refused it: /tmp/adamic-gate/TestOwnershipShapes1240644069/001/program.a:439:58: error TS2339: Property 'slice' does not exist on type 'number'.",
+      "--- FAIL: TestOwnershipShapes (2.96s)"
+    ]
+  },
+  {
+    "mutant": "S1",
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R008-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+    "rows_failed": [
+      "TestOctoberFeaturesAppear",
+      "TestUndefinedNumbersShapes"
+    ],
+    "failure_lines": [
+      "    fuzz_test.go:120: 200 seeds never wrote >>>",
+      "--- FAIL: TestOctoberFeaturesAppear (0.30s)",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through union",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through defaultUnion",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through methodDefault",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through interface",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through sole",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through solePick",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through cell",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through constructor",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through constructorDefault",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through record",
+      "    undefined_numbers_test.go:98: 40 seeds never carried a value through map",
+      "    undefined_numbers_test.go:103: 40 seeds never started from undefined",
+      "    undefined_numbers_test.go:103: 40 seeds never started from madeNaN",
+      "    undefined_numbers_test.go:103: 40 seeds never started from hole",
+      "--- FAIL: TestUndefinedNumbersShapes/vocabulary (0.01s)"
+    ]
+  }
+]

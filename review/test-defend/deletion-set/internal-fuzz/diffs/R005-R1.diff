@@ -1,0 +1,12 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..3773c431 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -215,7 +215,6 @@ func (g *generator) program() *Program {
+ 		g.declare("flags", NumberSet, false)
+ 	}
+ 	if g.allowed("regex") {
+-		add(statement("const finder = /a/g;"))
+ 	}
+ 	if g.allowed("closures-deep") {
+ 		add(statement("const " + pendingClosures + ": (() => number)[] = [];"))

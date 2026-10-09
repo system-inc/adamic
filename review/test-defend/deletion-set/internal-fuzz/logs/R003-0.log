@@ -1,0 +1,233 @@
+{"Time":"2026-10-09T18:28:49.48560177Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fuzz"}
+{"Time":"2026-10-09T18:28:49.493699807Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T18:28:49.493827175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== RUN   TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493859543Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== PAUSE TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493863469Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T18:28:49.493869408Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T18:28:49.493872102Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== RUN   TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493876538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== PAUSE TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493879242Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T18:28:49.493882086Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T18:28:49.49388459Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== RUN   TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493888045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== PAUSE TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493890769Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T18:28:49.493893643Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T18:28:49.49389827Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== RUN   TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493902547Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== PAUSE TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493905311Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T18:28:49.493909317Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T18:28:49.4939119Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== RUN   TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493930748Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== PAUSE TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493933713Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T18:28:49.493936747Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T18:28:49.493939461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== RUN   TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493950157Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== PAUSE TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493953111Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T18:28:49.493956176Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T18:28:49.493959561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== RUN   TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493963747Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== PAUSE TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.49396609Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T18:28:49.493969265Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature"}
+{"Time":"2026-10-09T18:28:49.49397257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature","Output":"=== RUN   TestReduceKeepsTheSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493975554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature","Output":"=== PAUSE TestReduceKeepsTheSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493977848Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature"}
+{"Time":"2026-10-09T18:28:49.493980672Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T18:28:49.493982895Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== RUN   TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493985649Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== PAUSE TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493988133Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T18:28:49.493992399Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T18:28:49.493994943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== RUN   TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.493998138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== PAUSE TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494000832Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T18:28:49.494003966Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T18:28:49.4940065Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== RUN   TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494010015Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== PAUSE TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494012759Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T18:28:49.494018508Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper"}
+{"Time":"2026-10-09T18:28:49.494020901Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"=== RUN   TestExecuteCPUHelper\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494034792Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Output":"--- PASS: TestExecuteCPUHelper (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494038908Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPUHelper","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.49405414Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T18:28:49.494056534Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== RUN   TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494061331Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== PAUSE TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494064065Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T18:28:49.494069373Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T18:28:49.494072648Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== RUN   TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494077625Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== PAUSE TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494080339Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T18:28:49.494083904Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T18:28:49.494086729Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== RUN   TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494091486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== PAUSE TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.4940944Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T18:28:49.494097945Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear"}
+{"Time":"2026-10-09T18:28:49.494100809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"=== CONT  TestOctoberFeaturesAppear\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494106778Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature"}
+{"Time":"2026-10-09T18:28:49.494109342Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceKeepsTheSignature","Output":"=== CONT  TestReduceKeepsTheSignature\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494112787Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine"}
+{"Time":"2026-10-09T18:28:49.494115561Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"=== CONT  TestJudgeReadsThePanicLine\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494134008Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes"}
+{"Time":"2026-10-09T18:28:49.494136813Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes","Output":"=== CONT  TestUndefinedNumbersShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.494143172Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary"}
+{"Time":"2026-10-09T18:28:49.494146307Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestFuzzerSharesRuntimeLibrary","Output":"=== CONT  TestFuzzerSharesRuntimeLibrary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495368111Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Output":"--- PASS: TestJudgeReadsThePanicLine (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495384685Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestJudgeReadsThePanicLine","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.495389022Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit"}
+{"Time":"2026-10-09T18:28:49.495390935Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"=== CONT  TestExecuteCPULimit\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495393298Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T18:28:49.495395001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== RUN   TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495397274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== PAUSE TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495398997Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T18:28:49.49540113Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T18:28:49.495402912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== RUN   TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495405306Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== PAUSE TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495406918Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T18:28:49.495408751Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T18:28:49.495410604Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== RUN   TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495412486Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== PAUSE TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495414039Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T18:28:49.495416913Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes"}
+{"Time":"2026-10-09T18:28:49.495420338Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"=== CONT  TestBytesSharedRejects63Bytes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495426988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Output":"--- PASS: TestBytesSharedRejects63Bytes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495429001Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestBytesSharedRejects63Bytes","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.495431484Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix"}
+{"Time":"2026-10-09T18:28:49.495433277Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"=== CONT  TestExactSignatureRejectsSuffix\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.49543551Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Output":"--- PASS: TestExactSignatureRejectsSuffix (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495438956Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExactSignatureRejectsSuffix","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.495440318Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal"}
+{"Time":"2026-10-09T18:28:49.495441629Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"=== CONT  TestReduceRejectsDifferentRefusal\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495980004Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Output":"--- PASS: TestReduceRejectsDifferentRefusal (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.495992523Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestReduceRejectsDifferentRefusal","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.495995637Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems"}
+{"Time":"2026-10-09T18:28:49.495998281Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"=== CONT  TestSourceTreeCutsAtItems\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.496006544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Output":"--- PASS: TestSourceTreeCutsAtItems (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.496010119Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSourceTreeCutsAtItems","Elapsed":0}
+{"Time":"2026-10-09T18:28:49.496012412Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare"}
+{"Time":"2026-10-09T18:28:49.496016448Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"=== CONT  TestSharedSliceCutsShare\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.637604724Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Output":"--- PASS: TestSharedSliceCutsShare (0.14s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.637707075Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestSharedSliceCutsShare","Elapsed":0.14}
+{"Time":"2026-10-09T18:28:49.637729819Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes"}
+{"Time":"2026-10-09T18:28:49.637733284Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"=== CONT  TestOwnershipShapes\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663122591Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary"}
+{"Time":"2026-10-09T18:28:49.663183571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary","Output":"=== RUN   TestUndefinedNumbersShapes/vocabulary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663195188Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary","Output":"=== PAUSE TestUndefinedNumbersShapes/vocabulary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663198093Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary"}
+{"Time":"2026-10-09T18:28:49.663208268Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-001-005"}
+{"Time":"2026-10-09T18:28:49.663211262Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-001-005","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-001-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663215528Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-001-005","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-001-005\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663218292Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-001-005"}
+{"Time":"2026-10-09T18:28:49.663220876Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-006-010"}
+{"Time":"2026-10-09T18:28:49.663223059Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-006-010","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-006-010\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663226394Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-006-010","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-006-010\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663229018Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-006-010"}
+{"Time":"2026-10-09T18:28:49.663231772Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-011-015"}
+{"Time":"2026-10-09T18:28:49.663234126Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-011-015","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-011-015\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.66323711Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-011-015","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-011-015\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663239864Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-011-015"}
+{"Time":"2026-10-09T18:28:49.663242538Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020"}
+{"Time":"2026-10-09T18:28:49.663244611Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-016-020\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663247646Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-016-020\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663249939Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020"}
+{"Time":"2026-10-09T18:28:49.663254967Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025"}
+{"Time":"2026-10-09T18:28:49.663259303Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-021-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663262768Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-021-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663265522Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025"}
+{"Time":"2026-10-09T18:28:49.663268456Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030"}
+{"Time":"2026-10-09T18:28:49.66327064Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-026-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663273854Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-026-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663276458Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030"}
+{"Time":"2026-10-09T18:28:49.663279152Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035"}
+{"Time":"2026-10-09T18:28:49.663281526Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-031-035\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.66328441Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-031-035\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663287054Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035"}
+{"Time":"2026-10-09T18:28:49.663290229Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040"}
+{"Time":"2026-10-09T18:28:49.663292282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040","Output":"=== RUN   TestUndefinedNumbersShapes/seeds-036-040\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.663295436Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040","Output":"=== PAUSE TestUndefinedNumbersShapes/seeds-036-040\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.66329812Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040"}
+{"Time":"2026-10-09T18:28:49.663300644Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails"}
+{"Time":"2026-10-09T18:28:49.663303118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"=== CONT  TestShrinkKeepsOnlyWhatFails\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.70426567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Output":"--- PASS: TestShrinkKeepsOnlyWhatFails (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.704318127Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestShrinkKeepsOnlyWhatFails","Elapsed":0.04}
+{"Time":"2026-10-09T18:28:49.704324817Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower"}
+{"Time":"2026-10-09T18:28:49.704338327Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower","Output":"=== CONT  TestOverridesShapesAndLower\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758045996Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/vocabulary"}
+{"Time":"2026-10-09T18:28:49.758187906Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/vocabulary","Output":"=== RUN   TestOverridesShapesAndLower/vocabulary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758202728Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/vocabulary","Output":"=== PAUSE TestOverridesShapesAndLower/vocabulary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758205882Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/vocabulary"}
+{"Time":"2026-10-09T18:28:49.758210229Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-000-004"}
+{"Time":"2026-10-09T18:28:49.758212863Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-000-004","Output":"=== RUN   TestOverridesShapesAndLower/seeds-000-004\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758216929Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-000-004","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-000-004\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758219593Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-000-004"}
+{"Time":"2026-10-09T18:28:49.758223328Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-005-009"}
+{"Time":"2026-10-09T18:28:49.758225992Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-005-009","Output":"=== RUN   TestOverridesShapesAndLower/seeds-005-009\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758229988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-005-009","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-005-009\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758233223Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-005-009"}
+{"Time":"2026-10-09T18:28:49.758236157Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-010-014"}
+{"Time":"2026-10-09T18:28:49.758238661Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-010-014","Output":"=== RUN   TestOverridesShapesAndLower/seeds-010-014\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758283917Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-010-014","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-010-014\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758290287Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-010-014"}
+{"Time":"2026-10-09T18:28:49.758293151Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-015-019"}
+{"Time":"2026-10-09T18:28:49.758295735Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-015-019","Output":"=== RUN   TestOverridesShapesAndLower/seeds-015-019\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758300893Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-015-019","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-015-019\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758311488Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-015-019"}
+{"Time":"2026-10-09T18:28:49.758314503Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-020-024"}
+{"Time":"2026-10-09T18:28:49.758316946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-020-024","Output":"=== RUN   TestOverridesShapesAndLower/seeds-020-024\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758320532Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-020-024","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-020-024\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758323175Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-020-024"}
+{"Time":"2026-10-09T18:28:49.758326591Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-025-029"}
+{"Time":"2026-10-09T18:28:49.758328904Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-025-029","Output":"=== RUN   TestOverridesShapesAndLower/seeds-025-029\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758332169Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-025-029","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-025-029\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758334582Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-025-029"}
+{"Time":"2026-10-09T18:28:49.758370555Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-030-034"}
+{"Time":"2026-10-09T18:28:49.758373289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-030-034","Output":"=== RUN   TestOverridesShapesAndLower/seeds-030-034\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758376664Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-030-034","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-030-034\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758379148Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-030-034"}
+{"Time":"2026-10-09T18:28:49.758382273Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-035-039"}
+{"Time":"2026-10-09T18:28:49.758384726Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-035-039","Output":"=== RUN   TestOverridesShapesAndLower/seeds-035-039\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758387931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-035-039","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-035-039\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758390655Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-035-039"}
+{"Time":"2026-10-09T18:28:49.75839368Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-040-044"}
+{"Time":"2026-10-09T18:28:49.758396544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-040-044","Output":"=== RUN   TestOverridesShapesAndLower/seeds-040-044\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758400269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-040-044","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-040-044\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758406118Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-040-044"}
+{"Time":"2026-10-09T18:28:49.758409323Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-045-049"}
+{"Time":"2026-10-09T18:28:49.758412047Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-045-049","Output":"=== RUN   TestOverridesShapesAndLower/seeds-045-049\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758415682Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-045-049","Output":"=== PAUSE TestOverridesShapesAndLower/seeds-045-049\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.758418426Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOverridesShapesAndLower/seeds-045-049"}
+{"Time":"2026-10-09T18:28:49.75842104Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite"}
+{"Time":"2026-10-09T18:28:49.758423814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"=== CONT  TestExecuteCPULimit/infinite\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.901262207Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Output":"--- PASS: TestOctoberFeaturesAppear (0.41s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:49.901315716Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOctoberFeaturesAppear","Elapsed":0.41}
+{"Time":"2026-10-09T18:28:49.901322996Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated"}
+{"Time":"2026-10-09T18:28:49.901326121Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"=== CONT  TestExecuteCPULimit/saturated\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.429461565Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Output":"--- PASS: TestOwnershipShapes (4.77s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.429515405Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestOwnershipShapes","Elapsed":4.77}
+{"Time":"2026-10-09T18:28:54.429521354Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU"}
+{"Time":"2026-10-09T18:28:54.429523507Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"=== CONT  TestExecuteCPULimit/SIGXCPU\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.445724708Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Output":"--- PASS: TestExecuteCPULimit/SIGXCPU (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.445757707Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/SIGXCPU","Elapsed":0.04}
+{"Time":"2026-10-09T18:28:54.445775713Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary"}
+{"Time":"2026-10-09T18:28:54.445777596Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary","Output":"=== CONT  TestUndefinedNumbersShapes/vocabulary\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.45565488Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary","Output":"--- PASS: TestUndefinedNumbersShapes/vocabulary (0.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:54.455737211Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/vocabulary","Elapsed":0.01}
+{"Time":"2026-10-09T18:28:54.455741398Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040"}
+{"Time":"2026-10-09T18:28:54.45574304Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040","Output":"=== CONT  TestUndefinedNumbersShapes/seeds-036-040\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.038693601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"    run_test.go:84: 1 s CPU workload completed in 5.088768173s under a 2s CPU limit (wall past the limit: true)\n"}
+{"Time":"2026-10-09T18:28:55.073807908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Output":"--- PASS: TestExecuteCPULimit/saturated (5.17s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.073859594Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/saturated","Elapsed":5.17}
+{"Time":"2026-10-09T18:28:55.073867356Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035"}
+{"Time":"2026-10-09T18:28:55.07387018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Output":"=== CONT  TestUndefinedNumbersShapes/seeds-031-035\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.439176061Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Output":"--- PASS: TestExecuteCPULimit/infinite (5.68s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.439298562Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit/infinite","Elapsed":5.68}
+{"Time":"2026-10-09T18:28:55.439311321Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Output":"--- PASS: TestExecuteCPULimit (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.439314746Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestExecuteCPULimit","Elapsed":0}
+{"Time":"2026-10-09T18:28:55.439317109Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030"}
+{"Time":"2026-10-09T18:28:55.439318942Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-026-030","Output":"=== CONT  TestUndefinedNumbersShapes/seeds-026-030\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:55.871913445Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Output":"    undefined_numbers_test.go:58: seed 34: the checker refused it: /tmp/adamic-gate/TestUndefinedNumbersShapesseeds-031-0352739249451/001/program.a:112:72: error TS2367: This comparison appears to be unintentional because the types '\"3.5\"' and '\" pad \"' have no overlap.\n","OutputType":"error"}
+{"Time":"2026-10-09T18:28:56.16466783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040","Output":"--- PASS: TestUndefinedNumbersShapes/seeds-036-040 (1.71s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:56.164724333Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-036-040","Elapsed":1.71}
+{"Time":"2026-10-09T18:28:56.164731334Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025"}
+{"Time":"2026-10-09T18:28:56.164734909Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-021-025","Output":"=== CONT  TestUndefinedNumbersShapes/seeds-021-025\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:56.168777438Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Output":"--- FAIL: TestUndefinedNumbersShapes/seeds-031-035 (1.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T18:28:56.168806981Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-031-035","Elapsed":1.1}
+{"Time":"2026-10-09T18:28:56.168814062Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020"}
+{"Time":"2026-10-09T18:28:56.168815945Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fuzz","Test":"TestUndefinedNumbersShapes/seeds-016-020","Output":"=== CONT  TestUndefinedNumbersShapes/seeds-016-020\n","OutputType":"frame"}

@@ -1,0 +1,245 @@
+[
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M01.diff",
+    "failed": [
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M02.diff",
+    "failed": [
+      "TestOctoberFeaturesAppear",
+      "TestSharedSliceCutsShare",
+      "TestOwnershipShapes",
+      "TestOverridesShapesAndLower",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M03.diff",
+    "failed": [
+      "TestShrinkKeepsOnlyWhatFails"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M04.diff",
+    "failed": [
+      "TestSourceTreeCutsAtItems"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M05.diff",
+    "failed": [],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M06.diff",
+    "failed": [
+      "TestJudgeReadsThePanicLine"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M07.diff",
+    "failed": [
+      "TestExecuteCPULimit"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M08.diff",
+    "failed": [
+      "TestJudgeReadsThePanicLine",
+      "TestFuzzerSharesRuntimeLibrary"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M09.diff",
+    "failed": [
+      "TestSourceTreeCutsAtItems",
+      "TestReduceKeepsTheSignature"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M10.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestRegexProgramsPassTheChecker",
+      "TestOwnershipShapes",
+      "TestOverridesShapesAndLower",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M11.diff",
+    "failed": [
+      "TestOwnershipShapes"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M12.diff",
+    "failed": [],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M13.diff",
+    "failed": [
+      "TestOverridesShapesAndLower"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M14.diff",
+    "failed": [],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M15.diff",
+    "failed": [
+      "TestShrinkKeepsOnlyWhatFails",
+      "TestReduceKeepsTheSignature"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-audit/internal-fuzz",
+    "file": "review/test-audit/internal-fuzz/M16.diff",
+    "failed": [],
+    "selected": false
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/D1.diff",
+    "failed": [
+      "TestOctoberFeaturesAppear"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/D2.diff",
+    "failed": [
+      "TestSharedSliceCutsShare"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/D3.diff",
+    "failed": [
+      "TestFuzzerSharesRuntimeLibrary"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/G1.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestOverridesShapesAndLower",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/G2.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestOverridesShapesAndLower",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/G3.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/R1.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestOwnershipShapes",
+      "TestRegexProgramsPassTheChecker",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/R2.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestOwnershipShapes",
+      "TestRegexProgramsPassTheChecker",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/R3.diff",
+    "failed": [
+      "TestGeneratedProgramsCheckAndLower",
+      "TestOwnershipShapes",
+      "TestRegexProgramsPassTheChecker",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/S1.diff",
+    "failed": [
+      "TestOctoberFeaturesAppear",
+      "TestOneSeedOneProgram",
+      "TestOwnershipShapes",
+      "TestUndefinedNumbersShapes"
+    ],
+    "selected": true
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/S2.diff",
+    "failed": [
+      "TestOverridesShapesAndLower",
+      "TestOwnershipShapes"
+    ],
+    "selected": false
+  },
+  {
+    "branch": "test-defend/internal-fuzz",
+    "file": "review/test-defend/internal-fuzz/seed-checker-defense/S3.diff",
+    "failed": [],
+    "selected": false
+  }
+]

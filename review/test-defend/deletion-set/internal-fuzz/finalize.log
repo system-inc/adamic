@@ -1,0 +1,154 @@
+{
+  "package": "internal/fuzz",
+  "main": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "skipped": [
+    "TestGeneratedProgramsCheckAndLower",
+    "TestOneSeedOneProgram",
+    "TestRegexProgramsPassTheChecker"
+  ],
+  "mutants": [
+    {
+      "mutant": "M10",
+      "file_line": "internal/fuzz/generate.go:167",
+      "branch": "test-audit/internal-fuzz",
+      "source_diff": "review/test-audit/internal-fuzz/M10.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "G1",
+      "file_line": "internal/fuzz/generate.go:1086",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G1.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "still_caught_by": [
+        "TestOverridesShapesAndLower"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "G2",
+      "file_line": "internal/fuzz/generate.go:952",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G2.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "still_caught_by": [
+        "TestUndefinedNumbersShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "G3",
+      "file_line": "internal/fuzz/generate.go:1093",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/G3.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower"
+      ],
+      "still_caught_by": [
+        "TestUndefinedNumbersShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "R1",
+      "file_line": "internal/fuzz/generate.go:218",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R1.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "R2",
+      "file_line": "internal/fuzz/generate.go:1226",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R2.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "R3",
+      "file_line": "internal/fuzz/generate.go:1214",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/R3.diff",
+      "candidates_failed": [
+        "TestGeneratedProgramsCheckAndLower",
+        "TestRegexProgramsPassTheChecker"
+      ],
+      "still_caught_by": [
+        "TestOwnershipShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    },
+    {
+      "mutant": "S1",
+      "file_line": "internal/fuzz/generate.go:27",
+      "branch": "test-defend/internal-fuzz",
+      "source_diff": "review/test-defend/internal-fuzz/seed-checker-defense/S1.diff",
+      "candidates_failed": [
+        "TestOneSeedOneProgram"
+      ],
+      "still_caught_by": [
+        "TestOctoberFeaturesAppear",
+        "TestUndefinedNumbersShapes"
+      ],
+      "stale": false,
+      "witness_failures": [],
+      "pin_failures": [],
+      "panicking_tests": []
+    }
+  ],
+  "keep": [],
+  "deletable": [
+    "TestGeneratedProgramsCheckAndLower",
+    "TestOneSeedOneProgram",
+    "TestRegexProgramsPassTheChecker"
+  ],
+  "notes": [
+    "Candidate-specific defender diffs use G/R/S names instead of D; included as supplemental evidence."
+  ]
+}
+mutant wall 73.47 baseline 16.008

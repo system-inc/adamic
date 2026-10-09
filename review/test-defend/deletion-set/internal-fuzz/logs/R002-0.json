@@ -1,0 +1,13 @@
+{
+  "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_BUILD_CACHE_DIR=/tmp/deletion-fuzz/cache/R002-0 go test -json -count=1 -timeout 30m ./internal/fuzz/ -skip ^(TestGeneratedProgramsCheckAndLower|TestOneSeedOneProgram|TestRegexProgramsPassTheChecker)($|_|/)",
+  "wall_seconds": 10.627,
+  "exit": -15,
+  "failed": [
+    "TestOverridesShapesAndLower"
+  ],
+  "witness_failures": [],
+  "pin_failures": [],
+  "panic": null,
+  "stopped_after_catch": true,
+  "log": "review/test-defend/deletion-set/internal-fuzz/logs/R002-0.log"
+}

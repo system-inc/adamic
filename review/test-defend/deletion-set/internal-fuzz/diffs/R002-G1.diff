@@ -1,0 +1,13 @@
+diff --git a/internal/fuzz/generate.go b/internal/fuzz/generate.go
+index 8fb52a1d..e6787590 100644
+--- a/internal/fuzz/generate.go
++++ b/internal/fuzz/generate.go
+@@ -1083,7 +1083,7 @@ func (g *generator) stringArray(depth int) *Expression {
+ 	case 0:
+ 		return compose(StringArray, "@e.split(@e)", g.expression(String, next), text(String, g.pick("','", "''", "'a'")))
+ 	case 1:
+-		return compose(StringArray, "@e.slice(@e)", g.expression(StringArray, next), g.expression(Number, next))
++		return compose(StringArray, "@e.sliceMissing(@e)", g.expression(StringArray, next), g.expression(Number, next))
+ 	case 2:
+ 		item := g.name("item")
+ 		g.push()
