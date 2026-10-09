@@ -65,3 +65,25 @@ The initial full run was stopped after this new evidence; its partial log and
 metrics are archived as `evidence/before-projection-fix-*`, not counted as a
 finished gate. The corrected selected parity and semantic mutant passed on all backends, including
 the optional-member witness. The full gate is rerun on this corrected source.
+
+The final complete package run on corrected source commit `97192283f` **passed**:
+**152 test/subtest passes, 0 failures, 1 skip, no unfinished checks**. Process wall
+was **4462.380 seconds**, `nproc=5`; load before `0.20 1.46 3.28`, after
+`4.49 5.37 5.81`. See `evidence/whole-package-metrics.json` and the complete
+`evidence/whole-package.jsonl`. The one skip is
+`TestCheckerBridgeRefusalPending`, awaiting `codex/tsgo-errors-as-values` because
+`internal/load/prelude.d.ts` lacks TSGoError. It cannot be removed within this
+rule's territory. All requested corpus, WASI, benchmark and profile inputs were
+set; no check skipped for an absent input.
+
+The full run passed the 814-file compiler/stage-1 corpus, all registered rule
+comparisons, every owned witness, sharding, JSX, profile generation/compilation/
+snapshots, link-only node tables, registration controls and all existing mutants.
+The owned wrapper-exemption mutant also passed in the complete package. Its
+separate sanitized native proof is readable at `evidence/mutant.txt:33`; exact
+original output remains in `evidence/mutant.log.gz`. Readable transcripts remove
+indentation on empty lines only. No required shared helper or language feature
+blocked the completed rule port. The pre-existing bridge skip remains uncovered.
+
+Source and validation commits before this final report are `c6b063bbe` and
+`97192283f`. They remained local until the finished unit was pushed once.
