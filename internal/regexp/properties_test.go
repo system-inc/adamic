@@ -8,6 +8,7 @@ import (
 
 // The sparse compile-time maps must agree with the shared runtime Canonicalize.
 func TestSharedCanonicalize(t *testing.T) {
+	t.Parallel()
 	for c := rune(0); c <= 0x10ffff; c++ {
 		i := sort.Search(len(simpleCaseFold), func(i int) bool { return simpleCaseFold[i][0] >= c })
 		want := c

@@ -31,24 +31,44 @@ func jsxManifestCases(t *testing.T, cases []string) string {
 	}
 	return path
 }
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+
+const testJSXAgreementShards = 32
+
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX case.
+// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
 func TestJSXAgreement(t *testing.T) {
-	list := jsxManifest(t)
-	want := execute(t, "", goOracle(t), "--manifest", list)
+	finishSetup := miscStart(t)
+	cases := jsxCases()
+	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx", cases)
+	oracle := miscOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
 		t.Fatal(err)
 	}
-	if diff := firstDifference(want, onNode(t, main, "--manifest", list)); diff != "" {
-		t.Fatal(diff)
-	}
-	binary, script := build(t, main, true)
-	for name, got := range map[string][]byte{"native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff != "" {
-			t.Fatal(name + ": " + diff)
+	binary, script := miscBuild(t, main)
+	answers := miscTextAnswers(t, oracle, cases, ".tsx")
+	finishSetup()
+	miscRunShards(t, testJSXAgreementShards, ids, func(t *testing.T, i int) {
+		list := jsxManifestCases(t, cases[i:i+1])
+		want := answers[i].Data
+		for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list), "emitted JS": onNode(t, script, "--manifest", list)} {
+			if err := miscCompare(want, got, false); err != nil {
+				t.Fatalf("%s %s: %v", ids[i], name, err)
+			}
 		}
-	}
-	t.Logf("%d JSX cases, %d bytes match Go on source Node, native and emitted JS", len(jsxCases()), len(want))
+	})
+}
+
+func TestJSXAgreementPlantedDisagreement(t *testing.T) {
+	t.Parallel()
+	miscPlantedProof(t, testJSXAgreementShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx", jsxCases()), func(planted bool) error {
+		got := []byte("agree")
+		if planted {
+			got = []byte("disagree")
+		}
+		return miscCompare([]byte("agree"), got, false)
+	})
 }
 
 func TestJSXOriginalLibraries(t *testing.T) {
@@ -122,17 +142,39 @@ func TestJSXOriginalLibraries(t *testing.T) {
 		}
 	}
 }
-// Not parallel: native.Build writes the shared user cache directory adamic/runtime
+
+const testJSXMutantShards = 32
+
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
+// Not parallel: miscBuild writes the shared adamic-build product cache and adamic/runtime user cache
 func TestJSXMutant(t *testing.T) {
-	list := jsxManifest(t)
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
-	binary, _ := build(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff == "" {
-			t.Fatal(name + " mutant survived")
-		} else {
-			t.Log(name + ": " + diff)
+	finishSetup := miscStart(t)
+	cases := jsxCases()
+	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
+	oracle := miscOracle(t)
+	path := miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+	binary, _ := miscBuild(t, path)
+	answers := miscTextAnswers(t, oracle, cases, ".tsx")
+	finishSetup()
+	miscRunShards(t, testJSXMutantShards, ids, func(t *testing.T, i int) {
+		list := jsxManifestCases(t, cases[i:i+1])
+		want := answers[i].Data
+		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+			if err := miscCompare(want, got, true); err != nil {
+				t.Fatalf("%s %s: %v", ids[i], name, err)
+			}
 		}
-	}
+	})
+}
+
+func TestJSXMutantPlantedSurvivor(t *testing.T) {
+	t.Parallel()
+	miscPlantedProof(t, testJSXMutantShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", jsxCases()), func(planted bool) error {
+		got := []byte("disagree")
+		if planted {
+			got = []byte("agree")
+		}
+		return miscCompare([]byte("agree"), got, true)
+	})
 }
