@@ -3,6 +3,7 @@
 #include "adamic.h"
 
 #include <math.h>
+#include <pthread.h>
 #include <string.h>
 
 adamic_heap adamic_null = {0, adamic_kind_object, 0};
@@ -85,15 +86,28 @@ adamic_string *adamic_union_typeof(const adamic_heap *value, bool null) {
 	}
 }
 
-// Program shape metadata is static, registered when an object of the shape is made.
+// Program shape metadata is static, registered when an object of the shape is made. Objects are made
+// in parallel tasks too, so an entry is pushed once under the lock and published with release order;
+// readers load the list head with acquire, and an entry's fields never change once it's on the list.
 static adamic_shape_types *shape_types;
+static pthread_mutex_t shape_types_lock = PTHREAD_MUTEX_INITIALIZER;
 
 void adamic_register_shape_types(adamic_shape_types *metadata) {
-	for (adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
-		if (entry == metadata) return;
+	if (__atomic_load_n(&metadata->registered, __ATOMIC_ACQUIRE)) return;
+	pthread_mutex_lock(&shape_types_lock);
+	if (!metadata->registered) {
+		metadata->next = shape_types;
+		__atomic_store_n(&shape_types, metadata, __ATOMIC_RELEASE);
+		__atomic_store_n(&metadata->registered, true, __ATOMIC_RELEASE);
 	}
-	metadata->next = shape_types;
-	shape_types = metadata;
+	pthread_mutex_unlock(&shape_types_lock);
+}
+
+int adamic_shape_type(const adamic_shape *shape, size_t index) {
+	for (const adamic_shape_types *entry = __atomic_load_n(&shape_types, __ATOMIC_ACQUIRE); entry != NULL; entry = entry->next) {
+		if (entry->shape == shape) return entry->types[index];
+	}
+	return 0;
 }
 
 static bool named(const char *name, const char *const *names, size_t count) {
@@ -126,8 +140,12 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 	}
 	if (value->kind == adamic_kind_object) {
 		const adamic_object *object = (const adamic_object *)value;
+		if (adamic_record_is(object)) {
+			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+			return adamic_record_has(object, &key);
+		}
 		for (size_t index = 0; index < object->shape->count; index++) {
-			if (strcmp(name, object->shape->names[index]) != 0) continue;
+			if (strcmp(name, object->shape->names[index]) != 0 || adamic_object_orders(object)[index] == 0) continue;
 			if (object->class == NULL || name[0] != '#') return true;
 			const adamic_shape *public = object->class->public_shape;
 			if (named(name, public->names, public->count)) return true;
@@ -153,12 +171,12 @@ bool adamic_has_property(const adamic_heap *value, const char *name) {
 }
 
 static adamic_heap *dynamic_slot(const adamic_object *object, size_t index) {
+	if (adamic_object_orders(object)[index] == 0 || !adamic_object_initialized(object)[index]) return NULL;
 	const adamic_value slot = object->slots[index];
 	if (object->shape->references[index]) return adamic_retain(slot.reference);
-	for (const adamic_shape_types *entry = shape_types; entry != NULL; entry = entry->next) {
-		if (entry->shape != object->shape) continue;
+	{
 		// These are ir.Type's scalar representations, written by the emitter.
-		switch (entry->types[index]) {
+		switch (object->dynamic_shape ? object->dynamic_types[index] : adamic_shape_type(object->shape, index)) {
 		case 1: return adamic_box_number(slot.number);
 		case 2: return slot.boolean ? &adamic_box_true.heap : &adamic_box_false.heap;
 		case 7: {
@@ -176,6 +194,11 @@ adamic_heap *adamic_dynamic_property(adamic_heap *value, const char *name) {
 	}
 	if (value->kind == adamic_kind_object) {
 		const adamic_object *object = (const adamic_object *)value;
+		if (adamic_record_is(object)) {
+			adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+			const adamic_value *slot = adamic_record_get(object, &key);
+			return slot == NULL ? NULL : adamic_retain(slot->reference);
+		}
 		for (size_t index = 0; index < object->shape->count; index++) {
 			if (strcmp(name, object->shape->names[index]) == 0) return dynamic_slot(object, index);
 		}

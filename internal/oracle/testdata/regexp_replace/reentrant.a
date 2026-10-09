@@ -1,0 +1,21 @@
+const outer = /(a)(b)/g;
+const other = /([a-z]+)([0-9]+)/g;
+function replacement(match: string, first: string, second: string, offset: number, input: string): string {
+    other.lastIndex = 0;
+    const inner = other.exec(first + second + '42');
+    const nested = match.replace(/b/g, (part: string) => part.toUpperCase());
+    const tested = /42$/.test(first + second + '42');
+    let word = 'none'; let digits = 'none';
+    if (inner !== null) { word = inner[1] ?? 'none'; digits = inner[2] ?? 'none'; }
+    console.log(`${offset}:${outer.lastIndex}:${other.lastIndex}:${word}:${digits}`);
+    return `${nested}:${tested}:${input.slice(offset, offset + match.length)}`;
+}
+outer.lastIndex = 9;
+console.log('abxab'.replace(outer, replacement));
+console.log(`${outer.lastIndex}:${other.lastIndex}`);
+console.log('abxab'.replaceAll(outer, replacement));
+console.log(`${outer.lastIndex}:${other.lastIndex}`);
+const sticky = /ab/y;
+sticky.lastIndex = 1;
+console.log('zab'.replace(sticky, (match: string) => match.replace(/a/, (part: string) => `${part.toUpperCase()}:${/b/.test(match)}`)));
+console.log(`${sticky.lastIndex}`);

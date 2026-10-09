@@ -2,6 +2,7 @@
 #include "adamic.h"
 
 #include <stdlib.h>
+#include <stdio.h>
 #include <string.h>
 
 // Wrappers let the ordinary iterative object cleanup release the table and iterator snapshots.
@@ -214,4 +215,24 @@ bool adamic_record_iterator_next(adamic_record_iterator *iterator, adamic_string
 		}
 	}
 	return false;
+}
+
+bool adamic_record_is(const adamic_object *object) { return object->shape == &record_shape; }
+
+adamic_value adamic_record_view(const adamic_record *record, const char *name, unsigned char wanted, const char *type, const char *expression) {
+ adamic_string key = {{0, adamic_kind_string, 0}, strlen(name), name, 0, NULL, NULL, 0};
+ const adamic_value *slot = adamic_record_get_own(record, &key);
+ const adamic_heap *value = slot == NULL ? NULL : slot->reference;
+ if (wanted == 10 && slot != NULL) return *slot;
+ if (value != NULL) {
+  if (wanted == 1 && value->kind == adamic_kind_number) return (adamic_value){.number = ((const adamic_number_box *)value)->number};
+  if (wanted == 2 && value->kind == adamic_kind_boolean) return (adamic_value){.boolean = ((const adamic_boolean_box *)value)->boolean};
+  if (wanted == 3 && value->kind == adamic_kind_string) return *slot;
+ }
+ const char *actual = value == NULL ? "undefined" : value->kind == adamic_kind_number ? "number" : value->kind == adamic_kind_boolean ? "boolean" : value->kind == adamic_kind_string ? "string" : "object";
+ size_t capacity = strlen(expression) + strlen(type) + strlen(actual) + 100;
+ char *message = malloc(capacity);
+ if (message == NULL) adamic_panic("out of memory", sizeof "out of memory" - 1);
+ (void)snprintf(message, capacity, "field read failed: %s expected %s, found %s", expression, type, actual);
+ adamic_panic(message, strlen(message));
 }

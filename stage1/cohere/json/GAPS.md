@@ -89,8 +89,9 @@ its refusal, then runs its source on Node and checks the stated output:
 
 1. `gaps/multiplePush.ts`: `stage 0 can't lower push with other than one value yet`.
    Node prints `a,b`. Around it: one `push` call per value.
-2. `gaps/emptyFallback.ts`: `stage 0 can't lower an array of never yet`.
-   Node prints `0`. Around it: comment-bearing inputs initialize all comment lists; indexed reads
+2. `gaps/emptyFallback.ts`: closed on compiler/area-stack (views slice 1, Oct 8); it used to stop at
+   `stage 0 can't lower an array of never yet`. Node prints `0`, and `TestClosedEmptyFallbackGap` holds
+   native ASan/UBSan, the JavaScript backend and the leak check to it. The workaround still stands: comment-bearing inputs initialize all comment lists; indexed reads
    use a checked `panic` fallback instead of an untyped `[]`.
 3. `gaps/repeatInTry.ts`: `stage 0 can't lower a try around repeat, whose failure
    is a panic natively but a throw a catch can take on Node (docs/memory.md) yet`.

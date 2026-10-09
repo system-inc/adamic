@@ -1,0 +1,48 @@
+=== RUN   TestNestedEmptyArrayElementKinds
+=== PAUSE TestNestedEmptyArrayElementKinds
+=== RUN   TestEmptyLiteralGenericReturnUsesSamePath
+=== PAUSE TestEmptyLiteralGenericReturnUsesSamePath
+=== CONT  TestNestedEmptyArrayElementKinds
+=== RUN   TestNestedEmptyArrayElementKinds/first
+=== CONT  TestEmptyLiteralGenericReturnUsesSamePath
+=== PAUSE TestNestedEmptyArrayElementKinds/first
+=== RUN   TestNestedEmptyArrayElementKinds/last
+=== PAUSE TestNestedEmptyArrayElementKinds/last
+=== RUN   TestNestedEmptyArrayElementKinds/typed
+=== PAUSE TestNestedEmptyArrayElementKinds/typed
+=== RUN   TestNestedEmptyArrayElementKinds/strings
+=== PAUSE TestNestedEmptyArrayElementKinds/strings
+=== RUN   TestNestedEmptyArrayElementKinds/objects
+=== PAUSE TestNestedEmptyArrayElementKinds/objects
+=== RUN   TestNestedEmptyArrayElementKinds/union
+=== PAUSE TestNestedEmptyArrayElementKinds/union
+=== CONT  TestNestedEmptyArrayElementKinds/first
+=== CONT  TestNestedEmptyArrayElementKinds/strings
+=== CONT  TestNestedEmptyArrayElementKinds/last
+=== CONT  TestNestedEmptyArrayElementKinds/typed
+    empty_literal_test.go:35: empty element kind 2, want 1
+=== CONT  TestNestedEmptyArrayElementKinds/union
+=== NAME  TestEmptyLiteralGenericReturnUsesSamePath
+    empty_literal_test.go:60: generic empty kinds: map[2:2]
+--- FAIL: TestEmptyLiteralGenericReturnUsesSamePath (0.09s)
+=== CONT  TestNestedEmptyArrayElementKinds/objects
+=== NAME  TestNestedEmptyArrayElementKinds/last
+    empty_literal_test.go:35: empty element kind 2, want 1
+=== NAME  TestNestedEmptyArrayElementKinds/first
+    empty_literal_test.go:35: empty element kind 2, want 1
+=== NAME  TestNestedEmptyArrayElementKinds/strings
+    empty_literal_test.go:35: empty element kind 2, want 3
+=== NAME  TestNestedEmptyArrayElementKinds/objects
+    empty_literal_test.go:35: empty element kind 2, want 4
+=== NAME  TestNestedEmptyArrayElementKinds/union
+    empty_literal_test.go:35: empty element kind 2, want 1
+--- FAIL: TestNestedEmptyArrayElementKinds (0.00s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/typed (0.08s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/last (0.09s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/first (0.09s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/strings (0.09s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/objects (0.05s)
+    --- FAIL: TestNestedEmptyArrayElementKinds/union (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.150s
+FAIL

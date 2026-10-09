@@ -2,12 +2,11 @@ package fuzz
 
 import (
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
-// This tool still shares a default runtime. A feature mismatch must stop before execution.
-func TestFuzzerFeatureMismatchStopsAtLink(t *testing.T) {
+// Feature-bearing programs select their runtime from the emitted C.
+func TestFuzzerUsesProgramsFeatures(t *testing.T) {
 	t.Parallel()
 	directory := t.TempDir()
 	checkout, err := Prepare("../..", filepath.Join(directory, "checkout"))
@@ -18,9 +17,9 @@ func TestFuzzerFeatureMismatchStopsAtLink(t *testing.T) {
 const call=count;
 console.log(call(1,2).toString());
 `, filepath.Join(directory, "program"))
-	undefined := strings.Contains(outcome.Detail, "undefined reference") || strings.Contains(outcome.Detail, "Undefined symbols")
-	if outcome.Verdict != Finding || outcome.Key != "clang refused the C" || !undefined || !strings.Contains(outcome.Detail, "adamic_runtime_features_closure_convention") {
-		t.Fatalf("want feature-set link failure, got %#v", outcome)
+	if outcome.Verdict != Agreed || string(outcome.Node.Stdout) != "2\n" ||
+		string(outcome.Native.Stdout) != "2\n" || string(outcome.Backend.Stdout) != "2\n" ||
+		outcome.Node.ExitCode != 0 || outcome.Native.ExitCode != 0 || outcome.Backend.ExitCode != 0 {
+		t.Fatalf("want matching feature runtimes held to Node, got %#v", outcome)
 	}
-	t.Log(outcome.Detail)
 }

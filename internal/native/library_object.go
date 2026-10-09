@@ -2,6 +2,7 @@ package native
 
 import (
 	"fmt"
+	"strings"
 
 	"github.com/system-inc/adamic/internal/ir"
 )
@@ -18,11 +19,26 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is_frozen(%s)", arguments[0]))
 	case "freeze":
 		return e.own(ir.Object, fmt.Sprintf("adamic_object_freeze(%s)", arguments[0]))
-	case "hasOwn":
+	case "optionalDelete":
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_delete(%s, %s)", arguments[0], arguments[1]))
+	case "hasOwn", "optionalIn":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_has_own(%s, %s)", arguments[0], arguments[1]))
 	case "keys":
 		return e.own(ir.Array, fmt.Sprintf("adamic_object_keys(%s)", arguments[0]))
 	case "values", "entries":
+		if call.Checked {
+			e.declarations = append(e.declarations, "adamic_array *adamic_object_values_checked(adamic_object *, int, const char *, bool, const adamic_value *, size_t);")
+			allowed := "NULL"
+			if len(call.Allowed) > 0 {
+				allowed = e.temporary()
+				values := make([]string, 0, len(call.Allowed))
+				for _, value := range call.Allowed {
+					values = append(values, fmt.Sprintf("{.%s = %s}", member(call.Element), e.value(value)))
+				}
+				e.line("const adamic_value %s[] = {%s};", allowed, strings.Join(values, ", "))
+			}
+			return e.own(ir.Array, fmt.Sprintf("adamic_object_values_checked(%s, %d, %s, %t, %s, %d)", arguments[0], call.Element, cString(call.ElementName), call.Method == "entries", allowed, len(call.Allowed)))
+		}
 		return e.own(ir.Array, fmt.Sprintf("adamic_object_values(%s, %t, %t)", arguments[0], call.Element.IsReference(), call.Method == "entries"))
 	case "assign":
 		for _, source := range arguments[1:] {

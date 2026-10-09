@@ -1,0 +1,239 @@
+{
+  "warning": "Discovery only. No Node identity/native acceptance claim.",
+  "rows": [
+    {
+      "order": 1,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/debug.ts:113:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n/workspace/scratch/parser-front33-discovery-slice/src/compiler/debug.ts:114:19: error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.\n",
+      "file": "src/compiler/debug.ts",
+      "line": 113,
+      "column": 19,
+      "message": "error TS2339: Property 'captureStackTrace' does not exist on type 'ErrorConstructor'.",
+      "found_behind_stubs": false,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/debug.ts",
+        "line": 113,
+        "column": 19,
+        "name": "fail",
+        "edits": [
+          {
+            "start": 5235,
+            "end": 5533,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 2,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:11:52: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 409,
+        "replacement": "parserProofMissingemptyMap()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 3,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/debug.ts:333:29: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/debug.ts",
+      "line": 333,
+      "column": 29,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/debug.ts",
+        "line": 333,
+        "column": 29,
+        "name": "enumMemberCache",
+        "start": 17566,
+        "end": 17665,
+        "replacement": "enumMemberCache: Map<Record<string, string | number>, ts.SortedReadonlyArray<[number, string]>> = parserProofMissingenumMemberCache()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 4,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/performanceCore.ts:37:37: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performanceCore.ts",
+      "line": 37,
+      "column": 37,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/performanceCore.ts",
+        "line": 37,
+        "column": 37,
+        "name": "tryGetPerformance",
+        "edits": [
+          {
+            "start": 987,
+            "end": 2025,
+            "replacement": "{ throw \"scratch-only discovery stub\";\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 5,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts:15:18: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 15,
+      "column": 18,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts",
+        "line": 15,
+        "column": 18,
+        "name": "timeorigin",
+        "start": 597,
+        "end": 621,
+        "replacement": "timeorigin: number = parserProofMissingtimeorigin()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 6,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts:16:15: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 16,
+      "column": 15,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts",
+        "line": 16,
+        "column": 15,
+        "name": "marks",
+        "start": 657,
+        "end": 690,
+        "replacement": "marks: Map<string, number> = parserProofMissingmarks()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 7,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts:17:16: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 17,
+      "column": 16,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts",
+        "line": 17,
+        "column": 16,
+        "name": "counts",
+        "start": 720,
+        "end": 754,
+        "replacement": "counts: Map<string, number> = parserProofMissingcounts()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 8,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts:18:19: stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet\n",
+      "file": "src/compiler/performance.ts",
+      "line": 18,
+      "column": 19,
+      "message": "stage 0 can't lower an indirect call or class construction before enum initialization; declare enums before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/performance.ts",
+        "line": 18,
+        "column": 19,
+        "name": "durations",
+        "start": 785,
+        "end": 822,
+        "replacement": "durations: Map<string, number> = parserProofMissingdurations()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 9,
+      "exit": 1,
+      "all_diagnostics": "adamic: /workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:11:52: stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet\n",
+      "file": "src/compiler/core.ts",
+      "line": 11,
+      "column": 52,
+      "message": "stage 0 can't lower a call before all runtime namespaces are initialized; put namespaces before executable module code yet",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts",
+        "line": 11,
+        "column": 52,
+        "name": "emptyMap",
+        "start": 386,
+        "end": 414,
+        "replacement": "parserProofMissingemptyMap()"
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 10,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:893:10: error TS2393: Duplicate function implementation.\n/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:895:10: error TS2393: Duplicate function implementation.\n",
+      "file": "src/compiler/core.ts",
+      "line": 893,
+      "column": 10,
+      "message": "error TS2393: Duplicate function implementation.",
+      "found_behind_stubs": true,
+      "stub": {
+        "file": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts",
+        "line": 893,
+        "column": 10,
+        "name": "parserProofMissingemptyMap",
+        "edits": [
+          {
+            "start": 32122,
+            "end": 32161,
+            "replacement": "{ throw \"scratch-only discovery stub\";}"
+          }
+        ]
+      },
+      "placeholder": "Throwing function body; exact predicate callback edit retained if applicable.",
+      "stub_exit": 0
+    },
+    {
+      "order": 11,
+      "exit": 1,
+      "all_diagnostics": "/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:893:10: error TS2393: Duplicate function implementation.\n/workspace/scratch/parser-front33-discovery-slice/src/compiler/core.ts:895:10: error TS2393: Duplicate function implementation.\n",
+      "file": "src/compiler/core.ts",
+      "line": 893,
+      "column": 10,
+      "message": "error TS2393: Duplicate function implementation.",
+      "found_behind_stubs": true,
+      "stub_exit": 1,
+      "stub_error": "/workspace/scratch/parser-front33-stub.cjs:27\nif(output===text)throw Error('Stub does not change source');fs.writeFileSync(file,output);console.log(JSON.stringify({file,line:+line,column:+column,name:n.name?.getText(sf),edits}));\n                 ^\n\nError: Stub does not change source\n    at Object.<anonymous> (/workspace/scratch/parser-front33-stub.cjs:27:24)\n    at Module._compile (node:internal/modules/cjs/loader:1872:14)\n    at Object..js (node:internal/modules/cjs/loader:2003:10)\n    at Module.load (node:internal/modules/cjs/loader:1594:32)\n    at Module._load (node:internal/modules/cjs/loader:1396:12)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:255:19)\n    at Module.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:154:5)\n    at node:internal/main/run_main_module:33:47\n\nNode.js v24.19.0\n"
+    }
+  ]
+}

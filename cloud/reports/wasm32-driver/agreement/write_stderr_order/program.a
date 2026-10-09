@@ -1,0 +1,7 @@
+// writeTextFile to /dev/stderr after a console.log: with stdout and stderr on one pipe, the line
+// printed first is out before the file's text arrives (output_test.go).
+import { writeTextFile } from 'adamic';
+
+console.log('first');
+writeTextFile('/dev/stderr', 'second\n');
+console.log('third');

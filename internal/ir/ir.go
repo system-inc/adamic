@@ -10,6 +10,10 @@ import "fmt"
 
 // Program is one compiled Adamic program.
 type Program struct {
+	ViewOrigins       []Expression
+	ViewContracts     []ViewContract
+	ViewContractTypes map[int]ViewContractID
+
 	// argumentFacts caches PackedCountNeeded's whole-program derivation (argument_slots.go).
 	argumentFacts *argumentFacts
 	// UninitializedFields records the field names whose readiness can be observed.
@@ -20,6 +24,8 @@ type Program struct {
 
 	// CheckedFields conservatively checks these field names at every object read.
 	CheckedFields map[string]bool
+	NonNullChecks NonNullCheckCounts
+	Async         *AsyncProgram
 
 	// Source is the entry file's base name, as written, for the header of what the backends emit.
 	Source string
@@ -76,6 +82,17 @@ type PredicateCallCheck struct {
 
 type PredicateDirectionCheck struct {
 	Direction, Status, Reason string
+}
+
+// NonNullCheckCounts records proven assertions and inserted nullish checks.
+type NonNullCheckCounts struct {
+	Proven, Checked int
+	Sites           []NonNullCheck
+}
+
+type NonNullCheck struct {
+	Where, Expression string
+	Proven            bool
 }
 
 // Class is a class instantiation. Base is zero for a root; Methods has the base slots as a prefix.
@@ -195,6 +212,7 @@ const (
 	Uint8Array
 	Int32Array
 	Float64Array
+	Uint16Array
 )
 
 // Maybe is the type of a value of type t that may be missing: number | undefined and boolean |
@@ -241,6 +259,12 @@ type Local struct {
 
 	// Global is a variable declared at the module's top level, which functions can read and write.
 	Global bool
+
+	// NamespaceState stays unready until assigned when its type excludes undefined.
+	NamespaceState bool
+
+	// NamespaceVar has hoisted storage; its initializer is an assignment in source order.
+	NamespaceVar bool
 
 	// Function is the function that declares it, -1 for the module's top level.
 	Function int
@@ -368,6 +392,9 @@ type (
 	// {}: the object made is Empty, each of the source type's fields the literal doesn't give, as
 	// undefined (what JavaScript reads from a field that isn't there), with Fields written into it.
 	ObjectLiteral struct {
+		// Record uses counted own-key storage when indexed aliases can add fields.
+		Record          bool
+		GraphTypes      []int
 		SpreadReadiness string
 		// Class is the nominal class ID, or zero for a plain object.
 		Class                int
@@ -376,6 +403,8 @@ type (
 		NoReuse              bool
 		SpreadMaybeUndefined bool
 		Empty                []Field
+		// Missing reserves declared optional fields without making them own properties.
+		Missing []Field
 
 		// Tuple is a tuple written out, [key, value]: natively an object whose fields are named "0",
 		// "1" and on, as every tuple is, and in JavaScript an array, as the source's is. (What 0.2
@@ -391,6 +420,12 @@ type (
 	// Property reads a field. Of is its type. Optional is ?., which is undefined when Object is: a
 	// number field read that way is number | undefined.
 	Property struct {
+		ViewContract       ViewContractID
+		ViewTypeID         int
+		ViewReceiverTypeID int
+		ViewWhere          string
+		ViewOrdinary       bool
+
 		// View names a required field read whose presence, readiness and representation are checked.
 		View        string
 		ViewType    string
@@ -418,6 +453,8 @@ type (
 	// ArrayLiteral makes an array. Where Spread is set, the element at that position is an array of the
 	// same elements, spread into this one at that point in the evaluation, as JavaScript does.
 	ArrayLiteral struct {
+		GraphTypes []int
+
 		Element  Type
 		Elements []Expression
 		Spread   []bool
@@ -590,6 +627,8 @@ type (
 	// members: the discriminant Field must hold one of Allowed, or the program panics with Message,
 	// in both backends (docs/0.1.md, decision 5).
 	CheckedCast struct {
+		ViewContract ViewContractID
+
 		CheckedFields bool
 		Value         Expression
 		Field         string
@@ -605,6 +644,7 @@ type (
 		Array, Index Expression
 		Element      Type
 		Relative     bool
+		Optional     bool // array?.[index], skipping the index when the receiver is missing
 	}
 
 	// ArraySearch is array.indexOf(Value), with ===, and array.includes(Value), with SameValueZero,
@@ -839,6 +879,19 @@ type (
 		Separator Expression
 		Element   Type
 		Depth     int
+	}
+
+	// ParallelMap is structured fork-join; the callback takes item then index.
+	// Its proof belongs to lowering and its native scheduling belongs to the runtime.
+	ParallelMap struct {
+		// Moved is set by lowering only after proving exclusive, disjoint item
+		// graphs and consuming the source binding. Native skips item/result sharing.
+		Moved       bool
+		Items, Work Expression
+		// Shared includes immutable reference globals read by the task's call graph.
+		// They are marking roots, not extra evaluations in the sequential witness.
+		Shared []Expression
+		Result Type
 	}
 
 	// ReadTextFile is readTextFile(Path) from 'adamic': the file's bytes decoded as UTF-8 the way
@@ -1147,6 +1200,7 @@ type (
 
 	// SetProperty is object.name = value: the field takes the value, and lets go of what it held.
 	SetProperty struct {
+		Record        bool // write into counted own-key storage
 		Uninitialized bool
 		Object        Expression
 		Name          string
@@ -1279,3 +1333,5 @@ func (p *Program) HasInheritance() bool {
 	}
 	return false
 }
+
+func (ParallelMap) Type() Type { return Array }

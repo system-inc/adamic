@@ -173,8 +173,10 @@ not end-to-end record lowering or generic dynamic-record JSON support.
 `internal/native/record_test.go` builds the C fixture in
 `internal/native/testdata/records/harness.c` through the same Build path as heap tests.
 `oracle.js` uses Node's own operations as the independent oracle. Every successful
-fixture runs with Count, ASan, UBSan and LeakSanitizer enabled, compares stdout byte
-for byte, and requires allocations equal frees. The deliberate missing-member
+fixture runs with Count, ASan and UBSan, compares stdout byte for byte, and
+requires allocations equal frees. Finished programs then use internal/leakcheck:
+LeakSanitizer on Linux, counted allocation balance followed by leaks --atExit on
+Darwin. No unsupported detect_leaks option is set on Darwin. The deliberate missing-member
 stops and NotYet panic are checked for exact message and exit; like other panics,
 they do not reach normal-exit leak checking.
 
@@ -192,7 +194,8 @@ mutation combination. Symbols and exotic property descriptors are out of scope.
 Isolated production-runtime mutants prove the comparisons and memory checks fail:
 integer keys left in insertion order, UINT32_MAX treated as an array index, and a
 deleted key still yielded are caught by Node comparisons without sanitizer failures.
-Removing Map's release of the overwrite key is caught by LeakSanitizer; freeing a
+Removing Map's release of the overwrite key is caught by the shared leak check
+and by an actual counted mutant build on every platform; freeing a
 stored key is caught by ASan; a null own-slot access is caught by UBSan. Mutated
 libraries are built in private test caches, without changing the working tree.
 
@@ -313,3 +316,13 @@ fixture). The six original ordering and memory mutants still passed their
 detection checks. No compiler files were edited; literal-key refusal and
 end-to-end lowering are the compiler's work. The full repository gate and
 non-Linux targets were not run for this change.
+
+### Shared leak helper migration
+
+TestRecordsAgainstNode, TestRecordMutants and TestRecordReadMutants now use
+internal/leakcheck for every finished program. Mutants build both sanitizer and
+counted libraries from the same isolated changed runtime. The helper accepts a
+BuildCounted callback for this purpose; using the production runtime for the
+counted mutant would check the control instead. The tests live in native_test
+and use public runtime-building APIs to avoid an import cycle through leakcheck.
+Intentional panics and sanitizer failures retain their exact diagnostic checks.

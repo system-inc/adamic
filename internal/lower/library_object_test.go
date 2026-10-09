@@ -38,11 +38,11 @@ func TestObjectRefusalsExplainSoundness(t *testing.T) {
 func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.values(view);`,
-		`const source={value:1, hidden:'wrong'}; const view:{readonly value:number}=source; Object.entries(view);`,
 		`Object.assign({value:1}, {extra:2});`,
-		`function keys(source:{value:number}|undefined):string[] { return Object.keys({...source}); }`,
 		`function own(object:{value?:number}):boolean { return Object.hasOwn(object,'value'); }`,
+		`class Parent { static first = 1; } class Child extends Parent {} Object.hasOwn(Child, 'first');`,
+		`const source = { get value(): number { return 1; } }; const alias: {readonly value?:number} = source; Object.hasOwn(alias, 'value');`,
+		`class Parent { static first = 1; } class Child extends Parent {} const view: {readonly first:number} = Child; Object.hasOwn(view, 'first');`,
 		`const object={value:1}; Object.freeze(object); try { object.value=2; } catch { console.log('caught'); }`,
 		`Object.groupBy([1,2], (value:number):string => value===1 ? 'one' : 'other');`,
 	} {
@@ -54,5 +54,13 @@ func TestObjectUnprovenShapesStayNotYet(t *testing.T) {
 				t.Fatalf("got %v, want NotYet", err)
 			}
 		})
+	}
+}
+
+func TestObjectHasOwnInterface(t *testing.T) {
+	t.Parallel()
+	_, err := lowerSource(t, `interface Shape { value?: number; } const object: Shape = {}; const alias: Shape = object; Object.hasOwn(alias,'value');`)
+	if err != nil {
+		t.Fatal(err)
 	}
 }

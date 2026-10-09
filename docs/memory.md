@@ -302,6 +302,8 @@ The last three were caught only once `mutations.a` existed. Before it, no progra
 
 ## Cycles: found by the compiler, broken by Weak
 
+Compiler-generated async protocol layouts have one narrow exception: the canonical, unexported provenance identities in `internal/ir/async.go`, accepted by `fresh.RuntimeBreaksCycles` and checked at `lowering.findCycles` in `internal/lower/cycles.go`. These are IR/runtime types, not source checker declarations. Their internal frame -> waiting Promise -> reaction -> frame edges are broken by settlement, pending-subscription cancellation and normal-exit registry teardown in `runtime/async.c`; reference counting alone is insufficient. The [async design](concurrency-async.md#promise-representation-counts-and-cycles) specifies the order. Names, structural shape, annotations and user brands never confer this exemption. A user class named exactly `adamic_generated_frame_0`, `adamic_async_promise` or `adamic_async_reaction` still goes through the ordinary slot/write checks; the spoof tests and name-based mutants hold that boundary. User payloads and captures do not inherit it. The first async lowering admits only primitive payloads and bypasses synchronous lifetime proofs across suspension; additional reference payloads need the normal cycle/fresh-write analysis, without asking callers to put Weak on runtime-owned protocol edges.
+
 Reference counting can't free a cycle, and a garbage collector is refused (no cycle collector, ever: decided by @system_adamic, task #gsz351g). What's known:
 
 - **Immutable data is acyclic.** A value built from `readonly` parts can only point at values that already existed when it was made, so no `readonly` structure can ever reach itself. Immutable by default is the first answer.
@@ -671,8 +673,8 @@ What's left on `nbody` is one retain and one release per element a variable is g
 
 **The proof: nothing in `v`'s live range can change the array.** `v`'s live range is the rest of the block that declares it, every nested statement included. Every expression and statement there must be one that can't take an element out of any array, through any alias. That's a fixed list, never a guess about what's safe:
 
-- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); an Error allocation, with its message and name expressions checked too; and direct, nonvirtual calls to named functions whose bodies, and everything they call, are made only of allowed things.
-- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); any call through a function value, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; every virtual call, whose static signature does not prove what an override does; and an assignment to `a` itself.
+- **Allowed:** what `pure` in `borrow.go` allows (reads, arithmetic, field and element reads, string work); a field store into an object (`SetProperty`, which lets go of the field's old value, never an array's slot); declarations and assignments of other variables; a `push` (it adds, and moving the buffer doesn't move the objects); an Error allocation, with its message and name expressions checked too; and calls whose every possible target has a body, and reachable callees, made only of allowed things. Named and virtual calls use `CallTargets`; calls through function values use `ClosureTargets` and require a known target set.
+- **A change, which stops the borrow:** a store into an element (`SetIndex`); `pop`, `shift`, `splice` (also discarded, `adamic_array_remove`), `fill`, `sort`, `reverse`; anything reuse could do in place to an array (`map`, a spread of an array, `[...a, x]`); a call through a function value with Unknown targets or any changing target, and every runtime operation that calls one (`map`, `forEach`, `reduce`, `filter`, `find`, a `sort` comparator, `Array.from` with a function); a call to a named function that does any of these, at any depth; a virtual call with any changing implementation; and an assignment to `a` itself.
 - **A throw.** A throw out of the live range ends `v` without a release. A borrowed `v` has none to give, so a throw path needs nothing. A call that can throw is judged by what it does, like any other.
 
 **What else must know.** A borrowed `v` holds no count, so nothing may treat it as owned:
@@ -776,12 +778,15 @@ without releasing the array's element. `borrow_element_throw.a` exercises both, 
 field write in an indexed loop, a pop in a catch before the last use (refused borrowing), and
 a pop through a direct call in the Error's message (also refused).
 
-A virtual call now stops borrowing. The old summary used only `Call.Function`, its static
-signature. In `borrow_element_virtual_store.a`, that signature reads only the array's length,
-while the implementation replaces its element. Keeping the array alive, and prohibiting its
-move into a consumed parameter, does not keep an element alive after an explicit replacement.
-The conservative fix checks `Call.Virtual == 0` before consulting the direct-call summary.
-Resolving all possible overrides could recover some borrows later; it is not proven here.
+A virtual call stops borrowing when any possible implementation changes an array. The
+current summary checks every `CallTargets` implementation, rather than only `Call.Function`
+or a `Call.Virtual == 0` guard. In `borrow_element_virtual_store.a`, the static signature
+reads only the array's length, while an implementation replaces its element, so borrowing
+is refused. Calls through function values likewise check every `ClosureTargets` function;
+Unknown targets stop borrowing. `devirt_borrow_doc_claim.a` covers virtual implementations
+and a known closure that only read lengths, so those calls preserve the element borrow.
+Keeping the array alive, and prohibiting its move into a consumed parameter, does not keep
+an element alive after an explicit replacement.
 
 **Mutants actually run.** Each began from the final compiler independently, and the source was
 restored after every run. Oracle mutants ran uncached, against Node, release C and sanitized C;
