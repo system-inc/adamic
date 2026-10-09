@@ -154,7 +154,7 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 			fresh, freshSeconds := freshGoBuild(t, root, built.output, built.pkg, true, nil)
 
 			started := time.Now()
-			cold, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
+			cold, err := os.ReadFile(GoBuild(t, ".", built.output, built.pkg, nil))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -168,7 +168,7 @@ func TestProductIdentityOfGoBuildProducts(t *testing.T) {
 			t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 			writes := len(store.writes)
 			started = time.Now()
-			warm, err := os.ReadFile(GoBuild(t, built.output, built.pkg, nil))
+			warm, err := os.ReadFile(GoBuild(t, ".", built.output, built.pkg, nil))
 			if err != nil {
 				t.Fatal(err)
 			}
@@ -275,7 +275,7 @@ func changeEachInput(t *testing.T, directory, output, pkg string, arguments, env
 				t.Setenv("ADAMIC_BUILD_STORE_TOKEN", filepath.Join(t.TempDir(), "no-token"))
 			}
 			before, _ := os.ReadFile(log)
-			binary := GoBuild(t, output, pkg, *arguments, *environment...)
+			binary := GoBuild(t, ".", output, pkg, *arguments, *environment...)
 			after, _ := os.ReadFile(log)
 			// The census line this build wrote: 'build <name> <key12> <outcome> <seconds>', after any note about the store.
 			var outcome []string

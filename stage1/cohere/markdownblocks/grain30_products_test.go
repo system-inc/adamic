@@ -349,7 +349,7 @@ func grainBuildTool(t *testing.T, name string) string {
 	if name == "formatter" {
 		pkg = "github.com/system-inc/cohere/command/cohere"
 	}
-	return buildcache.GoBuild(t, "grain-"+name, pkg, nil)
+	return buildcache.GoBuild(t, ".", "grain-"+name, pkg, nil)
 }
 
 func grainGenerator(t *testing.T, name string) string {

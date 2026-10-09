@@ -14,18 +14,32 @@ import (
 	"testing"
 )
 
-// GoBuild is the product of 'go build <arguments> -o <output> <pkg>' run at the repository root with environment
-// added: the stage 0 compiler, the checker archive, an oracle binary. It returns the built file's path. Its key is
-// every file of every package in this repository the build compiles (from go list -deps under the same arguments
-// and environment), each module's go.mod and go.sum (which pin every module outside it), the arguments, the build
-// environment as go itself resolves it, and the Go and C toolchains. An -overlay build is keyed too when every file
-// its overlay reads is inside the repository (@system_adamic, Oct 9 04:57Z): the key adds the overlay's map and each
-// replacement file's content, and leaves out the overlay file's own path, which is a temporary name. One that reads a
-// file outside the repository is refused: such a build stays the caller's own.
-func GoBuild(t testing.TB, output, pkg string, arguments []string, environment ...string) string {
+// GoBuild is the product of 'go build <arguments> -o <output> <pkg>' run in directory, a directory of the repository
+// ("." for its root, "cohere" for cohere's module), with environment added: the stage 0 compiler, the checker archive,
+// an oracle binary. It returns the built file's path. Its key is every file of every package in this repository the
+// build compiles (from go list -deps under the same arguments and environment), each module's go.mod and go.sum (which
+// pin every module outside it), the arguments, the build environment as go itself resolves it, and the Go and C
+// toolchains. An -overlay build is keyed too when every file its overlay reads is inside the repository
+// (@system_adamic, Oct 9 04:57Z): the key adds the overlay's map and each replacement file's content, and leaves out
+// the overlay file's own path, which is a temporary name. One that reads a file outside the repository is refused:
+// such a build stays the caller's own.
+func GoBuild(t testing.TB, directory, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, false, directory, output, pkg, arguments, environment)
+}
+
+// GoTestBinary is GoBuild for 'go test -c': an oracle a test runs as a process, keyed with the package's test files and
+// what only its test imports (#hff1651, Oct 9: products that ran go test -c by hand carried their checkout path and were
+// keyed without the go flags, so a stored oracle never matched a rebuild from another tree).
+func GoTestBinary(t testing.TB, directory, output, pkg string, arguments []string, environment ...string) string {
+	t.Helper()
+	return goProduct(t, true, directory, output, pkg, arguments, environment)
+}
+
+func goProduct(t testing.TB, test bool, directory, output, pkg string, arguments []string, environment []string) string {
 	t.Helper()
 	arguments = reproducible(arguments)
-	inputs, err := GoInputs(output, pkg, arguments, environment)
+	inputs, err := goInputs(test, directory, output, pkg, arguments, environment)
 	if err != nil {
 		t.Fatalf("build %s: %v", pkg, err)
 	}
@@ -33,40 +47,16 @@ func GoBuild(t testing.TB, output, pkg string, arguments []string, environment .
 	if slices.Contains(inputs.Flags, rebuildEverything) {
 		arguments = append([]string{"-a"}, arguments...)
 	}
-	directory := Product(t, inputs, func(directory string) error {
-		command := exec.Command("go", append(append(append([]string{"build"}, arguments...), "-o", filepath.Join(directory, output)), pkg)...)
-		command.Dir = root
-		command.Env = append(os.Environ(), environment...)
-		if combined, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("go build %s: %v\n%s", pkg, err, combined)
-		}
-		return nil
-	})
-	return filepath.Join(directory, output)
-}
-
-// GoTestBinary is the product of 'go test -c <arguments> -o <output> <pkg>' run in directory, a directory of the
-// repository such as "cohere" whose module holds the package, with environment added: an oracle a test runs as a
-// process. It's built and keyed as GoBuild is, with the package's test files in the key (#hff1651, Oct 9: products
-// that ran go test -c by hand carried their checkout path and were keyed without the go flags, so a stored oracle
-// never matched a rebuild from another tree).
-func GoTestBinary(t testing.TB, directory, output, pkg string, arguments []string, environment ...string) string {
-	t.Helper()
-	arguments = reproducible(arguments)
-	inputs, err := goInputs(true, directory, output, pkg, arguments, environment)
-	if err != nil {
-		t.Fatalf("test binary %s: %v", pkg, err)
-	}
-	root, _ := repositoryRoot()
-	if slices.Contains(inputs.Flags, rebuildEverything) {
-		arguments = append([]string{"-a"}, arguments...)
+	verb := []string{"build"}
+	if test {
+		verb = []string{"test", "-c"}
 	}
 	product := Product(t, inputs, func(product string) error {
-		command := exec.Command("go", append(append(append([]string{"test", "-c"}, arguments...), "-o", filepath.Join(product, output)), pkg)...)
+		command := exec.Command("go", append(append(append(verb, arguments...), "-o", filepath.Join(product, output)), pkg)...)
 		command.Dir = filepath.Join(root, directory)
 		command.Env = append(os.Environ(), environment...)
 		if combined, err := command.CombinedOutput(); err != nil {
-			return fmt.Errorf("go test -c %s: %v\n%s", pkg, err, combined)
+			return fmt.Errorf("go %s %s: %v\n%s", strings.Join(verb, " "), pkg, err, combined)
 		}
 		return nil
 	})
@@ -239,9 +229,13 @@ func goInputs(test bool, directory, output, pkg string, arguments []string, envi
 	for _, target := range overlay.files {
 		files[target] = true
 	}
+	// A root build keeps the name it always had, so its key doesn't move.
 	name := "go build " + pkg + " " + output
-	if test {
+	switch {
+	case test:
 		name = "go test -c " + directory + " " + pkg + " " + output
+	case directory != ".":
+		name = "go build " + directory + " " + pkg + " " + output
 	}
 	inputs := Inputs{Name: name, Flags: append([]string{"arguments " + strings.Join(keyed, " ")}, overlay.flags...), Toolchain: []string{Tool("go", "version")}}
 	if outsideHeaders {

@@ -32,7 +32,7 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		!slices.ContainsFunc(inputs.Toolchain, func(tool string) bool { return strings.HasPrefix(tool, "go version: ") }) {
 		t.Fatalf("flags %v, toolchain %v", inputs.Flags, inputs.Toolchain)
 	}
-	binary := GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
+	binary := GoBuild(t, ".", "withc", "./internal/buildcache/testdata/withc", nil)
 	// GoBuild built it with the reproducible flags, as its recorded inputs say.
 	if described, err := os.ReadFile(filepath.Dir(binary) + ".inputs"); err != nil || !strings.Contains(string(described), "flag arguments -trimpath -ldflags=-buildid=") {
 		t.Fatalf("the product's inputs: %q, %v", described, err)
@@ -42,7 +42,7 @@ func TestGoBuildKeysWhatTheBuildCompilesAndRuns(t *testing.T) {
 		t.Fatalf("the product printed %q, %v", output, err)
 	}
 	// Built once: the second call is a hit.
-	GoBuild(t, "withc", "./internal/buildcache/testdata/withc", nil)
+	GoBuild(t, ".", "withc", "./internal/buildcache/testdata/withc", nil)
 	if lines, _ := os.ReadFile(log); strings.Count(string(lines), " miss ") != 1 || strings.Count(string(lines), " hit ") != 1 {
 		t.Fatalf("census: %q", lines)
 	}
