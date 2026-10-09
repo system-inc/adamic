@@ -1,0 +1,15 @@
+CAUGHT inflate complete count: complete count
+CAUGHT drop required field evidence: field proof src/compiler/factory/nodeFactory.ts:3419:5:right
+CAUGHT change pinned source hash: source pin src/compiler/factory/baseNodeFactory.ts
+PASS boundary createComplete: definitely-written-before-escape
+PASS boundary createConditional: conditional-or-path-incomplete-write
+PASS boundary createBothBranches: definitely-written-before-escape
+PASS boundary createPassed: written-by-return-after-earlier-escape
+PASS boundary createAlias: definitely-written-before-escape
+PASS boundary createLoop: unresolved-control
+PASS boundary createCompound: conditional-or-path-incomplete-write
+PASS boundary createUndefined: written-undefined-before-escape
+CAUGHT scanner branch writes joined by union: createConditional changed to definitely-written-before-escape
+CAUGHT scanner passed node never escapes: createPassed changed to definitely-written-before-escape
+CAUGHT scanner undefined literal treated as initialized: createUndefined changed to definitely-written-before-escape
+PASS source pins, population, field evidence, counts, three artifact mutants, three scanner mutants and eight boundary cases

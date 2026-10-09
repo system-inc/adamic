@@ -1,0 +1,13 @@
+// Observe stock TypeScript's public factory and parser on Node, independently of Adamic.
+const ts=require(process.env.TYPESCRIPT_API||'/workspace/cache/tsc-census/npm/node_modules/typescript');
+const fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const base=__dirname,ledger=JSON.parse(fs.readFileSync(path.join(base,'data/factories.json'),'utf8'));
+function snapshot(name,node){const fields=ledger.find(f=>f.name===name&&f.location.file.endsWith('/nodeFactory.ts')).requiredFields.filter(f=>!f.phantom);return {factory:name,kind:ts.SyntaxKind[node.kind],requiredFields:fields.map(f=>({field:f.name,own:Object.hasOwn(node,f.name),value:node[f.name]===undefined?'undefined':Array.isArray(node[f.name])?'array':typeof node[f.name]}))};}
+const binary=ts.factory.createBinaryExpression(ts.factory.createNumericLiteral(3),ts.SyntaxKind.PlusToken,ts.factory.createNumericLiteral(4));
+const variable=ts.factory.createVariableDeclaration('answer',undefined,undefined,ts.factory.createNumericLiteral(42));
+const plain=ts.factory.createNumericLiteral('7',ts.TokenFlags.None),conditional=ts.factory.createNumericLiteral('0b1',ts.TokenFlags.BinarySpecifier);
+const source=ts.factory.createSourceFile([],ts.factory.createToken(ts.SyntaxKind.EndOfFileToken),ts.NodeFlags.None);
+const parsed=ts.createSourceFile('sample.ts','let answer = 42;',ts.ScriptTarget.ES2020,true,ts.ScriptKind.TS);
+assert.equal(binary.left.text,'3');assert.equal(binary.right.text,'4');assert.equal(variable.name.escapedText,'answer');assert.equal(plain.transformFlags,0);assert.ok(conditional.transformFlags&ts.TransformFlags.ContainsES2015);assert.equal(source.bindDiagnostics,undefined);assert.deepEqual(parsed.bindDiagnostics,[]);assert.equal(parsed.statements[0].parent,parsed);assert.equal(source.parent,undefined);
+const observations=[snapshot('createBinaryExpression',binary),snapshot('createVariableDeclaration',variable),snapshot('createNumericLiteral',plain),snapshot('createNumericLiteral',conditional),snapshot('createSourceFile',source)];
+const result={typescript:ts.version,sourceFileBeforeParser:{bindDiagnostics:'undefined',parent:'undefined'},sourceFileAfterParser:{bindDiagnostics:parsed.bindDiagnostics,text:parsed.text,statementParentIsSource:true},numericFlags:{plain:plain.transformFlags,conditional:conditional.transformFlags},observations};fs.writeFileSync(path.join(base,'data/api_observations.json'),JSON.stringify(result,null,2)+'\n');console.log('PASS stock TypeScript factory children, conditional flags, undefined late fields, parser completion and parent references');

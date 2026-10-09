@@ -1,0 +1,11 @@
+// a-check: refused a cast the runtime can't check
+// TypeScript v6.0.3 factory/nodeFactory.ts:4251-4264. Optional children retained as explicit unions.
+interface VariableNode { kind: string; name: string; initializer: number | undefined; }
+function createVariableDeclaration(name: string, initializer: number | undefined): VariableNode {
+    const node = { kind: 'VariableDeclaration' } as VariableNode;
+    // mutant: omit name completion
+    node.initializer = initializer;
+    return node;
+}
+console.log(`${createVariableDeclaration('answer', 42).name}:42`);
+console.log(`${createVariableDeclaration('empty', undefined).initializer}`);

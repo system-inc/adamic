@@ -1,0 +1,21 @@
+// a-check: clean
+// TypeScript v6.0.3 factory/nodeFactory.ts:6041-6106; parser.ts:1989-2015.
+// SourceFile.bindDiagnostics is undefined in the factory and filled in parser setFields.
+// Its representation is made explicit here; the loud read is the evidence, not a compiler implementation.
+import { panic } from 'adamic';
+interface SourceNode { kind: string; text: string; bindDiagnostics: readonly string[] | undefined; }
+function createSourceFile(): SourceNode {
+    return { kind: 'SourceFile', text: '', bindDiagnostics: undefined };
+}
+function setFields(node: SourceNode, text: string): void {
+    node.text = text;
+    const diagnostics: string[] = [];
+    // mutant: omit completion after factory escape
+}
+function checkedDiagnosticCount(node: SourceNode): number {
+    const diagnostics = node.bindDiagnostics ?? panic('SourceFile.bindDiagnostics is not initialized');
+    return diagnostics.length;
+}
+const node = createSourceFile();
+setFields(node, 'let answer = 42;');
+console.log(`${node.text}:${checkedDiagnosticCount(node)}`);

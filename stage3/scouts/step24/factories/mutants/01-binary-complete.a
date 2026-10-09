@@ -1,0 +1,12 @@
+// a-check: refused a cast the runtime can't check
+// TypeScript v6.0.3 factory/nodeFactory.ts:3419-3457. Child nodes trimmed to numbers.
+interface BinaryNode { kind: string; left: number; operatorToken: string; right: number; }
+function createBinaryExpression(left: number, operatorToken: string, right: number): BinaryNode {
+    const node = { kind: 'BinaryExpression' } as BinaryNode;
+    node.left = left;
+    node.operatorToken = operatorToken;
+    // mutant: omit right completion
+    return node;
+}
+const node = createBinaryExpression(3, '+', 4);
+console.log(`${node.kind}:${node.left}:${node.operatorToken}:${node.right}`);

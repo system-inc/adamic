@@ -1,0 +1,278 @@
+{
+  "Node": [
+    {
+      "field": "pos",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8507,
+        "column": 5
+      },
+      "expression": "pos"
+    },
+    {
+      "field": "end",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8508,
+        "column": 5
+      },
+      "expression": "end"
+    },
+    {
+      "field": "kind",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8509,
+        "column": 5
+      },
+      "expression": "kind"
+    },
+    {
+      "field": "id",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8510,
+        "column": 5
+      },
+      "expression": "0"
+    },
+    {
+      "field": "flags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8511,
+        "column": 5
+      },
+      "expression": "NodeFlags.None"
+    },
+    {
+      "field": "modifierFlagsCache",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8512,
+        "column": 5
+      },
+      "expression": "ModifierFlags.None"
+    },
+    {
+      "field": "transformFlags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8513,
+        "column": 5
+      },
+      "expression": "TransformFlags.None"
+    },
+    {
+      "field": "parent",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8514,
+        "column": 5
+      },
+      "expression": "undefined!"
+    },
+    {
+      "field": "original",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8515,
+        "column": 5
+      },
+      "expression": "undefined"
+    },
+    {
+      "field": "emitNode",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8516,
+        "column": 5
+      },
+      "expression": "undefined"
+    }
+  ],
+  "Token": [
+    {
+      "field": "pos",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8521,
+        "column": 5
+      },
+      "expression": "pos"
+    },
+    {
+      "field": "end",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8522,
+        "column": 5
+      },
+      "expression": "end"
+    },
+    {
+      "field": "kind",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8523,
+        "column": 5
+      },
+      "expression": "kind"
+    },
+    {
+      "field": "id",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8524,
+        "column": 5
+      },
+      "expression": "0"
+    },
+    {
+      "field": "flags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8525,
+        "column": 5
+      },
+      "expression": "NodeFlags.None"
+    },
+    {
+      "field": "transformFlags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8526,
+        "column": 5
+      },
+      "expression": "TransformFlags.None"
+    },
+    {
+      "field": "parent",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8527,
+        "column": 5
+      },
+      "expression": "undefined!"
+    },
+    {
+      "field": "emitNode",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8528,
+        "column": 5
+      },
+      "expression": "undefined"
+    }
+  ],
+  "Identifier": [
+    {
+      "field": "pos",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8533,
+        "column": 5
+      },
+      "expression": "pos"
+    },
+    {
+      "field": "end",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8534,
+        "column": 5
+      },
+      "expression": "end"
+    },
+    {
+      "field": "kind",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8535,
+        "column": 5
+      },
+      "expression": "kind"
+    },
+    {
+      "field": "id",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8536,
+        "column": 5
+      },
+      "expression": "0"
+    },
+    {
+      "field": "flags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8537,
+        "column": 5
+      },
+      "expression": "NodeFlags.None"
+    },
+    {
+      "field": "transformFlags",
+      "undefined": false,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8538,
+        "column": 5
+      },
+      "expression": "TransformFlags.None"
+    },
+    {
+      "field": "parent",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8539,
+        "column": 5
+      },
+      "expression": "undefined!"
+    },
+    {
+      "field": "original",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8540,
+        "column": 5
+      },
+      "expression": "undefined"
+    },
+    {
+      "field": "emitNode",
+      "undefined": true,
+      "location": {
+        "file": "src/compiler/utilities.ts",
+        "line": 8541,
+        "column": 5
+      },
+      "expression": "undefined"
+    }
+  ]
+}

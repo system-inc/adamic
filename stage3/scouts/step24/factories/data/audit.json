@@ -1,0 +1,49 @@
+{
+  "artifactMutants": [
+    {
+      "name": "inflate complete count",
+      "caught": "complete count\n\n0 !== 1\n"
+    },
+    {
+      "name": "drop required field evidence",
+      "caught": "field proof src/compiler/factory/nodeFactory.ts:3419:5:right"
+    },
+    {
+      "name": "change pinned source hash",
+      "caught": "source pin src/compiler/factory/baseNodeFactory.ts\n+ actual - expected\n\n+ '86826be85abc6406cec8915574950ab349ba829167a4d3f28332c38dd8b90e0a'\n- '0000000000000000000000000000000000000000000000000000000000000000'\n"
+    }
+  ],
+  "scannerMutants": [
+    {
+      "name": "branch writes joined by union",
+      "witness": "createConditional",
+      "expected": "conditional-or-path-incomplete-write",
+      "observed": "definitely-written-before-escape",
+      "caughtBy": "independent boundary status assertion"
+    },
+    {
+      "name": "passed node never escapes",
+      "witness": "createPassed",
+      "expected": "written-by-return-after-earlier-escape",
+      "observed": "definitely-written-before-escape",
+      "caughtBy": "independent boundary status assertion"
+    },
+    {
+      "name": "undefined literal treated as initialized",
+      "witness": "createUndefined",
+      "expected": "written-undefined-before-escape",
+      "observed": "definitely-written-before-escape",
+      "caughtBy": "independent boundary status assertion"
+    }
+  ],
+  "boundaryCases": {
+    "createComplete": "definitely-written-before-escape",
+    "createConditional": "conditional-or-path-incomplete-write",
+    "createBothBranches": "definitely-written-before-escape",
+    "createPassed": "written-by-return-after-earlier-escape",
+    "createAlias": "definitely-written-before-escape",
+    "createLoop": "unresolved-control",
+    "createCompound": "conditional-or-path-incomplete-write",
+    "createUndefined": "written-undefined-before-escape"
+  }
+}

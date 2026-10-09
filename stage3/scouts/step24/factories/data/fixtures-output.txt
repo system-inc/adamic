@@ -1,0 +1,6 @@
+PASS 01-binary-complete Node, header, recorded current refusal; mutant caught
+PASS 02-variable-complete Node, header, recorded current refusal; mutant caught
+PASS 03-numeric-conditional Node, header, recorded current refusal; mutant caught
+PASS 04-sourcefile-after-escape Node, header, native/JS/leaks/counts; mutant caught
+PASS 05-parser-finish Node, header, native/JS/leaks/counts; mutant caught
+PASS five source goldens, five mutants, 2 native/JS/leak/count checks
