@@ -3,7 +3,6 @@ package lint
 import (
 	"context"
 	"os"
-	"os/exec"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -152,7 +151,7 @@ func TestProfileCompilation_000(t *testing.T) {
 		t.Fatal(err)
 	}
 	defer stats.Close()
-	command := exec.Command(filepath.Join(products, "counted"), "--manifest", path, "--count")
+	command := compilationCommand(t, filepath.Join(products, "counted"), "--manifest", path, "--count")
 	command.Stdout, command.Stderr = output, stats
 	if err := command.Run(); err != nil {
 		t.Fatal(err)
