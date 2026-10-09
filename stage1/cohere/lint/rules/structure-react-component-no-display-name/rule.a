@@ -1,0 +1,107 @@
+import type { RuleContext } from '../../context.ts';
+import type { HelperNode } from '../../helpers/react/nodes.a';
+import { project } from '../../helpers/react/projection.a';
+import { reactEs6ComponentClass } from '../../helpers/react/react_es6_component_class.a';
+import { isComponentBase } from '../../helpers/react/react_component_base.a';
+import { isComponentBaseName } from '../../helpers/react/component_base_name.a';
+import { reactLikelyComponentName } from '../../helpers/react/react_likely_component_name.a';
+import { isNamespacedMember } from '../../helpers/react/namespaced_member.a';
+import type { AnalysisNode } from '../../helpers/slot05/batch33/model.a';
+import type { JsxNode } from '../../helpers/slot05/batch32/model.a';
+import { isLikelyReactComponent } from '../../helpers/slot05/batch33/is_likely_react_component.a';
+import { returnArgumentLooksLikeJsx } from '../../helpers/slot05/batch32/return_argument_looks_like_jsx.a';
+import { messageNoDisplayNameAssignment } from './messages.a';
+
+export class Rule {
+    readonly context: RuleContext;
+    react: HelperNode[] = [];
+    analysis: AnalysisNode[] = [];
+    jsx: JsxNode[] = [];
+    readonly anonymous = new Map<string, boolean>();
+    readonly components = new Map<string, boolean>();
+    gathered = false;
+    constructor(context: RuleContext) { this.context = context; }
+    prepare(root: number): void {
+        this.react = project(this.context.parser.nodes);
+        for(const node of this.context.parser.nodes) {
+            const functionLike = ['FunctionDeclaration', 'FunctionExpression', 'ArrowFunction', 'MethodDeclaration'].includes(node.kind);
+            const parameters: number[] = [];
+            let body = -1;
+            if(functionLike) {
+                for(const child of node.children) {
+                    if(this.context.kind(child) === 'Parameter') { parameters.push(child); }
+                    if(this.context.kind(child) === 'Block') { body = child; }
+                }
+                if(node.kind === 'ArrowFunction') { body = node.children[node.children.length - 1] ?? -1; }
+            }
+            const expression = ['ParenthesizedExpression', 'ReturnStatement'].includes(node.kind) ? node.children[0] ?? -1 : -1;
+            let name = -1;
+            if(node.kind === 'Parameter') {
+                for(const child of node.children) {
+                    const kind = this.context.kind(child);
+                    if(kind === 'Identifier' || kind === 'ObjectBindingPattern' || kind === 'ArrayBindingPattern') { name = child; break; }
+                }
+            }
+            this.analysis.push({functionLike, identifier: node.kind === 'Identifier', typeReference: false, call: false, property: false, parenthesized: node.kind === 'ParenthesizedExpression', block: node.kind === 'Block', returnStatement: node.kind === 'ReturnStatement', text: node.text, expression, name, typeName: -1, body, parameters, statements: node.kind === 'Block' ? node.children : []});
+            this.jsx.push({element: node.kind === 'JsxElement', fragment: node.kind === 'JsxFragment', selfClosing: node.kind === 'JsxSelfClosingElement', parenthesized: node.kind === 'ParenthesizedExpression', conditional: node.kind === 'ConditionalExpression', expression, whenTrue: node.children[2] ?? -1, whenFalse: node.children[4] ?? -1});
+        }
+    }
+    wrapper(index: number): boolean {
+        if(index < 0) { return false; }
+        const call = this.context.unwrap(index);
+        if(this.context.kind(call) !== 'CallExpression') { return false; }
+        const expression = this.context.node(call).children[0] ?? -1;
+        if(expression < 0) { return false; }
+        const callee = this.context.unwrap(expression);
+        if(this.context.kind(callee) === 'Identifier') { return ['memo', 'forwardRef'].includes(this.context.node(callee).text); }
+        return isNamespacedMember(this.react, callee, (name: string): boolean => name === 'memo' || name === 'forwardRef');
+    }
+    component(index: number): boolean {
+        return isLikelyReactComponent(this.analysis, index, (expression: number): boolean => returnArgumentLooksLikeJsx(this.jsx, expression)) || reactEs6ComponentClass(this.react, index, (expression: number): boolean => isComponentBase(this.react, expression, isComponentBaseName));
+    }
+    record(index: number): void {
+        if(index >= 0 && this.context.kind(index) === 'Identifier' && reactLikelyComponentName(this.context.node(index).text)) { this.components.set(this.context.node(index).text, true); }
+    }
+    gather(): void {
+        this.gathered = true;
+        for(const statement of this.context.node(this.context.root).children) {
+            const kind = this.context.kind(statement);
+            if(kind === 'FunctionDeclaration' || kind === 'ClassDeclaration') {
+                if(this.component(statement)) { this.record(this.context.name(statement)); }
+            }
+            else if(kind === 'VariableStatement') {
+                for(const list of this.context.children(statement, 'VariableDeclarationList')) {
+                    for(const declaration of this.context.node(list).children) {
+                        const initializer = this.context.initializer(declaration);
+                        if(initializer < 0) { continue; }
+                        const value = this.context.unwrap(initializer);
+                        if(this.component(value) || this.wrapper(value)) { this.record(this.context.node(declaration).children[0] ?? -1); }
+                    }
+                }
+            }
+        }
+    }
+    visit(index: number): void {
+        const node = this.context.node(index);
+        if(node.kind === 'VariableDeclaration') {
+            const name = node.children[0] ?? -1;
+            if(name >= 0 && this.context.kind(name) === 'Identifier' && this.wrapper(this.context.initializer(index))) { this.anonymous.set(this.context.node(name).text, true); }
+            return;
+        }
+        if(this.context.kind(node.children[1] ?? -1) !== 'EqualsToken') { return; }
+        const operand = node.children[0] ?? -1;
+        if(operand < 0) { return; }
+        const left = this.context.unwrap(operand);
+        if(this.context.kind(left) !== 'PropertyAccessExpression') { return; }
+        const property = this.context.property(left);
+        if(this.context.kind(property) !== 'Identifier' || this.context.node(property).text !== 'displayName') { return; }
+        const receiver = this.context.node(left).children[0] ?? -1;
+        if(receiver < 0) { return; }
+        const target = this.context.unwrap(receiver);
+        if(this.context.kind(target) !== 'Identifier' || this.anonymous.get(this.context.node(target).text) === true) { return; }
+        if(!this.gathered) { this.gather(); }
+        if(this.components.get(this.context.node(target).text) !== true) { return; }
+        this.context.reportNode(index, 'structure/react-component-no-display-name', 'noDisplayNameAssignment', messageNoDisplayNameAssignment);
+    }
+}
+export function create(context: RuleContext): Rule { return new Rule(context); }

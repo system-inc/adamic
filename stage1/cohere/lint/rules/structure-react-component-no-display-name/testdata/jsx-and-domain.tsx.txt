@@ -1,0 +1,4 @@
+export const Field = () => <div />;
+Field.displayName = 'Field';
+const Organization = { displayName: 'x' };
+Organization.displayName = 'y';

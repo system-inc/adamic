@@ -1,0 +1,28 @@
+func TestStructureReactComponentNoDisplayNamePort(t *testing.T) {
+    t.Parallel()
+    oracle := goOracle(t)
+    directory := mutant(t, "", "")
+    var rows []string
+    count := 0
+    for _, row := range upstream(t) {
+        fields := strings.Split(row, "\t")
+        if len(fields)>1 && fields[1]=="structure/react-component-no-display-name" { rows=append(rows,row); count++ }
+    }
+    if count != 56 { t.Fatalf("captured upstream case count: got %d, want 56", count) }
+    t.Logf("structure-react-component-no-display-name upstream cases: %d",count)
+    for _, d := range prepareRegistry(t,".") {
+        if d.Name == "structure/react-component-no-display-name" {
+            for _, row := range ownedWitnessRows(t,".",d) {
+                result := execute(t,"",oracle,"--manifest",manifest(t,[]string{row}),"--count")
+                if string(result.output) == "0\n" { t.Fatal("witness has no Go finding",row) }
+                rows=append(rows,row)
+                rows=append(rows,strings.SplitN(row,"\t",2)[0]+"\tall")
+            }
+        }
+    }
+    for _, row := range generated(t) {
+        fields := strings.Split(row,"\t")
+        if len(fields)==1 || fields[1]=="all" || fields[1]=="structure/react-component-no-display-name" { rows=append(rows,row) }
+    }
+    compare(t,oracle,buildPort(t,directory,true),directory,manifest(t,rows))
+}

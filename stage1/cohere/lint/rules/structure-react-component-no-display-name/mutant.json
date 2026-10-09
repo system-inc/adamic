@@ -1,0 +1,5 @@
+{
+  "name": "display-name-wrapper-exemption-lost",
+  "from": "this.anonymous.get(this.context.node(target).text) === true",
+  "to": "this.anonymous.get(this.context.node(target).text) === false"
+}

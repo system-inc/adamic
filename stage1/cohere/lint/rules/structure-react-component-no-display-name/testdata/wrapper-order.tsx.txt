@@ -1,0 +1,6 @@
+declare function memo(x: unknown): unknown;
+Before.displayName = 'Before';
+const Before = memo(() => null);
+Before.displayName = 'exempt';
+const After = memo(() => null);
+After.displayName = 'exempt';
