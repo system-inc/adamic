@@ -292,3 +292,5 @@ All mutation files are standalone diffs against the starting commit. D1 changes 
 The third lexer defense remains cannot-judge if its narrowed CRLF replay also exhausts the budget. Two shared catches do not meet the requested three-completed-attempt criterion for not defended. The row stays pending rather than being marked redundant. Its name does not overpromise: exact live-Go token agreement is asserted.
 
 Coverage profiles are gzip-compressed; decompress before using go tool cover. matrix.json lists every observed pass and every unknown row. runs.json files retain commands, wall time and status. The overall work took about 35 minutes, beyond the nominal port budget, because of enabled baseline dependency correction, full-package replays and two cooked CRLF runs. Dependency installations were not separately timed.
+
+Concurrent publication: another worker created the same remote evidence branch during this session. This session is preserved under sessions/6eef5ae5; the other worker’s root evidence is retained by a normal merge. No source changes or history rewrites are involved.
