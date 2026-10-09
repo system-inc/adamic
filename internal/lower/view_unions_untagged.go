@@ -99,7 +99,8 @@ func (l *lowering) supportsUntaggedRead(root ir.ViewContract) bool {
 		seen[id] = true
 		defer delete(seen, id)
 		if contract.Kind == ir.ViewArray {
-			return supported(contract.Element)
+			// Standalone array readers do not install V2's union matcher.
+			return false // awaits views-v2: array union membership dispatch
 		}
 		if contract.Kind == ir.ViewUnion {
 			if len(contract.Members) == 0 {
