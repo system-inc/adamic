@@ -6,7 +6,10 @@
 #
 # name<TAB>sha<TAB>step<TAB>pattern: the red must be at that step, and the pattern (an extended regex, may be empty) must
 # match the first failure's block of the gate's log. An empty file is no suite; a missing one holds every promotion.
-plain-wrong-answer	58c3960d5f90899a24e55ab840076b29bc1ca320	tests	internal/buildcache TestEveryInputChangesTheKey
+# plain-wrong-answer's buildcache change flows through the build cache into every product and importer, so the fast gate's
+# first failure can be any of them (Oct 9 13:50Z: stage1/typescript/parser TestExpressionsAgree after 1,265 s, 96 units over
+# budget): red at tests, no pattern, until @system_adamic_tests gives the control a leaf package.
+plain-wrong-answer	58c3960d5f90899a24e55ab840076b29bc1ca320	tests	
 binary-dies-partway	a840ec0723dee3a596055f76146a36a44cc60b10	tests	internal/corpusfiles
 deferred-red-reaches-census	0096078f544f90bb5d48febbc5099a906699e734	census
 wasi-family-must-run	15e7f9faa8733da808570aa6b63777161d1402c0	tests	internal/native TestWASIUnit[0-9]+
