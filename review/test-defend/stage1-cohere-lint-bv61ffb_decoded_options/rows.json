@@ -1,0 +1,43 @@
+[
+  {
+    "test": "TestClosedComparatorGaps",
+    "package": "stage1/cohere/lint",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestDecodedOptionsAndMutant family"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/library_string.go:239",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/library_string.go:239",
+        "change": "ir.Add -> ir.Subtract in positioned lastIndexOf prefix end",
+        "rows_failed": [
+          "TestClosedComparatorGaps"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/lint-gap-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/lint/ -run \"^(TestClosedComparatorGaps|TestDecodedOptionsAndMutant_[0-9]+|TestDecodedOptionsAndMutantUnion|TestProduct_DecodedOptions(Lowered|MutantLowered|Native|GoOracle))$\" > D1.log 2>&1; closed_gaps_test.go:50: native prints \"-1\\n\", Node \"1\\n\"",
+    "bounded": true,
+    "rows_passed": [
+      "TestDecodedOptionsAndMutantUnion",
+      "TestProduct_DecodedOptionsGoOracle",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_005",
+      "TestProduct_DecodedOptionsNative",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_000",
+      "TestProduct_DecodedOptionsMutantLowered",
+      "TestProduct_DecodedOptionsLowered"
+    ],
+    "code_under_test": "Adamic lowering, native C emission, JavaScript emission for the three gap fixtures",
+    "oracle": "Node executing unchanged fixtures plus handwritten output pins",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ]
+  }
+]

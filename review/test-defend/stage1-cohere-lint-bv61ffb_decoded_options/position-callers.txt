@@ -1,0 +1,4 @@
+stage1/cohere/lint/gaps/4_last_index_position.ts:7:        return this.source.lastIndexOf('(', position);
+stage1/cohere/lint/rules/no-empty-character-class/rule.a:15:        const slash = text.lastIndexOf('/');
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:159:            const opening = this.context.source.slice(0, this.context.start(first)).lastIndexOf('(');
+stage1/cohere/lint/rules/typescript-method-signature-style/rule.ts:169:            const opening = this.context.source.slice(0, this.context.start(first)).lastIndexOf('<');

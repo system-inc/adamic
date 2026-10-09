@@ -1,0 +1,158 @@
+{
+  "expanded-baseline.log": {
+    "timeout": true,
+    "observed_terminal_events": [
+      {
+        "Test": "TestDecodedOptionsAndMutant_000",
+        "Action": "pass",
+        "Elapsed": 8.24
+      }
+    ],
+    "unknown": [
+      "TestClosedComparatorGaps",
+      "TestCompilerAndStage1Agree_CheckerSanitized_00",
+      "TestCompilerAndStage1Agree_CheckerSanitized_01",
+      "TestCompilerAndStage1Agree_CheckerSanitized_02",
+      "TestCompilerAndStage1Agree_CheckerSanitized_03",
+      "TestCompilerAndStage1Agree_CheckerSanitized_04",
+      "TestCompilerAndStage1Agree_CheckerSanitized_05",
+      "TestCompilerAndStage1Agree_CheckerSanitized_06",
+      "TestCompilerAndStage1Agree_CheckerSanitized_07",
+      "TestCompilerAndStage1Agree_CheckerSanitized_08",
+      "TestCompilerAndStage1Agree_CheckerSanitized_09",
+      "TestCompilerAndStage1Agree_CheckerSanitized_10",
+      "TestCompilerAndStage1Agree_CheckerSanitized_11",
+      "TestCompilerAndStage1Agree_CheckerSanitized_12",
+      "TestCompilerAndStage1Agree_CheckerSanitized_13",
+      "TestCompilerAndStage1Agree_CheckerSanitized_14",
+      "TestCompilerAndStage1Agree_CheckerSanitized_15",
+      "TestCompilerAndStage1Agree_CheckerSanitized_16",
+      "TestCompilerAndStage1Agree_CheckerSanitized_17",
+      "TestDecodedOptionsAndMutantUnion",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestProduct_CompilerAgreementLowered",
+      "TestProduct_DecodedOptionsGoOracle",
+      "TestProduct_DecodedOptionsLowered",
+      "TestProduct_DecodedOptionsMutantLowered",
+      "TestProduct_DecodedOptionsNative",
+      "TestProduct_LintGoOracle",
+      "TestProduct_LintOwnedWitnessesLowered",
+      "TestProduct_LintOwnedWitnessesSanitized"
+    ]
+  },
+  "D1-expanded.log": {
+    "timeout": true,
+    "observed_terminal_events": [
+      {
+        "Test": "TestDecodedOptionsAndMutant_000",
+        "Action": "pass",
+        "Elapsed": 9.51
+      }
+    ],
+    "unknown": [
+      "TestClosedComparatorGaps",
+      "TestCompilerAndStage1Agree_CheckerSanitized_00",
+      "TestCompilerAndStage1Agree_CheckerSanitized_01",
+      "TestCompilerAndStage1Agree_CheckerSanitized_02",
+      "TestCompilerAndStage1Agree_CheckerSanitized_03",
+      "TestCompilerAndStage1Agree_CheckerSanitized_04",
+      "TestCompilerAndStage1Agree_CheckerSanitized_05",
+      "TestCompilerAndStage1Agree_CheckerSanitized_06",
+      "TestCompilerAndStage1Agree_CheckerSanitized_07",
+      "TestCompilerAndStage1Agree_CheckerSanitized_08",
+      "TestCompilerAndStage1Agree_CheckerSanitized_09",
+      "TestCompilerAndStage1Agree_CheckerSanitized_10",
+      "TestCompilerAndStage1Agree_CheckerSanitized_11",
+      "TestCompilerAndStage1Agree_CheckerSanitized_12",
+      "TestCompilerAndStage1Agree_CheckerSanitized_13",
+      "TestCompilerAndStage1Agree_CheckerSanitized_14",
+      "TestCompilerAndStage1Agree_CheckerSanitized_15",
+      "TestCompilerAndStage1Agree_CheckerSanitized_16",
+      "TestCompilerAndStage1Agree_CheckerSanitized_17",
+      "TestDecodedOptionsAndMutantUnion",
+      "TestDecodedOptionsAndMutant_001",
+      "TestDecodedOptionsAndMutant_002",
+      "TestDecodedOptionsAndMutant_003",
+      "TestDecodedOptionsAndMutant_004",
+      "TestDecodedOptionsAndMutant_005",
+      "TestProduct_CompilerAgreementLowered",
+      "TestProduct_DecodedOptionsGoOracle",
+      "TestProduct_DecodedOptionsLowered",
+      "TestProduct_DecodedOptionsMutantLowered",
+      "TestProduct_DecodedOptionsNative",
+      "TestProduct_LintGoOracle",
+      "TestProduct_LintOwnedWitnessesLowered",
+      "TestProduct_LintOwnedWitnessesSanitized"
+    ]
+  },
+  "D1-narrowed.log": {
+    "timeout": false,
+    "observed_terminal_events": [
+      {
+        "Test": "TestDecodedOptionsAndMutantUnion",
+        "Action": "pass",
+        "Elapsed": 0
+      },
+      {
+        "Test": "TestProduct_DecodedOptionsMutantLowered",
+        "Action": "pass",
+        "Elapsed": 2.11
+      },
+      {
+        "Test": "TestProduct_DecodedOptionsGoOracle",
+        "Action": "pass",
+        "Elapsed": 5.81
+      },
+      {
+        "Test": "TestProduct_DecodedOptionsNative",
+        "Action": "pass",
+        "Elapsed": 5.81
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_003",
+        "Action": "pass",
+        "Elapsed": 5.84
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_002",
+        "Action": "pass",
+        "Elapsed": 0.04
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_005",
+        "Action": "pass",
+        "Elapsed": 3.84
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_001",
+        "Action": "pass",
+        "Elapsed": 0.12
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_004",
+        "Action": "pass",
+        "Elapsed": 0.45
+      },
+      {
+        "Test": "TestDecodedOptionsAndMutant_000",
+        "Action": "pass",
+        "Elapsed": 6.39
+      },
+      {
+        "Test": "TestClosedComparatorGaps",
+        "Action": "fail",
+        "Elapsed": 0
+      },
+      {
+        "Test": "TestProduct_DecodedOptionsLowered",
+        "Action": "pass",
+        "Elapsed": 1.66
+      }
+    ],
+    "unknown": []
+  }
+}

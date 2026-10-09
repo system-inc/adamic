@@ -1,0 +1,13 @@
+diff --git a/internal/lower/library_string.go b/internal/lower/library_string.go
+index 1117530a..fdc5515a 100644
+--- a/internal/lower/library_string.go
++++ b/internal/lower/library_string.go
+@@ -236,7 +236,7 @@ func (l *lowering) libraryStringMethod(node *ast.Node, value ir.Expression, name
+ 			text, search, position := b.read(b.parameters[0]), b.read(b.parameters[1]), b.read(b.parameters[2])
+ 			integer := ir.Conditional{Condition: ir.NumberCall{Function: "isNaN", Arguments: []ir.Expression{position}}, WhenTrue: ir.NumberConstant{Value: math.Inf(1)}, WhenNot: ir.MathCall{Function: "trunc", Arguments: []ir.Expression{position}}}
+ 			start := ir.MathCall{Function: "min", Arguments: []ir.Expression{ir.StringLength{Value: text}, ir.MathCall{Function: "max", Arguments: []ir.Expression{integer, ir.NumberConstant{Value: 0}}}}}
+-			end := ir.Binary{Operator: ir.Add, Left: start, Right: ir.StringLength{Value: search}}
++			end := ir.Binary{Operator: ir.Subtract, Left: start, Right: ir.StringLength{Value: search}}
+ 			prefix := ir.StringCall{Value: text, Method: "slice", Arguments: []ir.Expression{ir.NumberConstant{Value: 0}, end}}
+ 			return b.finish("string_last_index_of_position", ir.StringCall{Value: prefix, Method: "lastIndexOf", Arguments: []ir.Expression{search}}), true, nil
+ 		}
