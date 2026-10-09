@@ -1,0 +1,3 @@
+// a-check: refused an intrinsic callback parameter x of type Slice receiving array element type number[] without a representation adapter
+interface Slice {readonly slice:()=>number[];}
+console.log([[1,2],[3,4]].map((x:Slice):string=>x.slice().join(',')).join('|'));
