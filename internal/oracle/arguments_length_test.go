@@ -68,8 +68,8 @@ func TestArgumentsLengthTypeScriptSource(t *testing.T) {
 
 // A type-correct implementation can still read the wrong word. Only Node's
 // value comparison catches this exact clean 9-versus-1 miscompile.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestArgumentsLengthWrongSlotMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join("testdata", "native-arguments-length-value.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -90,8 +90,8 @@ func TestArgumentsLengthWrongSlotMutant(t *testing.T) {
 		if sanitize {
 			name = "sanitized"
 		}
-		// Not parallel: native.Build writes the shared os.UserCacheDir()/adamic/runtime directory.
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			binary := filepath.Join(t.TempDir(), "mutant")
 			if err := native.Build(mutated, binary, native.Options{Sanitize: sanitize}); err != nil {
 				t.Fatal(err)

@@ -9,10 +9,10 @@ import (
 	"github.com/system-inc/adamic/internal/ir"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewFlagDowncast(t *testing.T) {
-	// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
+	t.Parallel()
 	t.Run("tsc source", func(t *testing.T) {
+		t.Parallel()
 		path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/assertions/13_flag_downcast.a"))
 		if err != nil {
 			t.Fatal(err)
@@ -35,8 +35,8 @@ func TestCheckedViewFlagDowncast(t *testing.T) {
 			t.Fatal(report)
 		}
 	})
-	// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 	t.Run("wrong scalar and check removal", func(t *testing.T) {
+		t.Parallel()
 		program, path := interfaceFixture(t, "lane1/flag-downcast-wrong")
 		if difference := disagreement(run{stdout: []byte("true\n")}, onNode(t, path)); difference != "" {
 			t.Fatal("source Node: " + difference)

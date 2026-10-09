@@ -13,8 +13,8 @@ import (
 
 // V1 supports ordinary optional reads but not optional checked reads. Keep the
 // source observation and both backend entry points pinned independently.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewOptionalReadBoundary(t *testing.T) {
+	t.Parallel()
 	checked, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/lane1/optional-read.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -23,8 +23,8 @@ func TestCheckedViewOptionalReadBoundary(t *testing.T) {
 	if difference := disagreement(want, onNode(t, checked)); difference != "" {
 		t.Fatal("checked source Node: " + difference)
 	}
-	// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 	t.Run("ordinary control", func(t *testing.T) {
+		t.Parallel()
 		program, path := interfaceFixture(t, "lane1/optional-read-control")
 		if difference := disagreement(want, onNode(t, path)); difference != "" {
 			t.Fatal("control source Node: " + difference)
@@ -40,8 +40,8 @@ func TestCheckedViewOptionalReadBoundary(t *testing.T) {
 		}
 	})
 	for _, backend := range []string{"native", "JavaScript"} {
-		// Not parallel: lowered writes the package-level sourceImports map.
 		t.Run(backend, func(t *testing.T) {
+			t.Parallel()
 			defer func() {
 				if value := recover(); value != nil {
 					t.Errorf("compiler panic instead of the pinned NotYet boundary: %v", value)

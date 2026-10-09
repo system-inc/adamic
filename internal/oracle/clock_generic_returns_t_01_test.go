@@ -16,8 +16,8 @@ func init() {
 	})
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestClockGenericReturnsT01Mutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/clock_generic_returns_t_01.a"))
 	if err != nil {
 		t.Fatal(err)

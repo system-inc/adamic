@@ -11,8 +11,8 @@ import (
 	"testing"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
+	t.Parallel()
 	for _, sample := range []struct{ name, source, output, message string }{
 		{"optional-absent", "absent\n", "absent\n", ""},
 		{"optional-receiver", "ok\nabsent\n", "ok\nabsent\n", ""},
@@ -33,8 +33,8 @@ func TestCheckedViewObjectPrimitiveSource(t *testing.T) {
 		{"node-indicator-good", "true\nIdentifier\nabsent\n", "true\nIdentifier\nabsent\n", ""},
 		{"node-indicator-wrong", "42\n", "", "field read failed: value.externalModuleIndicator matches no member of true | Node | undefined; expected true | Node | undefined, found object"},
 	} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(sample.name, func(t *testing.T) {
+			t.Parallel()
 			if strings.HasPrefix(sample.name, "comment-") {
 				// Array membership needs V3 element-kind metadata and hole-aware reads.
 				t.Skip("awaits compiler/views-v3: array element kind and holes (b065fa576)")

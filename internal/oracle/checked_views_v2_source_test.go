@@ -11,8 +11,8 @@ import (
 	"testing"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/binding-name-source-good.a")
 	loaded, err := load.Load([]string{path})
 	if err != nil {
@@ -33,8 +33,8 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 	}
 	for _, family := range []string{"binding-name", "option-element", "structural"} {
 		for _, variant := range []string{"good", "wrong", "nested", "absent"} {
-			// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 			t.Run(family+"/"+variant, func(t *testing.T) {
+				t.Parallel()
 				if variant == "absent" {
 					path, _ := filepath.Abs("../../stage3/interface-downcasts/untagged/fixtures/" + family + "-source-" + variant + ".a")
 					loaded, err := load.Load([]string{path})
@@ -76,11 +76,11 @@ func TestCheckedViewUntaggedSourceDispatch(t *testing.T) {
 }
 
 // Fault injection at lowered source reads, using the same IR consumed by both backends.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
+	t.Parallel()
 	for _, variant := range []string{"good-number", "good-string", "wrong", "nested"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/callable-union-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -109,8 +109,8 @@ func TestCheckedViewUntaggedCallableUnion(t *testing.T) {
 
 // These receipts keep remaining adapter boundaries distinct from completed
 // candidates. Their valid Node controls do not certify Adamic support.
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedOptionalCallableControl(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-optional-boundary")
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -123,12 +123,12 @@ func TestCheckedViewUntaggedOptionalCallableControl(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
+	t.Parallel()
 	for _, flow := range []string{"helper", "generic", "callback", "stored"} {
 		for _, variant := range []string{"good", "wrong"} {
-			// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 			t.Run(flow+"/"+variant, func(t *testing.T) {
+				t.Parallel()
 				program, path := interfaceFixture(t, "untagged/fixtures/flow-"+flow+"-"+variant)
 				want := run{stdout: []byte("true\n")}
 				if difference := disagreement(want, onNode(t, path)); difference != "" {
@@ -148,11 +148,11 @@ func TestCheckedViewUntaggedSourceFlows(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
+	t.Parallel()
 	for _, variant := range []string{"good", "wrong"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/class-data-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -172,11 +172,11 @@ func TestCheckedViewUntaggedOwnClassData(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewUntaggedRecursive(t *testing.T) {
+	t.Parallel()
 	for _, variant := range []string{"good", "absent", "wrong", "nested"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(variant, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "untagged/fixtures/recursive-"+variant)
 			node := onNode(t, path)
 			if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {

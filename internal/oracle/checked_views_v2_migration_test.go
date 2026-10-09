@@ -12,11 +12,11 @@ import (
 	"testing"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good", "fs-option-boxing"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "v2/"+name)
 			node := onNode(t, path)
 			sanitized, binary := nativelyUncached(t, program)
@@ -32,8 +32,8 @@ func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
+	t.Parallel()
 	path, _ := filepath.Abs("../../stage3/interface-downcasts/v2/array-arm.a")
 	loaded, err := load.Load([]string{path})
 	if err != nil {
@@ -48,8 +48,8 @@ func TestCheckedViewV2ArrayArmBoundary(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2WrongFamilyMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-good-number")
 	want := onNode(t, path)
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -85,8 +85,8 @@ func TestCheckedViewV2WrongFamilyMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: native.Build writes the shared os.UserCacheDir()/adamic/runtime directory.
 func TestCheckedViewV2RepresentationMutants(t *testing.T) {
+	t.Parallel()
 	// The backend differential above checks the same five slot families after writes.
 	// Here the native reader deliberately restores each old interpretation, one at a time.
 	for _, sample := range []struct {
@@ -100,8 +100,8 @@ func TestCheckedViewV2RepresentationMutants(t *testing.T) {
 		{"int32", 16, "int32", "adamic_typed_array_new(adamic_typed_array_int32,1)"},
 		{"float64", 17, "float64", "adamic_typed_array_new(adamic_typed_array_float64,1)"},
 	} {
-		// Not parallel: native.Build writes the shared os.UserCacheDir()/adamic/runtime directory.
 		t.Run(sample.name, func(t *testing.T) {
+			t.Parallel()
 			code := representationProbeC(sample.tag, sample.value, false)
 			binary := filepath.Join(t.TempDir(), "correct")
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
@@ -156,8 +156,8 @@ int main(void){
 `, value, tag, old)
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2MembershipMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "untagged/fixtures/structural-source-wrong")
 	node := onNode(t, path)
 	if node.exitCode != 0 {
@@ -187,8 +187,8 @@ func TestCheckedViewV2MembershipMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "v2/tuple-identity-wrong")
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("first\n")}, node); difference != "" {
@@ -218,8 +218,8 @@ func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "v2/callable-producer-wrong")
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -249,11 +249,11 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 	}
 }
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewV2MovedStage3Results(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.a", "assertions/20_type_flag_mask.a", "assertions/13_flag_downcast.a"} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs("../../stage3/fixtures/" + name)
 			if err != nil {
 				t.Fatal(err)

@@ -6,8 +6,8 @@ import (
 	"testing"
 )
 
-// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 func TestCheckedViewObjects(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, stdout, diagnostic string }{
 		{"objects-good", "true:okok\ntrue\n", ""},
 		{"objects-untagged-good", "true:okok\ntrue:1\n", ""},
@@ -16,8 +16,8 @@ func TestCheckedViewObjects(t *testing.T) {
 		{"objects-missing-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found missing"},
 		{"objects-uninitialized-nested", "", "field read failed: view.child.ready is not initialized; expected boolean, found uninitialized"},
 	} {
-		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and adamic/runtime directories.
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "lane1/"+probe.name)
 			want := run{stdout: []byte(probe.stdout)}
 			if probe.diagnostic == "" {
