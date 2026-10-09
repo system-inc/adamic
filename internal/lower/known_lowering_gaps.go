@@ -15,11 +15,6 @@ func (l *lowering) knownLoweringGap(node *ast.Node) error {
 		if l.errorStorage(l.checker.GetTypeAtLocation(source), map[*checker.Type]bool{}) {
 			return l.notYet(node, "object spread of Error storage with non-enumerable properties; copy the desired fields explicitly")
 		}
-	case ast.KindNewExpression:
-		created := node.AsNewExpression()
-		if l.isLibraryGlobal(created.Expression, "Error") && created.Arguments != nil && len(created.Arguments.Nodes) == 1 && l.includesUndefined(l.checker.GetTypeAtLocation(created.Arguments.Nodes[0])) {
-			return l.notYet(created.Arguments.Nodes[0], "new Error with a possibly undefined message; use message ?? ''")
-		}
 	case ast.KindSetAccessor:
 		parameters := node.AsSetAccessorDeclaration().Parameters.Nodes
 		if len(parameters) == 1 {

@@ -56,6 +56,7 @@ bool adamic_object_has(const adamic_object *object, const adamic_string *name) {
 }
 
 adamic_value *adamic_object_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	name = adamic_error_field_name(object, name);
 	adamic_object *mutable = (adamic_object *)object;
 	for (size_t index = 0; index < object->shape->count; index++) {
 		if (strcmp(object->shape->names[index], name) == 0) {
@@ -114,6 +115,7 @@ adamic_maybe_number adamic_object_maybe_number(const adamic_object *object, cons
 
 // Cache absence too, with count as the index, without adding a field to the object's shape.
 adamic_value *adamic_object_optional_find(const adamic_object *object, const char *name, adamic_slot_cache *cache) {
+	name = adamic_error_field_name(object, name);
 	cache->shape = object->shape;
 	cache->index = object->shape->count;
 	for (size_t index = 0; index < object->shape->count; index++) {

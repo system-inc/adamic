@@ -1,5 +1,7 @@
 # Miscompile containment, part A
 
+The optional-message portion below records the original delivery. [The Error-message correction](error-message-fix.md) supersedes that refusal and restores the unchanged marker fixture.
+
 Step 09, task #63pvx2b. Six common-lowering guards stop eight differential witnesses before either backend can produce unsafe output. This contains implementation gaps; it does not implement the missing runtime behavior.
 
 ## Observations

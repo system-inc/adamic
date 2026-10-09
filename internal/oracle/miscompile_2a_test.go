@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -37,7 +38,7 @@ func TestMiscompile2AErrorSpread(t *testing.T) {
 }
 func TestMiscompile2AOptionalError(t *testing.T) {
 	t.Parallel()
-	checkMiscompile2AStop(t, "4ddd17f_opt_3", "[] [m]\n", "possibly undefined message", false)
+	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a", "[] [m]\n")
 }
 func TestMiscompile2AMaybeSetter(t *testing.T) {
 	t.Parallel()
@@ -71,7 +72,11 @@ func TestMiscompile2AErrorSubclassSpread(t *testing.T) {
 
 func checkMiscompile2AAdmitted(t *testing.T, relative, output string) {
 	t.Helper()
-	path, err := filepath.Abs(filepath.Join(repository, relative))
+	path := relative
+	if !filepath.IsAbs(path) {
+		path = filepath.Join(repository, relative)
+	}
+	path, err := filepath.Abs(path)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -88,7 +93,7 @@ func checkMiscompile2AAdmitted(t *testing.T, relative, output string) {
 	}
 	got, binary := natively(t, program)
 	if difference := disagreement(node, got); difference != "" {
-		t.Fatal(difference)
+		t.Fatalf("%s; native stderr: %s", difference, got.stderr)
 	}
 	if report := leaks(t, program, binary); report != "" {
 		t.Fatal(report)
@@ -104,8 +109,33 @@ func TestMiscompile2AMarker(t *testing.T) {
 	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/census_never_rest_marker.a", "function\nfunction\nok\nfunction:function\nfunction\nfunction\nfunction\nfunction\nfunction:1\nfunction\n")
 }
 
+// Keep the stored census program unchanged, and exercise its existing optional
+// entry point with an omitted argument using a separate test driver.
+func TestMiscompile2AMarkerUndefined(t *testing.T) {
+	t.Parallel()
+	source, err := os.ReadFile(filepath.Join(repository, "internal/oracle/testdata/census_never_rest_marker.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "marker-undefined.a")
+	source = append(source, []byte(`
+try { fail(); } catch (error) {
+ if (error instanceof Error) { console.log('[' + error.message + ']'); }
+}
+`)...)
+	if err := os.WriteFile(path, source, 0o644); err != nil {
+		t.Fatal(err)
+	}
+	checkMiscompile2AAdmitted(t, path, "function\nfunction\nok\nfunction:function\nfunction\nfunction\nfunction\nfunction\nfunction:1\nfunction\n[]\n")
+}
+
+func TestMiscompile2AUndefinedError(t *testing.T) {
+	t.Parallel()
+	checkMiscompile2AAdmitted(t, "internal/oracle/testdata/miscompile_2a/error_undefined_message.a", "[] []\n[] [m]\n[] 1\n")
+}
+
 func init() {
-	for _, name := range []string{"9984394_error_spread", "4ddd17f_opt_3", "classfeat_maybe_setter", "4ddd17f_long_name", "iterators_derived_symbol", "iterators_override_source", "error_subclass_spread"} {
+	for _, name := range []string{"9984394_error_spread", "classfeat_maybe_setter", "4ddd17f_long_name", "iterators_derived_symbol", "iterators_override_source", "error_subclass_spread"} {
 		fixtures = append(fixtures, struct {
 			path            string
 			lowers, checked bool
@@ -118,4 +148,14 @@ func init() {
 		path            string
 		lowers, checked bool
 	}{"internal/oracle/testdata/miscompile_2a/controls.a", true, false})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/miscompile_2a/4ddd17f_opt_3.a", true, false})
+
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/miscompile_2a/error_undefined_message.a", true, false})
+
 }

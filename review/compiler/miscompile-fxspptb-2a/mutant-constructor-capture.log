@@ -5,21 +5,22 @@
 === CONT  TestMiscompile2AConstructorArrow
 === CONT  TestMiscompile2AConstructorNumberArrow
 === NAME  TestMiscompile2AConstructorArrow
-    miscompile_2a_test.go:60: gate cache node miss
+    miscompile_2a_test.go:61: gate cache node miss
 === NAME  TestMiscompile2AConstructorNumberArrow
-    miscompile_2a_test.go:64: gate cache node miss
-    miscompile_2a_test.go:64: Node: exit=0 stdout="NaN\nNaN,NaN\n"
+    miscompile_2a_test.go:65: gate cache node miss
 === NAME  TestMiscompile2AConstructorArrow
-    miscompile_2a_test.go:60: Node: exit=0 stdout="undefined:NaN|set\n"
+    miscompile_2a_test.go:61: Node: exit=0 stdout="undefined:NaN|set\n"
 === NAME  TestMiscompile2AConstructorNumberArrow
-    miscompile_2a_test.go:64: want path-bearing stop "this escaping a constructor through a closure", got <nil>
---- FAIL: TestMiscompile2AConstructorNumberArrow (0.50s)
+    miscompile_2a_test.go:65: Node: exit=0 stdout="NaN\nNaN,NaN\n"
 === NAME  TestMiscompile2AConstructorArrow
-    miscompile_2a_test.go:60: want path-bearing stop "this escaping a constructor through a closure", got <nil>
---- FAIL: TestMiscompile2AConstructorArrow (0.58s)
+    miscompile_2a_test.go:61: want path-bearing stop "this escaping a constructor through a closure", got <nil>
+--- FAIL: TestMiscompile2AConstructorArrow (0.99s)
+=== NAME  TestMiscompile2AConstructorNumberArrow
+    miscompile_2a_test.go:65: want path-bearing stop "this escaping a constructor through a closure", got <nil>
+--- FAIL: TestMiscompile2AConstructorNumberArrow (1.33s)
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.618s
+FAIL	github.com/system-inc/adamic/internal/oracle	1.397s
 FAIL

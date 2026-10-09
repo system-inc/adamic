@@ -5,20 +5,20 @@
 === CONT  TestMiscompile2AErrorSpread
 === CONT  TestMiscompile2AErrorSubclassSpread
 === NAME  TestMiscompile2AErrorSpread
-    miscompile_2a_test.go:36: gate cache node miss
+    miscompile_2a_test.go:37: gate cache node miss
 === NAME  TestMiscompile2AErrorSubclassSpread
-    miscompile_2a_test.go:69: gate cache node miss
-    miscompile_2a_test.go:69: Node: exit=0 stdout="no name no message\n"
+    miscompile_2a_test.go:70: gate cache node miss
+    miscompile_2a_test.go:70: Node: exit=0 stdout="no name no message\n"
 === NAME  TestMiscompile2AErrorSpread
-    miscompile_2a_test.go:36: Node: exit=0 stdout="no name no message\n"
-    miscompile_2a_test.go:36: want path-bearing stop "object spread of Error storage", got <nil>
---- FAIL: TestMiscompile2AErrorSpread (0.50s)
+    miscompile_2a_test.go:37: Node: exit=0 stdout="no name no message\n"
+    miscompile_2a_test.go:37: want path-bearing stop "object spread of Error storage", got <nil>
+--- FAIL: TestMiscompile2AErrorSpread (0.56s)
 === NAME  TestMiscompile2AErrorSubclassSpread
-    miscompile_2a_test.go:69: want path-bearing stop "object spread of Error storage", got /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:1:11: stage 0 can't lower a computed class base; name the base class directly yet
---- FAIL: TestMiscompile2AErrorSubclassSpread (0.51s)
+    miscompile_2a_test.go:70: want path-bearing stop "object spread of Error storage", got /workspace/adamic/internal/oracle/testdata/miscompile_2a/error_subclass_spread.a:1:11: stage 0 can't lower a computed class base; name the base class directly yet
+--- FAIL: TestMiscompile2AErrorSubclassSpread (0.57s)
 FAIL
 gate cache: native hits=0 misses=0
 gate cache: node hits=0 misses=2
 gate cache: probe hits=0 misses=0
-FAIL	github.com/system-inc/adamic/internal/oracle	0.591s
+FAIL	github.com/system-inc/adamic/internal/oracle	0.609s
 FAIL
