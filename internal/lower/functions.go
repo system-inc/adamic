@@ -166,7 +166,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 			}
 			function.RestElement = element
 		}
-		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) && !(l.result.Locals[local].Type == ir.Union && l.regexReplacementArgument(declaration)) {
+		if function.Closure && censusCallableSlotless(l.result.Locals[local].Type) && l.result.Locals[local].Type != ir.Union {
 			// Its arguments are each one adamic_value.
 			return l.notYet(parameter, "a function value taking "+l.checker.TypeToString(l.checker.GetTypeAtLocation(parameter.Name())))
 		}

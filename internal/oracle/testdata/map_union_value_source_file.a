@@ -1,0 +1,19 @@
+// Reduced tsc shapes; the member representations are the same as the recorded Map value type.
+interface SourceFile { readonly fileName: string; readonly version: number; }
+type Value = false | SourceFile | undefined;
+function show(value: Value): string {
+ if (value === undefined) { return 'missing'; }
+ if (value === false) { return 'false'; }
+ return `${value.fileName}:${value.version}`;
+}
+const source: SourceFile = {fileName: 'source'.repeat(2), version: 3};
+const map = new Map<string, Value>([['a', source], ['b', false], ['c', undefined]]);
+console.log(`${show(map.get('a'))} ${show(map.get('b'))} ${show(map.get('c'))} ${map.has('c')} ${map.has('missing')}`);
+for (const [key, value] of map) { console.log(`${key}=${show(value)}`); }
+const held = map.get('a'); map.set('a', false);
+console.log(show(held));
+const copy = new Map(map); map.clear();
+console.log(`${copy.delete('b')} ${copy.delete('b')}`);
+copy.set('b', source);
+for (const [key, value] of copy) { console.log(`${key}=${show(value)}`); }
+copy.clear(); console.log(`${copy.size}`);

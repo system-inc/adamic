@@ -1090,10 +1090,16 @@ func (l *lowering) writable(proven *checker.Type) bool {
 // map's value, a cell, or a function value's argument or result. number | undefined is packed into
 // one (a reserved NaN is undefined); boolean | undefined has a tagged byte for object fields
 // (censusFieldSlotless), but remains unsupported in the other slot contexts, and a
-// Union has to be boxed on its way in, which stage 0 does only where a variable, a parameter or a
-// result takes one.
+// Union has to be boxed on its way in, which fitted slot paths arrange before storage.
 func slotless(valueType ir.Type) bool {
 	return valueType == ir.MaybeBoolean || valueType == ir.Union
+}
+
+// boxedSlot reports whether a fitted value occupies one adamic_value. Unlike
+// general object fields, these callers box on writes and read the stored type.
+// A Union is one counted reference; optional booleans still need two words.
+func boxedSlot(valueType ir.Type) bool {
+	return !slotless(valueType) || valueType == ir.Union
 }
 
 // call lowers a call to one of the module's functions, or to a function value.
@@ -1271,7 +1277,7 @@ func (l *lowering) functionValue(node *ast.Node, target int) (ir.Expression, err
 	arguments := []ir.Expression{}
 	for _, parameter := range callee.Parameters {
 		declared := l.result.Locals[parameter]
-		if censusCallableSlotless(declared.Type) {
+		if censusCallableSlotless(declared.Type) && declared.Type != ir.Union {
 			return nil, l.notYet(node, "a function value taking "+typeName(declared.Type))
 		}
 		local := len(l.result.Locals)
@@ -1385,7 +1391,7 @@ func (l *lowering) callClosure(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	for _, argument := range arguments {
-		if censusCallableSlotless(argument.Type()) {
+		if censusCallableSlotless(argument.Type()) && argument.Type() != ir.Union {
 			return nil, l.notYet(node, "passing "+typeName(argument.Type())+" to a function value")
 		}
 	}

@@ -227,8 +227,7 @@ func (l *lowering) libraryIteratorElement(node *ast.Node) (ir.Type, bool) {
 		return 0, false
 	}
 	element, known := l.representation(arguments[0])
-	// Scalar unions already occupy one tagged reference slot in the iterator.
-	return element, known && (!slotless(element) || element == ir.Union && l.writable(arguments[0]))
+	return element, known && boxedSlot(element)
 }
 
 func (l *lowering) libraryIteratorLoop(function int, iterator ir.Expression, item ir.Read, body []ir.Statement) []ir.Statement {
@@ -285,7 +284,7 @@ func (l *lowering) libraryForOfIterator(node *ast.Node, iterator ir.Expression, 
 				return nil, err
 			}
 			of := l.result.Locals[local].Type
-			if slotless(of) && !(of == ir.Union && l.writable(l.checker.GetTypeAtLocation(binding.Name()))) {
+			if !boxedSlot(of) {
 				return nil, l.notYet(binding, "an iterator binding held in more than one word")
 			}
 			bindings = append(bindings, ir.Declare{Local: local, Value: ir.Property{Object: item, Name: strconv.Itoa(index), Of: of}})

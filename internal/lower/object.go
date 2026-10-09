@@ -316,14 +316,14 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 			contexts = append(contexts, l.impliedTarget(literal))
 			for _, contextual := range contexts {
 				if element := l.literalArrayElement(contextual); element != nil {
-					if held, known := l.kept(element); known && !slotless(held) {
+					if held, known := l.kept(element); known && boxedSlot(held) {
 						return held, nil
 					}
 				}
 			}
 		} else if contextual := l.checker.GetContextualType(literal, checker.ContextFlagsNone); contextual != nil && l.checker.IsArrayType(contextual) {
 			// Keep every proven nonempty contextual element representation, including weak handles.
-			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && !slotless(declared) {
+			if declared, _ := l.representation(l.checker.GetElementTypeOfArrayType(contextual)); declared != 0 && boxedSlot(declared) {
 				arrayType = contextual
 			}
 		}
@@ -340,8 +340,8 @@ func (l *lowering) elementType(node *ast.Node) (ir.Type, error) {
 		return 0, l.notYet(node, "an array of unknown with erased element storage (retain its declared element type before reading elements)")
 	}
 	valueType, isKnown := l.kept(element)
-	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
-		// An element is one adamic_value, and number | undefined needs two words.
+	if !isKnown || !boxedSlot(valueType) {
+		// Elements are fitted on writes; optional booleans still need two words.
 		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
 	}
 	return valueType, nil
@@ -1035,7 +1035,7 @@ func (l *lowering) forOf(node *ast.Node) ([]ir.Statement, error) {
 			if err != nil {
 				return nil, err
 			}
-			if of := l.result.Locals[local].Type; slotless(of) && !(of == ir.Union && l.writable(l.checker.GetTypeAtLocation(binding.Name()))) {
+			if of := l.result.Locals[local].Type; !boxedSlot(of) {
 				return nil, l.notYet(binding, "a tuple element of type "+typeName(of))
 			}
 			lowered.Pattern = append(lowered.Pattern, ir.Binding{Local: local, Field: strconv.Itoa(index)})
@@ -1476,7 +1476,9 @@ func (l *lowering) arrayReduce(node *ast.Node, array ir.Expression, element ir.T
 	return ir.ArrayReduce{Array: array, Callback: callback, Initial: initial, Element: element, Result: result, CallbackType: int(l.concrete(l.checker.GetTypeAtLocation(arguments[0])).Id())}, true, nil
 }
 
-// mapTypes is a Map's key and value representations. 0.1's maps have string or number keys.
+// mapTypes is a Map's key and value representations. Union values already fit one
+// counted reference: construction and set box scalar members with fit, and get
+// and iteration read the same reference as variables and function results.
 func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	arguments := l.typeArguments(l.checker.GetTypeAtLocation(node))
 	if len(arguments) != 2 {
@@ -1495,8 +1497,9 @@ func (l *lowering) mapTypes(node *ast.Node) (ir.Type, ir.Type, error) {
 	if !keyKnown || !keyable(key) {
 		return 0, 0, l.notYet(node, "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions")
 	}
-	// number | undefined is held in a value's one slot packed (native/slots.go).
-	if !valueKnown || (slotless(value) && !(value == ir.Union && l.writable(arguments[1]))) {
+	// number | undefined is packed; a Union holds its existing tagged heap reference.
+	// Keep the refusal for representations that still need more than one slot.
+	if !valueKnown || !boxedSlot(value) {
 		return 0, 0, l.notYet(node, "a Map of "+l.checker.TypeToString(arguments[1]))
 	}
 	return key, value, nil
@@ -1865,21 +1868,21 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 		return nil, l.notYet(node, describe(node))
 	}
 	of, err := l.typeOf(node)
+	stored := of
 	if elements := l.typeArguments(l.checker.GetTypeAtLocation(access.Expression)); err == nil {
-		// What the tuple keeps there, not what the checker narrowed the read to: a Weak keeps a handle.
 		if position, convertErr := strconv.Atoi(index.Text()); convertErr == nil && position < len(elements) {
-			if declared, isKnown := l.representation(elements[position]); isKnown && declared == ir.Weak {
-				of = declared
+			if declared, known := l.representation(elements[position]); known && (declared == ir.Weak || declared == ir.Union) {
+				stored = declared
 			}
 		}
 	}
 	if err != nil {
 		return nil, err
 	}
-	if slotless(of) {
-		return nil, l.notYet(node, "a tuple element of type "+typeName(of))
+	if !boxedSlot(stored) {
+		return nil, l.notYet(node, "a tuple element of type "+typeName(stored))
 	}
-	property := ir.Property{Object: object, Name: index.Text(), Of: of}
+	property := ir.Property{Object: object, Name: index.Text(), Of: stored}
 	receiver := l.checker.GetTypeAtLocation(access.Expression)
 	if position, err := strconv.Atoi(index.Text()); err == nil {
 		elements := l.typeArguments(receiver)
@@ -1892,6 +1895,9 @@ func (l *lowering) elementAccess(node *ast.Node) (ir.Expression, error) {
 			property.View = sourceExpression(node)
 			property.ViewWhere = l.program.Where(node)
 		}
+	}
+	if stored == ir.Union && of != stored {
+		return ir.Narrow{Value: property, To: of}, nil
 	}
 	return property, nil
 }
@@ -1996,7 +2002,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 	missing := []ir.Field{}
 	for index := len(items); index < len(elements); index++ {
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || slotless(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
+		if !isKnown || !boxedSlot(of) || !l.includesUndefined(elements[index]) || !(of.IsMaybe() || of.IsReference()) {
 			return nil, l.notYet(node, "a tuple literal leaving out an element of type "+l.checker.TypeToString(elements[index]))
 		}
 		missing = append(missing, ir.Field{Name: strconv.Itoa(index), Value: fit(ir.Undefined{}, of)})
@@ -2006,7 +2012,7 @@ func (l *lowering) tupleLiteral(node *ast.Node, tuple *checker.Type) (ir.Express
 			return nil, l.notYet(item, describe(item)+" in a tuple literal")
 		}
 		of, isKnown := l.representation(elements[index])
-		if !isKnown || slotless(of) {
+		if !isKnown || !boxedSlot(of) {
 			return nil, l.notYet(item, "a tuple element of type "+l.checker.TypeToString(elements[index]))
 		}
 		value, err := l.expression(item)

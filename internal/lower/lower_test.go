@@ -69,6 +69,7 @@ func TestWhatStageZeroCannotLowerIsRefusedWithWhereAndWhat(t *testing.T) {
 		{"an array of boolean | undefined", "const answers: (boolean | undefined)[] = [true, undefined];\n", "main.a:1:42: stage 0 can't lower an array of true | undefined yet"},
 		{"a captured boolean | undefined", "function run(): boolean {\n\tlet seen: boolean | undefined;\n\tconst mark = (): void => {\n\t\tseen = true;\n\t};\n\tmark();\n\treturn seen ?? false;\n}\nconsole.log(`${run()}`);\n", "main.a:4:3: stage 0 can't lower a boolean | undefined variable a function value captures yet"},
 		{"a class field of a union", "class Shown {\n\tvalue: string | number = 1;\n}\nconsole.log(`${new Shown() === new Shown()}`);\n", "main.a:2:2: stage 0 can't lower a field of type string | number yet"},
+		{"a map of optional booleans", "const values = new Map<string, boolean | undefined>();\n", "main.a:1:16: stage 0 can't lower a Map of boolean | undefined yet"},
 		{"a template of a union with an object", "function pick(flag: boolean): number | { size: number } {\n\treturn flag ? 1 : { size: 2 };\n}\nconsole.log(`${pick(true)}`);\n", "main.a:4:16: stage 0 can't lower a template interpolating a union with an object, an array, a map or a function in it yet"},
 		{"an array of targets seen as an array of Weak", "import type { Weak } from 'adamic';\ninterface Item {\n\treadonly name: string;\n}\nconst items: readonly Item[] = [{ name: 'a' }];\nconst seen: readonly Weak<Item>[] = items;\n", "main.a:6:37: stage 0 can't lower a readonly Item[] seen as a readonly Weak<Item>[] (one keeps something weakly that the other keeps strongly) yet"},
 		{"a function value capturing what it initializes", "function run(): number {\n\tconst countdown = (from: number): number => (from <= 0 ? 0 : 1 + countdown(from - 1));\n\treturn countdown(3);\n}\nconsole.log(`${run()}`);\n", "main.a:2:8: stage 0 can't lower a function value that captures the variable its own initializer declares yet"},
@@ -674,5 +675,17 @@ func TestAMethodReadAsAValueIsRefused(t *testing.T) {
 			}
 			lowersAndAgreesWithNode(t, shelter+neighbor.source)
 		})
+	}
+}
+
+func TestTakeDaySupersededSlotRefusalsAccept(t *testing.T) {
+	for _, source := range []string{
+		"const made = Array.from({ length: 2 }, (value: boolean | undefined, index: number) => index);",
+		"interface Shown { readonly value: string | number; } const shown: Shown = { value: 1 }; console.log(`${shown.value}`);",
+		"interface Shown { value: string | number; } const shown: Shown = { value: 1 }; shown.value = 'one';",
+	} {
+		if _, err := lowerSource(t, source); err != nil {
+			t.Errorf("%s: %v", source, err)
+		}
 	}
 }
