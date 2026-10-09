@@ -184,7 +184,14 @@ integration are present, tree-lifetime tests are pending even if heap reductions
 
 Use ordinary recursive C, with the existing runtime stack guard at every emitted
 function entry, including callbacks and scanner/factory calls. Failure is exit 70:
-`adamic: panic: RangeError: Maximum call stack size exceeded`. JavaScript keeps its
+`adamic: panic: RangeError: Maximum call stack size exceeded in <function>`.
+ADAMIC_CHECK_STACK_NAMED uses the existing byte limit computed from RLIMIT_STACK
+and its argument/panic reserve. The limit can be configured with ulimit -s; the
+guard allocates nothing and passes a literal function name directly to panic.
+Both ordinary bodies and TSGo bridge replacements retain the named check.
+The source oracle reports V8's independently observed first stack-frame name for
+stack RangeError, and strips generated backend label indices. Raw Node outcomes
+are separately recorded for the pathological parser fixture. JavaScript keeps its
 own guarded backend behavior. Guard unwind and exception cleanup must preserve
 region and reference ownership. Never set a frame-count limit of 859: that is the
 scout's observed maximum active parser functions on its bounded corpus. Native

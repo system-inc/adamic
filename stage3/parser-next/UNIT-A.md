@@ -1,5 +1,5 @@
 Built: speculative source reductions, checked unknown result specialization and the refreshed placeholder merge for step 24 #1s2ws6y.
-Commits: merge 351a0fdc; Unit A delivery SHA is reported after push.
+Commits: merge 351a0fdc; Unit A delivery 1c06a80d158350cc2f782afe198324e46b6338d9.
 Commands and outputs: focused parser oracles, counts recording, a-check and focused vet pass; evidence is in evidence/.
 Mutants: unchecked result fails TestParserSpeculationMisfit in both backends; skipped rewind differs from Node in TestParserSpeculationRewindMutant.
 Uncovered: Program-region lifetime remains pending step 06 #7g4qv2b; arbitrary contextual, nested, class and callable result specialization is not implemented; captured unknown callbacks remain NotYet.

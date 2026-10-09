@@ -46,7 +46,7 @@
     "stdout": "true\n",
     "exit": 1,
     "stderr": "TypeError observed; Adamic must check the declared-T use at exit 70",
-    "native": "pending"
+    "native": "TestParserConstructionUseCheck; declared-T consumption pinned at exit 70"
   },
   {
     "mutant": "synthesized-key",
