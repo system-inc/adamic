@@ -1,0 +1,23 @@
+run adamic-gate-pilot-20261009T110708-499abfc1: red, 12614 tests in 141 units, 11 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/internal/ir TestCallTargetReaders (tests-37)
+    call_targets_guard_test.go:169: unapproved call-target read internal/lower/class_static_guard_test.go:TestClassStaticInitializerCallIsEmitted:Call.Function at /tmp/adamic/internal/lower/class_static_guard_test.go:45:13; use CallTargets or ClosureTargets
+FAIL github.com/system-inc/adamic/cmd/adamic-gate TestTypeAwareChildrenAndParentCost (tests-80)
+    resume_test.go:143: cannot enumerate TestVolumeAgreementAndMutants
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngineUnion (tests-85)
+    engine_shards_test.go:265: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_000 (tests-85)
+    engine_shards_test.go:289: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_001 (tests-85)
+    engine_shards_test.go:290: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_002 (tests-85)
+    engine_shards_test.go:291: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_003 (tests-85)
+    engine_shards_test.go:292: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_004 (tests-85)
+    engine_shards_test.go:293: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_005 (tests-85)
+    engine_shards_test.go:294: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_006 (tests-85)
+    engine_shards_test.go:295: shared inventory build or union validation did not complete
+FAIL github.com/system-inc/adamic/stage1/cohere/lint/inventory TestInventoryEngine_007 (tests-85)
+    engine_shards_test.go:296: shared inventory build or union validation did not complete

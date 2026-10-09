@@ -1,0 +1,26 @@
+{
+  "target": "f4946e74dd28084a740a2041ad98777137372cf6",
+  "jobs": 1,
+  "total_wall_seconds": 0.02314685699820984,
+  "load_before": "6.20 5.96 6.14 1/1137 791920",
+  "load_after": "6.20 5.96 6.14 1/1137 791929",
+  "entries": [
+    {
+      "number": 16,
+      "made_against": "e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+      "target": "f4946e74dd28084a740a2041ad98777137372cf6",
+      "ok": true,
+      "setup_seconds": 0,
+      "check_seconds": 0,
+      "cleanup_seconds": 0,
+      "wall_seconds": 0.0001974970000446774,
+      "load_before": "6.20 5.96 6.14 2/1138 791929",
+      "load_after": "6.20 5.96 6.14 1/1138 791929",
+      "messages": [
+        "16 proven-guards-relations: skipped (Supplied SHA changes only whitespace in a log. Nearby cbcc765c adds coverage, no compiler fix; mutable_kind_guard.a is an unresolved disagreement kept under notes, absent from main and from the registered oracle fixtures.)",
+        "16 made against=e011f8f60899586d6373a5ccb07335ad82cfbf3c",
+        "16 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=6.20 5.96 6.14 2/1138 791929 -> 6.20 5.96 6.14 1/1138 791929"
+      ]
+    }
+  ]
+}
