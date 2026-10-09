@@ -222,8 +222,10 @@ static inline adamic_value adamic_closure_receiver_call(adamic_closure *closure,
 #ifdef ADAMIC_CANONICAL_CLOSURES
 // Returns an owned canonical value; the frame cache holds no count on it.
 adamic_closure *adamic_closure_canonical(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_closure_canonical_graph(adamic_cell *identity, adamic_code code, size_t count, adamic_cell *const cells[]);
 #ifdef ADAMIC_CLOSURE_CONVENTION
 adamic_closure *adamic_counted_closure_canonical(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
+adamic_closure *adamic_counted_closure_canonical_graph(adamic_cell *identity, adamic_counted_code code, size_t count, adamic_cell *const cells[]);
 #endif
 void adamic_closure_uncache(adamic_closure *closure);
 #endif
@@ -324,6 +326,11 @@ typedef struct adamic_object {
 	bool frozen;
 	adamic_value slots[];
 } adamic_object;
+
+// Slots and both per-slot metadata bytes move together during graph adoption.
+static inline size_t adamic_object_size(size_t count) {
+	return sizeof(adamic_object) + count * (sizeof(adamic_value) + 2);
+}
 
 // Initialized bits follow slots in the same allocation, indexed by the actual shape.
 static inline unsigned char *adamic_object_initialized(const adamic_object *object) {
@@ -1194,8 +1201,10 @@ void *adamic_library_identity(size_t index);
 #endif
 #ifdef ADAMIC_CANONICAL_CLOSURES
 #define adamic_closure_canonical(identity, code, ...) (adamic_closure_canonical)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
+#define adamic_closure_canonical_graph(identity, code, ...) (adamic_closure_canonical_graph)((identity), _Generic((code), adamic_code: (code)), __VA_ARGS__)
 #ifdef ADAMIC_CLOSURE_CONVENTION
 #define adamic_counted_closure_canonical(identity, code, ...) (adamic_counted_closure_canonical)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
+#define adamic_counted_closure_canonical_graph(identity, code, ...) (adamic_counted_closure_canonical_graph)((identity), _Generic((code), adamic_counted_code: (code)), __VA_ARGS__)
 #endif
 #endif
 

@@ -56,9 +56,6 @@ var graphRegionLine = regexp.MustCompile(`(?m)^adamic: graph region: live (\d+) 
 // the stack's size (ulimit -s), and the table has to be the same on every machine. The shell's ulimit
 // is POSIX's, on Linux and macOS alike; where the hard limit won't allow 8 MiB, it fails out loud.
 
-// countsLine is the line a counted build writes last to stderr (runtime/count.c).
-var countsLine = regexp.MustCompile(`(?m)^adamic: counts: allocations (\d+) frees (\d+) retains (\d+) releases (\d+) peak (\d+) regions (\d+)\n\z`)
-
 func pinnedStack(name string, arguments ...string) (string, []string) {
 	return "/bin/sh", append([]string{"-c", `ulimit -s 8192 && exec "$0" "$@"`, name}, arguments...)
 }

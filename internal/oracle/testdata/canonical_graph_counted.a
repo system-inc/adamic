@@ -1,0 +1,11 @@
+function make(): (value?: number) => boolean {
+ let saved: ((value?: number) => boolean) | undefined = undefined;
+ function f(value?: number): boolean {
+  return saved === f && value === undefined && arguments.length === 0;
+ }
+ saved = f;
+ return f;
+}
+for (let index = 0; index < 20; index++) {
+ console.log(String(make()()));
+}
