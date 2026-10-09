@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -174,7 +174,7 @@
+ 	case ir.CallClosure:
+ 		targets := program.ClosureTargets(expression)
+ 		if targets.Unknown {
+-			return false
++			return true
+ 		}
+ 		for _, target := range targets.Functions {
+ 			if changing[target] {

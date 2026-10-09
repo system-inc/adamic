@@ -1,0 +1,609 @@
+[
+  {
+    "test": "TestNbodyIndexedElementsBorrow",
+    "package": "internal/native",
+    "file": "internal/native/element_borrow_test.go",
+    "seconds": 0.099,
+    "oracle": "Self: exactly five indexed declarations, owner=NULL and absence of releases in generated C. Count can admit a different set of five; no native behavior compared.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M2: element_borrow_test.go:38: want sun and both body/other pairs borrowed, got 0 declarations",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDevirtualizeBorrowDocClaim"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": 0.065,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; element_borrow_test.go:38: want sun and both body/other pairs borrowed, got 0 declarations",
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestThrowElementBorrowPlan",
+    "package": "internal/native",
+    "file": "internal/native/element_borrow_test.go",
+    "seconds": 0.068,
+    "oracle": "Self: named functions must or must not borrow across throws, catches and message calls.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M3"
+    ],
+    "last_proven_fail": "M3: element_borrow_test.go:84: caughtInside: harmless Error creation prevented borrowing",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; element_borrow_test.go:84: caughtInside: harmless Error creation prevented borrowing"
+  },
+  {
+    "test": "TestCallTargetsElementBorrowPlan",
+    "package": "internal/native",
+    "file": "internal/native/element_borrow_test.go",
+    "seconds": 0.071,
+    "oracle": "Self: bounded harmless closure borrows; virtual, unknown closure and writing targets do not.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: element_borrow_test.go:113: bounded harmless closure lost its element borrow",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestDevirtualizeBorrowDocClaim"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.065,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; element_borrow_test.go:113: bounded harmless closure lost its element borrow",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestDevirtualizeBorrowDocClaim",
+    "package": "internal/native",
+    "file": "internal/native/element_borrow_test.go",
+    "seconds": 0.065,
+    "oracle": "Self: both named virtual and closure length-only targets must permit a borrow; docs are context, not an external authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M1",
+      "M2",
+      "M4"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M4: element_borrow_test.go:142: throughClosure: length-only targets prevented borrowing",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestCallTargetsElementBorrowPlan"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P1"
+    ],
+    "subsumer_seconds": 0.071,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; element_borrow_test.go:142: throughClosure: length-only targets prevented borrowing",
+    "subsumption_mutants": 3
+  },
+  {
+    "test": "TestUniformFieldsMatchNode",
+    "package": "internal/native",
+    "file": "internal/native/fields_test.go",
+    "seconds": 0.697,
+    "oracle": "Node stdout executed and compared in release and sanitized binaries; self-written emitted-C lookup patterns also require optimization and conservative fallback.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M5",
+      "M8"
+    ],
+    "unique_kills": [
+      "M5"
+    ],
+    "last_proven_fail": "M8: fields_test.go:109: native: clang failed: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; fields_test.go:109: native: clang failed: exit status 1"
+  },
+  {
+    "test": "TestRuntimeFieldLayoutsAreIncluded",
+    "package": "internal/native",
+    "file": "internal/native/fields_test.go",
+    "seconds": 0.019,
+    "oracle": "Self: runtime C shape declarations must be represented by the production field-offset proof. The two production representations agree; no external authority.",
+    "oracle_kind": "self",
+    "kills": [
+      "M7"
+    ],
+    "unique_kills": [
+      "M7"
+    ],
+    "last_proven_fail": "M7: fields_test.go:168: directory.c: runtime field \"symbolicLink\" at 3 is absent or conflicting in the layout proof",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P3"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; fields_test.go:168: directory.c: runtime field \"symbolicLink\" at 3 is absent or conflicting in the layout proof"
+  },
+  {
+    "test": "TestRegexProgramsKeepCheckedFieldReads",
+    "package": "internal/native",
+    "file": "internal/native/fields_test.go",
+    "seconds": 0.514,
+    "oracle": "Node stdout executed and compared in release and sanitized binaries; self-written generated-C regex must retain checked field lookup.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M6",
+      "M8"
+    ],
+    "unique_kills": [
+      "M6"
+    ],
+    "last_proven_fail": "M8: fields_test.go:205: native: clang failed: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; fields_test.go:205: native: clang failed: exit status 1"
+  },
+  {
+    "test": "TestOptionalWriteMissingSlotRemainsChecked",
+    "package": "internal/native",
+    "file": "internal/native/fields_test.go",
+    "seconds": 0.165,
+    "oracle": "Node executes the missing-property fixture and must print 2\\n2\\n; self-written NotYet type, location and diagnostic require refusal before C.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M13"
+    ],
+    "unique_kills": [
+      "M13"
+    ],
+    "last_proven_fail": "M13: fields_test.go:241: missing-slot write must be refused before it reaches C, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P4"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; fields_test.go:241: missing-slot write must be refused before it reaches C, got <nil>"
+  },
+  {
+    "test": "TestFreedValuesAreCaughtWithSlabs",
+    "package": "internal/native",
+    "file": "internal/native/heap_test.go",
+    "seconds": 0.596,
+    "oracle": "AddressSanitizer executes deliberately freed runtime strings; requires heap-use-after-free or use-after-poison diagnostics plus failing exit, and a clean untouched control. Classified as a planted-failure witness; production M9 failures excluded from its kills.",
+    "oracle_kind": "external-run",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: heap_test.go:56: malloc, retain after the free: want AddressSanitizer's heap-use-after-free, got <nil>",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P5"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestFreedValuesAreCaughtWithSlabs$'; heap_test.go:56: malloc, retain after the free: want AddressSanitizer's heap-use-after-free, got <nil>",
+    "vacuous_subcases": [
+      "malloc/none",
+      "slabs/none"
+    ]
+  },
+  {
+    "test": "TestSizeClassesShareTheirChunks",
+    "package": "internal/native",
+    "file": "internal/native/heap_test.go",
+    "seconds": 0.155,
+    "oracle": "Self: release harness validates string bytes and compares churn/control RSS <=1.5. M10 inflates both, so the relative oracle passes despite lost spare reuse.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P6"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "ADAMIC_MUTANT=M10 go test -json -count=1 -timeout 90s ./internal/native/ -run \"$(cat scope.regex)\"; TestSizeClassesShareTheirChunks passed despite RSS inflation. See survivor logs."
+  },
+  {
+    "test": "TestResidentSetUnits",
+    "package": "internal/native",
+    "file": "internal/native/heap_test.go",
+    "seconds": 0.021,
+    "oracle": "Self: hand-written Linux and macOS getrusage-unit cases for a test-local normalization helper; no outside value checked.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1: heap_test.go:146: darwin: got 8388 KiB, want 8192",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "go test -json -count=1 -timeout 90s ./internal/native/ -run '^TestResidentSetUnits$'; heap_test.go:146: darwin: got 8388 KiB, want 8192"
+  },
+  {
+    "test": "TestIeee754MatchesNodeBitForBit",
+    "package": "internal/native",
+    "file": "internal/native/ieee754_test.go",
+    "seconds": 5.162,
+    "oracle": "Node Math runs for all 21 entry functions; exact result bits compared, with all NaN payloads treated equal. Baseline 1,281,787 answers, zero mismatches.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M11"
+    ],
+    "unique_kills": [
+      "M11"
+    ],
+    "last_proven_fail": "M11: ieee754_test.go:255: sin 1 8000000000000000: native 0000000000000000, Node 8000000000000000",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P_adamic_math_acos",
+      "P_adamic_math_acosh",
+      "P_adamic_math_asin",
+      "P_adamic_math_asinh",
+      "P_adamic_math_atan",
+      "P_adamic_math_atan2",
+      "P_adamic_math_cos",
+      "P_adamic_math_exp",
+      "P_adamic_math_atanh",
+      "P_adamic_math_log",
+      "P_adamic_math_log1p",
+      "P_adamic_math_log2",
+      "P_adamic_math_log10",
+      "P_adamic_math_expm1",
+      "P_adamic_math_cbrt",
+      "P_adamic_math_sin",
+      "P_adamic_math_tan",
+      "P_adamic_math_cosh",
+      "P_adamic_math_sinh",
+      "P_adamic_math_tanh",
+      "P_adamic_math_hypot"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; ieee754_test.go:255: sin 1 8000000000000000: native 0000000000000000, Node 8000000000000000"
+  },
+  {
+    "test": "TestCEndsInNewline",
+    "package": "internal/native",
+    "file": "internal/native/library_array_test.go",
+    "seconds": 0.06,
+    "oracle": "Self: generated C must end in newline for small and >256 KiB programs. Field rows also catch this through clang diagnostics.",
+    "oracle_kind": "self",
+    "kills": [
+      "M8"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M8: library_array_test.go:20: generated translation unit lacks a final newline",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestRegexProgramsKeepCheckedFieldReads"
+    ],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": 0.514,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; library_array_test.go:20: generated translation unit lacks a final newline",
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestLibraryMapSetIteratorResources",
+    "package": "internal/native",
+    "file": "internal/native/library_map_set_iterator_test.go",
+    "seconds": 0.935,
+    "oracle": "Self: RSS allowance 4096 KiB, active iterator counts through exit codes, successful numeric total and CPU bound 0.35 s. The count subcase checks only zero exit, so unrelated nonzero failures also fail it.",
+    "oracle_kind": "self",
+    "kills": [
+      "M12"
+    ],
+    "unique_kills": [
+      "M12"
+    ],
+    "last_proven_fail": "M12: library_map_set_iterator_test.go:90: held exhausted iterator peak 160152 KiB, control 660 KiB, allowance 4096 KiB",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 13,
+    "probe_kills": [
+      "P7"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestNbodyIndexedElementsBorrow",
+      "TestThrowElementBorrowPlan",
+      "TestCallTargetsElementBorrowPlan",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestUniformFieldsMatchNode",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestFreedValuesAreCaughtWithSlabs",
+      "TestSizeClassesShareTheirChunks",
+      "TestResidentSetUnits",
+      "TestIeee754MatchesNodeBitForBit",
+      "TestCEndsInNewline",
+      "TestLibraryMapSetIteratorResources"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run '^(TestNbodyIndexedElementsBorrow|TestThrowElementBorrowPlan|TestCallTargetsElementBorrowPlan|TestDevirtualizeBorrowDocClaim|TestUniformFieldsMatchNode|TestRuntimeFieldLayoutsAreIncluded|TestRegexProgramsKeepCheckedFieldReads|TestOptionalWriteMissingSlotRemainsChecked|TestFreedValuesAreCaughtWithSlabs|TestSizeClassesShareTheirChunks|TestResidentSetUnits|TestIeee754MatchesNodeBitForBit|TestCEndsInNewline|TestLibraryMapSetIteratorResources)$'; library_map_set_iterator_test.go:90: held exhausted iterator peak 160152 KiB, control 660 KiB, allowance 4096 KiB"
+  }
+]

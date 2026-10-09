@@ -1,0 +1,12 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -165,6 +165,9 @@
+ 		}
+ 		return true
+ 	case ir.Call:
++		if expression.Virtual != 0 {
++			return false
++		}
+ 		for _, target := range program.CallTargets(expression) {
+ 			if changing[target] {
+ 				return false

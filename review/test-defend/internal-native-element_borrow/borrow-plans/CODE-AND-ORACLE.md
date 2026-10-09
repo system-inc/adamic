@@ -1,0 +1,1 @@
+CODE UNDER TEST: native planElementBorrows, borrowable, changingFunctions, changes, unchanging and borrowElement C emission. ORACLE: self-written planner membership, five-declaration count, generated ownership and release assertions. No external authority or Node execution in these three rows. Node is used by some replay neighbors. No test, fixture or harness changes.

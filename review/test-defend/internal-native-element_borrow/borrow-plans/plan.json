@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "test": "TestNbodyIndexedElementsBorrow",
+    "file_line": "internal/native/element_borrow.go:221",
+    "menu": "change a constant/ownership option",
+    "change": "Initialize the fallback owner by retaining the existing indexed element instead of NULL. Change existing emitted declaration format and supply its pointer operand; no extra emitted statement.",
+    "semantic_lead": "Extra retain/release preserves answers but loses the indexed borrow ownership cost property. Only nbody inspects emitted indexed ownership among the three rows."
+  },
+  {
+    "id": "D2",
+    "test": "TestCallTargetsElementBorrowPlan",
+    "file_line": "internal/native/element_borrow.go:177",
+    "menu": "change a constant",
+    "change": "Unknown closure return false becomes true.",
+    "semantic_lead": "Unknown mutable callback can replace the element; doc claim has bounded harmless callbacks."
+  },
+  {
+    "id": "D3",
+    "test": "TestDevirtualizeBorrowDocClaim",
+    "file_line": "internal/native/element_borrow.go:167",
+    "menu": "return early",
+    "change": "Reject virtual calls at entry to the Call case before consulting all proven targets.",
+    "semantic_lead": "All virtual alternatives in the doc fixture only read length; the call-target negative fixture has a writing override. Conservative fallback preserves runtime answers while denying the positive borrow."
+  }
+]

@@ -1,0 +1,13 @@
+import pathlib,subprocess,os,time,json
+p=pathlib.Path('review/test-defend/internal-native-element_borrow/borrow-plans'); source=pathlib.Path('internal/native/element_borrow.go'); original=source.read_text(); old='e.line("%s %s = NULL;", cType(local.Type), owner)'; new='e.line("%s %s = adamic_retain(%s);", cType(local.Type), owner, name)'; changed=original.replace(old,new,1);assert changed!=original
+scratch=pathlib.Path('/tmp/defend-elements');scratch.mkdir(exist_ok=True); results=[];env=os.environ.copy();env['ADAMIC_GATE_UNCACHED']='1'
+def run(label,cmd,cache):
+ env['ADAMIC_BUILD_CACHE_DIR']='/tmp/defend-elements/cache/'+cache;started=time.monotonic()
+ with (p/(label+'.log')).open('w') as log:r=subprocess.run(cmd,env=env,stdout=log,stderr=subprocess.STDOUT)
+ results.append({'label':label,'command':cmd,'wall_seconds':time.monotonic()-started,'exit':r.returncode});print(label,r.returncode,round(results[-1]['wall_seconds'],3),flush=True);assert r.returncode==0
+try:
+ for id,text in [('clean',original),('D1',changed)]:
+  source.write_text(text)
+  run(id+'-nbody-build',['timeout','90','go','run','./cmd/adamic','build','bench/nbody.ts','-o',str(scratch/('nbody-'+id)),'--count'],id)
+  run(id+'-nbody-execute',['timeout','30',str(scratch/('nbody-'+id))],id)
+finally:source.write_text(original);(p/'nbody-witness-timings.json').write_text(json.dumps(results,indent=2)+'\n')

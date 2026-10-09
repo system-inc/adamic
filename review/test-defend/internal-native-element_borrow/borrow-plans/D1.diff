@@ -1,0 +1,11 @@
+--- a/internal/native/element_borrow.go
++++ b/internal/native/element_borrow.go
+@@ -218,7 +218,7 @@
+ 	e.line("%s %s = %s == NULL ? NULL : (%s)%s->reference;", cType(local.Type), name, slot, cType(local.Type), slot)
+ 	if hasFallback {
+ 		owner := name + "_owner"
+-		e.line("%s %s = NULL;", cType(local.Type), owner)
++		e.line("%s %s = adamic_retain(%s);", cType(local.Type), owner, name)
+ 		e.line("if (%s == NULL) {", name)
+ 		text, fallback, owned := e.aside(coalesce.Fallback)
+ 		e.out.WriteString(text)

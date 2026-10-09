@@ -1,0 +1,1 @@
+First df: /tmp 8.8G total, 258M used, 8.6G free; workspace 32G total, 17G used, 14G free. Removed prior-unit /tmp/adamic-gate after restoring owner permissions on deliberately locked fixture directories. Recreated mode1777. Second df: /tmp 238M used, 8.6G free; workspace unchanged. /tmp cannot satisfy15G floor.

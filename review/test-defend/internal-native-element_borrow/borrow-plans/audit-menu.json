@@ -1,0 +1,380 @@
+[
+  {
+    "id": "M1",
+    "file": "internal/native/element_borrow.go",
+    "line": 30,
+    "old": "if function.Closure {",
+    "new": "if !function.Closure {",
+    "switch": "if function.Closure != u047Mutant(\"M1\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M2",
+    "file": "internal/native/element_borrow.go",
+    "line": 138,
+    "old": "if _, isStore := statement.(ir.SetIndex); isStore {",
+    "new": "if _, isStore := statement.(ir.SetIndex); !isStore {",
+    "switch": "if _, isStore := statement.(ir.SetIndex); isStore != u047Mutant(\"M2\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M3",
+    "file": "internal/native/element_borrow.go",
+    "line": 158,
+    "old": "case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.MakeError, ir.Defined:\n\t\treturn true",
+    "new": "case ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.Defined:\n\t\treturn true",
+    "switch": "case ir.MakeError:\n\t\treturn !u047Mutant(\"M3\")\n\tcase ir.ObjectLiteral, ir.ArrayPush, ir.MakeClosure, ir.Defined:\n\t\treturn true",
+    "kind": "mutant"
+  },
+  {
+    "id": "M4",
+    "file": "internal/native/element_borrow.go",
+    "line": 176,
+    "old": "if targets.Unknown {",
+    "new": "if !targets.Unknown {",
+    "switch": "if targets.Unknown != u047Mutant(\"M4\") {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M5",
+    "file": "internal/native/fields.go",
+    "line": 69,
+    "old": "offsets[field.Name] = -1",
+    "new": "offsets[field.Name] = 0",
+    "switch": "offsets[field.Name] = -1\n\t\t\t\tif u047Mutant(\"M5\") { offsets[field.Name] = 0 }",
+    "kind": "mutant"
+  },
+  {
+    "id": "M6",
+    "file": "internal/native/fields.go",
+    "line": 37,
+    "old": "if len(program.Regexps) != 0 || recordStorage {",
+    "new": "if recordStorage {",
+    "switch": "if (len(program.Regexps) != 0 && !u047Mutant(\"M6\")) || recordStorage {",
+    "kind": "mutant"
+  },
+  {
+    "id": "M7",
+    "file": "internal/native/fields.go",
+    "line": 46,
+    "old": "\"symbolicLink\": 3",
+    "new": "\"symbolicLink\": 2",
+    "switch": "\"symbolicLink\": u047Number(\"M7\", 3, 2)",
+    "kind": "mutant"
+  },
+  {
+    "id": "M8",
+    "file": "internal/native/emit.go",
+    "line": 111,
+    "old": "bodies.WriteString(\"\\treturn 0;\\n}\\n\")",
+    "new": "bodies.WriteString(\"\\treturn 0;\\n}\")",
+    "switch": "if u047Mutant(\"M8\") { bodies.WriteString(\"\\treturn 0;\\n}\") } else { bodies.WriteString(\"\\treturn 0;\\n}\\n\") }",
+    "kind": "mutant"
+  },
+  {
+    "id": "M9",
+    "file": "internal/native/runtime/heap.c",
+    "line": 172,
+    "old": "\tPOISON(slot, size);",
+    "new": "\t(void)size;",
+    "switch": "\tif (!adamic_u047(\"M9\")) { POISON(slot, size); }",
+    "kind": "mutant"
+  },
+  {
+    "id": "M10",
+    "file": "internal/native/runtime/heap.c",
+    "line": 108,
+    "old": "chunk *each = spares;",
+    "new": "chunk *each = NULL;",
+    "switch": "chunk *each = adamic_u047(\"M10\") ? NULL : spares;",
+    "kind": "mutant"
+  },
+  {
+    "id": "M11",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2483,
+    "old": "return kernel_sin(x, z, 0);",
+    "new": "return kernel_sin(z, x, 0);",
+    "switch": "return adamic_u047(\"M11\") ? kernel_sin(z, x, 0) : kernel_sin(x, z, 0);",
+    "kind": "mutant"
+  },
+  {
+    "id": "M12",
+    "file": "internal/native/runtime/map.c",
+    "line": 267,
+    "old": "\titerator->map->iterating--;",
+    "new": "\t/* dropped exhausted iteration decrement */",
+    "switch": "\tif (!adamic_u047(\"M12\")) { iterator->map->iterating--; }",
+    "kind": "mutant"
+  },
+  {
+    "id": "M13",
+    "file": "internal/lower/class.go",
+    "line": 464,
+    "old": "if l.omittedOptionals[member] && !presentBeforeWrite(target) && !l.literalGivesField(target) {\n\t\treturn l.notYet(target, \"writing a possibly absent optional own field\")\n\t}",
+    "new": "",
+    "switch": "if !u047Mutant(\"M13\") && l.omittedOptionals[member] && !presentBeforeWrite(target) && !l.literalGivesField(target) {\n\t\treturn l.notYet(target, \"writing a possibly absent optional own field\")\n\t}",
+    "kind": "mutant"
+  },
+  {
+    "id": "P1",
+    "file": "internal/native/element_borrow.go",
+    "line": 24,
+    "old": "func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {\n",
+    "new": "func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {\n\treturn nil, nil\n",
+    "switch": "func planElementBorrows(program *ir.Program) (map[*ir.Statement]bool, map[int]bool) {\n\tif u047Mutant(\"P1\") { return nil, nil }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P2",
+    "file": "internal/native/emit.go",
+    "line": 22,
+    "old": "func C(program *ir.Program) string {\n",
+    "new": "func C(program *ir.Program) string {\n\treturn \"\"\n",
+    "switch": "func C(program *ir.Program) string {\n\tif u047Mutant(\"P2\") { return \"\" }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P3",
+    "file": "internal/native/fields.go",
+    "line": 28,
+    "old": "func uniformFieldOffsets(program *ir.Program) map[string]int {\n",
+    "new": "func uniformFieldOffsets(program *ir.Program) map[string]int {\n\treturn nil\n",
+    "switch": "func uniformFieldOffsets(program *ir.Program) map[string]int {\n\tif u047Mutant(\"P3\") { return nil }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P4",
+    "file": "internal/lower/lower.go",
+    "line": 20,
+    "old": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n",
+    "new": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\treturn nil, nil\n",
+    "switch": "func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {\n\tif u047Mutant(\"P4\") { return nil, nil }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P5",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 37,
+    "old": "adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {\n",
+    "new": "adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {\n\treturn NULL;\n",
+    "switch": "adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {\n\tif (adamic_u047(\"P5\")) { return NULL; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P6",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 15,
+    "old": "adamic_string *adamic_string_allocate(size_t length) {\n",
+    "new": "adamic_string *adamic_string_allocate(size_t length) {\n\treturn NULL;\n",
+    "switch": "adamic_string *adamic_string_allocate(size_t length) {\n\tif (adamic_u047(\"P6\")) { return NULL; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P7",
+    "file": "internal/native/runtime/map.c",
+    "line": 24,
+    "old": "adamic_map *adamic_map_new(bool string_keys, bool reference_values) {\n",
+    "new": "adamic_map *adamic_map_new(bool string_keys, bool reference_values) {\n\treturn NULL;\n",
+    "switch": "adamic_map *adamic_map_new(bool string_keys, bool reference_values) {\n\tif (adamic_u047(\"P7\")) { return NULL; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_acos",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 877,
+    "old": "double adamic_math_acos(double x) {\n",
+    "new": "double adamic_math_acos(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_acos(double x) {\n  if (adamic_u047(\"P_adamic_math_acos\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_acosh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 952,
+    "old": "double adamic_math_acosh(double x) {\n",
+    "new": "double adamic_math_acosh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_acosh(double x) {\n  if (adamic_u047(\"P_adamic_math_acosh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_asin",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1008,
+    "old": "double adamic_math_asin(double x) {\n",
+    "new": "double adamic_math_asin(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_asin(double x) {\n  if (adamic_u047(\"P_adamic_math_asin\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_asinh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1085,
+    "old": "double adamic_math_asinh(double x) {\n",
+    "new": "double adamic_math_asinh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_asinh(double x) {\n  if (adamic_u047(\"P_adamic_math_asinh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_atan",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1135,
+    "old": "double adamic_math_atan(double x) {\n",
+    "new": "double adamic_math_atan(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_atan(double x) {\n  if (adamic_u047(\"P_adamic_math_atan\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_atan2",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1248,
+    "old": "double adamic_math_atan2(double y, double x) {\n",
+    "new": "double adamic_math_atan2(double y, double x) {\n  return 0;\n",
+    "switch": "double adamic_math_atan2(double y, double x) {\n  if (adamic_u047(\"P_adamic_math_atan2\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_cos",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1372,
+    "old": "double adamic_math_cos(double x) {\n",
+    "new": "double adamic_math_cos(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_cos(double x) {\n  if (adamic_u047(\"P_adamic_math_cos\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_exp",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1465,
+    "old": "double adamic_math_exp(double x) {\n",
+    "new": "double adamic_math_exp(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_exp(double x) {\n  if (adamic_u047(\"P_adamic_math_exp\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_atanh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1576,
+    "old": "double adamic_math_atanh(double x) {\n",
+    "new": "double adamic_math_atanh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_atanh(double x) {\n  if (adamic_u047(\"P_adamic_math_atanh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_log",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1658,
+    "old": "double adamic_math_log(double x) {\n",
+    "new": "double adamic_math_log(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_log(double x) {\n  if (adamic_u047(\"P_adamic_math_log\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_log1p",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1804,
+    "old": "double adamic_math_log1p(double x) {\n",
+    "new": "double adamic_math_log1p(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_log1p(double x) {\n  if (adamic_u047(\"P_adamic_math_log1p\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_log2",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 1995,
+    "old": "double adamic_math_log2(double x) {\n",
+    "new": "double adamic_math_log2(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_log2(double x) {\n  if (adamic_u047(\"P_adamic_math_log2\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_log10",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2102,
+    "old": "double adamic_math_log10(double x) {\n",
+    "new": "double adamic_math_log10(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_log10(double x) {\n  if (adamic_u047(\"P_adamic_math_log10\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_expm1",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2237,
+    "old": "double adamic_math_expm1(double x) {\n",
+    "new": "double adamic_math_expm1(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_expm1(double x) {\n  if (adamic_u047(\"P_adamic_math_expm1\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_cbrt",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2358,
+    "old": "double adamic_math_cbrt(double x) {\n",
+    "new": "double adamic_math_cbrt(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_cbrt(double x) {\n  if (adamic_u047(\"P_adamic_math_cbrt\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_sin",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2473,
+    "old": "double adamic_math_sin(double x) {\n",
+    "new": "double adamic_math_sin(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_sin(double x) {\n  if (adamic_u047(\"P_adamic_math_sin\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_tan",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2533,
+    "old": "double adamic_math_tan(double x) {\n",
+    "new": "double adamic_math_tan(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_tan(double x) {\n  if (adamic_u047(\"P_adamic_math_tan\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_cosh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2578,
+    "old": "double adamic_math_cosh(double x) {\n",
+    "new": "double adamic_math_cosh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_cosh(double x) {\n  if (adamic_u047(\"P_adamic_math_cosh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_sinh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2642,
+    "old": "double adamic_math_sinh(double x) {\n",
+    "new": "double adamic_math_sinh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_sinh(double x) {\n  if (adamic_u047(\"P_adamic_math_sinh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_tanh",
+    "file": "internal/native/runtime/ieee754.c",
+    "line": 2699,
+    "old": "double adamic_math_tanh(double x) {\n",
+    "new": "double adamic_math_tanh(double x) {\n  return 0;\n",
+    "switch": "double adamic_math_tanh(double x) {\n  if (adamic_u047(\"P_adamic_math_tanh\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "P_adamic_math_hypot",
+    "file": "internal/native/runtime/hypot.c",
+    "line": 21,
+    "old": "double adamic_math_hypot(size_t count, const double *values) {\n",
+    "new": "double adamic_math_hypot(size_t count, const double *values) {\n  return 0;\n",
+    "switch": "double adamic_math_hypot(size_t count, const double *values) {\n  if (adamic_u047(\"P_adamic_math_hypot\")) { return 0; }\n",
+    "kind": "probe"
+  },
+  {
+    "id": "S1",
+    "file": "internal/native/heap_test.go",
+    "line": 132,
+    "old": "return value / 1024",
+    "new": "return value / 1000",
+    "switch": "return value / 1000",
+    "kind": "setup"
+  }
+]

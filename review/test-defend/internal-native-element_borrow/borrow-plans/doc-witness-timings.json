@@ -1,0 +1,56 @@
+[
+  {
+    "label": "clean-doc-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/devirt_borrow_doc_claim.a",
+      "-o",
+      "/tmp/defend-elements/doc-clean",
+      "--count"
+    ],
+    "wall_seconds": 0.22634186400318868,
+    "exit": 0
+  },
+  {
+    "label": "clean-doc-execute",
+    "command": [
+      "timeout",
+      "30",
+      "/tmp/defend-elements/doc-clean"
+    ],
+    "wall_seconds": 0.0025137709999398794,
+    "exit": 0
+  },
+  {
+    "label": "D3-doc-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "internal/oracle/testdata/devirt_borrow_doc_claim.a",
+      "-o",
+      "/tmp/defend-elements/doc-D3",
+      "--count"
+    ],
+    "wall_seconds": 5.770103508999455,
+    "exit": 0
+  },
+  {
+    "label": "D3-doc-execute",
+    "command": [
+      "timeout",
+      "30",
+      "/tmp/defend-elements/doc-D3"
+    ],
+    "wall_seconds": 0.0023933900010888465,
+    "exit": 0
+  }
+]

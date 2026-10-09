@@ -1,0 +1,56 @@
+[
+  {
+    "label": "clean-nbody-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "bench/nbody.ts",
+      "-o",
+      "/tmp/defend-elements/nbody-clean",
+      "--count"
+    ],
+    "wall_seconds": 0.35078302699912456,
+    "exit": 0
+  },
+  {
+    "label": "clean-nbody-execute",
+    "command": [
+      "timeout",
+      "30",
+      "/tmp/defend-elements/nbody-clean"
+    ],
+    "wall_seconds": 0.1929338900008588,
+    "exit": 0
+  },
+  {
+    "label": "D1-nbody-build",
+    "command": [
+      "timeout",
+      "90",
+      "go",
+      "run",
+      "./cmd/adamic",
+      "build",
+      "bench/nbody.ts",
+      "-o",
+      "/tmp/defend-elements/nbody-D1",
+      "--count"
+    ],
+    "wall_seconds": 5.843932771000254,
+    "exit": 0
+  },
+  {
+    "label": "D1-nbody-execute",
+    "command": [
+      "timeout",
+      "30",
+      "/tmp/defend-elements/nbody-D1"
+    ],
+    "wall_seconds": 0.21145806499771425,
+    "exit": 0
+  }
+]

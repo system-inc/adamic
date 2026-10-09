@@ -1,0 +1,56 @@
+{
+  "D1": {
+    "stdout": "-0.169075164\n-0.169086185\n",
+    "clean_counts": {
+      "allocations": 8,
+      "frees": 8,
+      "retains": 10,
+      "releases": 14,
+      "peak": 7,
+      "regions": 0
+    },
+    "mutant_counts": {
+      "allocations": 8,
+      "frees": 8,
+      "retains": 15000041,
+      "releases": 15000045,
+      "peak": 7,
+      "regions": 0
+    },
+    "delta": {
+      "allocations": 0,
+      "frees": 0,
+      "retains": 15000031,
+      "releases": 15000031,
+      "peak": 0,
+      "regions": 0
+    }
+  },
+  "D3": {
+    "stdout": "virtual1\nvirtual1\nclosure2\n",
+    "clean_counts": {
+      "allocations": 15,
+      "frees": 13,
+      "retains": 6,
+      "releases": 13,
+      "peak": 5,
+      "regions": 2
+    },
+    "mutant_counts": {
+      "allocations": 15,
+      "frees": 13,
+      "retains": 8,
+      "releases": 15,
+      "peak": 5,
+      "regions": 2
+    },
+    "delta": {
+      "allocations": 0,
+      "frees": 0,
+      "retains": 2,
+      "releases": 2,
+      "peak": 0,
+      "regions": 0
+    }
+  }
+}

@@ -1,0 +1,8 @@
+bounded-baseline 0 9.095 fails []
+D1-vet 0 0.339 fails []
+D1 1 13.961 fails ['TestNbodyIndexedElementsBorrow']
+D2-vet 0 0.37 fails []
+D2 1 14.359 fails ['TestCallTargetsElementBorrowPlan']
+D3-vet 0 0.374 fails []
+D3 1 14.876 fails ['TestDevirtualizeBorrowDocClaim']
+restored 0 2.175 fails []

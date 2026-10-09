@@ -1,0 +1,143 @@
+{
+  "D1": {
+    "failed": [
+      "TestNbodyIndexedElementsBorrow"
+    ],
+    "passed": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestExactReceiverRejectsAssignments",
+      "TestGlobalArgumentLending",
+      "TestInheritanceMemoryPlans",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "passed_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ]
+  },
+  "D2": {
+    "failed": [
+      "TestCallTargetsElementBorrowPlan"
+    ],
+    "passed": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCEndsInNewline",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizeBorrowDocClaim",
+      "TestDevirtualizedCalls",
+      "TestExactReceiverRejectsAssignments",
+      "TestGlobalArgumentLending",
+      "TestInheritanceMemoryPlans",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "passed_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/call",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ]
+  },
+  "D3": {
+    "failed": [
+      "TestDevirtualizeBorrowDocClaim"
+    ],
+    "passed": [
+      "TestBorrowChainDeclarations",
+      "TestBorrowChainTargets",
+      "TestCEndsInNewline",
+      "TestCallTargetsElementBorrowPlan",
+      "TestClosureConventionDropCount",
+      "TestClosureConventionRuntimeDropCount",
+      "TestClosureConventionRuntimeFeaturesIgnoreLiterals",
+      "TestClosureConventionWrongOrder",
+      "TestDevirtualizedCalls",
+      "TestExactReceiverRejectsAssignments",
+      "TestGlobalArgumentLending",
+      "TestInheritanceMemoryPlans",
+      "TestLoopArrayHoldC",
+      "TestLoopBorrowPlan",
+      "TestLoopCallCoverage",
+      "TestNbodyBorrowedLoopC",
+      "TestNbodyIndexedElementsBorrow",
+      "TestNoReaderCallingConvention",
+      "TestNodeBufferRuntimeWithoutDeclarations",
+      "TestOptionalMethodThunksMatchNode",
+      "TestOptionalWriteMissingSlotRemainsChecked",
+      "TestParserHasNoUnusedOptionalMethodThunks",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegexProgramsKeepCheckedFieldReads",
+      "TestRuntimeFieldLayoutsAreIncluded",
+      "TestRuntimeKeyKeepsBoundaries",
+      "TestTSGoBuildSeesTheProgramsFeatures",
+      "TestThrowElementBorrowPlan",
+      "TestUniformFieldsMatchNode"
+    ],
+    "passed_subcases": [
+      "TestNoReaderCallingConvention/closure_convention_plain.a",
+      "TestNoReaderCallingConvention/arguments_length_unrelated_type.a",
+      "TestNoReaderCallingConvention/arguments_length_no_reader.a",
+      "TestClosureConventionWrongOrder/definition",
+      "TestClosureConventionWrongOrder/function-pointer-cast",
+      "TestClosureConventionWrongOrder/call",
+      "TestClosureConventionWrongOrder/void-pointer-cast",
+      "TestOptionalMethodThunksMatchNode/sanitize=false",
+      "TestOptionalMethodThunksMatchNode/sanitize=true"
+    ]
+  }
+}
