@@ -1,0 +1,17 @@
+function* inner(): Generator<number, number, undefined> {
+ try {yield 3;yield 4;return 5;} finally {console.log('inner finally');}
+}
+function* outer(): Generator<number, number, undefined> {
+ yield* [1,2];
+ yield* new Set([6,7]);
+ const value=yield* inner();
+ console.log(`inner result:${value}`);
+ return 8;
+}
+const g=outer();
+for(const value of g) console.log(`${value}`);
+function* cancelled(): Generator<number, number, undefined> {
+ try {yield* inner();} finally {console.log('outer finally');}
+ return 10;
+}
+const h=cancelled();console.log(`${h.next().value}`);console.log(`${h.return(11).value}`);

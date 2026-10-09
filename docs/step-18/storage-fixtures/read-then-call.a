@@ -1,0 +1,26 @@
+let argumentsRun = 0;
+function argument(): string { argumentsRun += 1; console.log('argument'); return `value${argumentsRun}`; }
+interface Host { callback: ((value: string) => string) | undefined }
+const host: Host = {callback: (value: string): string => `old:${value}`};
+const saved = host.callback;
+const replacement = (value: string): string => `new:${value}`;
+host.callback = replacement;
+function invoke(callback: ((value: string) => string) | undefined): void { console.log(callback?.(argument()) ?? 'absent'); }
+invoke(saved);
+invoke(replacement);
+invoke(undefined);
+class Source {
+    readonly label: string;
+    constructor(label: string) { this.label = label; }
+    get savedCallback(): ((value: string) => string) | undefined {
+        console.log('getter');
+        const label = this.label;
+        return (value: string): string => `${label}:${value}`;
+    }
+}
+const source = new Source(`owner${1}`);
+const callback = source.savedCallback;
+console.log('saved');
+invoke(callback);
+invoke(callback);
+console.log(`${argumentsRun}`);

@@ -1,0 +1,6 @@
+{
+  "file": "stage3/parser-next/stack/pathological.a",
+  "stdout": "",
+  "stderr": "file:///workspace/adamic/[eval1]:4\n    if (input[position] === '(') {\n    ^\n\nRangeError: Maximum call stack size exceeded\n    at parseNested (file:///workspace/adamic/[eval1]:4:5)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n    at parseNested (file:///workspace/adamic/[eval1]:6:24)\n\nNode.js v24.19.0\n",
+  "exit": 1
+}

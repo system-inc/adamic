@@ -1138,9 +1138,15 @@ func (a *analysis) value(expression ir.Expression) value {
 		result.merge(a.value(expression.Fallback))
 		a.value(expression.Panic)
 		return result
+	case ir.CheckedJSON:
+		// Validation reads data, preserves identity, and never mutates a source slot.
+		return a.value(expression.Value)
 	case ir.Box:
 		return a.value(expression.Value)
 	case ir.Narrow:
+		return a.value(expression.Value)
+	case ir.PlaceholderUse:
+		// A checked use forwards the value; it cannot create a reference or a write.
 		return a.value(expression.Value)
 	case ir.Unwrap:
 		return a.value(expression.Value)
@@ -1271,6 +1277,8 @@ func (a *analysis) value(expression ir.Expression) value {
 			a.value(expression.Name)
 		}
 		return a.fresh(anyField, value{})
+	case ir.GeneratorFrame:
+		return a.value(expression.Value)
 	case ir.ObjectLiteral:
 		var copied value
 		if expression.Spread != nil {
@@ -1476,6 +1484,10 @@ func (a *analysis) value(expression ir.Expression) value {
 			return value{}
 		}
 		return result
+	case ir.IteratorMethod, ir.IteratorField:
+		// Protocol reads may invoke accessors; conservatively expose their receiver
+		// and treat returned references as outside the current summary.
+		return a.call(a.operands(expression), expression.Type())
 	case ir.CallClosure:
 		// Cells and structural receivers are outside this summary's model. The
 		// union for any bounded target set, and for Unknown, is an arbitrary call.

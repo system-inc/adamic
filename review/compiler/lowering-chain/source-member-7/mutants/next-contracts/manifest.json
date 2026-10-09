@@ -1,0 +1,106 @@
+[
+  {
+    "log": "../../evidence/next-contracts/mutant-alias_write.log.txt",
+    "mode": "Go overlay",
+    "name": "alias_write",
+    "package": "internal/oracle",
+    "patch": "alias_write.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_alias_write$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-nul_key.log.txt",
+    "mode": "Go overlay",
+    "name": "nul_key",
+    "package": "internal/oracle",
+    "patch": "nul_key.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_nul_key$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-proto_key.log.txt",
+    "mode": "Go overlay",
+    "name": "proto_key",
+    "package": "internal/oracle",
+    "patch": "proto_key.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_proto_key$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-computed_key.log.txt",
+    "mode": "Go overlay",
+    "name": "computed_key",
+    "package": "internal/oracle",
+    "patch": "computed_key.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_dictionary_computed_key$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-symbol_field.log.txt",
+    "mode": "Go overlay",
+    "name": "symbol_field",
+    "package": "internal/oracle",
+    "patch": "symbol_field.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_symbol_contract$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-callable_contract.log.txt",
+    "mode": "Go overlay",
+    "name": "callable_contract",
+    "package": "internal/oracle",
+    "patch": "callable_contract.patch",
+    "selector": "^TestCheckedJSONNextRefusals$/json_callable_contract$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-nullable_tag.log.txt",
+    "mode": "Go overlay",
+    "name": "nullable_tag",
+    "package": "internal/oracle",
+    "patch": "nullable_tag.patch",
+    "selector": "^TestCheckedJSONNext$/json_nullable$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-optional_read.log.txt",
+    "mode": "Go overlay",
+    "name": "optional_read",
+    "package": "internal/oracle",
+    "patch": "optional_read.patch",
+    "selector": "^TestCheckedJSONNext$/json_nullable$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-ownership_identity.log.txt",
+    "mode": "Go overlay",
+    "name": "ownership_identity",
+    "package": "internal/fresh",
+    "patch": "ownership_identity.patch",
+    "selector": "^TestCheckedJSONPreservesIdentityAndOperandWrites$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-javascript_depth.log.txt",
+    "mode": "Go overlay",
+    "name": "javascript_depth",
+    "package": "internal/oracle",
+    "patch": "javascript_depth.patch",
+    "selector": "^TestCheckedJSONNext$/json_depth_misfit$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-runtime_depth.log.txt",
+    "mode": "runtime source patch; restore after test",
+    "name": "runtime_depth",
+    "package": "internal/oracle",
+    "patch": "runtime_depth.patch",
+    "selector": "^TestCheckedJSONNext$/json_depth_misfit$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-runtime_key_order.log.txt",
+    "mode": "runtime source patch; restore after test",
+    "name": "runtime_key_order",
+    "package": "internal/oracle",
+    "patch": "runtime_key_order.patch",
+    "selector": "^TestCheckedJSONNext$/json_dictionary_order_misfit$"
+  },
+  {
+    "log": "../../evidence/next-contracts/mutant-runtime_record_guard.log.txt",
+    "mode": "runtime source patch; restore after test",
+    "name": "runtime_record_guard",
+    "package": "internal/native",
+    "patch": "runtime_record_guard.patch",
+    "selector": "^TestCheckedJSONRecordRemainsUnsupported$"
+  }
+]

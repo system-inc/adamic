@@ -1,0 +1,9 @@
+namespace State {
+    export const values: number[] = [1, 2];
+    export function read(): number { return values.length; }
+}
+const held: { readonly values: number[]; readonly read: () => number } = State;
+const read = held.read;
+held.values.push(3);
+console.log(String(read()));
+console.log(String(State.values.length));

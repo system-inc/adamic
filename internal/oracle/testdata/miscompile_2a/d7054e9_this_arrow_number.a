@@ -1,0 +1,10 @@
+class Counter {
+ readonly start: number; readonly count: number;
+ constructor() {
+  const next = (): number => this.count + 1;
+  this.start = next(); this.count = 5;
+ }
+}
+console.log(`${new Counter().start}`);
+const scaled = [1, 2].map((value) => value * new Counter().start);
+console.log(scaled.join(','));

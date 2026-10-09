@@ -1,0 +1,8 @@
+=== RUN   TestProjectReferencesAudit
+=== PAUSE TestProjectReferencesAudit
+=== CONT  TestProjectReferencesAudit
+    project_references_test.go:136: referenced option site admitted: <nil>
+--- FAIL: TestProjectReferencesAudit (0.49s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.501s
+FAIL

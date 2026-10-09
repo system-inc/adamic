@@ -461,6 +461,9 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 		return false
 	}
 	throws := false
+	if assign, ok := (*instruction.At).(ir.Assign); ok {
+		throws = assign.Throws(program)
+	}
 	var walk func(value reflect.Value)
 	walk = func(value reflect.Value) {
 		switch value.Kind() {
@@ -472,15 +475,24 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 			if call, ok := value.Interface().(ir.RegExpCall); ok && call.Replacement != nil && program.ClosuresMayThrow {
 				throws = true
 			}
+			if call, ok := value.Interface().(ir.NodeBufferCall); ok && call.MayThrow() {
+				throws = true
+			}
 			if call, ok := value.Interface().(ir.NodeFSFile); ok && call.MayThrow() {
 				throws = true
 			}
 			switch value.Type() {
+			case reflect.TypeOf(ir.Read{}):
+				throws = throws || value.Interface().(ir.Read).Throws(program)
+			case reflect.TypeOf(ir.Defined{}):
+				if value.Interface().(ir.Defined).Throws() {
+					throws = true
+				}
 			case callType:
 				if program.CallMayThrow(value.Interface().(ir.Call)) {
 					throws = true
 				}
-			case callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
+			case iteratorMethodType, iteratorFieldType, callClosureType, arrayMapType, arrayVisitType, arrayReduceType, arrayFromType, mapForEachType:
 				// A call through a function value, written out or made by the runtime's loop.
 				if program.ClosuresMayThrow {
 					throws = true
@@ -505,14 +517,16 @@ func CanThrow(program *ir.Program, instruction *Instruction) bool {
 }
 
 var (
-	callType        = reflect.TypeOf(ir.Call{})
-	callClosureType = reflect.TypeOf(ir.CallClosure{})
-	arrayMapType    = reflect.TypeOf(ir.ArrayMap{})
-	arrayVisitType  = reflect.TypeOf(ir.ArrayVisit{})
-	arrayReduceType = reflect.TypeOf(ir.ArrayReduce{})
-	arrayFromType   = reflect.TypeOf(ir.ArrayFrom{})
-	arraySortType   = reflect.TypeOf(ir.ArraySort{})
-	mapForEachType  = reflect.TypeOf(ir.MapForEach{})
+	iteratorMethodType = reflect.TypeOf(ir.IteratorMethod{})
+	iteratorFieldType  = reflect.TypeOf(ir.IteratorField{})
+	callType           = reflect.TypeOf(ir.Call{})
+	callClosureType    = reflect.TypeOf(ir.CallClosure{})
+	arrayMapType       = reflect.TypeOf(ir.ArrayMap{})
+	arrayVisitType     = reflect.TypeOf(ir.ArrayVisit{})
+	arrayReduceType    = reflect.TypeOf(ir.ArrayReduce{})
+	arrayFromType      = reflect.TypeOf(ir.ArrayFrom{})
+	arraySortType      = reflect.TypeOf(ir.ArraySort{})
+	mapForEachType     = reflect.TypeOf(ir.MapForEach{})
 )
 
 func (b *builder) linkLabels(names []string, target BlockId) {

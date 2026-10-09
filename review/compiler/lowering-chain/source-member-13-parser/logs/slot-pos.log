@@ -1,0 +1,8 @@
+=== RUN   TestParserNodeArrayLayout
+=== PAUSE TestParserNodeArrayLayout
+=== CONT  TestParserNodeArrayLayout
+    node_array_layout_test.go:30: wrong slot for pos: {FieldContract:{Name:pos DeclaredType:number Of:1 Optional:false} Slot:1 PresenceBit:0 InitializationBit:0}
+--- FAIL: TestParserNodeArrayLayout (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.008s
+FAIL

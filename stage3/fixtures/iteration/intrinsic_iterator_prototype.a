@@ -1,0 +1,4 @@
+// a-check: refused adamic/intrinsic-iterator
+// Authored counterexample: the intrinsic's prototype affects every array.
+Array.prototype[Symbol.iterator] = () => [7].values();
+for (const value of [1, 2]) { console.log(String(value)); }

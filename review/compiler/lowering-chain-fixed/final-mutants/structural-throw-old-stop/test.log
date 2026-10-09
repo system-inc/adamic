@@ -1,0 +1,8 @@
+=== RUN   TestLoweringChainStructuralError
+=== PAUSE TestLoweringChainStructuralError
+=== CONT  TestLoweringChainStructuralError
+    lowering_chain_fixes_test.go:39: /workspace/adamic/internal/oracle/testdata/statements_small_stopped/structural_error.a:3:5: stage 0 can't lower throwing an Error that is not made where it is thrown yet
+--- FAIL: TestLoweringChainStructuralError (0.05s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.068s
+FAIL

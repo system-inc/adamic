@@ -1,0 +1,26 @@
+=== RUN   TestParserFactoryCompletion
+=== RUN   TestParserFactoryCompletion/before_return
+=== RUN   TestParserFactoryCompletion/alias
+=== RUN   TestParserFactoryCompletion/both_branches
+=== RUN   TestParserFactoryCompletion/one_branch
+=== RUN   TestParserFactoryCompletion/before_escape
+=== RUN   TestParserFactoryCompletion/wrong_payload_assertion
+=== RUN   TestParserFactoryCompletion/early_return
+=== RUN   TestParserFactoryCompletion/loop_may_not_run
+=== RUN   TestParserFactoryCompletion/captured
+=== RUN   TestParserFactoryCompletion/short_circuit
+--- PASS: TestParserFactoryCompletion (0.68s)
+    --- PASS: TestParserFactoryCompletion/before_return (0.06s)
+    --- PASS: TestParserFactoryCompletion/alias (0.08s)
+    --- PASS: TestParserFactoryCompletion/both_branches (0.06s)
+    --- PASS: TestParserFactoryCompletion/one_branch (0.08s)
+    --- PASS: TestParserFactoryCompletion/before_escape (0.08s)
+    --- PASS: TestParserFactoryCompletion/wrong_payload_assertion (0.04s)
+    --- PASS: TestParserFactoryCompletion/early_return (0.07s)
+    --- PASS: TestParserFactoryCompletion/loop_may_not_run (0.06s)
+    --- PASS: TestParserFactoryCompletion/captured (0.07s)
+    --- PASS: TestParserFactoryCompletion/short_circuit (0.07s)
+=== RUN   TestParserFactoryReadBeforeCompletion
+--- PASS: TestParserFactoryReadBeforeCompletion (0.11s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.808s

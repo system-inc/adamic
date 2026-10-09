@@ -1,0 +1,8 @@
+=== RUN   TestProjectLoaderNodeImportsKeepReferenceRoots
+=== PAUSE TestProjectLoaderNodeImportsKeepReferenceRoots
+=== CONT  TestProjectLoaderNodeImportsKeepReferenceRoots
+    project_loader_test.go:150: node import discarded referenced source roots
+--- FAIL: TestProjectLoaderNodeImportsKeepReferenceRoots (0.70s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/load	0.715s
+FAIL

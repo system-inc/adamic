@@ -1,0 +1,252 @@
+=== RUN   TestCheckedAny
+=== RUN   TestCheckedAny/property
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="node\n" stderr="" exit=0; backends stdout="node\n" stderr="" exit=0
+=== RUN   TestCheckedAny/property_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:65: gate cache node miss
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "14\n"
+    checked_any_test.go:96: source Node stdout="14\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: config.value needs string, found number\n" exit=70
+=== RUN   TestCheckedAny/parameter
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/parameter_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:65: gate cache node miss
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/arithmetic
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/arithmetic_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:65: gate cache node miss
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/boolean
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="false\n" stderr="" exit=0; backends stdout="false\n" stderr="" exit=0
+=== RUN   TestCheckedAny/transport
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="number\nstring\n" stderr="" exit=0; backends stdout="number\nstring\n" stderr="" exit=0
+=== RUN   TestCheckedAny/validated
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="node\ndiagnostic: expected string\n" stderr="" exit=0; backends stdout="node\ndiagnostic: expected string\n" stderr="" exit=0
+=== RUN   TestCheckedAny/config_validated
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n" stderr="" exit=0; backends stdout="node\ndiagnostic: expected string\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected object\ndiagnostic: expected string\n" stderr="" exit=0
+=== RUN   TestCheckedAny/property_null_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:81: gate cache node miss
+    checked_any_test.go:89: null receiver mutant caught: JavaScript exit=70 stderr="adamic: panic: TypeError: Cannot read properties of null (reading 'value')\n"; native exit=70 stderr="adamic: panic: dynamic property read on null or undefined\n"
+    checked_any_test.go:96: source Node stdout="" stderr="adamic: panic: TypeError: Cannot read properties of null (reading 'value')\n" exit=70; backends stdout="" stderr="adamic: panic: checked any: config needs non-null property receiver, found null\n" exit=70
+=== RUN   TestCheckedAny/string_length
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="3\n1\n" stderr="" exit=0; backends stdout="3\n1\n" stderr="" exit=0
+=== RUN   TestCheckedAny/assertion
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="15\n" stderr="" exit=0; backends stdout="15\n" stderr="" exit=0
+=== RUN   TestCheckedAny/assertion_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:65: gate cache node miss
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "wrong1\n"
+    checked_any_test.go:96: source Node stdout="wrong1\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: 'wrong' as any needs number, found string\n" exit=70
+=== RUN   TestCheckedAny/stale_misfit
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:65: gate cache node miss
+    checked_any_test.go:72: mutant removing 1 guards caught by pinned exit/stderr: unchecked JavaScript matches Node "14\n"
+    checked_any_test.go:96: source Node stdout="14\n" stderr="" exit=0; backends stdout="" stderr="adamic: panic: checked any: value needs string, found number\n" exit=70
+=== RUN   TestCheckedAny/config_diagnostics
+    checked_any_test.go:23: gate cache node miss
+    checked_any_test.go:44: gate cache node miss
+    checked_any_test.go:96: source Node stdout="true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n" stderr="" exit=0; backends stdout="true\nfalse\nCompiler option 'compileOnSave' requires a value of type boolean.\n" stderr="" exit=0
+--- PASS: TestCheckedAny (6.61s)
+    --- PASS: TestCheckedAny/property (0.45s)
+    --- PASS: TestCheckedAny/property_misfit (0.43s)
+    --- PASS: TestCheckedAny/parameter (0.37s)
+    --- PASS: TestCheckedAny/parameter_misfit (0.41s)
+    --- PASS: TestCheckedAny/arithmetic (0.40s)
+    --- PASS: TestCheckedAny/arithmetic_misfit (0.46s)
+    --- PASS: TestCheckedAny/boolean (0.40s)
+    --- PASS: TestCheckedAny/transport (0.37s)
+    --- PASS: TestCheckedAny/validated (0.36s)
+    --- PASS: TestCheckedAny/config_validated (0.37s)
+    --- PASS: TestCheckedAny/property_null_misfit (0.60s)
+    --- PASS: TestCheckedAny/string_length (0.40s)
+    --- PASS: TestCheckedAny/assertion (0.39s)
+    --- PASS: TestCheckedAny/assertion_misfit (0.41s)
+    --- PASS: TestCheckedAny/stale_misfit (0.37s)
+    --- PASS: TestCheckedAny/config_diagnostics (0.41s)
+=== RUN   TestCheckedAnyUnsupportedContracts
+=== RUN   TestCheckedAnyUnsupportedContracts/callable
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractscallable4263010582/001/boundary.ts:1:44: stage 0 can't lower a call to an Identifier yet
+=== RUN   TestCheckedAnyUnsupportedContracts/prototype
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsprototype2977613987/001/boundary.ts:1:54: stage 0 can't lower a dynamic primitive prototype property (callable descriptors) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/array_view
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsarray_view4126107124/001/boundary.ts:1:15: stage 0 can't lower a value of type any[] yet
+=== RUN   TestCheckedAnyUnsupportedContracts/field_view
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsfield_view597949416/001/boundary.ts:1:53: stage 0 can't lower an any field in a typed object (dynamic slot adaptation is not established) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_alias_write
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_alias_write4141959596/001/boundary.ts:5:1: stage 0 can't lower a write through a checked JSON view alias yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_alias_update
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_alias_update1471526474/001/boundary.ts:5:1: stage 0 can't lower an update through a checked JSON view alias yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_iteration
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_iteration1736068054/001/boundary.ts:3:1: stage 0 can't lower iteration of checked JSON arrays (requires dynamic element reads) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_reflection
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_reflection3665342482/001/boundary.ts:5:1: stage 0 can't lower reflection in a checked JSON view program yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_array_method
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_array_method1706033052/001/boundary.ts:3:20: stage 0 can't lower a method on a checked JSON array (requires dynamic element reads) yet
+=== RUN   TestCheckedAnyUnsupportedContracts/json_unprepared
+    checked_any_test.go:179: /tmp/adamic-gate/TestCheckedAnyUnsupportedContractsjson_unprepared676143072/001/boundary.ts:3:24: stage 0 can't lower checked JSON contract without a prepared dynamic binding yet
+--- PASS: TestCheckedAnyUnsupportedContracts (0.32s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/callable (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/prototype (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/array_view (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/field_view (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_alias_write (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_alias_update (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_iteration (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_reflection (0.04s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_array_method (0.03s)
+    --- PASS: TestCheckedAnyUnsupportedContracts/json_unprepared (0.03s)
+=== RUN   TestCheckedJSON
+=== RUN   TestCheckedJSON/json_object
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[111 110 101 10 49 52 10 116 114 117 101 10] stderr:[] exitCode:0}; checked backends {stdout:[111 110 101 10 49 52 10 116 114 117 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_object_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 108 105 109 105 116 32 110 101 101 100 115 32 110 117 109 98 101 114 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}; native {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 108 105 109 105 116 32 110 101 101 100 115 32 110 117 109 98 101 114 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+    checked_json_test.go:84: source Node {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 114 97 119 46 111 112 116 105 111 110 115 46 108 105 109 105 116 32 110 101 101 100 115 32 110 117 109 98 101 114 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_list
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[49 52 10 50 10] stderr:[] exitCode:0}; checked backends {stdout:[49 52 10 50 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_list_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 97 114 114 97 121 32 101 108 101 109 101 110 116 32 110 101 101 100 115 32 110 117 109 98 101 114 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}; native {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 97 114 114 97 121 32 101 108 101 109 101 110 116 32 110 101 101 100 115 32 110 117 109 98 101 114 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+    checked_json_test.go:84: source Node {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 91 48 93 32 110 101 101 100 115 32 110 117 109 98 101 114 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_validated
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[116 114 117 101 10 67 111 109 112 105 108 101 114 32 111 112 116 105 111 110 32 39 99 111 109 112 105 108 101 79 110 83 97 118 101 39 32 114 101 113 117 105 114 101 115 32 97 32 118 97 108 117 101 32 111 102 32 116 121 112 101 32 98 111 111 108 101 97 110 46 10 102 97 108 115 101 10] stderr:[] exitCode:0}; checked backends {stdout:[116 114 117 101 10 67 111 109 112 105 108 101 114 32 111 112 116 105 111 110 32 39 99 111 109 112 105 108 101 79 110 83 97 118 101 39 32 114 101 113 117 105 114 101 115 32 97 32 118 97 108 117 101 32 111 102 32 116 121 112 101 32 98 111 111 108 101 97 110 46 10 102 97 108 115 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/structural
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_literal
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[108 105 115 116 10 110 111 100 101 10] stderr:[] exitCode:0}; checked backends {stdout:[108 105 115 116 10 110 111 100 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_literal_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; native {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}
+    checked_json_test.go:84: source Node {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 46 116 121 112 101 32 110 101 101 100 115 32 34 108 105 115 116 34 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_literal_result
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[49 10] stderr:[] exitCode:0}; checked backends {stdout:[49 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_literal_result_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[50 10] stderr:[] exitCode:0}; native {stdout:[50 10] stderr:[] exitCode:0}
+    checked_json_test.go:84: source Node {stdout:[50 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 32 43 32 49 32 110 101 101 100 115 32 49 44 32 102 111 117 110 100 32 110 117 109 98 101 114 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_boolean_list
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[102 97 108 115 101 10 116 114 117 101 10] stderr:[] exitCode:0}; checked backends {stdout:[102 97 108 115 101 10 116 114 117 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_optional
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[49 52 10 49 53 10] stderr:[] exitCode:0}; checked backends {stdout:[49 52 10 49 53 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_recovery
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[116 114 117 101 10 116 114 117 101 10 116 114 117 101 10 116 114 117 101 10] stderr:[] exitCode:0}; checked backends {stdout:[116 114 117 101 10 116 114 117 101 10 116 114 117 101 10 116 114 117 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_domain_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 110 117 109 98 101 114 32 110 101 101 100 115 32 74 83 79 78 32 118 97 108 117 101 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 110 111 110 45 74 83 79 78 32 110 117 109 98 101 114 10] exitCode:70}; native {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 110 117 109 98 101 114 32 110 101 101 100 115 32 74 83 79 78 32 118 97 108 117 101 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 110 111 110 45 74 83 79 78 32 110 117 109 98 101 114 10] exitCode:70}
+    checked_json_test.go:84: source Node {stdout:[78 97 78 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 114 97 119 46 110 117 109 98 101 114 32 110 101 101 100 115 32 74 83 79 78 32 118 97 108 117 101 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 110 111 110 45 74 83 79 78 32 110 117 109 98 101 114 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_union
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[108 105 115 116 10 111 98 106 101 99 116 10] stderr:[] exitCode:0}; checked backends {stdout:[108 105 115 116 10 111 98 106 101 99 116 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_union_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; native {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}
+    checked_json_test.go:84: source Node {stdout:[119 114 111 110 103 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 118 97 108 117 101 46 116 121 112 101 32 110 101 101 100 115 32 34 108 105 115 116 34 32 124 32 34 111 98 106 101 99 116 34 44 32 102 111 117 110 100 32 115 116 114 105 110 103 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_nested_list
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[110 111 100 101 10 109 105 115 115 105 110 103 10] stderr:[] exitCode:0}; checked backends {stdout:[110 111 100 101 10 109 105 115 115 105 110 103 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_nested_list_misfit
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:74: gate cache node miss
+    checked_json_test.go:82: mutant removing recursive check caught: JavaScript {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 112 97 116 104 32 110 101 101 100 115 32 115 116 114 105 110 103 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 110 117 109 98 101 114 10] exitCode:70}; native {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 112 97 116 104 32 110 101 101 100 115 32 115 116 114 105 110 103 32 124 32 117 110 100 101 102 105 110 101 100 44 32 102 111 117 110 100 32 110 117 109 98 101 114 10] exitCode:70}
+    checked_json_test.go:84: source Node {stdout:[49 52 10] stderr:[] exitCode:0}; checked backends {stdout:[] stderr:[97 100 97 109 105 99 58 32 112 97 110 105 99 58 32 99 104 101 99 107 101 100 32 97 110 121 58 32 114 97 119 46 112 97 116 104 115 91 48 93 46 112 97 116 104 32 110 101 101 100 115 32 115 116 114 105 110 103 44 32 102 111 117 110 100 32 110 117 109 98 101 114 10] exitCode:70}
+=== RUN   TestCheckedJSON/json_boxed_list
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[49 52 10 49 53 10 116 114 117 101 10] stderr:[] exitCode:0}; checked backends {stdout:[49 52 10 49 53 10 116 114 117 101 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/stock_decode_entities
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[65 32 66 32 194 160 32 38 109 105 115 115 105 110 103 59 10] stderr:[] exitCode:0}; checked backends {stdout:[65 32 66 32 194 160 32 38 109 105 115 115 105 110 103 59 10] stderr:[] exitCode:0}
+=== RUN   TestCheckedJSON/json_nul_literal
+    checked_json_test.go:15: gate cache node miss
+    checked_json_test.go:38: gate cache node miss
+    checked_json_test.go:84: source Node {stdout:[49 10] stderr:[] exitCode:0}; checked backends {stdout:[49 10] stderr:[] exitCode:0}
+--- PASS: TestCheckedJSON (8.44s)
+    --- PASS: TestCheckedJSON/json_object (0.34s)
+    --- PASS: TestCheckedJSON/json_object_misfit (0.53s)
+    --- PASS: TestCheckedJSON/json_list (0.33s)
+    --- PASS: TestCheckedJSON/json_list_misfit (0.53s)
+    --- PASS: TestCheckedJSON/json_validated (0.34s)
+    --- PASS: TestCheckedJSON/structural (0.35s)
+    --- PASS: TestCheckedJSON/json_literal (0.32s)
+    --- PASS: TestCheckedJSON/json_literal_misfit (0.53s)
+    --- PASS: TestCheckedJSON/json_literal_result (0.33s)
+    --- PASS: TestCheckedJSON/json_literal_result_misfit (0.54s)
+    --- PASS: TestCheckedJSON/json_boolean_list (0.34s)
+    --- PASS: TestCheckedJSON/json_optional (0.35s)
+    --- PASS: TestCheckedJSON/json_recovery (0.31s)
+    --- PASS: TestCheckedJSON/json_domain_misfit (0.48s)
+    --- PASS: TestCheckedJSON/json_union (0.32s)
+    --- PASS: TestCheckedJSON/json_union_misfit (0.52s)
+    --- PASS: TestCheckedJSON/json_nested_list (0.34s)
+    --- PASS: TestCheckedJSON/json_nested_list_misfit (0.58s)
+    --- PASS: TestCheckedJSON/json_boxed_list (0.35s)
+    --- PASS: TestCheckedJSON/stock_decode_entities (0.37s)
+    --- PASS: TestCheckedJSON/json_nul_literal (0.35s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=87
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	15.377s

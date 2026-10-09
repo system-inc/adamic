@@ -1,0 +1,311 @@
+package oracle
+
+import (
+	"bytes"
+	"context"
+	"errors"
+	"github.com/system-inc/adamic/internal/flow"
+	"github.com/system-inc/adamic/internal/ir"
+	"github.com/system-inc/adamic/internal/load"
+	"github.com/system-inc/adamic/internal/lower"
+	"os"
+	"path/filepath"
+	"strings"
+	"testing"
+)
+
+// Register this unit without editing the shared oracle's compiler-owned fixture list.
+func init() {
+	for _, name := range []string{"catch_callback", "finally_callback", "rethrow", "finally_completion", "liveness", "dynamic", "region_payload", "dynamic_uncaught", "object_uncaught", "library_failures", "library_types", "library_host", "error_subclasses", "saved_error"} {
+		fixtures = append(fixtures, struct {
+			path    string
+			lowers  bool
+			checked bool
+		}{
+			"internal/oracle/testdata/step21_" + name + ".a", true, false,
+		})
+	}
+	fixtures = append(fixtures, struct {
+		path    string
+		lowers  bool
+		checked bool
+	}{"internal/oracle/testdata/step21_soundness_terminal.a", true, true})
+	fixtures = append(fixtures, struct {
+		path            string
+		lowers, checked bool
+	}{"internal/oracle/testdata/step21_builtin_narrow_terminal.a", true, true})
+}
+
+// The unknown-read proposal retains its checker barrier; source Node establishes its meaning.
+func TestStep21ProposalOutcomes(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct{ name, diagnostic, stdout string }{
+		{"unknown_read", "TS18046", "unknown\n"},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "docs/step-21-exceptions/proposals", probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err == nil {
+				_, err = lower.Lower(context.Background(), loaded)
+			}
+			if err == nil || !strings.Contains(err.Error(), probe.diagnostic) {
+				t.Fatalf("want diagnostic containing %q, got %v", probe.diagnostic, err)
+			}
+			t.Log(err)
+			source := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+			if source.exitCode != 0 || string(source.stdout) != probe.stdout || len(source.stderr) != 0 {
+				t.Fatalf("source Node: exit %d stdout %q stderr %q", source.exitCode, source.stdout, source.stderr)
+			}
+		})
+	}
+}
+
+// A real executed handler/finalizer gains one output line after lowering. The outside
+// source oracle must reject it in each backend; warnings and sanitizers cannot kill it.
+func TestStep21FixtureMutants(t *testing.T) {
+	t.Parallel()
+	for _, probe := range []struct {
+		name    string
+		finally bool
+	}{
+		{"catch_callback", false}, {"finally_callback", true}, {"rethrow", false},
+		{"finally_completion", true}, {"liveness", false},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_"+probe.name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			original := onNode(t, path)
+			marker := ir.WriteLine{Value: ir.StringConstant{Index: len(program.Strings)}}
+			program.Strings = append(program.Strings, "mutated handler")
+			changed := step21MutateHandler(program.Main, probe.finally, marker)
+			for index := range program.Functions {
+				if !changed {
+					changed = step21MutateHandler(program.Functions[index].Body, probe.finally, marker)
+				}
+			}
+			if !changed {
+				t.Fatal("no handler selected")
+			}
+			backend := onJavaScriptBackend(t, program)
+			compiled, sanitized := natively(t, program)
+			release := released(t, program)
+			for label, result := range map[string]run{"JavaScript": backend, "sanitized native": compiled, "release native": release} {
+				if result.exitCode != 0 || len(result.stderr) != 0 || !strings.Contains(string(result.stdout), "mutated handler\n") {
+					t.Fatalf("%s mutant did not execute cleanly: exit %d stdout %q stderr %q", label, result.exitCode, result.stdout, result.stderr)
+				}
+				if disagreement(original, result) == "" {
+					t.Fatalf("%s mutant survived", label)
+				}
+			}
+			if leaked := leaks(t, program, sanitized); leaked != "" {
+				t.Fatal(leaked)
+			}
+			t.Log("mutant caught by stdout in both backends and release native; sanitizer and leak checks clean")
+		})
+	}
+}
+
+func step21MutateHandler(statements []ir.Statement, finally bool, marker ir.Statement) bool {
+	for index, statement := range statements {
+		switch statement := statement.(type) {
+		case ir.Try:
+			if finally && statement.HasFinally {
+				statement.Finally = append([]ir.Statement{marker}, statement.Finally...)
+				statements[index] = statement
+				return true
+			}
+			if !finally && statement.HasCatch {
+				statement.Catch = append([]ir.Statement{marker}, statement.Catch...)
+				statements[index] = statement
+				return true
+			}
+			if step21MutateHandler(statement.Body, finally, marker) || step21MutateHandler(statement.Catch, finally, marker) || step21MutateHandler(statement.Finally, finally, marker) {
+				return true
+			}
+		case ir.Block:
+			if step21MutateHandler(statement.Body, finally, marker) {
+				return true
+			}
+		case ir.If:
+			if step21MutateHandler(statement.Then, finally, marker) || step21MutateHandler(statement.Else, finally, marker) {
+				return true
+			}
+		case ir.ForOf:
+			if step21MutateHandler(statement.Body, finally, marker) {
+				return true
+			}
+		case ir.Loop:
+			if step21MutateHandler(statement.Body, finally, marker) {
+				return true
+			}
+		}
+	}
+	return false
+}
+
+// Source Node reads the original array after the callback assignment throws.
+// This pins the old value's lifetime before the earlier consuming grow call.
+func TestStep21ThrowPathLiveness(t *testing.T) {
+	t.Parallel()
+	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_liveness.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for function, body := range program.Functions {
+		if body.Name != "read" {
+			continue
+		}
+		text := -1
+		for local, value := range program.Locals {
+			if value.Function == function && value.Name == "text" {
+				text = local
+			}
+		}
+		if text < 0 {
+			t.Fatal("missing text local")
+		}
+		graph := flow.Build(program, function)
+		live := flow.LiveOut(graph)
+		for _, instruction := range graph.Instructions {
+			if _, ok := (*instruction.At).(ir.WriteLine); ok {
+				if !live[instruction.Id][flow.DeclarationId(text+1)] {
+					t.Fatal("old text is dead before a callback that throws into a catch reading it")
+				}
+				return
+			}
+		}
+		t.Fatal("missing consuming statement")
+	}
+	t.Fatal("missing read function")
+}
+
+// The ruling excludes Node's stderr renderer for uncaught exceptions. Keep sanitizer
+// failures fatal and keep the ordinary panic comparisons unchanged.
+func TestStep21Uncaught(t *testing.T) {
+	t.Parallel()
+	for _, name := range []string{"step21_dynamic_uncaught", "step21_object_uncaught", "exceptions_uncaught", "closures_throw_uncaught"} {
+		t.Run(name, func(t *testing.T) {
+			t.Parallel()
+			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name+".a"))
+			if err != nil {
+				t.Fatal(err)
+			}
+			program, err := lowered(t, path)
+			if err != nil {
+				t.Fatal(err)
+			}
+			original := onNode(t, path)
+			native, binary := natively(t, program)
+			leakRun := executeWith(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, binary)
+			if leakRun.exitCode != 1 || len(leakRun.stderr) != 0 {
+				t.Fatalf("uncaught lifetime check: exit %d stderr %q", leakRun.exitCode, leakRun.stderr)
+			}
+			for label, result := range map[string]run{"native": native, "release": released(t, program), "JavaScript": onJavaScriptBackend(t, program)} {
+				if original.exitCode != 1 || result.exitCode != 1 || !bytes.Equal(original.stdout, result.stdout) {
+					t.Fatalf("%s: stdout/exit differ: source %d %q, actual %d %q stderr %q", label, original.exitCode, original.stdout, result.exitCode, result.stdout, result.stderr)
+				}
+				if len(result.stderr) != 0 {
+					t.Fatalf("%s uncaught renderer wrote stderr: %s", label, result.stderr)
+				}
+				if strings.Contains(string(result.stderr), "Sanitizer") || strings.Contains(string(result.stderr), "runtime error:") {
+					t.Fatalf("%s sanitizer failure: %s", label, result.stderr)
+				}
+			}
+		})
+	}
+}
+
+func TestStep21UnknownAssertions(t *testing.T) {
+	t.Parallel()
+	for _, assertion := range []string{"{ readonly message: string }", "() => string"} {
+		t.Run(assertion, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "unknown.a")
+			source := "try { throw 42; } catch (error) { const value = error as " + assertion + "; console.log(typeof value); }"
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			var refused *lower.Refused
+			if !errors.As(err, &refused) {
+				t.Fatalf("want Refused, got %v", err)
+			}
+		})
+	}
+}
+
+// New repository programs stay .a; this temporary .ts copy proves equal admission.
+func TestStep21TypeScriptExtension(t *testing.T) {
+	t.Parallel()
+	originalPath, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/step21_dynamic.a"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(originalPath)
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "dynamic.ts")
+	if err := os.WriteFile(path, source, 0600); err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	original := execute(t, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), path)
+	native, binary := natively(t, program)
+	for label, result := range map[string]run{"native": native, "JavaScript": onJavaScriptBackend(t, program), "release": released(t, program)} {
+		if difference := disagreement(original, result); difference != "" {
+			t.Fatalf("%s: %s", label, difference)
+		}
+	}
+	if report := leaks(t, program, binary); report != "" {
+		t.Fatal(report)
+	}
+}
+
+func TestStep21ErrorBoundaries(t *testing.T) {
+	t.Parallel()
+	for _, source := range []string{
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(value.stack ?? 'absent');",
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(value['stack'] ?? 'absent');",
+		"class Failure extends Error {} const value = new Failure('failure'); console.log(`${Object.hasOwn(value, 'name')}`);",
+	} {
+		t.Run(source, func(t *testing.T) {
+			t.Parallel()
+			path := filepath.Join(t.TempDir(), "error.a")
+			if err := os.WriteFile(path, []byte(source), 0600); err != nil {
+				t.Fatal(err)
+			}
+			loaded, err := load.Load([]string{path})
+			if err != nil {
+				t.Fatal(err)
+			}
+			_, err = lower.Lower(context.Background(), loaded)
+			var notYet *lower.NotYet
+			if !errors.As(err, &notYet) {
+				t.Fatalf("want NotYet for unrepresented Error observation, got %v", err)
+			}
+		})
+	}
+}

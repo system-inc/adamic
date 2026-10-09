@@ -1,0 +1,10 @@
+{"Time":"2026-10-09T09:26:09.39949852Z","Action":"start","Package":"github.com/system-inc/adamic/cmd/adamic"}
+{"Time":"2026-10-09T09:26:09.406700438Z","Action":"run","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows"}
+{"Time":"2026-10-09T09:26:09.40678822Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"=== RUN   TestWASIRequestThrows\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:09.445921441Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"adamic: native: wasm32-wasi requires WASI_SYSROOT\n"}
+{"Time":"2026-10-09T09:26:09.445973649Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"    request_test.go:165: build returned 1\n","OutputType":"error"}
+{"Time":"2026-10-09T09:26:09.446149734Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Output":"--- FAIL: TestWASIRequestThrows (0.04s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:09.446177676Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Test":"TestWASIRequestThrows","Elapsed":0.04}
+{"Time":"2026-10-09T09:26:09.44620686Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:09.447175074Z","Action":"output","Package":"github.com/system-inc/adamic/cmd/adamic","Output":"FAIL\tgithub.com/system-inc/adamic/cmd/adamic\t0.047s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:26:09.447188945Z","Action":"fail","Package":"github.com/system-inc/adamic/cmd/adamic","Elapsed":0.048}

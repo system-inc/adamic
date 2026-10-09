@@ -1,0 +1,98 @@
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+=== RUN   TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+=== PAUSE TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+=== CONT  TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+    oracle_test.go:596: gate cache native miss
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a
+    oracle_test.go:603: gate cache native hit
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:749: gate cache node miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:589: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:749: gate cache node miss
+    oracle_test.go:596: gate cache native miss
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+=== NAME  TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a
+    oracle_test.go:589: gate cache native miss
+    oracle_test.go:603: gate cache native hit
+--- PASS: TestNativeAgreesWithNode (0.03s)
+    --- PASS: TestNativeAgreesWithNode/stage3/fixtures/taste/09_literal_cache.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/switch_empty_neighbors.a (0.62s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/host_array_unknown_predicate.a (0.71s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/gaps.a (0.86s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing.a (0.61s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/unknown_narrowing_host.a (0.72s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/nested_destructured.a (8.78s)
+PASS
+gate cache: native hits=7 misses=14
+gate cache: node hits=0 misses=14
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	8.825s

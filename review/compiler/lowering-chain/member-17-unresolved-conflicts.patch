@@ -1,0 +1,484 @@
+diff --cc internal/lower/library_object.go
+index bf0e78b02,03307b719..000000000
+--- a/internal/lower/library_object.go
++++ b/internal/lower/library_object.go
+@@@ -64,16 -61,8 +64,21 @@@ func (l *lowering) objectCallArguments(
+  		}
+  		call.Arguments = []ir.Expression{fit(value, ir.Union)}
+  	case "keys", "values", "entries", "freeze", "hasOwn", "assign":
+++<<<<<<< HEAD
+ +		if name == "keys" && !l.includesUndefined(l.checker.GetTypeAtLocation(written[0])) {
+ +			if _, _, known := l.nodeArrayLayoutOf(l.checker.GetTypeAtLocation(written[0])); known {
+ +				value, err := l.expression(written[0])
+ +				if err != nil {
+ +					return nil, true, err
+ +				}
+ +				call.Arguments = []ir.Expression{value}
+ +				call.Returns = ir.Array
+ +				return call, true, nil
+ +			}
+++=======
++ 		if l.errorAncestry(l.checker.GetTypeAtLocation(written[0])) {
++ 			return nil, true, l.notYet(written[0], "Object."+name+" on Error (its inherited name and non-enumerable own descriptors need presence representation)")
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  		}
+  		// Assignment and freezing retain their existing exact-shape requirement.
+  		// A plain const's literal initializer proves the complete shape, including field presence.
+diff --cc internal/native/runtime/adamic.h
+index b5fc577f7,4b3f85855..000000000
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@@ -912,13 -887,20 +912,29 @@@ void adamic_weak_dropped(adamic_weak *h
+  // nothing else can reach, and a Weak reaches without counting.
+  bool adamic_weak_held(const void *target);
+  
+++<<<<<<< HEAD
+ +// adamic_thrown is the error being thrown, or NULL (exceptions.c): set by a throw, tested after
+ +// every call that can throw, and taken by the catch that lands it. adamic_error_new is new
+ +// Error(message), and adamic_uncaught the panic of an error nothing caught.
+ +extern adamic_object *adamic_thrown;
+ +// NULL is an omitted or undefined message; its empty fallback is not an own field.
+++=======
++ // adamic_thrown owns a tagged union payload (NULL is undefined). The separate pending flag
++ // distinguishes a thrown undefined from no exception. Every throwing call tests the flag.
++ // A catch takes ownership; adamic_uncaught flushes stdout and exits 1 without conversion.
++ extern adamic_heap *adamic_thrown;
++ extern bool adamic_exception_pending;
++ extern const adamic_class adamic_error_class;
++ extern const adamic_class adamic_host_error_class;
++ extern const adamic_class adamic_host_type_error_class;
++ extern const adamic_class adamic_host_range_error_class;
++ extern const adamic_class adamic_range_error_class;
++ extern const adamic_class adamic_type_error_class;
++ adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind);
++ adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code);
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  adamic_object *adamic_error_new(adamic_string *message);
+ +const char *adamic_error_field_name(const adamic_object *object, const char *name);
+  _Noreturn void adamic_uncaught(void);
+  
+  // adamic_start begins every program: it keeps main's arguments, and writes to a closed pipe fail
+diff --cc internal/native/runtime/exceptions.c
+index 7d1acc6a1,d91cffa9e..000000000
+--- a/internal/native/runtime/exceptions.c
++++ b/internal/native/runtime/exceptions.c
+@@@ -13,43 -13,47 +14,90 @@@ bool adamic_exception_pending
+  static const char *const error_names[] = {"name", "message"};
+  static const bool error_references[] = {true, true};
+  static const adamic_shape error_shape = {2, error_names, error_references, NULL};
+++<<<<<<< HEAD
+ +static const char *const absent_message_names[] = {"name", "#message"};
+ +static const adamic_shape absent_message_shape = {2, absent_message_names, error_references, NULL};
+ +static adamic_string empty_message = ADAMIC_STRING("");
+++=======
++ const adamic_class adamic_error_class = {NULL, 0, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
++ const adamic_class adamic_host_error_class = {&adamic_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  static adamic_string error_name = ADAMIC_STRING("Error");
++ static adamic_string range_error_name = ADAMIC_STRING("RangeError");
++ static adamic_string type_error_name = ADAMIC_STRING("TypeError");
++ const adamic_class adamic_range_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
++ const adamic_class adamic_type_error_class = {&adamic_error_class, 2, 2, NULL, 0, &error_shape, NULL, 0, false, 0, NULL};
++ const adamic_class adamic_host_type_error_class = {&adamic_type_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
++ const adamic_class adamic_host_range_error_class = {&adamic_range_error_class, 2, 3, NULL, 0, NULL, NULL, 0, false, 0, NULL};
+  
+++<<<<<<< HEAD
+ +adamic_object *adamic_error_new(adamic_string *message) {
+ +	// Undefined creates no own message property. Keep the inherited empty fallback
+ +	// in private storage so ordinary and checked field reads share the same slot.
+ +	adamic_object *error = adamic_object_new(message == NULL ? &absent_message_shape : &error_shape);
+ +	error->slots[0].reference = adamic_retain(&error_name);
+ +	error->slots[1].reference = adamic_retain(message == NULL ? &empty_message : message);
+ +	adamic_object_field_types(error)[0] = adamic_rep_string;
+ +	adamic_object_field_types(error)[1] = adamic_rep_string;
+ +	return error;
+ +}
+ +
+ +// Public lookup sees Error.prototype.message without creating an own property.
+ +const char *adamic_error_field_name(const adamic_object *object, const char *name) {
+ +	return object->shape == &absent_message_shape && strcmp(name, "message") == 0 ? "#message" : name;
+ +}
+ +
+ +_Noreturn void adamic_uncaught(void) {
+ +	// String(error), as Node's runner reports an error nothing caught: name, and ": " and the message
+ +	// when there is one.
+ +	static adamic_slot_cache name_cache, message_cache;
+ +	const adamic_string *name = adamic_object_field(adamic_thrown, "name", &name_cache)->reference;
+ +	const adamic_string *message = adamic_object_field(adamic_thrown, "message", &message_cache)->reference;
+ +	size_t length = name->length + (message->length > 0 ? 2 + message->length : 0);
+ +	char *text = malloc(length + 1);
+ +	if (text == NULL) {
+ +		static const char out_of_memory[] = "out of memory";
+ +		adamic_panic(out_of_memory, sizeof out_of_memory - 1);
+ +	}
+ +	memcpy(text, name->bytes, name->length);
+ +	if (message->length > 0) {
+ +		memcpy(text + name->length, ": ", 2);
+ +		memcpy(text + name->length + 2, message->bytes, message->length);
+ +	}
+ +	adamic_panic(text, length);
+++=======
++ 
++ adamic_object *adamic_error_new_kind(adamic_string *message, const char *kind) {
++ 	adamic_object *error = adamic_object_new(&error_shape);
++ 	error->class = &adamic_error_class;
++ 	adamic_string *name = &error_name;
++  if (strcmp(kind,"RangeError")==0) { error->class = &adamic_range_error_class; name = &range_error_name; }
++  if (strcmp(kind,"TypeError")==0) { error->class = &adamic_type_error_class; name = &type_error_name; }
++  error->slots[0].reference = adamic_retain(name);
++ 	error->slots[1].reference = adamic_retain(message);
++ 	return error;
++ }
++ 
++ adamic_object *adamic_error_new_code(adamic_string *message, adamic_string *code) {
++  static const char *const names[] = {"name", "message", "code"};
++  static const bool references[] = {true, true, true};
++  static const adamic_shape shape = {3, names, references, NULL};
++  adamic_object *error = adamic_object_new(&shape);
++  error->class = &adamic_host_error_class;
++  error->slots[0].reference = adamic_retain(&error_name);
++  error->slots[1].reference = adamic_retain(message);
++  error->slots[2].reference = adamic_retain(code);
++  return error;
++ }
++ 
++ adamic_object *adamic_error_new(adamic_string *message) { return adamic_error_new_kind(message,"Error"); }
++ 
++ _Noreturn void adamic_uncaught(void) {
++ 	// No implicit conversion or stack rendering: the external contract is stdout and exit 1.
++ 	adamic_output_flush();
++ 	adamic_release(adamic_thrown);
++ 	adamic_thrown = NULL;
++ 	adamic_exception_pending = false;
++ 	exit(1);
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  }
+diff --cc internal/oracle/counts.md
+index acf74c80e,0d854c30a..000000000
+--- a/internal/oracle/counts.md
++++ b/internal/oracle/counts.md
+@@@ -292,8 -292,8 +292,13 @@@ Generated by TestCountsAreRecorded; aft
+  | internal/oracle/testdata/borrow_defined_lent.a | 8 | 8 | 1 | 8 | 6 | 0 |
+  | internal/oracle/testdata/borrow_defined_lent_field.a | 19 | 19 | 4 | 17 | 11 | 0 |
+  | internal/oracle/testdata/writes_in_try.a | 30 | 30 | 29 | 41 | 6 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/class_as_interface.a | 372 | 372 | 317 | 489 | 58 | 0 |
+ +| internal/oracle/testdata/optional_class_method.a | 40 | 40 | 65 | 98 | 9 | 0 |
+++=======
++ | internal/oracle/testdata/class_as_interface.a | 372 | 372 | 304 | 469 | 60 | 0 |
++ | internal/oracle/testdata/optional_class_method.a | 40 | 40 | 44 | 71 | 9 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/set_undefined.a | 26 | 26 | 31 | 48 | 7 | 0 |
+  | internal/oracle/testdata/borrow_map_overwrite.a | 29 | 29 | 23 | 46 | 13 | 0 |
+  | internal/oracle/testdata/spread_snapshot.a | 22 | 22 | 3 | 24 | 11 | 0 |
+@@@ -369,10 -369,10 +374,15 @@@
+  | internal/oracle/testdata/shared_slices.a | 12236 | 12236 | 10648 | 12767 | 86 | 0 |
+  | internal/oracle/testdata/string_append.a | 248 | 248 | 140 | 278 | 48 | 0 |
+  | internal/oracle/testdata/shared_slice_append.a | 200 | 200 | 37 | 206 | 9 | 0 |
+- | internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 33 | 154 | 10 | 0 |
++ | internal/oracle/testdata/search_from_sweep.a | 133 | 133 | 34 | 155 | 10 | 0 |
+  | internal/oracle/testdata/integer_format.a | 106826 | 106826 | 48056 | 136190 | 20 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/reuse_throw.a | 26 | 26 | 24 | 41 | 8 | 0 |
+ +| internal/oracle/testdata/reuse_narrowed.a | 8 | 5 | 9 | 10 | 5 | 0 |
+++=======
++ | internal/oracle/testdata/reuse_throw.a | 26 | 26 | 27 | 44 | 8 | 0 |
++ | internal/oracle/testdata/reuse_narrowed.a | 7 | 5 | 6 | 8 | 5 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/reuse_lent_global.a | 10 | 10 | 8 | 15 | 7 | 0 |
+  | internal/oracle/testdata/reuse_spread_method.a | 10 | 10 | 7 | 12 | 8 | 0 |
+  | internal/oracle/testdata/reuse_spread_method_alias.a | 8 | 8 | 7 | 14 | 6 | 0 |
+@@@ -388,12 -388,12 +398,21 @@@
+  | internal/oracle/testdata/library_map_set_groupby_keys.a | 31 | 31 | 42 | 68 | 12 | 0 |
+  | internal/oracle/testdata/library_map_set_next.a | 82 | 82 | 74 | 139 | 57 | 0 |
+  | internal/oracle/testdata/has_own.a | 5 | 5 | 0 | 7 | 3 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/regexp.a | 437 | 437 | 383 | 418 | 58 | 0 |
+ +| internal/oracle/testdata/sweeps/regexp_methods.a | 345663 | 345663 | 228825 | 335370 | 54 | 0 |
+ +| internal/oracle/testdata/regexp_matchall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |
+ +| internal/oracle/testdata/regexp_replaceall_nonglobal.a | 1 | 0 | 2 | 0 | 1 | 0 |
+ +| internal/oracle/testdata/regexp_null_narrowed.a | 5 | 4 | 11 | 7 | 3 | 0 |
+ +| internal/oracle/testdata/regexp_replace.a | 625 | 625 | 206 | 336 | 113 | 0 |
+++=======
++ | internal/oracle/testdata/regexp.a | 437 | 437 | 381 | 416 | 58 | 0 |
++ | internal/oracle/testdata/sweeps/regexp_methods.a | 345663 | 345663 | 228825 | 335370 | 54 | 0 |
++ | internal/oracle/testdata/regexp_matchall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |
++ | internal/oracle/testdata/regexp_replaceall_nonglobal.a | 2 | 2 | 5 | 4 | 2 | 0 |
++ | internal/oracle/testdata/regexp_null_narrowed.a | 4 | 4 | 8 | 5 | 3 | 0 |
++ | internal/oracle/testdata/regexp_replace.a | 625 | 625 | 205 | 335 | 113 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/regexp_split.a | 103 | 103 | 147 | 154 | 10 | 0 |
+  | internal/oracle/testdata/regexp_exec.a | 163 | 163 | 93 | 155 | 17 | 0 |
+  | internal/oracle/testdata/regexp_match.a | 83 | 83 | 84 | 102 | 18 | 0 |
+@@@ -503,12 -466,12 +522,12 @@@
+  | internal/oracle/testdata/class_identity.a | 11 | 11 | 6 | 17 | 7 | 0 |
+  | internal/oracle/testdata/class_inheritance_memory.a | 48 | 42 | 20 | 58 | 11 | 6 |
+  | internal/oracle/testdata/class_inheritance_generic.a | 89 | 89 | 85 | 148 | 39 | 0 |
+ -| internal/oracle/testdata/class_inheritance_interface.a | 37 | 37 | 44 | 70 | 13 | 0 |
+ +| internal/oracle/testdata/class_inheritance_interface.a | 37 | 37 | 68 | 102 | 13 | 0 |
+  | internal/oracle/testdata/class_private_generic.a | 28 | 28 | 16 | 42 | 14 | 0 |
+  | internal/oracle/testdata/class_private_members.a | 18 | 18 | 15 | 37 | 8 | 0 |
+- | internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 146 | 249 | 35 | 0 |
++ | internal/oracle/testdata/class_inheritance_conditional.a | 164 | 164 | 157 | 260 | 35 | 0 |
+  | internal/oracle/testdata/class_super_closure.a | 54 | 54 | 27 | 65 | 15 | 0 |
+- | internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 5 | 10 | 5 | 1 |
++ | internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 7 | 12 | 5 | 1 |
+  | internal/oracle/testdata/class_instance_key_region.a | 110 | 109 | 104 | 165 | 55 | 1 |
+  | internal/oracle/testdata/class_instance_key_consume.a | 8 | 7 | 5 | 12 | 6 | 1 |
+  | internal/oracle/testdata/class_instance_key_region_alias.a | 110 | 109 | 104 | 165 | 55 | 1 |
+@@@ -532,8 -495,8 +551,13 @@@
+  | internal/oracle/testdata/conditions_union.a | 25 | 25 | 14 | 39 | 3 | 0 |
+  | internal/oracle/testdata/conditions_sites.a | 1 | 1 | 5 | 6 | 1 | 0 |
+  | internal/oracle/testdata/conditions_evaluation.a | 3 | 3 | 0 | 3 | 2 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/conditions_ledger78.a | 430 | 430 | 88 | 435 | 6 | 0 |
+ +| internal/oracle/testdata/debugger_fail.a | 2 | 2 | 4 | 4 | 2 | 0 |
+++=======
++ | internal/oracle/testdata/conditions_ledger78.a | 430 | 430 | 80 | 427 | 6 | 0 |
++ | internal/oracle/testdata/debugger_fail.a | 2 | 2 | 5 | 5 | 2 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/devirtualize_modules/main.a | 5 | 2 | 8 | 10 | 2 | 3 |
+  | internal/oracle/testdata/devirtualize_receivers.a | 22 | 21 | 41 | 57 | 7 | 1 |
+  | internal/oracle/testdata/devirtualize_interfaces.a | 21 | 21 | 32 | 57 | 9 | 0 |
+@@@ -543,10 -506,10 +567,10 @@@
+  | internal/oracle/testdata/devirtualize_function_field.a | 13 | 13 | 21 | 29 | 10 | 0 |
+  | internal/oracle/testdata/devirtualize_factory.a | 8 | 5 | 12 | 19 | 2 | 3 |
+  | internal/oracle/testdata/devirt_borrow_doc_claim.a | 15 | 13 | 6 | 13 | 5 | 2 |
+- | internal/oracle/testdata/devirtualize.a | 43 | 39 | 22 | 62 | 10 | 4 |
++ | internal/oracle/testdata/devirtualize.a | 43 | 39 | 24 | 64 | 10 | 4 |
+  | internal/oracle/testdata/element_access_boolean.a | 38 | 38 | 17 | 50 | 7 | 0 |
+ -| internal/oracle/testdata/element_access_optional.a | 35 | 35 | 50 | 79 | 9 | 0 |
+ -| internal/oracle/testdata/element_access_presence.a | 4 | 3 | 5 | 7 | 4 | 0 |
+ +| internal/oracle/testdata/element_access_optional.a | 35 | 35 | 58 | 87 | 9 | 0 |
+ +| internal/oracle/testdata/element_access_presence.a | 5 | 3 | 8 | 10 | 4 | 0 |
+  | internal/oracle/testdata/element_access_reads.a | 42 | 42 | 17 | 51 | 9 | 0 |
+  | internal/oracle/testdata/element_access_tuple.a | 76 | 76 | 73 | 123 | 16 | 0 |
+  | internal/oracle/testdata/entries_scanner.a | 18 | 18 | 8 | 14 | 11 | 0 |
+@@@ -597,8 -560,7 +621,12 @@@
+  | internal/oracle/testdata/fallthrough_nested.a | 22 | 22 | 5 | 28 | 3 | 0 |
+  | internal/oracle/testdata/fallthrough_labels.a | 32 | 32 | 7 | 35 | 6 | 0 |
+  | internal/oracle/testdata/implicit_returns.a | 50 | 50 | 18 | 68 | 10 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 10 | 29 | 5 | 0 |
+ +| internal/oracle/testdata/refusal_rulings/function_signature.a | 3 | 3 | 0 | 3 | 3 | 0 |
+++=======
++ | internal/oracle/testdata/fallthrough_exceptions.a | 26 | 26 | 12 | 31 | 5 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/function_values_return.a | 24 | 24 | 29 | 58 | 8 | 0 |
+  | internal/oracle/testdata/function_values_boundary.a | 41 | 41 | 70 | 119 | 13 | 0 |
+  | internal/oracle/testdata/function_values_options.a | 6 | 6 | 6 | 14 | 6 | 0 |
+@@@ -645,25 -590,8 +673,30 @@@
+  | internal/oracle/testdata/imported_const_cases/string.a | 4 | 4 | 14 | 17 | 2 | 0 |
+  | internal/oracle/testdata/imported_const_cases/reexport.a | 1 | 1 | 9 | 12 | 1 | 0 |
+  | internal/oracle/testdata/imported_const_cases/fallthrough.a | 2 | 2 | 11 | 15 | 1 | 0 |
+++<<<<<<< HEAD
+ +| stage3/fixtures/iteration-dispatch/class.a | 22 | 22 | 11 | 22 | 7 | 0 |
+ +| stage3/fixtures/iteration-dispatch/object.a | 26 | 26 | 14 | 28 | 11 | 0 |
+ +| stage3/fixtures/iteration-dispatch/break.a | 20 | 20 | 11 | 18 | 10 | 0 |
+ +| stage3/fixtures/iteration-dispatch/return.a | 21 | 21 | 11 | 18 | 13 | 0 |
+ +| stage3/fixtures/iteration-dispatch/labeled_continue.a | 44 | 44 | 22 | 38 | 12 | 0 |
+ +| stage3/fixtures/iteration-dispatch/body_throw.a | 22 | 22 | 17 | 24 | 12 | 0 |
+ +| stage3/fixtures/iteration-dispatch/next_throw.a | 12 | 12 | 13 | 16 | 7 | 0 |
+ +| stage3/fixtures/iteration-dispatch/close_throw_body.a | 22 | 22 | 20 | 26 | 12 | 0 |
+ +| stage3/fixtures/iteration-dispatch/close_throw_break.a | 20 | 20 | 16 | 21 | 10 | 0 |
+ +| stage3/fixtures/iteration-dispatch/cached_next.a | 29 | 29 | 17 | 34 | 12 | 0 |
+ +| stage3/fixtures/iteration-dispatch/completion.a | 20 | 20 | 10 | 20 | 11 | 0 |
+ +| stage3/fixtures/iteration-dispatch/done_throw.a | 13 | 13 | 14 | 16 | 10 | 0 |
+ +| stage3/fixtures/iteration-dispatch/value_throw.a | 13 | 13 | 14 | 16 | 10 | 0 |
+ +| stage3/fixtures/iteration-dispatch/method_getters.a | 26 | 26 | 16 | 24 | 15 | 0 |
+ +| internal/oracle/testdata/class_wrong_output_refused/iterators_override_this.a | 57 | 57 | 31 | 49 | 9 | 0 |
+ +| internal/oracle/testdata/class_wrong_output_refused/iterators_hidden_return.a | 28 | 28 | 16 | 20 | 8 | 0 |
+ +| internal/oracle/testdata/user_iterators.a | 1050 | 1050 | 677 | 994 | 97 | 0 |
+ +| internal/oracle/testdata/user_iterators_rest_tdz.a | 11 | 3 | 7 | 3 | 8 | 0 |
+ +| internal/oracle/testdata/json_shorthand.a | 18 | 18 | 8 | 27 | 4 | 0 |
+++=======
++ | internal/oracle/testdata/user_iterators.a | 663 | 663 | 466 | 915 | 64 | 0 |
++ | internal/oracle/testdata/user_iterators_rest_tdz.a | 5 | 0 | 5 | 3 | 5 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/library_map_set_iterator_number_hash.a | 60 | 60 | 1039 | 1091 | 14 | 0 |
+  | internal/oracle/testdata/library_map_set_iterator_exhausted.a | 20230 | 20230 | 30328 | 50539 | 18 | 0 |
+  | internal/oracle/testdata/e4eec87_u02_optional_absent.a | 6 | 6 | 3 | 13 | 4 | 0 |
+@@@ -677,9 -604,9 +710,9 @@@
+  | internal/oracle/testdata/method_coverage_array_values.a | 26 | 26 | 18 | 48 | 13 | 0 |
+  | internal/oracle/testdata/method_coverage_bound_strings.a | 25 | 25 | 35 | 54 | 20 | 0 |
+  | internal/oracle/testdata/method_coverage_codes.a | 8 | 8 | 8 | 18 | 6 | 0 |
+ -| internal/oracle/testdata/method_coverage_conversions.a | 14 | 14 | 11 | 27 | 7 | 0 |
+ +| internal/oracle/testdata/method_coverage_conversions.a | 14 | 14 | 12 | 28 | 7 | 0 |
+  | internal/oracle/testdata/method_coverage_empty_alias_tdz.a | 0 | 0 | 0 | 0 | 0 | 0 |
+- | internal/oracle/testdata/method_coverage_format_failure.a | 1 | 0 | 0 | 1 | 1 | 0 |
++ | internal/oracle/testdata/method_coverage_format_failure.a | 2 | 2 | 4 | 6 | 2 | 0 |
+  | internal/oracle/testdata/method_coverage_map_parsers.a | 28 | 28 | 324 | 273 | 6 | 0 |
+  | internal/oracle/testdata/method_coverage_map_strings.a | 26 | 26 | 50 | 56 | 10 | 0 |
+  | internal/oracle/testdata/method_coverage_math.a | 140 | 140 | 28 | 196 | 32 | 0 |
+@@@ -991,52 -864,23 +1024,72 @@@
+  | internal/oracle/testdata/nested_reference_identity.a | 31 | 31 | 71 | 73 | 18 | 0 |
+  | internal/oracle/testdata/statements_small_prefix.a | 35 | 35 | 9 | 35 | 13 | 0 |
+  | internal/oracle/testdata/statements_small_parameters.a | 34 | 34 | 9 | 44 | 6 | 0 |
+++<<<<<<< HEAD
+ +| internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 9 | 13 | 4 | 0 |
+ +| stage3/fixtures/generics/01_identity.a | 3 | 3 | 3 | 7 | 3 | 0 |
+ +| stage3/fixtures/generics/02_optional_return.a | 5 | 5 | 3 | 9 | 3 | 0 |
+ +| stage3/fixtures/generics/03_callback_return.a | 8 | 8 | 3 | 11 | 3 | 0 |
+ +| stage3/fixtures/generics/05_nested_class.a | 8 | 8 | 5 | 16 | 7 | 0 |
+ +| stage3/fixtures/generics/09_recursive_optional.a | 3 | 3 | 1 | 4 | 3 | 0 |
+ +| stage3/fixtures/generics/10_identifier_multimap.a | 11 | 11 | 29 | 38 | 9 | 0 |
+ +| stage3/fixtures/generics/14_optional_literal_union.a | 3 | 3 | 0 | 3 | 3 | 0 |
+ +| stage3/fixtures/generics/15_array_callback.a | 18 | 18 | 7 | 27 | 4 | 0 |
+ +| docs/step-18/fixtures/function.a | 1 | 1 | 7 | 10 | 1 | 0 |
+ +| docs/step-18/fixtures/method.a | 5 | 5 | 3 | 8 | 4 | 0 |
+ +| docs/step-18/fixtures/element.a | 2 | 2 | 15 | 15 | 1 | 0 |
+ +| docs/step-18/fixtures/call-result.a | 2 | 2 | 8 | 9 | 2 | 0 |
+ +| docs/step-18/fixtures/cross-call.a | 4 | 4 | 11 | 16 | 4 | 0 |
+ +| docs/step-18/fixtures/receiver-call.a | 5 | 5 | 4 | 8 | 3 | 0 |
+ +| docs/step-18/fixtures/two-guards.a | 4 | 4 | 8 | 12 | 4 | 0 |
+ +| docs/step-18/fixtures/size.a | 3 | 3 | 6 | 8 | 3 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-parentheses-write.a | 2 | 2 | 3 | 2 | 2 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-parentheses.a | 3 | 2 | 5 | 4 | 2 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-method-continuation.a | 11 | 11 | 25 | 39 | 6 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-index.a | 17 | 17 | 15 | 35 | 3 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-intrinsics.a | 42 | 42 | 99 | 144 | 6 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-callable.a | 14 | 14 | 27 | 39 | 5 | 0 |
+ +| docs/step-18/fixtures/runtime-chain-present-undefined.a | 3 | 2 | 8 | 8 | 2 | 0 |
+ +| docs/step-18/fixtures/runtime-values.a | 31 | 31 | 40 | 71 | 4 | 0 |
+ +| docs/step-18/fixtures/runtime-order.a | 34 | 34 | 33 | 72 | 6 | 0 |
+ +| docs/step-18/fixtures/runtime-methods.a | 17 | 17 | 8 | 26 | 6 | 0 |
+ +| docs/step-18/fixtures/runtime-arguments.a | 27 | 27 | 29 | 55 | 7 | 0 |
+ +| docs/step-18/fixtures/runtime-cross-chain.a | 8 | 8 | 13 | 20 | 5 | 0 |
+ +| docs/step-18/fixtures/runtime-return-descriptor.a | 3 | 3 | 14 | 21 | 3 | 0 |
+ +| docs/step-18/fixtures/runtime-bound-methods.a | 15 | 15 | 9 | 25 | 5 | 0 |
+ +| docs/step-18/fixtures/runtime-bound-method-arguments.a | 21 | 21 | 11 | 32 | 12 | 0 |
+ +| docs/step-18/fixtures/runtime-bound-method-selection.a | 12 | 12 | 11 | 26 | 6 | 0 |
+ +| docs/step-18/fixtures/runtime-discarded-reference.a | 13 | 13 | 10 | 27 | 5 | 0 |
+ +| docs/step-18/storage-fixtures/read-then-call.a | 22 | 22 | 39 | 62 | 9 | 0 |
+ +| docs/step-18/storage-fixtures/getter-throw.a | 2 | 2 | 5 | 6 | 2 | 0 |
+ +| docs/step-18/storage-fixtures/getter.a | 26 | 26 | 40 | 64 | 8 | 0 |
+ +| docs/step-18/storage-fixtures/optional-method.a | 16 | 16 | 34 | 50 | 6 | 0 |
+ +| docs/step-18/storage-fixtures/field.a | 12 | 12 | 14 | 27 | 6 | 0 |
+ +| stage3/fixtures/iteration/collections.a | 35 | 35 | 24 | 47 | 11 | 0 |
+ +| stage3/fixtures/iteration/strings.a | 20 | 20 | 14 | 27 | 9 | 0 |
+ +| stage3/fixtures/iteration/object_iteration.a | 5 | 5 | 1 | 6 | 3 | 0 |
+ +| stage3/fixtures/iteration/array_view_stress.a | 34 | 34 | 50 | 72 | 16 | 0 |
+ +| stage3/fixtures/iteration/test262_array_views.a | 11 | 11 | 25 | 38 | 11 | 0 |
+ +| stage3/fixtures/iteration/array_view_weak.a | 5 | 5 | 8 | 13 | 4 | 0 |
+ +| stage3/fixtures/iteration/user_forwarding.a | 22 | 22 | 7 | 17 | 14 | 0 |
+++=======
++ | internal/oracle/testdata/statements_small_throw.a | 5 | 5 | 16 | 20 | 4 | 0 |
++ | internal/oracle/testdata/step21_catch_callback.a | 17 | 17 | 12 | 24 | 6 | 0 |
++ | internal/oracle/testdata/step21_finally_callback.a | 19 | 19 | 18 | 34 | 8 | 0 |
++ | internal/oracle/testdata/step21_rethrow.a | 13 | 13 | 22 | 32 | 4 | 0 |
++ | internal/oracle/testdata/step21_finally_completion.a | 17 | 17 | 6 | 19 | 5 | 0 |
++ | internal/oracle/testdata/step21_liveness.a | 12 | 12 | 9 | 17 | 5 | 0 |
++ | internal/oracle/testdata/step21_dynamic.a | 65 | 65 | 49 | 100 | 6 | 0 |
++ | internal/oracle/testdata/step21_region_payload.a | 3 | 3 | 3 | 5 | 3 | 0 |
++ | internal/oracle/testdata/step21_dynamic_uncaught.a | 0 | 0 | 1 | 2 | 0 | 0 |
++ | internal/oracle/testdata/step21_object_uncaught.a | 3 | 3 | 2 | 4 | 3 | 0 |
++ | internal/oracle/testdata/step21_library_failures.a | 35 | 35 | 56 | 82 | 4 | 0 |
++ | internal/oracle/testdata/step21_library_types.a | 22 | 22 | 36 | 51 | 9 | 0 |
++ | internal/oracle/testdata/step21_library_host.a | 25 | 25 | 31 | 48 | 7 | 0 |
++ | internal/oracle/testdata/step21_error_subclasses.a | 16 | 16 | 37 | 45 | 5 | 0 |
++ | internal/oracle/testdata/step21_saved_error.a | 20 | 20 | 37 | 47 | 7 | 0 |
++ | internal/oracle/testdata/step21_soundness_terminal.a | 3 | 2 | 3 | 5 | 3 | 0 |
++ | internal/oracle/testdata/step21_builtin_narrow_terminal.a | 6 | 4 | 8 | 9 | 5 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/structural_statics_instance.a | 4 | 4 | 5 | 9 | 4 | 0 |
+  | internal/oracle/testdata/structural_statics_static.a | 3 | 3 | 4 | 8 | 3 | 0 |
+  | internal/oracle/testdata/structural_statics_mixed.a | 15 | 15 | 18 | 32 | 5 | 0 |
+@@@ -1073,15 -917,15 +1126,25 @@@
+  | stage3/fixtures/taste/20_jsdoc_terminate.a | 25 | 25 | 8 | 35 | 9 | 0 |
+  | stage3/fixtures/taste/22_assignment_once.a | 164 | 164 | 40 | 208 | 19 | 0 |
+  | stage3/fixtures/taste/23_labels_finally.a | 42 | 42 | 0 | 42 | 5 | 0 |
+++<<<<<<< HEAD
+ +| stage3/fixtures/taste/24_proportional_conditions.a | 43 | 43 | 89 | 131 | 14 | 0 |
+ +| internal/oracle/testdata/taste_optional_join.a | 11 | 11 | 11 | 25 | 3 | 0 |
+ +| internal/oracle/testdata/taste_truthiness.a | 113 | 113 | 50 | 165 | 10 | 0 |
+ +| internal/oracle/testdata/taste_logical_assignment.a | 145 | 145 | 50 | 196 | 8 | 0 |
+ +| internal/oracle/testdata/taste_comma.a | 51 | 51 | 5 | 56 | 4 | 0 |
+ +| internal/oracle/testdata/taste_labels.a | 56 | 56 | 6 | 59 | 4 | 0 |
+ +| internal/oracle/testdata/taste_void.a | 39 | 39 | 8 | 46 | 4 | 0 |
+++=======
++ | stage3/fixtures/taste/24_proportional_conditions.a | 43 | 43 | 92 | 134 | 14 | 0 |
++ | internal/oracle/testdata/taste_optional_join.a | 11 | 11 | 8 | 22 | 4 | 0 |
++ | internal/oracle/testdata/taste_truthiness.a | 113 | 113 | 50 | 165 | 10 | 0 |
++ | internal/oracle/testdata/taste_logical_assignment.a | 145 | 145 | 50 | 196 | 8 | 0 |
++ | internal/oracle/testdata/taste_comma.a | 51 | 51 | 6 | 55 | 4 | 0 |
++ | internal/oracle/testdata/taste_labels.a | 56 | 56 | 6 | 59 | 4 | 0 |
++ | internal/oracle/testdata/taste_void.a | 39 | 39 | 9 | 45 | 4 | 0 |
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  | internal/oracle/testdata/taste_exports/main.a | 10 | 10 | 7 | 20 | 4 | 0 |
+ -| internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 34 | 10 | 0 |
+ +| internal/oracle/testdata/taste_stage3_representations.a | 24 | 24 | 11 | 35 | 10 | 0 |
+  | internal/oracle/testdata/taste_star/function.a | 3 | 3 | 5 | 5 | 3 | 0 |
+  | internal/oracle/testdata/taste_star/class.a | 3 | 3 | 8 | 7 | 3 | 0 |
+  | internal/oracle/testdata/taste_star/const.a | 3 | 3 | 5 | 5 | 3 | 0 |
+@@@ -1103,27 -947,24 +1166,27 @@@
+  | internal/oracle/testdata/typeof_null_switch.a | 4 | 4 | 11 | 11 | 3 | 0 |
+  | internal/oracle/testdata/typeof_null_slots.a | 14 | 14 | 26 | 36 | 5 | 0 |
+  | internal/oracle/testdata/typeof_null_roll.a | 1 | 1 | 0 | 1 | 1 | 0 |
+- | internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 42 | 63 | 3 | 0 |
++ | internal/oracle/testdata/unknown_narrowing.a | 31 | 31 | 43 | 64 | 3 | 0 |
+  | internal/oracle/testdata/unknown_narrowing_host.a | 8 | 8 | 11 | 16 | 4 | 0 |
+ +| internal/oracle/testdata/weak_miscompiles/matching_methods.a | 11 | 11 | 13 | 21 | 7 | 0 |
+ +| internal/oracle/testdata/weak_miscompiles/boolean_filter.a | 12 | 12 | 22 | 28 | 9 | 0 |
+ +| internal/oracle/testdata/weak_miscompiles/held_union.a | 5 | 5 | 13 | 17 | 5 | 0 |
+  | internal/oracle/testdata/read_files.a | 58 | 58 | 33 | 76 | 7 | 0 |
+  | internal/oracle/testdata/empty-path.a | 4 | 4 | 4 | 8 | 4 | 0 |
+  | internal/oracle/testdata/utf8_sweep.a | 38498 | 38498 | 7701 | 38501 | 7706 | 0 |
+  | internal/oracle/testdata/arguments.a | 77 | 77 | 14 | 68 | 27 | 0 |
+  | internal/oracle/testdata/read_arguments.a | 15 | 15 | 11 | 18 | 9 | 0 |
+  | internal/oracle/testdata/write_files.a | 132 | 132 | 52 | 167 | 8 | 0 |
+- | internal/oracle/testdata/walk.a | 222 | 222 | 117 | 288 | 36 | 0 |
++ | internal/oracle/testdata/walk.a | 222 | 222 | 131 | 302 | 36 | 0 |
+  | internal/oracle/testdata/node_buffer_input.a | 45 | 45 | 24 | 57 | 7 | 0 |
+- | internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 13 | 30 | 7 | 0 |
+- | internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 11 | 36 | 9 | 0 |
+- | internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 24 | 81 | 10 | 0 |
++ | internal/oracle/testdata/node_fs_file_close.a | 27 | 27 | 16 | 33 | 7 | 0 |
++ | internal/oracle/testdata/node_fs_file_write_file.a | 31 | 31 | 13 | 38 | 9 | 0 |
++ | internal/oracle/testdata/node_fs_file_mkdir.a | 61 | 61 | 29 | 86 | 10 | 0 |
+  | internal/oracle/testdata/node_fs_file_date.a | 12 | 12 | 3 | 16 | 6 | 0 |
+- | internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 11 | 45 | 12 | 0 |
++ | internal/oracle/testdata/node_fs_file_write_buffer.a | 34 | 34 | 15 | 49 | 12 | 0 |
+  | stage3/interface-downcasts/visitor.a | 21 | 21 | 32 | 40 | 13 | 0 |
+  | stage3/interface-downcasts/wrong-kind.a | 2 | 0 | 2 | 1 | 2 | 0 |
+ -| stage3/interface-downcasts/default-staged.ts | 0 | 0 | 0 | 0 | 0 | 0 |
+ +| stage3/interface-downcasts/default-staged.ts | 2 | 2 | 6 | 7 | 2 | 0 |
+  | stage3/interface-downcasts/default-wrong-type.a | 1 | 0 | 3 | 2 | 1 | 0 |
+  | stage3/interface-downcasts/default-wrong-boolean.a | 1 | 0 | 3 | 2 | 1 | 0 |
+  | stage3/interface-downcasts/default-literal.a | 1 | 0 | 4 | 2 | 1 | 0 |
+diff --cc oracle/adamic.mjs
+index ca56c8b51,edf724032..000000000
+--- a/oracle/adamic.mjs
++++ b/oracle/adamic.mjs
+@@@ -4,28 -4,7 +4,32 @@@
+  // makes preceding writes reach their descriptors before process.exit, including pipes on macOS.
+  import { lstatSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs';
+  
+++<<<<<<< HEAD
+ +// A second failure while the first is being reported (stderr closed under it, say) ends the program
+ +// at once. Without this, the write fails, that failure is another uncaught exception, whose report
+ +// fails the same way, forever, at full speed: two orphaned processes once ran for half an hour so.
+ +let panicking = false;
+ +
+ +process.on('uncaughtException', (error) => {
+ +	if (panicking) {
+ +		process.exit(70);
+ +	}
+ +	panicking = true;
+ +	let message = String(error);
+ +	// Preserve the independently observed function from V8's stack. Generated
+ +	// backend function labels carry the same source name after their index.
+ +	if (message === 'RangeError: Maximum call stack size exceeded') {
+ +		const frame = String(error.stack).split('\n')[1] ?? '';
+ +		const name = frame.match(/^\s*at ([^ ()]+) \(/)?.[1];
+ +		if (name) message += ` in ${name.replace(/^function_\d+_/, '')}`;
+ +	}
+ +	process.stderr.write(`adamic: panic: ${message}\n`);
+ +	process.exitCode = 70;
+ +});
+ +
+++=======
++ // Uncaught language exceptions retain Node's exit 1 behavior. Only panic exits 70.
+++>>>>>>> 205586a0899488595200f3fca470874ef9282b37
+  for (const stream of [process.stdout, process.stderr]) {
+  	// Node exposes this on pipe and terminal handles; regular files already write synchronously.
+  	stream._handle?.setBlocking(true);

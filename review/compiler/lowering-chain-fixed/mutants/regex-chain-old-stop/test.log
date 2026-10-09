@@ -1,0 +1,8 @@
+=== RUN   TestRegexProgramsKeepCheckedFieldReads
+=== PAUSE TestRegexProgramsKeepCheckedFieldReads
+=== CONT  TestRegexProgramsKeepCheckedFieldReads
+    fields_test.go:195: /workspace/scratch/optional-calls-main-tmp/TestRegexProgramsKeepCheckedFieldReads1282357963/001/regex-fields.ts:1:76: stage 0 can't lower an optional chain property without a represented receiver yet
+--- FAIL: TestRegexProgramsKeepCheckedFieldReads (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.051s
+FAIL

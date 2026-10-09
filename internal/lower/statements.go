@@ -117,12 +117,15 @@ func (l *lowering) statement(node *ast.Node) ([]ir.Statement, error) {
 // expressionStatement lowers an expression used as a statement: a console call, an assignment, or
 // ++ and --. Any other expression's value would be thrown away, and stage 0 doesn't lower that yet.
 func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, error) {
+	if err := l.weakArrayCallback(expression); err != nil {
+		return nil, err
+	}
 	expression = ast.SkipParentheses(expression)
 	if statements, handled, err := l.conditionalSuper(expression); handled {
 		return statements, err
 	}
 	switch expression.Kind {
-	case ast.KindNonNullExpression, ast.KindVoidExpression:
+	case ast.KindYieldExpression, ast.KindNonNullExpression, ast.KindVoidExpression:
 		value, err := l.expression(expression)
 		if err != nil {
 			return nil, err
@@ -131,6 +134,18 @@ func (l *lowering) expressionStatement(expression *ast.Node) ([]ir.Statement, er
 	case ast.KindCallExpression:
 		if ast.SkipParentheses(expression.AsCallExpression().Expression).Kind == ast.KindSuperKeyword {
 			return l.superStatement(expression)
+		}
+		if value, handled, err := l.optionalChain(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
+		}
+		if value, handled, err := l.optionalCallable(expression); handled {
+			if err != nil {
+				return nil, err
+			}
+			return []ir.Statement{ir.Evaluate{Value: value}}, nil
 		}
 		if err := l.optionalCall(expression); err != nil {
 			return nil, err
@@ -239,6 +254,9 @@ func (l *lowering) returnStatement(node *ast.Node) ([]ir.Statement, error) {
 // returnAssignment preserves the right side's value, assigns once, then returns
 // that same value. Reading the target again could observe another write.
 func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
+	if l.uninitializedInitializer(node.AsBinaryExpression().Right) {
+		return nil, l.notYet(node, "returning a placeholder reset")
+	}
 	statements, err := l.assignment(node)
 	if err != nil {
 		return nil, err
@@ -255,5 +273,9 @@ func (l *lowering) returnAssignment(node *ast.Node) ([]ir.Statement, error) {
 	value := assignment.Value
 	read := ir.Read{Local: held, Of: value.Type()}
 	assignment.Value = read
-	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(read, l.function.Returns)}}, nil
+	var returned ir.Expression = read
+	if origin := l.placeholderOrigin(node.AsBinaryExpression().Left); origin != "" && !l.placeholderAllowsUnset(node) {
+		returned = ir.PlaceholderUse{Value: read, Origin: origin, Use: "return", Path: sourceExpression(node), Where: l.program.Where(node), Of: l.function.Returns}
+	}
+	return []ir.Statement{ir.Declare{Local: held, Value: value}, assignment, ir.Return{Value: fit(returned, l.function.Returns)}}, nil
 }

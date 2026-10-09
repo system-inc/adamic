@@ -1,0 +1,6 @@
+let value: string = null!;
+console.log(`${value === null}|${value === undefined}|${value !== null}|${value !== undefined}`);
+value = undefined!;
+console.log(`${value === null}|${value === undefined}`);
+value = "written" + " value";
+console.log(`${value === null}|${value === undefined}`);

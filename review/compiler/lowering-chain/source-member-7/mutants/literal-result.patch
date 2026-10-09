@@ -1,0 +1,11 @@
+--- internal/lower/checked_any.go
++++ internal/lower/checked_any.go
+@@ -40,7 +40,7 @@
+ 	case target.Flags()&checker.TypeFlagsBoolean != 0 && target.Flags()&checker.TypeFlagsBooleanLiteral == 0:
+ 		to = ir.Boolean
+ 	default:
+-		return nil, l.notYet(node, "checked any used as "+l.checker.TypeToString(target)+" (a scalar tag does not establish this contract)")
++		to = ir.Number
+ 	}
+ 	if value.Type() == to {
+ 		return value, nil

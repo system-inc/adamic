@@ -1,0 +1,7 @@
+interface NodeArray<T> extends Array<T>{pos:number;end:number;hasTrailingComma:boolean;transformFlags:number;}
+const nodes=[1,2] as NodeArray<number>;
+nodes.end=7;
+nodes.pos=-1;
+nodes.transformFlags=1;
+nodes.hasTrailingComma=true;
+console.log(String(JSON.stringify(nodes)));

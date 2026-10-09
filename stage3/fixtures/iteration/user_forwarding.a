@@ -1,0 +1,8 @@
+// Reduced from core.ts:1736: custom Set forwards its iterator factory.
+const values = new Set<number>([4, 5]);
+const customSet = {
+    [Symbol.iterator]: () => values.values(),
+};
+for (const value of customSet) {
+    console.log(`${value}`);
+}

@@ -1,0 +1,8 @@
+target f39014171aaf6b10156142cc1848201d2505913c
+logs /tmp/adamic-gate/adamic-catalog-logs-w99zd34k
+build flags: commit=f39014171aaf6b10156142cc1848201d2505913c; nproc=5; cpu.max=400000 100000; go version go1.27.1 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+12 refuse-suppression-directives: applies-and-fails-as-recorded
+12 made against=a1c350315bb16b4c283a0ada1acbfebeddbbbbd4
+12 wall=32.188s setup=12.883s check=16.717s cleanup=0.485s load=4.60 6.89 4.43 2/221 192358 -> 3.78 6.40 4.36 7/238 192768
+total wall=32.213s load=4.60 6.89 4.43 1/220 192347 -> 3.78 6.40 4.36 7/237 192768

@@ -1,0 +1,3 @@
+function length(value: any): number { return value.length; }
+console.log(String(length('x😀')));
+console.log(String(length([14])));

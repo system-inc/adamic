@@ -1,0 +1,38 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 75, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 68, in main
+    audit(rows)
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 41, in audit
+    assert row['roots'] == len(set(row['all_sites'])), 'root deduplication changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: root deduplication changed
+roots killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 75, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 68, in main
+    audit(rows)
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 42, in audit
+    assert row['units'] == len(set(row['root_units'])), 'unit deduplication changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: unit deduplication changed
+units killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 75, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 68, in main
+    audit(rows)
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 43, in audit
+    assert row['witnesses'] == sorted(set(row['all_sites']))[:3], 'witness selection changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: witness selection changed
+witnesses killed
+Traceback (most recent call last):
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 75, in <module>
+    main()
+  File "/workspace/adamic/docs/step-20-iteration/census.py", line 59, in main
+    assert {row['file'] for row in files} == set(header['sources']), 'resolved source coverage changed'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: resolved source coverage changed
+coverage killed
