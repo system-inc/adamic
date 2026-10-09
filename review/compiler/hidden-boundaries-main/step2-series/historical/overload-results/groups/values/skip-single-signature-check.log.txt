@@ -1,0 +1,15 @@
+=== RUN   TestOverloadValues
+=== RUN   TestOverloadValues/narrow/liar
+    overload_values_test.go:33: gate cache node hit
+    oracle_test.go:596: gate cache native hit
+    overload_values_test.go:46: gate cache node hit
+    oracle_test.go:589: gate cache native hit
+    overload_values_test.go:53: javascript unchecked wrong result: {stdout:[116 114 117 101 10 49 10 49 10] stderr:[] exitCode:0}
+--- FAIL: TestOverloadValues (0.10s)
+    --- FAIL: TestOverloadValues/narrow/liar (0.10s)
+FAIL
+gate cache: native hits=2 misses=0
+gate cache: node hits=2 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.112s
+FAIL

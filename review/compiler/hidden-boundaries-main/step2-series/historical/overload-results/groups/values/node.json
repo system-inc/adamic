@@ -1,0 +1,50 @@
+[
+  {
+    "fixture": "internal/oracle/testdata/overload_values/module-liar.ts",
+    "exit": 0,
+    "stdout": "true\n1\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/module-valid.ts",
+    "exit": 0,
+    "stdout": "true\nword\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/narrow-liar.ts",
+    "exit": 0,
+    "stdout": "true\n1\n1\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/narrow-valid.ts",
+    "exit": 0,
+    "stdout": "true\nword\nword\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/order-liar.ts",
+    "exit": 0,
+    "stdout": "1\nca\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/order-valid.ts",
+    "exit": 0,
+    "stdout": "word\nca\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/returned-liar.ts",
+    "exit": 0,
+    "stdout": "true\n1\n1\nfalse\nother\n",
+    "stderr": ""
+  },
+  {
+    "fixture": "internal/oracle/testdata/overload_values/returned-valid.ts",
+    "exit": 0,
+    "stdout": "true\nword\nword\nfalse\nother\n",
+    "stderr": ""
+  }
+]

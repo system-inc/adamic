@@ -1,0 +1,2 @@
+function first<T>(items: readonly T[] | undefined): T | undefined { return items?.[0]; }
+console.log(`${first([7]) ?? 0}|${first<number>(undefined) ?? 0}`);

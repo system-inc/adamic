@@ -1,0 +1,12 @@
+{
+  "side": "main",
+  "query": {
+    "label": "hidden-01-large",
+    "file": "transformers/declarations.ts",
+    "start": 68180,
+    "end": 81805
+  },
+  "exit": 0,
+  "seconds": 45.985,
+  "note": "Measured separately with timeout 90; duration is the worker load/register/lower timing."
+}

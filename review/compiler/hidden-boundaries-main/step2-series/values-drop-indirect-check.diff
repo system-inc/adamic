@@ -1,0 +1,11 @@
+--- internal/lower/overload_results.go
++++ internal/lower/overload_results.go
+@@ -348,7 +348,7 @@
+ 			l.recordOverloadFieldCheck(call, implementation, ordinal, field, message)
+ 		}
+ 		body = append(body, setup...)
+-		body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}})
++		if closure == nil { body = append(body, ir.If{Condition: ir.Unary{Operator: ir.Not, Operand: test}, Then: []ir.Statement{ir.Panic{Message: ir.StringConstant{Index: l.constant(message)}}}}) }
+ 	}
+ 	returned := fit(read, of)
+ 	if returned.Type() != of && read.Type() == ir.Union {

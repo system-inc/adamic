@@ -1,0 +1,75 @@
+package lower
+
+import (
+	"github.com/microsoft/TypeScript/tsc/shim/ast"
+	"github.com/microsoft/TypeScript/tsc/shim/checker"
+	"github.com/system-inc/adamic/internal/ir"
+)
+
+// An ordinary closed function's fixed return contract is checked when its body
+// lowers. Its call can have effects: this proof uses no parameter or alias flow
+// fact that those effects could invalidate. Overloads, generic instantiations,
+// callbacks and host declarations do not get an unchecked shortcut here.
+func (l *lowering) overloadReturnCall(expression *ast.Node, promised *checker.Type) bool {
+	call := expression.AsCallExpression()
+	if !ast.IsIdentifier(ast.SkipParentheses(call.Expression)) {
+		return false
+	}
+	signature := l.checker.GetResolvedSignature(expression)
+	if signature == nil || len(signature.TypeParameters()) != 0 {
+		return false
+	}
+	declaration := signature.Declaration()
+	if declaration == nil || declaration.Kind != ast.KindFunctionDeclaration || declaration.Body() == nil || len(declaration.TypeParameters()) != 0 {
+		return false
+	}
+	symbol := l.symbol(ast.SkipParentheses(call.Expression))
+	if symbol == nil {
+		return false
+	}
+	for _, candidate := range symbol.Declarations {
+		if candidate.Kind != ast.KindFunctionDeclaration || candidate.Body() == nil {
+			return false
+		}
+	}
+	produced := l.checker.GetReturnTypeOfSignature(signature)
+	return l.classAssignable(produced, promised) && l.overloadReturnStorage(produced, promised)
+}
+
+// Returning an object preserves its slots and aliases. Covariance alone does
+// not rebox fields: a Number slot cannot become a Union pointer. Whole scalar
+// conversions use the ordinary return path; records require unchanged storage.
+// Different reference payload contracts need a separate recursive layout proof.
+func (l *lowering) overloadReturnStorage(produced, promised *checker.Type) bool {
+	produced, promised = l.concrete(produced), l.concrete(promised)
+	source, sourceKnown := l.representation(produced)
+	target, targetKnown := l.representation(promised)
+	if !sourceKnown || !targetKnown {
+		return false
+	}
+	if produced == promised || l.overloadScalar(produced) && l.overloadScalar(promised) {
+		return true
+	}
+	if source != ir.Object || target != ir.Object || produced.Flags()&checker.TypeFlagsUnion != 0 || promised.Flags()&checker.TypeFlagsUnion != 0 {
+		return false
+	}
+	for _, property := range l.checker.GetPropertiesOfType(promised) {
+		own := l.checker.GetPropertyOfType(produced, property.Name)
+		if own == nil || accessorSymbol(own) || accessorSymbol(property) {
+			return false
+		}
+		actual, expected := l.concrete(l.checker.GetTypeOfSymbol(own)), l.concrete(l.checker.GetTypeOfSymbol(property))
+		if actual == expected {
+			continue
+		}
+		if !l.overloadScalar(actual) || !l.overloadScalar(expected) {
+			return false
+		}
+		held, heldKnown := l.representation(actual)
+		wanted, wantedKnown := l.representation(expected)
+		if !heldKnown || !wantedKnown || held != wanted {
+			return false
+		}
+	}
+	return true
+}

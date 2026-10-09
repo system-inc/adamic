@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T10:05:04.211973786Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T10:05:04.21982288Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant"}
+{"Time":"2026-10-09T10:05:04.219906443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant","Output":"=== RUN   TestRepresentationClockSourceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.219934855Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant","Output":"=== PAUSE TestRepresentationClockSourceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.219937379Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant"}
+{"Time":"2026-10-09T10:05:04.219941575Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant"}
+{"Time":"2026-10-09T10:05:04.219943228Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant","Output":"=== CONT  TestRepresentationClockSourceMutant\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.219946643Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant/clock-source-ignore-payload"}
+{"Time":"2026-10-09T10:05:04.219950498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant/clock-source-ignore-payload","Output":"=== RUN   TestRepresentationClockSourceMutant/clock-source-ignore-payload\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.555134925Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant/clock-source-ignore-payload","Output":"    representation_clock_source_test.go:63: clock-source-ignore-payload killed by Node stdout; mutant exits zero without leaks\n"}
+{"Time":"2026-10-09T10:05:04.555442289Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant/clock-source-ignore-payload","Output":"--- PASS: TestRepresentationClockSourceMutant/clock-source-ignore-payload (0.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.555454958Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant/clock-source-ignore-payload","Elapsed":0.34}
+{"Time":"2026-10-09T10:05:04.555486344Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant","Output":"--- PASS: TestRepresentationClockSourceMutant (0.34s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.555489439Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestRepresentationClockSourceMutant","Elapsed":0.34}
+{"Time":"2026-10-09T10:05:04.555492093Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:05:04.555498562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-09T10:05:04.555500806Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=2\n"}
+{"Time":"2026-10-09T10:05:04.555502809Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T10:05:04.556763931Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.344s\n"}
+{"Time":"2026-10-09T10:05:04.556782449Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.345}

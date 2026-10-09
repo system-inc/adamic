@@ -1,0 +1,8 @@
+=== RUN   TestHiddenTNodeValueExactNotYet
+    hidden_boundary_generic_tnode_test.go:21: gate cache node miss
+--- PASS: TestHiddenTNodeValueExactNotYet (0.57s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=1
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.608s

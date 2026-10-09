@@ -1,0 +1,11 @@
+interface EvaluatorResult<T> { readonly value: T; isSyntacticallyString: boolean; }
+function evaluate(value: EvaluatorResult<string | undefined>): EvaluatorResult<string | undefined>;
+function evaluate(value: EvaluatorResult<string | number | undefined>): EvaluatorResult<string | number | undefined> { return value; }
+const text: EvaluatorResult<string | undefined> = { value: 'node', isSyntacticallyString: true };
+const missing: EvaluatorResult<string | undefined> = { value: undefined, isSyntacticallyString: false };
+const result = evaluate(text);
+console.log(result.value ?? 'missing');
+console.log(`${result === text}`);
+console.log(evaluate(missing).value ?? 'missing');
+result.isSyntacticallyString = false;
+console.log(`${text.isSyntacticallyString}`);

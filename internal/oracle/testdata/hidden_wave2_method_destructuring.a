@@ -1,0 +1,30 @@
+const host = { increment(value: number): number { return value + 1; } };
+const { increment } = host;
+const { increment: again } = host;
+console.log(`${increment(4)} ${host.increment(8)} ${increment === again}`);
+console.log([1, 2].map(increment).join(','));
+
+interface Callback { increment(value: number): number; }
+function extract({ increment: callback }: Callback): (value: number) => number {
+    return callback;
+}
+console.log(`${extract(host)(6)}`);
+const arrowHost: Callback = { increment: (value: number): number => value + 2 };
+console.log(`${extract(arrowHost)(6)}`);
+
+function make(prefix: string): (value: number) => string {
+    const local = { label(value: number): string { return `${prefix}:${value}`; } };
+    const { label } = local;
+    return label;
+}
+console.log(make(['kept', 'alive'].join('-'))(3));
+
+let evaluations = 0;
+function source(): Callback {
+    evaluations += 1;
+    return host;
+}
+const { increment: saved } = source();
+const writable: { increment: (value: number) => number } = host;
+writable.increment = (value: number): number => value + 10;
+console.log(`${evaluations} ${saved(2)} ${host.increment(2)}`);

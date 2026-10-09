@@ -1,0 +1,11 @@
+--- internal/lower/census_overload_proof.go
++++ internal/lower/census_overload_proof.go
+@@ -126,7 +126,7 @@
+ 		if ast.IsIdentifier(expression) {
+ 			for index, parameter := range parameters {
+ 				if l.symbol(expression) == l.symbol(parameter.Name()) {
+-					return l.censusRelated(narrowed(index, flow), promised)
++					return l.checker.IsTypeAssignableTo(promised, narrowed(index, flow))
+ 				}
+ 			}
+ 			// Local aliases can be rebound by a call; they are not flow evidence.

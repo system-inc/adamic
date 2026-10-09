@@ -1,0 +1,10 @@
+interface Block { readonly kind: 'Block'; readonly statements: readonly number[]; }
+interface Expression { readonly kind: string; readonly text: string; }
+type ConciseBody = Block | Expression;
+function transformAsyncFunctionBody(body: Block): Block;
+function transformAsyncFunctionBody(body: ConciseBody): ConciseBody { return body; }
+const block: Block = { kind: 'Block', statements: [1, 2, 3] };
+const result = transformAsyncFunctionBody(block);
+console.log(`${result === block}`);
+console.log(`${result.statements === block.statements}`);
+console.log(`${result.statements.length}`);
