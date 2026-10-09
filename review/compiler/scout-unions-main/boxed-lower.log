@@ -1,0 +1,529 @@
+panic: test timed out after 3m0s
+	running tests:
+		TestArgumentsLengthRefusalFixtures/aliasing (0s)
+		TestArgumentsLengthRefusalFixtures/arrow (1s)
+		TestArgumentsLengthRefusalFixtures/passing (0s)
+		TestArgumentsLengthRefusalFixtures/returning (0s)
+		TestArgumentsLengthRefusalFixtures/spreading (1s)
+
+goroutine 3175 [running]:
+testing.(*M).startAlarm.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2959 +0x34a
+created by time.goFunc
+	/workspace/adamic-tools/go/src/time/sleep.go:182 +0x2d
+
+goroutine 1 [chan receive, 2 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x2a98c855ab48, 0x2a98c84ffbc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+testing.runTests({0xcd2e48, 0x1c}, {0xcec7fd, 0x2b}, 0x2a98c81e1758, {0x1e44280, 0x117, 0x117}, {0xc2aa617d9cc71907, 0x29e92ea1fb, ...})
+	/workspace/adamic-tools/go/src/testing/testing.go:2740 +0x510
+testing.(*M).Run(0x2a98c85e3220)
+	/workspace/adamic-tools/go/src/testing/testing.go:2600 +0x6af
+main.main()
+	_testmain.go:602 +0x9b
+
+goroutine 20 [chan receive, 2 minutes]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x2a98c860a6c8, 0x1dad870)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 23 [chan receive]:
+testing.tRunner.func1()
+	/workspace/adamic-tools/go/src/testing/testing.go:2142 +0x425
+testing.tRunner(0x2a98c860ad88, 0x1dad868)
+	/workspace/adamic-tools/go/src/testing/testing.go:2199 +0x123
+created by testing.(*T).Run in goroutine 1
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2415 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2d448)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2d448)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2d448, 0x2a98cbb7c6c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2414 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2d208)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2d208, 0x2a98cbb7c680)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2411 [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/scanner.(*Scanner).ScanJSDocCommentTextToken(0x2a98cef80500, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/scanner/scanner.go:1365 +0x50
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).nextJSDocCommentTextToken(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:404
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocCommentWorker(0x2a98cefc7508, 0x2a0dc, 0x2a26a, 0x2a0d6, 0x8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:347 +0x12e8
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocComment(0x2a98cefc7508, 0x0?, 0x2a0dc, 0x0?, 0x2a0d6)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:170 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/parser.parseJSDocForNode(0x2a98cc636e08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:30 +0x20d
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).resolveJSDoc(0x2a98cc636e08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2766 +0x1c9
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).JSDoc(0x7bb2b2?, 0x2a98cbc42340?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:1574 +0x4d
+github.com/microsoft/TypeScript/tsc/internal/checker.getAllJSDocTags(0x2a98d0557040?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/jsdoc.go:89 +0x3d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkUnmatchedJSDocParameters(0x2a98caf50a08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/jsdoc.go:11 +0x35
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x2a98caf50a08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2805 +0x145
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionOrMethodDeclaration(0x2a98caf50a08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:3458 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMethodDeclaration(0x2a98caf50a08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2868 +0x11e
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98caf50a08, 0x2a98cd1d6e00)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2342 +0x139
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98caf50a08, 0x83a07c?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98caf50a08, {0x2a98ccc4b698, 0x20, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration(0x2a98caf50a08, 0x2a98cc9e80e8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5151 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98caf50a08, 0x2a98cc9e80e8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2424 +0x34c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98caf50a08, 0x93?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98caf50a08, {0x2a98cd65a408, 0x93, 0x2a98d4852450?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile(0x2a98caf50a08, {0x1da3348?, 0x1e8ec00?}, 0x2a98cc636e08, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2266 +0x1f3
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics(0x2a98caf50a08, {0x1da3348?, 0x1e8ec00?}, 0x2a98cc636e08, 0x2a98caf50c50)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14237 +0x67
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14227
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker(0x2a98caa4ea88, {0x1da3348, 0x1e8ec00}, 0x2a98caf50a08, 0x2a98cc636e08, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1526 +0xfb
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker(0x2a98caa4ea88, {0x1da3348?, 0x1e8ec00?}, 0x2a98d0557770?, 0x2a98cc636e08)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1506 +0x31
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1(0x7efec9041a00?, 0x0, 0x1?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:748 +0x47
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:487 +0x159
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x2a98d57d26c0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo(0x2a98cc7e2b40, {0x1d5bc18?, 0x2a98d57d2690?}, {0x2a98ca769208, 0x47, 0x47}, 0x1, 0x2a98cdab5d40)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:492 +0x17a
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles(0x2a98caa4ea88, {0x1da3348, 0x1e8ec00}, {0x2a98ca769208, 0x47, 0x47}, 0x2a98cac8e7e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:747 +0x1d8
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics(0x10?, {0x1da3348?, 0x1e8ec00?}, 0x98236a?, 0x2a98cc7e2b40?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:729 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics(0x2a98caa4ea88, {0x1da3348, 0x1e8ec00}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:823 +0x7d
+github.com/system-inc/adamic/internal/load.(*Program).diagnostics(0x2a98cf745200, {0x1da3348, 0x1e8ec00})
+	/workspace/adamic/internal/load/load.go:233 +0x32a
+github.com/system-inc/adamic/internal/load.load({0x2a98d0557e78, 0x1, 0x2a98c836ec00?}, 0x0)
+	/workspace/adamic/internal/load/load.go:147 +0xb05
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusalFixtures.func1(0x2a98c92f7208)
+	/workspace/adamic/internal/lower/arguments_length_test.go:87 +0x3ea
+testing.tRunner(0x2a98c92f7208, 0x2a98cb5e8990)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 23
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2417 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2d8c8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2d8c8)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2d8c8, 0x2a98cbb7c740)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2410 [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).newType(0x2a98d0645508, 0x100000, 0x2, {0x1da3fe0, 0x2a98cebc2780})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:25537 +0x146
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).newObjectType(0x2a98d0645508, 0x2, 0x2a98c904f4a8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:25619 +0x12f
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDeclaredTypeOfClassOrInterface(0x2a98d0645508, 0x2a98c904f4a8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:17710 +0x85
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).tryGetDeclaredTypeOfSymbol(0x1339940?, 0x2a98c88c2880?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:24205 +0x7c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDeclaredTypeOfSymbol(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:24195
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkTypeParameterListsIdentical(0x2a98d0645508, 0x2a98c904f4a8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:4516 +0xb4
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration(0x2a98d0645508, 0x2a98cc8e3468)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5125 +0x1a7
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98d0645508, 0x2a98cc8e3468)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2424 +0x34c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98d0645508, 0x93?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98d0645508, {0x2a98cdc8c008, 0x93, 0x2a98de1893c0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile(0x2a98d0645508, {0x1da3348?, 0x1e8ec00?}, 0x2a98cbcf1888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2266 +0x1f3
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics(0x2a98d0645508, {0x1da3348?, 0x1e8ec00?}, 0x2a98cbcf1888, 0x2a98d0645750)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14237 +0x67
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14227
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker(0x2a98c9ee2a88, {0x1da3348, 0x1e8ec00}, 0x2a98d0645508, 0x2a98cbcf1888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1526 +0xfb
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker(0x2a98c9ee2a88, {0x1da3348?, 0x1e8ec00?}, 0x2a98cc87b770?, 0x2a98cbcf1888)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1506 +0x31
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1(0x7efec9041108?, 0x0, 0x1?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:748 +0x47
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:487 +0x159
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x2a98cbd54300)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo(0x2a98ceacccc0, {0x1d5bc18?, 0x2a98cbd542d0?}, {0x2a98cd708d88, 0x47, 0x47}, 0x1, 0x2a98c87d2100)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:492 +0x17a
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles(0x2a98c9ee2a88, {0x1da3348, 0x1e8ec00}, {0x2a98cd708d88, 0x47, 0x47}, 0x2a98d0076de0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:747 +0x1d8
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics(0x10?, {0x1da3348?, 0x1e8ec00?}, 0x98236a?, 0x2a98ceacccc0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:729 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics(0x2a98c9ee2a88, {0x1da3348, 0x1e8ec00}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:823 +0x7d
+github.com/system-inc/adamic/internal/load.(*Program).diagnostics(0x2a98cac06240, {0x1da3348, 0x1e8ec00})
+	/workspace/adamic/internal/load/load.go:233 +0x32a
+github.com/system-inc/adamic/internal/load.load({0x2a98cc87be78, 0x1, 0x2a98c86b0e00?}, 0x0)
+	/workspace/adamic/internal/load/load.go:147 +0xb05
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusalFixtures.func1(0x2a98c92f6fc8)
+	/workspace/adamic/internal/lower/arguments_length_test.go:87 +0x3ea
+testing.tRunner(0x2a98c92f6fc8, 0x2a98cb5e8948)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 23
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2408 [runnable]:
+strings.(*Builder).Grow(0x2a98c9340740?, 0x356f4?)
+	/workspace/adamic-tools/go/src/strings/builder.go:75 +0x8c
+strings.Replace({0x2a98ca77e000, 0x356e8}, {0xcf43e8, 0x2f}, {0xd063f9, 0x3b}, 0xffffffffffffffff)
+	/workspace/adamic-tools/go/src/strings/strings.go:1150 +0x11f
+strings.ReplaceAll(...)
+	/workspace/adamic-tools/go/src/strings/strings.go:1179
+github.com/system-inc/adamic/internal/load.(*regexpLibraryFS).ReadFile(0x1c?, {0x2a98da65e2a0, 0x1c})
+	/workspace/adamic/internal/load/regexp_library.go:20 +0x1ae
+github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs.(*FS).ReadFile(0x3?, {0x2a98da65e2a0?, 0x2a98da65e2b0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/vfs/cachedvfs/cachedvfs.go:98 +0x22
+github.com/microsoft/TypeScript/tsc/internal/vfs/cachedvfs.(*FS).ReadFile(0x64dbe8?, {0x2a98da65e2a0?, 0x1da2bb0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/vfs/cachedvfs/cachedvfs.go:98 +0x22
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*compilerHost).GetSourceFile(0x2a98da65e2a0?, {{0x2a98da65e2a0, 0x1c}, {0x2a98da65e2a0, 0x1c}, {0x0, 0x0}})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/host.go:84 +0x50
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*fileLoader).parseSourceFile(0x2a98d0f1ca08, 0x2a98d1090180)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/fileloader.go:425 +0x322
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*parseTask).load(0x2a98d1090180, 0x2a98d0f1ca08)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/filesparser.go:121 +0x4dc
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*filesParser).start.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/filesparser.go:321 +0x38d
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x2a98cead0780)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*filesParser).parse(0x2a98cd295d10, 0x2a98da65e0c0?, {0x2a98cead08d0?, 0x2a98d1f18000?, 0x2a98d1f18040?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/filesparser.go:270 +0x37
+github.com/microsoft/TypeScript/tsc/internal/compiler.processAllProgramFiles({{0x2a98c8338dc0, 0x0, 0x2, {0x0, 0x0}, {0x0, 0x0}, 0x0}, {{0x1da40d0, 0x2a98cd295cc0}, ...}, ...}, ...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/fileloader.go:233 +0x97d
+github.com/microsoft/TypeScript/tsc/internal/compiler.NewProgram({{0x2a98c8338dc0, 0x0, 0x2, {0x0, 0x0}, {0x0, 0x0}, 0x0}, {{0x1da40d0, 0x2a98cd295cc0}, ...}, ...})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:322 +0x2dd
+github.com/system-inc/adamic/internal/load.load({0x2a98c9341e78, 0x1, 0x2a98c9fce800?}, 0x0)
+	/workspace/adamic/internal/load/load.go:121 +0x6ed
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusalFixtures.func1(0x2a98c92f6b48)
+	/workspace/adamic/internal/lower/arguments_length_test.go:87 +0x3ea
+testing.tRunner(0x2a98c92f6b48, 0x2a98cb5e88b8)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 23
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2409 [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).mark(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:353
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).lookAhead(0x2a98ce59f808, 0x0?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/parser.go:377 +0x3a
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).skipWhitespaceOrAsterisk(0x2a98ce59f808)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:433 +0x3e
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseTag(0x2a98ce59f808, {0x2a98d11ce1e0, 0x1, 0x1}, 0x7)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:468 +0x97
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocCommentWorker(0x2a98ce59f808, 0xdd0, 0xf24, 0xdca, 0x8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:247 +0xd90
+github.com/microsoft/TypeScript/tsc/internal/parser.(*Parser).parseJSDocComment(0x2a98ce59f808, 0x0?, 0xdd0, 0x0?, 0xdca)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:170 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/parser.parseJSDocForNode(0x2a98ca15d888, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/parser/jsdoc.go:30 +0x20d
+github.com/microsoft/TypeScript/tsc/internal/ast.(*SourceFile).resolveJSDoc(0x2a98ca15d888, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:2766 +0x1c9
+github.com/microsoft/TypeScript/tsc/internal/ast.(*Node).JSDoc(0x7bb2b2?, 0x2a98cbbf2718?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/ast/ast.go:1574 +0x4d
+github.com/microsoft/TypeScript/tsc/internal/checker.getAllJSDocTags(0x2a98c8677040?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/jsdoc.go:89 +0x3d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkUnmatchedJSDocParameters(0x2a98cbf1a008, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/jsdoc.go:11 +0x35
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x2a98cbf1a008, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2805 +0x145
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionOrMethodDeclaration(0x2a98cbf1a008, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:3458 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMethodDeclaration(0x2a98cbf1a008, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2868 +0x11e
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cbf1a008, 0x2a98ca4fd488)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2342 +0x139
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cbf1a008, 0x83a07c?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cbf1a008, {0x2a98ceb56780, 0xd, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration(0x2a98cbf1a008, 0x2a98ca1507e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5151 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cbf1a008, 0x2a98ca1507e0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2424 +0x34c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cbf1a008, 0x3?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cbf1a008, {0x2a98ceb56858, 0x3, 0x2a98ce6b7818?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile(0x2a98cbf1a008, {0x1da3348?, 0x1e8ec00?}, 0x2a98ca15d888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2266 +0x1f3
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics(0x2a98cbf1a008, {0x1da3348?, 0x1e8ec00?}, 0x2a98ca15d888, 0x2a98cbf1a250)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14237 +0x67
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14227
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker(0x2a98ca940e08, {0x1da3348, 0x1e8ec00}, 0x2a98cbf1a008, 0x2a98ca15d888, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1526 +0xfb
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker(0x2a98ca940e08, {0x1da3348?, 0x1e8ec00?}, 0x2a98c8677770?, 0x2a98ca15d888)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1506 +0x31
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1(0x7efe7897bc38?, 0x10, 0x1?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:748 +0x47
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:487 +0x159
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x2a98cae3c3c0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo(0x2a98ca500b40, {0x5ecd40?, 0x2a98cae3c390?}, {0x2a98ca768fc8, 0x47, 0x47}, 0x1, 0x2a98cb179a40)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:492 +0x17a
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles(0x2a98ca940e08, {0x1da3348, 0x1e8ec00}, {0x2a98ca768fc8, 0x47, 0x47}, 0x2a98cafe1140)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:747 +0x1d8
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics(0x1da3348?, {0x1da3348?, 0x1e8ec00?}, 0x98236a?, 0x2a98ca500b40?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:729 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics(0x2a98ca940e08, {0x1da3348, 0x1e8ec00}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:823 +0x7d
+github.com/system-inc/adamic/internal/load.(*Program).diagnostics(0x2a98cd8c40f0, {0x1da3348, 0x1e8ec00})
+	/workspace/adamic/internal/load/load.go:233 +0x32a
+github.com/system-inc/adamic/internal/load.load({0x2a98c8677e78, 0x1, 0x2a98c83ca000?}, 0x0)
+	/workspace/adamic/internal/load/load.go:147 +0xb05
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusalFixtures.func1(0x2a98c92f6d88)
+	/workspace/adamic/internal/lower/arguments_length_test.go:87 +0x3ea
+testing.tRunner(0x2a98c92f6d88, 0x2a98cb5e8900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 23
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2413 [runnable]:
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNodeWorker(0x40aa70?, 0x135b040?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:23300 +0x12b
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeFromTypeNode(0x2a98cb4f9508, 0x2a98ca8a4ae8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:23296 +0x1d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).tryGetTypeFromTypeNode(0x2a98cb4f9508, 0x655b1e?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:23290 +0x32
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeForVariableLikeDeclaration(0x2a98cb4f9508, 0x2a98cbf353b8, 0x0?, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:17063 +0x186
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getWidenedTypeForVariableLikeDeclaration(0x2a98cb4f9508, 0x2a98cbf353b8, 0x1)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:17034 +0x28
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrPropertyWorker(0x2a98cb4f9508, 0x2a98cd69af68)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16996 +0x27a
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfVariableOrParameterOrProperty(0x2a98cb4f9508, 0x2a98cd69af68)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16933 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getTypeOfSymbol(0x2a98cb4f9508?, 0x2a98cbf353b8?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:16896 +0x9b
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableLikeDeclaration(0x2a98cb4f9508, 0x2a98cbf353b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:6098 +0x31d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParameter(0x2a98cb4f9508, 0x2a98cbf353b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2722 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cb4f9508, 0x2a98cbf353b8)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2334 +0x116
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cb4f9508, 0x2a98ca1b04a8?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cb4f9508, {0x2a98cc0cdbb8, 0x2, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x2a98cb4f9508, 0x2a98ca1b0468)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2806 +0x172
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cb4f9508, 0x2a98ca1b0468)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2340 +0x179
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cb4f9508, 0x2a98cbf35428?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkVariableLikeDeclaration(0x2a98cb4f9508, 0x2a98cbf35428)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5999 +0xa8
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkParameter(0x2a98cb4f9508, 0x2a98cbf35428)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2722 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cb4f9508, 0x2a98cbf35428)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2334 +0x116
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cb4f9508, 0x883965?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cb4f9508, {0x2a98cc0cdbd8, 0x1, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSignatureDeclaration(0x2a98cb4f9508, 0x2a98cb1b5508)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2806 +0x172
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkFunctionOrMethodDeclaration(0x2a98cb4f9508, 0x2a98cb1b5508)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:3458 +0x34
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkMethodDeclaration(0x2a98cb4f9508, 0x2a98cb1b5508)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2868 +0x11e
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cb4f9508, 0x2a98cb1b5508)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2342 +0x139
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cb4f9508, 0x83a07c?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cb4f9508, {0x2a98cc0cdc40, 0x24, 0x0?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkInterfaceDeclaration(0x2a98cb4f9508, 0x2a98cb748d90)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:5151 +0x30c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElementWorker(0x2a98cb4f9508, 0x2a98cb748d90)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2424 +0x34c
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElement(0x2a98cb4f9508, 0xc?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2307 +0x66
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceElements(0x2a98cb4f9508, {0x2a98cfe72d08, 0xc, 0x2a98cd53aa20?})
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2297 +0x2d
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).checkSourceFile(0x2a98cb4f9508, {0x1da3348?, 0x1e8ec00?}, 0x2a98cd2d2a88, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:2266 +0x1f3
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).getDiagnostics(0x2a98cb4f9508, {0x1da3348?, 0x1e8ec00?}, 0x2a98cd2d2a88, 0x2a98cb4f9750)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14237 +0x67
+github.com/microsoft/TypeScript/tsc/internal/checker.(*Checker).GetDiagnostics(...)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/checker/checker.go:14227
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getBindAndCheckDiagnosticsWithChecker(0x2a98ce490708, {0x1da3348, 0x1e8ec00}, 0x2a98cb4f9508, 0x2a98cd2d2a88, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1526 +0xfb
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).getSemanticDiagnosticsWithChecker(0x2a98ce490708, {0x1da3348?, 0x1e8ec00?}, 0x2a98cd7ad770?, 0x2a98cd2d2a88)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:1506 +0x31
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles.func1(0x7efe80192610?, 0x27, 0x1?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:748 +0x47
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo.func1()
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:487 +0x159
+github.com/microsoft/TypeScript/tsc/internal/core.(*singleThreadedWorkGroup).RunAndWait(0x2a98cac40510)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/core/workgroup.go:74 +0x4b
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*checkerPool).forEachCheckerGroupDo(0x2a98c958a180, {0x5ecd40?, 0x2a98cac404e0?}, {0x2a98cbd3d8c8, 0x47, 0x47}, 0x1, 0x2a98c9ca2c80)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/checkerpool.go:492 +0x17a
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnosticsFromFiles(0x2a98ce490708, {0x1da3348, 0x1e8ec00}, {0x2a98cbd3d8c8, 0x47, 0x47}, 0x2a98cc147aa0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:747 +0x1d8
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).collectCheckerDiagnostics(0x1da3348?, {0x1da3348?, 0x1e8ec00?}, 0x98236a?, 0x2a98c958a180?)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:729 +0x4f
+github.com/microsoft/TypeScript/tsc/internal/compiler.(*Program).GetSemanticDiagnostics(0x2a98ce490708, {0x1da3348, 0x1e8ec00}, 0x0)
+	/workspace/adamic/cohere/TypeScript/tsc/internal/compiler/program.go:823 +0x7d
+github.com/system-inc/adamic/internal/load.(*Program).diagnostics(0x2a98cb713c50, {0x1da3348, 0x1e8ec00})
+	/workspace/adamic/internal/load/load.go:233 +0x32a
+github.com/system-inc/adamic/internal/load.load({0x2a98c9723e78, 0x1, 0x2a98c83cb000?}, 0x0)
+	/workspace/adamic/internal/load/load.go:147 +0xb05
+github.com/system-inc/adamic/internal/load.Load(...)
+	/workspace/adamic/internal/load/load.go:81
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusalFixtures.func1(0x2a98c92f7688)
+	/workspace/adamic/internal/lower/arguments_length_test.go:87 +0x3ea
+testing.tRunner(0x2a98c92f7688, 0x2a98cb5e8a20)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 23
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2416 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2d688)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2d688)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2d688, 0x2a98cbb7c700)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2466 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2db08)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2db08)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2db08, 0x2a98cbb7c780)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2467 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbb2dd48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbb2dd48)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbb2dd48, 0x2a98cbb7c800)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2468 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbd3c908)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbd3c908)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbd3c908, 0x2a98cbb7c840)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2469 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbd3cb48)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbd3cb48)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbd3cb48, 0x2a98cbb7c880)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2470 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbd3cd88)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbd3cd88)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbd3cd88, 0x2a98cbb7c8c0)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2471 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbd3cfc8)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbd3cfc8)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbd3cfc8, 0x2a98cbb7c900)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+
+goroutine 2472 [chan receive, 2 minutes]:
+testing.(*testState).waitParallel(0x2a98c85d6550)
+	/workspace/adamic-tools/go/src/testing/testing.go:2377 +0xaa
+testing.(*T).Parallel(0x2a98cbd3d208)
+	/workspace/adamic-tools/go/src/testing/testing.go:1958 +0x245
+github.com/system-inc/adamic/internal/lower.TestArgumentsLengthRefusals.func1(0x2a98cbd3d208)
+	/workspace/adamic/internal/lower/arguments_length_test.go:31 +0x2c
+testing.tRunner(0x2a98cbd3d208, 0x2a98cbb7c940)
+	/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea
+created by testing.(*T).Run in goroutine 20
+	/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4
+FAIL	github.com/system-inc/adamic/internal/lower	180.125s
+FAIL

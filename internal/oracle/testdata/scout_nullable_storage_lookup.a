@@ -1,0 +1,3 @@
+interface Item { readonly name: string; }
+const old: readonly (Item | null)[] = [null];
+console.log(`${old[0] === null}`);

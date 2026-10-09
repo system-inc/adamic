@@ -24,9 +24,9 @@ func (l *lowering) typeOf(node *ast.Node) (ir.Type, error) {
 	if ast.IsIdentifier(node) && l.exactPlainObject(node) {
 		return ir.Object, nil
 	}
-	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&checker.TypeFlagsUndefined != 0 {
-		// A field narrowed to undefined still occupies its declared slot, which may hold a packed
-		// optional number or a different reference kind. Read that representation, not an object.
+	if node.Kind == ast.KindPropertyAccessExpression && l.checker.GetTypeAtLocation(node).Flags()&(checker.TypeFlagsUndefined|checker.TypeFlagsNull) != 0 {
+		// A field narrowed to a nullish value still occupies its declared slot, which may
+		// hold a packed optional scalar or a tagged reference. Read that representation.
 		if field := l.checker.GetSymbolAtLocation(node.Name()); field != nil {
 			return l.typeOfSymbol(node, field)
 		}
@@ -207,7 +207,13 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 	}
 	value, err := l.value(node)
 	if err == nil {
+		if value.Type() == ir.Object && l.nullableObjectUnion(l.checker.GetTypeAtLocation(node)) && !nullableObjectLookupTypeOf(node, value) {
+			return nil, l.notYet(node, "a nullable object lookup without separate null/undefined tags")
+		}
 		if contextual := l.checker.GetContextualType(node, checker.ContextFlagsNone); contextual != nil {
+			if l.nullableObjectViewHazard(node, contextual) {
+				return nil, l.notYet(node, "sharing nullable object storage with different null/undefined tags; copy values into tagged storage")
+			}
 			if err := l.unknownView(node, l.checker.GetTypeAtLocation(node), contextual); err != nil {
 				return nil, err
 			}
@@ -251,6 +257,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		}
 	}
 	if err != nil || value.Type() != ir.Weak {
+		if err == nil {
+			value = l.nullableObjectBoundary(node, value)
+		}
 		return value, err
 	}
 	read := l.checker.GetTypeAtLocation(node)
@@ -557,6 +566,9 @@ func (l *lowering) enumNeverValue(node *ast.Node) (ir.Expression, error) {
 		}
 		written := node.AsTypeOfExpression().Expression
 		null := l.typeOfNull(written)
+		if operand.Type() == ir.Union {
+			null = false
+		}
 		if null && l.includesUndefined(l.concrete(l.checker.GetTypeAtLocation(written))) {
 			switch operand.(type) {
 			case ir.ArrayIndex, ir.MapGet, ir.ArrayPop:

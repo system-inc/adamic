@@ -1,0 +1,7 @@
+interface Mixed { value: number | string; }
+function replace(mixed: Mixed): void { mixed.value = 'changed'; }
+const mixed: Mixed = {value: 7};
+if (typeof mixed.value === 'number') {
+    replace(mixed);
+    console.log(`${mixed.value + 1}`);
+}

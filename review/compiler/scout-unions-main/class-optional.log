@@ -1,0 +1,8 @@
+=== RUN   TestScoutClassBooleanKeepsUnsafeViewsRefused
+=== PAUSE TestScoutClassBooleanKeepsUnsafeViewsRefused
+=== CONT  TestScoutClassBooleanKeepsUnsafeViewsRefused
+    scout_class_boolean_test.go:21: neighbor must remain stopped, got <nil>
+--- FAIL: TestScoutClassBooleanKeepsUnsafeViewsRefused (0.09s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.107s
+FAIL
