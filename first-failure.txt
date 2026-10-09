@@ -1,0 +1,4 @@
+FIRST FAILURE (tools, at 1.7 s):
+internal/oracle/wasi_engines_test.go:20 runs wasmtime, which cloud/fast-gate/tools.txt doesn't declare
+Declare each in cloud/fast-gate/tools.txt (devtools/fast-gate), with a check, and have setup provide it.
+(box load 20.9 on 64 cores at first failure)
