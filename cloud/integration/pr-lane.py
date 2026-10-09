@@ -24,7 +24,7 @@ import json, os, re, subprocess, sys
 repository = "system-inc/adamic"
 ahra = os.path.expanduser("~/Projects/ahra")
 # push-main.sh's testOnlyPattern.
-testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)")
+testOnlyPaths = re.compile(r"(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)")
 directory = os.path.dirname(os.path.abspath(__file__))
 state = os.path.expanduser("~/.adamic-pr-lane")
 os.makedirs(state, exist_ok=True)

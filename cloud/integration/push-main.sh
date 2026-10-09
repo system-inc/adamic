@@ -100,7 +100,7 @@ fi
 # check (@system_adamic, Oct 9). star-train.py's testOnlyPaths is the same pattern.
 # One guard: a test-only change in a package where the candidate changes code still counts, since a
 # test asserting the old behavior meets the new code there.
-testOnlyPattern='(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)'
+testOnlyPattern='(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/|^README\.md$)'
 # The packages (directories) where <base>..<tip> changes anything but tests and records.
 codePackages() {
 	local path
