@@ -1,0 +1,50 @@
+run adamic-verify-20261009T212530-a9c0bc16: void, 0 tests in 45 units, 0 failed, 2 units broken, 0 killed over budget
+AGAIN product-00: from run adamic-verify-again-20261009T212558-7c5cc352
+AGAIN product-01: from run adamic-verify-again-20261009T212558-7c5cc352
+NOT RUN tests-00: not run, its product product-00 failed
+NOT RUN tests-01: not run, its product product-00 failed
+NOT RUN tests-02: not run, its product product-00 failed
+NOT RUN tests-03: not run, its product product-00, product-01 failed
+NOT RUN tests-04: not run, its product product-00 failed
+NOT RUN tests-05: not run, its product product-00 failed
+NOT RUN tests-06: not run, its product product-00 failed
+NOT RUN tests-07: not run, its product product-00 failed
+NOT RUN tests-08: not run, its product product-00 failed
+NOT RUN tests-09: not run, its product product-00 failed
+NOT RUN tests-10: not run, its product product-00 failed
+NOT RUN tests-11: not run, its product product-00, product-01 failed
+NOT RUN tests-12: not run, its product product-00 failed
+NOT RUN tests-13: not run, its product product-00 failed
+NOT RUN tests-14: not run, its product product-00 failed
+NOT RUN tests-15: not run, its product product-00 failed
+NOT RUN tests-16: not run, its product product-00 failed
+NOT RUN tests-17: not run, its product product-00 failed
+NOT RUN tests-18: not run, its product product-00 failed
+NOT RUN tests-19: not run, its product product-00 failed
+NOT RUN tests-20: not run, its product product-00, product-01 failed
+NOT RUN tests-21: not run, its product product-00, product-01 failed
+NOT RUN tests-22: not run, its product product-00, product-01 failed
+NOT RUN tests-23: not run, its product product-00, product-01 failed
+NOT RUN tests-24: not run, its product product-00, product-01 failed
+NOT RUN tests-25: not run, its product product-00, product-01 failed
+NOT RUN tests-26: not run, its product product-00, product-01 failed
+NOT RUN tests-27: not run, its product product-00, product-01 failed
+NOT RUN tests-28: not run, its product product-00, product-01 failed
+NOT RUN tests-29: not run, its product product-00, product-01 failed
+NOT RUN tests-30: not run, its product product-00, product-01 failed
+NOT RUN tests-31: not run, its product product-00, product-01 failed
+NOT RUN tests-32: not run, its product product-00, product-01 failed
+NOT RUN tests-33: not run, its product product-00, product-01 failed
+NOT RUN tests-34: not run, its product product-00, product-01 failed
+NOT RUN tests-35: not run, its product product-00, product-01 failed
+NOT RUN tests-00-r1: not run, its product product-00 failed
+NOT RUN tests-01-r1: not run, its product product-00 failed
+NOT RUN tests-02-r1: not run, its product product-00 failed
+NOT RUN tests-34-r1: not run, its product product-00, product-01 failed
+NOT RUN tests-34-r2: not run, its product product-00, product-01 failed
+NOT RUN tests-34-r3: not run, its product product-00, product-01 failed
+NOT RUN tests-34-r4: not run, its product product-00, product-01 failed
+BROKEN product-00: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN product-01: no results (exited true, last output "960M\t/tmp/adamic-tools")
+BROKEN product-00 on 3 placements, workers: ddf4d400950e, 48ab18cc216d, d95b3b5a1a4a
+BROKEN product-01 on 3 placements, workers: d9a51227ce19, 79499c3bd220, d24109916836
