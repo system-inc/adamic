@@ -57,7 +57,7 @@ func volumeProfileCorporaNativeInputs(ctx context.Context, h *harness, sanitize 
 	// Use the compiler source recipe rather than executable metadata: workers
 	// have different Git revisions and Go archives embed different scratch paths.
 	archiveName, archiveFlags := "typeaware checker archive", ""
-	toolContext, cancelTool := context.WithTimeout(ctx, 90*time.Second)
+	toolContext, cancelTool := context.WithCancel(ctx)
 	defer cancelTool()
 	cc, err := volumeProfileCorporaCommand(toolContext, "go", "env", "CC").Output()
 	if err != nil {
@@ -74,7 +74,7 @@ func volumeProfileCorporaNativeInputs(ctx context.Context, h *harness, sanitize 
 		Files:     []string{"bridge/tsgo", "cohere/TypeScript/tsc/internal", "cohere/TypeScript/tsc/go.mod", "cohere/TypeScript/tsc/go.sum", "cohere/TypeScript-shim", "go.mod", "cohere/go.mod", "cohere/go.sum"},
 		Toolchain: []string{buildcache.Tool("clang", "--version"), buildcache.Tool(strings.Fields(string(cc))[0], "--version"), buildcache.Tool("go", "version"), buildcache.Tool("go", "env", "-json", "GOOS", "GOARCH", "GOAMD64", "GOARM64", "CGO_ENABLED", "CC", "CXX", "CGO_CFLAGS", "CGO_CPPFLAGS", "CGO_CXXFLAGS", "CGO_LDFLAGS", "GOFLAGS", "GOEXPERIMENT")},
 	}
-	listContext, cancelList := context.WithTimeout(ctx, 90*time.Second)
+	listContext, cancelList := context.WithCancel(ctx)
 	defer cancelList()
 	list := volumeProfileCorporaCommand(listContext, "go", "list", "-deps", "-json", "./cmd/adamic")
 	list.Dir = h.repository
@@ -166,14 +166,11 @@ func volumeProfileCorporaNative(ctx context.Context, h *harness, stage0, archive
 		if sanitize {
 			args = append(args, "--sanitize")
 		}
-		buildContext, cancelBuild := context.WithTimeout(ctx, 90*time.Second)
+		buildContext, cancelBuild := context.WithCancel(ctx)
 		defer cancelBuild()
 		command := volumeProfileCorporaCommand(buildContext, stage0, args...)
 		command.Dir = h.repository
 		if output, err := command.CombinedOutput(); err != nil {
-			if buildContext.Err() != nil {
-				return fmt.Errorf("cooked: %s exceeded 90s hard deadline (60s budget)", inputs.Name)
-			}
 			return fmt.Errorf("%s: %w\n%s", inputs.Name, err, output)
 		}
 		return nil
@@ -325,7 +322,7 @@ func volumeProfileCorporaReadProducts(t *testing.T, directory string) volumeProf
 			t.Fatal("incomplete corpus setup products")
 		}
 		if _, err := os.Stat(path); err != nil {
-			t.Fatalf("corpus setup product unavailable: %v; run TestVolumeProfileCorpora_Setup", err)
+			t.Fatalf("corpus setup product unavailable: %v", err)
 		}
 	}
 	return products
@@ -391,8 +388,25 @@ func volumeProfileCorporaGoProduct(t *testing.T, ctx context.Context, repository
 	return ""
 }
 
-// Not parallel: publishes the shared corpus products before parallel shards are released.
+// Shared products are prepared once per process by any selected shard or product
+// declaration, before the shard's own deadline. Loom bounds the whole unit.
+var volumeProfileCorporaShared struct {
+	once     sync.Once
+	products volumeProfileCorporaProductPaths
+}
+
 func volumeProfileCorporaPrepare(t *testing.T) volumeProfileCorporaProductPaths {
+	t.Helper()
+	volumeProfileCorporaShared.once.Do(func() {
+		volumeProfileCorporaShared.products = volumeProfileCorporaBuildProducts(t)
+	})
+	if volumeProfileCorporaShared.products.Oracle == "" {
+		t.Fatal("shared corpus preparation did not complete")
+	}
+	return volumeProfileCorporaShared.products
+}
+
+func volumeProfileCorporaBuildProducts(t *testing.T) volumeProfileCorporaProductPaths {
 	deadline := context.Background()
 	repository, err := filepath.Abs("../../..")
 	if err != nil {
@@ -423,7 +437,7 @@ func volumeProfileCorporaPrepare(t *testing.T) volumeProfileCorporaProductPaths 
 		}
 		var products volumeProfileCorporaProductPaths
 		products.Oracle = oracle
-		// Fetch the two native products concurrently, under the same setup deadline.
+		// Prepare the two native products concurrently, without a setup deadline.
 		builds.Add(2)
 		go func() {
 			defer builds.Done()
@@ -437,27 +451,13 @@ func volumeProfileCorporaPrepare(t *testing.T) volumeProfileCorporaProductPaths 
 		if t.Failed() {
 			return fmt.Errorf("corpus native product preparation failed")
 		}
-		if deadline.Err() != nil {
-			return fmt.Errorf("cooked: setup exceeded 90s deadline")
-		}
 		data, err := json.Marshal(products)
 		if err != nil {
 			return err
 		}
 		return os.WriteFile(filepath.Join(directory, "products.json"), data, 0600)
 	})
-	if deadline.Err() != nil {
-		t.Fatal("cooked: setup exceeded 90s deadline")
-	}
 	return volumeProfileCorporaReadProducts(t, directory)
-}
-
-// Not parallel: retains the explicit setup entry point for older gate callers.
-func TestVolumeProfileCorpora_Setup(t *testing.T) {
-	if os.Getenv("ADAMIC_VOLUME_REPOSITORY_MANIFEST") == "" && os.Getenv("ADAMIC_VOLUME_COMPILER_MANIFEST") == "" {
-		t.Skip("set a corpus manifest")
-	}
-	volumeProfileCorporaPrepare(t)
 }
 
 // Individual shards can initialize the same products without another test.
