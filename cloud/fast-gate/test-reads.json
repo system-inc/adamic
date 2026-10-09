@@ -1,0 +1,41 @@
+{
+  "cmd/adamic-gate": [
+    "."
+  ],
+  "internal/flow": [
+    "internal/load/testdata",
+    "internal/oracle/testdata"
+  ],
+  "internal/fresh": [
+    "internal/flow/testdata",
+    "internal/load/testdata",
+    "internal/oracle/testdata"
+  ],
+  "internal/lower": [
+    "internal/oracle/testdata",
+    "review/optional-indexing"
+  ],
+  "internal/native": [
+    "internal/oracle/testdata",
+    "internal/regexp/testdata"
+  ],
+  "internal/oracle": [
+    "stage3/fixtures"
+  ],
+  "stage1/cohere/graphql/printer": [
+    "stage1/cohere/graphql/testdata",
+    "stage1/cohere/json"
+  ],
+  "stage1/cohere/markdownblocks": [
+    "stage1/cohere/markdowninline"
+  ],
+  "stage1/cohere/tsprinter": [
+    "stage1/typescript/parser"
+  ],
+  "stage1/cohere/typeaware": [
+    "stage1/cohere/lint"
+  ],
+  "stage1/typescript/parser": [
+    "stage1/typescript/scanner"
+  ]
+}
