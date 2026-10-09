@@ -196,6 +196,12 @@ func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, 
 // Constructors initialize an already allocated object. A separate allocator fixes its dynamic
 // identity before even the base constructor runs, so base method calls can dispatch dynamically.
 func (l *lowering) inheritanceConstructor(index int, declaration *ast.Node) error {
+	// Class initializers have their own receiver frame, even when instantiation
+	// is discovered while lowering an unrelated closure. Only arrows created
+	// inside this constructor may capture its locals.
+	outerClosures := l.closures
+	l.closures = nil
+	defer func() { l.closures = outerClosures }()
 	instance := l.instance
 	var constructor *ast.Node
 	for _, member := range declaration.Members() {

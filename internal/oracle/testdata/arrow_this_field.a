@@ -1,0 +1,13 @@
+class Base {
+    readonly label: string;
+    constructor(label: string) { this.label = label; }
+}
+class Derived extends Base {
+    readonly copied: string = (() => this.label)();
+}
+function make(): Derived {
+    const construct = () => new Derived(['arrow', 'field'].join('-'));
+    return construct();
+}
+const value = make();
+console.log(`${value.label} ${value.copied}`);
