@@ -1,0 +1,65 @@
+=== RUN   TestCheckedRuntimeRegexFields
+=== PAUSE TestCheckedRuntimeRegexFields
+=== RUN   TestCheckedRuntimeMapFields
+=== PAUSE TestCheckedRuntimeMapFields
+=== RUN   TestCheckedRuntimeSetFields
+=== PAUSE TestCheckedRuntimeSetFields
+=== RUN   TestCheckedRuntimeFSFields
+=== PAUSE TestCheckedRuntimeFSFields
+=== RUN   TestCheckedRuntimeDirectoryFields
+=== PAUSE TestCheckedRuntimeDirectoryFields
+=== CONT  TestCheckedRuntimeRegexFields
+=== CONT  TestCheckedRuntimeFSFields
+=== CONT  TestCheckedRuntimeSetFields
+=== CONT  TestCheckedRuntimeMapFields
+=== CONT  TestCheckedRuntimeDirectoryFields
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: gate cache node miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: gate cache node miss
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: gate cache node miss
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: gate cache node miss
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: gate cache node miss
+=== NAME  TestCheckedRuntimeSetFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeDirectoryFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeFSFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeRegexFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeMapFields
+    oracle_test.go:604: gate cache native miss
+=== NAME  TestCheckedRuntimeSetFields
+    checked_runtime_fields_test.go:71: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/set.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeSetFields (12.49s)
+=== NAME  TestCheckedRuntimeDirectoryFields
+    checked_runtime_fields_test.go:75: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/directory.a: source Node exit 0 stdout "alpha.txt\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeDirectoryFields (12.49s)
+=== NAME  TestCheckedRuntimeFSFields
+    checked_runtime_fields_test.go:72: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/fs.a: source Node exit 0 stdout "alpha\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeFSFields (12.52s)
+=== NAME  TestCheckedRuntimeRegexFields
+    checked_runtime_fields_test.go:69: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/regex.a: source Node exit 0 stdout "a\na\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeRegexFields (12.56s)
+=== NAME  TestCheckedRuntimeMapFields
+    checked_runtime_fields_test.go:70: /workspace/adamic/internal/oracle/testdata/checked-runtime-fields/map.a: source Node exit 0 stdout "alpha\ndone\n"; guarded native sanitized, release and JavaScript agree; one structural receiving slot
+--- PASS: TestCheckedRuntimeMapFields (12.57s)
+PASS
+gate cache: native hits=0 misses=5
+gate cache: node hits=0 misses=10
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	12.580s

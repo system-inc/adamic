@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeCheckedReferenceArrayKeepsContract
+=== PAUSE TestRuntimeCheckedReferenceArrayKeepsContract
+=== CONT  TestRuntimeCheckedReferenceArrayKeepsContract
+    checked_reference_fields_test.go:56: want exit 70 "adamic: panic: write failed: array[] expects string, got object\n", got <nil> ""
+--- FAIL: TestRuntimeCheckedReferenceArrayKeepsContract (5.79s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	5.795s
+FAIL

@@ -1,0 +1,303 @@
+=== RUN   TestAgreementParseIntRadixWitness
+=== PAUSE TestAgreementParseIntRadixWitness
+=== RUN   TestCensusMarkerZeroCallIsNotAssumedSafe
+=== PAUSE TestCensusMarkerZeroCallIsNotAssumedSafe
+=== RUN   TestCheckedSignatureInstantiation
+=== PAUSE TestCheckedSignatureInstantiation
+=== RUN   TestInheritanceCycleFinderIncludesInheritedFields
+=== PAUSE TestInheritanceCycleFinderIncludesInheritedFields
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== RUN   TestFlagEnumsDomain
+=== PAUSE TestFlagEnumsDomain
+=== RUN   TestNumericEnumLiteralPromises
+=== PAUSE TestNumericEnumLiteralPromises
+=== RUN   TestOriginalCycleLedger
+    import_cycle_ledger_test.go:31: set ADAMIC_CYCLE_LEDGER_ROOT to pristine TypeScript 6.0.3 with generated diagnostics
+--- SKIP: TestOriginalCycleLedger (0.00s)
+=== RUN   TestDestructuredMethodsCannotLoadOwnSlots
+=== PAUSE TestDestructuredMethodsCannotLoadOwnSlots
+=== RUN   TestNodeFSFileNamespaceImport
+=== PAUSE TestNodeFSFileNamespaceImport
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestParserFactoryBindingHoisting
+=== PAUSE TestParserFactoryBindingHoisting
+=== RUN   TestNestedCapturedParametersAreOwned
+=== PAUSE TestNestedCapturedParametersAreOwned
+=== RUN   TestOverloadInferenceWitnesses
+=== PAUSE TestOverloadInferenceWitnesses
+=== RUN   TestPredicateUseRegions
+=== PAUSE TestPredicateUseRegions
+=== RUN   TestRegExpUnicodeClassSourceAgreesWithNode
+=== PAUSE TestRegExpUnicodeClassSourceAgreesWithNode
+=== RUN   TestTypedArrayViewsCannotChangeRepresentation
+=== PAUSE TestTypedArrayViewsCannotChangeRepresentation
+=== CONT  TestAgreementParseIntRadixWitness
+=== CONT  TestNodeFSFileNamespaceImport
+=== CONT  TestTypedArrayViewsCannotChangeRepresentation
+=== CONT  TestRegExpUnicodeClassSourceAgreesWithNode
+=== CONT  TestPredicateUseRegions
+=== RUN   TestPredicateUseRegions/unused
+=== PAUSE TestPredicateUseRegions/unused
+=== RUN   TestPredicateUseRegions/true
+=== PAUSE TestPredicateUseRegions/true
+=== RUN   TestPredicateUseRegions/false
+=== PAUSE TestPredicateUseRegions/false
+=== RUN   TestPredicateUseRegions/both
+=== PAUSE TestPredicateUseRegions/both
+=== RUN   TestPredicateUseRegions/return_continuation
+=== PAUSE TestPredicateUseRegions/return_continuation
+=== RUN   TestPredicateUseRegions/throw_continuation
+=== PAUSE TestPredicateUseRegions/throw_continuation
+=== RUN   TestPredicateUseRegions/false_continuation
+=== PAUSE TestPredicateUseRegions/false_continuation
+=== RUN   TestPredicateUseRegions/const_result_alias
+=== PAUSE TestPredicateUseRegions/const_result_alias
+=== RUN   TestPredicateUseRegions/compound_result_alias
+=== PAUSE TestPredicateUseRegions/compound_result_alias
+=== RUN   TestPredicateUseRegions/short_circuit
+=== PAUSE TestPredicateUseRegions/short_circuit
+=== RUN   TestPredicateUseRegions/closure_read
+=== PAUSE TestPredicateUseRegions/closure_read
+=== RUN   TestPredicateUseRegions/indexed_spelling
+=== PAUSE TestPredicateUseRegions/indexed_spelling
+=== RUN   TestPredicateUseRegions/indexed_argument
+=== PAUSE TestPredicateUseRegions/indexed_argument
+=== RUN   TestPredicateUseRegions/computed_index
+=== PAUSE TestPredicateUseRegions/computed_index
+=== RUN   TestPredicateUseRegions/loop_read
+=== PAUSE TestPredicateUseRegions/loop_read
+=== RUN   TestPredicateUseRegions/later_read
+=== PAUSE TestPredicateUseRegions/later_read
+=== RUN   TestPredicateUseRegions/replacement
+=== PAUSE TestPredicateUseRegions/replacement
+=== CONT  TestOverloadInferenceWitnesses
+=== RUN   TestOverloadInferenceWitnesses/one_compatible_binder
+=== RUN   TestOverloadInferenceWitnesses/incompatible_known_member
+=== RUN   TestOverloadInferenceWitnesses/multiple_unknown_binders
+=== RUN   TestOverloadInferenceWitnesses/optional_rigid_binder
+--- PASS: TestOverloadInferenceWitnesses (0.23s)
+    --- PASS: TestOverloadInferenceWitnesses/one_compatible_binder (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/incompatible_known_member (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/multiple_unknown_binders (0.00s)
+    --- PASS: TestOverloadInferenceWitnesses/optional_rigid_binder (0.00s)
+=== CONT  TestNestedCapturedParametersAreOwned
+--- PASS: TestTypedArrayViewsCannotChangeRepresentation (0.45s)
+=== CONT  TestParserFactoryBindingHoisting
+--- PASS: TestAgreementParseIntRadixWitness (0.46s)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/async
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== RUN   TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== PAUSE TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestClassStaticSideEffectMatchesNode
+--- PASS: TestParserFactoryBindingHoisting (0.12s)
+=== CONT  TestDestructuredMethodsCannotLoadOwnSlots
+--- PASS: TestNestedCapturedParametersAreOwned (0.70s)
+=== CONT  TestNumericEnumLiteralPromises
+=== RUN   TestNumericEnumLiteralPromises/member_tag
+--- PASS: TestDestructuredMethodsCannotLoadOwnSlots (0.47s)
+=== CONT  TestFlagEnumsDomain
+    enum_flags_test.go:96: bitwise_updates
+=== RUN   TestNumericEnumLiteralPromises/narrowed_member
+--- PASS: TestRegExpUnicodeClassSourceAgreesWithNode (1.06s)
+=== CONT  TestCheckedSignatureInstantiation
+=== RUN   TestNumericEnumLiteralPromises/plain_literal
+=== CONT  TestInheritanceCycleFinderIncludesInheritedFields
+--- PASS: TestCheckedSignatureInstantiation (0.14s)
+=== RUN   TestNumericEnumLiteralPromises/indexed_subset
+--- PASS: TestInheritanceCycleFinderIncludesInheritedFields (0.13s)
+=== CONT  TestCensusMarkerZeroCallIsNotAssumedSafe
+=== RUN   TestNumericEnumLiteralPromises/subset_member
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: alias
+=== RUN   TestNumericEnumLiteralPromises/open_tag
+--- PASS: TestCensusMarkerZeroCallIsNotAssumedSafe (0.13s)
+=== CONT  TestPredicateUseRegions/unused
+--- PASS: TestNumericEnumLiteralPromises (0.57s)
+    --- PASS: TestNumericEnumLiteralPromises/member_tag (0.06s)
+    --- PASS: TestNumericEnumLiteralPromises/narrowed_member (0.14s)
+    --- PASS: TestNumericEnumLiteralPromises/plain_literal (0.07s)
+    --- PASS: TestNumericEnumLiteralPromises/indexed_subset (0.10s)
+    --- PASS: TestNumericEnumLiteralPromises/subset_member (0.09s)
+    --- PASS: TestNumericEnumLiteralPromises/open_tag (0.10s)
+=== CONT  TestPredicateUseRegions/short_circuit
+--- PASS: TestClassStaticSideEffectMatchesNode (1.12s)
+=== CONT  TestPredicateUseRegions/replacement
+=== CONT  TestPredicateUseRegions/later_read
+--- PASS: TestNodeFSFileNamespaceImport (1.60s)
+=== CONT  TestPredicateUseRegions/loop_read
+=== CONT  TestPredicateUseRegions/computed_index
+=== CONT  TestPredicateUseRegions/indexed_argument
+=== CONT  TestPredicateUseRegions/indexed_spelling
+=== CONT  TestPredicateUseRegions/closure_read
+=== CONT  TestPredicateUseRegions/throw_continuation
+=== CONT  TestPredicateUseRegions/compound_result_alias
+=== CONT  TestPredicateUseRegions/const_result_alias
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: or
+=== CONT  TestPredicateUseRegions/false_continuation
+=== CONT  TestPredicateUseRegions/both
+=== CONT  TestPredicateUseRegions/return_continuation
+=== CONT  TestPredicateUseRegions/false
+=== CONT  TestPredicateUseRegions/true
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/var
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object
+--- PASS: TestPredicateUseRegions (0.04s)
+    --- PASS: TestPredicateUseRegions/unused (0.11s)
+    --- PASS: TestPredicateUseRegions/short_circuit (0.16s)
+    --- PASS: TestPredicateUseRegions/replacement (0.17s)
+    --- PASS: TestPredicateUseRegions/later_read (0.19s)
+    --- PASS: TestPredicateUseRegions/loop_read (0.16s)
+    --- PASS: TestPredicateUseRegions/computed_index (0.16s)
+    --- PASS: TestPredicateUseRegions/closure_read (0.11s)
+    --- PASS: TestPredicateUseRegions/indexed_argument (0.15s)
+    --- PASS: TestPredicateUseRegions/indexed_spelling (0.20s)
+    --- PASS: TestPredicateUseRegions/throw_continuation (0.18s)
+    --- PASS: TestPredicateUseRegions/const_result_alias (0.19s)
+    --- PASS: TestPredicateUseRegions/compound_result_alias (0.22s)
+    --- PASS: TestPredicateUseRegions/false_continuation (0.13s)
+    --- PASS: TestPredicateUseRegions/both (0.15s)
+    --- PASS: TestPredicateUseRegions/return_continuation (0.17s)
+    --- PASS: TestPredicateUseRegions/false (0.17s)
+    --- PASS: TestPredicateUseRegions/true (0.20s)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: xor
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: and_left
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built)
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/delete
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/==
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/!
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string
+=== CONT  TestWhatZeroOneRefusesIsRefusedWithAFix/async
+--- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix (0.00s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/an_unchecked_cast (0.12s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/var (0.18s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/this.method_read_as_a_value (0.12s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_method_read_off_its_object (0.14s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/reduce_without_an_initial_value (0.12s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random,_not_called (0.13s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Math.random (0.16s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_generic_cell_holding_a_function_that_captures_it (0.17s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_through_a_subtype (0.12s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_a_generic_class_makes_but_never_names (0.15s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_cycle_only_a_later_instantiation_closes (0.20s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_of_sets_that_reach_back (0.15s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_set_whose_elements_reach_back (0.11s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_keys_reach_back (0.17s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_map_whose_values_reach_back (0.19s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_callback_that_captures_what_holds_it (0.15s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_mutable_array_of_children (0.15s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_closure_in_a_cell_it_captures (0.12s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_parent_pointer_not_declared_weak (0.18s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/Array.from's_undefined_typed_as_a_number (0.18s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_doubly_linked_list_with_a_strong_next (0.26s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this,_a_field_set_only_in_a_branch (0.17s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_filter_that_decides_by_truthiness (0.32s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_handing_this_out_before_its_fields_are_set_(R's_early_this) (0.16s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_storing_this_before_its_fields_are_set (0.29s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/a_constructor_calling_a_method_before_its_fields_are_set_(R2's,_and_R's_half_built) (0.19s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/== (0.21s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/! (0.15s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/delete (0.26s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_number (0.16s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/async (0.18s)
+    --- PASS: TestWhatZeroOneRefusesIsRefusedWithAFix/throwing_a_string (0.20s)
+=== NAME  TestFlagEnumsDomain
+    enum_flags_test.go:96: and_right
+    enum_flags_test.go:96: and_complement
+    enum_flags_test.go:96: nested
+    enum_flags_test.go:96: field
+    enum_flags_test.go:96: array
+    enum_flags_test.go:96: map
+    enum_flags_test.go:96: parameter
+    enum_flags_test.go:96: optional
+    enum_flags_test.go:96: switch
+--- PASS: TestFlagEnumsDomain (4.54s)
+PASS

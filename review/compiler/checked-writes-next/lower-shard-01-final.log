@@ -1,0 +1,185 @@
+=== RUN   TestAgreementRejectsEmptyAnswer
+=== PAUSE TestAgreementRejectsEmptyAnswer
+=== RUN   TestArrayPredicateCannotInventAnElementContract
+=== PAUSE TestArrayPredicateCannotInventAnElementContract
+=== RUN   TestCensusOverloadRelation
+=== PAUSE TestCensusOverloadRelation
+=== RUN   TestClassFeaturesNarrowedAccessor
+=== PAUSE TestClassFeaturesNarrowedAccessor
+=== RUN   TestInheritanceGenericViewsKeepNominalArguments
+=== PAUSE TestInheritanceGenericViewsKeepNominalArguments
+=== RUN   TestDefiniteAssignmentUsesReadiness
+=== PAUSE TestDefiniteAssignmentUsesReadiness
+=== RUN   TestEnumReverseMappingUsesSingleSlot
+=== PAUSE TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestFSRemoveDefaultRetryDelayLowers
+=== PAUSE TestFSRemoveDefaultRetryDelayLowers
+=== RUN   TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== PAUSE TestIteratorDestructuringDoesNotLieAboutExhaustion
+=== RUN   TestLibraryMethodValueSafety
+=== PAUSE TestLibraryMethodValueSafety
+=== RUN   TestNodeLibraryQualifiedTypeAssertion
+=== PAUSE TestNodeLibraryQualifiedTypeAssertion
+=== RUN   TestNamespaceClassEarlyConstructionStaysLoud
+=== PAUSE TestNamespaceClassEarlyConstructionStaysLoud
+=== RUN   TestNamespaceInitializationReachability
+=== PAUSE TestNamespaceInitializationReachability
+=== RUN   TestOptionalIndexingMapShapeRefused
+=== PAUSE TestOptionalIndexingMapShapeRefused
+=== RUN   TestPredicateOverloadRuntime
+=== PAUSE TestPredicateOverloadRuntime
+=== RUN   TestUnrepresentedPrototypeCallsAreNotYet
+=== PAUSE TestUnrepresentedPrototypeCallsAreNotYet
+=== RUN   TestSwitchConditionalBreakFallsThrough
+=== PAUSE TestSwitchConditionalBreakFallsThrough
+=== RUN   TestMixedUnionContractRecursiveMember
+=== PAUSE TestMixedUnionContractRecursiveMember
+=== CONT  TestAgreementRejectsEmptyAnswer
+=== CONT  TestInheritanceGenericViewsKeepNominalArguments
+=== CONT  TestDefiniteAssignmentUsesReadiness
+=== CONT  TestLibraryMethodValueSafety
+=== CONT  TestMixedUnionContractRecursiveMember
+=== RUN   TestLibraryMethodValueSafety/string_receiver
+=== PAUSE TestLibraryMethodValueSafety/string_receiver
+=== RUN   TestLibraryMethodValueSafety/number_receiver
+=== PAUSE TestLibraryMethodValueSafety/number_receiver
+=== RUN   TestLibraryMethodValueSafety/opaque_return
+=== PAUSE TestLibraryMethodValueSafety/opaque_return
+=== RUN   TestLibraryMethodValueSafety/apply_spread
+=== PAUSE TestLibraryMethodValueSafety/apply_spread
+=== RUN   TestLibraryMethodValueSafety/bind_arity
+=== PAUSE TestLibraryMethodValueSafety/bind_arity
+=== RUN   TestLibraryMethodValueSafety/bind_absent_receiver
+=== PAUSE TestLibraryMethodValueSafety/bind_absent_receiver
+=== RUN   TestLibraryMethodValueSafety/opaque_identity
+=== PAUSE TestLibraryMethodValueSafety/opaque_identity
+=== RUN   TestLibraryMethodValueSafety/unsupported_callback
+=== PAUSE TestLibraryMethodValueSafety/unsupported_callback
+=== RUN   TestLibraryMethodValueSafety/mutable_alias
+=== PAUSE TestLibraryMethodValueSafety/mutable_alias
+=== RUN   TestLibraryMethodValueSafety/opaque_field
+=== PAUSE TestLibraryMethodValueSafety/opaque_field
+=== RUN   TestLibraryMethodValueSafety/opaque_shorthand
+=== PAUSE TestLibraryMethodValueSafety/opaque_shorthand
+=== RUN   TestLibraryMethodValueSafety/absent_array
+=== PAUSE TestLibraryMethodValueSafety/absent_array
+=== RUN   TestLibraryMethodValueSafety/array_element_erasure
+=== PAUSE TestLibraryMethodValueSafety/array_element_erasure
+=== RUN   TestLibraryMethodValueSafety/call_spread
+=== PAUSE TestLibraryMethodValueSafety/call_spread
+=== CONT  TestSwitchConditionalBreakFallsThrough
+--- PASS: TestMixedUnionContractRecursiveMember (0.16s)
+=== CONT  TestUnrepresentedPrototypeCallsAreNotYet
+--- PASS: TestInheritanceGenericViewsKeepNominalArguments (0.23s)
+=== CONT  TestPredicateOverloadRuntime
+=== RUN   TestPredicateOverloadRuntime/parser_every_result
+--- PASS: TestAgreementRejectsEmptyAnswer (0.34s)
+=== CONT  TestOptionalIndexingMapShapeRefused
+--- PASS: TestOptionalIndexingMapShapeRefused (0.10s)
+=== CONT  TestNamespaceInitializationReachability
+=== RUN   TestNamespaceInitializationReachability/direct
+--- PASS: TestSwitchConditionalBreakFallsThrough (0.50s)
+=== CONT  TestNamespaceClassEarlyConstructionStaysLoud
+=== RUN   TestNamespaceInitializationReachability/helper
+--- PASS: TestNamespaceClassEarlyConstructionStaysLoud (0.11s)
+=== CONT  TestNodeLibraryQualifiedTypeAssertion
+=== RUN   TestNamespaceInitializationReachability/cycle
+--- PASS: TestNamespaceInitializationReachability (0.32s)
+    --- PASS: TestNamespaceInitializationReachability/direct (0.12s)
+    --- PASS: TestNamespaceInitializationReachability/helper (0.08s)
+    --- PASS: TestNamespaceInitializationReachability/cycle (0.12s)
+=== CONT  TestIteratorDestructuringDoesNotLieAboutExhaustion
+--- PASS: TestIteratorDestructuringDoesNotLieAboutExhaustion (0.12s)
+=== CONT  TestFSRemoveDefaultRetryDelayLowers
+--- PASS: TestUnrepresentedPrototypeCallsAreNotYet (0.97s)
+=== CONT  TestEnumReverseMappingUsesSingleSlot
+=== RUN   TestPredicateOverloadRuntime/parser_some_result
+--- PASS: TestDefiniteAssignmentUsesReadiness (1.28s)
+=== CONT  TestCensusOverloadRelation
+=== RUN   TestCensusOverloadRelation/parameter_contravariance
+=== PAUSE TestCensusOverloadRelation/parameter_contravariance
+=== RUN   TestCensusOverloadRelation/generic_parameter_constraints
+=== PAUSE TestCensusOverloadRelation/generic_parameter_constraints
+=== RUN   TestCensusOverloadRelation/mutable_parameters
+=== PAUSE TestCensusOverloadRelation/mutable_parameters
+=== RUN   TestCensusOverloadRelation/result_covariance
+=== PAUSE TestCensusOverloadRelation/result_covariance
+=== CONT  TestClassFeaturesNarrowedAccessor
+--- PASS: TestClassFeaturesNarrowedAccessor (0.16s)
+=== CONT  TestArrayPredicateCannotInventAnElementContract
+--- PASS: TestNodeLibraryQualifiedTypeAssertion (0.93s)
+=== CONT  TestLibraryMethodValueSafety/string_receiver
+=== CONT  TestLibraryMethodValueSafety/call_spread
+--- PASS: TestEnumReverseMappingUsesSingleSlot (0.54s)
+=== CONT  TestLibraryMethodValueSafety/array_element_erasure
+=== CONT  TestLibraryMethodValueSafety/absent_array
+=== CONT  TestLibraryMethodValueSafety/opaque_shorthand
+=== CONT  TestLibraryMethodValueSafety/opaque_field
+=== CONT  TestLibraryMethodValueSafety/mutable_alias
+--- PASS: TestArrayPredicateCannotInventAnElementContract (0.42s)
+=== CONT  TestLibraryMethodValueSafety/unsupported_callback
+=== RUN   TestPredicateOverloadRuntime/overload_some
+=== CONT  TestLibraryMethodValueSafety/opaque_identity
+=== CONT  TestLibraryMethodValueSafety/bind_absent_receiver
+=== CONT  TestLibraryMethodValueSafety/bind_arity
+=== CONT  TestLibraryMethodValueSafety/apply_spread
+--- PASS: TestFSRemoveDefaultRetryDelayLowers (1.13s)
+=== CONT  TestLibraryMethodValueSafety/opaque_return
+=== CONT  TestLibraryMethodValueSafety/number_receiver
+=== CONT  TestCensusOverloadRelation/parameter_contravariance
+=== CONT  TestCensusOverloadRelation/mutable_parameters
+=== CONT  TestCensusOverloadRelation/result_covariance
+--- PASS: TestLibraryMethodValueSafety (0.01s)
+    --- PASS: TestLibraryMethodValueSafety/string_receiver (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/call_spread (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/array_element_erasure (0.15s)
+    --- PASS: TestLibraryMethodValueSafety/absent_array (0.13s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_shorthand (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_field (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/mutable_alias (0.10s)
+    --- PASS: TestLibraryMethodValueSafety/unsupported_callback (0.11s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_identity (0.09s)
+    --- PASS: TestLibraryMethodValueSafety/bind_absent_receiver (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/bind_arity (0.06s)
+    --- PASS: TestLibraryMethodValueSafety/apply_spread (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/opaque_return (0.07s)
+    --- PASS: TestLibraryMethodValueSafety/number_receiver (0.06s)
+=== CONT  TestCensusOverloadRelation/generic_parameter_constraints
+--- PASS: TestCensusOverloadRelation (0.00s)
+    --- PASS: TestCensusOverloadRelation/parameter_contravariance (0.05s)
+    --- PASS: TestCensusOverloadRelation/result_covariance (0.05s)
+    --- PASS: TestCensusOverloadRelation/mutable_parameters (0.05s)
+    --- PASS: TestCensusOverloadRelation/generic_parameter_constraints (0.05s)
+=== RUN   TestPredicateOverloadRuntime/overload_some_empty
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_valid
+=== RUN   TestPredicateOverloadRuntime/overload_some_false_read
+=== RUN   TestPredicateOverloadRuntime/overload_some_objects
+=== RUN   TestPredicateOverloadRuntime/overload_some_true_only
+=== RUN   TestPredicateOverloadRuntime/overload_callback
+=== RUN   TestPredicateOverloadRuntime/overload_erased
+=== RUN   TestPredicateOverloadRuntime/overload_checked
+=== RUN   TestPredicateOverloadRuntime/overload_false
+=== RUN   TestPredicateOverloadRuntime/overload_once
+=== RUN   TestPredicateOverloadRuntime/overload_every
+=== RUN   TestPredicateOverloadRuntime/overload_array_alias
+=== RUN   TestPredicateOverloadRuntime/overload_assertion
+=== RUN   TestPredicateOverloadRuntime/overload_nominal
+--- PASS: TestPredicateOverloadRuntime (10.30s)
+    --- PASS: TestPredicateOverloadRuntime/parser_every_result (1.00s)
+    --- PASS: TestPredicateOverloadRuntime/parser_some_result (0.67s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some (0.47s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_empty (0.53s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_valid (0.55s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_false_read (0.78s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_objects (0.72s)
+    --- PASS: TestPredicateOverloadRuntime/overload_some_true_only (0.56s)
+    --- PASS: TestPredicateOverloadRuntime/overload_callback (0.56s)
+    --- PASS: TestPredicateOverloadRuntime/overload_erased (0.67s)
+    --- PASS: TestPredicateOverloadRuntime/overload_checked (0.37s)
+    --- PASS: TestPredicateOverloadRuntime/overload_false (0.55s)
+    --- PASS: TestPredicateOverloadRuntime/overload_once (0.65s)
+    --- PASS: TestPredicateOverloadRuntime/overload_every (0.46s)
+    --- PASS: TestPredicateOverloadRuntime/overload_array_alias (0.61s)
+    --- PASS: TestPredicateOverloadRuntime/overload_assertion (0.60s)
+    --- PASS: TestPredicateOverloadRuntime/overload_nominal (0.55s)
+PASS

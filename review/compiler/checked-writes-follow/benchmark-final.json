@@ -1,0 +1,51 @@
+{
+  "instrument": "Python time.perf_counter_ns wall clock around subprocess.run; one warmup per binary; alternating base/before/after, best of five; release -O2, no sanitizers",
+  "machine": "Linux-6.18.44-x86_64-with-glibc2.41",
+  "processor": "AMD EPYC 9V74 80-Core Processor",
+  "nproc": 5,
+  "quota": "400000 100000",
+  "base_sha": "5e33a17b186a8a2218d27b69b21e2de5acc5b750",
+  "cleared_sha": "781766edccfd21ed4f2e9f9106dd488d28751e96",
+  "load_before": [
+    2.37841796875,
+    1.279296875,
+    1.60693359375
+  ],
+  "runs": {
+    "base": [
+      0.069400402,
+      0.069323637,
+      0.06452467,
+      0.064563559,
+      0.069249616
+    ],
+    "before": [
+      0.11889554,
+      0.121201312,
+      0.111242866,
+      0.11119275,
+      0.116193611
+    ],
+    "after": [
+      0.070159136,
+      0.068179203,
+      0.067987295,
+      0.067841525,
+      0.068552696
+    ]
+  },
+  "load_after": [
+    2.37841796875,
+    1.279296875,
+    1.60693359375
+  ],
+  "best": {
+    "base": 0.06452467,
+    "before": 0.11119275,
+    "after": 0.067841525
+  },
+  "slowdown_percent": {
+    "before": 72.32594912922453,
+    "after": 5.140444732224103
+  }
+}

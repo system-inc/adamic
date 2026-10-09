@@ -1,0 +1,1 @@
+stage3/checked-writes/array-refused.a:4:7: Adamic 0.1 refuses a value of type (1 | 2)[] seen as number[], which can write number where 1 | 2 is read; make the wider type readonly (readonly T[], ReadonlyMap, readonly fields), which can't write; or copy the value ([...items], { ...item }) (adamic/invariant-mutable)

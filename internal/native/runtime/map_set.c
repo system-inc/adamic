@@ -46,17 +46,17 @@ uint64_t adamic_map_number_hash(double number) {
 
 static const char *const iterator_names[] = {"next"};
 static const bool iterator_references[] = {true};
-static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL};
+static const adamic_shape iterator_shape = {1, iterator_names, iterator_references, NULL, NULL};
 static const char *const state_names[] = {"iterator", "part", "key", "value", "set"};
 static const bool state_references[] = {true, false, false, false, false};
-static const adamic_shape state_shape = {5, state_names, state_references, NULL};
+static const adamic_shape state_shape = {5, state_names, state_references, NULL, NULL};
 static const char *const result_names[] = {"done", "value"};
 static const bool result_reference[] = {false, true};
 static const bool result_scalar[] = {false, false};
-static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL}, {2, result_names, result_reference, NULL}};
+static const adamic_shape result_shapes[] = {{2, result_names, result_scalar, NULL, NULL}, {2, result_names, result_reference, NULL, NULL}};
 static const char *const pair_names[] = {"0", "1"};
 static const bool pair_references[][2] = {{false, false}, {false, true}, {true, false}, {true, true}};
-static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL}, {2, pair_names, pair_references[1], NULL}, {2, pair_names, pair_references[2], NULL}, {2, pair_names, pair_references[3], NULL}};
+static const adamic_shape pair_shapes[] = {{2, pair_names, pair_references[0], NULL, NULL}, {2, pair_names, pair_references[1], NULL, NULL}, {2, pair_names, pair_references[2], NULL, NULL}, {2, pair_names, pair_references[3], NULL, NULL}};
 
 // These are ir.Type's scalar representations; all other accepted collection elements are counted.
 static bool collection_reference(int type) {

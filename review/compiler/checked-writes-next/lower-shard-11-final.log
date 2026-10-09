@@ -1,0 +1,489 @@
+=== RUN   TestArgumentsLengthRefusals
+=== PAUSE TestArgumentsLengthRefusals
+=== RUN   TestCensusOverloadBinderGuards
+=== PAUSE TestCensusOverloadBinderGuards
+=== RUN   TestClassFeaturesPrivateChecker
+=== PAUSE TestClassFeaturesPrivateChecker
+=== RUN   TestInheritanceRefusesThisBeforeSuperReturns
+=== PAUSE TestInheritanceRefusesThisBeforeSuperReturns
+=== RUN   TestClassWrongOutputPrivateRepair
+=== PAUSE TestClassWrongOutputPrivateRepair
+=== RUN   TestFlagEnumMemberAliases
+=== PAUSE TestFlagEnumMemberAliases
+=== RUN   TestEnumLimitsStayLoud
+=== PAUSE TestEnumLimitsStayLoud
+=== RUN   TestInputSpreadCoverage
+=== PAUSE TestInputSpreadCoverage
+=== RUN   TestIteratorSymbolKeysAreNotStringKeys
+=== PAUSE TestIteratorSymbolKeysAreNotStringKeys
+=== RUN   TestNodeFSFileBufferBorrow
+=== PAUSE TestNodeFSFileBufferBorrow
+=== RUN   TestATupleSeenAsAnArrayIsNotYet
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestNamespaceLimitsStayLoud
+=== PAUSE TestNamespaceLimitsStayLoud
+=== RUN   TestNestedCallbackCycleIsRefused
+=== PAUSE TestNestedCallbackCycleIsRefused
+=== RUN   TestOverrideOptionalRefusesNativeSignature
+=== PAUSE TestOverrideOptionalRefusesNativeSignature
+=== RUN   TestPredicateBodiesAreProven
+=== PAUSE TestPredicateBodiesAreProven
+=== RUN   TestRepresentationClockSourceCheckedTypes
+=== PAUSE TestRepresentationClockSourceCheckedTypes
+=== RUN   TestUnknownReflectionRefusals
+=== PAUSE TestUnknownReflectionRefusals
+=== CONT  TestArgumentsLengthRefusals
+=== RUN   TestArgumentsLengthRefusals/indexing
+=== PAUSE TestArgumentsLengthRefusals/indexing
+=== RUN   TestArgumentsLengthRefusals/aliasing
+=== PAUSE TestArgumentsLengthRefusals/aliasing
+=== RUN   TestArgumentsLengthRefusals/passing
+=== CONT  TestUnknownReflectionRefusals
+=== RUN   TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== CONT  TestRepresentationClockSourceCheckedTypes
+=== CONT  TestPredicateBodiesAreProven
+=== CONT  TestOverrideOptionalRefusesNativeSignature
+=== PAUSE TestArgumentsLengthRefusals/passing
+=== RUN   TestArgumentsLengthRefusals/returning
+=== PAUSE TestArgumentsLengthRefusals/returning
+=== RUN   TestArgumentsLengthRefusals/spreading
+=== PAUSE TestArgumentsLengthRefusals/spreading
+=== RUN   TestArgumentsLengthRefusals/writing_object
+=== PAUSE TestArgumentsLengthRefusals/writing_object
+=== RUN   TestArgumentsLengthRefusals/writing_length
+=== PAUSE TestArgumentsLengthRefusals/writing_length
+=== RUN   TestArgumentsLengthRefusals/incrementing_length
+=== PAUSE TestArgumentsLengthRefusals/incrementing_length
+=== RUN   TestArgumentsLengthRefusals/compound_length
+=== PAUSE TestArgumentsLengthRefusals/compound_length
+=== RUN   TestArgumentsLengthRefusals/arrow
+=== PAUSE TestArgumentsLengthRefusals/arrow
+=== RUN   TestArgumentsLengthRefusals/parenthesized_write
+=== PAUSE TestArgumentsLengthRefusals/parenthesized_write
+=== PAUSE TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== CONT  TestNestedCallbackCycleIsRefused
+=== RUN   TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== PAUSE TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== RUN   TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== PAUSE TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== RUN   TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== PAUSE TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== PAUSE TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== PAUSE TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== RUN   TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== RUN   TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== PAUSE TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== RUN   TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== PAUSE TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== PAUSE TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== RUN   TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== PAUSE TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== RUN   TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== PAUSE TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== RUN   TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== PAUSE TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== RUN   TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== PAUSE TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== PAUSE TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+=== CONT  TestNamespaceLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/computed_enum
+--- PASS: TestOverrideOptionalRefusesNativeSignature (0.42s)
+=== CONT  TestATupleSeenAsAnArrayIsNotYet
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_return
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_return
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_element
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_element
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== RUN   TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== PAUSE TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+=== CONT  TestNodeFSFileBufferBorrow
+--- PASS: TestNestedCallbackCycleIsRefused (0.43s)
+=== CONT  TestIteratorSymbolKeysAreNotStringKeys
+=== NAME  TestRepresentationClockSourceCheckedTypes
+    representation_clock_source_test.go:78: CompilerType admits Object and Closure; length-only admits Array and String; neither unresolved parameter has one ABI
+--- PASS: TestRepresentationClockSourceCheckedTypes (0.44s)
+=== CONT  TestInputSpreadCoverage
+=== RUN   TestInputSpreadCoverage/fileStatus_alias.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_alias.a
+=== RUN   TestInputSpreadCoverage/fileStatus_array.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_array.a
+=== RUN   TestInputSpreadCoverage/fileStatus_local.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_local.a
+=== RUN   TestInputSpreadCoverage/fileStatus_nested.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_nested.a
+=== RUN   TestInputSpreadCoverage/fileStatus_parentheses.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_parentheses.a
+=== RUN   TestInputSpreadCoverage/fileStatus_tuple.a
+=== PAUSE TestInputSpreadCoverage/fileStatus_tuple.a
+=== RUN   TestInputSpreadCoverage/programArguments_alias.a
+=== PAUSE TestInputSpreadCoverage/programArguments_alias.a
+=== RUN   TestInputSpreadCoverage/programArguments_array.a
+=== PAUSE TestInputSpreadCoverage/programArguments_array.a
+=== RUN   TestInputSpreadCoverage/programArguments_local.a
+=== PAUSE TestInputSpreadCoverage/programArguments_local.a
+=== RUN   TestInputSpreadCoverage/programArguments_nested.a
+=== PAUSE TestInputSpreadCoverage/programArguments_nested.a
+=== RUN   TestInputSpreadCoverage/programArguments_parentheses.a
+=== PAUSE TestInputSpreadCoverage/programArguments_parentheses.a
+=== RUN   TestInputSpreadCoverage/programArguments_tuple.a
+=== PAUSE TestInputSpreadCoverage/programArguments_tuple.a
+=== RUN   TestInputSpreadCoverage/readDirectory_alias.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_alias.a
+=== RUN   TestInputSpreadCoverage/readDirectory_array.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_array.a
+=== RUN   TestInputSpreadCoverage/readDirectory_local.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_local.a
+=== RUN   TestInputSpreadCoverage/readDirectory_nested.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_nested.a
+=== RUN   TestInputSpreadCoverage/readDirectory_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_parentheses.a
+=== RUN   TestInputSpreadCoverage/readDirectory_tuple.a
+=== PAUSE TestInputSpreadCoverage/readDirectory_tuple.a
+=== RUN   TestInputSpreadCoverage/readTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/readTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_array.a
+=== RUN   TestInputSpreadCoverage/readTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_local.a
+=== RUN   TestInputSpreadCoverage/readTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/readTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/readTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/readTextFile_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8At_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8At_alias.a
+=== RUN   TestInputSpreadCoverage/utf8At_array.a
+=== PAUSE TestInputSpreadCoverage/utf8At_array.a
+=== RUN   TestInputSpreadCoverage/utf8At_later.a
+=== PAUSE TestInputSpreadCoverage/utf8At_later.a
+=== RUN   TestInputSpreadCoverage/utf8At_local.a
+=== PAUSE TestInputSpreadCoverage/utf8At_local.a
+=== RUN   TestInputSpreadCoverage/utf8At_multiple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_multiple.a
+=== RUN   TestInputSpreadCoverage/utf8At_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8At_nested.a
+=== RUN   TestInputSpreadCoverage/utf8At_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8At_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8At_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8At_tuple.a
+=== RUN   TestInputSpreadCoverage/utf8Length_alias.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_alias.a
+=== RUN   TestInputSpreadCoverage/utf8Length_array.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_array.a
+=== RUN   TestInputSpreadCoverage/utf8Length_empty.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_empty.a
+=== RUN   TestInputSpreadCoverage/utf8Length_local.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_local.a
+=== RUN   TestInputSpreadCoverage/utf8Length_nested.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_nested.a
+=== RUN   TestInputSpreadCoverage/utf8Length_parentheses.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_parentheses.a
+=== RUN   TestInputSpreadCoverage/utf8Length_tuple.a
+=== PAUSE TestInputSpreadCoverage/utf8Length_tuple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_alias.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_alias.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_array.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_array.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_later.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_later.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_local.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_local.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_multiple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_multiple.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_nested.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_nested.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== RUN   TestInputSpreadCoverage/writeTextFile_tuple.a
+=== PAUSE TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestEnumLimitsStayLoud
+=== RUN   TestNamespaceLimitsStayLoud/reopened_enum
+=== RUN   TestNamespaceLimitsStayLoud/early_enum
+--- PASS: TestIteratorSymbolKeysAreNotStringKeys (0.34s)
+=== CONT  TestFlagEnumMemberAliases
+=== RUN   TestNamespaceLimitsStayLoud/mutable_object_escape
+=== RUN   TestNamespaceLimitsStayLoud/object_value
+=== RUN   TestNamespaceLimitsStayLoud/reflection
+=== RUN   TestNamespaceLimitsStayLoud/reopening
+--- PASS: TestFlagEnumMemberAliases (0.94s)
+=== CONT  TestClassWrongOutputPrivateRepair
+=== RUN   TestNamespaceLimitsStayLoud/function_merge_escape
+=== RUN   TestNamespaceLimitsStayLoud/class_merge
+=== RUN   TestNamespaceLimitsStayLoud/destructured_state
+=== RUN   TestNamespaceLimitsStayLoud/nested_object_var
+--- PASS: TestPredicateBodiesAreProven (2.51s)
+=== CONT  TestInheritanceRefusesThisBeforeSuperReturns
+=== CONT  TestClassFeaturesPrivateChecker
+--- PASS: TestInheritanceRefusesThisBeforeSuperReturns (0.18s)
+=== RUN   TestNamespaceLimitsStayLoud/rest_object_var
+--- PASS: TestClassWrongOutputPrivateRepair (1.09s)
+=== CONT  TestCensusOverloadBinderGuards
+=== RUN   TestCensusOverloadBinderGuards/constraint
+=== PAUSE TestCensusOverloadBinderGuards/constraint
+=== RUN   TestCensusOverloadBinderGuards/parameter
+=== PAUSE TestCensusOverloadBinderGuards/parameter
+=== RUN   TestCensusOverloadBinderGuards/result
+=== PAUSE TestCensusOverloadBinderGuards/result
+=== CONT  TestArgumentsLengthRefusals/indexing
+--- PASS: TestClassFeaturesPrivateChecker (0.18s)
+=== CONT  TestArgumentsLengthRefusals/writing_length
+--- PASS: TestNodeFSFileBufferBorrow (2.50s)
+=== CONT  TestArgumentsLengthRefusals/writing_object
+=== RUN   TestNamespaceLimitsStayLoud/default_object_var
+=== CONT  TestArgumentsLengthRefusals/spreading
+=== CONT  TestArgumentsLengthRefusals/returning
+=== CONT  TestArgumentsLengthRefusals/passing
+=== RUN   TestNamespaceLimitsStayLoud/computed_member
+=== CONT  TestArgumentsLengthRefusals/aliasing
+=== CONT  TestArgumentsLengthRefusals/arrow
+=== CONT  TestArgumentsLengthRefusals/parenthesized_write
+=== RUN   TestNamespaceLimitsStayLoud/replace_function
+=== CONT  TestArgumentsLengthRefusals/compound_length
+=== CONT  TestArgumentsLengthRefusals/incrementing_length
+=== CONT  TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+--- PASS: TestArgumentsLengthRefusals (0.00s)
+    --- PASS: TestArgumentsLengthRefusals/indexing (0.29s)
+    --- PASS: TestArgumentsLengthRefusals/writing_length (0.25s)
+    --- PASS: TestArgumentsLengthRefusals/writing_object (0.25s)
+    --- PASS: TestArgumentsLengthRefusals/returning (0.18s)
+    --- PASS: TestArgumentsLengthRefusals/spreading (0.23s)
+    --- PASS: TestArgumentsLengthRefusals/passing (0.30s)
+    --- PASS: TestArgumentsLengthRefusals/aliasing (0.24s)
+    --- PASS: TestArgumentsLengthRefusals/arrow (0.27s)
+    --- PASS: TestArgumentsLengthRefusals/parenthesized_write (0.20s)
+    --- PASS: TestArgumentsLengthRefusals/compound_length (0.16s)
+    --- PASS: TestArgumentsLengthRefusals/incrementing_length (0.20s)
+=== CONT  TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code());
+--- PASS: TestEnumLimitsStayLoud (3.36s)
+=== CONT  TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_}
+=== RUN   TestNamespaceLimitsStayLoud/early_call
+=== CONT  TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code()));
+=== CONT  TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code));
+=== CONT  TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON);
+=== CONT  TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1);
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested);
+=== RUN   TestNamespaceLimitsStayLoud/early_read
+=== CONT  TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_}
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code());
+=== CONT  TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null});
+=== CONT  TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>());
+=== CONT  TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_}
+=== RUN   TestNamespaceLimitsStayLoud/block_var
+=== CONT  TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_}
+=== CONT  TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_}
+=== CONT  TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{}));
+=== CONT  TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_}
+=== RUN   TestNamespaceLimitsStayLoud/nested_early_read
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_initializer
+=== CONT  TestInputSpreadCoverage/fileStatus_alias.a
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple
+--- PASS: TestUnknownReflectionRefusals (0.03s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_referencefunction_reflect(value:_unknown):_string_{_return_typeof_value;_}_function_test(value:_{code:string}|null):_string_{_return_reflect(value);_} (0.16s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getter_or_methodclass_Code_{_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.18s)
+    --- PASS: TestUnknownReflectionRefusals/ambient_class_fieldclass_Code_{_declare_code:_string;_}_function_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value;_}_has(new_Code()); (0.21s)
+    --- PASS: TestUnknownReflectionRefusals/presence_descriptorsfunction_has(value:_{code:number}|undefined):_boolean_{_return_'code'_in_{...value};_} (0.22s)
+    --- PASS: TestUnknownReflectionRefusals/class_constructorclass_Code_{_static_code_=_'x';_}_console.log(String('code'_in_Code)); (0.22s)
+    --- PASS: TestUnknownReflectionRefusals/dispatch_tableclass_Code_{_inspect(value:_unknown):_void_{}_}_console.log(String('inspect'_in_new_Code())); (0.36s)
+    --- PASS: TestUnknownReflectionRefusals/function_descriptorsfunction_box(value:_unknown):_unknown_{_return_value;_}_box(()_=>_1); (0.22s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_const_nested_=_{child:{code:null}};_read(nested); (0.16s)
+    --- PASS: TestUnknownReflectionRefusals/JSON_as_a_valuefunction_box(value:_unknown):_unknown_{_return_value;_}_box(JSON); (0.37s)
+    --- PASS: TestUnknownReflectionRefusals/ToPrimitivefunction_text(value:_unknown):_string_{_return_String(value);_} (0.19s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'stack'_in_value;_} (0.17s)
+    --- PASS: TestUnknownReflectionRefusals/nullable_fieldfunction_box(value:_unknown):_unknown_{_return_value;_}_box({code:null}); (0.22s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_getterclass_Code_{_get_code():_string_{_return_'x';_}_}_function_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'code'_in_value_?_value.code_:_undefined;_}_read(new_Code()); (0.32s)
+    --- PASS: TestUnknownReflectionRefusals/descriptor_metadatafunction_has(value:_unknown):_boolean_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'errno'_in_value;_} (0.26s)
+    --- PASS: TestUnknownReflectionRefusals/opaque_hostfunction_box(value:_unknown):_unknown_{_return_value;_}_box(new_Map<string,_number>()); (0.29s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_prototypefunction_read(value:_unknown):_unknown_{_return_typeof_value_===_'object'_&&_value_!==_null_&&_'__proto__'_in_value_?_value.__proto___:_undefined;_} (0.18s)
+    --- PASS: TestUnknownReflectionRefusals/tuplefunction_has(pair:_readonly_[number]):_boolean_{_return_'length'_in_pair;_} (0.24s)
+    --- PASS: TestUnknownReflectionRefusals/dynamic_key_coercionfunction_has(key:_string,_value:_object):_boolean_{_return_key_in_value;_} (0.22s)
+    --- PASS: TestUnknownReflectionRefusals/NUL_keyconsole.log(String('a\0b'_in_{})); (0.27s)
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array
+=== RUN   TestNamespaceLimitsStayLoud/explicit_receiver
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_map's_value
+=== RUN   TestNamespaceLimitsStayLoud/ambient
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_element
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_field
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_return
+--- PASS: TestNamespaceLimitsStayLoud (5.37s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_enum (0.45s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopened_enum (0.25s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_enum (0.27s)
+    --- PASS: TestNamespaceLimitsStayLoud/mutable_object_escape (0.25s)
+    --- PASS: TestNamespaceLimitsStayLoud/object_value (0.22s)
+    --- PASS: TestNamespaceLimitsStayLoud/reflection (0.20s)
+    --- PASS: TestNamespaceLimitsStayLoud/reopening (0.28s)
+    --- PASS: TestNamespaceLimitsStayLoud/function_merge_escape (0.14s)
+    --- PASS: TestNamespaceLimitsStayLoud/class_merge (0.26s)
+    --- PASS: TestNamespaceLimitsStayLoud/destructured_state (0.12s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_object_var (0.21s)
+    --- PASS: TestNamespaceLimitsStayLoud/rest_object_var (0.23s)
+    --- PASS: TestNamespaceLimitsStayLoud/default_object_var (0.35s)
+    --- PASS: TestNamespaceLimitsStayLoud/computed_member (0.21s)
+    --- PASS: TestNamespaceLimitsStayLoud/replace_function (0.31s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_call (0.33s)
+    --- PASS: TestNamespaceLimitsStayLoud/early_read (0.34s)
+    --- PASS: TestNamespaceLimitsStayLoud/block_var (0.27s)
+    --- PASS: TestNamespaceLimitsStayLoud/nested_early_read (0.27s)
+    --- PASS: TestNamespaceLimitsStayLoud/explicit_receiver (0.20s)
+    --- PASS: TestNamespaceLimitsStayLoud/ambient (0.19s)
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_argument
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/an_assignment
+=== CONT  TestATupleSeenAsAnArrayIsNotYet/a_cast_literal
+=== CONT  TestInputSpreadCoverage/writeTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_nested.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_multiple.a
+--- PASS: TestATupleSeenAsAnArrayIsNotYet (0.00s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_initializer (0.26s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_method_called_on_a_tuple (0.18s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_tuple_field_seen_as_an_array_field (0.12s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_array_of_tuples_seen_as_an_array_of_arrays (0.14s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_function_returning_a_tuple_seen_as_returning_an_array (0.30s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_map's_value (0.20s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_slot_that_may_be_undefined (0.29s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_element (0.18s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_return (0.15s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_arrow's_body (0.32s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_field (0.20s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_assignment (0.16s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/an_argument (0.19s)
+    --- PASS: TestATupleSeenAsAnArrayIsNotYet/a_cast_literal (0.15s)
+=== CONT  TestInputSpreadCoverage/writeTextFile_local.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_later.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_array.a
+=== CONT  TestInputSpreadCoverage/writeTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/utf8Length_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8Length_parentheses.a
+=== CONT  TestInputSpreadCoverage/utf8Length_nested.a
+=== CONT  TestInputSpreadCoverage/utf8Length_local.a
+=== CONT  TestInputSpreadCoverage/utf8Length_empty.a
+=== CONT  TestInputSpreadCoverage/utf8Length_array.a
+=== CONT  TestInputSpreadCoverage/utf8Length_alias.a
+=== CONT  TestInputSpreadCoverage/utf8At_tuple.a
+=== CONT  TestInputSpreadCoverage/utf8At_parentheses.a
+=== CONT  TestInputSpreadCoverage/utf8At_nested.a
+=== CONT  TestInputSpreadCoverage/utf8At_multiple.a
+=== CONT  TestInputSpreadCoverage/utf8At_local.a
+=== CONT  TestInputSpreadCoverage/utf8At_later.a
+=== CONT  TestInputSpreadCoverage/utf8At_array.a
+=== CONT  TestInputSpreadCoverage/utf8At_alias.a
+=== CONT  TestInputSpreadCoverage/readTextFile_tuple.a
+=== CONT  TestInputSpreadCoverage/readTextFile_parentheses.a
+=== CONT  TestInputSpreadCoverage/readTextFile_nested.a
+=== CONT  TestInputSpreadCoverage/readTextFile_local.a
+=== CONT  TestInputSpreadCoverage/readTextFile_array.a
+=== CONT  TestInputSpreadCoverage/readTextFile_alias.a
+=== CONT  TestInputSpreadCoverage/readDirectory_tuple.a
+=== CONT  TestInputSpreadCoverage/readDirectory_parentheses.a
+=== CONT  TestInputSpreadCoverage/readDirectory_nested.a
+=== CONT  TestInputSpreadCoverage/readDirectory_local.a
+=== CONT  TestInputSpreadCoverage/readDirectory_array.a
+=== CONT  TestInputSpreadCoverage/readDirectory_alias.a
+=== CONT  TestInputSpreadCoverage/programArguments_tuple.a
+=== CONT  TestInputSpreadCoverage/programArguments_parentheses.a
+=== CONT  TestInputSpreadCoverage/programArguments_nested.a
+=== CONT  TestInputSpreadCoverage/programArguments_local.a
+=== CONT  TestInputSpreadCoverage/programArguments_array.a
+=== CONT  TestInputSpreadCoverage/programArguments_alias.a
+=== CONT  TestInputSpreadCoverage/fileStatus_tuple.a
+=== CONT  TestInputSpreadCoverage/fileStatus_parentheses.a
+=== CONT  TestInputSpreadCoverage/fileStatus_nested.a
+=== CONT  TestInputSpreadCoverage/fileStatus_local.a
+=== CONT  TestInputSpreadCoverage/fileStatus_array.a
+=== CONT  TestCensusOverloadBinderGuards/constraint
+=== CONT  TestCensusOverloadBinderGuards/result
+=== CONT  TestCensusOverloadBinderGuards/parameter
+--- PASS: TestInputSpreadCoverage (0.00s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_alias.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_tuple.a (0.15s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_nested.a (0.15s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_multiple.a (0.15s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_parentheses.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_later.a (0.16s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_local.a (0.22s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_tuple.a (0.15s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_array.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/writeTextFile_alias.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_local.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_nested.a (0.22s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_empty.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_parentheses.a (0.26s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_array.a (0.21s)
+    --- PASS: TestInputSpreadCoverage/utf8Length_alias.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/utf8At_multiple.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/utf8At_tuple.a (0.22s)
+    --- PASS: TestInputSpreadCoverage/utf8At_nested.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/utf8At_parentheses.a (0.23s)
+    --- PASS: TestInputSpreadCoverage/utf8At_alias.a (0.14s)
+    --- PASS: TestInputSpreadCoverage/utf8At_array.a (0.15s)
+    --- PASS: TestInputSpreadCoverage/utf8At_local.a (0.20s)
+    --- PASS: TestInputSpreadCoverage/utf8At_later.a (0.28s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_tuple.a (0.26s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_nested.a (0.30s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_array.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_parentheses.a (0.32s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_local.a (0.32s)
+    --- PASS: TestInputSpreadCoverage/readTextFile_alias.a (0.21s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_tuple.a (0.14s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_array.a (0.14s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_parentheses.a (0.21s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_local.a (0.21s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_nested.a (0.23s)
+    --- PASS: TestInputSpreadCoverage/programArguments_tuple.a (0.11s)
+    --- PASS: TestInputSpreadCoverage/programArguments_nested.a (0.10s)
+    --- PASS: TestInputSpreadCoverage/readDirectory_alias.a (0.22s)
+    --- PASS: TestInputSpreadCoverage/programArguments_local.a (0.21s)
+    --- PASS: TestInputSpreadCoverage/programArguments_array.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/programArguments_parentheses.a (0.27s)
+    --- PASS: TestInputSpreadCoverage/programArguments_alias.a (0.19s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_tuple.a (0.18s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_parentheses.a (0.26s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_local.a (0.23s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_nested.a (0.27s)
+    --- PASS: TestInputSpreadCoverage/fileStatus_array.a (0.21s)
+--- PASS: TestCensusOverloadBinderGuards (0.00s)
+    --- PASS: TestCensusOverloadBinderGuards/constraint (0.20s)
+    --- PASS: TestCensusOverloadBinderGuards/result (0.19s)
+    --- PASS: TestCensusOverloadBinderGuards/parameter (0.17s)
+PASS

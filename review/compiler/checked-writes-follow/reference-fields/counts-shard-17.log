@@ -1,0 +1,327 @@
+=== RUN   TestCheckedCountsWarmShard
+=== PAUSE TestCheckedCountsWarmShard
+=== CONT  TestCheckedCountsWarmShard
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_hoisting.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_hoisting.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_three_levels.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_three_levels.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a
+=== RUN   TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts
+=== PAUSE TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts
+=== NAME  TestCheckedCountsWarmShard
+    counts_test.go:238: fixture census 932
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a
+    counts_test.go:233: | internal/oracle/testdata/nested_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a
+    counts_test.go:233: | internal/oracle/testdata/nested_reduced_parameter_unused.a | 4 | 4 | 3 | 6 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a
+    counts_test.go:233: | internal/oracle/testdata/nested_assignment_return.a | 7 | 7 | 8 | 9 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a
+    counts_test.go:233: | internal/oracle/testdata/e4eec87_f2_union_narrow_call.a | 1 | 0 | 3 | 3 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a
+    counts_test.go:233: | internal/oracle/testdata/nested_generic_capture.a | 14 | 14 | 22 | 29 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a
+    counts_test.go:233: | internal/oracle/testdata/nested_destructured_tdz.a | 2 | 0 | 1 | 0 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a
+    counts_test.go:233: | internal/oracle/testdata/nested_owned_parameter.a | 10 | 10 | 14 | 23 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a
+    counts_test.go:233: | internal/oracle/testdata/nested_destructured.a | 13 | 13 | 7 | 17 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a
+    counts_test.go:233: | internal/oracle/testdata/nested_mixed.a | 7 | 7 | 9 | 12 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a
+    counts_test.go:233: | internal/oracle/testdata/nested_pattern_parameter.a | 6 | 6 | 5 | 10 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a
+    counts_test.go:233: | internal/oracle/testdata/nested_weak.a | 4 | 4 | 5 | 10 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a
+    counts_test.go:233: | internal/oracle/testdata/nested_tdz_write.a | 2 | 0 | 1 | 0 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts
+    counts_test.go:233: | internal/oracle/testdata/non_null_checked_narrowed.ts | 2 | 2 | 0 | 2 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_encodings.a | 164 | 164 | 109 | 245 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_finalized.a | 4 | 2 | 4 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_digest_twice.a | 4 | 2 | 4 | 6 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_random.a | 140591 | 140591 | 1027 | 141106 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_crypto.a | 169 | 169 | 72 | 192 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_hoisting.a
+    counts_test.go:233: gate cache native miss
+    counts_test.go:233: | internal/oracle/testdata/nested_hoisting.a | 2 | 2 | 0 | 2 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_three_levels.a
+    counts_test.go:233: gate cache native miss
+    counts_test.go:233: | internal/oracle/testdata/nested_three_levels.a | 8 | 8 | 7 | 13 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_utf16.a | 327796 | 327796 | 27 | 327812 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a
+    counts_test.go:233: | internal/oracle/testdata/nested_array.a | 17 | 17 | 21 | 31 | 9 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_writes.a | 30 | 30 | 22 | 56 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_bom.a | 25 | 25 | 21 | 37 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a
+    counts_test.go:233: | internal/oracle/testdata/nested_returned.a | 21 | 21 | 10 | 29 | 11 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a
+    counts_test.go:233: | internal/oracle/testdata/nested_mutual.a | 10 | 10 | 46 | 52 | 5 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a
+    counts_test.go:233: | internal/oracle/testdata/node_buffer_utf8.a | 197461 | 197461 | 28 | 197475 | 6 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a
+    counts_test.go:233: | internal/oracle/testdata/nested_minimal.a | 2 | 2 | 0 | 2 | 1 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a
+    counts_test.go:233: | internal/oracle/testdata/nested_captures.a | 22 | 22 | 8 | 22 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a
+    counts_test.go:233: | internal/oracle/testdata/narrowed_union_valid.a | 9 | 9 | 13 | 23 | 3 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a
+    counts_test.go:233: | internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a | 2 | 1 | 4 | 5 | 2 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a
+    counts_test.go:233: | internal/oracle/testdata/nested_callback_levels.a | 9 | 9 | 8 | 12 | 4 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a
+    counts_test.go:233: | internal/oracle/testdata/new_expression_class_cache_local.a | 49 | 49 | 36 | 78 | 10 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a
+    counts_test.go:233: | internal/oracle/testdata/new_expression_class_cache_or.a | 25 | 25 | 11 | 42 | 7 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a
+    counts_test.go:233: | internal/oracle/testdata/new_expression_class_value.a | 72 | 72 | 31 | 114 | 14 | 0 |
+=== CONT  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+    counts_test.go:233: gate cache native miss
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a
+    counts_test.go:233: | internal/oracle/testdata/nested_reduced_parameter_escaped.a | 4 | 4 | 6 | 10 | 4 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a
+    counts_test.go:233: | internal/oracle/testdata/nested_callback_late_capture.a | 9 | 9 | 8 | 12 | 5 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a
+    counts_test.go:233: | internal/oracle/testdata/nested_callback_recursive.a | 29 | 29 | 31 | 41 | 14 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a
+    counts_test.go:233: | internal/oracle/testdata/nested_reduced_parameter_unreachable.a | 5 | 5 | 4 | 8 | 4 | 0 |
+=== NAME  TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a
+    counts_test.go:233: | internal/oracle/testdata/nested_callback_escaped.a | 16 | 16 | 13 | 19 | 8 | 0 |
+--- PASS: TestCheckedCountsWarmShard (0.00s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz.a (0.41s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unused.a (0.47s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_assignment_return.a (0.46s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2_union_narrow_call.a (0.48s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_generic_capture.a (0.50s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured_tdz.a (0.31s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_owned_parameter.a (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_destructured.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mixed.a (0.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_pattern_parameter.a (0.40s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_weak.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_tdz_write.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/non_null_checked_narrowed.ts (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_encodings.a (1.37s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_finalized.a (1.32s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_digest_twice.a (1.15s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_random.a (1.23s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_crypto.a (1.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_hoisting.a (0.25s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_three_levels.a (0.21s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf16.a (0.78s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_array.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_writes.a (0.83s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_bom.a (0.83s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_returned.a (0.12s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_mutual.a (0.13s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/node_buffer_utf8.a (0.84s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_minimal.a (0.17s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_captures.a (0.18s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/narrowed_union_valid.a (0.16s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/e4eec87_f2b_union_narrow_number.a (0.30s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_levels.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_local.a (0.33s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_cache_or.a (0.35s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/new_expression_class_value.a (0.29s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_escaped.a (0.27s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_late_capture.a (0.28s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_recursive.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_reduced_parameter_unreachable.a (0.20s)
+    --- PASS: TestCheckedCountsWarmShard/internal/oracle/testdata/nested_callback_escaped.a (0.26s)
+PASS
+gate cache: native hits=0 misses=40
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	3.816s

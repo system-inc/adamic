@@ -1,0 +1,25 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.067s)
+v24.19.0
+setup: node ready (0.084s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.467s)
+
+added 3 packages in 936ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=2.136s
+setup: markdown dependencies ready (2.326s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (22.677s)
+setup: shared cache ready (29.492s)
+# github.com/system-inc/adamic/internal/ir
+internal/ir/ir.go:27:1: syntax error: unexpected <<, expected field name or embedded type
+internal/ir/ir.go:29:1: syntax error: unexpected ==, expected field name or embedded type
+internal/ir/ir.go:36:1: syntax error: unexpected >>, expected field name or embedded type
+internal/ir/ir.go:408:1: syntax error: unexpected <<, expected field name or embedded type
+internal/ir/ir.go:412:1: syntax error: unexpected ==, expected field name or embedded type
+internal/ir/ir.go:415:1: syntax error: unexpected >>, expected field name or embedded type
+internal/ir/ir.go:472:1: syntax error: unexpected <<, expected field name or embedded type
+internal/ir/ir.go:475:1: syntax error: unexpected ==, expected field name or embedded type
+internal/ir/ir.go:477:1: syntax error: unexpected >>, expected field name or embedded type
+internal/ir/ir.go:1241:1: syntax error: unexpected <<, expected field name or embedded type
+internal/ir/ir.go:1241:1: too many errors

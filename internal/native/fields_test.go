@@ -155,7 +155,7 @@ func TestRuntimeFieldLayoutsAreIncluded(t *testing.T) {
 			}
 			for _, initializer := range initializers {
 				parts := strings.Split(initializer, ",")
-				if len(parts) != 4 {
+				if len(parts) != 5 {
 					t.Fatalf("%s: unrecognized runtime shape %s", file.Name(), initializer)
 				}
 				count, err := strconv.Atoi(strings.TrimSpace(parts[0]))
