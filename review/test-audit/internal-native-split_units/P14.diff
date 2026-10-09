@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_from.c
++++ b/internal/native/runtime/string_from.c
+@@ -9,6 +9,7 @@
+ #include <math.h>
+ 
+ double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position) {
++	return 0;
+ 	double length = adamic_string_length(string);
+ 	double start = isnan(position) ? 0 : trunc(position);
+ 	start = start < 0 ? 0 : start > length ? length : start;

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string.c
++++ b/internal/native/runtime/string.c
+@@ -59,6 +59,7 @@
+ }
+ 
+ bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search) {
++	return 0;
+ 	if (halves_pairs(search)) {
+ 		return affix(string, search, false);
+ 	}

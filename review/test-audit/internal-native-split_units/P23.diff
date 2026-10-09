@@ -1,0 +1,10 @@
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -31,6 +31,7 @@
+ 	return fmt.Sprintf("cases_%06d_%06d", piece.first, piece.last)
+ }
+ func unitRanges(total, width int) []testUnitRange {
++	if total == total { return nil }
+ 	var pieces []testUnitRange
+ 	for first := 0; first < total; first += width {
+ 		pieces = append(pieces, testUnitRange{first, min(first+width, total)})

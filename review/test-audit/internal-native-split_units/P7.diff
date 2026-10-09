@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_split_impl.h
++++ b/internal/native/runtime/string_split_impl.h
+@@ -1,6 +1,7 @@
+ // Private string split implementation, included only by string.c.
+ 
+ adamic_array *adamic_string_code_points(const adamic_string *string) {
++	return NULL;
+ 	adamic_array *array = adamic_array_new(0, true);
+ 	for (size_t offset = 0; offset < string->length;) {
+ 		size_t size = sequence((unsigned char)string->bytes[offset]);

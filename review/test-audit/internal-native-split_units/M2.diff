@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -85,7 +85,7 @@
+ 	}
+ 	result->length = written;
+ 	// A non-ASCII part clears the ASCII fact even when the original allocation is reused.
+-	result->units = units + 1;
++	result->units = units + 2;
+ 	if (result != string) {
+ 		adamic_release(string);
+ 	}

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -11,6 +11,7 @@
+ }
+ 
+ adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end) {
++	return NULL;
+ 	double length = adamic_string_length(string);
+ 	double from = clamp_index(start, length);
+ 	double to = has_end ? clamp_index(end, length) : length;

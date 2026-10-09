@@ -1,0 +1,202 @@
+[
+  {
+    "id": "P1",
+    "entry": "adamic_string_allocate",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 15,
+    "signature": "adamic_string *adamic_string_allocate(size_t length) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P2",
+    "entry": "adamic_string_append",
+    "file": "internal/native/runtime/string_append.c",
+    "line": 33,
+    "signature": "adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P3",
+    "entry": "adamic_string_at",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 70,
+    "signature": "adamic_string *adamic_string_at(const adamic_string *string, double index) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P4",
+    "entry": "adamic_string_char_code",
+    "file": "internal/native/runtime/string_decode_impl.h",
+    "line": 44,
+    "signature": "double adamic_string_char_code(const adamic_string *string, double position) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P5",
+    "entry": "adamic_string_char_code_at",
+    "file": "internal/native/runtime/adamic.h",
+    "line": 741,
+    "signature": "static inline double adamic_string_char_code_at(const adamic_string *string, double position) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P6",
+    "entry": "adamic_string_code_point_at",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 89,
+    "signature": "adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {",
+    "statement": "return (adamic_maybe_number){false, 0};"
+  },
+  {
+    "id": "P7",
+    "entry": "adamic_string_code_points",
+    "file": "internal/native/runtime/string_split_impl.h",
+    "line": 3,
+    "signature": "adamic_array *adamic_string_code_points(const adamic_string *string) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P8",
+    "entry": "adamic_string_compare",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 122,
+    "signature": "int adamic_string_compare(const adamic_string *left, const adamic_string *right) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P9",
+    "entry": "adamic_string_concat",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 37,
+    "signature": "adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P10",
+    "entry": "adamic_string_ends_with",
+    "file": "internal/native/runtime/string.c",
+    "line": 61,
+    "signature": "bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P11",
+    "entry": "adamic_string_equal",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 122,
+    "signature": "int adamic_string_equal(const adamic_string *left, const adamic_string *right) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P12",
+    "entry": "adamic_string_from_number",
+    "file": "internal/native/runtime/string_build_impl.h",
+    "line": 19,
+    "signature": "adamic_string *adamic_string_from_number(double value) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P13",
+    "entry": "adamic_string_index_of",
+    "file": "internal/native/runtime/string_search_impl.h",
+    "line": 50,
+    "signature": "double adamic_string_index_of(const adamic_string *string, const adamic_string *search) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P14",
+    "entry": "adamic_string_index_of_from",
+    "file": "internal/native/runtime/string_from.c",
+    "line": 11,
+    "signature": "double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P15",
+    "entry": "adamic_string_length",
+    "file": "internal/native/runtime/adamic.h",
+    "line": 738,
+    "signature": "static inline double adamic_string_length(const adamic_string *string) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P16",
+    "entry": "adamic_string_pad",
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "line": 30,
+    "signature": "adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P17",
+    "entry": "adamic_string_repeat",
+    "file": "internal/native/runtime/string_repeat_impl.h",
+    "line": 12,
+    "signature": "adamic_string *adamic_string_repeat(const adamic_string *string, double count) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P18",
+    "entry": "adamic_string_share",
+    "file": "internal/native/runtime/string_share.c",
+    "line": 26,
+    "signature": "adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P19",
+    "entry": "adamic_string_slice",
+    "file": "internal/native/runtime/string_slice_impl.h",
+    "line": 13,
+    "signature": "adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P20",
+    "entry": "adamic_string_starts_with",
+    "file": "internal/native/runtime/string.c",
+    "line": 54,
+    "signature": "bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P21",
+    "entry": "adamic_string_trim",
+    "file": "internal/native/runtime/string_trim_impl.h",
+    "line": 13,
+    "signature": "adamic_string *adamic_string_trim(adamic_string *string) {",
+    "statement": "return NULL;"
+  },
+  {
+    "id": "P22",
+    "entry": "adamic_string_units",
+    "file": "internal/native/runtime/string_index.c",
+    "line": 43,
+    "signature": "size_t adamic_string_units(const adamic_string *string) {",
+    "statement": "return 0;"
+  },
+  {
+    "id": "P23",
+    "entry": "unitRanges",
+    "file": "internal/native/split_units_test.go",
+    "line": 33,
+    "signature": "func unitRanges(total, width int) []testUnitRange {",
+    "statement": "return nil"
+  },
+  {
+    "id": "P24",
+    "entry": "parseTestShard",
+    "file": "internal/native/split_units_test.go",
+    "line": 308,
+    "signature": "func parseTestShard(value string) (testShard, error) {",
+    "statement": "return testShard{}, nil"
+  },
+  {
+    "id": "P25",
+    "entry": "testShard.owns",
+    "file": "internal/native/split_units_test.go",
+    "line": 331,
+    "signature": "func (s testShard) owns(piece int) bool {",
+    "statement": "return false"
+  }
+]

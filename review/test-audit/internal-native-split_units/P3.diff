@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -68,6 +68,7 @@
+ }
+ 
+ adamic_string *adamic_string_at(const adamic_string *string, double index) {
++	return NULL;
+ 	// As for an array: an index is an integer from 0 up to the length in UTF-16 units, and anything
+ 	// else (negative, a fraction, NaN, past the end) is a property the string doesn't have. Half of a
+ 	// supplementary character is a lone surrogate, as slice makes it.

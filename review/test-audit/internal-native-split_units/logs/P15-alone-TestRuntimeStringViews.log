@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T10:56:22.713641529Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:56:22.789750657Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews"}
+{"Time":"2026-10-09T10:56:22.789837545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"=== RUN   TestRuntimeStringViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.790082086Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"=== PAUSE TestRuntimeStringViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:22.790085622Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews"}
+{"Time":"2026-10-09T10:56:22.790088446Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews"}
+{"Time":"2026-10-09T10:56:22.790090168Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"=== CONT  TestRuntimeStringViews\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:23.350692655Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews3114866409/001/views: exit status 1\n","OutputType":"error"}
+{"Time":"2026-10-09T10:56:23.350745553Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"        view offsets or holds differ\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:56:23.350751141Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"        adamic: counts: allocations 1 frees 0 retains 2 releases 0 peak 1 regions 0\n","OutputType":"error-continue"}
+{"Time":"2026-10-09T10:56:23.3507712Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Output":"--- FAIL: TestRuntimeStringViews (0.56s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:23.350775787Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeStringViews","Elapsed":0.56}
+{"Time":"2026-10-09T10:56:23.350813924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:23.354296082Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.604s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:23.354336813Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.641}

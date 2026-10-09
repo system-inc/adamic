@@ -1,0 +1,182 @@
+[
+  {
+    "id": "M1",
+    "returncode": 0,
+    "wall": 0.08550390099981087,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_share.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "M2",
+    "returncode": 0,
+    "wall": 0.05461619200013956,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_append.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "M3",
+    "returncode": 0,
+    "wall": 0.15123625900014304,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_index.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "M4",
+    "returncode": 0,
+    "wall": 0.6456527269997423,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "S1",
+    "returncode": 0,
+    "wall": 0.8706367060003686,
+    "command": "go vet -overlay /tmp/u053/overlay-S1.json ./internal/native/"
+  },
+  {
+    "id": "S2",
+    "returncode": 0,
+    "wall": 0.5288871660000041,
+    "command": "go vet -overlay /tmp/u053/overlay-S2.json ./internal/native/"
+  },
+  {
+    "id": "S3",
+    "returncode": 0,
+    "wall": 0.606748060999962,
+    "command": "go vet -overlay /tmp/u053/overlay-S3.json ./internal/native/"
+  },
+  {
+    "id": "S4",
+    "returncode": 0,
+    "wall": 0.6808264950000193,
+    "command": "go vet -overlay /tmp/u053/overlay-S4.json ./internal/native/"
+  },
+  {
+    "id": "P1",
+    "returncode": 0,
+    "wall": 0.32738608699992255,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P2",
+    "returncode": 0,
+    "wall": 0.02489124300018375,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_append.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P3",
+    "returncode": 0,
+    "wall": 0.2765886329998466,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P4",
+    "returncode": 0,
+    "wall": 0.27785868799992386,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P5",
+    "returncode": 0,
+    "wall": 0.31492265499991845,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P6",
+    "returncode": 0,
+    "wall": 0.30204008300006535,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P7",
+    "returncode": 0,
+    "wall": 0.2980415100000755,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P8",
+    "returncode": 0,
+    "wall": 0.28809260600019115,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P9",
+    "returncode": 0,
+    "wall": 0.3163347739996425,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P10",
+    "returncode": 0,
+    "wall": 0.3033640169996943,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P11",
+    "returncode": 0,
+    "wall": 0.30479397799990693,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P12",
+    "returncode": 0,
+    "wall": 0.3839768429998003,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P13",
+    "returncode": 0,
+    "wall": 0.4807811529999526,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P14",
+    "returncode": 0,
+    "wall": 0.044088998999995965,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_from.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P15",
+    "returncode": 0,
+    "wall": 0.42866161599977204,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P16",
+    "returncode": 0,
+    "wall": 0.48877429599997413,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P17",
+    "returncode": 0,
+    "wall": 0.5209846570000991,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P18",
+    "returncode": 0,
+    "wall": 0.0581040529996244,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_share.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P19",
+    "returncode": 0,
+    "wall": 0.6217818300001454,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P20",
+    "returncode": 0,
+    "wall": 0.5369626229999085,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P21",
+    "returncode": 0,
+    "wall": 0.5146384839999882,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string.c -o /tmp/u053/validate.o"
+  },
+  {
+    "id": "P22",
+    "returncode": 0,
+    "wall": 0.23185052000008,
+    "command": "clang -std=c11 -Wall -Wextra -Werror -Wcast-function-type-strict -pedantic -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-function -Wno-unused-parameter -Wno-self-assign -ffp-contract=off -fno-optimize-sibling-calls -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all -I /tmp/u053/standalone-runtime -c /tmp/u053/standalone-runtime/string_index.c -o /tmp/u053/validate.o"
+  }
+]

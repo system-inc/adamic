@@ -1,0 +1,1305 @@
+[
+  {
+    "id": "M1",
+    "kind": "production",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews2032290328/001/views: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.523145450999891
+  },
+  {
+    "id": "M2",
+    "kind": "production",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringViewAfterAppendMatchesNode"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode140648882/001/string-build: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode3902965152/001/append: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=M2 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 9.038434271999904
+  },
+  {
+    "id": "M3",
+    "kind": "production",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 196: native  127758; Node  127757",
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:453: cache states differ: native \"96 96 96\\n90 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 \\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n33 90 65 56833 55357 233 65 5683",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 1:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 9.03683820499964
+  },
+  {
+    "id": "M4",
+    "kind": "production",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:200: slice 61 - c008000000000000 7ff8000000000001: native \"a\", Node \"\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.894778474999839
+  },
+  {
+    "id": "S1",
+    "kind": "construction",
+    "results": {
+      "TestSplitUnitCoverage": "fail",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestSplitUnitCoverage"
+    ],
+    "evidence": {
+      "TestSplitUnitCoverage": "    split_units_test.go:65: invalid coverage at {first:1 last:2049} after 0"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "fail",
+      "TestSplitUnitCoverage/normalize_points": "fail",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=S1 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.735161274999882
+  },
+  {
+    "id": "S2",
+    "kind": "construction",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "fail",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestRetainedSplitCoverage"
+    ],
+    "evidence": {
+      "TestRetainedSplitCoverage": "    split_units_test.go:394: ADAMIC_TEST_SHARD must be i/n with 0 <= i < n: \"0/1\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "fail",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=S2 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/S2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.104229678000138
+  },
+  {
+    "id": "S3",
+    "kind": "construction",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "fail",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestRetainedSplitCoverage"
+    ],
+    "evidence": {
+      "TestRetainedSplitCoverage": "    split_units_test.go:404: piece 0 of 90 has 0 owners across 1 shards"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "fail",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=S3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/S3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.226329267999972
+  },
+  {
+    "id": "S4",
+    "kind": "construction",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "fail",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestRetainedTopLevelCoverage"
+    ],
+    "evidence": {
+      "TestRetainedTopLevelCoverage": "    split_units_test.go:477: wrong unit in TestRecordMutantsUnit00"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 28.4176369300003
+  },
+  {
+    "id": "P1",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews3269405419/001/views: signal: segmentation fault",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode3406616440/001/append: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: /tmp/adamic-gate/TestStringIndexMatchesNodeASCII373751354/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P1 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 3.328073399999994
+  },
+  {
+    "id": "P2",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringViewAfterAppendMatchesNode"
+    ],
+    "evidence": {
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode3687215058/001/append: exit status 1",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode95660637/001/string-build: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P2 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P2 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.979087746000005
+  },
+  {
+    "id": "P3",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews3818723611/001/views: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 1:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.643980217000262
+  },
+  {
+    "id": "P4",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:453: cache states differ: native \"96 96 96\\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 \\n0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 18: native  0; Node  NaN",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringsMatchJavaScript": "    string_test.go:200: charCodeAt - - c008000000000000 0000000000000000: native \"0\", Node \"NaN\"",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 1:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P4 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P4 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.002289731000019
+  },
+  {
+    "id": "P5",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 18: native  0; Node  NaN",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringsMatchJavaScript": "    string_test.go:200: charCodeAt - - c008000000000000 0000000000000000: native \"0\", Node \"NaN\"",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 1:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P5 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P5 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.7374443060002704
+  },
+  {
+    "id": "P6",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 1: native  -1; Node  55356",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringsMatchJavaScript": "    string_test.go:200: codePointAt 61 - 0000000000000000 0000000000000000: native \"undefined\", Node \"97\"",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 1:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P6 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P6 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.2017865630000415
+  },
+  {
+    "id": "P7",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript3244726812/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P7 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P7 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.744251093000003
+  },
+  {
+    "id": "P8",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:200: compare - 61 0000000000000000 0000000000000000: native \"0\", Node \"-1\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P8 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P8 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.78737698499981
+  },
+  {
+    "id": "P9",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:451: /tmp/adamic-gate/TestStringIndexCacheStatesMatchNode439701033/001/cache-states: exit status 1",
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript94837439/001/harness: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode3872604256/001/append: exit status 1",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode3501023803/001/string-build: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: /tmp/adamic-gate/TestStringIndexMatchesNodemixed1115217931/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/mixed": "fail",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P9 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P9 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 2.309915058000115
+  },
+  {
+    "id": "P10",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:200: endsWith - - 0000000000000000 0000000000000000: native \"0\", Node \"1\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P10 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P10 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.445775905000119
+  },
+  {
+    "id": "P11",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:200: rejoin - - c008000000000000 0000000000000000: native \"0\", Node \"1\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P11 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P11 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.105457145999935
+  },
+  {
+    "id": "P12",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode3204514332/001/string-build: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode1344325434/001/append: exit status 1",
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript3864181923/001/harness: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: /tmp/adamic-gate/TestStringIndexMatchesNodeASCII2854874165/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P12 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P12 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 2.6692256900000757
+  },
+  {
+    "id": "P13",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringIndexMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:453: cache states differ: native \"0 0 0\\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n33 90 65 56832 55357 233 65 56832 5",
+      "TestStringsMatchJavaScript": "    string_test.go:200: indexOf - 61 0000000000000000 0000000000000000: native \"0\", Node \"-1\"",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: line 5:"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P13 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P13 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.360286156000257
+  },
+  {
+    "id": "P14",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 3: native  0; Node  -1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P14 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P14 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.760521463999794
+  },
+  {
+    "id": "P15",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "over-budget",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews3114866409/001/views: exit status 1",
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:453: cache states differ: native \"96 96 96\\n\\n\\n\\n\\n\\n\\n\"; Node \"96 96 96\\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n3",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:116: operation 9: native  0; Node  4",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: 1008 native lines, 7296 from Node",
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript1365463415/001/harness: signal: killed"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P15 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 91.97440183400022
+  },
+  {
+    "id": "P16",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript4045019393/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P16 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P16 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 10.860619947000032
+  },
+  {
+    "id": "P17",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode"
+    ],
+    "evidence": {
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode3350586750/001/string-build: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P17 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P17 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 17.439664436000385
+  },
+  {
+    "id": "P18",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews1926670713/001/views: signal: segmentation fault",
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript2644259950/001/harness: exit status 1",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode3429221837/001/string-build: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: /tmp/adamic-gate/TestStringIndexMatchesNodemixed477991145/001/harness: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode1649878509/001/append: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/mixed": "fail",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P18 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P18 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 2.928064380000251
+  },
+  {
+    "id": "P19",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "fail"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": {
+      "TestRuntimeStringViews": "    string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews1480389620/001/views: signal: segmentation fault",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode1612029276/001/string-build: exit status 1",
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript1210957583/001/harness: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:402: /tmp/adamic-gate/TestStringViewAfterAppendMatchesNode43602695/001/append: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: /tmp/adamic-gate/TestStringIndexMatchesNodemixed1758215974/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/mixed": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P19 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P19 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 2.481526439999925
+  },
+  {
+    "id": "P20",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:200: startsWith - - 0000000000000000 0000000000000000: native \"0\", Node \"1\""
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P20 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P20 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.986243206999916
+  },
+  {
+    "id": "P21",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "fail",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringsMatchJavaScript"
+    ],
+    "evidence": {
+      "TestStringsMatchJavaScript": "    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript4019677531/001/harness: exit status 1"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P21 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P21 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 8.076103719999992
+  },
+  {
+    "id": "P22",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "pass",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "fail",
+      "TestStringIndexMatchesNode": "fail",
+      "TestStringViewAfterAppendMatchesNode": "fail",
+      "TestStringIndexCacheStatesMatchNode": "fail",
+      "TestStringsMatchJavaScript": "over-budget",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode"
+    ],
+    "evidence": {
+      "TestStringIndexCacheStatesMatchNode": "    string_index_test.go:451: /tmp/adamic-gate/TestStringIndexCacheStatesMatchNode1049223046/001/cache-states: exit status 1",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:404: UTF-16 view after append differs from Node",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:110: /tmp/adamic-gate/TestStringBuildingMatchesNode4055030451/001/string-build: exit status 1",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: 1008 native lines, 7296 from Node"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "pass",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "fail",
+      "TestStringIndexMatchesNode/BMP": "fail",
+      "TestStringIndexMatchesNode/BMP_low_halves": "fail",
+      "TestStringIndexMatchesNode/mixed": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P22 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P22 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 92.15724986099985
+  },
+  {
+    "id": "P23",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "fail",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "fail",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestSplitUnitCoverage",
+      "TestRetainedSplitCoverage"
+    ],
+    "evidence": {
+      "TestSplitUnitCoverage": "    split_units_test.go:56: got 0 units, want 45",
+      "TestRetainedSplitCoverage": "    split_units_test.go:374: random regex units must partition all 10000 cases into 40 units of 250"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "fail",
+      "TestSplitUnitCoverage/normalize_points": "fail",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P23 timeout 120 go test -overlay /tmp/u053/P23-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 15.125562730000183
+  },
+  {
+    "id": "P24",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "fail",
+      "TestRetainedSplitCoverage": "fail",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestShardSelection",
+      "TestRetainedSplitCoverage"
+    ],
+    "evidence": {
+      "TestShardSelection": "    split_units_test.go:349: invalid shard accepted: \"-1/2\"",
+      "TestRetainedSplitCoverage": "panic: runtime error: integer divide by zero in testShard.owns",
+      "TestStringBuildingMatchesNode": "    string_build_test.go:119: 2000 stateful operations match Node",
+      "TestStringIndexMatchesNode": "    string_index_test.go:278: 7296 lines, 0 mismatches",
+      "TestStringViewAfterAppendMatchesNode": "    string_index_test.go:406: 43 lines match Node, including literal, stack and in-place append views",
+      "TestStringsMatchJavaScript": "    string_test.go:207: 11460 answers, 0 mismatches"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "fail"
+    },
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": 7.582284046000041
+  },
+  {
+    "id": "P25",
+    "kind": "probe",
+    "results": {
+      "TestSplitUnitCoverage": "pass",
+      "TestShardSelection": "pass",
+      "TestRetainedSplitCoverage": "fail",
+      "TestRetainedTopLevelCoverage": "pass",
+      "TestStringBuildingMatchesNode": "pass",
+      "TestStringIndexMatchesNode": "pass",
+      "TestStringViewAfterAppendMatchesNode": "pass",
+      "TestStringIndexCacheStatesMatchNode": "pass",
+      "TestStringsMatchJavaScript": "pass",
+      "TestRuntimeStringViews": "pass"
+    },
+    "failures": [
+      "TestRetainedSplitCoverage"
+    ],
+    "evidence": {
+      "TestRetainedSplitCoverage": "    split_units_test.go:397: piece 0 of 90 has 0 owners across 1 shards"
+    },
+    "subcases": {
+      "TestSplitUnitCoverage/decode_prefixes": "pass",
+      "TestSplitUnitCoverage/normalize_points": "pass",
+      "TestRetainedSplitCoverage/shard_union": "fail",
+      "TestRetainedSplitCoverage/decode_targets": "pass",
+      "TestRetainedSplitCoverage/WASI": "pass",
+      "TestRetainedSplitCoverage/split_cache": "pass",
+      "TestRetainedSplitCoverage/record_mutants": "pass",
+      "TestStringIndexMatchesNode/ASCII": "pass",
+      "TestStringIndexMatchesNode/BMP": "pass",
+      "TestStringIndexMatchesNode/BMP_low_halves": "pass",
+      "TestStringIndexMatchesNode/mixed": "pass"
+    },
+    "command": "ADAMIC_MUTANT=P25 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/P25 timeout 120 go test -overlay /tmp/u053/P25-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "wall_seconds": null
+  }
+]

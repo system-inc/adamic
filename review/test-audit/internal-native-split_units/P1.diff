@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -13,6 +13,7 @@
+ }
+ 
+ adamic_string *adamic_string_allocate(size_t length) {
++	return NULL;
+ 	return allocate(length);
+ }
+ 

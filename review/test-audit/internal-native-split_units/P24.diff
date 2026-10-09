@@ -1,0 +1,10 @@
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -306,6 +306,7 @@
+ type testShard struct{ index, count int }
+ 
+ func parseTestShard(value string) (testShard, error) {
++	if value == value { return testShard{}, nil }
+ 	if value == "" {
+ 		return testShard{0, 1}, nil
+ 	}

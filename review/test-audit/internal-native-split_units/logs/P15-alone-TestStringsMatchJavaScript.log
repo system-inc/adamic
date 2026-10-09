@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:54:46.452753995Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:54:46.460153883Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript"}
+{"Time":"2026-10-09T10:54:46.460190167Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Output":"=== RUN   TestStringsMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:46.460208544Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Output":"=== PAUSE TestStringsMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:46.460210487Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript"}
+{"Time":"2026-10-09T10:54:46.460212309Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript"}
+{"Time":"2026-10-09T10:54:46.460213661Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Output":"=== CONT  TestStringsMatchJavaScript\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.833883045Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Output":"    string_test.go:189: /tmp/adamic-gate/TestStringsMatchJavaScript1365463415/001/harness: signal: killed\n","OutputType":"error"}
+{"Time":"2026-10-09T10:56:15.834660212Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Output":"--- FAIL: TestStringsMatchJavaScript (89.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.834809423Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestStringsMatchJavaScript","Elapsed":89.37}
+{"Time":"2026-10-09T10:56:15.834843603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.836471746Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t89.383s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:56:15.836485336Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":89.384}

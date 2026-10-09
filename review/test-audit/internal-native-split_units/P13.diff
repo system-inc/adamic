@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -48,6 +48,7 @@
+ }
+ 
+ double adamic_string_index_of(const adamic_string *string, const adamic_string *search) {
++	return 0;
+ 	return adamic_string_index_of_at(string, search, 0);
+ }
+ 

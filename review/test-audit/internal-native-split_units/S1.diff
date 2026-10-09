@@ -1,0 +1,11 @@
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -32,7 +32,7 @@
+ }
+ func unitRanges(total, width int) []testUnitRange {
+ 	var pieces []testUnitRange
+-	for first := 0; first < total; first += width {
++	for first := 1; first < total; first += width {
+ 		pieces = append(pieces, testUnitRange{first, min(first+width, total)})
+ 	}
+ 	return pieces

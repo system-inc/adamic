@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -17,6 +17,7 @@
+ }
+ 
+ adamic_string *adamic_string_from_number(double value) {
++	return NULL;
+ 	char buffer[ADAMIC_NUMBER_FORMAT_MAX];
+ 	size_t length = adamic_number_format(value, buffer);
+ 	adamic_string *string = allocate(length);

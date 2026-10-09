@@ -1,0 +1,306 @@
+diff --git a/internal/native/runtime/adamic.h b/internal/native/runtime/adamic.h
+index 3142aaa3..748fa601 100644
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -3,6 +3,9 @@
+ #ifndef ADAMIC_H
+ #define ADAMIC_H
+ 
++#include <stdlib.h>
++#include <string.h>
++static inline int u053_selected(const char *id) { const char *value = getenv("ADAMIC_MUTANT"); return value != NULL && strcmp(value, id) == 0; }
+ #include <stdbool.h>
+ #include <stddef.h>
+ #include <stdint.h>
+@@ -736,9 +739,11 @@ adamic_maybe_boolean adamic_maybe_boolean_unpack(uint8_t packed);
+ size_t adamic_string_units(const adamic_string *string);
+ double adamic_string_char_code(const adamic_string *string, double position);
+ static inline double adamic_string_length(const adamic_string *string) {
++	if (u053_selected("P15")) { return 0; }
+ 	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+ }
+ static inline double adamic_string_char_code_at(const adamic_string *string, double position) {
++	if (u053_selected("P5")) { return 0; }
+ 	if (string->units == string->length + 1 && position >= 0 && position < (double)string->length) {
+ 		return (double)(unsigned char)string->bytes[(size_t)position];
+ 	}
+diff --git a/internal/native/runtime/string.c b/internal/native/runtime/string.c
+index 48fc51e8..d8c0c42b 100644
+--- a/internal/native/runtime/string.c
++++ b/internal/native/runtime/string.c
+@@ -52,6 +52,7 @@ adamic_string *adamic_string_at_relative(const adamic_string *string, double ind
+ }
+ 
+ bool adamic_string_starts_with(const adamic_string *string, const adamic_string *search) {
++	if (u053_selected("P20")) { return 0; }
+ 	if (halves_pairs(search)) {
+ 		return affix(string, search, true);
+ 	}
+@@ -59,6 +60,7 @@ bool adamic_string_starts_with(const adamic_string *string, const adamic_string
+ }
+ 
+ bool adamic_string_ends_with(const adamic_string *string, const adamic_string *search) {
++	if (u053_selected("P10")) { return 0; }
+ 	if (halves_pairs(search)) {
+ 		return affix(string, search, false);
+ 	}
+diff --git a/internal/native/runtime/string_append.c b/internal/native/runtime/string_append.c
+index 5b613b50..057c7d3e 100644
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -31,6 +31,7 @@ static adamic_string *grown(size_t length, size_t capacity) {
+ }
+ 
+ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]) {
++	if (u053_selected("P2")) { return NULL; }
+ 	size_t length = string->length, added = 0;
+ 	size_t units = adamic_string_units(string);
+ 	for (size_t index = 0; index < count; index++) {
+@@ -85,7 +86,7 @@ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_
+ 	}
+ 	result->length = written;
+ 	// A non-ASCII part clears the ASCII fact even when the original allocation is reused.
+-	result->units = units + 1;
++	result->units = units + (u053_selected("M2") ? 2 : 1);
+ 	if (result != string) {
+ 		adamic_release(string);
+ 	}
+diff --git a/internal/native/runtime/string_build_impl.h b/internal/native/runtime/string_build_impl.h
+index da505b3c..a5da8be9 100644
+--- a/internal/native/runtime/string_build_impl.h
++++ b/internal/native/runtime/string_build_impl.h
+@@ -13,10 +13,12 @@ static adamic_string *allocate(size_t length) {
+ }
+ 
+ adamic_string *adamic_string_allocate(size_t length) {
++	if (u053_selected("P1")) { return NULL; }
+ 	return allocate(length);
+ }
+ 
+ adamic_string *adamic_string_from_number(double value) {
++	if (u053_selected("P12")) { return NULL; }
+ 	char buffer[ADAMIC_NUMBER_FORMAT_MAX];
+ 	size_t length = adamic_number_format(value, buffer);
+ 	adamic_string *string = allocate(length);
+@@ -35,6 +37,7 @@ void adamic_string_check_length(double units) {
+ }
+ 
+ adamic_string *adamic_string_concat(size_t count, adamic_string *const parts[]) {
++	if (u053_selected("P9")) { return NULL; }
+ 	size_t length = 0, units = 0;
+ 	for (size_t index = 0; index < count; index++) {
+ 		if (parts[index]->length > SIZE_MAX - length) {
+@@ -120,6 +123,7 @@ size_t adamic_string_join_halves(char *bytes, size_t from, size_t length) {
+ }
+ 
+ int adamic_string_equal(const adamic_string *left, const adamic_string *right) {
++	if (u053_selected("P11")) { return 0; }
+ 	// Either may be undefined (a string | undefined): undefined is equal only to itself.
+ 	if (left == NULL || right == NULL) {
+ 		return left == right;
+diff --git a/internal/native/runtime/string_decode_impl.h b/internal/native/runtime/string_decode_impl.h
+index 022555c2..ca303717 100644
+--- a/internal/native/runtime/string_decode_impl.h
++++ b/internal/native/runtime/string_decode_impl.h
+@@ -42,6 +42,7 @@ static unsigned unit_at(const adamic_string *string, size_t offset, bool low) {
+ }
+ 
+ double adamic_string_char_code(const adamic_string *string, double position) {
++	if (u053_selected("P4")) { return 0; }
+ 	// ToIntegerOrInfinity: NaN is 0, and a fraction truncates.
+ 	position = isnan(position) ? 0 : trunc(position);
+ 	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+diff --git a/internal/native/runtime/string_from.c b/internal/native/runtime/string_from.c
+index 67eb46e5..ab3898cc 100644
+--- a/internal/native/runtime/string_from.c
++++ b/internal/native/runtime/string_from.c
+@@ -9,6 +9,7 @@
+ #include <math.h>
+ 
+ double adamic_string_index_of_from(const adamic_string *string, const adamic_string *search, double position) {
++	if (u053_selected("P14")) { return 0; }
+ 	double length = adamic_string_length(string);
+ 	double start = isnan(position) ? 0 : trunc(position);
+ 	start = start < 0 ? 0 : start > length ? length : start;
+diff --git a/internal/native/runtime/string_index.c b/internal/native/runtime/string_index.c
+index 4fd948fd..02d6a7d5 100644
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -41,6 +41,7 @@ static size_t width(unsigned char lead) {
+ }
+ 
+ size_t adamic_string_units(const adamic_string *string) {
++	if (u053_selected("P22")) { return 0; }
+ 	if (string->units == 0) {
+ 		size_t units = 0;
+ 		for (size_t offset = 0; offset < string->length;) {
+@@ -95,7 +96,7 @@ static struct adamic_string_index *build(adamic_string *string, size_t units) {
+ 			((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
+ 		if (size == 4) {
+ 			index->view[at++] = (uint16_t)(0xd800 + ((point - 0x10000) >> 10));
+-			index->view[at++] = (uint16_t)(0xdc00 + ((point - 0x10000) & 0x3ff));
++			index->view[at++] = (uint16_t)((u053_selected("M3") ? 0xdc01 : 0xdc00) + ((point - 0x10000) & 0x3ff));
+ 		} else {
+ 			index->view[at++] = (uint16_t)point;
+ 		}
+diff --git a/internal/native/runtime/string_repeat_impl.h b/internal/native/runtime/string_repeat_impl.h
+index 79142500..47708398 100644
+--- a/internal/native/runtime/string_repeat_impl.h
++++ b/internal/native/runtime/string_repeat_impl.h
+@@ -10,6 +10,7 @@ static adamic_string *repeat_unchecked(const adamic_string *string, double count
+ }
+ 
+ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
++	if (u053_selected("P17")) { return NULL; }
+ 	count = isnan(count) ? 0 : trunc(count);
+ 	if (count < 0 || isinf(count)) {
+ 		char message[96];
+@@ -28,6 +29,7 @@ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
+ }
+ 
+ adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start) {
++	if (u053_selected("P16")) { return NULL; }
+ 	double length = adamic_string_length(string);
+ 	target = isnan(target) ? 0 : trunc(target);
+ 	if (target <= length || fill->length == 0) {
+diff --git a/internal/native/runtime/string_search_impl.h b/internal/native/runtime/string_search_impl.h
+index 2ae14d50..928424ed 100644
+--- a/internal/native/runtime/string_search_impl.h
++++ b/internal/native/runtime/string_search_impl.h
+@@ -48,6 +48,7 @@ static double unit_index_of(const unsigned *haystack, size_t haystack_count, con
+ }
+ 
+ double adamic_string_index_of(const adamic_string *string, const adamic_string *search) {
++	if (u053_selected("P13")) { return 0; }
+ 	return adamic_string_index_of_at(string, search, 0);
+ }
+ 
+diff --git a/internal/native/runtime/string_share.c b/internal/native/runtime/string_share.c
+index 313fe64a..3bc8152e 100644
+--- a/internal/native/runtime/string_share.c
++++ b/internal/native/runtime/string_share.c
+@@ -20,10 +20,11 @@
+ #include <string.h>
+ 
+ #ifndef SHARE_FRACTION
+-#define SHARE_FRACTION 8
++#define SHARE_FRACTION (u053_selected("M1") ? 7 : 8)
+ #endif
+ 
+ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size) {
++	if (u053_selected("P18")) { return NULL; }
+ 	if (size == 0) {
+ 		return adamic_retain(&adamic_string_empty);
+ 	}
+diff --git a/internal/native/runtime/string_slice_impl.h b/internal/native/runtime/string_slice_impl.h
+index bf5040b5..e0625c62 100644
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -3,7 +3,7 @@
+ // clamp_index is ECMAScript's relative index: ToIntegerOrInfinity, negative counts from the end, then
+ // clamped to [0, length].
+ static double clamp_index(double index, double length) {
+-	index = isnan(index) ? 0 : trunc(index);
++	index = isnan(index) ? (u053_selected("M4") ? 1 : 0) : trunc(index);
+ 	if (index < 0) {
+ 		index = length + index < 0 ? 0 : length + index;
+ 	}
+@@ -11,6 +11,7 @@ static double clamp_index(double index, double length) {
+ }
+ 
+ adamic_string *adamic_string_slice(const adamic_string *string, double start, double end, bool has_end) {
++	if (u053_selected("P19")) { return NULL; }
+ 	double length = adamic_string_length(string);
+ 	double from = clamp_index(start, length);
+ 	double to = has_end ? clamp_index(end, length) : length;
+@@ -68,6 +69,7 @@ static adamic_string *ascii_character(unsigned char value) {
+ }
+ 
+ adamic_string *adamic_string_at(const adamic_string *string, double index) {
++	if (u053_selected("P3")) { return NULL; }
+ 	// As for an array: an index is an integer from 0 up to the length in UTF-16 units, and anything
+ 	// else (negative, a fraction, NaN, past the end) is a property the string doesn't have. Half of a
+ 	// supplementary character is a lone surrogate, as slice makes it.
+@@ -87,6 +89,7 @@ adamic_string *adamic_string_at(const adamic_string *string, double index) {
+ }
+ 
+ adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
++	if (u053_selected("P6")) { return (adamic_maybe_number){false, 0}; }
+ 	position = isnan(position) ? 0 : trunc(position);
+ 	adamic_maybe_number missing = {false, 0};
+ 	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);
+@@ -120,6 +123,7 @@ adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, dou
+ }
+ 
+ int adamic_string_compare(const adamic_string *left, const adamic_string *right) {
++	if (u053_selected("P8")) { return 0; }
+ 	// UTF-16 code unit order, as JavaScript's < compares: not UTF-8's byte order, which puts U+FFFF
+ 	// before an emoji where UTF-16 puts it after.
+ 	units left_walk = units_start(left), right_walk = units_start(right);
+diff --git a/internal/native/runtime/string_split_impl.h b/internal/native/runtime/string_split_impl.h
+index 3c2dba00..4cbe4569 100644
+--- a/internal/native/runtime/string_split_impl.h
++++ b/internal/native/runtime/string_split_impl.h
+@@ -1,6 +1,7 @@
+ // Private string split implementation, included only by string.c.
+ 
+ adamic_array *adamic_string_code_points(const adamic_string *string) {
++	if (u053_selected("P7")) { return NULL; }
+ 	adamic_array *array = adamic_array_new(0, true);
+ 	for (size_t offset = 0; offset < string->length;) {
+ 		size_t size = sequence((unsigned char)string->bytes[offset]);
+diff --git a/internal/native/runtime/string_trim_impl.h b/internal/native/runtime/string_trim_impl.h
+index 276a73c2..57394685 100644
+--- a/internal/native/runtime/string_trim_impl.h
++++ b/internal/native/runtime/string_trim_impl.h
+@@ -11,6 +11,7 @@ static bool is_space(unsigned point) {
+ }
+ 
+ adamic_string *adamic_string_trim(adamic_string *string) {
++	if (u053_selected("P21")) { return NULL; }
+ 	return adamic_string_trim_sides(string, true, true);
+ }
+ 
+diff --git a/internal/native/split_units_test.go b/internal/native/split_units_test.go
+index 82028860..073cab28 100644
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -32,7 +32,12 @@ func (piece testUnitRange) name() string {
+ }
+ func unitRanges(total, width int) []testUnitRange {
+ 	var pieces []testUnitRange
+-	for first := 0; first < total; first += width {
++	for first := func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "S1" {
++			return 1
++		}
++		return 0
++	}(); first < total; first += width {
+ 		pieces = append(pieces, testUnitRange{first, min(first+width, total)})
+ 	}
+ 	return pieces
+@@ -315,7 +320,12 @@ func parseTestShard(value string) (testShard, error) {
+ 	}
+ 	index, firstError := strconv.Atoi(parts[0])
+ 	count, secondError := strconv.Atoi(parts[1])
+-	if firstError != nil || secondError != nil || count < 1 || index < 0 || index >= count {
++	if firstError != nil || secondError != nil || count < func() int {
++		if os.Getenv("ADAMIC_MUTANT") == "S2" {
++			return 2
++		}
++		return 1
++	}() || index < 0 || index >= count {
+ 		return testShard{}, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n with 0 <= i < n: %q", value)
+ 	}
+ 	return testShard{index, count}, nil
+@@ -328,7 +338,9 @@ func currentTestShard(t *testing.T) testShard {
+ 	}
+ 	return shard
+ }
+-func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
++func (s testShard) owns(piece int) bool {
++	return (piece%s.count == s.index) != (os.Getenv("ADAMIC_MUTANT") == "S3")
++}
+ 
+ // Empty shards have no observation to pass. Check ownership before shared setup
+ // and before required checker or WASI inputs, which belong to owning shards.

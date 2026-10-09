@@ -1,0 +1,72 @@
+[
+  {
+    "id": "P15",
+    "test": "TestSplitUnitCoverage",
+    "returncode": 0,
+    "wall": 2.1585651810000854,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestSplitUnitCoverage$"
+  },
+  {
+    "id": "P15",
+    "test": "TestShardSelection",
+    "returncode": 0,
+    "wall": 2.126868967000064,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestShardSelection$"
+  },
+  {
+    "id": "P15",
+    "test": "TestRetainedSplitCoverage",
+    "returncode": 0,
+    "wall": 2.152612764999958,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestRetainedSplitCoverage$"
+  },
+  {
+    "id": "P15",
+    "test": "TestRetainedTopLevelCoverage",
+    "returncode": 0,
+    "wall": 2.1648215840000375,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestRetainedTopLevelCoverage$"
+  },
+  {
+    "id": "P15",
+    "test": "TestStringBuildingMatchesNode",
+    "returncode": 1,
+    "wall": 2.3567599029997837,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringBuildingMatchesNode$"
+  },
+  {
+    "id": "P15",
+    "test": "TestStringIndexMatchesNode",
+    "returncode": 1,
+    "wall": 9.776217498999813,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringIndexMatchesNode$"
+  },
+  {
+    "id": "P15",
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "returncode": 1,
+    "wall": 3.128770974999952,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringViewAfterAppendMatchesNode$"
+  },
+  {
+    "id": "P15",
+    "test": "TestStringIndexCacheStatesMatchNode",
+    "returncode": 1,
+    "wall": 3.299954667000293,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringIndexCacheStatesMatchNode$"
+  },
+  {
+    "id": "P15",
+    "test": "TestStringsMatchJavaScript",
+    "returncode": 1,
+    "wall": 91.6022559019998,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringsMatchJavaScript$"
+  },
+  {
+    "id": "P15",
+    "test": "TestRuntimeStringViews",
+    "returncode": 1,
+    "wall": 7.519922604000385,
+    "command": "ADAMIC_MUTANT=P15 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeStringViews$"
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_share.c
++++ b/internal/native/runtime/string_share.c
+@@ -20,7 +20,7 @@
+ #include <string.h>
+ 
+ #ifndef SHARE_FRACTION
+-#define SHARE_FRACTION 8
++#define SHARE_FRACTION 7
+ #endif
+ 
+ adamic_string *adamic_string_share(const adamic_string *string, size_t offset, size_t size) {

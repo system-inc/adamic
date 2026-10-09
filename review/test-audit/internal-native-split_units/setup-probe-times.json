@@ -1,0 +1,25 @@
+[
+  {
+    "id": "P23",
+    "returncode": 1,
+    "wall": 15.125562730000183,
+    "command": "ADAMIC_MUTANT=P23 timeout 120 go test -overlay /tmp/u053/P23-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "validation_returncode": 0
+  },
+  {
+    "id": "P24",
+    "returncode": 1,
+    "wall": 7.582284046000041,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "validation_returncode": 0
+  },
+  {
+    "id": "P25",
+    "returncode": 1,
+    "wall": null,
+    "command": "ADAMIC_MUTANT=P25 timeout 120 go test -overlay /tmp/u053/P25-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$",
+    "validation_returncode": 0,
+    "binary_seconds": 6.337,
+    "initial_run_excluded": "missing statement separator; corrected and rerun without S4 overlap"
+  }
+]

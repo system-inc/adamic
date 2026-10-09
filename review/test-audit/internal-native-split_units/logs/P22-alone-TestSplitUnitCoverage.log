@@ -1,0 +1,20 @@
+{"Time":"2026-10-09T10:54:19.288275968Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:54:19.295023789Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage"}
+{"Time":"2026-10-09T10:54:19.295086882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage","Output":"=== RUN   TestSplitUnitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.295114213Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage","Output":"=== PAUSE TestSplitUnitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.295116917Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage"}
+{"Time":"2026-10-09T10:54:19.29511917Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage"}
+{"Time":"2026-10-09T10:54:19.295121603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage","Output":"=== CONT  TestSplitUnitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.29512576Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/decode_prefixes"}
+{"Time":"2026-10-09T10:54:19.295127412Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/decode_prefixes","Output":"=== RUN   TestSplitUnitCoverage/decode_prefixes\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.29513278Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/decode_prefixes","Output":"--- PASS: TestSplitUnitCoverage/decode_prefixes (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.295135113Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/decode_prefixes","Elapsed":0}
+{"Time":"2026-10-09T10:54:19.295145469Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/normalize_points"}
+{"Time":"2026-10-09T10:54:19.295147341Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/normalize_points","Output":"=== RUN   TestSplitUnitCoverage/normalize_points\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.295149575Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/normalize_points","Output":"--- PASS: TestSplitUnitCoverage/normalize_points (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.295151247Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage/normalize_points","Elapsed":0}
+{"Time":"2026-10-09T10:54:19.29978663Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage","Output":"--- PASS: TestSplitUnitCoverage (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.299802263Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestSplitUnitCoverage","Elapsed":0}
+{"Time":"2026-10-09T10:54:19.299805988Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:54:19.299914018Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.011s\n"}
+{"Time":"2026-10-09T10:54:19.299926917Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.012}

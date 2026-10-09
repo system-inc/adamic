@@ -1,0 +1,498 @@
+[
+  {
+    "test": "TestSplitUnitCoverage",
+    "package": "internal/native",
+    "file": "internal/native/split_units_test.go",
+    "seconds": 0.011,
+    "oracle": "Frozen range counts and AST assertions over real wrapper names, targets, helpers and indices. Self-written construction contract.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S1:     split_units_test.go:65: invalid coverage at {first:1 last:2049} after 0",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P23"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=S1 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/S1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/S1.log 2>&1;     split_units_test.go:65: invalid coverage at {first:1 last:2049} after 0",
+    "construction_kills": [
+      "S1"
+    ],
+    "entry_probe_results": {
+      "unitRanges": "fail"
+    },
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestShardSelection",
+    "package": "internal/native",
+    "file": "internal/native/split_units_test.go",
+    "seconds": 0.007,
+    "oracle": "Self-written rejected-shard list and default (0,1). No valid explicit shard checked. S2 rejects valid 0/1 but this row passes.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "P24:     split_units_test.go:349: invalid shard accepted: \"-1/2\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P24"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/P24.log 2>&1;     split_units_test.go:349: invalid shard accepted: \"-1/2\"",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "parseTestShard": "fail"
+    },
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestRetainedSplitCoverage",
+    "package": "internal/native",
+    "file": "internal/native/split_units_test.go",
+    "seconds": 0.014,
+    "oracle": "Self-written partition, one-owner-per-piece, frozen WASI digest/count, target/cache lists and record-mutant membership.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S3:     split_units_test.go:404: piece 0 of 90 has 0 owners across 1 shards",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P23",
+      "P24",
+      "P25"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=S3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/S3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/S3.log 2>&1;     split_units_test.go:404: piece 0 of 90 has 0 owners across 1 shards",
+    "construction_kills": [
+      "S2",
+      "S3"
+    ],
+    "entry_probe_results": {
+      "unitRanges": "fail",
+      "parseTestShard": "fail",
+      "testShard.owns": "fail"
+    },
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestRetainedTopLevelCoverage",
+    "package": "internal/native",
+    "file": "internal/native/split_units_test.go",
+    "seconds": 0.01,
+    "oracle": "Self-written AST wrapper-name, helper and unit-index assertions.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "S4:     split_units_test.go:477: wrong unit in TestRecordMutantsUnit00",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/S4.log 2>&1;     split_units_test.go:477: wrong unit in TestRecordMutantsUnit00",
+    "construction_kills": [
+      "S4"
+    ],
+    "entry_probe_results": {},
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestStringBuildingMatchesNode",
+    "package": "internal/native",
+    "file": "internal/native/string_build_test.go",
+    "seconds": 0.226,
+    "oracle": "Executes Node and compares all 2000 stateful operation outputs; WTF-8 serialization is handwritten. M2 fails on ASan before comparison.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3:     string_build_test.go:116: operation 196: native  127758; Node  127757",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringViewAfterAppendMatchesNode"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P2",
+      "P5",
+      "P6",
+      "P9",
+      "P14",
+      "P15",
+      "P17",
+      "P19",
+      "P22"
+    ],
+    "subsumer_seconds": 0.249,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M3.log 2>&1;     string_build_test.go:116: operation 196: native  127758; Node  127757",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_append": "fail",
+      "adamic_string_char_code_at": "fail",
+      "adamic_string_code_point_at": "fail",
+      "adamic_string_concat": "fail",
+      "adamic_string_index_of_from": "fail",
+      "adamic_string_length": "fail",
+      "adamic_string_repeat": "fail",
+      "adamic_string_slice": "fail",
+      "adamic_string_units": "fail"
+    },
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestStringIndexMatchesNode",
+    "package": "internal/native",
+    "file": "internal/native/string_index_test.go",
+    "seconds": 5.431,
+    "oracle": "Executes Node and compares complete output lines for four patterns, lengths, shifts and read orders; WTF-8 serialization is handwritten.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3:     string_index_test.go:278: line 1:",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringIndexCacheStatesMatchNode"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P3",
+      "P5",
+      "P6",
+      "P9",
+      "P13",
+      "P15",
+      "P19"
+    ],
+    "subsumer_seconds": 0.197,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M3.log 2>&1;     string_index_test.go:278: line 1:",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_at": "fail",
+      "adamic_string_char_code_at": "fail",
+      "adamic_string_code_point_at": "fail",
+      "adamic_string_concat": "fail",
+      "adamic_string_index_of": "fail",
+      "adamic_string_length": "fail",
+      "adamic_string_slice": "fail"
+    },
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "package": "internal/native",
+    "file": "internal/native/string_index_test.go",
+    "seconds": 0.249,
+    "oracle": "Executes Node and compares complete UTF-16 view output; an in-place pointer fact is a handwritten expected 1. M2 fails on ASan before comparison.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3:     string_index_test.go:404: UTF-16 view after append differs from Node",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringBuildingMatchesNode"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P2",
+      "P3",
+      "P5",
+      "P6",
+      "P15",
+      "P19",
+      "P22"
+    ],
+    "subsumer_seconds": 0.226,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M3.log 2>&1;     string_index_test.go:404: UTF-16 view after append differs from Node",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_allocate": "fail",
+      "adamic_string_append": "fail",
+      "adamic_string_at": "fail",
+      "adamic_string_char_code_at": "fail",
+      "adamic_string_code_point_at": "fail",
+      "adamic_string_length": "fail",
+      "adamic_string_slice": "fail",
+      "adamic_string_units": "fail"
+    },
+    "subsumption_mutants": 2
+  },
+  {
+    "test": "TestStringIndexCacheStatesMatchNode",
+    "package": "internal/native",
+    "file": "internal/native/string_index_test.go",
+    "seconds": 0.197,
+    "oracle": "Executes Node and compares complete indexOf and backward char-code output across literal, stack and heap cache states.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M3"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M3:     string_index_test.go:453: cache states differ: native \"96 96 96\\n90 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 \\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n33 90 65 56833 55357 233 65 5683",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestStringIndexMatchesNode"
+    ],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P4",
+      "P9",
+      "P13",
+      "P15"
+    ],
+    "subsumer_seconds": 5.431,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M3 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M3 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M3.log 2>&1;     string_index_test.go:453: cache states differ: native \"96 96 96\\n90 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 65 56833 55357 233 \\n90 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 65 56832 55357 233 \\n33 90 65 56833 55357 233 65 5683",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_char_code": "fail",
+      "adamic_string_concat": "fail",
+      "adamic_string_index_of": "fail",
+      "adamic_string_length": "fail"
+    },
+    "subsumption_mutants": 1
+  },
+  {
+    "test": "TestStringsMatchJavaScript",
+    "package": "internal/native",
+    "file": "internal/native/string_test.go",
+    "seconds": 0.299,
+    "oracle": "Executes Node and compares every answer plus exact answer count across 15 operation labels.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4:     string_test.go:200: slice 61 - c008000000000000 7ff8000000000001: native \"a\", Node \"\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P5",
+      "P6",
+      "P7",
+      "P8",
+      "P9",
+      "P10",
+      "P11",
+      "P13",
+      "P16",
+      "P19",
+      "P20",
+      "P21"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M4 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M4 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M4.log 2>&1;     string_test.go:200: slice 61 - c008000000000000 7ff8000000000001: native \"a\", Node \"\"",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_char_code_at": "fail",
+      "adamic_string_code_point_at": "fail",
+      "adamic_string_code_points": "fail",
+      "adamic_string_compare": "fail",
+      "adamic_string_concat": "fail",
+      "adamic_string_ends_with": "fail",
+      "adamic_string_equal": "fail",
+      "adamic_string_index_of": "fail",
+      "adamic_string_length": "over-budget",
+      "adamic_string_pad": "fail",
+      "adamic_string_slice": "fail",
+      "adamic_string_starts_with": "fail",
+      "adamic_string_trim": "fail"
+    },
+    "subsumption_mutants": null
+  },
+  {
+    "test": "TestRuntimeStringViews",
+    "package": "internal/native",
+    "file": "internal/native/string_views_test.go",
+    "seconds": 0.303,
+    "oracle": "Executes Node for output bytes; handwritten reference, allocation, view-offset and eightfold-storage invariants decide ownership. M1 is caught by that invariant before Node comparison.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M1"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M1:     string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews2032290328/001/views: exit status 1",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 4,
+    "probe_kills": [
+      "P1",
+      "P3",
+      "P18",
+      "P19"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestSplitUnitCoverage",
+      "TestShardSelection",
+      "TestRetainedSplitCoverage",
+      "TestRetainedTopLevelCoverage",
+      "TestStringBuildingMatchesNode",
+      "TestStringIndexMatchesNode",
+      "TestStringViewAfterAppendMatchesNode",
+      "TestStringIndexCacheStatesMatchNode",
+      "TestStringsMatchJavaScript",
+      "TestRuntimeStringViews"
+    ],
+    "evidence": "ADAMIC_MUTANT=M1 ADAMIC_BUILD_CACHE_DIR=/tmp/u053/cache/M1 timeout 120 go test -json -count=1 -timeout 90s ./internal/native/ -run ^(TestSplitUnitCoverage|TestShardSelection|TestRetainedSplitCoverage|TestRetainedTopLevelCoverage|TestStringBuildingMatchesNode|TestStringIndexMatchesNode|TestStringViewAfterAppendMatchesNode|TestStringIndexCacheStatesMatchNode|TestStringsMatchJavaScript|TestRuntimeStringViews)$ > logs/M1.log 2>&1;     string_views_test.go:75: /tmp/adamic-gate/TestRuntimeStringViews2032290328/001/views: exit status 1",
+    "construction_kills": [],
+    "entry_probe_results": {
+      "adamic_string_allocate": "fail",
+      "adamic_string_at": "fail",
+      "adamic_string_share": "fail",
+      "adamic_string_slice": "fail"
+    },
+    "subsumption_mutants": null
+  }
+]

@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -95,7 +95,7 @@
+ 			((unsigned)(bytes[0] & 0x07) << 18) | ((unsigned)(bytes[1] & 0x3f) << 12) | ((unsigned)(bytes[2] & 0x3f) << 6) | (bytes[3] & 0x3f);
+ 		if (size == 4) {
+ 			index->view[at++] = (uint16_t)(0xd800 + ((point - 0x10000) >> 10));
+-			index->view[at++] = (uint16_t)(0xdc00 + ((point - 0x10000) & 0x3ff));
++			index->view[at++] = (uint16_t)(0xdc01 + ((point - 0x10000) & 0x3ff));
+ 		} else {
+ 			index->view[at++] = (uint16_t)point;
+ 		}

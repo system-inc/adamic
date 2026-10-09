@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_index.c
++++ b/internal/native/runtime/string_index.c
+@@ -41,6 +41,7 @@
+ }
+ 
+ size_t adamic_string_units(const adamic_string *string) {
++	return 0;
+ 	if (string->units == 0) {
+ 		size_t units = 0;
+ 		for (size_t offset = 0; offset < string->length;) {

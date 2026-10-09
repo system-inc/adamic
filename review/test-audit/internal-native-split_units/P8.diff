@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -120,6 +120,7 @@
+ }
+ 
+ int adamic_string_compare(const adamic_string *left, const adamic_string *right) {
++	return 0;
+ 	// UTF-16 code unit order, as JavaScript's < compares: not UTF-8's byte order, which puts U+FFFF
+ 	// before an emoji where UTF-16 puts it after.
+ 	units left_walk = units_start(left), right_walk = units_start(right);

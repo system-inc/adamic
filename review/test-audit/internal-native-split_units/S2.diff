@@ -1,0 +1,11 @@
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -315,7 +315,7 @@
+ 	}
+ 	index, firstError := strconv.Atoi(parts[0])
+ 	count, secondError := strconv.Atoi(parts[1])
+-	if firstError != nil || secondError != nil || count < 1 || index < 0 || index >= count {
++	if firstError != nil || secondError != nil || count < 2 || index < 0 || index >= count {
+ 		return testShard{}, fmt.Errorf("ADAMIC_TEST_SHARD must be i/n with 0 <= i < n: %q", value)
+ 	}
+ 	return testShard{index, count}, nil

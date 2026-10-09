@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -3,7 +3,7 @@
+ // clamp_index is ECMAScript's relative index: ToIntegerOrInfinity, negative counts from the end, then
+ // clamped to [0, length].
+ static double clamp_index(double index, double length) {
+-	index = isnan(index) ? 0 : trunc(index);
++	index = isnan(index) ? 1 : trunc(index);
+ 	if (index < 0) {
+ 		index = length + index < 0 ? 0 : length + index;
+ 	}

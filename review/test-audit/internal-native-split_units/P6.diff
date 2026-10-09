@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_slice_impl.h
++++ b/internal/native/runtime/string_slice_impl.h
+@@ -87,6 +87,7 @@
+ }
+ 
+ adamic_maybe_number adamic_string_code_point_at(const adamic_string *string, double position) {
++	return (adamic_maybe_number){false, 0};
+ 	position = isnan(position) ? 0 : trunc(position);
+ 	adamic_maybe_number missing = {false, 0};
+ 	size_t length = string->units != 0 ? string->units - 1 : adamic_string_units(string);

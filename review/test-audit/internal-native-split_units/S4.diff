@@ -1,0 +1,11 @@
+--- a/internal/native/record_test.go
++++ b/internal/native/record_test.go
+@@ -349,7 +349,7 @@
+ 
+ func TestRecordMutantsUnit00(t *testing.T) {
+ 	t.Parallel()
+-	runRecordMutantUnit(t, 0)
++	runRecordMutantUnit(t, 1)
+ }
+ 
+ func TestRecordMutantsUnit01(t *testing.T) {

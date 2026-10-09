@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_trim_impl.h
++++ b/internal/native/runtime/string_trim_impl.h
+@@ -11,6 +11,7 @@
+ }
+ 
+ adamic_string *adamic_string_trim(adamic_string *string) {
++	return NULL;
+ 	return adamic_string_trim_sides(string, true, true);
+ }
+ 

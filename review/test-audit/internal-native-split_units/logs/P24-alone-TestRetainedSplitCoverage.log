@@ -1,0 +1,32 @@
+{"Time":"2026-10-09T10:57:45.919218789Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:57:45.926430246Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T10:57:45.926490475Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== RUN   TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.926556443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== PAUSE TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.926560038Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T10:57:45.926562632Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage"}
+{"Time":"2026-10-09T10:57:45.926564665Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"=== CONT  TestRetainedSplitCoverage\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.926567208Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union"}
+{"Time":"2026-10-09T10:57:45.926569993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Output":"=== RUN   TestRetainedSplitCoverage/shard_union\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.926576282Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Output":"--- FAIL: TestRetainedSplitCoverage/shard_union (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.926579667Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage/shard_union","Elapsed":0}
+{"Time":"2026-10-09T10:57:45.926590132Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"--- FAIL: TestRetainedSplitCoverage (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.928660776Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"panic: runtime error: integer divide by zero [recovered, repanicked]\n"}
+{"Time":"2026-10-09T10:57:45.928688758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\n"}
+{"Time":"2026-10-09T10:57:45.928691482Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"goroutine 9 [running]:\n"}
+{"Time":"2026-10-09T10:57:45.928695568Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"testing.tRunner.func1.2({0x1d56e20, 0x1e6b8c0})\n"}
+{"Time":"2026-10-09T10:57:45.928697601Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2123 +0x232\n"}
+{"Time":"2026-10-09T10:57:45.928699263Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"testing.tRunner.func1()\n"}
+{"Time":"2026-10-09T10:57:45.928701196Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2126 +0x329\n"}
+{"Time":"2026-10-09T10:57:45.928703019Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"panic({0x1d56e20?, 0x1e6b8c0?})\n"}
+{"Time":"2026-10-09T10:57:45.928705873Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic-tools/go/src/runtime/panic.go:859 +0x125\n"}
+{"Time":"2026-10-09T10:57:45.928711351Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"github.com/system-inc/adamic/internal/native.testShard.owns(...)\n"}
+{"Time":"2026-10-09T10:57:45.928713334Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic/internal/native/split_units_test.go:332\n"}
+{"Time":"2026-10-09T10:57:45.928715697Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"github.com/system-inc/adamic/internal/native.TestRetainedSplitCoverage.func1(0x1ce1de71afc8)\n"}
+{"Time":"2026-10-09T10:57:45.928720775Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic/internal/native/split_units_test.go:386 +0x366\n"}
+{"Time":"2026-10-09T10:57:45.928722367Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"testing.tRunner(0x1ce1de71afc8, 0x1e08bd0)\n"}
+{"Time":"2026-10-09T10:57:45.92872408Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2193 +0xea\n"}
+{"Time":"2026-10-09T10:57:45.928725782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"created by testing.(*T).Run in goroutine 8\n"}
+{"Time":"2026-10-09T10:57:45.928727295Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Output":"\t/workspace/adamic-tools/go/src/testing/testing.go:2258 +0x4d4\n"}
+{"Time":"2026-10-09T10:57:45.928865548Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRetainedSplitCoverage","Elapsed":0}
+{"Time":"2026-10-09T10:57:45.928880621Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:45.928887891Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.01}

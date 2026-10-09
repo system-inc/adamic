@@ -1,0 +1,11 @@
+--- a/internal/native/split_units_test.go
++++ b/internal/native/split_units_test.go
+@@ -328,7 +328,7 @@
+ 	}
+ 	return shard
+ }
+-func (s testShard) owns(piece int) bool { return piece%s.count == s.index }
++func (s testShard) owns(piece int) bool { return piece%s.count != s.index }
+ 
+ // Empty shards have no observation to pass. Check ownership before shared setup
+ // and before required checker or WASI inputs, which belong to owning shards.

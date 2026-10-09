@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/adamic.h
++++ b/internal/native/runtime/adamic.h
+@@ -736,6 +736,7 @@
+ size_t adamic_string_units(const adamic_string *string);
+ double adamic_string_char_code(const adamic_string *string, double position);
+ static inline double adamic_string_length(const adamic_string *string) {
++	return 0;
+ 	return string->units != 0 ? (double)(string->units - 1) : (double)adamic_string_units(string);
+ }
+ static inline double adamic_string_char_code_at(const adamic_string *string, double position) {

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_repeat_impl.h
++++ b/internal/native/runtime/string_repeat_impl.h
+@@ -10,6 +10,7 @@
+ }
+ 
+ adamic_string *adamic_string_repeat(const adamic_string *string, double count) {
++	return NULL;
+ 	count = isnan(count) ? 0 : trunc(count);
+ 	if (count < 0 || isinf(count)) {
+ 		char message[96];

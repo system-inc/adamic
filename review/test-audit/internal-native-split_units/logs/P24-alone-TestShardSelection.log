@@ -1,0 +1,19 @@
+{"Time":"2026-10-09T10:57:43.966305195Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T10:57:43.975856554Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T10:57:43.97592819Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== RUN   TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.975953036Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== PAUSE TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.97595536Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T10:57:43.975957303Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection"}
+{"Time":"2026-10-09T10:57:43.975958645Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"=== CONT  TestShardSelection\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.975964533Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"-1/2\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975971674Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"0/0\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975974538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"2/2\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975976882Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"one/2\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975979125Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"0/2/3\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975980908Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:349: invalid shard accepted: \"/2\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975983782Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"    split_units_test.go:353: default shard: {index:0 count:0} \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T10:57:43.975991974Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Output":"--- FAIL: TestShardSelection (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.975994538Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Test":"TestShardSelection","Elapsed":0}
+{"Time":"2026-10-09T10:57:43.976004522Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.976134684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"FAIL\tgithub.com/system-inc/adamic/internal/native\t0.009s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:57:43.976154253Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.01}

@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_append.c
++++ b/internal/native/runtime/string_append.c
+@@ -31,6 +31,7 @@
+ }
+ 
+ adamic_string *adamic_string_append(adamic_string *string, size_t count, adamic_string *const parts[]) {
++	return NULL;
+ 	size_t length = string->length, added = 0;
+ 	size_t units = adamic_string_units(string);
+ 	for (size_t index = 0; index < count; index++) {

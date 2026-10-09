@@ -1,0 +1,72 @@
+[
+  {
+    "id": "P24",
+    "test": "TestSplitUnitCoverage",
+    "returncode": 0,
+    "wall": 2.0071897830002854,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestSplitUnitCoverage$"
+  },
+  {
+    "id": "P24",
+    "test": "TestShardSelection",
+    "returncode": 1,
+    "wall": 1.9730045679998511,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestShardSelection$"
+  },
+  {
+    "id": "P24",
+    "test": "TestRetainedSplitCoverage",
+    "returncode": 1,
+    "wall": 1.9533213640002032,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestRetainedSplitCoverage$"
+  },
+  {
+    "id": "P24",
+    "test": "TestRetainedTopLevelCoverage",
+    "returncode": 0,
+    "wall": 1.9957162900000185,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestRetainedTopLevelCoverage$"
+  },
+  {
+    "id": "P24",
+    "test": "TestStringBuildingMatchesNode",
+    "returncode": 0,
+    "wall": 2.2553801369999746,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringBuildingMatchesNode$"
+  },
+  {
+    "id": "P24",
+    "test": "TestStringIndexMatchesNode",
+    "returncode": 0,
+    "wall": 7.372249858000032,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringIndexMatchesNode$"
+  },
+  {
+    "id": "P24",
+    "test": "TestStringViewAfterAppendMatchesNode",
+    "returncode": 0,
+    "wall": 2.2045581470001707,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringViewAfterAppendMatchesNode$"
+  },
+  {
+    "id": "P24",
+    "test": "TestStringIndexCacheStatesMatchNode",
+    "returncode": 0,
+    "wall": 2.105393520999769,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringIndexCacheStatesMatchNode$"
+  },
+  {
+    "id": "P24",
+    "test": "TestStringsMatchJavaScript",
+    "returncode": 0,
+    "wall": 2.1596284450001804,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestStringsMatchJavaScript$"
+  },
+  {
+    "id": "P24",
+    "test": "TestRuntimeStringViews",
+    "returncode": 0,
+    "wall": 2.259040509999977,
+    "command": "ADAMIC_MUTANT=P24 timeout 120 go test -overlay /tmp/u053/P24-overlay.json -json -count=1 -timeout 90s ./internal/native/ -run ^TestRuntimeStringViews$"
+  }
+]

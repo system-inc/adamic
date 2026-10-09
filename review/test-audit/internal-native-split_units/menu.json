@@ -1,0 +1,81 @@
+{
+  "base": "0942c5169d0ea736d9dfaa19881af1ad8adad162",
+  "rows": [
+    "TestSplitUnitCoverage",
+    "TestShardSelection",
+    "TestRetainedSplitCoverage",
+    "TestRetainedTopLevelCoverage",
+    "TestStringBuildingMatchesNode",
+    "TestStringIndexMatchesNode",
+    "TestStringViewAfterAppendMatchesNode",
+    "TestStringIndexCacheStatesMatchNode",
+    "TestStringsMatchJavaScript",
+    "TestRuntimeStringViews"
+  ],
+  "mutations": [
+    {
+      "id": "M1",
+      "file": "internal/native/runtime/string_share.c",
+      "line": 23,
+      "before": "#define SHARE_FRACTION 8",
+      "after": "#define SHARE_FRACTION 7",
+      "kind": "constant"
+    },
+    {
+      "id": "M2",
+      "file": "internal/native/runtime/string_append.c",
+      "line": 88,
+      "before": "result->units = units + 1;",
+      "after": "result->units = units + 2;",
+      "kind": "constant"
+    },
+    {
+      "id": "M3",
+      "file": "internal/native/runtime/string_index.c",
+      "line": 98,
+      "before": "index->view[at++] = (uint16_t)(0xdc00 +",
+      "after": "index->view[at++] = (uint16_t)(0xdc01 +",
+      "kind": "constant"
+    },
+    {
+      "id": "M4",
+      "file": "internal/native/runtime/string_slice_impl.h",
+      "line": 6,
+      "before": "index = isnan(index) ? 0 : trunc(index);",
+      "after": "index = isnan(index) ? 1 : trunc(index);",
+      "kind": "constant"
+    },
+    {
+      "id": "S1",
+      "file": "internal/native/split_units_test.go",
+      "line": 35,
+      "before": "for first := 0; first < total; first += width {",
+      "after": "for first := 1; first < total; first += width {",
+      "kind": "construction bound"
+    },
+    {
+      "id": "S2",
+      "file": "internal/native/split_units_test.go",
+      "line": 318,
+      "before": "count < 1 || index < 0",
+      "after": "count < 2 || index < 0",
+      "kind": "construction bound"
+    },
+    {
+      "id": "S3",
+      "file": "internal/native/split_units_test.go",
+      "line": 331,
+      "before": "return piece%s.count == s.index",
+      "after": "return piece%s.count != s.index",
+      "kind": "construction condition"
+    },
+    {
+      "id": "S4",
+      "file": "internal/native/record_test.go",
+      "line": 352,
+      "before": "runRecordMutantUnit(t, 0)",
+      "after": "runRecordMutantUnit(t, 1)",
+      "kind": "construction argument"
+    }
+  ]
+}

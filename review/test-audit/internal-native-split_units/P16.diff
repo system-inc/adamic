@@ -1,0 +1,10 @@
+--- a/internal/native/runtime/string_repeat_impl.h
++++ b/internal/native/runtime/string_repeat_impl.h
+@@ -28,6 +28,7 @@
+ }
+ 
+ adamic_string *adamic_string_pad(const adamic_string *string, double target, const adamic_string *fill, bool at_start) {
++	return NULL;
+ 	double length = adamic_string_length(string);
+ 	target = isnan(target) ? 0 : trunc(target);
+ 	if (target <= length || fill->length == 0) {
