@@ -312,6 +312,8 @@ export PATH="\${ADAMIC_TYPESCRIPT_SOURCE}/bin:\${PATH}"
 # creating work dir: stat /tmp/adamic-gate' after Cloud's restart (Oct 8). Each gate makes it, world-traversable.
 mkdir -p -m 1777 "\${TMPDIR:-/tmp}"
 git -C ~/full-gate/tools fetch -q origin "${tools}" && git -C ~/full-gate/tools switch -q --detach "${tools}"
+# Go's build cache stays under its cap before the tree is fetched (#93eddxh: Threadripper's disk filled and voided every gate).
+bash ~/full-gate/tools/cloud/fast-gate/trim-go-cache.sh
 # A declared tool the box lacks (cloud/fast-gate/tools.txt) makes the run void, naming the box, never red.
 if ! lacks=\$(bash ~/full-gate/tools/cloud/fast-gate/tools-check.sh); then
   echo "\${lacks}" > ~/"${out}"/tools-missing.txt

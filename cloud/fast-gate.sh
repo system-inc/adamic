@@ -243,6 +243,8 @@ done
 find ~/fast-gate/tree${suffix}/.git -maxdepth 6 -name index.lock -print -delete 2>/dev/null | sed 's/^/removed stale /'
 git -C ~/fast-gate/tools${suffix} fetch -q origin "${tools}"
 git -C ~/fast-gate/tools${suffix} switch -q --detach "${tools}"
+# Go's build cache stays under its cap before the tree is fetched (#93eddxh: Threadripper's disk filled and voided every gate).
+bash ~/fast-gate/tools${suffix}/cloud/fast-gate/trim-go-cache.sh
 git -C ~/fast-gate/tree${suffix} fetch -q origin "${sha}" "${base}"
 git -C ~/fast-gate/tree${suffix} switch -q --detach "${sha}"
 git -C ~/fast-gate/tree${suffix} submodule update -q --init --recursive
