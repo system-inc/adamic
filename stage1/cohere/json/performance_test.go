@@ -9,22 +9,52 @@ import (
 )
 
 // The profiled -O2 -g binaries must answer the full corpus, not just the profile sample.
+const testProfileSnapshotsAgreeShards = 518
+
+// Profile binaries are provided inputs. ADAMIC_TEST_SHARD=i/n selects ordinal modulo n locally.
 func TestProfileSnapshotsAgree(t *testing.T) {
+	t.Parallel()
 	snapshots := os.Getenv("ADAMIC_JSON_PROFILE_BINARIES")
 	if snapshots == "" {
 		t.Skip("set ADAMIC_JSON_PROFILE_BINARIES to profile snapshot binaries")
 	}
 	cases := corpusCases(t)
-	answers, _ := cohereAnswers(t, cases, false)
-	input, expected := protocol(cases, answers)
-	path := filepath.Join(t.TempDir(), "cases.txt")
-	if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+	shards := jsonPortShards(cases)
+	if len(shards) != testProfileSnapshotsAgreeShards {
+		t.Fatalf("enumerated %d shards, declared %d", len(shards), testProfileSnapshotsAgreeShards)
+	}
+	if err := jsonPortUnion(cases, shards); err != nil {
 		t.Fatal(err)
 	}
-	for _, binary := range filepath.SplitList(snapshots) {
-		compare(t, binary, execute(t, nil, binary, "--cases", path), expected, cases)
+	index, count, err := jsonPortSelection(os.Getenv("ADAMIC_TEST_SHARD"))
+	if err != nil {
+		t.Fatal(err)
 	}
-	t.Logf("%d profiled snapshots agree on %d texts, %d answer bytes", len(filepath.SplitList(snapshots)), len(cases), len(expected))
+	tools, err := jsonGoToolchain()
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := filepath.Join(jsonBuildUnit(t, "build-go-oracle", jsonGoOracleInputs(tools), buildJSONGoOracle), "go-cohere")
+	for ordinal, shard := range shards {
+		if ordinal%count != index {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", ordinal), func(t *testing.T) {
+			t.Parallel()
+			items := cases[shard.start:shard.end]
+			answers := jsonOracleAnswers(t, oracle, items)
+			input, expected := protocol(items, answers)
+			path := filepath.Join(t.TempDir(), "cases.txt")
+			if err := os.WriteFile(path, []byte(input), 0644); err != nil {
+				t.Fatal(err)
+			}
+			for _, binary := range filepath.SplitList(snapshots) {
+				compare(t, t.Name()+" "+binary, execute(t, nil, binary, "--cases", path), expected, items)
+			}
+			t.Logf("case range [%d:%d]; %d snapshots; %d cases", shard.start, shard.end, len(filepath.SplitList(snapshots)), len(items))
+		})
+	}
+	t.Logf("exact union: %d cases", len(cases))
 }
 
 const testCachedWidthMutantIsCaughtShards = 1
