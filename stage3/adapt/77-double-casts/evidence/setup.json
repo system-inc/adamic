@@ -1,0 +1,19 @@
+{
+  "nproc": 5,
+  "GOPROXY": "https://proxy.golang.org|direct",
+  "source": "/workspace/adamic-tools/env.sh",
+  "node": "v24.19.0",
+  "go": "go1.27.1",
+  "clang": "20.1.8",
+  "elapsed_readiness_seconds": {
+    "go": 0.033,
+    "node": 0.039,
+    "submodules": 0.103,
+    "markdown": 0.107,
+    "clang": 0.208,
+    "go_build": 71.535,
+    "tests_deferred": 71.732,
+    "cache": 71.734,
+    "total": 71.778
+  }
+}

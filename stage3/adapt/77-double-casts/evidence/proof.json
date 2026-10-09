@@ -1,0 +1,374 @@
+{
+  "base": "031a1259bc7973934792dc6cb1bd4074fc2204b9",
+  "node": "v24.19.0",
+  "typescript": "6.0.3",
+  "reviewed": 18,
+  "removed": 4,
+  "unresolved": 14,
+  "sites": [
+    {
+      "id": "C01",
+      "file": "src/compiler/checker.ts",
+      "scoutLocation": "src/compiler/checker.ts:10950:32",
+      "before": "results as unknown as T[]",
+      "after": "results as unknown as T[]",
+      "action": "unresolved",
+      "reason": "Producer results are function-like declarations; arbitrary T[] is not established. The internal factory/caller correlation must be carried rather than asserted."
+    },
+    {
+      "id": "C02",
+      "file": "src/compiler/checker.ts",
+      "scoutLocation": "src/compiler/checker.ts:49445:40",
+      "before": "paramTag.parent.parent as unknown as JSDocCallbackTag",
+      "after": "paramTag.parent.parent as JSDocCallbackTag",
+      "action": "checked-downcast",
+      "reason": "Single tagged-object downcast, under the existing isJSDocCallbackTag branch. The public parent declarations do not represent this runtime ancestry. Deferred checked-cast obligation, not an upcast."
+    },
+    {
+      "id": "C03",
+      "file": "src/compiler/core.ts",
+      "scoutLocation": "src/compiler/core.ts:736:36",
+      "before": "emptyArray as any as SortedReadonlyArray<T>",
+      "after": "emptyArray as any as SortedReadonlyArray<T>",
+      "action": "unresolved",
+      "reason": "The required sorted phantom brand is never stored. A single cast cannot verify sortedness or materialize the brand. Removing the public brand needs a public API sanction or a producer contract."
+    },
+    {
+      "id": "C04",
+      "file": "src/compiler/core.ts",
+      "scoutLocation": "src/compiler/core.ts:759:12",
+      "before": "deduplicated as any as SortedReadonlyArray<T>",
+      "after": "deduplicated as any as SortedReadonlyArray<T>",
+      "action": "unresolved",
+      "reason": "The required sorted phantom brand is never stored. A single cast cannot verify sortedness or materialize the brand. Removing the public brand needs a public API sanction or a producer contract."
+    },
+    {
+      "id": "C05",
+      "file": "src/compiler/core.ts",
+      "scoutLocation": "src/compiler/core.ts:764:12",
+      "before": "[] as any as SortedArray<T>",
+      "after": "[] as any as SortedArray<T>",
+      "action": "unresolved",
+      "reason": "The required sorted phantom brand is never stored. A single cast cannot verify sortedness or materialize the brand. Removing the public brand needs a public API sanction or a producer contract."
+    },
+    {
+      "id": "C06",
+      "file": "src/compiler/core.ts",
+      "scoutLocation": "src/compiler/core.ts:810:89",
+      "before": "compareStringsCaseSensitive as any as Comparer<T>",
+      "after": "compareStringsCaseSensitive as any as Comparer<T>",
+      "action": "unresolved",
+      "reason": "A string comparator is not a comparator for arbitrary T. A function downcast cannot establish contravariant argument compatibility; callers must supply a comparator or the public generic must be restricted."
+    },
+    {
+      "id": "C07",
+      "file": "src/compiler/debug.ts",
+      "scoutLocation": "src/compiler/debug.ts:849:36",
+      "before": "this.mapper1 as unknown as DebugTypeMapper",
+      "after": "this.mapper1 as TypeMapper & DebugTypeMapper",
+      "action": "checked-downcast",
+      "reason": "Single class view of a TypeMapper whose prototype is dynamically installed by attachDebugPrototypeIfDebug. Deferred checked class/prototype obligation; not a proven unconditional TypeMapper upcast. The intersection retains the actual mapper union while explicitly requesting the class view, rather than lying that the class is itself the mapper union."
+    },
+    {
+      "id": "C08",
+      "file": "src/compiler/debug.ts",
+      "scoutLocation": "src/compiler/debug.ts:850:8",
+      "before": "this.mapper2 as unknown as DebugTypeMapper",
+      "after": "this.mapper2 as TypeMapper & DebugTypeMapper",
+      "action": "checked-downcast",
+      "reason": "Single class view of a TypeMapper whose prototype is dynamically installed by attachDebugPrototypeIfDebug. Deferred checked class/prototype obligation; not a proven unconditional TypeMapper upcast. The intersection retains the actual mapper union while explicitly requesting the class view, rather than lying that the class is itself the mapper union."
+    },
+    {
+      "id": "C09",
+      "file": "src/compiler/program.ts",
+      "scoutLocation": "src/compiler/program.ts:3284:116",
+      "before": "emptyArray as any as SortedReadonlyArray<Diagnostic>",
+      "after": "emptyArray as any as SortedReadonlyArray<Diagnostic>",
+      "action": "unresolved",
+      "reason": "The required sorted phantom brand is never stored. A single cast cannot verify sortedness or materialize the brand. Removing the public brand needs a public API sanction or a producer contract."
+    },
+    {
+      "id": "C10",
+      "file": "src/compiler/transformer.ts",
+      "scoutLocation": "src/compiler/transformer.ts:338:108",
+      "before": "node as any as SourceFile",
+      "after": "node as T & SourceFile",
+      "action": "checked-downcast",
+      "reason": "Single SourceFile downcast under the existing SyntaxKind.SourceFile test. The generic Node/Bundle owner is not unconditionally a SourceFile; retain the checked-cast obligation. The intersection retains the input generic type and explicitly requests its SourceFile refinement."
+    },
+    {
+      "id": "C11",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "scoutLocation": "src/compiler/tsbuildPublic.ts:992:23",
+      "before": "program as any as SemanticDiagnosticsBuilderProgram",
+      "after": "program as any as SemanticDiagnosticsBuilderProgram",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C12",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "scoutLocation": "src/compiler/tsbuildPublic.ts:993:22",
+      "before": "program as any as SemanticDiagnosticsBuilderProgram",
+      "after": "program as any as SemanticDiagnosticsBuilderProgram",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C13",
+      "file": "src/compiler/tsbuildPublic.ts",
+      "scoutLocation": "src/compiler/tsbuildPublic.ts:1355:12",
+      "before": "readBuilderProgram(parsed.options, compilerHost) as any as T",
+      "after": "readBuilderProgram(parsed.options, compilerHost) as any as T",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C14",
+      "file": "src/compiler/watch.ts",
+      "scoutLocation": "src/compiler/watch.ts:862:41",
+      "before": "createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>",
+      "after": "createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C15",
+      "file": "src/compiler/watchPublic.ts",
+      "scoutLocation": "src/compiler/watchPublic.ts:150:38",
+      "before": "createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>",
+      "after": "createEmitAndSemanticDiagnosticsBuilderProgram as any as CreateProgram<T>",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C16",
+      "file": "src/compiler/watchPublic.ts",
+      "scoutLocation": "src/compiler/watchPublic.ts:151:24",
+      "before": "readBuilderProgram(options, host) as any as T",
+      "after": "readBuilderProgram(options, host) as any as T",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C17",
+      "file": "src/compiler/watchPublic.ts",
+      "scoutLocation": "src/compiler/watchPublic.ts:555:22",
+      "before": "readBuilderProgram(compilerOptions, compilerHost) as any as T",
+      "after": "readBuilderProgram(compilerOptions, compilerHost) as any as T",
+      "action": "unresolved",
+      "reason": "The builtin factory/read result cannot satisfy arbitrary caller T. Capability probing also does not establish the entire semantic builder interface; a checked whole-object downcast would change the missing-capability fallback. Public generic contracts must be split or correlated."
+    },
+    {
+      "id": "C18",
+      "file": "src/compiler/watchUtilities.ts",
+      "scoutLocation": "src/compiler/watchUtilities.ts:839:13",
+      "before": "fallbackPolling as unknown as WatchFileKind",
+      "after": "fallbackPolling as unknown as WatchFileKind",
+      "action": "unresolved",
+      "reason": "Different enum declarations happen to share numeric values. An explicit mapping is truthful but emits different JavaScript; changing the public enum/type declaration is outside the sanction."
+    }
+  ],
+  "sourceFiles": 711,
+  "idempotent": true,
+  "LFReconstruction": true,
+  "outputs": {
+    "built/local/_tsc.js": "dab59db4053464359a4461e8111591f15a1d0d737abe752ff4261c8c87ddf95f",
+    "built/local/_tsserver.js": "1992fc3518a4aa5443638a25794281995ec3ce84820692713296262997d5443b",
+    "built/local/_typingsInstaller.js": "71515c1c1aa29c8616309f7dea4d3a32eed662df3a4dbcf4345e7522ece56ac1",
+    "built/local/run.js": "bfa89ce905ad036e9338450b9001ec57bc89dee6611faef2974678c3a7b38412",
+    "built/local/tsc.js": "2cffde0b8c6760dfb0b5b0382bbb7e00ba6a8b2d981b9205b256a700a481d983",
+    "built/local/tsserver.js": "e3ccfeec65ec5c470b8ffc5611878a31182650c7e8a062c38a719f83b523edcb",
+    "built/local/tsserverlibrary.js": "6a0b343fa3a3f53cf198c83a18035c104b6990b2a260272654f9a6b2f2380fdf",
+    "built/local/typescript.d.ts": "edd733bf256465ddcbbd753a76cfe14cf4ef0a872ce5da7aa53072e1c9f93a9d",
+    "built/local/typescript.js": "c608261af17bf4b95fc1527c62ba34eb2c44e3f8f0c6944d045ec61b23fc156c",
+    "built/local/typescript/typescript.d.ts": "40d52e734bd760a03b8b13542c8d9dee58a62304f3569f2a545ad458b926578e",
+    "built/local/typingsInstaller.js": "2d48a038523ea7c626fa2796a30fa5fdc07612ea5fab83544423009d7683a213",
+    "built/local/watchGuard.js": "008f2ceb504ee9b8c5d47054d43033e1ec3f2fef03f18d8aa1b2dd70cba6fc88"
+  },
+  "jsFiles": 10,
+  "apiFiles": [
+    "built/local/typescript.d.ts",
+    "built/local/typescript/typescript.d.ts"
+  ],
+  "lane": {
+    "counts": {
+      "passing": 106366,
+      "failing": 1,
+      "pending": 0
+    },
+    "failed_tests": [
+      "unittests:: Public APIs for typescript.d.ts should be acknowledged when they change"
+    ],
+    "baseline_diffs": [
+      "api/typescript.d.ts"
+    ],
+    "status": "pass"
+  },
+  "checker": {
+    "before": [],
+    "after": [],
+    "mutant": [
+      {
+        "file": "src/compiler/transformer.ts",
+        "code": 2352,
+        "message": "Conversion of type 'T' to type 'string' may be a mistake because neither type sufficiently overlaps with the other. If this was intentional, convert the expression to 'unknown' first.\n  Type 'Node' is not comparable to type 'string'."
+      },
+      {
+        "file": "src/compiler/transformer.ts",
+        "code": 2339,
+        "message": "Property 'path' does not exist on type 'string'."
+      }
+    ]
+  },
+  "mutants": [
+    {
+      "site": "C01",
+      "location": "src/compiler/checker.ts:10950:32",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C02",
+      "location": "src/compiler/checker.ts:49445:40",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C03",
+      "location": "src/compiler/core.ts:736:36",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C04",
+      "location": "src/compiler/core.ts:759:12",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C05",
+      "location": "src/compiler/core.ts:764:12",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C06",
+      "location": "src/compiler/core.ts:810:89",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C07",
+      "location": "src/compiler/debug.ts:849:36",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C08",
+      "location": "src/compiler/debug.ts:850:8",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C09",
+      "location": "src/compiler/program.ts:3284:116",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C10",
+      "location": "src/compiler/transformer.ts:338:108",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C11",
+      "location": "src/compiler/tsbuildPublic.ts:992:23",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C12",
+      "location": "src/compiler/tsbuildPublic.ts:993:22",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C13",
+      "location": "src/compiler/tsbuildPublic.ts:1355:12",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C14",
+      "location": "src/compiler/watch.ts:862:41",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C15",
+      "location": "src/compiler/watchPublic.ts:150:38",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C16",
+      "location": "src/compiler/watchPublic.ts:151:24",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C17",
+      "location": "src/compiler/watchPublic.ts:555:22",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    },
+    {
+      "site": "C18",
+      "location": "src/compiler/watchUtilities.ts:839:13",
+      "mutation": "outer bridge/cast chain replaced by string assertion",
+      "caughtBy": "reviewed AST site multiplicity guard",
+      "exit": 1
+    }
+  ],
+  "artifactMutants": [
+    {
+      "file": "built/local/_tsc.js",
+      "mutation": "append one real artifact byte",
+      "caughtBy": "SHA256 equality"
+    },
+    {
+      "file": "built/local/typescript.d.ts",
+      "mutation": "append one real artifact byte",
+      "caughtBy": "SHA256 equality"
+    }
+  ],
+  "laneCountMutant": "caught",
+  "debugRuntime": [
+    "m1: left\n    continued\nm2: right",
+    "m1: left\n    continued\nm2: right"
+  ],
+  "runtimeMutant": {
+    "mutation": "actual built nested-mapper m1 label changed to m0",
+    "caughtBy": "exact successful debugger output"
+  },
+  "totalMutants": 23
+}
