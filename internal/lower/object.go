@@ -569,8 +569,14 @@ func (l *lowering) property(node *ast.Node) (ir.Expression, error) {
 func (l *lowering) readObjectField(node *ast.Node, property ir.Property) ir.Expression {
 	property.Readiness = sourceExpression(node)
 	property.View = sourceExpression(node)
+	property.ViewWhere = l.program.Where(node)
+	if node.Kind == ast.KindPropertyAccessExpression {
+		property.ViewReceiverTypeID = int(l.checker.GetTypeAtLocation(node.AsPropertyAccessExpression().Expression).Id())
+	}
 	if symbol := l.checker.GetSymbolAtLocation(node.Name()); symbol != nil {
 		declared := l.checker.GetTypeOfSymbol(symbol)
+		property.ViewTypeID = int(declared.Id())
+		property.ViewContract = l.result.ViewContractTypes[property.ViewTypeID]
 		property.ViewType = l.checker.TypeToString(declared)
 		property.ViewAllowed = l.viewLiterals(declared)
 	}
@@ -1390,6 +1396,23 @@ func (l *lowering) arrayVisit(node *ast.Node, array ir.Expression, element ir.Ty
 	signatures := l.checker.GetSignaturesOfType(l.checker.GetTypeAtLocation(arguments[0]), checker.SignatureKindCall)
 	if len(signatures) != 1 {
 		return nil, true, l.notYet(arguments[0], name+" with an overloaded callback")
+	}
+	claim := predicateOfSignature(l.checker, signatures[0])
+	if claim != nil && claim.Type() != nil {
+		if name == "filter" && element == ir.Union {
+			target, known := l.kept(l.concrete(claim.Type()))
+			if known && target != element {
+				return nil, true, l.notYet(node, "filter predicate element representation conversion from boxed union to "+typeName(target)+"; use a loop with an explicit narrowed copy")
+			}
+		}
+		// An undefined result already fits packed optional-number storage.
+		// Heap-backed and boxed sources cannot be reused as that result slot.
+		if name == "find" && !(element == ir.MaybeNumber && claim.Type().Flags()&checker.TypeFlagsUndefined != 0) {
+			result, err := l.typeOf(node)
+			if err != nil || result != ir.Maybe(element) {
+				return nil, true, l.notYet(node, "find predicate result representation conversion from "+typeName(ir.Maybe(element))+" to "+l.checker.TypeToString(l.checker.GetTypeAtLocation(node))+"; use a loop with an explicit narrowed result")
+			}
+		}
 	}
 	var returns ir.Type
 	if result := l.checker.GetReturnTypeOfSignature(signatures[0]); result.Flags()&checker.TypeFlagsVoid == 0 {
