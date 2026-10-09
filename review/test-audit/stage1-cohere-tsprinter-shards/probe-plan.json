@@ -1,0 +1,17 @@
+[
+  {
+    "id": "P1",
+    "file": "stage1/cohere/tsprinter/expressions.ts",
+    "entry": "formatExpression",
+    "family": "TestTSCCorpusAgreement family: expressions"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/tsprinter/files.ts",
+    "entry": "formatFile",
+    "families": [
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family: statements"
+    ]
+  }
+]

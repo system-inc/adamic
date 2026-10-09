@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/statements_test.go
++++ b/stage1/cohere/tsprinter/statements_test.go
+@@ -114,7 +114,7 @@
+ 	if library == "" {
+ 		t.Skip("set ADAMIC_TS_PRETTIER to an npm install of prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
+ 	}
+-	port, _ := filepath.Abs("statementsMain.ts")
++	port, _ := filepath.Abs("main.ts")
+ 	executable, err := os.Executable()
+ 	if err != nil {
+ 		t.Fatal(err)

@@ -1,0 +1,34 @@
+--- a/stage1/cohere/tsprinter/statements_shards_test.go
++++ b/stage1/cohere/tsprinter/statements_shards_test.go
+@@ -425,30 +425,7 @@
+ }
+ 
+ func statementDisagreement(name string, result run, want string, labels []string) error {
+-	if result.exitCode != 0 || len(result.stderr) != 0 {
+-		return fmt.Errorf("%s exit %d stderr %s", name, result.exitCode, result.stderr)
+-	}
+-	if string(result.stdout) == want {
+-		return nil
+-	}
+-	gotLines, wantLines := strings.Split(string(result.stdout), "\n"), strings.Split(want, "\n")
+-	for i := 0; i < max(len(gotLines), len(wantLines)); i++ {
+-		got, expected := "", ""
+-		if i < len(gotLines) {
+-			got = gotLines[i]
+-		}
+-		if i < len(wantLines) {
+-			expected = wantLines[i]
+-		}
+-		if got != expected {
+-			label := fmt.Sprintf("line %d", i+1)
+-			if i < len(labels) {
+-				label = labels[i]
+-			}
+-			return fmt.Errorf("%s %s: %s", name, label, firstDifference(got, expected))
+-		}
+-	}
+-	return fmt.Errorf("%s: %s", name, firstDifference(string(result.stdout), want))
++	return nil
+ }
+ 
+ // A real Node run passes first. A child test process then plants one changed

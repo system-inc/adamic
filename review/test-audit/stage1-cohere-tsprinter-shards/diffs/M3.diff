@@ -1,0 +1,10 @@
+--- a/stage1/cohere/tsprinter/literals.ts
++++ b/stage1/cohere/tsprinter/literals.ts
+@@ -1,6 +1,6 @@
+ // Literal paths through cohere utility_text.go and print_literal.go.
+ export function numberText(raw: string): string {
+-    if(raw.length === 1) {
++    if(raw.length !== 1) {
+         return raw;
+     }
+     let value = raw.toLowerCase();

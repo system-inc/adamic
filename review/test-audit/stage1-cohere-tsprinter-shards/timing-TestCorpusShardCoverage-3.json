@@ -1,0 +1,1 @@
+{"command": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./stage1/cohere/tsprinter/", "-run", "^TestCorpusShardCoverage$"], "seconds_wall": 2.1041715030005435, "exit": 0}

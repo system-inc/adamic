@@ -1,0 +1,1 @@
+{"id": "M4", "command": ["timeout", "120", "go", "test", "-json", "-count=1", "-timeout", "90s", "./stage1/cohere/tsprinter/", "-run", "^TestProduct_TSPrinterExpressions(Sanitized|Release)$"], "exit": 1, "seconds_wall": 4.038234596999246}

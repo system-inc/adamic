@@ -1,0 +1,10 @@
+package tsprinter
+
+import "os"
+
+func auditU141Path(path string) string {
+	if os.Getenv("ADAMIC_MUTANT") == "S5" {
+		return "main.ts"
+	}
+	return path
+}

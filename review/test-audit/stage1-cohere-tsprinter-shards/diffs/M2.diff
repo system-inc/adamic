@@ -1,0 +1,9 @@
+--- a/stage1/cohere/tsprinter/expressions.ts
++++ b/stage1/cohere/tsprinter/expressions.ts
+@@ -1818,5 +1818,5 @@
+     const reason = printer.statementUnsupported(root);
+     if(reason !== '') return { kind: 'NotYet', reason };
+     const printed = docs.print(printer.statementDoc(printer.normalize(root), -1));
+-    return { kind: 'Ok', text: printed === '' ? '' : `${printed}\n` };
++    return { kind: 'Ok', text: printed === '' ? '' : `${printed} ` };
+ }

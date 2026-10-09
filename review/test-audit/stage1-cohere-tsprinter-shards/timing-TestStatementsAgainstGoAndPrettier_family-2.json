@@ -1,0 +1,1 @@
+{"command": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./stage1/cohere/tsprinter/", "-run", "^(TestStatementsAgainstGoAndPrettier_[0-9]{3}|TestStatementsAgainstGoAndPrettierUnion)$"], "seconds_wall": 28.57105487300214, "exit": 0}

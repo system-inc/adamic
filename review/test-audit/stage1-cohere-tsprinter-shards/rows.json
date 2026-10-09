@@ -1,0 +1,611 @@
+[
+  {
+    "test": "TestCorpusShardAssignment",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten largest-first assignment.",
+    "oracle_kind": "self",
+    "kills": [
+      "S1"
+    ],
+    "unique_kills": [
+      "S1"
+    ],
+    "last_proven_fail": "S1: largest-first assignment [[0 4 1] [2 5 3]], want [[1 5 0] [3 4 2]]",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [S1]; command in S1.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; largest-first assignment [[0 4 1] [2 5 3]], want [[1 5 0] [3 4 2]]",
+    "samples": [
+      0.008,
+      0.009,
+      0.01
+    ],
+    "members": [
+      "TestCorpusShardAssignment"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestCorpusShardCoverage",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten missing, extra, and unterminated-answer rejection messages.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W1: error <nil>, want first.ts:0: unterminated answer",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W1]; command in W1.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; error <nil>, want first.ts:0: unterminated answer",
+    "samples": [
+      0.009,
+      0.009,
+      0.008
+    ],
+    "members": [
+      "TestCorpusShardCoverage"
+    ],
+    "witness_kills": [
+      "W1"
+    ]
+  },
+  {
+    "test": "TestCorpusShardTransport",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "seconds": 0.056,
+    "oracle": "Node runs a custom echo child; expected bytes and ordering are handwritten.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "S2"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "S2: transport: exit 0 stderr  diff fixture-00.ts:0: line 1: \"ok\\txxxxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxx\\rok\\txxxxxxxxxxxx\\rok\\txxxxxxxxxxx\\rok\\txxxxxxxxxx\\rok\\txxxxxxxxx\\rok\\txxxxxxxx\\rok\\txxxxxxx\\rok\\txxxxxx\\rok\\txxxxx\\rok\\txxxx\\rok\\txxx\\rok\\txx\\r\", Go cohere \"ok\\txxxxxxxxxxxxxxxxxxxxxxxx\"",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [S2]; command in S2.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; transport: exit 0 stderr  diff fixture-00.ts:0: line 1: \"ok\\txxxxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxxx\\rok\\txxxxxxxxxxxxx\\rok\\txxxxxxxxxxxx\\rok\\txxxxxxxxxxx\\rok\\txxxxxxxxxx\\rok\\txxxxxxxxx\\rok\\txxxxxxxx\\rok\\txxxxxxx\\rok\\txxxxxx\\rok\\txxxxx\\rok\\txxxx\\rok\\txxx\\rok\\txx\\r\", Go cohere \"ok\\txxxxxxxxxxxxxxxxxxxxxxxx\"",
+    "samples": [
+      0.056,
+      0.057,
+      0.056
+    ],
+    "members": [
+      "TestCorpusShardTransport"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestStatementsAgainstGoAndPrettier_Setup",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_printer_units_test.go",
+    "seconds": 2.99,
+    "oracle": "Successful preparation only; S5 returned main.ts as the statement port and this row still passed.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": null,
+    "verdict": "untrue",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [S5]; command in S5.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; S5: setup passed with the wrong returned port path; the statement family caught it.",
+    "samples": [
+      3.025,
+      2.903,
+      2.99
+    ],
+    "members": [
+      "TestStatementsAgainstGoAndPrettier_Setup"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestStatementsShardAssignmentStable",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten stability under corpus growth and duplicate-key rejection.",
+    "oracle_kind": "self",
+    "kills": [
+      "S3"
+    ],
+    "unique_kills": [
+      "S3"
+    ],
+    "last_proven_fail": "S3: repeated stable key accepted",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [S3]; command in S3.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; repeated stable key accepted",
+    "samples": [
+      0.009,
+      0.009,
+      0.009
+    ],
+    "members": [
+      "TestStatementsShardAssignmentStable"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestStatementsShardSelection",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten exact-once selection and invalid-selector rejection.",
+    "oracle_kind": "self",
+    "kills": [
+      "S4"
+    ],
+    "unique_kills": [
+      "S4"
+    ],
+    "last_proven_fail": "S4: 1 boxes: shard-000 selected 0 times",
+    "verdict": "setup-check",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [S4]; command in S4.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; 1 boxes: shard-000 selected 0 times",
+    "samples": [
+      0.009,
+      0.009,
+      0.008
+    ],
+    "members": [
+      "TestStatementsShardSelection"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestStatementsShardDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "seconds": 1.656,
+    "oracle": "Handwritten planted owner, failure count, exit status, and case identity; a positive Node port run is a prerequisite.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W2: See complete failure output in W2.log",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W2]; command in W2.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; See complete failure output in W2.log",
+    "samples": [
+      1.592,
+      1.656,
+      1.658
+    ],
+    "members": [
+      "TestStatementsShardDisagreement"
+    ],
+    "witness_kills": [
+      "W2"
+    ]
+  },
+  {
+    "test": "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "seconds": 0.008,
+    "oracle": "Handwritten rejection of missing, repeated, extra IDs and wrong shard count.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W3: invalid union accepted",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W3]; command in W3.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; invalid union accepted",
+    "samples": [
+      0.01,
+      0.008,
+      0.007
+    ],
+    "members": [
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs"
+    ],
+    "witness_kills": [
+      "W3"
+    ]
+  },
+  {
+    "test": "TestStatementsAgainstGoAndPrettier family",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/statements_printer_units_test.go",
+    "seconds": 26.43,
+    "oracle": "Go cohere supplies expected bytes; npm/embedded Prettier checks exact outcomes with pinned differences. Node port, native, and backend compare against Go. Gap refusal labels are handwritten. Leak checks also run.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M2",
+      "M3",
+      "M4"
+    ],
+    "unique_kills": [
+      "M4"
+    ],
+    "last_proven_fail": "M4: Node case 1039 /workspace/adamic/stage1/cohere/css/parse_value.ts:4888:KindVariableStatement: line 1: \"ok\\tconst variable =\\\\n    scss && tree.maybe(first).type() === 'word' &&\\\\n    tree.maybe(first).string('value').startsWith('$');\\\\n\", Go cohere \"ok\\tconst variable =\\\\n    scss &&\\\\n    tree.maybe(first).type() === 'word' &&\\\\n    tree.maybe(first).string('value').startsWith('$');\\\\n\"",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestStatementsShardDisagreement",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement"
+    ],
+    "evidence": "run-matrix.py [M4]; command in M4.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; Node case 1039 /workspace/adamic/stage1/cohere/css/parse_value.ts:4888:KindVariableStatement: line 1: \"ok\\tconst variable =\\\\n    scss && tree.maybe(first).type() === 'word' &&\\\\n    tree.maybe(first).string('value').startsWith('$');\\\\n\", Go cohere \"ok\\tconst variable =\\\\n    scss &&\\\\n    tree.maybe(first).type() === 'word' &&\\\\n    tree.maybe(first).string('value').startsWith('$');\\\\n\"",
+    "samples": [
+      27.296,
+      26.43,
+      24.199
+    ],
+    "members": [
+      "TestStatementsAgainstGoAndPrettier_000",
+      "TestStatementsAgainstGoAndPrettier_001",
+      "TestStatementsAgainstGoAndPrettier_002",
+      "TestStatementsAgainstGoAndPrettier_003",
+      "TestStatementsAgainstGoAndPrettier_004",
+      "TestStatementsAgainstGoAndPrettier_005",
+      "TestStatementsAgainstGoAndPrettier_006",
+      "TestStatementsAgainstGoAndPrettier_007",
+      "TestStatementsAgainstGoAndPrettier_008",
+      "TestStatementsAgainstGoAndPrettier_009",
+      "TestStatementsAgainstGoAndPrettier_010",
+      "TestStatementsAgainstGoAndPrettier_011",
+      "TestStatementsAgainstGoAndPrettier_012",
+      "TestStatementsAgainstGoAndPrettier_013",
+      "TestStatementsAgainstGoAndPrettier_014",
+      "TestStatementsAgainstGoAndPrettier_015",
+      "TestStatementsAgainstGoAndPrettierUnion"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestTSCCorpusAgreement family",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/tsc_printer_units_test.go",
+    "seconds": 6.137,
+    "oracle": "Go cohere supplies expected bytes. Node port, native, and backend check exact stdout, stderr and exit status; leak checks also run.",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M1",
+      "M2",
+      "M3"
+    ],
+    "unique_kills": [
+      "M1"
+    ],
+    "last_proven_fail": "M3: See complete failure output in M3.log",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 9,
+    "probe_kills": [
+      "P1",
+      "P2"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsAgainstGoAndPrettier_Setup",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestStatementsAgainstGoAndPrettier family",
+      "TestTSCCorpusAgreement family",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [M3]; command in M3.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; See complete failure output in M3.log",
+    "samples": [
+      6.165,
+      6.137,
+      5.835
+    ],
+    "members": [
+      "TestTSCCorpusAgreement_Union",
+      "TestTSCCorpusAgreement_000",
+      "TestTSCCorpusAgreement_001",
+      "TestTSCCorpusAgreement_002",
+      "TestTSCCorpusAgreement_003",
+      "TestTSCCorpusAgreement_004",
+      "TestTSCCorpusAgreement_005",
+      "TestTSCCorpusAgreement_006",
+      "TestTSCCorpusAgreement_007"
+    ],
+    "witness_kills": []
+  },
+  {
+    "test": "TestTSCCorpusAgreement_PlantedDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/tsc_corpus_split_test.go",
+    "seconds": 4.951,
+    "oracle": "Go-derived positive answers plus the handwritten exactly-one-owner planted failure invariant.",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W4: caught by 0 shards, want exactly one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W4]; command in W4.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; caught by 0 shards, want exactly one",
+    "samples": [
+      4.672,
+      4.951,
+      5.034
+    ],
+    "members": [
+      "TestTSCCorpusAgreement_PlantedDisagreement"
+    ],
+    "witness_kills": [
+      "W4"
+    ]
+  },
+  {
+    "test": "TestTSCShardPlantedDisagreement",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/tsc_units_test.go",
+    "seconds": 0.355,
+    "oracle": "Handwritten positive answers and exactly-one-owner planted failure invariant.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W4: planted disagreement caught by 0 shards, want exactly one",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W4]; command in W4.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; planted disagreement caught by 0 shards, want exactly one",
+    "samples": [
+      0.332,
+      0.355,
+      0.367
+    ],
+    "members": [
+      "TestTSCShardPlantedDisagreement"
+    ],
+    "witness_kills": [
+      "W4"
+    ]
+  },
+  {
+    "test": "TestTSCShardUnionRejectsMissingAndRepeated",
+    "package": "stage1/cohere/tsprinter",
+    "file": "stage1/cohere/tsprinter/tsc_units_test.go",
+    "seconds": 0.009,
+    "oracle": "Handwritten rejection of missing and repeated IDs.",
+    "oracle_kind": "self",
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W5: missing id accepted",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 14,
+    "probe_kills": [],
+    "subsumer_seconds": null,
+    "vacuous": null,
+    "bounded": true,
+    "matrix_rows": [
+      "TestCorpusShardAssignment",
+      "TestCorpusShardCoverage",
+      "TestCorpusShardTransport",
+      "TestStatementsShardAssignmentStable",
+      "TestStatementsShardSelection",
+      "TestStatementsShardDisagreement",
+      "TestStatementsShardUnionRejectsMissingAndRepeatedIDs",
+      "TestTSCCorpusAgreement_PlantedDisagreement",
+      "TestTSCShardPlantedDisagreement",
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "evidence": "run-matrix.py [W5]; command in W5.json: timeout 120 go test -json -count=1 -timeout 90s ./stage1/cohere/tsprinter/ -run <recorded selector>; missing id accepted",
+    "samples": [
+      0.009,
+      0.009,
+      0.01
+    ],
+    "members": [
+      "TestTSCShardUnionRejectsMissingAndRepeated"
+    ],
+    "witness_kills": [
+      "W5"
+    ]
+  }
+]

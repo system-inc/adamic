@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/statements_shards_test.go
++++ b/stage1/cohere/tsprinter/statements_shards_test.go
+@@ -384,7 +384,7 @@
+ 	if e1 != nil || e2 != nil || i < 0 || n <= 0 || i >= n {
+ 		return nil, fmt.Errorf("ADAMIC_TEST_SHARD must have 0 <= i < n, got %q", value)
+ 	}
+-	return func(shard int) bool { return shard%n == i }, nil
++	return func(shard int) bool { return shard%n != i }, nil
+ }
+ 
+ func TestStatementsShardSelection(t *testing.T) {

@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/syntax.ts
++++ b/stage1/cohere/tsprinter/syntax.ts
+@@ -92,7 +92,7 @@
+     return -1;
+ }
+ export function flatten(parent: string, child: string): boolean {
+-    if(rank(parent) !== rank(child) || parent === '**') return false;
++    if(rank(parent) !== rank(child) || parent.slice(0) !== '**') return false;
+     if(['==', '!=', '===', '!=='].includes(parent) && ['==', '!=', '===', '!=='].includes(child)) return false;
+     if(['*', '/', '%'].includes(parent) && ['*', '/', '%'].includes(child) && (parent !== child || parent === '%'))
+         return false;

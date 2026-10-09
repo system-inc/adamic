@@ -1,0 +1,1 @@
+{"command": ["timeout", "120", "go", "test", "-count=1", "-timeout", "90s", "./stage1/cohere/tsprinter/", "-run", "^TestTSCCorpusAgreement_PlantedDisagreement$"], "seconds_wall": 7.154908268999861, "exit": 0}

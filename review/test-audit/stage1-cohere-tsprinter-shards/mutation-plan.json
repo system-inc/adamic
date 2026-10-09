@@ -1,0 +1,129 @@
+[
+  {
+    "id": "M1",
+    "file": "stage1/cohere/tsprinter/expressions.ts",
+    "line": 1811,
+    "old": "docs.concat([printed, docs.text(';'), docs.hardline()])",
+    "new": "docs.concat([printed, docs.text(','), docs.hardline()])",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M2",
+    "file": "stage1/cohere/tsprinter/expressions.ts",
+    "line": 1821,
+    "old": "text: printed === '' ? '' : `${printed}\\n`",
+    "new": "text: printed === '' ? '' : `${printed} `",
+    "menu": "change constant",
+    "kind": "production"
+  },
+  {
+    "id": "M3",
+    "file": "stage1/cohere/tsprinter/literals.ts",
+    "line": 3,
+    "old": "if(raw.length === 1)",
+    "new": "if(raw.length !== 1)",
+    "menu": "flip condition",
+    "kind": "production"
+  },
+  {
+    "id": "M4",
+    "file": "stage1/cohere/tsprinter/syntax.ts",
+    "line": 95,
+    "old": "rank(parent) !== rank(child) || parent === '**'",
+    "new": "rank(parent) !== rank(child) || parent.slice(0) !== '**'",
+    "menu": "flip condition",
+    "kind": "production",
+    "compile_repair": "slice(0) is an identity operation that prevents TS2367 from literal narrowing in the standalone condition. No statement inserted."
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "line": 40,
+    "old": "return weights[order[i]] > weights[order[j]]",
+    "new": "return weights[order[i]] < weights[order[j]]",
+    "menu": "flip condition",
+    "kind": "setup"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "line": 168,
+    "old": "result.WriteByte('\\n')",
+    "new": "result.WriteByte('\\r')",
+    "menu": "change constant",
+    "kind": "setup"
+  },
+  {
+    "id": "S3",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "line": 168,
+    "old": "\t\tseen[key] = true",
+    "new": "",
+    "menu": "drop statement",
+    "kind": "setup"
+  },
+  {
+    "id": "S4",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "line": 387,
+    "old": "return shard%n == i",
+    "new": "return shard%n != i",
+    "menu": "flip condition",
+    "kind": "setup"
+  },
+  {
+    "id": "S5",
+    "file": "stage1/cohere/tsprinter/statements_test.go",
+    "line": 117,
+    "old": "filepath.Abs(\"statementsMain.ts\")",
+    "new": "filepath.Abs(\"main.ts\")",
+    "menu": "change constant",
+    "kind": "setup"
+  },
+  {
+    "id": "W1",
+    "file": "stage1/cohere/tsprinter/shards_test.go",
+    "line": 134,
+    "old": "func mergeCorpus(plan *corpusPlan, outputs [][]byte) ([]byte, error) {\n\tif len(outputs) != len(plan.shards) {\n\t\treturn nil, fmt.Errorf(\"corpus: %d shards, want %d\", len(outputs), len(plan.shards))\n\t}\n\tmerged := make([][]byte, len(plan.labels))\n\tfor number, shard := range plan.shards {\n\t\toutput := outputs[number]\n\t\tlines := bytes.Split(bytes.TrimSuffix(output, []byte(\"\\n\")), []byte(\"\\n\"))\n\t\tif len(output) == 0 {\n\t\t\tlines = nil\n\t\t}\n\t\tif len(lines) != len(shard.indices) {\n\t\t\tindex := shard.indices[min(len(lines), len(shard.indices)-1)]\n\t\t\treturn nil, fmt.Errorf(\"shard %d %s: missing or extra case: %d answers, want %d\", number, plan.labels[index], len(lines), len(shard.indices))\n\t\t}\n\t\tif !bytes.HasSuffix(output, []byte(\"\\n\")) {\n\t\t\treturn nil, fmt.Errorf(\"shard %d %s: unterminated answer\", number, plan.labels[shard.indices[len(shard.indices)-1]])\n\t\t}\n\t\tfor i, index := range shard.indices {\n\t\t\tif index < 0 || index >= len(merged) {\n\t\t\t\treturn nil, fmt.Errorf(\"shard %d: extra case %d\", number, index)\n\t\t\t}\n\t\t\tif merged[index] != nil {\n\t\t\t\treturn nil, fmt.Errorf(\"shard %d %s: repeated case\", number, plan.labels[index])\n\t\t\t}\n\t\t\tmerged[index] = lines[i]\n\t\t}\n\t}\n\tvar result bytes.Buffer\n\tfor index, line := range merged {\n\t\tif line == nil {\n\t\t\treturn nil, fmt.Errorf(\"%s: missing case\", plan.labels[index])\n\t\t}\n\t\tresult.Write(line)\n\t\tresult.WriteByte('\\n')\n\t}\n\treturn result.Bytes(), nil\n}",
+    "new": "func mergeCorpus(plan *corpusPlan, outputs [][]byte) ([]byte, error) {\n\treturn nil, nil\n}",
+    "menu": "return early",
+    "kind": "witness"
+  },
+  {
+    "id": "W2",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "line": 427,
+    "old": "func statementDisagreement(name string, result run, want string, labels []string) error {\n\tif result.exitCode != 0 || len(result.stderr) != 0 {\n\t\treturn fmt.Errorf(\"%s exit %d stderr %s\", name, result.exitCode, result.stderr)\n\t}\n\tif string(result.stdout) == want {\n\t\treturn nil\n\t}\n\tgotLines, wantLines := strings.Split(string(result.stdout), \"\\n\"), strings.Split(want, \"\\n\")\n\tfor i := 0; i < max(len(gotLines), len(wantLines)); i++ {\n\t\tgot, expected := \"\", \"\"\n\t\tif i < len(gotLines) {\n\t\t\tgot = gotLines[i]\n\t\t}\n\t\tif i < len(wantLines) {\n\t\t\texpected = wantLines[i]\n\t\t}\n\t\tif got != expected {\n\t\t\tlabel := fmt.Sprintf(\"line %d\", i+1)\n\t\t\tif i < len(labels) {\n\t\t\t\tlabel = labels[i]\n\t\t\t}\n\t\t\treturn fmt.Errorf(\"%s %s: %s\", name, label, firstDifference(got, expected))\n\t\t}\n\t}\n\treturn fmt.Errorf(\"%s: %s\", name, firstDifference(string(result.stdout), want))\n}",
+    "new": "func statementDisagreement(name string, result run, want string, labels []string) error {\n\treturn nil\n}",
+    "menu": "return early",
+    "kind": "witness"
+  },
+  {
+    "id": "W3",
+    "file": "stage1/cohere/tsprinter/statements_shards_test.go",
+    "line": 245,
+    "old": "func statementUnion(count int, shards [][]int) error {\n\tif len(shards) != testStatementsAgainstGoAndPrettierShards {\n\t\treturn fmt.Errorf(\"enumerated %d shards, want %d\", len(shards), testStatementsAgainstGoAndPrettierShards)\n\t}\n\tseen := make([]bool, count)\n\ttotal := 0\n\tfor number, ids := range shards {\n\t\tif len(ids) == 0 {\n\t\t\treturn fmt.Errorf(\"shard-%03d is empty\", number)\n\t\t}\n\t\tfor _, id := range ids {\n\t\t\tif id < 0 || id >= count {\n\t\t\t\treturn fmt.Errorf(\"shard-%03d: extra case ID %d\", number, id)\n\t\t\t}\n\t\t\tif seen[id] {\n\t\t\t\treturn fmt.Errorf(\"shard-%03d: repeated case ID %d\", number, id)\n\t\t\t}\n\t\t\tseen[id] = true\n\t\t\ttotal++\n\t\t}\n\t}\n\tfor id, found := range seen {\n\t\tif !found {\n\t\t\treturn fmt.Errorf(\"missing case ID %d\", id)\n\t\t}\n\t}\n\tif total != count {\n\t\treturn fmt.Errorf(\"union count %d, want %d\", total, count)\n\t}\n\treturn nil\n}",
+    "new": "func statementUnion(count int, shards [][]int) error {\n\treturn nil\n}",
+    "menu": "return early",
+    "kind": "witness"
+  },
+  {
+    "id": "W4",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go",
+    "line": 217,
+    "old": "func expressionDisagreement(plan *corpusPlan, number int, want []byte, result run) error {\n\tif result.exitCode != 0 || len(result.stderr) != 0 {\n\t\treturn fmt.Errorf(\"shard-%03d: exit %d stderr %s\", number, result.exitCode, result.stderr)\n\t}\n\tif bytes.Equal(result.stdout, want) {\n\t\treturn nil\n\t}\n\tactual, expected := bytes.Split(result.stdout, []byte(\"\\n\")), bytes.Split(want, []byte(\"\\n\"))\n\tfor i := 0; i < max(len(actual), len(expected)); i++ {\n\t\tif i < len(actual) && i < len(expected) && bytes.Equal(actual[i], expected[i]) {\n\t\t\tcontinue\n\t\t}\n\t\tlabel := \"answer count\"\n\t\tif i < len(plan.shards[number].indices) {\n\t\t\tlabel = plan.labels[plan.shards[number].indices[i]]\n\t\t}\n\t\treturn fmt.Errorf(\"shard-%03d %s: %s\", number, label, firstDifference(string(result.stdout), string(want)))\n\t}\n\treturn fmt.Errorf(\"shard-%03d: byte disagreement\", number)\n}",
+    "new": "func expressionDisagreement(plan *corpusPlan, number int, want []byte, result run) error {\n\treturn nil\n}",
+    "menu": "return early",
+    "kind": "witness"
+  },
+  {
+    "id": "W5",
+    "file": "stage1/cohere/tsprinter/expression_units_test.go",
+    "line": 186,
+    "old": "func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {\n\t// Position is part of the case id: generated cases may share a label.\n\tseen := make(map[int]bool, len(plan.labels))\n\tcount := 0\n\tfor number, shard := range plan.shards {\n\t\tfor _, id := range shard.indices {\n\t\t\tif id < 0 || id >= len(plan.labels) || seen[id] {\n\t\t\t\treturn fmt.Errorf(\"shard-%03d: missing, extra or repeated case id %d\", number, id)\n\t\t\t}\n\t\t\tseen[id] = true\n\t\t\tcount++\n\t\t}\n\t}\n\tif count != len(plan.labels) {\n\t\treturn fmt.Errorf(\"union: %d case ids, want %d\", count, len(plan.labels))\n\t}\n\tfor id := range plan.labels {\n\t\tif !seen[id] {\n\t\t\treturn fmt.Errorf(\"union: missing case id %d\", id)\n\t\t}\n\t}\n\tmerged, err := mergeCorpus(plan, outputs)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif !bytes.Equal(merged, want) {\n\t\treturn fmt.Errorf(\"union differs from unsplit answers\")\n\t}\n\treturn nil\n}",
+    "new": "func expressionUnion(plan *corpusPlan, outputs [][]byte, want []byte) error {\n\treturn nil\n}",
+    "menu": "return early",
+    "kind": "witness"
+  }
+]

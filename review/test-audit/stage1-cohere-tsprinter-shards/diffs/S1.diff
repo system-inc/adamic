@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/shards_test.go
++++ b/stage1/cohere/tsprinter/shards_test.go
+@@ -37,7 +37,7 @@
+ 	}
+ 	sort.Slice(order, func(i, j int) bool {
+ 		if weights[order[i]] != weights[order[j]] {
+-			return weights[order[i]] > weights[order[j]]
++			return weights[order[i]] < weights[order[j]]
+ 		}
+ 		return order[i] < order[j]
+ 	})

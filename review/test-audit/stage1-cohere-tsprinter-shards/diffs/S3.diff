@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/statements_shards_test.go
++++ b/stage1/cohere/tsprinter/statements_shards_test.go
+@@ -165,7 +165,7 @@
+ 		if seen[key] {
+ 			return nil, fmt.Errorf("repeated stable case key %q", key)
+ 		}
+-		seen[key] = true
++
+ 		digest := sha256.Sum256([]byte(key))
+ 		var value uint64
+ 		for _, b := range digest[:8] {

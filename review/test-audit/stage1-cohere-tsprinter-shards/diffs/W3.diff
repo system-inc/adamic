@@ -1,0 +1,37 @@
+--- a/stage1/cohere/tsprinter/statements_shards_test.go
++++ b/stage1/cohere/tsprinter/statements_shards_test.go
+@@ -243,34 +243,6 @@
+ }
+ 
+ func statementUnion(count int, shards [][]int) error {
+-	if len(shards) != testStatementsAgainstGoAndPrettierShards {
+-		return fmt.Errorf("enumerated %d shards, want %d", len(shards), testStatementsAgainstGoAndPrettierShards)
+-	}
+-	seen := make([]bool, count)
+-	total := 0
+-	for number, ids := range shards {
+-		if len(ids) == 0 {
+-			return fmt.Errorf("shard-%03d is empty", number)
+-		}
+-		for _, id := range ids {
+-			if id < 0 || id >= count {
+-				return fmt.Errorf("shard-%03d: extra case ID %d", number, id)
+-			}
+-			if seen[id] {
+-				return fmt.Errorf("shard-%03d: repeated case ID %d", number, id)
+-			}
+-			seen[id] = true
+-			total++
+-		}
+-	}
+-	for id, found := range seen {
+-		if !found {
+-			return fmt.Errorf("missing case ID %d", id)
+-		}
+-	}
+-	if total != count {
+-		return fmt.Errorf("union count %d, want %d", total, count)
+-	}
+ 	return nil
+ }
+ 

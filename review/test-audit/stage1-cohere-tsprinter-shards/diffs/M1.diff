@@ -1,0 +1,11 @@
+--- a/stage1/cohere/tsprinter/expressions.ts
++++ b/stage1/cohere/tsprinter/expressions.ts
+@@ -1808,7 +1808,7 @@
+             printer.operator(printer.unwrapped(root)) === ',')
+     )
+         printed = docs.concat([docs.text('('), printed, docs.text(')')]);
+-    return { kind: 'Ok', text: docs.print(docs.concat([printed, docs.text(';'), docs.hardline()])) };
++    return { kind: 'Ok', text: docs.print(docs.concat([printed, docs.text(','), docs.hardline()])) };
+ }
+ 
+ export function formatProgram(parser: Parser, source: string, settings: SettingsOptions): ResultType {
