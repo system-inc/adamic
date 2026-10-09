@@ -166,14 +166,14 @@ struct adamic_closure {
 // Module generic adapters carry the declaration identity, while ordinary closures
 // retain allocation identity. Low-bit tagging keeps these domains disjoint.
 static inline uintptr_t adamic_reference_identity(const void *value) {
- if (value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_closure) {
-  size_t source = ((const adamic_closure *)value)->source_identity;
-  if (source != 0) return ((uintptr_t)source << 1) | 1;
- }
- return (uintptr_t)value;
+	if (value != NULL && ((const adamic_heap *)value)->kind == adamic_kind_closure) {
+		size_t source = ((const adamic_closure *)value)->source_identity;
+		if (source != 0) return ((uintptr_t)source << 1) | 1;
+	}
+	return (uintptr_t)value;
 }
 static inline bool adamic_reference_equal(const void *left, const void *right) {
- return adamic_reference_identity(left) == adamic_reference_identity(right);
+	return adamic_reference_identity(left) == adamic_reference_identity(right);
 }
 
 
@@ -549,6 +549,8 @@ typedef struct adamic_map {
 	// reference_keys is keys that are counted references: strings, compared by their text, or, when
 	// string_keys isn't set, objects, arrays, maps and functions, compared by identity, as === does.
 	bool reference_keys;
+	// Only function-capable key types need declaration identity rather than addresses.
+	bool function_keys;
 	// boolean_keys is keys that are booleans, compared and hashed as booleans: a boolean set in an
 	// adamic_value leaves the rest of its bytes unspecified, so it's never read as a number.
 	bool boolean_keys;
@@ -582,6 +584,8 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values);
 // adamic_map_new_identity is a map whose keys are objects, arrays, maps or functions, each its own
 // key, found by identity (map.c).
 adamic_map *adamic_map_new_identity(bool reference_values);
+// Address-only keys cannot contain a function; selected from the static IR type.
+adamic_map *adamic_map_new_addresses(bool reference_values);
 
 // adamic_map_new_booleans is a map whose keys are booleans: true and false, two keys at most.
 adamic_map *adamic_map_new_booleans(bool reference_values);
@@ -696,6 +700,7 @@ enum adamic_equality {
 	adamic_equal_identity,
 	adamic_equal_maybe_numbers,
 	adamic_equal_unions,
+	adamic_equal_addresses,
 };
 double adamic_array_index_of(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero);
 double adamic_array_search_from(const adamic_array *array, adamic_value value, enum adamic_equality equality, bool same_value_zero, double from, bool has_from, bool last);

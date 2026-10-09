@@ -76,12 +76,13 @@ adamic_array *adamic_plain_object_keys(const adamic_object *object) {
 // real JavaScript answer, and a zero count makes them immortal.
 void *adamic_library_identity(size_t index) {
 	static adamic_closure number = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure string = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure boolean = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure object = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure json = {.heap = {0, adamic_kind_object, 0}};
- static adamic_closure array = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure regexp = {.heap = {0, adamic_kind_closure, 0}};
- static adamic_closure *const identities[] = {&number, &string, &boolean, &object, &json, &array, &regexp};
+	static adamic_closure string = {.heap = {0, adamic_kind_closure, 0}};
+	static adamic_closure boolean = {.heap = {0, adamic_kind_closure, 0}};
+	static adamic_closure object = {.heap = {0, adamic_kind_closure, 0}};
+	static const adamic_shape json_shape = {.count = 0};
+	static adamic_object json = {.heap = {0, adamic_kind_object, 0}, .shape = &json_shape};
+	static adamic_closure array = {.heap = {0, adamic_kind_closure, 0}};
+	static adamic_closure regexp = {.heap = {0, adamic_kind_closure, 0}};
+	static void *const identities[] = {&number, &string, &boolean, &object, &json, &array, &regexp};
 	return identities[index];
 }

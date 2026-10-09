@@ -16,7 +16,10 @@ func newMap(key ir.Type, referenceValues bool) string {
 		return fmt.Sprintf("adamic_map_new_booleans(%t)", referenceValues)
 	}
 	if key.IsReference() && key != ir.String {
-		return fmt.Sprintf("adamic_map_new_identity(%t)", referenceValues)
+		if key == ir.Closure || key == ir.Union {
+			return fmt.Sprintf("adamic_map_new_identity(%t)", referenceValues)
+		}
+		return fmt.Sprintf("adamic_map_new_addresses(%t)", referenceValues)
 	}
 	return fmt.Sprintf("adamic_map_new(%t, %t)", key == ir.String, referenceValues)
 }

@@ -208,8 +208,10 @@ func equality(element ir.Type) string {
 		return "adamic_equal_unions"
 	case ir.MaybeNumber:
 		return "adamic_equal_maybe_numbers"
+	case ir.Closure:
+		return "adamic_equal_identity"
 	}
-	return "adamic_equal_identity"
+	return "adamic_equal_addresses"
 }
 
 // joinKind tells the runtime how join writes an element.

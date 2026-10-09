@@ -31,6 +31,7 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->buckets = NULL;
 	map->string_keys = string_keys;
 	map->reference_keys = string_keys;
+	map->function_keys = false;
 	map->boolean_keys = false;
 	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
@@ -51,6 +52,13 @@ adamic_map *adamic_map_new_maybe_numbers(bool reference_values) {
 }
 
 adamic_map *adamic_map_new_identity(bool reference_values) {
+	adamic_map *map = adamic_map_new(false, reference_values);
+	map->reference_keys = true;
+	map->function_keys = true;
+	return map;
+}
+
+adamic_map *adamic_map_new_addresses(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->reference_keys = true;
 	return map;
@@ -79,7 +87,7 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 	}
 	if (map->reference_keys) {
 		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
-		uint64_t bits = (uint64_t)adamic_reference_identity(key.reference);
+		uint64_t bits = (uint64_t)(map->function_keys ? adamic_reference_identity(key.reference) : (uintptr_t)key.reference);
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
 	return adamic_map_number_hash(key.number);
@@ -96,7 +104,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
-		return adamic_reference_equal(left.reference, right.reference);
+		return map->function_keys ? adamic_reference_equal(left.reference, right.reference) : left.reference == right.reference;
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }
@@ -107,6 +115,17 @@ static size_t find(const adamic_map *map, adamic_value key) {
 		return SIZE_MAX;
 	}
 	size_t mask = map->bucket_count - 1;
+	// This static-key case needs neither heap kind loads nor per-collision mode checks.
+	if (map->reference_keys && !map->string_keys && !map->function_keys) {
+		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
+		uint64_t hash = (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
+		for (size_t bucket = hash & mask;; bucket = (bucket + 1) & mask) {
+			size_t slot = map->buckets[bucket];
+			if (slot == 0) return SIZE_MAX;
+			const adamic_map_entry *entry = &map->entries[slot - 1];
+			if (!entry->deleted && entry->key.reference == key.reference) return slot - 1;
+		}
+	}
 	for (size_t bucket = hash_key(map, key) & mask;; bucket = (bucket + 1) & mask) {
 		size_t slot = map->buckets[bucket];
 		if (slot == 0) {

@@ -238,6 +238,9 @@ double adamic_array_index_of(const adamic_array *array, adamic_value value, enum
 			}
 			break;
 		}
+		case adamic_equal_addresses:
+			equal = element.reference == value.reference;
+			break;
 		case adamic_equal_identity:
 			equal = adamic_reference_equal(element.reference, value.reference);
 			break;

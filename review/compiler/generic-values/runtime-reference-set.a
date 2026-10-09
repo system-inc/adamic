@@ -1,0 +1,14 @@
+// Scaled object-key membership from set_foreach_objects.a; no function keys.
+interface Box { readonly label: number; }
+const keys: Box[] = [];
+const collection = new Set<Box>();
+for (let index = 0; index < 1024; index += 1) {
+ const key: Box = { label: index };
+ keys.push(key);
+ collection.add(key);
+}
+let hits = 0;
+for (let pass = 0; pass < 30000; pass += 1) {
+ for (const key of keys) { if (collection.has(key)) { hits += 1; } }
+}
+console.log(`${hits}`);

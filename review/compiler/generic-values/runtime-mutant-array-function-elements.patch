@@ -1,0 +1,11 @@
+--- a/internal/native/emit_arrays.go
++++ b/internal/native/emit_arrays.go
+@@ -209,7 +209,7 @@
+ 	case ir.MaybeNumber:
+ 		return "adamic_equal_maybe_numbers"
+ 	case ir.Closure:
+-		return "adamic_equal_identity"
++		return "adamic_equal_addresses"
+ 	}
+ 	return "adamic_equal_addresses"
+ }

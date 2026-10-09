@@ -1,0 +1,11 @@
+--- a/internal/native/emit_maps.go
++++ b/internal/native/emit_maps.go
+@@ -16,7 +16,7 @@
+ 		return fmt.Sprintf("adamic_map_new_booleans(%t)", referenceValues)
+ 	}
+ 	if key.IsReference() && key != ir.String {
+-		if key == ir.Closure || key == ir.Union {
++		if false {
+ 			return fmt.Sprintf("adamic_map_new_identity(%t)", referenceValues)
+ 		}
+ 		return fmt.Sprintf("adamic_map_new_addresses(%t)", referenceValues)

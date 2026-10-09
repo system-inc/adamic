@@ -1,0 +1,6 @@
+function make(value: number): () => number { return () => value; }
+const closures: (() => number)[] = [];
+for (let index = 0; index < 20000; index += 1) { closures.push(make(index)); }
+let total = 0;
+for (const closure of closures) { total += closure(); }
+console.log(`${total}`);
