@@ -1,0 +1,14 @@
+--- FAIL: TestMethodDestructuringSafety (0.25s)
+    --- FAIL: TestMethodDestructuringSafety/arrow_receiver (0.05s)
+        method_destructuring_test.go:27: receiver or prototype origin was erased
+    --- FAIL: TestMethodDestructuringSafety/default_receiver (0.03s)
+        method_destructuring_test.go:27: receiver or prototype origin was erased
+    --- FAIL: TestMethodDestructuringSafety/explicit_receiver (0.04s)
+        method_destructuring_test.go:27: receiver or prototype origin was erased
+    --- FAIL: TestMethodDestructuringSafety/structural_receiver (0.03s)
+        method_destructuring_test.go:27: receiver or prototype origin was erased
+    --- FAIL: TestMethodDestructuringSafety/receiver (0.03s)
+        method_destructuring_test.go:27: receiver or prototype origin was erased
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.262s
+FAIL

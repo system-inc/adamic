@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/hidden-04/replay_check.py", line 37, in <module>
+    record, _ = run('caller-selected', caller, 0)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/workspace/adamic/stage3/hidden-04/replay_check.py", line 30, in run
+    assert result.returncode == expected, (name, result.returncode, lines[1:])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('caller-selected', 1, ['replay load/register/lower: 237.399127ms', 'replay attempt mismatch: requested /tmp/hidden-04-selector-mutant-final/source/caller.a:2:1, selected /tmp/hidden-04-selector-mutant-final/source/caller.a:3:1'])

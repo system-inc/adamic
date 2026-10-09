@@ -1,0 +1,12 @@
+[
+  {
+    "mutant": "drop-kind-check",
+    "caught": true,
+    "exit": 1
+  },
+  {
+    "mutant": "drop-value-check",
+    "caught": true,
+    "exit": 1
+  }
+]

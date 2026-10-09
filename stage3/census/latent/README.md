@@ -231,3 +231,23 @@ assertion. Run the positive test with `LATENT_REPLAY_MUTANT_PARENT_SIBLING=1` to
 prove that the equality/reproduction check itself fails under that mutant.
 
 [Replay validation and three real-project timings](replay/REPORT.md) compare the command with the 10,551-attempt full entry census.
+
+When the recorded caller differs from the diagnostic's declaration, add
+`-attempt /path/to/caller.a:LINE:COLUMN`. This must name the caller unit's exact
+header position. It changes only the selected attempt: the diagnostic's location,
+kind and reason still have to match an actual lowering finding exactly. A sibling,
+wrong reason or position merely inside the caller cannot count as reproduction.
+`review/compiler/hidden-boundaries-main/step3/historical-optional-array/replay_check.py WORKER NEW_OUTPUT_DIRECTORY` checks these cases;
+the existing sibling-selection mutant must fail its positive caller assertion.
+
+For a hash-pinned hidden interval, the guarded worker also accepts
+`-project PROJECT -region-file FILE -region-start BYTE -region-end BYTE`.
+This separate mode retains the complete project but attempts only declarations
+overlapping that UTF-8 half-open interval, including enclosing declarations and
+checker-skipped bodies. It writes a labelled partial ledger and does not assert
+diagnostic reproduction. Use the stock AST to verify the overlapping-unit roster;
+apply the existing hidden-census arithmetic and clip its result to the interval.
+Totals outside that interval, and whole-file or whole-corpus totals, are invalid
+for this partial ledger. The ordinary full census and diagnostic replay modes are
+unchanged. [Historical hidden 04 evidence](../../../review/compiler/hidden-boundaries-main/step3/historical-optional-array/REPORT.md) verifies this clipping
+against the original full-census result before comparing the current compiler.

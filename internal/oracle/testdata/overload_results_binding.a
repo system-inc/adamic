@@ -1,0 +1,14 @@
+// Reduced generic parameter boundary from transformers/declarations.ts.
+interface Node { readonly kind: string; readonly text: string; }
+interface BindingElement extends Node { readonly kind: 'binding'; }
+interface OmittedExpression extends Node { readonly kind: 'omitted'; }
+type ArrayBindingElement = BindingElement | OmittedExpression;
+function visitBindingElement<T extends Node>(elem: T): T;
+function visitBindingElement(elem: ArrayBindingElement): ArrayBindingElement {
+ if (elem.kind === 'omitted') { return elem; }
+ return { kind: 'binding', text: elem.text + ':visited' };
+}
+const binding: BindingElement = { kind: 'binding', text: 'name' };
+const omitted: OmittedExpression = { kind: 'omitted', text: 'empty' };
+console.log(`${visitBindingElement(binding).text}`);
+console.log(`${visitBindingElement(omitted) === omitted}`);

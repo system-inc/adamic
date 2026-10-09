@@ -1,0 +1,6 @@
+function overwrite<T extends (number | string)[]>(items: T | undefined): void {
+    if (items !== undefined) { items.push(7); }
+}
+const strings = ["text"];
+overwrite(strings);
+console.log(strings.join("|"));

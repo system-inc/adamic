@@ -1,0 +1,3877 @@
+{
+  "main": "68db8ddd145281a62655452496bdc32ef848bdf3",
+  "stack": "f742bb83173dcd151abb8f4513985693112c1ea8",
+  "source_pin": "388096e6a83a4e9d287fb827f793c599ba1bf0ad",
+  "adapted_files_verified": 82,
+  "scope": "Ten assigned disjoint hidden intervals only; complete project loaded and registered. Not a whole-corpus total.",
+  "regions": [
+    {
+      "label": "hidden-01-large",
+      "file": "transformers/declarations.ts",
+      "start": 68180,
+      "end": 81805,
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "main": {
+        "hidden_bytes": 13625,
+        "hidden_ranges": [
+          [
+            68180,
+            81805
+          ]
+        ],
+        "units": [
+          "transformers/declarations.ts:1387:5",
+          "transformers/declarations.ts:259:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:328:14",
+            "kind": "NotYet",
+            "reason": "a boolean | undefined variable a function value captures",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10357:40",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:389:74",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:429:36",
+            "kind": "NotYet",
+            "reason": "a call through ?. (an optional call)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:431:13",
+            "kind": "NotYet",
+            "reason": "reading primaryDeclaration",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:558:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:565:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:572:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:477:51",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:196:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:491:137",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:499:32",
+            "kind": "NotYet",
+            "reason": "reading newFile",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:503:106",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/path.ts:278:1",
+            "kind": "Refused",
+            "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:507:65",
+            "kind": "NotYet",
+            "reason": "reading outputFilePath",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:524:39",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:535:112",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:537:79",
+            "kind": "NotYet",
+            "reason": "iterating a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:619:54",
+            "kind": "Refused",
+            "reason": "overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "85f061b01b449dba9aa71e8b1c05d7bf85430ef65599364f0eba0bf59b324e4c"
+      },
+      "stack": {
+        "hidden_bytes": 13625,
+        "hidden_ranges": [
+          [
+            68180,
+            81805
+          ]
+        ],
+        "units": [
+          "transformers/declarations.ts:1387:5",
+          "transformers/declarations.ts:259:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:328:14",
+            "kind": "NotYet",
+            "reason": "a boolean | undefined variable a function value captures",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10357:40",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:389:74",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:429:36",
+            "kind": "NotYet",
+            "reason": "a call through ?. (an optional call)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:431:13",
+            "kind": "NotYet",
+            "reason": "reading primaryDeclaration",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:558:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:565:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:572:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:477:51",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:194:1",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:491:137",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:499:32",
+            "kind": "NotYet",
+            "reason": "reading newFile",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:503:106",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/path.ts:278:1",
+            "kind": "Refused",
+            "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string at result; result covariance requires string to fit Path",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:507:65",
+            "kind": "NotYet",
+            "reason": "reading outputFilePath",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:524:39",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:535:112",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:537:79",
+            "kind": "NotYet",
+            "reason": "iterating a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:612:90",
+            "kind": "NotYet",
+            "reason": "an indirect value of an overload requiring a checked implementation boundary",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "4c0d4a5cd8dc9fa8fc1b88527bb00d08311197c6db8158d0361d7b6b9fcf0dc2"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-01-small",
+      "file": "transformers/declarations.ts",
+      "start": 82928,
+      "end": 89827,
+      "sha256": "3b69b0e68abb0f4a0745d5dd45651f43c9c336fe5b72883fe8d4dde1f6c4d6ed",
+      "main": {
+        "hidden_bytes": 6899,
+        "hidden_ranges": [
+          [
+            82928,
+            89827
+          ]
+        ],
+        "units": [
+          "transformers/declarations.ts:1387:5",
+          "transformers/declarations.ts:259:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:328:14",
+            "kind": "NotYet",
+            "reason": "a boolean | undefined variable a function value captures",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10357:40",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:389:74",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:429:36",
+            "kind": "NotYet",
+            "reason": "a call through ?. (an optional call)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:431:13",
+            "kind": "NotYet",
+            "reason": "reading primaryDeclaration",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:558:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:565:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:572:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:477:51",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:196:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes parameter visitor cannot be served by implementation parameter visitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:491:137",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:499:32",
+            "kind": "NotYet",
+            "reason": "reading newFile",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:503:106",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/path.ts:278:1",
+            "kind": "Refused",
+            "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:507:65",
+            "kind": "NotYet",
+            "reason": "reading outputFilePath",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:524:39",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:535:112",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:537:79",
+            "kind": "NotYet",
+            "reason": "iterating a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:619:54",
+            "kind": "Refused",
+            "reason": "overload 1 of visitBindingElement parameter elem cannot be served by implementation parameter elem",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "476f3987cad97b5329813999e3af4109c2514bcf4c3e7b920366d6079e1c7ba0"
+      },
+      "stack": {
+        "hidden_bytes": 6899,
+        "hidden_ranges": [
+          [
+            82928,
+            89827
+          ]
+        ],
+        "units": [
+          "transformers/declarations.ts:1387:5",
+          "transformers/declarations.ts:259:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:328:14",
+            "kind": "NotYet",
+            "reason": "a boolean | undefined variable a function value captures",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10357:40",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:389:74",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:429:36",
+            "kind": "NotYet",
+            "reason": "a call through ?. (an optional call)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:431:13",
+            "kind": "NotYet",
+            "reason": "reading primaryDeclaration",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:558:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:565:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:572:22",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:477:51",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:194:1",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:491:137",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:499:32",
+            "kind": "NotYet",
+            "reason": "reading newFile",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:503:106",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/path.ts:278:1",
+            "kind": "Refused",
+            "reason": "overload 1 of getDirectoryPath result Path cannot be served by implementation result string at result; result covariance requires string to fit Path",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:507:65",
+            "kind": "NotYet",
+            "reason": "reading outputFilePath",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:524:39",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:535:112",
+            "kind": "NotYet",
+            "reason": "reading statements",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:537:79",
+            "kind": "NotYet",
+            "reason": "iterating a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:259:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/declarations.ts:612:90",
+            "kind": "NotYet",
+            "reason": "an indirect value of an overload requiring a checked implementation boundary",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "49246fb595eb69f8ef84afba39f171f3c4e6ea1aea986d3ca04be524ab07adfc"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-05-large",
+      "file": "transformers/es2018.ts",
+      "start": 35690,
+      "end": 41768,
+      "sha256": "85b478ff113c6dfa39fd489f0c81c654ceb24a0ee8ef82592c16264301ef7b88",
+      "main": {
+        "hidden_bytes": 5583,
+        "hidden_ranges": [
+          [
+            35690,
+            36087
+          ],
+          [
+            36483,
+            36992
+          ],
+          [
+            37091,
+            41768
+          ]
+        ],
+        "units": [
+          "transformers/es2018.ts:154:1",
+          "transformers/es2018.ts:827:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1220:5",
+            "kind": "Refused",
+            "reason": "overload 1 of transformFunctionBody result Block cannot be served by implementation result ConciseBody",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:123:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:829:39",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:830:37",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:836:79",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:837:94",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:838:64",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:839:65",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:840:73",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:847:105",
+            "kind": "NotYet",
+            "reason": "reading callValues",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:857:80",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:876:25",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:881:21",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "5fe26abebf1a4711e14e91c3bfd74847effeb5c5a3178bc85d09e4247831c31d"
+      },
+      "stack": {
+        "hidden_bytes": 5583,
+        "hidden_ranges": [
+          [
+            35690,
+            36087
+          ],
+          [
+            36483,
+            36992
+          ],
+          [
+            37091,
+            41768
+          ]
+        ],
+        "units": [
+          "transformers/es2018.ts:154:1",
+          "transformers/es2018.ts:827:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:587:119",
+            "kind": "Refused",
+            "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:374:21",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:123:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:424:87",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:535:17",
+            "kind": "Refused",
+            "reason": "inherited library member unshift read as an own field",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:578:49",
+            "kind": "NotYet",
+            "reason": "reading visited",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:580:16",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:632:29",
+            "kind": "NotYet",
+            "reason": "an ElementAccessExpression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:634:27",
+            "kind": "NotYet",
+            "reason": "reading visited",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:654:17",
+            "kind": "NotYet",
+            "reason": "assigning to an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:662:17",
+            "kind": "NotYet",
+            "reason": "reading block",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:674:20",
+            "kind": "NotYet",
+            "reason": "reading visited",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:741:16",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:745:42",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:746:39",
+            "kind": "NotYet",
+            "reason": "reading initializerWithoutParens",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:987:34",
+            "kind": "NotYet",
+            "reason": "slice with an index that isn't a number",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:988:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:989:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:991:9",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:829:39",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:830:37",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:836:79",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:837:94",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:838:64",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:839:65",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:840:73",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:847:105",
+            "kind": "NotYet",
+            "reason": "reading callValues",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:857:80",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:876:25",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:881:21",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/debug.ts:189:13",
+            "kind": "NotYet",
+            "reason": "assigning an element of a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/debug.ts:190:14",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/debug.ts:301:48",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:947:13",
+            "kind": "NotYet",
+            "reason": "a call through ?. (an optional call)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:976:33",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:393:126",
+            "kind": "Refused",
+            "reason": "overload 1 of visitParameterList parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1000:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1018:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1035:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:194:1",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1064:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1092:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1111:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1139:16",
+            "kind": "NotYet",
+            "reason": "reading updated",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1148:33",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1170:35",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1175:9",
+            "kind": "NotYet",
+            "reason": "assigning to an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1184:21",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:1125:34",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1202:30",
+            "kind": "NotYet",
+            "reason": "reading returnStatement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1227:21",
+            "kind": "NotYet",
+            "reason": "reading body",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1234:69",
+            "kind": "NotYet",
+            "reason": "reading body",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1236:34",
+            "kind": "Refused",
+            "reason": "inherited library member slice read as an own field",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1237:40",
+            "kind": "NotYet",
+            "reason": "reading block",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1239:16",
+            "kind": "NotYet",
+            "reason": "reading body",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1244:33",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:154:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:1445:24",
+            "kind": "NotYet",
+            "reason": "iterating a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:123:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:829:39",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:830:37",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:836:79",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:837:94",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:838:64",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:839:65",
+            "kind": "NotYet",
+            "reason": "reading result",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:840:73",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:847:105",
+            "kind": "NotYet",
+            "reason": "reading callValues",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:857:80",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:876:25",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:827:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2018.ts:881:21",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "10e3c260f56a13620b75e402cd58914765bb687f848f814a8032ae0a2c5c6113"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-05-small",
+      "file": "transformers/es2015.ts",
+      "start": 144178,
+      "end": 149926,
+      "sha256": "81b6bd05f9558a566421b15eff0b98c3fc21ca288f951439e13035fb077366b4",
+      "main": {
+        "hidden_bytes": 5420,
+        "hidden_ranges": [
+          [
+            144178,
+            144610
+          ],
+          [
+            144839,
+            145083
+          ],
+          [
+            145182,
+            149926
+          ]
+        ],
+        "units": [
+          "transformers/es2015.ts:3192:5",
+          "transformers/es2015.ts:488:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:488:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:825:14",
+            "kind": "NotYet",
+            "reason": "a function returning CapturedThis",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:123:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3194:22",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3195:39",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3196:37",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3200:70",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3201:90",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3208:107",
+            "kind": "NotYet",
+            "reason": "reading values",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3217:80",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3240:21",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "4cf085deca750b5cfd5070dcf1938b8a81d217c15849c488c2e4544bc41fc79f"
+      },
+      "stack": {
+        "hidden_bytes": 5420,
+        "hidden_ranges": [
+          [
+            144178,
+            144610
+          ],
+          [
+            144839,
+            145083
+          ],
+          [
+            145182,
+            149926
+          ]
+        ],
+        "units": [
+          "transformers/es2015.ts:3192:5",
+          "transformers/es2015.ts:488:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:488:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:825:14",
+            "kind": "NotYet",
+            "reason": "a function returning CapturedThis",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:123:5",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNode parameter node cannot be served by implementation parameter node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3194:22",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3195:39",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3196:37",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3200:70",
+            "kind": "NotYet",
+            "reason": "reading expression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3201:90",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3208:107",
+            "kind": "NotYet",
+            "reason": "reading values",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3217:80",
+            "kind": "NotYet",
+            "reason": "reading iterator",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3192:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2015.ts:3240:21",
+            "kind": "NotYet",
+            "reason": "reading forStatement",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "4cf085deca750b5cfd5070dcf1938b8a81d217c15849c488c2e4544bc41fc79f"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-06",
+      "file": "transformers/esDecorators.ts",
+      "start": 61324,
+      "end": 72741,
+      "sha256": "3d77006c23ed173fb28a1399b0404a6cf51fe9976993747a22fb14d8a6059633",
+      "main": {
+        "hidden_bytes": 11417,
+        "hidden_ranges": [
+          [
+            61324,
+            72741
+          ]
+        ],
+        "units": [
+          "transformers/esDecorators.ts:1236:5",
+          "transformers/esDecorators.ts:295:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:670:14",
+            "kind": "NotYet",
+            "reason": "a function returning ImmediatelyInvokedArrowFunction",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1239:9",
+            "kind": "NotYet",
+            "reason": "a value of type TNode",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "aa8015a632d2f46d693378fb0c1c5b06df9f1588b63dfff096884e174aad9d9e"
+      },
+      "stack": {
+        "hidden_bytes": 1020,
+        "hidden_ranges": [
+          [
+            61665,
+            61755
+          ],
+          [
+            61858,
+            61958
+          ],
+          [
+            62407,
+            62493
+          ],
+          [
+            62902,
+            62952
+          ],
+          [
+            65225,
+            65317
+          ],
+          [
+            69170,
+            69305
+          ],
+          [
+            72267,
+            72734
+          ]
+        ],
+        "units": [
+          "transformers/esDecorators.ts:1236:5",
+          "transformers/esDecorators.ts:295:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:295:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:670:14",
+            "kind": "NotYet",
+            "reason": "a function returning ImmediatelyInvokedArrowFunction",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:194:1",
+            "kind": "Refused",
+            "reason": "overload 1 of visitNodes result NodeArray<TOut> | (TInArray & undefined) cannot be served by implementation result NodeArray<Node> | undefined at result; result covariance requires undefined to fit NodeArray<TOut> | (TInArray & undefined)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1254:22",
+            "kind": "NotYet",
+            "reason": "reading modifiers",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1268:39",
+            "kind": "NotYet",
+            "reason": "a Map whose keys aren't strings, numbers, booleans, objects, arrays, maps or functions",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1308:22",
+            "kind": "NotYet",
+            "reason": "assigning to an ObjectLiteralExpression",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/debug.ts:251:45",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1401:19",
+            "kind": "NotYet",
+            "reason": "reading modifiers",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1236:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/esDecorators.ts:1407:18",
+            "kind": "NotYet",
+            "reason": "reading modifiers",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "354c72d9a0738ad69245b2ff931ed01a7043fcd791b6e7db60a62a3e5998e151"
+      },
+      "net_revealed_bytes": 10397,
+      "revealed_ranges": [
+        [
+          61324,
+          61665
+        ],
+        [
+          61755,
+          61858
+        ],
+        [
+          61958,
+          62407
+        ],
+        [
+          62493,
+          62902
+        ],
+        [
+          62952,
+          65225
+        ],
+        [
+          65317,
+          69170
+        ],
+        [
+          69305,
+          72267
+        ],
+        [
+          72734,
+          72741
+        ]
+      ],
+      "revealed_bytes": 10397,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-13",
+      "file": "transformers/es2017.ts",
+      "start": 30237,
+      "end": 37526,
+      "sha256": "a5ad5e9213c7af3f4f266f50553cdfc4e31296cbe54fe8464d6a792e4d2f2755",
+      "main": {
+        "hidden_bytes": 7289,
+        "hidden_ranges": [
+          [
+            30237,
+            37526
+          ]
+        ],
+        "units": [
+          "transformers/es2017.ts:119:1",
+          "transformers/es2017.ts:736:5",
+          "transformers/es2017.ts:737:5",
+          "transformers/es2017.ts:738:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "kind": "Refused",
+            "reason": "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "kind": "Refused",
+            "reason": "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "kind": "Refused",
+            "reason": "overload 1 of transformAsyncFunctionBody result Block cannot be served by implementation result ConciseBody",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "a5011c00645d0cf1e124e9067b184a2098495b0396f732f9eb1ba816c080ac1b"
+      },
+      "stack": {
+        "hidden_bytes": 6965,
+        "hidden_ranges": [
+          [
+            30561,
+            37526
+          ]
+        ],
+        "units": [
+          "transformers/es2017.ts:119:1",
+          "transformers/es2017.ts:736:5",
+          "transformers/es2017.ts:737:5",
+          "transformers/es2017.ts:738:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:587:119",
+            "kind": "Refused",
+            "reason": "overload 2 of visitEachChild parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:176:24",
+            "kind": "NotYet",
+            "reason": "reading visited",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:177:16",
+            "kind": "NotYet",
+            "reason": "reading visited",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:259:21",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/debug.ts:273:33",
+            "kind": "NotYet",
+            "reason": "a value of type never",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:119:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:316:5",
+            "kind": "SkippedDependency",
+            "reason": "a dependency function whose body has checker diagnostics (measurement skipped)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:393:126",
+            "kind": "Refused",
+            "reason": "overload 1 of visitParameterList parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:774:16",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:777:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:754:13",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:786:43",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:787:33",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:794:39",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:800:58",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:801:9",
+            "kind": "NotYet",
+            "reason": "assigning to an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:812:25",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:1125:34",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:736:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:855:17",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/visitorPublic.ts:393:126",
+            "kind": "Refused",
+            "reason": "overload 1 of visitParameterList parameter nodesVisitor cannot be served by implementation parameter nodesVisitor",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:774:16",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:777:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:754:13",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:786:43",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:787:33",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:794:39",
+            "kind": "NotYet",
+            "reason": "a Set of __String (a Set holds strings, numbers, booleans, objects, arrays, maps or functions so far)",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:800:58",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:801:9",
+            "kind": "NotYet",
+            "reason": "assigning to an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:812:25",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:1125:34",
+            "kind": "NotYet",
+            "reason": "a SpreadElement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10655:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:10645:6",
+            "kind": "Refused",
+            "reason": "a value of type T seen as TextRange, whose readonly field pos becomes writable: a readonly field may hold something narrower than number, which a write of number would replace",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:737:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/transformers/es2017.ts:855:17",
+            "kind": "NotYet",
+            "reason": "reading innerParameters",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "91d41fd50007b0012851f213d4f128cc5751fe70f542dea5d799d48e01205cd8"
+      },
+      "net_revealed_bytes": 324,
+      "revealed_ranges": [
+        [
+          30237,
+          30561
+        ]
+      ],
+      "revealed_bytes": 324,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-14",
+      "file": "utilities.ts",
+      "start": 455532,
+      "end": 462634,
+      "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "main": {
+        "hidden_bytes": 7102,
+        "hidden_ranges": [
+          [
+            455532,
+            462634
+          ]
+        ],
+        "units": [
+          "utilities.ts:11316:1",
+          "utilities.ts:11322:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:35",
+            "kind": "Refused",
+            "reason": "a method in object destructuring",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11322:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11320:5",
+            "kind": "Refused",
+            "reason": "overload 1 of evaluate result EvaluatorResult<string | undefined> cannot be served by implementation result EvaluatorResult<string | number | undefined>",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "c3c1e4d43ab70615846f214e664bd0d6e4a7eaab8feea938e7f2a532be394e0a"
+      },
+      "stack": {
+        "hidden_bytes": 5008,
+        "hidden_ranges": [
+          [
+            455663,
+            456560
+          ],
+          [
+            456871,
+            457602
+          ],
+          [
+            458210,
+            461483
+          ],
+          [
+            461628,
+            461735
+          ]
+        ],
+        "units": [
+          "utilities.ts:11316:1",
+          "utilities.ts:11322:5"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:5041:1",
+            "kind": "Refused",
+            "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node at result._expressionBrand; required field is absent from Node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11344:28",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11361:28",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11406:41",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11316:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11428:28",
+            "kind": "NotYet",
+            "reason": "for...of over an object",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11322:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:5041:1",
+            "kind": "Refused",
+            "reason": "overload 1 of skipParentheses result Expression cannot be served by implementation result Node at result._expressionBrand; required field is absent from Node",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11322:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11344:28",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11322:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11361:28",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11322:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:11406:41",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "9972baa2c331a2fa9fda8bdce576d14ec71baceceeaf0051e1649a40cfc992b4"
+      },
+      "net_revealed_bytes": 2094,
+      "revealed_ranges": [
+        [
+          455532,
+          455663
+        ],
+        [
+          456560,
+          456871
+        ],
+        [
+          457602,
+          458210
+        ],
+        [
+          461483,
+          461628
+        ],
+        [
+          461735,
+          462634
+        ]
+      ],
+      "revealed_bytes": 2094,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-08",
+      "file": "utilities.ts",
+      "start": 356194,
+      "end": 365984,
+      "sha256": "ef43309e71a5bff946d868de2753b73de6b3cae07e5f215e2a2f1281ef0406ef",
+      "main": {
+        "hidden_bytes": 9790,
+        "hidden_ranges": [
+          [
+            356194,
+            365984
+          ]
+        ],
+        "units": [
+          "utilities.ts:9041:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9045:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9049:23",
+            "kind": "NotYet",
+            "reason": "an array of never",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "77ffb38a427edb89d046fcbff62da2b1ef5a328b79c7728c1847bde28eceb4d8"
+      },
+      "stack": {
+        "hidden_bytes": 2360,
+        "hidden_ranges": [
+          [
+            356393,
+            356512
+          ],
+          [
+            356618,
+            356787
+          ],
+          [
+            356915,
+            357041
+          ],
+          [
+            357756,
+            357896
+          ],
+          [
+            358711,
+            358849
+          ],
+          [
+            359252,
+            359349
+          ],
+          [
+            359475,
+            359613
+          ],
+          [
+            359778,
+            359942
+          ],
+          [
+            360383,
+            360541
+          ],
+          [
+            361258,
+            361416
+          ],
+          [
+            361855,
+            361997
+          ],
+          [
+            362579,
+            362661
+          ],
+          [
+            362831,
+            362957
+          ],
+          [
+            363079,
+            363161
+          ],
+          [
+            363312,
+            363430
+          ],
+          [
+            363546,
+            363659
+          ],
+          [
+            363811,
+            364041
+          ],
+          [
+            365676,
+            365736
+          ]
+        ],
+        "units": [
+          "utilities.ts:9041:1"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9045:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9051:28",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9052:20",
+            "kind": "NotYet",
+            "reason": "reading target",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9058:24",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9080:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9102:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9114:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9120:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9129:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9142:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9161:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9176:17",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9193:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9199:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9205:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9211:23",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9217:20",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9223:20",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9041:1",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilities.ts:9274:20",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "bcb7e7b445b2d11f231cbc2502dda3339fa327c7732b1cb4e8e0fe88e7e3a6fc"
+      },
+      "net_revealed_bytes": 7430,
+      "revealed_ranges": [
+        [
+          356194,
+          356393
+        ],
+        [
+          356512,
+          356618
+        ],
+        [
+          356787,
+          356915
+        ],
+        [
+          357041,
+          357756
+        ],
+        [
+          357896,
+          358711
+        ],
+        [
+          358849,
+          359252
+        ],
+        [
+          359349,
+          359475
+        ],
+        [
+          359613,
+          359778
+        ],
+        [
+          359942,
+          360383
+        ],
+        [
+          360541,
+          361258
+        ],
+        [
+          361416,
+          361855
+        ],
+        [
+          361997,
+          362579
+        ],
+        [
+          362661,
+          362831
+        ],
+        [
+          362957,
+          363079
+        ],
+        [
+          363161,
+          363312
+        ],
+        [
+          363430,
+          363546
+        ],
+        [
+          363659,
+          363811
+        ],
+        [
+          364041,
+          365676
+        ],
+        [
+          365736,
+          365984
+        ]
+      ],
+      "revealed_bytes": 7430,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-04-large",
+      "file": "checker.ts",
+      "start": 620304,
+      "end": 627479,
+      "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "main": {
+        "hidden_bytes": 5441,
+        "hidden_ranges": [
+          [
+            620603,
+            621669
+          ],
+          [
+            622380,
+            624252
+          ],
+          [
+            624411,
+            624548
+          ],
+          [
+            624985,
+            625304
+          ],
+          [
+            625355,
+            626740
+          ],
+          [
+            626763,
+            627425
+          ]
+        ],
+        "units": [
+          "checker.ts:10648:13",
+          "checker.ts:1486:1",
+          "checker.ts:6309:5",
+          "checker.ts:9346:9"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:6309:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:6600:18",
+            "kind": "NotYet",
+            "reason": "a function returning Declaration & HasModifiers",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:852:44",
+            "kind": "NotYet",
+            "reason": "a value of type __String",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10653:40",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10654:35",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10655:64",
+            "kind": "NotYet",
+            "reason": "reading isExportEquals",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10667:199",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10668:35",
+            "kind": "NotYet",
+            "reason": "reading expr",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10669:40",
+            "kind": "NotYet",
+            "reason": "reading first",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10670:25",
+            "kind": "NotYet",
+            "reason": "reading referenced",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10681:25",
+            "kind": "NotYet",
+            "reason": "reading isExportAssignmentCompatibleSymbolName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10718:51",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10724:84",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10727:39",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10728:54",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10732:67",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10738:29",
+            "kind": "NotYet",
+            "reason": "reading statement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10744:25",
+            "kind": "NotYet",
+            "reason": "reading isExportAssignmentCompatibleSymbolName",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "25b6a81ebefdf1a17d6d2248646b9461ccad3469c13d253b4de584c273d01a77"
+      },
+      "stack": {
+        "hidden_bytes": 5441,
+        "hidden_ranges": [
+          [
+            620603,
+            621669
+          ],
+          [
+            622380,
+            624252
+          ],
+          [
+            624411,
+            624548
+          ],
+          [
+            624985,
+            625304
+          ],
+          [
+            625355,
+            626740
+          ],
+          [
+            626763,
+            627425
+          ]
+        ],
+        "units": [
+          "checker.ts:10648:13",
+          "checker.ts:1486:1",
+          "checker.ts:6309:5",
+          "checker.ts:9346:9"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:6309:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:6600:18",
+            "kind": "NotYet",
+            "reason": "a function returning Declaration & HasModifiers",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/utilitiesPublic.ts:852:44",
+            "kind": "NotYet",
+            "reason": "a value of type __String",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10653:40",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10654:35",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10655:64",
+            "kind": "NotYet",
+            "reason": "reading isExportEquals",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10667:199",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10668:35",
+            "kind": "NotYet",
+            "reason": "reading expr",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10669:40",
+            "kind": "NotYet",
+            "reason": "reading first",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10670:25",
+            "kind": "NotYet",
+            "reason": "reading referenced",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10681:25",
+            "kind": "NotYet",
+            "reason": "reading isExportAssignmentCompatibleSymbolName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10718:51",
+            "kind": "NotYet",
+            "reason": "reading name",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10724:84",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10727:39",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10728:54",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10732:67",
+            "kind": "NotYet",
+            "reason": "reading varName",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10738:29",
+            "kind": "NotYet",
+            "reason": "reading statement",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:10648:13",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:10744:25",
+            "kind": "NotYet",
+            "reason": "reading isExportAssignmentCompatibleSymbolName",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "25b6a81ebefdf1a17d6d2248646b9461ccad3469c13d253b4de584c273d01a77"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    },
+    {
+      "label": "hidden-04-small",
+      "file": "checker.ts",
+      "start": 1623136,
+      "end": 1629022,
+      "sha256": "938b2634f27cb57a202675254cf9af0935a891fecddb8f9d94a12d69cf0f93fb",
+      "main": {
+        "hidden_bytes": 4022,
+        "hidden_ranges": [
+          [
+            1624861,
+            1628883
+          ]
+        ],
+        "units": [
+          "checker.ts:1486:1",
+          "checker.ts:26774:5",
+          "checker.ts:27279:9"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26814:33",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26895:29",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26915:182",
+            "kind": "Refused",
+            "reason": "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26973:46",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26977:37",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26978:42",
+            "kind": "NotYet",
+            "reason": "reading sourceTypes",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:162:1",
+            "kind": "Refused",
+            "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27130:22",
+            "kind": "NotYet",
+            "reason": "reading t",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27133:32",
+            "kind": "NotYet",
+            "reason": "reading t",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27143:33",
+            "kind": "NotYet",
+            "reason": "new an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27159:65",
+            "kind": "NotYet",
+            "reason": "reading matched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:987:34",
+            "kind": "NotYet",
+            "reason": "slice with an index that isn't a number",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:988:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:989:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:991:9",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:406:47",
+            "kind": "NotYet",
+            "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:409:21",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:414:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27180:66",
+            "kind": "NotYet",
+            "reason": "reading matched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27181:25",
+            "kind": "NotYet",
+            "reason": "reading unmatched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27216:37",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27281:27",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27288:34",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27411:55",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:15893:44",
+            "kind": "NotYet",
+            "reason": "a value of type __String",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27481:21",
+            "kind": "NotYet",
+            "reason": "reading sourceProp",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:27279:9",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:1228:67",
+            "kind": "Refused",
+            "reason": "overload 1 of reduceLeft parameter f cannot be served by implementation parameter f",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:27279:9",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27303:35",
+            "kind": "NotYet",
+            "reason": "reading allTypeFlags",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "a667d13dd2385589cfbd61757948f5bda6d85fb94ef21858a961919a476bad65"
+      },
+      "stack": {
+        "hidden_bytes": 4022,
+        "hidden_ranges": [
+          [
+            1624861,
+            1628883
+          ]
+        ],
+        "units": [
+          "checker.ts:1486:1",
+          "checker.ts:26774:5",
+          "checker.ts:27279:9"
+        ],
+        "checker_rejected": true,
+        "causes": [
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26814:33",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26895:29",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:220:112",
+            "kind": "NotYet",
+            "reason": "a generic function as a value",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26915:182",
+            "kind": "Refused",
+            "reason": "an unproven relation from Type to TypeParameter: optional field constraint has no proven compatible presence/type",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26973:46",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26977:37",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:26978:42",
+            "kind": "NotYet",
+            "reason": "reading sourceTypes",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:261:1",
+            "kind": "Refused",
+            "reason": "overload 1 of filter result U[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:162:1",
+            "kind": "Refused",
+            "reason": "overload 1 of find result U | undefined cannot be served by implementation result T | undefined at result; result covariance requires T to fit U | undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27130:22",
+            "kind": "NotYet",
+            "reason": "reading t",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27133:32",
+            "kind": "NotYet",
+            "reason": "reading t",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27143:33",
+            "kind": "NotYet",
+            "reason": "new an Identifier",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27159:65",
+            "kind": "NotYet",
+            "reason": "reading matched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:987:34",
+            "kind": "NotYet",
+            "reason": "slice with an index that isn't a number",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:988:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:989:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:991:9",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:406:47",
+            "kind": "NotYet",
+            "reason": "a narrowed union member whose object tag cannot be checked with typeof; keep differently held object kinds in separately typed variables",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:409:21",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:414:5",
+            "kind": "panic",
+            "reason": "statement panic: runtime error: invalid memory address or nil pointer dereference",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27180:66",
+            "kind": "NotYet",
+            "reason": "reading matched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27181:25",
+            "kind": "NotYet",
+            "reason": "reading unmatched",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27216:37",
+            "kind": "Refused",
+            "reason": "a cast the runtime can't check",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:656:1",
+            "kind": "Refused",
+            "reason": "overload 1 of concatenate result T[] cannot be served by implementation result readonly T[] | undefined at result.length; required field is absent from undefined",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27281:27",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27288:34",
+            "kind": "NotYet",
+            "reason": "checked view union arm awaits views-v3: array element kind",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27411:55",
+            "kind": "NotYet",
+            "reason": "a union or optional field read in a program with record storage",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:15893:44",
+            "kind": "NotYet",
+            "reason": "a value of type __String",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:26774:5",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27481:21",
+            "kind": "NotYet",
+            "reason": "reading sourceProp",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:27279:9",
+            "where": "/tmp/any-returns-adapted/src/compiler/core.ts:1228:67",
+            "kind": "Refused",
+            "reason": "overload 1 of reduceLeft parameter f cannot be served by implementation parameter f; callback contravariance at callback.parameter1 requires T to fit U",
+            "start": null,
+            "end": null
+          },
+          {
+            "unit": "/tmp/any-returns-adapted/src/compiler/checker.ts:27279:9",
+            "where": "/tmp/any-returns-adapted/src/compiler/checker.ts:27303:35",
+            "kind": "NotYet",
+            "reason": "reading allTypeFlags",
+            "start": null,
+            "end": null
+          }
+        ],
+        "ledger_sha256": "cd55c1435bb0a17542a9820c66b9866c5d664128672d1006a604aa94d964bd29"
+      },
+      "net_revealed_bytes": 0,
+      "revealed_ranges": [],
+      "revealed_bytes": 0,
+      "newly_hidden_ranges": [],
+      "newly_hidden_bytes": 0
+    }
+  ]
+}

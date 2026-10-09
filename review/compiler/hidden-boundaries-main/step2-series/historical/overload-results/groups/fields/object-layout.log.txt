@@ -1,0 +1,6 @@
+=== RUN   TestHiddenTNodeConstraintMutationRemainsNotYet
+    hidden_boundary_generic_tnode_test.go:93: want constrained mutation refusal, got <nil>
+--- FAIL: TestHiddenTNodeConstraintMutationRemainsNotYet (0.04s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	0.044s
+FAIL

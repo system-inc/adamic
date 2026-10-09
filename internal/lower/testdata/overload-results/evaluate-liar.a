@@ -1,0 +1,7 @@
+interface Result<T extends string | number | undefined> { value: T; }
+function evaluate(value: 'template'): Result<string | undefined>;
+function evaluate(value: string): Result<string | number | undefined> {
+ console.log(value);
+ return { value: 42 };
+}
+console.log(`${evaluate('template').value}`);

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:54:17.835246597Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:54:17.844952186Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString"}
+{"Time":"2026-10-09T09:54:17.845052554Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Output":"=== RUN   TestHiddenTNodeConstraintString\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.845131751Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Output":"=== PAUSE TestHiddenTNodeConstraintString\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.845138491Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString"}
+{"Time":"2026-10-09T09:54:17.84520553Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString"}
+{"Time":"2026-10-09T09:54:17.845211179Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Output":"=== CONT  TestHiddenTNodeConstraintString\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.945329451Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Output":"    hidden_boundary_generic_tnode_test.go:40: lost concrete checker mapping: 3, true\n","OutputType":"error"}
+{"Time":"2026-10-09T09:54:17.945453274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Output":"--- FAIL: TestHiddenTNodeConstraintString (0.10s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.945570246Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintString","Elapsed":0.1}
+{"Time":"2026-10-09T09:54:17.94560001Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.949709478Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.114s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:54:17.949740314Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.115}

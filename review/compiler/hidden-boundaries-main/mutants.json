@@ -1,0 +1,264 @@
+[
+  {
+    "mutant": "array-layout",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/array-layout-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintArrayLayout$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 7.707,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintArrayLayout",
+        "seconds": 0.03
+      }
+    ]
+  },
+  {
+    "mutant": "default",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/default-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/hidden_boundary_generic_tnode.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 13.59,
+    "failures": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_generic_tnode.a",
+        "seconds": 0.54
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "seconds": 0.06
+      }
+    ]
+  },
+  {
+    "mutant": "generic-value",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/generic-value-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeGenericValueRemainsNotYet$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 13.565,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeGenericValueRemainsNotYet",
+        "seconds": 0.06
+      }
+    ]
+  },
+  {
+    "mutant": "ignore-mapper",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/ignore-mapper-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintString$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 13.03,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintString",
+        "seconds": 0.1
+      }
+    ]
+  },
+  {
+    "mutant": "ignore-substitution",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/ignore-substitution-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintNumber$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 15.59,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintNumber",
+        "seconds": 0.09
+      }
+    ]
+  },
+  {
+    "mutant": "no-constraint",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/no-constraint-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintNumber$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 12.856,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintNumber",
+        "seconds": 0.06
+      }
+    ]
+  },
+  {
+    "mutant": "object-layout",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/object-layout-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintObject$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 10.293,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintObject",
+        "seconds": 0.03
+      }
+    ]
+  },
+  {
+    "mutant": "unconstrained",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/unconstrained-overlay.json",
+      "./internal/lower",
+      "-run",
+      "^TestHiddenTNodeConstraintUnconstrained$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 8.476,
+    "failures": [
+      {
+        "test": "TestHiddenTNodeConstraintUnconstrained",
+        "seconds": 0.04
+      }
+    ]
+  },
+  {
+    "mutant": "never-storage",
+    "command": [
+      "timeout",
+      "150",
+      "go",
+      "test",
+      "-overlay",
+      "/workspace/adamic/review/compiler/hidden-boundaries-main/never-storage-overlay.json",
+      "./internal/oracle",
+      "-run",
+      "^TestNativeAgreesWithNode$/internal/oracle/testdata/hidden_boundary_never_array.a$",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-json"
+    ],
+    "exit": 1,
+    "wall_seconds": 13.101,
+    "failures": [
+      {
+        "test": "TestNativeAgreesWithNode/internal/oracle/testdata/hidden_boundary_never_array.a",
+        "seconds": 0.03
+      },
+      {
+        "test": "TestNativeAgreesWithNode",
+        "seconds": 0.02
+      }
+    ]
+  },
+  {
+    "mutant": "never-writable",
+    "exit": 1,
+    "failures": [
+      {
+        "test": "TestHiddenNeverArrayRejectsWritableWidening",
+        "seconds": 0.05
+      }
+    ]
+  },
+  {
+    "mutant": "source-object-layout",
+    "exit": 1,
+    "failures": [
+      {
+        "test": "TestRepresentationClockSourceCheckedTypes",
+        "seconds": 0.03
+      }
+    ]
+  }
+]

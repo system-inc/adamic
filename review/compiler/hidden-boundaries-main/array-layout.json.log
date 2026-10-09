@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T09:53:37.72847206Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T09:53:37.735580415Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout"}
+{"Time":"2026-10-09T09:53:37.735641946Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Output":"=== RUN   TestHiddenTNodeConstraintArrayLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.735662436Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Output":"=== PAUSE TestHiddenTNodeConstraintArrayLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.735664829Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout"}
+{"Time":"2026-10-09T09:53:37.735668936Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout"}
+{"Time":"2026-10-09T09:53:37.735670808Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Output":"=== CONT  TestHiddenTNodeConstraintArrayLayout\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.766048635Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Output":"    hidden_boundary_generic_tnode_test.go:30: constraint representation = (5, true), want (0, false)\n","OutputType":"error"}
+{"Time":"2026-10-09T09:53:37.766118759Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Output":"--- FAIL: TestHiddenTNodeConstraintArrayLayout (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.766122154Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestHiddenTNodeConstraintArrayLayout","Elapsed":0.03}
+{"Time":"2026-10-09T09:53:37.766140461Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.766903197Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.038s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:53:37.766924108Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.038}
