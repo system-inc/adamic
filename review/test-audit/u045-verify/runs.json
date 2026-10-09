@@ -1,0 +1,116 @@
+[
+  {
+    "mutant": "M06",
+    "side": "base",
+    "exit": 0,
+    "seconds": 17.465,
+    "line": null,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_chain_captured_root\\.a$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M06-base"
+  },
+  {
+    "mutant": "M06",
+    "side": "mutant",
+    "exit": 1,
+    "seconds": 10.336,
+    "line": "oracle_test.go:759: the release build: exit codes differ",
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_chain_captured_root\\.a$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M06-mutant"
+  },
+  {
+    "mutant": "M06",
+    "side": "base2",
+    "exit": 0,
+    "seconds": 3.897,
+    "line": null,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestNativeAgreesWithNode$/^internal$/^oracle$/^testdata$/^borrow_chain_captured_root\\.a$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M06-base2"
+  },
+  {
+    "mutant": "M08",
+    "side": "base",
+    "exit": 0,
+    "seconds": 2.458,
+    "line": null,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestStatementRegionsAreUsed$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M08-base"
+  },
+  {
+    "mutant": "M08",
+    "side": "mutant",
+    "exit": 0,
+    "seconds": 9.254,
+    "line": null,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestStatementRegionsAreUsed$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M08-mutant"
+  },
+  {
+    "mutant": "M08",
+    "side": "base2",
+    "exit": 0,
+    "seconds": 2.722,
+    "line": null,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/oracle/",
+      "-run",
+      "^TestStatementRegionsAreUsed$"
+    ],
+    "cache": "/tmp/u045-verify/cache/M08-base2"
+  }
+]

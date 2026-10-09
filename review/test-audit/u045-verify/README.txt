@@ -1,0 +1,10 @@
+rp:verify-u045
+Main: 946a8f095a7fa419a92117406314b7b3d44630f0
+cohere pin: 7945d102a6c18dd36adf9114a758ce646e8b2359
+Warm env.sh worked, Go 1.27.1; setup skipped.
+Initial disk: /tmp 6.3 GB free and /workspace 4.8 GB free. Deleted only prior completed unit scratch /tmp/M08k. Permission-probe leftovers needed owner chmod before deletion. Recheck /tmp 6.5 GB free, /workspace 4.8 GB free. No repository or tools deleted.
+Both supplied diffs passed git apply --check and applied with git apply, then were reversed with git apply -R after each mutant run. Only the two specified native source conditions were mutated, independently. Tests, fixtures, counts.md and harness were unchanged. Final git diff --exit-code passed.
+All six invocations used -count=1 -timeout 10m, a distinct fresh ADAMIC_BUILD_CACHE_DIR, and ADAMIC_GATE_UNCACHED=1. runs.json records exact selectors, cache paths, exit status, monotonic wall seconds including compile time, and first failing line. Logs were outside the repository throughout testing and copied in afterward.
+M06: TestNativeAgreesWithNode/internal/oracle/testdata/borrow_chain_captured_root.a PASS/FAIL/PASS. First assertion: oracle_test.go:759: the release build: exit codes differ. The sanitized run reports AddressSanitizer: heap-use-after-free in adamic_write_line, and native output/exit disagrees with Node. This is a real assertion and sanitizer catch, not a kill or timeout.
+M08: TestStatementRegionsAreUsed PASS/PASS/PASS. This test only reads the recorded counts.md, parses six fixture rows and checks positive In regions and allocations = frees + regions. It never calls counted(), lowers fixtures or generates native code. With the golden unchanged, the production mutant cannot change this test's inputs; the requested verification does not prove M08 closed. No golden regeneration or test edits were performed.
+No run failed solely by kill or deadline; no such rerun was needed. Raw logs are gzip-compressed without content changes. No code is pushed, only this evidence directory.
