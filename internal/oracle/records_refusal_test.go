@@ -5,7 +5,6 @@ import (
 	"github.com/system-inc/adamic/internal/lower"
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -47,33 +46,37 @@ func recordRefusalMutant(t *testing.T, name string) bool {
 			t.Fatalf("%s must be refused: %v", extension, err)
 		}
 		want := recordRefusalPin(name)
-		if !strings.HasSuffix(refusal.Where, want[0]) || !strings.Contains(refusal.What, want[1]) || !strings.Contains(refusal.Fix, want[2]) {
+		if refusal.Where != probe+want[0] || refusal.What != want[1] || refusal.Fix != want[2] {
 			t.Fatalf("diagnostic changed: %+v; want location, reason, fix %q", refusal, want)
 		}
 	}
 	return false
 }
 func recordRefusalPin(name string) [3]string {
+	readFix := "check Object.hasOwn(record, key) immediately before reading its own value, or use a Map"
+	scalar := "a narrowed record scalar read after a call mutates that record: its current slot type cannot be proven"
+	scalarFix := "snapshot the value before the call, or read and recheck its type after the call"
 	switch name {
 	case "prototype_read":
-		return [3]string{":2:54", "prototype chain isn't modeled", "Object.hasOwn"}
+		return [3]string{":2:54", "record read of toString: the record's prototype chain isn't modeled", readFix}
 	case "prototype_in":
-		return [3]string{":2:53", "prototype chain isn't modeled", "Object.hasOwn"}
+		return [3]string{":2:53", "record membership for constructor: the record's prototype chain isn't modeled", "use Object.hasOwn(record, key) for own membership, or a Map"}
 	case "prototype_set":
-		return [3]string{":2:34", "inherited setter isn't modeled", "computed own"}
+		return [3]string{":2:34", "record assignment to __proto__: its inherited setter isn't modeled", "define an explicit computed own __proto__ data entry before assigning, or use a Map"}
 	case "compare_properties_left":
-		return [3]string{":9:9", "prototype chain isn't modeled", "Object.hasOwn"}
+		return [3]string{":9:9", "record read of toString: the record's prototype chain isn't modeled", readFix}
 	case "compare_properties_right":
-		return [3]string{":9:20", "prototype chain isn't modeled", "Object.hasOwn"}
+		return [3]string{":9:20", "record read of constructor: the record's prototype chain isn't modeled", readFix}
 	case "environment_boundary":
-		return [3]string{":3:12", "prototype chain isn't modeled", "Object.hasOwn"}
+		return [3]string{":3:12", "record read of toString: the record's prototype chain isn't modeled", readFix}
 	case "named_invalidated":
-		return [3]string{":9:20", "current slot type cannot be proven", "recheck"}
+		return [3]string{":9:20", scalar, scalarFix}
 	case "narrowed_number":
-		return [3]string{":3:58", "current slot type cannot be proven", "recheck"}
+		return [3]string{":3:58", scalar, scalarFix}
 	}
 	panic("unknown record refusal fixture")
 }
+
 func TestRecordRefusalPrototypeRead(t *testing.T) {
 	t.Parallel()
 	recordRefusalMutant(t, "prototype_read")
