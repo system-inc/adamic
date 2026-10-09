@@ -1,0 +1,12 @@
+# area	owner	oracle
+# Each area is a branch, area/<area>, that one Circle merges its workers' branches into.
+# oracle names the outside check that lets a branch merge into its area without a reader:
+# test262 (zero new disagreements), cohere (Go cohere, byte for byte), or none.
+compiler	system_adamic_compiler	none
+runtime	system_adamic_runtime	none
+library	system_adamic_library	test262
+stage1-lint	system_cohere_adamic	cohere
+stage1-format	system_cohere_adamic	cohere
+stage3	system_adamic_typescript	none
+platforms	system_adamic_platforms	none
+developer-tools	system_adamic_developer_tools	none

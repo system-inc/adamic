@@ -1,0 +1,87 @@
+# prefix	area	note
+# Which area a worker's green branch merges into, read by area-route.py for the automatic area merges.
+# The longest matching prefix wins. An area of "hold" means a person decides: the branch is held and
+# reported to integration and the Circle named in the note, never merged and never dropped.
+# A family of unlanded codex/* branches (the name's first word) with two or more members that neither a
+# row here nor their workers' fleet decides fails area-route-test.py.
+#
+# Stage 1 (cohere's side, @system_cohere_adamic since Oct 7)
+codex/stage1-lint-	stage1-lint
+codex/stage1-	stage1-format
+codex/lint-	stage1-lint
+codex/typeaware-	stage1-lint
+codex/parser-lint-cases	stage1-lint	the lint rule corpus waves
+codex/checked-	hold	@system_adamic_compiler: checked writes and casts on the area-next line
+codex/scout-36-	hold	@system_adamic_library: library's scouts for step 36 (speed), cut from area/library
+codex/scanner-cast-	hold	@system_adamic_compiler: checked-cast work (step 09), restacked on area-views-next; not the lint scanner
+codex/scanner-	stage1-lint
+codex/parser-	hold	@system_cohere_adamic: the shared parser serves both stage 1 areas
+codex/realpath-	hold	@system_cohere_adamic
+codex/cohere-	hold	@system_cohere_adamic: a cohere pin moves the submodule every area and gate box reads
+codex/shared-ssa	stage1-lint	cohere's static_single_assignment port (#dnv6f2c)
+codex/tsgo-	stage1-lint	the checker bridge
+# Compiler (its lowering wall and the stricter checks, @system_adamic Oct 8)
+codex/compiler-	compiler
+codex/notyet-	compiler
+codex/stricter-	compiler
+codex/enum-	compiler
+codex/clock-	compiler
+codex/accessors	compiler
+codex/stdout-	compiler
+codex/optional-	compiler
+codex/method-	compiler	method values, notes/method-values
+codex/non-null	compiler	the checked non-null lowering
+codex/records-	compiler	records and named-index storage
+codex/census-	compiler	the refusal census replays
+codex/error-classes	compiler	error class lowering and the refusal-pass rulings
+codex/generic-function	compiler	generic function values
+# Runtime
+codex/runtime-	runtime
+codex/concurrency	runtime
+codex/typed-array	runtime
+codex/async-	runtime	native async and host promises
+codex/string-views	runtime	native string views
+codex/host-	library	Node host APIs (fs, process, buffer, crypto): library's, not platforms' (platforms, Oct 8)
+codex/host-promises	runtime	census-owners.tsv
+# Library
+codex/library-	library
+codex/regex-	library
+codex/grok-	hold	@system_adamic_library: date coverage, written by a Grok worker
+# Stage 3
+codex/stage3-	stage3
+codex/require-	stage3	the host process tsc runs inside is stage 3's (@system_adamic, Oct 8)
+codex/step12-	hold	@system_adamic_typescript: step 12, the native scanner proof; typescript decides where each lands
+codex/tsc-cycle-	hold	@system_adamic_runtime: step 06, the census of tsc's cycle slots
+codex/tsc-census-	hold	@system_adamic_compiler: compiler library call census and numeric predicate lowering; compiler decides where it lands
+codex/host29-	hold	@system_adamic_library: step 29, the Node host surface tsc touches (#7fsgdcn); cut from area/stage3, so library merges each into its area by hand
+codex/hidden-	hold	@system_adamic_compiler: step 05's overload fixtures, waiting on codex/overload-results; compiler sends one landing candidate on area-next's line, so none merges into area/compiler
+codex/views-	hold	@system_adamic_compiler: the views are compiler's area-views, integrated by hand (typescript asked to come off, Oct 8)
+codex/proven-	hold	@system_adamic_compiler or @system_adamic_typescript: the predicates touch lowering and stage 3's census
+codex/scout-19-	hold	@system_adamic_library: library's scouts for step 19 (Maps and Sets), cut from area/library
+codex/scout-33-	hold	@system_adamic_library: library's scouts for step 33 (leaks)
+codex/scout-22-	hold	step 22 (JavaScript object semantics) has no owner yet; integration asks @system_adamic
+codex/area-library-	hold	@system_adamic_library: library's area workers, merged by library's runner
+codex/step05-	stage3	@system_adamic_typescript: step 05, the hidden 37% census (stage3/census only)
+codex/step31-	hold	@system_adamic_typescript: step 31, stage 3 scouts on the views train; typescript decides where each lands
+codex/coverage-	hold	@system_adamic_integration: readers' branches from integration's readings of merges (#fxspptb); their programs go into the review lane, the branches never merge
+codex/step09-	stage3	@system_adamic_typescript: step 09, tsc's any and unchecked casts adapted in stage 3 (typescript, Oct 8: route to area/stage3 like step 05)
+codex/step10-	hold	@system_adamic_typescript: step 10, the writable-view sites
+codex/step24-	hold	@system_adamic_typescript: step 24, the native parser proof
+codex/scout-23-	hold	@system_adamic_library: library's scouts for step 23 (regex), cut from area/library
+codex/scout-generics	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-optional-calls	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-map-keys	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-iteration	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/scout-exceptions	hold	@system_adamic_compiler: its scout for the walls behind step 04, cut from the area-next candidate
+codex/object-semantics	hold	@system_adamic_compiler: step 22's object conversions, cut from the area-next line
+# Platforms
+codex/platforms-	platforms
+codex/wasm	platforms
+codex/workers-	platforms
+codex/apple-	platforms
+# Developer tools
+codex/developer-tools-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/gate-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/fuzz-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/fleet-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area
+codex/stale-	hold	@system_adamic_developer_tools: area/developer-tools is retiring (devtools/area-inventory c419cdd0); its work lands as fix-forwards from main, never through the area

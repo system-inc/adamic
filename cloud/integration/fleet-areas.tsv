@@ -1,0 +1,16 @@
+# fleet	area
+# A branch no prefix in area-routes.tsv decides routes by the fleet of the Codex sessions that name it
+# (in their latest reply or their title; the roster is ahra's modules/ai/data/fleet-roster.json). Fleets
+# that disagree, or a fleet missing here, hold the branch. A fleet ending in * matches as a prefix.
+compiler	compiler
+runtime	runtime
+library	library
+stage3	stage3
+devtools	developer-tools
+devtools-*	developer-tools
+apple	platforms
+wasm	platforms
+workers	platforms
+lint-*	stage1-lint
+stage1-format-work	stage1-format
+format-idle	stage1-format

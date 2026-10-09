@@ -1,0 +1,11 @@
+# The star's chain, in landing order: slug, source branch, owner, and optional riders (test-only
+# branches merged in below the source, landing on the slice's whole gate). A rider rides only once its
+# own fast gate is green alone on main, at most three per slice, in this order. star-train.py stacks each slice on
+# the one above it and lands the bottom one when it's green (Kirk and @system_adamic, October 8).
+views-slice1	compiler/area-stack	system_adamic_compiler
+views-v1	compiler/views-rehearsal@views-v1	system_adamic_compiler
+views-v2	compiler/views-v2	system_adamic_compiler
+views-v3	compiler/views-v3	system_adamic_compiler
+views-v4	compiler/views-rehearsal@views-v4	system_adamic_compiler
+views-v5	compiler/views-rehearsal@views-v5	system_adamic_compiler
+views-v6	compiler/views-rehearsal@views-v6	system_adamic_compiler
