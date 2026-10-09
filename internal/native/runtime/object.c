@@ -333,6 +333,7 @@ adamic_object *adamic_object_copy_reserving_checked(const adamic_object *source,
 	object->shape = shape;
 	object->class = NULL;
 	object->frozen = false;
+	object->tuple = false;
 	object->dynamic_shape = true;
 	object->dynamic_types = types;
 	memset(object->slots, 0, count * sizeof(adamic_value));
