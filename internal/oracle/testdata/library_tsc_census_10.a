@@ -1,0 +1,4 @@
+// Reduced from core.ts:2251
+const str = 'prefix.ts';
+const expectedPos = 6;
+console.log(str.slice(expectedPos));

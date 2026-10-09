@@ -1,0 +1,5 @@
+// a-check: refused a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+// debug.ts:598. Fresh allocation is ownership-safe; Array prototype intrinsic identity and NodeArray assertion are unproven.
+interface Node { flags: number; }
+const nodeArrayProto = Object.create(Array.prototype) as readonly Node[];
+console.log(`${typeof nodeArrayProto}`);

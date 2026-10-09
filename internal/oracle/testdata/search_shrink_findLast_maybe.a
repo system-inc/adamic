@@ -1,0 +1,7 @@
+const list = [1, 2, 3];
+const found = list.findLast((item: number | undefined, index: number): boolean => {
+	console.log(`${index} ${item === undefined ? 'hole' : item}`);
+	if (index === 2) { list.splice(0, 3); }
+	return item === undefined;
+});
+console.log(`${found ?? 'none'}`);

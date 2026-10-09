@@ -1,0 +1,17 @@
+let order = '';
+const value = {
+ toString: (): { n: number } => { order += 'string '; return {n: 1}; },
+ valueOf: (): { n: number } => { order += 'value '; return {n: 2}; },
+};
+try { console.log(`${value}`); } catch (error) {
+ if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ console.log(`${error instanceof TypeError}/${error instanceof RangeError}`);
+}
+console.log(`${order}`);
+order = '';
+try { console.log('prefix ' + value); } catch (error) {
+ if(error instanceof Error) console.log(`${error.name}: ${error.message}`);
+ console.log(`${error instanceof TypeError}/${error instanceof RangeError}`);
+}
+console.log(`${order}`);
+console.log('after conversion');

@@ -96,10 +96,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/06_fileExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "07_directoryExists.a",
@@ -116,10 +113,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/07_directoryExists.a:54:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "08_getDirectories.a",
@@ -151,8 +145,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/08_getDirectories.a:187:25: stage 0 can't lower node:fs.readdirSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/08_getDirectories.a:161:1: Adamic 0.1 refuses overload 1 of ensureTrailingDirectorySeparator result Path cannot be served by implementation result string; make the implementation result covariant with every overload result"
     }
   },
   {
@@ -170,10 +164,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/09_realpath.a:17:17: stage 0 can't lower node:process.Process.platform yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "10_getModifiedTime.a",
@@ -189,8 +180,8 @@
       "exit": 0
     },
     "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/10_getModifiedTime.a:37:5: stage 0 can't lower node:fs.symlinkSync yet"
+      "outcome": "Refused",
+      "what": "stage3/fixtures/host/10_getModifiedTime.a:36:24: Adamic 0.1 refuses Date string conversion (local toString); ruling 10, roadmap step 29: Date admits only UTC and ISO forms, never locale- or timezone-dependent forms; use epoch milliseconds or an explicit UTC/ISO operation"
     }
   },
   {
@@ -220,10 +211,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/12_deleteFile.a:23:5: stage 0 can't lower node:fs.symlinkSync yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "13_createDirectory.a",
@@ -277,10 +265,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/15_getExecutingFilePath.a:22:52: stage 0 can't lower node:path.dirname yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "16_getEnvironmentVariable.a",
@@ -295,7 +280,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:13:12: stage 0 can't lower node:process.Process.env yet"
+      "what": "stage3/fixtures/host/16_getEnvironmentVariable.a:19:5: stage 0 can't lower an indexed mutation without a closed const literal origin yet"
     }
   },
   {
@@ -309,10 +294,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/17_write.a:13:5: stage 0 can't lower node:net.Socket.write yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "18_exit_0.a",
@@ -328,7 +310,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/18_exit_0.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "what": "stage3/fixtures/host/18_exit_0.a:25:43: stage 0 can't lower a nullable reference view from number | undefined to string | number | null | undefined changes its empty case or adds a second empty case (nullable reference needs an empty-case tag) yet"
     }
   },
   {
@@ -345,7 +327,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/19_exit_1.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "what": "stage3/fixtures/host/19_exit_1.a:25:43: stage 0 can't lower a nullable reference view from number | undefined to string | number | null | undefined changes its empty case or adds a second empty case (nullable reference needs an empty-case tag) yet"
     }
   },
   {
@@ -362,7 +344,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/20_exit_2.a:25:30: stage 0 can't lower node:process.Process.exit yet"
+      "what": "stage3/fixtures/host/20_exit_2.a:25:43: stage 0 can't lower a nullable reference view from number | undefined to string | number | null | undefined changes its empty case or adds a second empty case (nullable reference needs an empty-case tag) yet"
     }
   },
   {
@@ -380,7 +362,7 @@
     },
     "stage0": {
       "outcome": "NotYet",
-      "what": "stage3/fixtures/host/21_createHash.a:21:20: stage 0 can't lower node:crypto.\"node:crypto\" read as a value yet"
+      "what": "stage3/fixtures/host/21_createHash.a:30:1: stage 0 can't lower a try around Hash finalization, whose catchable .code contract is not supported yet, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet"
     }
   },
   {
@@ -395,10 +377,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/22_createHash_fallback.a:23:1: stage 0 can't lower a function without a body yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "23_newLine.a",
@@ -411,10 +390,7 @@
       "stderr": "",
       "exit": 0
     },
-    "stage0": {
-      "outcome": "NotYet",
-      "what": "stage3/fixtures/host/23_newLine.a:12:31: stage 0 can't lower node:os.EOL yet"
-    }
+    "stage0": {"outcome":"Compiles","what":""}
   },
   {
     "file": "24_useCaseSensitiveFileNames.a",

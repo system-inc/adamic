@@ -1,0 +1,3 @@
+// utilitiesPublic.ts:749: parsing config text cannot establish a result type.
+const result = JSON.parse('{"compilerOptions":{}}');
+console.log(typeof result);

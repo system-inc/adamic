@@ -1,15 +1,20 @@
 package flow
 
 import (
+	"bytes"
+	"context"
 	"crypto/sha256"
 	"fmt"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"reflect"
 	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/load"
 )
 
 var flowProgramChecks = []func(*testing.T, string){
@@ -132,4 +137,38 @@ func TestFlowCorpusRemainder(t *testing.T) {
 		})
 	}
 	t.Logf("remainder ran %d programs", count)
+}
+
+// The accessor source is a pinned lowering refusal, not a graph-bearing program.
+// Keep its old selectable unit, but require the exact refusal and Node behavior.
+func checkRefusedAccessorProgram(t *testing.T, path string) {
+	t.Helper()
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	canonical, err := os.ReadFile(filepath.Join(filepath.Dir(path), "class_features_refused", filepath.Base(path)))
+	if err != nil {
+		t.Fatal(err)
+	}
+	if !bytes.Equal(source, canonical) {
+		t.Fatal("accessor source differs from pinned refusal")
+	}
+	program, err := load.Load([]string{path})
+	if err != nil {
+		t.Fatal(err)
+	}
+	_, err = Lower(context.Background(), program)
+	if err == nil || !strings.Contains(err.Error(), "can't lower spreading an accessor literal whose getter may throw yet") {
+		t.Fatalf("expected throwing accessor spread gap, got %v", err)
+	}
+	ctx, cancel := context.WithTimeout(context.Background(), 20*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, "node", "--disable-warning=ExperimentalWarning", "../../oracle/node.mjs", path)
+	output, err := command.CombinedOutput()
+	const want = "6\nGgSsGg\n5/5/GgSsGgrwr\namount,label\n5/literal/amount,label\ngetter1\nsetterinput2\n2,10,label\n2,10,label/ab\n3/3\n1/3\n"
+	if err != nil || string(output) != want {
+		t.Fatalf("source Node = %v, %q, want %q", err, output, want)
+	}
+	t.Log("source Node agrees; throwing accessor spread remains explicitly refused")
 }

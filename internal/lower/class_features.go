@@ -74,6 +74,9 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
 	// A spread of a possibly absent plain object has synthetic optional slots, not real keys.
 	// Class and accessor descriptors provide the public shape for their stored fields.
 	proven := l.checker.GetTypeAtLocation(arguments[0])
+	if proven.Flags()&(checker.TypeFlagsNumberLike|checker.TypeFlagsBooleanLike|checker.TypeFlagsStringLike) != 0 {
+		return l.objectCall(node, "keys")
+	}
 	if !isClassInstance(proven) && l.iteratorMember(proven) != nil {
 		return nil, true, l.notYet(node, "Object.keys on a literal with symbol-key storage")
 	}

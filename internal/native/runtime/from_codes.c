@@ -91,21 +91,22 @@ adamic_string *adamic_string_from_code_points(size_t count, const double values[
 	codes buffer = {NULL, 0, 0};
 	for (size_t index = 0; index < count; index++) {
 		double value = values[index];
-		// Anything but an integer from 0 to 0x10FFFF is a RangeError, which 0.1 makes a panic, in V8's
-		// words: "Invalid code point " and the value as String() writes it.
+		// Invalid points raise through the same pending word as an explicit throw, so catches
+		// and finallies release the caller's references on the way out.
 		if (!(value >= 0 && value <= 0x10ffff && value == trunc(value))) {
 			free(buffer.bytes);
-			static const char prefix[] = "RangeError: Invalid code point ";
+			static adamic_string prefix = ADAMIC_STRING("Invalid code point ");
+			static adamic_string name = ADAMIC_STRING("RangeError");
 			adamic_string *written = adamic_string_from_number(value);
-			size_t length = sizeof prefix - 1 + written->length;
-			char *message = malloc(length);
-			if (message == NULL) {
-				static const char failed[] = "out of memory";
-				adamic_panic(failed, sizeof failed - 1);
-			}
-			memcpy(message, prefix, sizeof prefix - 1);
-			memcpy(message + sizeof prefix - 1, written->bytes, written->length);
-			adamic_panic(message, length);
+			adamic_string *message = adamic_string_concat(2, (adamic_string *const[]){&prefix, written});
+			adamic_thrown = adamic_error_new(message);
+			static adamic_slot_cache name_cache;
+			adamic_value *slot = adamic_object_field(adamic_thrown, "name", &name_cache);
+			adamic_release(slot->reference);
+			slot->reference = adamic_retain(&name);
+			adamic_release(message);
+			adamic_release(written);
+			return NULL;
 		}
 		codes_point(&buffer, (unsigned)value);
 	}

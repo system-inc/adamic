@@ -1,0 +1,17 @@
+// A custom ES2024 Set-shaped value without ES2025 operations.
+class CustomSet {
+    readonly size = 0;
+    readonly [Symbol.toStringTag] = 'Set';
+    add(value: string): Set<string> { return new Set<string>([value]); }
+    clear(): void {}
+    delete(value: string): boolean { return false; }
+    has(value: string): boolean { return false; }
+    forEach(callback: (value: string, key: string, set: Set<string>) => void, thisArg?: unknown): void {}
+    keys(): SetIterator<string> { return new Set<string>().keys(); }
+    values(): SetIterator<string> { return new Set<string>().values(); }
+    entries(): SetIterator<[string, string]> { return new Set<string>().entries(); }
+    [Symbol.iterator](): SetIterator<string> { return this.values(); }
+}
+function acceptsSet(value: Set<string>): number { return value.size; }
+const result = acceptsSet(new CustomSet());
+console.log(`${result}`);

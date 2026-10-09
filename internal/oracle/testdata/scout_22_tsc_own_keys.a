@@ -1,0 +1,23 @@
+// TypeScript v6.0.3 src/compiler/core.ts:1256,1287-1296.
+// The loop body is unchanged. Instantiate MapLike<T> as a fixed literal and
+// type the cached intrinsic explicitly; unrestricted index signatures stay refused.
+const hasOwnProperty: (this: object, key: string) => boolean = Object.prototype.hasOwnProperty;
+const map = { z: 'last', '10': 'ten', '2': 'two', '01': 'non-index', toString: 'own', missing: undefined };
+const keys: string[] = [];
+for (const key in map) {
+    if (hasOwnProperty.call(map, key)) {
+        keys.push(key);
+    }
+}
+console.log(keys.join('|'));
+for (const key of ['missing', 'toString', 'valueOf', 'constructor', 'absent', 'z', '2', '01', 'z\0']) {
+    console.log(`${key}: ${hasOwnProperty.call(map, key)}`);
+}
+// Borrowing bypasses an own override, unlike map.hasOwnProperty(key).
+const shadow = { hasOwnProperty: (key: string): boolean => false, value: 'built'.repeat(2) };
+console.log(`${hasOwnProperty.call(shadow, 'value')} ${hasOwnProperty.call(shadow, 'hasOwnProperty')}`);
+let order = '';
+function objectValue(): string { order += 'object '; return 'runtime'.repeat(2); }
+function propertyKey(): string { order += 'key '; return 'value'; }
+console.log(`${hasOwnProperty.call({ value: objectValue() }, propertyKey())} ${order}`);
+console.log(`${Object.prototype.hasOwnProperty.call(map, 'constructor')}`);

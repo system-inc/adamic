@@ -1,0 +1,4 @@
+// Reduced from core.ts:234
+const text = 'a🌍';
+const index = 2;
+console.log(`${text.charCodeAt(index)}`);

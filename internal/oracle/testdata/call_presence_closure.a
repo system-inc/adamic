@@ -1,0 +1,5 @@
+function measure(value: number = 9): string { return `${arguments.length}:${value}`; }
+const read = measure;
+console.log(read());
+console.log(read(undefined));
+console.log(read(0));

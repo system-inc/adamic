@@ -1,0 +1,4 @@
+import { parallelMap as ordered } from 'adamic';
+const items: readonly number[] = [4, 2, 9, 1];
+const result = ordered(items, (item, index) => item * 10 + index);
+console.log(result.join(','));

@@ -1,0 +1,126 @@
+const map = new Map<number, string>([
+    [1, 'a'],
+    [2, 'b'],
+    [3, 'c'],
+]);
+const keys = map.keys();
+const values = map.values();
+const entries = map.entries();
+console.log(`${keys.next().value} ${values.next().value}`);
+map.delete(2);
+map.set(1, 'A');
+map.set(2, 'B');
+map.set(4, 'd');
+for(const key of keys) {
+    console.log(`key ${key}`);
+}
+for(const value of values) {
+    console.log(`value ${value}`);
+}
+for(const pair of entries) {
+    console.log(`entry ${pair[0]} ${pair[1]}`);
+}
+map.set(5, 'e');
+console.log(`${keys.next().done} ${keys.next().value === undefined}`);
+const set = new Set<string>(['a', 'b', 'c']);
+const setKeys = set.keys();
+const setValues = set.values();
+const setEntries = set.entries();
+const firstSetEntry = setEntries.next();
+if(!firstSetEntry.done) {
+    console.log(`first set entry ${firstSetEntry.value[0]} ${firstSetEntry.value[1]}`);
+}
+console.log(`${setKeys.next().value} ${setValues.next().value}`);
+set.delete('b');
+set.delete('a');
+set.add('b');
+set.add('a');
+for(const key of setKeys) {
+    console.log(`set key ${key}`);
+}
+for(const value of setValues) {
+    console.log(`set value ${value}`);
+}
+for(const pair of setEntries) {
+    console.log(`set entry ${pair[0]} ${pair[1]}`);
+}
+set.add('d');
+console.log(`${setKeys.next().done} ${setKeys.next().value === undefined}`);
+const walking = new Map<number, string>([
+    [1, 'a'],
+    [2, 'b'],
+]);
+for(const [key, value] of walking) {
+    console.log(`walk ${key} ${value}`);
+    if(key === 1) {
+        walking.delete(2);
+        walking.set(3, 'c');
+        walking.set(2, 'B');
+    }
+}
+const walkingSet = new Set<number>([1, 2]);
+for(const value of walkingSet) {
+    console.log(`walk set ${value}`);
+    if(value === 1) {
+        walkingSet.delete(2);
+        walkingSet.add(3);
+        walkingSet.add(2);
+    }
+}
+const mapSymbol = map[Symbol.iterator]();
+console.log(`${mapSymbol[Symbol.iterator]() === mapSymbol}`);
+const symbolEntry = mapSymbol.next();
+if(!symbolEntry.done) {
+    console.log(`${symbolEntry.value[0]} ${symbolEntry.value[1]}`);
+}
+const setSymbol = set[Symbol.iterator]();
+console.log(`${setSymbol[Symbol.iterator]() === setSymbol} ${setSymbol.next().value}`);
+
+const cleared = new Map<number, string>([
+    [1, 'old'],
+    [2, 'old'],
+]);
+const clearIterator = cleared.entries();
+console.log(`${clearIterator.next().done}`);
+cleared.clear();
+cleared.set(3, 'new');
+for(const pair of clearIterator) {
+    console.log(`clear ${pair[0]} ${pair[1]}`);
+}
+const clearedSet = new Set<string>(['old']);
+const clearSetIterator = clearedSet.values();
+console.log(`${clearSetIterator.next().value}`);
+clearedSet.clear();
+clearedSet.add('new');
+console.log(`${clearSetIterator.next().value}`);
+const emptyMap = new Map<number, string>();
+const emptyKeys = emptyMap.keys();
+console.log(`${emptyKeys.next().done}`);
+emptyMap.set(1, 'late');
+console.log(`${emptyKeys.next().done} ${emptyKeys.next().value === undefined}`);
+const emptySet = new Set<string>();
+const emptyValues = emptySet.values();
+console.log(`${emptyValues.next().done}`);
+emptySet.add('late');
+console.log(`${emptyValues.next().done} ${emptyValues.next().value === undefined}`);
+
+const deletingCurrent = new Map<number, number>([
+    [1, 10],
+    [2, 20],
+    [3, 30],
+]);
+for(const key of deletingCurrent.keys()) {
+    console.log(`delete current ${key}`);
+    if(key === 1) {
+        deletingCurrent.delete(1);
+        deletingCurrent.set(4, 40);
+    }
+}
+const deletingCurrentSet = new Set<number>([1, 2, 3]);
+for(const value of deletingCurrentSet.values()) {
+    console.log(`delete current set ${value}`);
+    if(value === 1) {
+        deletingCurrentSet.delete(1);
+        deletingCurrentSet.add(4);
+    }
+}

@@ -1,0 +1,7 @@
+// commandLineParser.ts:132: a finite subset of the JSX option map.
+const jsxOptionMap = new Map(Object.entries({ preserve: 1, 'react-native': 3, 'react-jsx': 4 }));
+for (const [key, value] of jsxOptionMap) console.log(`${key}:${value}`);
+// parser.ts:2356: finite keyword table specialization.
+const textToKeywordObj = { break: 83, const: 87, if: 101 };
+const viableKeywordSuggestions = Object.keys(textToKeywordObj).filter(keyword => keyword.length > 2);
+console.log(viableKeywordSuggestions.join('|'));

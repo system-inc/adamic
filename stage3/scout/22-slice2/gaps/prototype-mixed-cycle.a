@@ -1,0 +1,5 @@
+// Node accepts this ownership cycle. A graph-region proof is required before admission.
+const a = {};
+const b = {a};
+Object.setPrototypeOf(a,b);
+console.log(`${Object.getPrototypeOf(a)===b}`);

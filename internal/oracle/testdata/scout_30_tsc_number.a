@@ -1,0 +1,7 @@
+// commandLineParser.ts:2556,2562: numeric literal text, with unary minus outside Number.
+function literal(text: string, negative: boolean): number {
+    return negative ? -Number(text) : Number(text);
+}
+for (const text of ['0', '1.25', '0x10', '0b11', '0o17', '1e309', 'junk'.repeat(2)]) {
+    console.log(`${literal(text, false)} ${literal(text, true)}`);
+}

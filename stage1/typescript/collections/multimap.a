@@ -1,0 +1,49 @@
+// a-check: checked
+// Copyright (c) Microsoft Corporation. Licensed under the Apache License, Version 2.0.
+// Step 19 ruling 1: core.ts:1527-1567, composition with explicit receiver helpers.
+export interface MultiMap<K, V> {
+    readonly map: Map<K, V[]>;
+}
+
+export function createMultiMap<K, V>(): MultiMap<K, V> {
+    return { map: new Map<K, V[]>() };
+}
+
+export function multiMapAdd<K, V>(receiver: MultiMap<K, V>, key: K, value: V): V[] {
+    let values = receiver.map.get(key);
+    if (values !== undefined) {
+        values.push(value);
+    }
+    else {
+        values = [value];
+        receiver.map.set(key, values);
+    }
+    return values;
+}
+
+export function multiMapRemove<K, V>(receiver: MultiMap<K, V>, key: K, value: V): void {
+    const values = receiver.map.get(key);
+    if (values !== undefined) {
+        multiMapUnorderedRemoveItem(values, value);
+        if (values.length === 0) {
+            receiver.map.delete(key);
+        }
+    }
+}
+
+// Map.forEach's third argument is the collection, including through composition.
+export function multiMapForEach<K, V>(receiver: MultiMap<K, V>, callback: (values: V[], key: K, receiver: MultiMap<K, V>) => void): void {
+    for (const [key, values] of receiver.map) {
+        callback(values, key, receiver);
+    }
+}
+
+// core.ts:2348-2373, dense-array equivalent without an unproven indexed read.
+// copyWithin copies the last element, including a stored undefined, before pop.
+function multiMapUnorderedRemoveItem<T>(array: T[], item: T): boolean {
+    const index = array.indexOf(item);
+    if (index === -1) return false;
+    array.copyWithin(index, array.length - 1);
+    array.pop();
+    return true;
+}

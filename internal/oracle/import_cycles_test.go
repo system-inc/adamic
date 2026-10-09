@@ -97,7 +97,7 @@ func TestImportCycleLoadTimeReads(t *testing.T) {
 			}
 			truth := onNode(t, path)
 			if string(truth.stdout) != probe.output {
-				t.Fatalf("Node stdout: %q", truth.stdout)
+				t.Fatalf("Node stdout: %q; exit=%d stderr=%q", truth.stdout, truth.exitCode, truth.stderr)
 			}
 			if probe.nodeError != "" {
 				if truth.exitCode == 0 || !strings.Contains(string(truth.stderr), probe.nodeError) {

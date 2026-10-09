@@ -1,0 +1,25 @@
+// Exercise every matcher entry point at a Unicode surrogate-pair interior.
+for (const regex of [/\B/u, /\B/v, new RegExp('\\B(?<part>a?)', 'u'), new RegExp('(?!\\W)', 'u'), new RegExp('(?!\\W)', 'v')]) {
+ for (const input of ['a🌍b', '🌍']) {
+  console.log(input.split(regex).map(value => value ?? 'undefined').join('|'));
+  console.log(input.split(regex, undefined).map(value => value ?? 'undefined').join('|'));
+  console.log(input.split(regex, 100).map(value => value ?? 'undefined').join('|'));
+  console.log(input.split(regex, 4294967295).map(value => value ?? 'undefined').join('|'));
+  const m = regex.exec(input);
+  console.log(`${m === null ? -1 : m.index} ${regex.test(input)} ${input.search(regex)}`);
+  const single = input.match(regex);
+  console.log(single === null ? 'null' : single.map(value => value ?? 'undefined').join('|'));
+  console.log(input.replace(regex, '#'));
+ }
+}
+for (const global of [/\B/ug, /\B/vg, new RegExp('\\B(?<part>a?)', 'ug'), new RegExp('(?!\\W)', 'ug'), new RegExp('(?!\\W)', 'vg')]) {
+ for (const input of ['a🌍b', '🌍']) {
+  console.log(input.replace(global, '#'));
+  console.log(input.replaceAll(global, '#'));
+  const many = input.match(global);
+  console.log(many === null ? 'null' : many.join('|'));
+  let indices = '';
+  for (const match of input.matchAll(global)) indices += `${match.index},`;
+  console.log(indices);
+ }
+}

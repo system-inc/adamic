@@ -1,0 +1,24 @@
+=== RUN   TestLoadersMatchGoCohere
+=== PAUSE TestLoadersMatchGoCohere
+=== CONT  TestLoadersMatchGoCohere
+    loader_test.go:172: === RUN   TestAdamicConfigCases
+            adamic_config_test.go:152: Go: 9.870416s, 0 projects, 0 projects/s; 1354 source files, 137 files/s
+        --- PASS: TestAdamicConfigCases (9.90s)
+        PASS
+        ok  	github.com/system-inc/cohere/command/cohere	10.163s
+    loader_test.go:197: 143 settings, 130 tsconfigs, 1354 source files
+=== RUN   TestLoadersMatchGoCohere/catches_strict_JSON_comments
+    loader_test.go:217: native caught: line 2944: "settings-root \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001\"", Go cohere "error parsing lint config /tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/comments.json: invalid character '/' looking for beginning of object key string"
+    loader_test.go:217: Node caught: line 2944: "settings-root \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001\"", Go cohere "error parsing lint config /tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/comments.json: invalid character '/' looking for beginning of object key string"
+=== RUN   TestLoadersMatchGoCohere/catches_inherited_rule_options
+    loader_test.go:217: native caught: line 2803: "rule \"@typescript-eslint/no-shadow\" error []", Go cohere "rule \"@typescript-eslint/no-shadow\" error [\"option\"]"
+    loader_test.go:217: Node caught: line 2803: "rule \"@typescript-eslint/no-shadow\" error []", Go cohere "rule \"@typescript-eslint/no-shadow\" error [\"option\"]"
+=== RUN   TestLoadersMatchGoCohere/catches_tsconfig_excludes
+    loader_test.go:217: native caught: line 27053: "file \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/src/b.ts\"", Go cohere "file \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/src/x.cts\""
+    loader_test.go:217: Node caught: line 27053: "file \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/src/b.ts\"", Go cohere "file \"/tmp/adamic-gate/TestLoadersMatchGoCohere3770469958/001/src/x.cts\""
+--- PASS: TestLoadersMatchGoCohere (408.52s)
+    --- PASS: TestLoadersMatchGoCohere/catches_strict_JSON_comments (52.25s)
+    --- PASS: TestLoadersMatchGoCohere/catches_inherited_rule_options (32.82s)
+    --- PASS: TestLoadersMatchGoCohere/catches_tsconfig_excludes (30.22s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/config	408.533s

@@ -1,0 +1,4 @@
+// Reduced from core.ts:2345
+const array = [1, 2, 3];
+console.log(`${array.pop()}`);
+console.log(array.join(','));

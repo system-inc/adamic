@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"github.com/system-inc/adamic/internal/ir"
+	"math"
 	"path/filepath"
 	"reflect"
 	"testing"
@@ -78,6 +79,32 @@ func TestSyntaxSubstrMutants(t *testing.T) {
 					}
 					return value
 				})
+			}
+			if name == "undefined-length" {
+				// Undefined length is normalized at the call boundary now, before
+				// the helper clamps the resulting positive infinity to the suffix.
+				mutate := func(value ir.Expression) ir.Expression {
+					call, ok := value.(ir.Call)
+					if !ok || program.Functions[call.Function].Name != "library_string_substr" || len(call.Arguments) != 3 {
+						return value
+					}
+					mutateStringExpressions(reflect.ValueOf(&call.Arguments[2]).Elem(), func(argument ir.Expression) ir.Expression {
+						coalesce, ok := argument.(ir.Coalesce)
+						if !ok {
+							return argument
+						}
+						fallback, ok := coalesce.Fallback.(ir.NumberConstant)
+						if ok && math.IsInf(fallback.Value, 1) {
+							coalesce.Fallback = ir.NumberConstant{}
+							changed = true
+							return coalesce
+						}
+						return argument
+					})
+					return call
+				}
+				mutateStringExpressions(reflect.ValueOf(&program.Main).Elem(), mutate)
+				mutateStringExpressions(reflect.ValueOf(&program.Functions).Elem(), mutate)
 			}
 			if name == "evaluation-order" {
 				mutate := func(value ir.Expression) ir.Expression {

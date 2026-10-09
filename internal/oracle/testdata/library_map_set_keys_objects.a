@@ -1,0 +1,33 @@
+const first = { id: 1 };
+const second = { id: 1 };
+const alias = first;
+const map = new Map<{ id: number }, string>([
+    [first, 'first'],
+    [second, 'second'],
+]);
+console.log(`${map.size} ${map.get(alias)} ${map.get({ id: 1 })}`);
+map.set(alias, 'updated');
+map.delete(first);
+map.set(first, 'last');
+first.id = 9;
+let order = '';
+map.forEach(function(value, key) {
+    order += `${key.id}:${value}|`;
+});
+console.log(order);
+const set = new Set<{ id: number }>([first, second, alias]);
+console.log(`${set.size} ${set.has(alias)} ${set.has({ id: 9 })}`);
+set.delete(first);
+set.add(first);
+order = '';
+for(const key of set) {
+    order += `${key.id}|`;
+}
+console.log(order);
+for(let index = 2; index < 14; index++) {
+    const key = { id: index };
+    map.set(key, `${index}`);
+    set.add(key);
+    console.log(`${map.has(key)} ${set.has(key)}`);
+}
+console.log(`${map.has(first)} ${map.has(second)} ${set.has(first)} ${set.has(second)}`);

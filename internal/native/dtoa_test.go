@@ -168,12 +168,13 @@ func TestToExponentialAndToPrecisionOutOfRangePanic(t *testing.T) {
 #include <string.h>
 
 int main(int count, char **arguments) {
-	(void)count;
+	adamic_start(count, arguments);
 	double digits = strtod(arguments[2], NULL);
 	// Written as a program writes, so the panic is what flushes it.
 	static adamic_string before = ADAMIC_STRING("before");
 	adamic_write_line(adamic_stdout, &before);
 	adamic_string *text = strcmp(arguments[1], "exponential") == 0 ? adamic_number_to_exponential(1.5, digits, true) : adamic_number_to_precision(1.5, digits, true);
+	if (adamic_thrown != NULL) adamic_uncaught();
 	adamic_write_line(adamic_stdout, text);
 	adamic_release(text);
 	return 0;

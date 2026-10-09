@@ -1,0 +1,4 @@
+// Reduced from core.ts:706
+const array = ['a', 'b'];
+const deduplicated = [1, 0];
+console.log(deduplicated.map((index) => array[index]).join('|'));

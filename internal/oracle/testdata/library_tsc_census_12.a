@@ -1,0 +1,4 @@
+// Reduced from core.ts:283
+const array: readonly number[] = [1, 2, 3];
+const index = 2;
+console.log(array.slice(0, index).join('|'));

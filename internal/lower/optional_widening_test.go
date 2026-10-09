@@ -105,3 +105,45 @@ func TestOptionalWideningSpreadOverwrite(t *testing.T) {
 		t.Fatal(err)
 	}
 }
+
+// Parentheses preserve both fresh-literal exemptions and structural-view refusals.
+func TestOptionalWideningParenthesizedRelations(t *testing.T) {
+	t.Parallel()
+	for name, site := range map[string]string{
+		"initializer": "const result: Target = VALUE;",
+		"cast":        "const result = VALUE as Target;",
+		"satisfies":   "const result = VALUE satisfies Target;",
+		"assignment":  "let result: Target = { x: 0 }; result = VALUE;",
+		"argument":    "function take(value: Target): void {} take(VALUE);",
+		"return":      "function result(): Target { return VALUE; }",
+		"arrow":       "const result = (): Target => VALUE;",
+		"property":    "const result: { item: Target } = { item: VALUE };",
+		"array":       "const result: Target[] = [VALUE];",
+		"default":     "function result(value: Target = VALUE): void {}",
+		"field":       "class Result { item: Target = VALUE; }",
+	} {
+		for _, fresh := range []bool{false, true} {
+			suffix := "structural"
+			value := "((view))"
+			if fresh {
+				suffix = "fresh"
+				value = "(({ x: 1 }))"
+			}
+			t.Run(name+"/"+suffix, func(t *testing.T) {
+				t.Parallel()
+				source := "type Target = { readonly x: number; readonly y?: number }; const original = { x: 1, y: 'hidden' }; const view: { readonly x: number } = original; " + strings.ReplaceAll(site, "VALUE", value)
+				_, err := lowerSource(t, source)
+				if fresh {
+					if err != nil {
+						t.Fatal(err)
+					}
+					return
+				}
+				var refused *Refused
+				if !errors.As(err, &refused) || !strings.Contains(refused.Fix, "adamic/no-optional-widening") {
+					t.Fatalf("want optional widening refusal, got %v", err)
+				}
+			})
+		}
+	}
+}

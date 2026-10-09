@@ -1,0 +1,61 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== CONT  TestNativeAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/node_buffer_input.a (1.48s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a
+--- PASS: TestNativeAgreesWithNode (0.01s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_writes.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_encodings.a (1.40s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_crypto.a (1.52s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_bom.a (1.60s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_namespace.a (1.17s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fs_decode.a (1.24s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_finalized.a (1.21s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a (0.48s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_random.a (1.59s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf16.a (1.84s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_utf8.a (1.14s)
+PASS
+gate cache: native hits=0 misses=32
+gate cache: node hits=0 misses=22
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	3.824s

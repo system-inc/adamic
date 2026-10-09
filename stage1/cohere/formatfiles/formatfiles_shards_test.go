@@ -196,7 +196,7 @@ func formatfilesBinaryWithOptions(t *testing.T, program *ir.Program, mutant *mut
 	}
 	flags = append(flags, "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), fmt.Sprintf("C-sha256=%x", sha256.Sum256([]byte(source))))
 	inputs := buildcache.Inputs{Name: name,
-		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
+		Files: []string{"stage1/cohere/formatfiles/golang.ts", "stage1/cohere/formatfiles/disk.ts", "stage1/cohere/formatfiles/enumerate.ts", "stage1/cohere/formatfiles/main.ts", "stage1/cohere/config/glob.ts", "stage1/cohere/gitignore/path.ts", "stage1/cohere/gitignore/glob.ts", "stage1/cohere/gitignore/gitignore.ts", "internal", "go.mod", "cohere/TypeScript/tsc", "cohere/TypeScript-shim"},
 		Flags: flags, Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("clang", "--version")}}
 	directory := buildcache.Product(t, inputs, func(directory string) error {
 		return formatfilesBuildNative(t, source, filepath.Join(directory, "port"), sanitize)
@@ -497,7 +497,7 @@ func formatfilesOracle(t *testing.T) (string, string) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go"))
+	side, err := filepath.Abs(filepath.Join("testdata", "cohere_side_test.go.txt"))
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -513,7 +513,7 @@ func formatfilesOracle(t *testing.T) (string, string) {
 	}
 
 	inputs := buildcache.Inputs{Name: "formatfiles-go-oracle",
-		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go"},
+		Files:     []string{"cohere/go.mod", "cohere/internal", "cohere/TypeScript/tsc", "cohere/TypeScript-shim", "stage1/cohere/formatfiles/testdata/cohere_side_test.go.txt"},
 		Flags:     []string{"go test -c -overlay ./internal/format/formatfiles", buildcache.Tool("go", "env", "GOOS", "GOARCH", "CGO_ENABLED", "GOEXPERIMENT", "GOFLAGS")},
 		Toolchain: []string{runtime.Version(), runtime.GOOS, runtime.GOARCH, buildcache.Tool("go", "version")}}
 	product := buildcache.Product(t, inputs, func(directory string) error {

@@ -76,7 +76,7 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		// A function that never returns (it panics on every path, as (why) => panic(why) does) has no
 		// result to hold, as one returning void hasn't. An arrow whose expression is never for another
 		// reason, a variable the checker narrowed to nothing, isn't one.
-		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body())
+		neverArrow := returns.Flags()&checker.TypeFlagsNever != 0 && declaration.Body() != nil && declaration.Body().Kind != ast.KindBlock && declaration.Body().Kind != ast.KindCallExpression && !l.isPanicCall(declaration.Body()) && !l.isProcessExit(declaration.Body())
 		if returns.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) == 0 || neverArrow {
 			valueType, isKnown := l.representation(returns)
 			if returns.Flags()&checker.TypeFlagsUndefined != 0 {
@@ -154,6 +154,9 @@ func (l *lowering) signature(index int, declaration *ast.Node, this int) error {
 		if declared.Initializer == nil {
 			function.Parameters = append(function.Parameters, local)
 			continue
+		}
+		if l.includesNull(l.checker.GetTypeAtLocation(parameter.Name())) {
+			return l.notYet(parameter, "a defaulted nullable parameter (nullable reference needs an empty-case tag for omitted arguments)")
 		}
 		missing := ir.Maybe(l.result.Locals[local].Type)
 		if !missing.IsMaybe() && !missing.IsReference() {

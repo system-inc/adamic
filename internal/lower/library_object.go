@@ -9,6 +9,9 @@ import (
 )
 
 func (l *lowering) objectCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+	if value, handled, err := l.objectDescriptorCall(node, name); handled {
+		return value, handled, err
+	}
 	return l.objectCallArguments(node, name, node.AsCallExpression().Arguments.Nodes)
 }
 
@@ -17,14 +20,33 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		return nil, true, &Refused{Where: l.program.Where(node), What: "Object." + name, Fix: reason}
 	}
 	switch name {
-	case "defineProperty", "defineProperties", "getOwnPropertyDescriptor", "getOwnPropertyDescriptors":
-		return refused("property descriptors can change the presence, type or access behavior of fields; Adamic fields have a fixed shape and are plain loads and stores")
 	case "getPrototypeOf", "setPrototypeOf", "create":
-		return refused("prototypes expose or replace fields outside the declared shape; use a declared object or class with composition")
+		if name != "getPrototypeOf" {
+			arguments := node.AsCallExpression().Arguments.Nodes
+			index := 0
+			if name == "setPrototypeOf" {
+				index = 1
+			}
+			if len(arguments) > index {
+				for _, field := range l.checker.GetPropertiesOfType(l.checker.GetTypeAtLocation(arguments[index])) {
+					of, known := l.representation(l.checker.GetTypeOfSymbol(field))
+					if !known || of == ir.Object || of == ir.Array || of == ir.Map || of == ir.Closure || of == ir.Union {
+						return nil, true, l.notYet(node, "field '"+field.Name+"' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out")
+					}
+				}
+			}
+		}
+		return l.objectPrototypeLink(node, name)
 	case "fromEntries":
 		return refused("tsc returns an index-signature object with unproven keys; Adamic fixes object shapes and refuses index signatures; use Map")
 	case "groupBy":
 		return nil, true, l.notYet(node, "Object.groupBy's partial record with dynamically present keys (use Map and an explicitly typed grouping loop)")
+	}
+	if value, handled, err := l.objectNamesCallArguments(node, name, written); handled {
+		return value, handled, err
+	}
+	if value, handled, err := l.objectIntegrityCallArguments(node, name, written); handled {
+		return value, handled, err
 	}
 	count := 1
 	if name == "is" || name == "hasOwn" {
@@ -47,12 +69,24 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 	call := ir.ObjectCall{Method: name, Returns: ir.Boolean}
 	switch name {
 	case "is":
-		for _, argument := range written {
+		null := [2]bool{}
+		for index, argument := range written {
+			proven := l.checker.GetTypeAtLocation(argument)
+			null[index] = proven.Flags()&checker.TypeFlagsNull != 0
+			if !null[index] && l.includesNull(proven) {
+				return nil, true, l.notYet(argument, "Object.is with a nullable union (null and undefined need distinct runtime tags)")
+			}
 			value, err := l.expression(argument)
 			if err != nil {
 				return nil, true, err
 			}
 			call.Arguments = append(call.Arguments, fit(value, ir.Union))
+		}
+		if null[0] || null[1] {
+			// Exact null types prove SameValue without a null tag. Both operands still evaluate
+			// once, in order, through the condition; both arms have the proven result.
+			result := ir.BooleanConstant{Value: null[0] && null[1]}
+			return ir.Conditional{Condition: call, WhenTrue: result, WhenNot: result}, true, nil
 		}
 	case "isFrozen":
 		value, err := l.expression(written[0])
@@ -88,13 +122,16 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 		call.Arguments = []ir.Expression{value}
 		switch name {
 		case "hasOwn":
-			key := ast.SkipParentheses(written[1])
-			if key.Kind != ast.KindStringLiteral || !l.hasProperty(written[0], key.Text()) || len(key.Text()) > 0 && key.Text()[0] == '#' {
-				return refused("hasOwn requires a string literal naming a declared public field or method; use Map for arbitrary keys")
-			}
-			keyValue, err := l.expression(key)
+			keyValue, err := l.expression(written[1])
 			if err != nil {
 				return nil, true, err
+			}
+			switch keyValue.Type() {
+			case ir.String:
+			case ir.Number:
+				keyValue = ir.NumberToString{Value: keyValue}
+			default:
+				return nil, true, l.notYet(written[1], "Object.hasOwn with a key requiring unrepresented ToPropertyKey coercion")
 			}
 			call.Arguments = append(call.Arguments, keyValue)
 		case "freeze":
@@ -192,7 +229,8 @@ func (l *lowering) objectCallArguments(node *ast.Node, name string, written []*a
 }
 
 // exactObject proves there are no hidden fields and no synthetic absent slots. An explicit type
-// annotation, alias, spread or call would need a separate proof and is deliberately not guessed.
+// annotation, spread or call would need a separate proof and is deliberately not guessed.
+// A let binding is also exact when no assignment anywhere in its module can replace its object.
 func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 	if depth > 16 {
 		return false
@@ -206,7 +244,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment {
 				return false
 			}
-			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral {
+			if field.Name().Kind != ast.KindIdentifier && field.Name().Kind != ast.KindStringLiteral && field.Name().Kind != ast.KindNumericLiteral {
 				return false
 			}
 			if strings.ContainsRune(field.Name().Text(), 0) || field.Name().Text() == "__proto__" || len(field.Name().Text()) > 0 && field.Name().Text()[0] == '#' {
@@ -227,7 +265,7 @@ func (l *lowering) exactObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	variable := declaration.AsVariableDeclaration()
-	if variable.Type != nil || variable.Initializer == nil || declaration.Parent.Flags&ast.NodeFlagsConst == 0 {
+	if variable.Type != nil || variable.Initializer == nil || (declaration.Parent.Flags&ast.NodeFlagsConst == 0 && l.objectBindingAssigned(declaration, symbol)) {
 		return false
 	}
 	return l.exactObject(variable.Initializer, depth+1)

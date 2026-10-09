@@ -1,0 +1,9 @@
+console.log(String(Date.hasOwnProperty('now')));
+console.log(String(Date.hasOwnProperty('UTC')));
+console.log(String(Date.hasOwnProperty('parse')));
+console.log(String(Date.hasOwnProperty('missing')));
+console.log(String(Date.prototype.hasOwnProperty('getTime')));
+console.log(String(Date.prototype.hasOwnProperty('getUTCFullYear')));
+console.log(String(Date.prototype.hasOwnProperty('toISOString')));
+console.log(String(Date.prototype.hasOwnProperty('constructor')));
+console.log(String(Date.prototype.hasOwnProperty('missing')));

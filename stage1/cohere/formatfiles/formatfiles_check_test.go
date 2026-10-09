@@ -15,43 +15,43 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 	if requested := formatfilesSelectedShard(t); requested >= 0 && requested != selected {
 		t.Skip("another shard selected")
 	}
-	shared := formatfilesPrepareShard(t, selected)
+	shared := formatfilesPrepareShard(t)
 	ctx := formatfilesDeadline(t, "shard")
-	casesPath, goAnswers := shared.casesPath, shared.answers
-	shards := shared.parts
+	goAnswers := shared.answers
 	portSource, program, binary := shared.port.source, shared.port.program, shared.port.binary
 
-	checks := make([][]func(*testing.T), testThePortParsesAsGoCohereDoesShards)
-
-	for index, part := range shards {
-		checks[index] = append(checks[index], func(t *testing.T) {
-			casesPath, goAnswers := formatfilesCaseFile(t, part), part.answers
-			nodeRun := formatfilesNode(t, ctx, filepath.Join(portSource, "main.ts"), casesPath)
-			nativeRun := formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, casesPath)
-			sanitized := binary
-			backendRun := formatfilesNode(t, ctx, shared.port.javascript, casesPath)
-			for _, side := range []struct {
-				name string
-				run  run
-			}{{"Node", nodeRun}, {"native", nativeRun}, {"the JavaScript backend", backendRun}} {
-				if side.run.exitCode != 0 || len(side.run.stderr) > 0 {
-					t.Fatalf("%s: exit %d, stderr %q", side.name, side.run.exitCode, side.run.stderr)
-				}
-				if difference := firstDifference(string(side.run.stdout), goAnswers); difference != "" {
-					t.Errorf("%s and Go cohere differ: %s", side.name, difference)
-				}
+	part := shared.parts[selected]
+	partCases := formatfilesCaseFile(t, part)
+	for _, side := range []struct {
+		name string
+		run  func(*testing.T) run
+	}{
+		{"Node", func(t *testing.T) run {
+			return formatfilesNode(t, ctx, filepath.Join(portSource, "main.ts"), partCases)
+		}},
+		{"native", func(t *testing.T) run {
+			return formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, partCases)
+		}},
+		{"JavaScript backend", func(t *testing.T) run { return formatfilesNode(t, ctx, shared.port.javascript, partCases) }},
+	} {
+		t.Run(side.name, func(t *testing.T) {
+			t.Parallel()
+			result := side.run(t)
+			if result.exitCode != 0 || len(result.stderr) > 0 {
+				t.Fatalf("%s: exit %d, stderr %q", side.name, result.exitCode, result.stderr)
 			}
-			agreed := !t.Failed()
-			if leaked := formatfilesLeaks(t, ctx, program, sanitized, casesPath); leaked != "" {
-				t.Errorf("leaks:\n%s", leaked)
+			if difference := firstDifference(string(result.stdout), part.answers); difference != "" {
+				t.Fatalf("%s and Go cohere differ: %s", side.name, difference)
 			}
-
-			if agreed {
-				t.Logf("%d trees, %d files offered, %d directories entered, %d refused walks: every answer the same from Go cohere, the port natively, on Node and through the JavaScript backend",
-					strings.Count(goAnswers, "tree "), strings.Count(goAnswers, "\nfile "), strings.Count(goAnswers, "\ndirectory "), strings.Count(goAnswers, "\nenumerate error "))
-			}
+			t.Logf("%d trees: every answer the same from %s and Go cohere", strings.Count(part.answers, "tree "), side.name)
 		})
 	}
+	t.Run("leaks", func(t *testing.T) {
+		t.Parallel()
+		if leaked := formatfilesLeaks(t, ctx, program, binary, partCases); leaked != "" {
+			t.Errorf("leaks:\n%s", leaked)
+		}
+	})
 
 	// Cases that answer the same whatever the walk does would agree without testing it: each kind of
 	// answer has to be among them.
@@ -67,42 +67,42 @@ func formatfilesCheckShard(t *testing.T, selected int) {
 		t.Errorf("the cases never reach %q", missing)
 	}
 
-	// The comparison has to be able to fail. Each mutant changes the port where only its answers can
-	// show it, and the port must then disagree with Go cohere: natively, since that is the program this
-	// test holds, and on Node, which shows the fault is the port's and not stage 0's.
-	for _, mutant := range mutants {
-		index := formatfilesShard("mutant/" + mutant.name)
-		if selected >= 0 && index != selected {
-			continue
-		}
-		prepared := shared.mutated[mutant.name]
-		mutated, mutatedBinary := prepared.source, prepared.binary
+}
 
-		checks[index] = append(checks[index], func(t *testing.T) {
-			t.Logf("mutant %s", mutant.name)
-			for _, side := range []struct {
-				name string
-				run  run
-			}{{"natively", formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)}, {"on Node", formatfilesNode(t, ctx, filepath.Join(mutated, "main.ts"), casesPath)}} {
-				if side.run.exitCode != 0 {
-					t.Errorf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, side.run.exitCode, side.run.stderr)
-					continue
-				}
-				difference := firstDifference(string(side.run.stdout), goAnswers)
-				if difference == "" {
-					t.Errorf("%s the mutant agrees with Go cohere: the comparison cannot see it", side.name)
-					continue
-				}
-				t.Logf("%s, caught: %s", side.name, difference)
+// Each mutant keeps the entire live corpus, in its own independently bounded unit.
+func formatfilesCheckMutant(t *testing.T, selected int) {
+	t.Helper()
+	mutant := mutants[selected]
+	if requested := formatfilesSelectedShard(t); requested >= 0 && requested != formatfilesShard("mutant/"+mutant.name) {
+		t.Skip("another shard selected")
+	}
+	shared := formatfilesReady(t)
+	prepared := formatfilesPreparedMutant(t, selected)
+	ctx := formatfilesDeadline(t, "mutant")
+	casesPath, goAnswers := shared.casesPath, shared.answers
+	mutated, mutatedBinary := prepared.source, prepared.binary
+	for _, side := range []struct {
+		name string
+		run  func(*testing.T) run
+	}{
+		{"natively", func(t *testing.T) run {
+			return formatfilesExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, mutatedBinary, casesPath)
+		}},
+		{"on Node", func(t *testing.T) run {
+			return formatfilesNode(t, ctx, filepath.Join(mutated, "main.ts"), casesPath)
+		}},
+	} {
+		t.Run(mutant.name+"/"+side.name, func(t *testing.T) {
+			t.Parallel()
+			result := side.run(t)
+			if result.exitCode != 0 {
+				t.Fatalf("%s the mutant exits %d (stderr %q); it must be caught by its answers, not by failing", side.name, result.exitCode, result.stderr)
 			}
+			difference := firstDifference(string(result.stdout), goAnswers)
+			if difference == "" {
+				t.Fatal("the mutant agrees with Go cohere: the comparison cannot see it")
+			}
+			t.Logf("%s, caught: %s", side.name, difference)
 		})
 	}
-
-	if len(checks) != testThePortParsesAsGoCohereDoesShards {
-		t.Fatal("shard count differs")
-	}
-	for _, check := range checks[selected] {
-		check(t)
-	}
-
 }

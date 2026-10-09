@@ -1,0 +1,14 @@
+=== RUN   TestInputAgreesWithNode
+=== PAUSE TestInputAgreesWithNode
+=== CONT  TestInputAgreesWithNode
+=== RUN   TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== PAUSE TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+=== CONT  TestInputAgreesWithNode/internal/oracle/testdata/realpath.a
+    input_test.go:111: gate cache probe miss
+--- PASS: TestInputAgreesWithNode (0.00s)
+    --- PASS: TestInputAgreesWithNode/internal/oracle/testdata/realpath.a (39.85s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=1
+ok  	github.com/system-inc/adamic/internal/oracle	39.899s

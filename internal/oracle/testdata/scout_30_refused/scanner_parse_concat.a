@@ -1,0 +1,4 @@
+// scanner.ts:1258: library parse is admitted, but mixed + is compiler-owned.
+let tokenValue = '077';
+tokenValue = '' + parseInt(tokenValue, 8);
+console.log(tokenValue);

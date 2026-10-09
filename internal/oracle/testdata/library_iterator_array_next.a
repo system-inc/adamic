@@ -1,0 +1,72 @@
+const array = [1, 2];
+const values = array.values();
+const keys = array.keys();
+const entries = array.entries();
+const first = values.next();
+console.log(`${first.done} ${first.value}`);
+array[1] = 8;
+array.push(3);
+const second = values.next();
+console.log(`${second.done} ${second.value}`);
+for(const value of values) {
+    console.log(`rest ${value}`);
+}
+const end = values.next();
+console.log(`end ${end.done} ${end.value === undefined}`);
+array.push(4);
+const still = values.next();
+console.log(`still ${still.done} ${still.value === undefined}`);
+for(const key of keys) {
+    console.log(`key ${key}`);
+}
+for(const pair of entries) {
+    console.log(`entry ${pair[0]} ${pair[1]}`);
+}
+const words = ['aa'.repeat(2), 'bb'.repeat(2)];
+const wordValues = words.values();
+console.log(wordValues.next().value);
+words.splice(1, 1);
+console.log(`${wordValues.next().done}`);
+words.push('cc');
+console.log(`${wordValues.next().done}`);
+const optional: (number | undefined)[] = [undefined, NaN, -0, 5];
+for(const value of optional.values()) {
+    console.log(`${value}`);
+}
+const empty: string[] = [];
+const emptyIterator = empty.values();
+console.log(`${emptyIterator.next().done}`);
+empty.push('late');
+console.log(`${emptyIterator.next().done}`);
+const symbolValues = array[Symbol.iterator]();
+console.log(`${symbolValues[Symbol.iterator]() === symbolValues}`);
+console.log(`${symbolValues.next().value}`);
+const booleanArray = [true, false];
+for(const pair of booleanArray.entries()) {
+    console.log(`${pair[0]} ${pair[1]}`);
+}
+for(const key of booleanArray.keys()) {
+    console.log(`boolean key ${key}`);
+}
+
+const readonly: readonly string[] = ['a', 'b'];
+const held = readonly.values();
+for(const value of held) {
+    console.log(`break ${value}`);
+    if(value === 'a') {
+        break;
+    }
+}
+console.log(`${held.next().value}`);
+const maybeWords: (string | undefined)[] = [undefined, 'word'];
+const maybeIterator = maybeWords.values();
+const maybeFirst = maybeIterator.next();
+console.log(`${maybeFirst.done} ${maybeFirst.value === undefined}`);
+console.log(`${maybeIterator.next().value}`);
+const freshOne = maybeIterator.next();
+const freshTwo = maybeIterator.next();
+console.log(`${freshOne !== freshTwo} ${freshOne.done} ${freshOne.value === undefined}`);
+const narrowed = [7].values().next();
+if(!narrowed.done) {
+    console.log(`narrowed value ${narrowed.value + 1}`);
+}

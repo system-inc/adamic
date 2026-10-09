@@ -1,0 +1,29 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import * as fs from 'node:fs';
+const statSyncOptions = {throwIfNoEntry: false} as const;
+function statSync(path: string): import('fs').Stats | undefined {
+    try { return fs.statSync(path, statSyncOptions); }
+    catch { return undefined; }
+}
+function fileExists(path: string): boolean {
+    const stat = statSync(path);
+    return stat !== undefined && stat.isFile();
+}
+function directoryExists(path: string): boolean {
+    const stat = statSync(path);
+    return stat !== undefined && stat.isDirectory();
+}
+for (const path of ['node_fs_directory_inputs/plain.txt','node_fs_directory_inputs/nested','node_fs_directory_inputs/absent','node_fs_directory_inputs/plain.txt/child']) {
+    console.log(`${path} ${fileExists(path)} ${directoryExists(path)}`);
+    try { console.log(`direct ${fs.statSync(path,statSyncOptions) === undefined}`); }
+    catch (error) { if (error instanceof Error) {
+        console.log(`caught ${errorCode(error) ?? ''} ${error.message}`);
+    } }
+}
+const throwingOptions = {throwIfNoEntry: true} as const;
+try { fs.statSync('node_fs_directory_inputs/absent', throwingOptions); }
+catch (error) { if (error instanceof Error) {
+    console.log(`required ${errorCode(error) ?? ''} ${error.message}`);
+} }

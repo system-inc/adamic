@@ -1,0 +1,17 @@
+const seen = new Map<string, RegExpExecArray>();
+const matched = /b/.exec('abc');
+if (matched !== null) { seen.set('hit', matched); }
+function observe(key: string): void {
+ const value = seen.get(key);
+ if (value !== undefined) {
+  console.log(`present: undefined=${value === undefined} null=${value === null} typeof=${typeof value}`);
+ } else { console.log('absent: undefined=true null=false'); }
+}
+observe('absent');
+observe('hit');
+const misses = new Map<string, RegExpExecArray | null>();
+misses.set('miss', /z/.exec('abc'));
+misses.set('hit', /b/.exec('abc'));
+for (const value of misses.values()) {
+ console.log(`stored: undefined=${value === undefined} null=${value === null} typeof=${typeof value}`);
+}

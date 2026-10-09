@@ -1,0 +1,27 @@
+=== RUN   TestNodeProcessHostNewLine
+=== PAUSE TestNodeProcessHostNewLine
+=== RUN   TestNodeProcessOSNamespace
+=== PAUSE TestNodeProcessOSNamespace
+=== CONT  TestNodeProcessHostNewLine
+=== CONT  TestNodeProcessOSNamespace
+=== NAME  TestNodeProcessHostNewLine
+    node_process_host_fixture_test.go:16: gate cache node miss
+=== NAME  TestNodeProcessOSNamespace
+    node_process_tmpdir_test.go:46: gate cache node miss
+=== NAME  TestNodeProcessHostNewLine
+    node_process_host_fixture_test.go:45: gate cache node miss
+=== NAME  TestNodeProcessOSNamespace
+    node_process_tmpdir_test.go:47: gate cache node miss
+=== NAME  TestNodeProcessHostNewLine
+    node_process_host_fixture_test.go:78: gate cache node miss
+    node_process_host_fixture_test.go:82: 23_newLine unchanged source matches status.json on both backends; CRLF mutants run cleanly and fail only Node bytes
+--- PASS: TestNodeProcessHostNewLine (2.64s)
+=== NAME  TestNodeProcessOSNamespace
+    node_process_tmpdir_test.go:68: gate cache node miss
+    node_process_tmpdir_test.go:72: System.newLine namespace body agrees on both backends; native and JavaScript EOL mutants caught only by Node stdout comparison
+--- PASS: TestNodeProcessOSNamespace (2.88s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=6
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	2.913s

@@ -1,0 +1,3 @@
+const target = {};
+Error.captureStackTrace(target);
+console.log(`${Object.hasOwn(target, 'stack')}`);

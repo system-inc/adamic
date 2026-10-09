@@ -311,6 +311,15 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 	packed, count := e.closureArguments(expression)
 	call := e.packedClosureCall(expression, closure, packed, count)
+	processHost := false
+	walkExpressions(e.program, func(value ir.Expression) {
+		if host, ok := value.(ir.ProcessCall); ok && host.Operation == "performance" {
+			processHost = true
+		}
+	})
+	if processHost && closure != "" {
+		call = fmt.Sprintf("adamic_node_performance_invoke(%s, %s, %s, %t)", closure, packed, count, expression.Returns == 0)
+	}
 	if expression.Direct > 0 {
 		target := expression.Direct - 1
 		extra := ""

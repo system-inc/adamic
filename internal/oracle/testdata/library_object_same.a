@@ -2,3 +2,10 @@
 console.log(`${Object.is(NaN, NaN)} ${Object.is(0 / 0, Number.NaN)} ${Object.is(NaN, 0 / 0)}`);
 console.log(`${Object.is(-0, 0)} ${Object.is(0, -0)} ${Object.is(-0, -0)} ${Object.is(0, 0)} ${Object.is(-0, +0)}`);
 console.log(`${Object.is(0 / -1, -0)} ${Object.is(0 / -1, 0)} ${Object.is(-1 * 0, -0)} ${Object.is(NaN, Infinity)}`);
+
+// Exact null operands are distinct from undefined; evaluation still happens left to right once.
+let nullOrder = '';
+function nextNumber(): number { nullOrder += 'v'; return 1; }
+console.log(`${Object.is(null, null)} ${Object.is(null, undefined)} ${Object.is(undefined, null)} ${Object.is(null, false)} ${Object.is(0, null)}`);
+console.log(`${Object.is(null, nextNumber())} ${nullOrder}`);
+console.log(`${Object.is(nextNumber(), null)} ${nullOrder}`);

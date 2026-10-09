@@ -1,0 +1,7 @@
+// a-check: checked
+// compiler/core.ts:600-611: callback receives key before value; collisions retain first key position.
+import { mapEntries } from '../../../stage1/typescript/collections/core.a';
+const input = new Map<string, number>([['first', 1], ['second', 2], ['third', 3]]);
+const output = mapEntries(input, (key: string, value: number): readonly [string, number] => [value === 2 ? 'other' : 'same', value + key.length]);
+console.log(`${output.size}`);
+for (const [key, value] of output) console.log(`${key} ${value}`);

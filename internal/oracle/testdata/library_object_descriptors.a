@@ -1,0 +1,28 @@
+const object = {'2': 2, '1': 1, text: 'built'.repeat(2), flag: false};
+const descriptor = Object.getOwnPropertyDescriptor(object, 'text');
+if (descriptor !== undefined) {
+ console.log(`${Object.keys(descriptor).join('|')}`);
+ console.log(`${descriptor.writable ?? false}`);
+ console.log(`${descriptor.enumerable ?? false}`);
+ console.log(`${descriptor.configurable ?? false}`);
+ const value: unknown = descriptor.value;
+ if (typeof value === 'string') console.log(`${value}`);
+}
+console.log(`${Object.getOwnPropertyDescriptor(object, 'missing') === undefined}`);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'toString') === undefined}`);
+const all = Object.getOwnPropertyDescriptors(object);
+console.log(`${Object.keys(all).join('|')}`);
+console.log(`${all.text.value ?? 'missing'}`);
+console.log(`${all.flag.value ?? true}`);
+console.log(`${all['1'].value ?? 0}`);
+console.log(`${object.propertyIsEnumerable('text')}`);
+console.log(`${object.propertyIsEnumerable('missing')}`);
+console.log(`${object.propertyIsEnumerable('toString')}`);
+Object.preventExtensions(object);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.configurable ?? false}`);
+Object.seal(object);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.writable ?? false}`);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.configurable ?? true}`);
+Object.freeze(object);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.writable ?? true}`);
+console.log(`${Object.getOwnPropertyDescriptor(object, 'text')?.enumerable ?? false}`);

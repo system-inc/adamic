@@ -1,0 +1,25 @@
+import { programArguments } from 'adamic';
+import { statSync, readdirSync, type Stats, type Dirent } from 'node:fs';
+
+function inspect(value: Stats | Dirent | undefined): void {
+    if (value !== undefined) {
+        console.log(`${value.isFile()} ${value.isDirectory()} ${value.isSymbolicLink()} ${value.isBlockDevice()} ${value.isCharacterDevice()} ${value.isFIFO()} ${value.isSocket()}`);
+    } else { console.log('absent'); }
+}
+function reverse(value: Dirent | Stats | undefined): void {
+    if (value !== undefined) {
+        console.log(`${value.isFile()} ${value.isDirectory()} ${value.isSymbolicLink()} ${value.isBlockDevice()} ${value.isCharacterDevice()} ${value.isFIFO()} ${value.isSocket()}`);
+    }
+}
+const root = programArguments()[0] ?? 'walking';
+let value: Stats | Dirent | undefined;
+inspect(value);
+for (const entry of readdirSync(root, { withFileTypes: true })) {
+    value = entry;
+    console.log(entry.name);
+    inspect(value);
+    reverse(value);
+    value = statSync(root + '/' + entry.name, { throwIfNoEntry: false });
+    inspect(value);
+    reverse(value);
+}

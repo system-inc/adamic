@@ -13,15 +13,17 @@ func TestFixtureCorpusCountsEveryDiagnosticKind(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// Optional fields now have a named representation gap. Keep that witness
+	// and the async witness; non_null.a supplies the soundness refusal.
 	got := map[string]int{}
 	for _, reason := range r.Reasons {
 		got[reason.Kind] += reason.Count
 	}
-	if r.FilesReachingLowering != 2 {
-		t.Fatalf("entries reaching lowering = %d, want 2", r.FilesReachingLowering)
+	if r.FilesReachingLowering != 3 {
+		t.Fatalf("entries reaching lowering = %d, want 3", r.FilesReachingLowering)
 	}
-	if got["Refused"] != 1 || got["NotYet"] != 1 {
-		t.Fatalf("counts = %#v, want one Refused and one NotYet", got)
+	if got["Refused"] != 1 || got["NotYet"] != 2 {
+		t.Fatalf("counts = %#v, want one Refused and two NotYet", got)
 	}
 }
 
@@ -75,7 +77,7 @@ func TestJSONIsMachineReadable(t *testing.T) {
 	if err := json.Unmarshal(stdout.Bytes(), &got); err != nil {
 		t.Fatalf("invalid JSON: %v\n%s", err, stdout.String())
 	}
-	if got.FilesExamined != 2 || len(got.Reasons) != 2 {
+	if got.FilesExamined != 3 || len(got.Reasons) != 3 {
 		t.Fatalf("report = %#v", got)
 	}
 }

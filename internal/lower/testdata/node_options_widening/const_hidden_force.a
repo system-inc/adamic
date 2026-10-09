@@ -1,0 +1,5 @@
+import { rmSync } from 'node:fs';
+const options = { recursive: false };
+(options as { recursive: boolean; force: string }).force = 'yes';
+try { rmSync('missing-node-options-widening-entry', options); }
+catch (error) { if (error instanceof Error) console.log(error.message); }

@@ -20,6 +20,10 @@ func TestMathNumberOracleCatchesMutants(t *testing.T) {
 		{"conversion", "convert", "adamic_number_from_string(", "adamic_number_parse_float("},
 		{"own_property", "convert", "adamic_number_has_own_property(", "!adamic_number_has_own_property("},
 		{"prototype", "prototype", "adamic_number_to_fixed(", "adamic_number_to_fixed(1 + "},
+		{"catchable_fixed", "prototype", "adamic_number_checked_fixed(", "adamic_number_checked_fixed(1 + "},
+		{"catchable_exponential", "prototype", "adamic_number_checked_exponential(", "adamic_number_checked_exponential(1 + "},
+		{"catchable_precision", "prototype", "adamic_number_checked_precision(", "adamic_number_checked_precision(1 + "},
+		{"catchable_radix", "prototype", "adamic_number_checked_radix(", "adamic_number_checked_radix(1 + "},
 	}
 	for _, mutant := range mutants {
 		t.Run(mutant.name, func(t *testing.T) {

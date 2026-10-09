@@ -1,0 +1,30 @@
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/cwd_catch
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/cwd_catch
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/measure_catch
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/measure_catch
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== RUN   TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+=== PAUSE TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/cwd_catch
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+=== CONT  TestNodeProcessUnsupportedOperationsStayLoud/measure_catch
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/cwd_catch
+    node_process_test.go:263: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudcwd_catch1161631427/001/node_process_unsupported.a:1:1: stage 0 can't lower a try around the Node host cwd operation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure
+    node_process_test.go:263: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudwrite_backpressure4187582750/001/node_process_unsupported.a:1:18: stage 0 can't lower observing the backpressure return of process.stdout.write yet
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback
+    node_process_test.go:263: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudnextTick_callback2955302887/001/node_process_unsupported.a:1:1: stage 0 can't lower process.nextTick as a value (use its supported process operation directly) yet
+=== NAME  TestNodeProcessUnsupportedOperationsStayLoud/measure_catch
+    node_process_test.go:263: /tmp/adamic-gate/TestNodeProcessUnsupportedOperationsStayLoudmeasure_catch2419922037/001/node_process_unsupported.a:1:66: stage 0 can't lower a try around the Node host measure operation, whose failure is a panic natively but a throw a catch can take on Node (docs/memory.md) yet
+--- PASS: TestNodeProcessUnsupportedOperationsStayLoud (0.00s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/cwd_catch (0.28s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/write_backpressure (0.28s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/nextTick_callback (0.27s)
+    --- PASS: TestNodeProcessUnsupportedOperationsStayLoud/measure_catch (0.27s)
+PASS
+ok  	github.com/system-inc/adamic/internal/oracle	0.316s

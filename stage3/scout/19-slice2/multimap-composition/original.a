@@ -1,0 +1,41 @@
+// a-check: type error TS2304
+export interface MultiMap<K, V> extends Map<K, V[]> {
+    /**
+     * Adds the value to an array of values associated with the key, and returns the array.
+     * Creates the array if it does not already exist.
+     */
+    add(key: K, value: V): V[];
+    /**
+     * Removes a value from an array of values associated with the key.
+     * Does not preserve the order of those values.
+     * Does nothing if `key` is not in `map`, or `value` is not in `map[key]`.
+     */
+    remove(key: K, value: V): void;
+}
+
+/** @internal */
+export function createMultiMap<K, V>(): MultiMap<K, V> {
+    const map = new Map<K, V[]>() as MultiMap<K, V>;
+    map.add = multiMapAdd;
+    map.remove = multiMapRemove;
+    return map;
+}
+function multiMapAdd<K, V>(this: MultiMap<K, V>, key: K, value: V) {
+    let values = this.get(key);
+    if (values !== undefined) {
+        values.push(value);
+    }
+    else {
+        this.set(key, values = [value]);
+    }
+    return values;
+}
+function multiMapRemove<K, V>(this: MultiMap<K, V>, key: K, value: V) {
+    const values = this.get(key);
+    if (values !== undefined) {
+        unorderedRemoveItem(values, value);
+        if (!values.length) {
+            this.delete(key);
+        }
+    }
+}

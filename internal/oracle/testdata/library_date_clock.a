@@ -1,0 +1,13 @@
+const first = Date.now();
+const callback: () => number = Date.now;
+const second = callback();
+const date = new Date();
+const last = Date.now();
+console.log(String(Number.isInteger(first)));
+console.log(String(Number.isInteger(second)));
+console.log(String(Number.isInteger(date.getTime())));
+console.log(String(first > 0 && first < 8640000000000000));
+console.log(String(Number.isInteger(last)));
+console.log(String(first >= Date.UTC(2020, 0) && first < Date.UTC(2100, 0)));
+console.log(String(date.toISOString().endsWith('Z')));
+console.log(String(callback === Date.now));

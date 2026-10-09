@@ -1,0 +1,8 @@
+import { programArguments } from 'adamic';
+const pattern = programArguments()[0] ?? '^a{12}$';
+try {
+    console.log(`${new RegExp(pattern).test('aaaaaaaaaaaa')}`);
+} catch (error) {
+    console.log('caught a budget stop');
+}
+console.log('finished');

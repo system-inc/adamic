@@ -1,0 +1,3 @@
+Original driver from 8f76160; child writes ready\ncached true\n in one os.write.
+24 concurrent observations: {'cmVhZHkK': 24}
+All lost cached true despite child exit 0.

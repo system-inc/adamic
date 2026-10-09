@@ -54,7 +54,7 @@ adamic_string *adamic_string_from_char_codes_of(const adamic_array *values) {
 }
 
 adamic_string *adamic_string_from_code_points_of(const adamic_array *values) {
-	// A RangeError panics from inside, where the copy would be let go of at exit anyway.
+	// A RangeError returns through the pending exception word; release the copy on that path too.
 	double *copied = numbers(values);
 	adamic_string *result = adamic_string_from_code_points(values->length, copied);
 	free(copied);
