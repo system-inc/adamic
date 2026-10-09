@@ -1,0 +1,13 @@
+FIRST FAILURE (products, at 245.0 s):
+github.com/system-inc/adamic/stage1/cohere/typeaware TestProduct_profile_mutant_first_binding
+=== RUN   TestProduct_profile_mutant_first_binding
+=== PAUSE TestProduct_profile_mutant_first_binding
+=== CONT  TestProduct_profile_mutant_first_binding
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.059133s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.015684s
+    volume_profile_Mutants_test.go:166: phase command first-binding 90.022635s
+    volume_profile_Mutants_test.go:166: first-binding: signal: killed
+        
+--- FAIL: TestProduct_profile_mutant_first_binding (125.88s)
+
+(box load 272.0 on 64 cores at first failure)
