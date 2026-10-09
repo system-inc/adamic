@@ -2444,8 +2444,6 @@ class CacheDrainMutants(unittest.TestCase):
         self.assertEqual(len(result.failures), 2, result.failures)
 
 
-if __name__ == "__main__":
-    unittest.main()
 
 
 class WASIUnits(unittest.TestCase):
@@ -3029,3 +3027,7 @@ func TestProduct_Recipe(t *testing.T) {
         self.assertEqual(row['input_hash'], 'a'*64, row)
         self.assertEqual(row['inputs']['buildcache'], [self.recipe])
         self.assertEqual(gate.result['units'][0]['input_hash'], row['input_hash'])
+
+
+if __name__ == "__main__":
+    unittest.main()

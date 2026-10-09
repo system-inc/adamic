@@ -111,3 +111,37 @@ For compound units, discovery may read already cached prerequisite products but
 never invokes a build callback. If an unavailable prerequisite prevents it from
 collecting every recipe named by the recorded unit, it emits a null hash and an
 explicit rerun reason instead of substituting the prerequisite's key.
+
+## Port to the current tools tree
+
+`devtools/red-sort-v2` replays the nine red-sort commits, including the initial
+input-hash commit, onto fast-gate `374ebb90b953035970e7a7b53d86d3ce615e96ed`.
+The only cherry-pick conflict was the cache-drain deadline assertion in
+`run_test.py`: retain the current one-second patched deadline and its named
+kill message. The current runner's product deadlines, scheduling, phase input
+providers, and stop handling remain in place.
+
+Move `unittest.main()` below all test classes so direct execution includes the
+ported proofs as well as the existing trailing WASI tests. On this tree:
+
+```
+timeout 600 python3 cloud/fast-gate/run_test.py
+# Ran 194 tests: OK
+
+timeout 600 python3 -m unittest discover -s cloud/fast-gate -p sort_reds_test.py -v
+# Ran 24 tests: OK
+
+timeout 600 python3 -m unittest discover -s cloud/fast-gate -p run_test.py -k PlantedRedSortProof -v
+# Ran 2 tests: OK
+```
+
+The original direct command on the unmodified fast-gate base passed 166 tests.
+There were no baseline failures. The real planted candidate's status contains
+`candidate reds: 1`; running that same proof with the all-mains sorter produces
+one assertion failure (`0 != 1`) and zero errors, as its mutation test requires.
+The shared command's parity, relocated-tree, changed-input, and evaluated
+product-recipe tests all run in the 194-test direct suite.
+
+This repository contains no integration `push-main` implementation. Its shared
+hash command interface above is preserved for that caller. This port runs no
+watcher deployment or candidate gate.
