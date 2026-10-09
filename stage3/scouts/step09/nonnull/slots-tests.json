@@ -1,0 +1,21 @@
+{
+  "checks": 18,
+  "mutants": [
+    {
+      "name": "omit-read",
+      "caught": "first-read observation assertion"
+    },
+    {
+      "name": "omit-write",
+      "caught": "first-read observation assertion"
+    },
+    {
+      "name": "invert-written",
+      "caught": "first-read observation assertion"
+    },
+    {
+      "name": "getter-writes-before-read",
+      "caught": "first-read observation assertion"
+    }
+  ]
+}

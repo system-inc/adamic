@@ -1,0 +1,7 @@
+{
+  "input": "001_varianceCantBeStrictWhileStructureIsnt",
+  "mutant": "omit real undefined observation from unconditional table initializer",
+  "site": "src/compiler/scanner.ts:4097:24@218730-218740:undefined",
+  "caught_by": "independent known-nullish initializer contract",
+  "caught": true
+}

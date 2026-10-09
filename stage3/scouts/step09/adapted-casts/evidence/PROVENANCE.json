@@ -1,0 +1,17 @@
+{
+  "repository_sha": "855bcfaacb8919a0d61ec34eda785fce9fde8ba2",
+  "source": {
+    "repository": "https://github.com/microsoft/TypeScript.git",
+    "tag": "v6.0.3",
+    "commit": "050880ce59e30b356b686bd3144efe24f875ebc8"
+  },
+  "extras": [
+    {
+      "adaptation": "43-any-returns",
+      "sha": "643639ea30051875d2ba1a133866081bc8999e2a",
+      "source": "stage3/adapt/43-any-returns"
+    }
+  ],
+  "node_types": "25.3.3",
+  "lock_sha256": "e85be648176ba25eaa38f9c1b7b7ca9bab782b0c448fb15fc44c355c40ef9a4b"
+}

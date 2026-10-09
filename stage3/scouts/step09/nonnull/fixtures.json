@@ -1,0 +1,5 @@
+[
+ {"file":"01_erased.a","site":"src/compiler/builder.ts:1793:46","node_stdout":"7\n","proven":1,"checked":0},
+ {"file":"02_checked_pass.a","site":"src/compiler/core.ts:519:16","node_stdout":"17\n17\n","proven":0,"checked":1},
+ {"file":"03_checked_stop.a","site":"src/compiler/core.ts:1896:24","node_stdout":"42\nafter\n","runtime_stdout":"42\n","proven":0,"checked":1,"fails":true}
+]
