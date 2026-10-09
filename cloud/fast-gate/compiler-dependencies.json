@@ -1,7 +1,9 @@
 {
   "version": 1,
   "packages": {
-    "internal/boundedrun": [],
+    "internal/boundedrun": [
+      "cmd/adamic"
+    ],
     "internal/leakcheck": [
       "internal/native"
     ]
