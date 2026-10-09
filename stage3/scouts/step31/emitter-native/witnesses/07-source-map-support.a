@@ -1,0 +1,5 @@
+// a-check: type error TS2307
+// The upstream sys branch is lazy; this fixture holds its disabled path to Node.
+type SourceMapSupport = typeof import("source-map-support");
+const sourceMapsEnabled = false;
+console.log(`${sourceMapsEnabled}`);

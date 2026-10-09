@@ -1,0 +1,3 @@
+{"record":"project","format":"adamic-emitter-v1","typescript":"6.0.3","id":"emitter-recorded","options":{"module":"commonjs","noLib":true,"target":"es2020","types":[]}}
+{"record":"result","emitSkipped":false,"diagnostics":[]}
+{"record":"output","path":"recorded.js","text":"\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.value = void 0;\nexports.answer = answer;\n// retained comment\nexports.value = 41 + 1;\nfunction answer() { return exports.value; }\n","bom":false,"sources":["recorded.a"]}

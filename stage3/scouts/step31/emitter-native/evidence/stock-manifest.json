@@ -1,0 +1,29 @@
+{
+  "environment": {
+    "format": "adamic-emitter-v1",
+    "typescript": "6.0.3",
+    "node": "v24.19.0",
+    "api": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39",
+    "libraries": "c4bbec912cb85fb91d95ff7a0922b1eb09fceb9d584cdd18debfd049c48d22cd",
+    "driver": "97a8232889191d5616c7b298ef2359e35dfde4db338f1673a7e77ca57611a402"
+  },
+  "projects": [
+    {
+      "id": "emitter-recorded",
+      "input": "aad1a74ca9a43ddcfc28562bce6141317775b5794b789c3d330e7b4fd12c45c8",
+      "shard": "projects/eadee1bfbd17b63630f150c9c98ef40999c8f8d9c2b3dbf9eccc0f1e58f56b02.jsonl",
+      "sha256": "e3e51e9be884f3637464149535c91c63ff088d6dc167780bebe6f246eb1319aa",
+      "bytes": 539,
+      "milliseconds": 36.527514,
+      "reused": false
+    }
+  ],
+  "selected": [
+    "emitter-recorded"
+  ],
+  "changed": 1,
+  "reused": 0,
+  "requestSha256": "24b634856c1811115fb98d122007b5f4bae03c993e4d972ef821c8c49db2947d",
+  "milliseconds": 185.880585,
+  "sha256": "e3e51e9be884f3637464149535c91c63ff088d6dc167780bebe6f246eb1319aa"
+}

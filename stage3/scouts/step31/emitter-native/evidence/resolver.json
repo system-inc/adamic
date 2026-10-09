@@ -1,0 +1,907 @@
+{
+  "request": {
+    "projects": [
+      {
+        "id": "emitter-recorded",
+        "options": {
+          "target": "es2020",
+          "module": "commonjs",
+          "noLib": true,
+          "types": []
+        },
+        "files": [
+          {
+            "path": "recorded.a",
+            "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n"
+          }
+        ]
+      }
+    ]
+  },
+  "context": {
+    "hostKeys": [
+      "getCanonicalFileName",
+      "getCommonSourceDirectory",
+      "getCompilerOptions",
+      "getCurrentDirectory",
+      "getSourceFile",
+      "getSourceFileByPath",
+      "getSourceFiles",
+      "isSourceFileFromExternalLibrary",
+      "getRedirectFromSourceFile",
+      "isSourceOfProjectReferenceRedirect",
+      "getSymlinkCache",
+      "writeFile",
+      "isEmitBlocked",
+      "shouldTransformImportCall",
+      "getEmitModuleFormatOfFile",
+      "getDefaultResolutionModeForFile",
+      "getModeForResolutionAtIndex",
+      "readFile",
+      "fileExists",
+      "realpath",
+      "useCaseSensitiveFileNames",
+      "getBuildInfo",
+      "getSourceFileFromReference",
+      "redirectTargetsMap",
+      "getFileIncludeReasons",
+      "createHash",
+      "getModuleResolutionCache",
+      "trace",
+      "getGlobalTypingsCacheLocation"
+    ],
+    "resolverKeys": [
+      "getReferencedExportContainer",
+      "getReferencedImportDeclaration",
+      "getReferencedDeclarationWithCollidingName",
+      "isDeclarationWithCollidingName",
+      "isValueAliasDeclaration",
+      "hasGlobalName",
+      "isReferencedAliasDeclaration",
+      "hasNodeCheckFlag",
+      "isTopLevelValueImportEqualsWithEntityName",
+      "isDeclarationVisible",
+      "isImplementationOfOverload",
+      "requiresAddingImplicitUndefined",
+      "isExpandoFunctionDeclaration",
+      "getPropertiesOfContainerFunction",
+      "createTypeOfDeclaration",
+      "createReturnTypeOfSignatureDeclaration",
+      "createTypeOfExpression",
+      "createLiteralConstValue",
+      "isSymbolAccessible",
+      "isEntityNameVisible",
+      "getConstantValue",
+      "getEnumMemberValue",
+      "collectLinkedAliases",
+      "markLinkedReferences",
+      "getReferencedValueDeclaration",
+      "getReferencedValueDeclarations",
+      "getTypeReferenceSerializationKind",
+      "isOptionalParameter",
+      "isArgumentsLocalBinding",
+      "getExternalModuleFileFromDeclaration",
+      "isLiteralConstDeclaration",
+      "isLateBound",
+      "getJsxFactoryEntity",
+      "getJsxFragmentFactoryEntity",
+      "isBindingCapturedByNode",
+      "getDeclarationStatementsForSourceFile",
+      "isImportRequiredByAugmentation",
+      "isDefinitelyReferenceToGlobalSymbolObject",
+      "createLateBoundIndexSignatures",
+      "symbolToDeclarations"
+    ],
+    "sources": [
+      {
+        "fileName": "/project/recorded.ts",
+        "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n"
+      }
+    ],
+    "options": {
+      "target": 7,
+      "module": 1,
+      "noLib": true,
+      "types": []
+    }
+  },
+  "calls": [
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "getSourceFiles",
+      "args": [],
+      "result": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ]
+    },
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "isSourceFileFromExternalLibrary",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": false
+    },
+    {
+      "group": "host",
+      "name": "isSourceOfProjectReferenceRedirect",
+      "args": [
+        "/project/recorded.ts"
+      ],
+      "result": false
+    },
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "getCompilerOptions",
+      "args": [],
+      "result": {
+        "target": 7,
+        "module": 1,
+        "noLib": true,
+        "types": []
+      }
+    },
+    {
+      "group": "host",
+      "name": "isEmitBlocked",
+      "args": [
+        "/project/recorded.js"
+      ],
+      "result": false
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getConstantValue",
+      "args": [
+        {
+          "$node": true,
+          "kind": 212,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getConstantValue",
+      "args": [
+        {
+          "$node": true,
+          "kind": 212,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getConstantValue",
+      "args": [
+        {
+          "$node": true,
+          "kind": 212,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getConstantValue",
+      "args": [
+        {
+          "$node": true,
+          "kind": 212,
+          "pos": 32,
+          "end": 38
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": 98,
+          "end": 104
+        },
+        false
+      ],
+      "result": {
+        "$node": true,
+        "kind": 308,
+        "pos": 0,
+        "end": 108,
+        "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+        "fileName": "/project/recorded.ts"
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedExportContainer",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        },
+        false
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "resolver",
+      "name": "getReferencedImportDeclaration",
+      "args": [
+        {
+          "$node": true,
+          "kind": 80,
+          "pos": -1,
+          "end": -1
+        }
+      ],
+      "result": {
+        "$undefined": true
+      }
+    },
+    {
+      "group": "host",
+      "name": "getEmitModuleFormatOfFile",
+      "args": [
+        {
+          "$node": true,
+          "kind": 308,
+          "pos": 0,
+          "end": 108,
+          "text": "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n",
+          "fileName": "/project/recorded.ts"
+        }
+      ],
+      "result": 1
+    }
+  ],
+  "rows": [
+    {
+      "record": "project",
+      "format": "adamic-emitter-v1",
+      "typescript": "6.0.3",
+      "id": "emitter-recorded",
+      "options": {
+        "module": "commonjs",
+        "noLib": true,
+        "target": "es2020",
+        "types": []
+      }
+    },
+    {
+      "record": "result",
+      "emitSkipped": false,
+      "diagnostics": []
+    },
+    {
+      "record": "output",
+      "path": "recorded.js",
+      "text": "\"use strict\";\nObject.defineProperty(exports, \"__esModule\", { value: true });\nexports.value = void 0;\nexports.answer = answer;\n// retained comment\nexports.value = 41 + 1;\nfunction answer() { return exports.value; }\n",
+      "bom": false,
+      "sources": [
+        "recorded.a"
+      ]
+    }
+  ]
+}

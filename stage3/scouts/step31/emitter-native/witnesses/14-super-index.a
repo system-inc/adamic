@@ -1,0 +1,7 @@
+// a-check: type error TS2538
+function findSuperStatementIndex(found: boolean): number | undefined { return found ? 0 : undefined; }
+function transformConstructorBodyWorker(statementsIn: string[], superStatementIndex: number | undefined): void {
+    const superStatement = statementsIn[superStatementIndex];
+    console.log(`${superStatement}`);
+}
+transformConstructorBodyWorker(["super()"], findSuperStatementIndex(true));

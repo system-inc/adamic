@@ -1,0 +1,7 @@
+// a-check: type error TS2322
+interface ResolvedModuleFull { resolvedFileName: string; originalPath?: string; }
+interface Result { resolvedModule: ResolvedModuleFull | undefined; }
+function createResolvedModuleWithFailedLookupLocations(resolved: { resolvedFileName: string; originalPath: string | undefined } | undefined): Result {
+    return { resolvedModule: resolved && { resolvedFileName: resolved.resolvedFileName, originalPath: resolved.originalPath } };
+}
+console.log(`${createResolvedModuleWithFailedLookupLocations({ resolvedFileName: "recorded.js", originalPath: undefined }).resolvedModule?.resolvedFileName}`);

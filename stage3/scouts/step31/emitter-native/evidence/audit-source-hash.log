@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/emitter-native/audit.py", line 32, in <module>
+    for name,wanted in hashes.items():assert hashlib.sha256((args.tree/name).read_bytes()).hexdigest()==wanted,'pinned adapted source hash: '+name
+                                             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: pinned adapted source hash: src/compiler/_namespaces/ts.moduleSpecifiers.ts

@@ -1,0 +1,8 @@
+// a-check: type error TS2345
+interface Node { kind: number; }
+function getOriginalNode(node: Node): Node { return node; }
+function transformConstructorBody(statements: Node[]): void {
+    const statement = statements[0];
+    console.log(`${getOriginalNode(statement).kind}`);
+}
+transformConstructorBody([{ kind: 261 }]);

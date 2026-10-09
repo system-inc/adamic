@@ -1,0 +1,156 @@
+[
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 1549,
+    "column": 21,
+    "name": "loadModuleFromTargetExportOrImport",
+    "start": 84292,
+    "end": 102145,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "64ff1d5d731b0fa29b706b7f7e6230acaf070eef84f21dd49edc19f10c72d7a1",
+    "originalLines": 233
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 156,
+    "column": 9,
+    "name": "createResolvedModuleWithFailedLookupLocations",
+    "start": 7424,
+    "end": 9131,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "71491b521c73bc813534d4eb1757ab32f0a05bfa1f2775e0023d2773f2a8c456",
+    "originalLines": 32
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 24,
+    "column": 13,
+    "name": "withPackageId",
+    "start": 2387,
+    "end": 3150,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "517dd5b7883fad65fb25aa45e93bcac3a1bc7c89937b8b4417c6c65cda6e46d0",
+    "originalLines": 15
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/moduleNameResolver.ts",
+    "line": 299,
+    "column": 36,
+    "name": "getPackageJsonTypesVersionsPaths",
+    "start": 13468,
+    "end": 13990,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "3934ddd132d32e72a631f80a5ad9dffc80716949723cf23bad4e2ca0a5658bb7",
+    "originalLines": 17
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sourcemap.ts",
+    "line": 194,
+    "column": 58,
+    "name": "appendSourceMap",
+    "start": 6461,
+    "end": 9879,
+    "replacement": ": void { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "1acd48e20f5e4f316b4f268ffc349afabcf5113e792f4874ab2bd9227042b217",
+    "originalLines": 63
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1172,
+    "column": 43,
+    "name": "watchPresentFileSystemEntry",
+    "start": 51399,
+    "end": 52893,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "b100a7a2a27375ef121df9a1f75e5ff740b063b36592912d603b9fc1192f64fb",
+    "originalLines": 29
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1459,
+    "column": 69,
+    "name": "tryEnableSourceMapsForHost",
+    "start": 66426,
+    "end": 66685,
+    "replacement": ": void { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "f769466ad06a6e86cbda5f046fb9aa4b02b7424feb07c9f201968da4cbeb69cc",
+    "originalLines": 8
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/sys.ts",
+    "line": 1471,
+    "column": 13,
+    "name": "getNodeSystem",
+    "start": 60567,
+    "end": 81196,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "2733003293504069d99048d5fec3508f4bb1de10dd59d4bfb5af8da33b33874a",
+    "originalLines": 479
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 294,
+    "column": 9,
+    "name": "enableSubstitution",
+    "start": 13019,
+    "end": 13250,
+    "replacement": ": void { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "7d62ab320db9c70871e6573621f2cb4087b03527fec9224465944872f6b2890c",
+    "originalLines": 4
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 319,
+    "column": 9,
+    "name": "enableEmitNotification",
+    "start": 14127,
+    "end": 14363,
+    "replacement": ": void { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "491e660bb74a1ca4667033ec3be667e128c3b24f202b00ed55cdfd3522d37716",
+    "originalLines": 4
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 484,
+    "column": 9,
+    "name": "endLexicalEnvironment",
+    "start": 20961,
+    "end": 23483,
+    "replacement": "{ throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "135133cde80fbc816bb78e9581515453f60447eb5ac5bed6d50e1d8c6da49743",
+    "originalLines": 55
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformer.ts",
+    "line": 481,
+    "column": 9,
+    "name": "endBlockScope",
+    "start": 22184,
+    "end": 23211,
+    "replacement": ": Statement[] | undefined { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "799d4fc99436fe8a648cfd4b36c3f50bdbf08fbdf4f133dcfa12ee489d5e6fb3",
+    "originalLines": 20
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformers/classFields.ts",
+    "line": 1613,
+    "column": 21,
+    "name": "visitInNewClassLexicalEnvironment",
+    "start": 79005,
+    "end": 81978,
+    "replacement": ": U { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "1d80c2c33261cab4e2957330f467572ca1f0c8b672ed0dd6a6bffd11ae890b81",
+    "originalLines": 60
+  },
+  {
+    "file": "/workspace/step31-final-run/walk/slice/src/compiler/transformers/classFields.ts",
+    "line": 1970,
+    "column": 45,
+    "name": "transformConstructorBodyWorker",
+    "start": 99933,
+    "end": 102521,
+    "replacement": ": void { throw new Error(\"discovery placeholder\"); }",
+    "originalSha256": "f66b61ced46b4147e2c83fd43da7a9cd45091f3325f1dc0fedff2790186eea40",
+    "originalLines": 61
+  }
+]

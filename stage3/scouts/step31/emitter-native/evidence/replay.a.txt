@@ -1,0 +1,141 @@
+import { programArguments, readTextFile } from "adamic";
+import type {} from "node:util";
+import { emitFiles, createSourceFile, bindSourceFile, getTransformers, createMultiMap, ScriptTarget, ModuleKind, type EmitResolver, type EmitHost, type CompilerOptions, type LateBoundDeclaration, type Path, type FileIncludeReason } from "/workspace/step31-final-run/slice/src/compiler/_namespaces/ts.ts";
+const requestPath = programArguments()[0];
+if (requestPath === undefined) throw new Error("request pathname required");
+const request = readTextFile(requestPath);
+if (request.kind === "Error") throw new Error(request.message);
+if (request.text !== "{\"projects\":[{\"id\":\"emitter-recorded\",\"options\":{\"target\":\"es2020\",\"module\":\"commonjs\",\"noLib\":true,\"types\":[]},\"files\":[{\"path\":\"recorded.a\",\"text\":\"// retained comment\\nexport const value: number = 41 + 1;\\nexport function answer(): number { return value; }\\n\"}]}]}\n") throw new Error("this closed replay requires its recorded input bytes");
+const options: CompilerOptions = {"target":7,"module":1,"noLib":true,"types":[]};
+const source = createSourceFile("/project/recorded.ts", "// retained comment\nexport const value: number = 41 + 1;\nexport function answer(): number { return value; }\n", ScriptTarget.ES2020, true);
+bindSourceFile(source, options);
+let resolverCursor = 0;
+const resolver: EmitResolver = {
+hasGlobalName: (arg0) => { throw new Error("unrecorded resolver method: hasGlobalName"); },
+getReferencedExportContainer: (arg0, arg1) => { switch (resolverCursor) {
+case 1:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 3:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 6:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 9:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 12:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 14:
+if (arg0.kind !== 80 || arg0.pos !== 98 || arg0.end !== 104 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return source;
+case 15:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1 || arg1 !== false) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+default: throw new Error("resolver order mismatch: getReferencedExportContainer");
+} },
+getReferencedImportDeclaration: (arg0) => { switch (resolverCursor) {
+case 2:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 4:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 7:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 10:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 13:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 16:
+if (arg0.kind !== 80 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+default: throw new Error("resolver order mismatch: getReferencedImportDeclaration");
+} },
+getReferencedDeclarationWithCollidingName: (arg0) => { throw new Error("unrecorded resolver method: getReferencedDeclarationWithCollidingName"); },
+isDeclarationWithCollidingName: (arg0) => { throw new Error("unrecorded resolver method: isDeclarationWithCollidingName"); },
+isValueAliasDeclaration: (arg0) => { throw new Error("unrecorded resolver method: isValueAliasDeclaration"); },
+isReferencedAliasDeclaration: (arg0, arg1) => { throw new Error("unrecorded resolver method: isReferencedAliasDeclaration"); },
+isTopLevelValueImportEqualsWithEntityName: (arg0) => { throw new Error("unrecorded resolver method: isTopLevelValueImportEqualsWithEntityName"); },
+hasNodeCheckFlag: (arg0, arg1) => { throw new Error("unrecorded resolver method: hasNodeCheckFlag"); },
+isDeclarationVisible: (arg0) => { throw new Error("unrecorded resolver method: isDeclarationVisible"); },
+isLateBound: (arg0): arg0 is LateBoundDeclaration => { throw new Error("unrecorded resolver method: isLateBound"); },
+collectLinkedAliases: (arg0, arg1) => { throw new Error("unrecorded resolver method: collectLinkedAliases"); },
+markLinkedReferences: (arg0) => { throw new Error("unrecorded resolver method: markLinkedReferences"); },
+isImplementationOfOverload: (arg0) => { throw new Error("unrecorded resolver method: isImplementationOfOverload"); },
+requiresAddingImplicitUndefined: (arg0, arg1) => { throw new Error("unrecorded resolver method: requiresAddingImplicitUndefined"); },
+isExpandoFunctionDeclaration: (arg0) => { throw new Error("unrecorded resolver method: isExpandoFunctionDeclaration"); },
+getPropertiesOfContainerFunction: (arg0) => { throw new Error("unrecorded resolver method: getPropertiesOfContainerFunction"); },
+createTypeOfDeclaration: (arg0, arg1, arg2, arg3, arg4) => { throw new Error("unrecorded resolver method: createTypeOfDeclaration"); },
+createReturnTypeOfSignatureDeclaration: (arg0, arg1, arg2, arg3, arg4) => { throw new Error("unrecorded resolver method: createReturnTypeOfSignatureDeclaration"); },
+createTypeOfExpression: (arg0, arg1, arg2, arg3, arg4) => { throw new Error("unrecorded resolver method: createTypeOfExpression"); },
+createLiteralConstValue: (arg0, arg1) => { throw new Error("unrecorded resolver method: createLiteralConstValue"); },
+isSymbolAccessible: (arg0, arg1, arg2, arg3) => { throw new Error("unrecorded resolver method: isSymbolAccessible"); },
+isEntityNameVisible: (arg0, arg1) => { throw new Error("unrecorded resolver method: isEntityNameVisible"); },
+getConstantValue: (arg0) => { switch (resolverCursor) {
+case 0:
+if (arg0.kind !== 212 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 5:
+if (arg0.kind !== 212 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 8:
+if (arg0.kind !== 212 || arg0.pos !== -1 || arg0.end !== -1) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+case 11:
+if (arg0.kind !== 212 || arg0.pos !== 32 || arg0.end !== 38) throw new Error("resolver argument mismatch");
+resolverCursor++; return undefined;
+default: throw new Error("resolver order mismatch: getConstantValue");
+} },
+getEnumMemberValue: (arg0) => { throw new Error("unrecorded resolver method: getEnumMemberValue"); },
+getReferencedValueDeclaration: (arg0) => { throw new Error("unrecorded resolver method: getReferencedValueDeclaration"); },
+getReferencedValueDeclarations: (arg0) => { throw new Error("unrecorded resolver method: getReferencedValueDeclarations"); },
+getTypeReferenceSerializationKind: (arg0, arg1) => { throw new Error("unrecorded resolver method: getTypeReferenceSerializationKind"); },
+isOptionalParameter: (arg0) => { throw new Error("unrecorded resolver method: isOptionalParameter"); },
+isArgumentsLocalBinding: (arg0) => { throw new Error("unrecorded resolver method: isArgumentsLocalBinding"); },
+getExternalModuleFileFromDeclaration: (arg0) => { throw new Error("unrecorded resolver method: getExternalModuleFileFromDeclaration"); },
+isLiteralConstDeclaration: (arg0) => { throw new Error("unrecorded resolver method: isLiteralConstDeclaration"); },
+getJsxFactoryEntity: (arg0) => { throw new Error("unrecorded resolver method: getJsxFactoryEntity"); },
+getJsxFragmentFactoryEntity: (arg0) => { throw new Error("unrecorded resolver method: getJsxFragmentFactoryEntity"); },
+isBindingCapturedByNode: (arg0, arg1) => { throw new Error("unrecorded resolver method: isBindingCapturedByNode"); },
+getDeclarationStatementsForSourceFile: (arg0, arg1, arg2, arg3) => { throw new Error("unrecorded resolver method: getDeclarationStatementsForSourceFile"); },
+isImportRequiredByAugmentation: (arg0) => { throw new Error("unrecorded resolver method: isImportRequiredByAugmentation"); },
+isDefinitelyReferenceToGlobalSymbolObject: (arg0) => { throw new Error("unrecorded resolver method: isDefinitelyReferenceToGlobalSymbolObject"); },
+createLateBoundIndexSignatures: (arg0, arg1, arg2, arg3, arg4) => { throw new Error("unrecorded resolver method: createLateBoundIndexSignatures"); },
+symbolToDeclarations: (arg0, arg1, arg2, arg3, arg4, arg5) => { throw new Error("unrecorded resolver method: symbolToDeclarations"); }
+};
+const outputs: {name: string; text: string; bom: boolean; sources: string[]}[] = [];
+const host: EmitHost = {
+getSourceFiles: () => { return [source]; },
+useCaseSensitiveFileNames: () => { return true; },
+getCurrentDirectory: () => { return "/project"; },
+getCommonSourceDirectory: () => { return "/project/"; },
+getCanonicalFileName: (arg0) => { return arg0; },
+isEmitBlocked: (arg0) => { return false; },
+shouldTransformImportCall: (arg0) => { return false; },
+getEmitModuleFormatOfFile: (arg0) => { return ModuleKind.CommonJS; },
+writeFile: (arg0, arg1, arg2, arg3, arg4, arg5) => { outputs.push({name: arg0, text: arg1, bom: arg2, sources: (arg4 ?? []).map(file => file.fileName === source.fileName ? "recorded.a" : file.fileName)}); },
+getBuildInfo: () => { return undefined; },
+getSourceFileFromReference: (arg0, arg1) => { return undefined; },
+redirectTargetsMap: new Map<Path, readonly string[]>(),
+getCompilerOptions: () => { return options; },
+getSourceFile: (arg0) => { return source; },
+getSourceFileByPath: (arg0) => { return source; },
+fileExists: (arg0) => { return arg0 === source.fileName; },
+getRedirectFromSourceFile: (arg0) => { return undefined; },
+isSourceOfProjectReferenceRedirect: (arg0) => { return false; },
+getFileIncludeReasons: () => { return createMultiMap<Path, FileIncludeReason>(); },
+getDefaultResolutionModeForFile: (arg0) => { return undefined; },
+getModeForResolutionAtIndex: (arg0, arg1) => { return undefined; },
+isSourceFileFromExternalLibrary: (arg0) => { return false; }
+};
+const result = emitFiles(resolver, host, undefined, getTransformers(options), false, false);
+if (resolverCursor !== 17) throw new Error("resolver transcript incomplete");
+console.log("{\"record\":\"project\",\"format\":\"adamic-emitter-v1\",\"typescript\":\"6.0.3\",\"id\":\"emitter-recorded\",\"options\":{\"module\":\"commonjs\",\"noLib\":true,\"target\":\"es2020\",\"types\":[]}}");
+console.log(JSON.stringify({record: "result", emitSkipped: result.emitSkipped, diagnostics: result.diagnostics}));
+for (const output of outputs) console.log(JSON.stringify({record: "output", path: output.name.slice(9), text: output.text, bom: output.bom, sources: output.sources}));

@@ -1,0 +1,6 @@
+// a-check: type error TS2322
+interface MapLike<T> { [index: string]: T; }
+function getPackageJsonTypesVersionsPaths(typesVersions: MapLike<MapLike<string[]>>, key: string): { version: string; paths: MapLike<string[]> } {
+    return { version: key, paths: typesVersions[key] };
+}
+console.log(getPackageJsonTypesVersionsPaths({ "6": { "*": ["index.d.ts"] } }, "6").version);

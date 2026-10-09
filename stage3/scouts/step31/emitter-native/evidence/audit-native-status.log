@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/emitter-native/audit.py", line 31, in <module>
+    assert summary['native_executed'] is False and summary['native_comparison'] is None,'no native success from failed builds'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: no native success from failed builds

@@ -1,0 +1,6 @@
+// a-check: type error TS2532
+interface PrivateMethod { name: string; }
+function visitInNewClassLexicalEnvironment(privateInstanceMethodsAndAccessors: PrivateMethod[]): void {
+    if (privateInstanceMethodsAndAccessors.length > 0) console.log(privateInstanceMethodsAndAccessors[0].name);
+}
+visitInNewClassLexicalEnvironment([{ name: "method" }]);

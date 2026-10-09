@@ -1,0 +1,6 @@
+// a-check: type error TS2322
+type ModuleImportResult = { module: undefined; modulePath?: undefined; error: { stack?: string; message?: string } };
+const requireModule: (error: unknown) => ModuleImportResult = (error) => {
+    return { module: undefined, modulePath: undefined, error };
+};
+console.log(`${requireModule({ message: "missing" }).error.message}`);

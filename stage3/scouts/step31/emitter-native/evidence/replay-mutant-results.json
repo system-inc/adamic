@@ -1,0 +1,237 @@
+[
+  {
+    "name": "baseline",
+    "catcher": "baseline",
+    "report": {
+      "success": true,
+      "timeout": false,
+      "differences": {}
+    },
+    "comparison_exit": 0
+  },
+  {
+    "name": "order",
+    "catcher": "resolver order mismatch",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 0,
+          "expected_bytes": 539,
+          "actual_bytes": 0
+        },
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 64
+        },
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 3
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "argument",
+    "catcher": "resolver argument mismatch",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 0,
+          "expected_bytes": 539,
+          "actual_bytes": 0
+        },
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 49
+        },
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 3
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "complete",
+    "catcher": "resolver transcript incomplete",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 0,
+          "expected_bytes": 539,
+          "actual_bytes": 0
+        },
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 53
+        },
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 3
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "request",
+    "catcher": "this closed replay requires its recorded input bytes",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 0,
+          "expected_bytes": 539,
+          "actual_bytes": 0
+        },
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 75
+        },
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 3
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "source-input",
+    "catcher": "stock emitted stdout bytes",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 450,
+          "expected_bytes": 539,
+          "actual_bytes": 539
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "sources",
+    "catcher": "baseline",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 524,
+          "expected_bytes": 539,
+          "actual_bytes": 527
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "bom",
+    "catcher": "baseline",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 507,
+          "expected_bytes": 539,
+          "actual_bytes": 538
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "emitSkipped",
+    "catcher": "baseline",
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 202,
+          "expected_bytes": 539,
+          "actual_bytes": 538
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "process-stdout",
+    "catcher": [
+      "stdout"
+    ],
+    "test_double": true,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stdout": {
+          "first_byte": 450,
+          "expected_bytes": 539,
+          "actual_bytes": 539
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "process-stderr",
+    "catcher": [
+      "stderr"
+    ],
+    "test_double": true,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "stderr": {
+          "first_byte": 0,
+          "expected_bytes": 0,
+          "actual_bytes": 1
+        }
+      }
+    },
+    "comparison_exit": 1
+  },
+  {
+    "name": "process-exit",
+    "catcher": [
+      "exit"
+    ],
+    "test_double": true,
+    "report": {
+      "success": false,
+      "timeout": false,
+      "differences": {
+        "exit": {
+          "first_byte": 0,
+          "expected_bytes": 2,
+          "actual_bytes": 2
+        }
+      }
+    },
+    "comparison_exit": 1
+  }
+]

@@ -1,0 +1,8 @@
+// a-check: type error TS18046
+function watchPresentFileSystemEntry(code: string): void {
+    let hitSystemWatcherLimit = false;
+    try { throw { code }; }
+    catch (e) { hitSystemWatcherLimit ||= e.code === "ENOSPC"; }
+    console.log(`${hitSystemWatcherLimit}`);
+}
+watchPresentFileSystemEntry("ENOSPC");

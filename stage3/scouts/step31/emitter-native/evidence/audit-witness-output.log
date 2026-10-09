@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/workspace/adamic/stage3/scouts/step31/emitter-native/audit.py", line 39, in <module>
+    assert candidate['node']==baseline['node']==dict(exit=0,stdout=spec['stdout'],stderr=''),'witness Node output'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: witness Node output

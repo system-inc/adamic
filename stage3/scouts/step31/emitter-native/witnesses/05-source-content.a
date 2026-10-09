@@ -1,0 +1,6 @@
+// a-check: type error TS2345
+function setSourceContent(sourceIndex: number, content: string | null): void { console.log(`${sourceIndex}:${content}`); }
+function appendSourceMap(sourcesContent: (string | null)[], sourceIndex: number): void {
+    setSourceContent(0, sourcesContent[sourceIndex]);
+}
+appendSourceMap(["emitter"], 0);

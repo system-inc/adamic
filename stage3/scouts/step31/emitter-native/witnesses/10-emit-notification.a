@@ -1,0 +1,5 @@
+// a-check: type error TS2532
+const enabledSyntaxKindFeatures: number[] = [];
+function enableEmitNotification(kind: number): void { enabledSyntaxKindFeatures[kind] |= 2; }
+enableEmitNotification(0);
+console.log(`${enabledSyntaxKindFeatures[0]}`);
