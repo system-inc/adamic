@@ -1,0 +1,18 @@
+github.com/system-inc/adamic/stage1/cohere/tsprinter	TestExpressionsAgainstGoAndPrettier	507.68	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownWhitespaceLayout (setup)	148.30	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownUnicodeWidths (setup)	114.65	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/escaped_delimiter_parity	75.32	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/table_pipe_escaping	73.70	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline/minimum_absent_fence	68.34	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/can_begin_at.ts	66.98	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/collect_list_interiors.ts	66.50	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/sort_by_position.ts	66.32	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/all.ts	65.36	pass
+github.com/system-inc/adamic/stage1/cohere/lint/helpers/comments	TestCommentMutants/for_file.ts	65.31	pass
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMarkdownListLayout/unordered_marker	55.03	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/flow_trailing_comma_lost	40.81	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/batch_backslash_scan_misses_escapes	40.77	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/emoji_first_unit_range_loses_endpoint	40.55	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/colon_separation_lost	40.30	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/emoji_surrogate_slot_shifted	37.58	pass
+github.com/system-inc/adamic/stage1/cohere/yaml	TestFormatterMutants/root_final_newline_lost	34.16	pass
