@@ -20,7 +20,7 @@ func TestFlagEnumsOpen(t *testing.T) {
 		{"implicit", "enum Color { Red, Green, Blue } const color: Color = Color.Red | Color.Green;", "closed union"},
 		{"numeric_shape", "enum Color { Red = 0, Green = 1, Blue = 2 } const color: Color = Color.Green | Color.Blue;", "closed union"},
 		{"arithmetic_shape", "enum Color { Red = 0, Green = 1 << 0, Blue = (1 << 0) + 1 } const color: Color = Color.Green | Color.Blue;", "closed union"},
-		{"switch_default", flagDeclaration + "function show(flags: Flags): void { switch (flags) { case Flags.None: break; case Flags.A: break; case Flags.B: break; case Flags.High: break; case Flags.Both: break; } }", "flag-enum switch without a default"},
+		{"switch_default", flagDeclaration + "function show(flags: Flags): void { switch (flags) { case Flags.None: console.log('none'); break; case Flags.A: console.log('a'); break; case Flags.B: console.log('b'); break; case Flags.High: console.log('high'); break; case Flags.Both: console.log('both'); break; } }", "flag-enum switch without a default"},
 		{"cross_enum_left", flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Flags = Flags.A | Other.B;", "enum-flags"},
 		{"cross_enum_right", flagDeclaration + "enum Other { A = 1 << 0, B = 1 << 1 } const flags: Other = Flags.A | Other.B;", "enum-flags"},
 		{"or_number", flagDeclaration + "function open(n: number): Flags { return Flags.A | n; }", "enum-flags"},
@@ -36,14 +36,40 @@ func TestFlagEnumsOpen(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			_, err := lowerSource(t, probe.source)
 			if probe.name == "narrowed_member" || probe.name == "member_slot" {
+				_, err := lowerSource(t, probe.source)
 				var refused *Refused
 				if !errors.As(err, &refused) {
 					t.Fatalf("want literal promise refusal, got %v", err)
 				}
-			} else if err != nil {
-				t.Fatal(err)
+			} else {
+				observations := map[string]string{
+					"complement":          "value",
+					"arithmetic":          "value",
+					"increment":           "flags",
+					"shift_update":        "flags",
+					"shift_result":        "flags",
+					"sign_bit":            "Flags.A",
+					"implicit":            "color",
+					"numeric_shape":       "color",
+					"arithmetic_shape":    "color",
+					"switch_default":      "Flags.Both",
+					"cross_enum_left":     "flags",
+					"cross_enum_right":    "flags",
+					"or_number":           "open(8)",
+					"xor_number":          "open(8)",
+					"and_numbers":         "open(7)",
+					"compound_or_number":  "flags",
+					"compound_xor_number": "flags",
+					"mutable_alias":       "flags",
+					"bare_number":         "flags",
+					"array_view":          "numbers.join(',')",
+				}
+				source := probe.source
+				if probe.name == "switch_default" {
+					source += "show(Flags.Both);"
+				}
+				lowersAndAgreesWithNode(t, source+"console.log(`${"+observations[probe.name]+"}`);")
 			}
 		})
 	}
@@ -68,53 +94,53 @@ func TestFlagEnumsDomain(t *testing.T) {
 		{"switch", "function use(flags: Flags): void { switch(flags) { case Flags.A: console.log('a'); break; default: console.log('combination'); break; } } use(Flags.A); use(Flags.Both);"},
 	} {
 		t.Log(probe.name)
-		enumLowersAndAgreesWithNode(t, flagDeclaration+probe.source+"console.log(`${Flags.None}/${Flags.High}/${Flags[Flags.A]}`);")
+		lowersAndAgreesWithNode(t, flagDeclaration+probe.source+"console.log(`${Flags.None}/${Flags.High}/${Flags[Flags.A]}`);")
 	}
 }
 
 func TestEnumNeverDefault(t *testing.T) {
 	t.Parallel()
-	enumLowersAndAgreesWithNode(t, "enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } } console.log(describe(Color.Red) + describe(Color.Green) + describe(Color.Blue)); console.log(`${Color.Red}/${Color.Green}/${Color.Blue}/${Color[0]}`);")
+	lowersAndAgreesWithNode(t, "enum Color { Red, Green, Blue } function describe(value: Color): string { switch(value) { case Color.Red: return 'r'; case Color.Green: return 'g'; case Color.Blue: return 'b'; default: { const unreachable: never = value; return unreachable; } } } console.log(describe(Color.Red) + describe(Color.Green) + describe(Color.Blue)); console.log(`${Color.Red}/${Color.Green}/${Color.Blue}/${Color[0]}`);")
 }
 
 func TestFlagEnumLiteralSpellings(t *testing.T) {
 	t.Parallel()
-	enumLowersAndAgreesWithNode(t, "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High; console.log(`${Flags.None}/${Flags.A}/${Flags.High}/${flags}/${Flags[Flags.High]}`);")
+	lowersAndAgreesWithNode(t, "enum Flags { None = 0x0, A = 0x1 << 0b0, High = 0o1 << 0x1e } const flags: Flags = Flags.A | Flags.High; console.log(`${Flags.None}/${Flags.A}/${Flags.High}/${flags}/${Flags[Flags.High]}`);")
 }
 
 func TestFlagEnumMemberAliases(t *testing.T) {
 	t.Parallel()
-	enumLowersAndAgreesWithNode(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified; console.log(`${Flags.Alias}/${Flags.Qualified}/${flags}/${Flags[1]}/${Flags[2]}`); console.log(Object.keys(Flags).join(','));")
+	lowersAndAgreesWithNode(t, "enum Flags { None = 0, A = 1 << 0, B = 1 << 1, Alias = A, Qualified = Flags.B } const flags: Flags = Flags.Alias | Flags.Qualified; console.log(`${Flags.Alias}/${Flags.Qualified}/${flags}/${Flags[1]}/${Flags[2]}`); console.log(Object.keys(Flags).join(','));")
 }
 
 func TestEnumNameEnumeration(t *testing.T) {
 	t.Parallel()
-	enumLowersAndAgreesWithNode(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); } console.log(`${Names.A}/${Names.B}/${Names.Alias}/${Names[1]}`);")
+	lowersAndAgreesWithNode(t, "enum Names { A, B, Alias = B } const names = Names; for (const name in names) { console.log(name); } console.log(`${Names.A}/${Names.B}/${Names.Alias}/${Names[1]}`);")
 }
 
 func TestFlagEnumInlineIteration(t *testing.T) {
 	t.Parallel()
-	enumLowersAndAgreesWithNode(t, flagDeclaration+"function use(box: { flags: Flags }): void { console.log(`${box.flags}`); } for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); } console.log(Flags[Flags.High]);")
+	lowersAndAgreesWithNode(t, flagDeclaration+"function use(box: { flags: Flags }): void { console.log(`${box.flags}`); } for (const flags of [Flags.None, Flags.A | Flags.B]) { use({flags}); } console.log(Flags[Flags.High]);")
 }
 
 func TestFlagEnumAliasBoundaries(t *testing.T) {
 	t.Parallel()
 	for _, source := range []string{
-		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias;",
-		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; }",
-		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; }",
-		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; }",
+		"enum Other { A = 1 << 0 } enum Flags { None = 0, A = 1 << 0, Alias = Other.A } const flags: Flags = Flags.A | Flags.Alias; console.log(`${flags}`);",
+		flagDeclaration + "for (const flags of [Flags.A, 99]) { const value: Flags = flags; console.log(`${value}`); }",
+		flagDeclaration + "const numbers: number[] = [Flags.A]; numbers.push(99); for (const flags of numbers) { const value: Flags = flags; console.log(`${value}`); }",
+		flagDeclaration + "for (let flags of [Flags.A | Flags.B]) { flags = 99; const value: Flags = flags; console.log(`${value}`); }",
 		flagDeclaration + "const combined = Flags.A | Flags.B; function use(box: { flags: Flags.A }): void {} use({flags: combined});",
 		flagDeclaration + "interface Node { flags: Flags } type Mutable<T> = { -readonly [K in keyof T]: T[K] }; function set<T extends Node>(node: T, flags: Flags): void { (node as Mutable<T>).flags = flags; }",
 	} {
-		_, err := lowerSource(t, source)
 		if strings.Contains(source, "Mutable<T>") || strings.Contains(source, "flags: Flags.A") {
+			_, err := lowerSource(t, source)
 			var refused *Refused
 			if !errors.As(err, &refused) {
 				t.Fatalf("want Refused, got %v for %s", err, source)
 			}
-		} else if err != nil {
-			t.Fatal(err)
+		} else {
+			lowersAndAgreesWithNode(t, source+"console.log(`${Flags.A}/${Flags[Flags.A]}`);")
 		}
 	}
 }
