@@ -100,7 +100,7 @@ func corpusCases(t *testing.T) []textCase {
 	if err != nil {
 		t.Fatal(err)
 	}
-	cases, err := fileCorpus(root)
+	cases, err := pinnedCorpusFiles(root, repositoryCorpusCommit)
 	if err != nil {
 		t.Fatal(err)
 	}
