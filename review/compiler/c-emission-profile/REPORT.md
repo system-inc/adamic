@@ -4,6 +4,8 @@ Commands and outputs: GOMAXPROCS=4 /tmp/c-emission-profile; lower 4.124505348s, 
 Mutants: none; this delivery adds evidence only, with no compiler, fixture, or test change.
 Not covered: sf-yepesta's mutant snapshot, the other two port snapshots, full oracle C equivalence, an implemented fix, or optimized cold timing.
 
+The implemented fix and full byte-comparison evidence are in [fix/REPORT.md](fix/REPORT.md).
+
 ## Observation
 
 Fresh branch compiler/c-emission-profile from origin/main. Recipe is

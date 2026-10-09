@@ -1,0 +1,8 @@
+=== RUN   TestObjectMetadataCacheIsPerEmission
+=== PAUSE TestObjectMetadataCacheIsPerEmission
+=== CONT  TestObjectMetadataCacheIsPerEmission
+    object_metadata_test.go:26: field-type query was used as the dynamic-property cache key
+--- FAIL: TestObjectMetadataCacheIsPerEmission (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.006s
+FAIL
