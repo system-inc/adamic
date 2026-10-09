@@ -1,31 +1,31 @@
 package tsprinter
 
 import (
+	"bytes"
+	"context"
+	"errors"
 	"os"
+	"os/exec"
 	"path/filepath"
 	"testing"
 	"time"
+
+	"github.com/system-inc/adamic/internal/childguard"
 )
 
 func testMutant(t *testing.T, i int) {
 	t.Helper()
 	started := time.Now()
 	change := mutations[i]
-	// Setup belongs to this leaf so its measured cost includes the build.
-	// Selecting one shard never prepares any other mutant or corpus.
-	var cases, want string
-	switch change.entry {
-	case "docMain.ts":
-		cases, want, _ = documentCorpus(t)
-	default:
-		cases, want = mutantOracle(t, change)
-	}
+	cases, want := mutantOracleProduct(t, i)
 	t.Logf("grain oracle setup: %.3fs", time.Since(started).Seconds())
+	binary := mutantNativeProduct(t, i)
 	path := mutatedPort(t, change)
-	program := lowered(t, path)
-	t.Logf("grain oracle and lower setup: %.3fs", time.Since(started).Seconds())
-	binary := nativeBinary(t, program, t.TempDir())
 	t.Logf("grain total build setup: %.3fs", time.Since(started).Seconds())
+	// Only this leaf's witness selection, execution and comparisons use the
+	// case deadline. A cold miss is still covered by go test's 90 s timeout.
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
 	ownStarted := time.Now()
 	defer func() { t.Logf("grain own work: %.3fs", time.Since(ownStarted).Seconds()) }()
 	arguments := []string{cases}
@@ -49,8 +49,12 @@ func testMutant(t *testing.T, i int) {
 		arguments = []string{"--cases", cases, "80"}
 	}
 	t.Logf("mutant %d/%d: %s", i+1, testMutantsShards, change.name)
-	node := onNode(t, path, arguments...)
-	native := execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
+	runner, err := filepath.Abs(filepath.Join(repository, "oracle", "node.mjs"))
+	if err != nil {
+		t.Fatal(err)
+	}
+	node := mutantExecute(t, ctx, nil, "node", append([]string{"--disable-warning=ExperimentalWarning", runner, path}, arguments...)...)
+	native := mutantExecute(t, ctx, []string{"ASAN_OPTIONS=detect_leaks=0"}, binary, arguments...)
 	for _, side := range []struct {
 		name   string
 		result run
@@ -67,4 +71,29 @@ func testMutant(t *testing.T, i int) {
 		}
 		t.Logf("%s caught by successful-run output mismatch: %s", side.name, difference)
 	}
+	if ctx.Err() != nil {
+		t.Fatalf("mutant own-work deadline: %v", ctx.Err())
+	}
+}
+
+// The case-only context covers both output oracles. A killed or crashed child
+// is a test failure, never evidence that a mutant was caught.
+func mutantExecute(t *testing.T, ctx context.Context, environment []string, name string, arguments ...string) run {
+	t.Helper()
+	command := exec.CommandContext(ctx, name, arguments...)
+	command.WaitDelay = time.Second
+	if environment != nil {
+		command.Env = append(os.Environ(), environment...)
+	}
+	var stdout, stderr bytes.Buffer
+	command.Stdout, command.Stderr = &stdout, &stderr
+	err := childguard.Run(command, childguard.Options{})
+	if ctx.Err() != nil {
+		t.Fatalf("mutant own-work deadline: %v", ctx.Err())
+	}
+	var exitError *exec.ExitError
+	if err != nil && !errors.As(err, &exitError) {
+		t.Fatalf("running %s: %v", name, err)
+	}
+	return run{stdout: stdout.Bytes(), stderr: stderr.Bytes(), exitCode: command.ProcessState.ExitCode()}
 }
