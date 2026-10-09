@@ -233,7 +233,7 @@ process.stdout.write(JSON.stringify(cases));`)
 	if err = json.Unmarshal(output, &cases); err != nil {
 		t.Fatal(err)
 	}
-	runRegexCases(t, cases)
+	runRegexPartitions(t, cases)
 }
 func TestRegExpNativeStepLimit(t *testing.T) {
 	program, err := regex.Compile("(a+)+$", "")
