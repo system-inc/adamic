@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T09:57:29.721681502Z","Action":"start","Package":"github.com/system-inc/adamic/internal/childguard"}
+{"Time":"2026-10-09T09:57:29.724649893Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:57:29.724932617Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== RUN   TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:29.724966404Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== PAUSE TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:29.726201349Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:57:29.72621329Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:57:29.726216971Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== CONT  TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:29.729335906Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"--- PASS: TestExitIsNotGuardError (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:29.729361718Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Elapsed":0}
+{"Time":"2026-10-09T09:57:29.729416257Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:29.732463138Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"ok  \tgithub.com/system-inc/adamic/internal/childguard\t0.009s\n"}
+{"Time":"2026-10-09T09:57:29.73249618Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Elapsed":0.011}

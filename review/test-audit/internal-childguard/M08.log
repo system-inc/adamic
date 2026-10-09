@@ -1,0 +1,41 @@
+{"Time":"2026-10-09T09:55:48.84085446Z","Action":"start","Package":"github.com/system-inc/adamic/internal/childguard"}
+{"Time":"2026-10-09T09:55:48.844146417Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild"}
+{"Time":"2026-10-09T09:55:48.844318245Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild","Output":"=== RUN   TestChild\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:48.844358587Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild","Output":"=== PAUSE TestChild\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:48.844363307Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild"}
+{"Time":"2026-10-09T09:55:48.84440891Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress"}
+{"Time":"2026-10-09T09:55:48.84441254Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Output":"=== RUN   TestProgress\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.849711545Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Output":"--- PASS: TestProgress (8.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:56.849821961Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Elapsed":8.01}
+{"Time":"2026-10-09T09:55:56.849851215Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestStalled"}
+{"Time":"2026-10-09T09:55:56.849854175Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestStalled","Output":"=== RUN   TestStalled\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.053039565Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestStalled","Output":"--- PASS: TestStalled (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.053110141Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestStalled","Elapsed":0.2}
+{"Time":"2026-10-09T09:55:57.053130884Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestCeiling"}
+{"Time":"2026-10-09T09:55:57.053134118Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestCeiling","Output":"=== RUN   TestCeiling\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.455468662Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestCeiling","Output":"--- PASS: TestCeiling (0.40s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.455522259Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestCeiling","Elapsed":0.4}
+{"Time":"2026-10-09T09:55:57.455535461Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:55:57.455539085Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== RUN   TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.45554986Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== PAUSE TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.455570083Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:55:57.45557393Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup"}
+{"Time":"2026-10-09T09:55:57.45557706Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Output":"=== RUN   TestKillsProcessGroup\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.659885577Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Output":"--- PASS: TestKillsProcessGroup (0.20s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.659947341Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Elapsed":0.2}
+{"Time":"2026-10-09T09:55:57.659959168Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestNoFirstOutput"}
+{"Time":"2026-10-09T09:55:57.659963504Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestNoFirstOutput","Output":"=== RUN   TestNoFirstOutput\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961238156Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestNoFirstOutput","Output":"--- PASS: TestNoFirstOutput (0.30s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961294245Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestNoFirstOutput","Elapsed":0.3}
+{"Time":"2026-10-09T09:55:57.961304395Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild"}
+{"Time":"2026-10-09T09:55:57.961307993Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild","Output":"=== CONT  TestChild\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961314684Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild","Output":"--- PASS: TestChild (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961318044Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestChild","Elapsed":0}
+{"Time":"2026-10-09T09:55:57.961320655Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError"}
+{"Time":"2026-10-09T09:55:57.961327429Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"=== CONT  TestExitIsNotGuardError\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961662687Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"    childguard_test.go:98: wrong exit error: ceiling: 263.27µs\n","OutputType":"error"}
+{"Time":"2026-10-09T09:55:57.961674571Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Output":"--- FAIL: TestExitIsNotGuardError (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.961679194Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestExitIsNotGuardError","Elapsed":0}
+{"Time":"2026-10-09T09:55:57.961698348Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.962066416Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"FAIL\tgithub.com/system-inc/adamic/internal/childguard\t9.121s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:55:57.962094708Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/childguard","Elapsed":9.121}

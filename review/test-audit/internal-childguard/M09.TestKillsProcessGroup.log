@@ -1,0 +1,9 @@
+{"Time":"2026-10-09T09:57:29.679480848Z","Action":"start","Package":"github.com/system-inc/adamic/internal/childguard"}
+{"Time":"2026-10-09T09:57:29.683261731Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup"}
+{"Time":"2026-10-09T09:57:29.683337005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Output":"=== RUN   TestKillsProcessGroup\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:31.682876371Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Output":"    childguard_test.go:115: descendant kept output pipes open after group kill\n","OutputType":"error"}
+{"Time":"2026-10-09T09:57:31.683066134Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Output":"--- FAIL: TestKillsProcessGroup (2.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:31.683100419Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestKillsProcessGroup","Elapsed":2}
+{"Time":"2026-10-09T09:57:31.683129495Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:31.68345562Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"FAIL\tgithub.com/system-inc/adamic/internal/childguard\t2.003s\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:31.683471154Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/childguard","Elapsed":2.004}

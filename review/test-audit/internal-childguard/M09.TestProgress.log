@@ -1,0 +1,8 @@
+{"Time":"2026-10-09T09:57:29.685010123Z","Action":"start","Package":"github.com/system-inc/adamic/internal/childguard"}
+{"Time":"2026-10-09T09:57:29.691296993Z","Action":"run","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress"}
+{"Time":"2026-10-09T09:57:29.69138178Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Output":"=== RUN   TestProgress\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:37.702759139Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Output":"--- PASS: TestProgress (8.01s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:37.702842802Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Test":"TestProgress","Elapsed":8.01}
+{"Time":"2026-10-09T09:57:37.702879219Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T09:57:37.703533894Z","Action":"output","Package":"github.com/system-inc/adamic/internal/childguard","Output":"ok  \tgithub.com/system-inc/adamic/internal/childguard\t8.018s\n"}
+{"Time":"2026-10-09T09:57:37.703562041Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/childguard","Elapsed":8.019}
