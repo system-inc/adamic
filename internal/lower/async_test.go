@@ -35,7 +35,6 @@ func TestAsyncGapsNameTheMissingPiece(t *testing.T) {
 		{"async function f(): Promise<void> { try { throw new Error('why'); } catch { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
 		{"async function f(): Promise<void> { try { await Promise.resolve(); } finally { await Promise.resolve(); } }\nawait f();", "await in catch or finally"},
 		{"async function f(): Promise<number> { try { return await Promise.resolve(1); } finally { console.log('clean'); } }\nawait f();", "async finally completion routing"},
-		{"async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();", "type void"},
 		{"async function f(): Promise<number> { return Promise.resolve(1); }\nawait f();", "Promise adoption"},
 		{"async function f(): Promise<number> { return await {then(resolve: (value: number) => void): void { resolve(1); }}; }\nawait f();", "thenables"},
 		{"async function f(): Promise<void> {}\nf();", "unawaited async task"},
@@ -196,5 +195,25 @@ const result = await f(false);`,
 		if !errors.As(err, &notYet) || !strings.Contains(err.Error(), "return of thenables") {
 			t.Fatalf("class or union thenable must be refused by name: %v", err)
 		}
+	}
+}
+
+// Async unit 2 represents a void await's value as undefined. Keep both the
+// formerly refused unused binding and the observable registered fixture covered.
+func TestAsyncVoidAwaitValuesLower(t *testing.T) {
+	t.Parallel()
+	observed, err := os.ReadFile("../oracle/testdata/async_void_value.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	for _, probe := range []struct{ name, source string }{
+		{"unused", "async function f(): Promise<void> { const value = await Promise.resolve(); }\nawait f();"},
+		{"observed", string(observed)},
+	} {
+		t.Run(probe.name, func(t *testing.T) {
+			if _, err := lowerSource(t, probe.source); err != nil {
+				t.Fatal(err)
+			}
+		})
 	}
 }
