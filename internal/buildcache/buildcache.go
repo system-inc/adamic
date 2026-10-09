@@ -113,7 +113,7 @@ func get(inputs Inputs, build func(directory string) error) (string, string, err
 		return "", "", err
 	}
 	outcome := "miss"
-	if os.Getenv("ADAMIC_BUILD_STORE") != "off" {
+	if storeAddress() != "" {
 		switch err = fetch(key, scratch); {
 		case err == nil:
 			outcome = "fetched"

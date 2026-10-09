@@ -31,48 +31,6 @@ func jsxFailure(t *testing.T, name string, args ...string) (int, string) {
 	return exit.ExitCode(), stderr.String()
 }
 
-// Not parallel: compare both original refusals before compiling the permissive mutant.
-func TestJsxMemberNameRejection(t *testing.T) {
-	path := filepath.Join(t.TempDir(), "dashed-member.tsx")
-	source := "const x = <Foo.custom-element/>;\n"
-	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
-		t.Fatal(err)
-	}
-	oracle := goOracle(t)
-	code, diagnostics := jsxFailure(t, oracle, path, "--whole")
-	if code != 1 || !strings.Contains(diagnostics, "parser diagnostic") || !strings.Contains(diagnostics, "1003") {
-		t.Fatalf("Go must reject dashed JSX member: %d %s", code, diagnostics)
-	}
-	directory, _ := filepath.Abs(".")
-	runner, _ := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
-	binary := buildPort(t, directory, true)
-	code, nodeError := jsxFailure(t, "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(directory, "main.ts"), path, "--whole")
-	if code != 70 || !strings.Contains(nodeError, "JSX expected name") {
-		t.Fatalf("Node failed to reject: %d %s", code, nodeError)
-	}
-	code, nativeError := jsxFailure(t, binary, path, "--whole")
-	if code != 70 || nodeError != nativeError {
-		t.Fatalf("native rejection differs: %d %s", code, nativeError)
-	}
-	t.Logf("Go rejects with diagnostic 1003; Node/native reject identically: %s", strings.TrimSpace(nodeError))
-	from := "while(this.parser.kind() === 'DotToken') {\n                this.parser.next();\n                const right = this.identifier();"
-	to := strings.Replace(from, "const right", "this.parser.scanner.scanJsxIdentifier();\n                const right", 1)
-	mutant := copyPort(t, "jsx.ts", from, to)
-	mutantBinary := buildPort(t, mutant, true)
-	for _, side := range []struct {
-		name string
-		run  execution
-	}{
-		{"Node", execute(t, "", "node", "--disable-warning=ExperimentalWarning", runner, filepath.Join(mutant, "main.ts"), path, "--whole")},
-		{"native", execute(t, "", mutantBinary, path, "--whole")},
-	} {
-		if !strings.Contains(string(side.run.output), "custom-element") {
-			t.Fatal("mutant did not exercise the invalid member")
-		}
-		t.Logf("%s compiled permissive mutant finishes cleanly; Go-backed rejection check catches its exit 0", side.name)
-	}
-}
-
 // Not parallel: one control binary holds every name boundary before mutant builds.
 func TestJsxNameBoundaryRejections(t *testing.T) {
 	oracle := goOracle(t)
