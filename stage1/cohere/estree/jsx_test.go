@@ -140,16 +140,38 @@ func TestJSXOriginalLibraries(t *testing.T) {
 		}
 	}
 }
+
+const testJSXMutantShards = 9
+
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
 func TestJSXMutant(t *testing.T) {
-	list := jsxManifest(t)
-	want := execute(t, "", goOracle(t), "--manifest", list)
-	path := mutantPort(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
-	binary, _ := build(t, path, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if diff := firstDifference(want, got); diff == "" {
-			t.Fatal(name + " mutant survived")
-		} else {
-			t.Log(name + ": " + diff)
-		}
+	finishSetup := miscStart(t)
+	cases := jsxCases()
+	if len(cases) != testJSXMutantShards {
+		t.Fatal("JSX mutant enumeration changed")
 	}
+	ids := miscIDs("jsx-mutant", len(cases))
+	oracle := miscOracle(t)
+	path := mutantPort(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
+	binary, _ := miscBuild(t, path)
+	finishSetup()
+	miscRunShards(t, testJSXMutantShards, ids, func(t *testing.T, i int) {
+		list := jsxManifestCases(t, cases[i:i+1])
+		want := execute(t, "", oracle, "--manifest", list)
+		for name, got := range map[string][]byte{"Node": onNode(t, path, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
+			if err := miscCompare(want, got, true); err != nil {
+				t.Fatalf("%s %s: %v", ids[i], name, err)
+			}
+		}
+	})
+}
+
+func TestJSXMutantPlantedSurvivor(t *testing.T) {
+	miscPlantedProof(t, testJSXMutantShards, miscIDs("jsx-mutant", len(jsxCases())), func(planted bool) error {
+		got := []byte("disagree")
+		if planted {
+			got = []byte("agree")
+		}
+		return miscCompare([]byte("agree"), got, true)
+	})
 }
