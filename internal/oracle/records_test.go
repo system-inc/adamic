@@ -21,7 +21,7 @@ func init() {
 			path    string
 			lowers  bool
 			checked bool
-		}{"internal/oracle/testdata/records_" + name + ".a", true, name == "prototype_read" || name == "prototype_in" || name == "prototype_set" || name == "narrowed_number"})
+		}{"internal/oracle/testdata/records_" + name + ".a", name != "prototype_read" && name != "prototype_in" && name != "prototype_set" && name != "narrowed_number", false})
 	}
 }
 
@@ -97,6 +97,9 @@ func TestRecordOperationMutants(t *testing.T) {
 
 func TestRecordPrototypeMutant(t *testing.T) {
 	t.Parallel()
+	if !recordRefusalMutant(t, "prototype_read") {
+		return
+	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_prototype_read.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -183,6 +186,9 @@ func TestRecordCoalesceMutant(t *testing.T) {
 
 func TestRecordNarrowingMutant(t *testing.T) {
 	t.Parallel()
+	if !recordRefusalMutant(t, "narrowed_number") {
+		return
+	}
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/records_narrowed_number.a"))
 	if err != nil {
 		t.Fatal(err)

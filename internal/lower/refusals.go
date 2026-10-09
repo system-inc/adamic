@@ -103,6 +103,10 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
 			found = err
 			return true
 		}
+		if err := l.recordDivergenceRefusal(node); err != nil {
+			found = err
+			return true
+		}
 		if err := l.recordLiteralRead(node); err != nil {
 			found = err
 			return true
