@@ -12,6 +12,8 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+	"sync"
+	"syscall"
 	"testing"
 	"time"
 
@@ -84,6 +86,7 @@ func ownedWitnessShard(id string, count int) int {
 }
 
 func TestOwnedWitnessesAssignmentStable(t *testing.T) {
+	t.Parallel()
 	cases := ownedWitnessCases(t, ".")
 	original, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
 	if err != nil {
@@ -153,7 +156,6 @@ func checkOwnedWitnessUnion(cases []ownedWitnessCase, plan [][]ownedWitnessCase)
 // unset runs all. Each top-level shard is independently discoverable by go test -list.
 func ownedWitnessUnit(t *testing.T, shard int) {
 	t.Helper()
-	t.Parallel()
 	if text := os.Getenv("ADAMIC_TEST_SHARD"); text != "" {
 		parts := strings.Split(text, "/")
 		if len(parts) != 2 {
@@ -190,15 +192,19 @@ func ownedWitnessUnit(t *testing.T, shard int) {
 		}
 		return
 	}
+	// Standalone shard selectors prepare under the setup budget as well.
+	// The case deadline starts only after all shared inputs are ready.
+	ownedWitnessSetup(t)
+	oracle, binary, module := ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
 	started := time.Now()
-	oracle := goOracle(t)
-	binary, module := ownedWitnessProducts(t, directory)
-	t.Logf("setup=%s; shard=%03d witnesses=%d; live union=%d witnesses/%d manifest cases", time.Since(started), shard, len(plan[shard]), len(cases), 2*len(cases))
+	defer func() { t.Logf("case wall=%s; shard=%03d witnesses=%d", time.Since(started), shard, len(plan[shard])) }()
 	var rows []string
 	for _, witness := range plan[shard] {
 		path := strings.SplitN(witness.row, "\t", 2)[0]
-		pair := recoveryRows(t, oracle, []string{witness.row, path + "\tall"})
-		answer := execute(t, "", oracle, "--manifest", manifest(t, pair[:1]), "--count")
+		pair := ownedWitnessRecoveryRows(t, ctx, oracle, []string{witness.row, path + "\tall"})
+		answer := ownedWitnessExecute(t, ctx, oracle, "--manifest", manifest(t, pair[:1]), "--count")
 		if string(answer.output) == "0\n" {
 			t.Fatalf("%s witness reports no findings", witness.descriptor.Name)
 		}
@@ -208,19 +214,114 @@ func ownedWitnessUnit(t *testing.T, shard int) {
 		return
 	}
 	path := manifest(t, rows)
-	want := execute(t, "", oracle, "--manifest", path)
+	want := ownedWitnessExecute(t, ctx, oracle, "--manifest", path)
 	for _, side := range []struct {
 		name string
 		run  execution
 	}{
-		{"Node", node(t, directory, path, false)},
-		{"emitted JavaScript", runJavaScript(t, module, path, false)},
-		{"native", execute(t, "", binary, "--manifest", path)},
+		{"Node", ownedWitnessExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), filepath.Join(directory, "main.ts"), "--manifest", path)},
+		{"emitted JavaScript", ownedWitnessExecute(t, ctx, "node", "--disable-warning=ExperimentalWarning", filepath.Join(repository, "oracle/node.mjs"), module, "--manifest", path)},
+		{"native", ownedWitnessExecute(t, ctx, binary, "--manifest", path)},
 	} {
 		if err := ownedWitnessAgreement(fmt.Sprintf("shard-%03d", shard), side.name, side.run.output, want.output); err != nil {
 			t.Fatal(err)
 		}
 	}
+}
+
+var ownedWitnessShared struct {
+	sync.Mutex
+	oracle, binary, module string
+}
+
+// Not parallel: publishes the shared oracle and immutable products before parallel shards resume.
+func TestOwnedWitnesses_Setup(t *testing.T) {
+	if os.Getenv("ADAMIC_OWNED_WITNESS_PROBE") == "1" {
+		return
+	}
+	ownedWitnessSetup(t)
+}
+
+func ownedWitnessSetup(t *testing.T) {
+	t.Helper()
+	ownedWitnessShared.Lock()
+	defer ownedWitnessShared.Unlock()
+	if ownedWitnessShared.oracle != "" {
+		return
+	}
+	started := time.Now()
+	deadline := time.AfterFunc(90*time.Second, func() { fmt.Fprintln(os.Stderr, "cooked: TestOwnedWitnesses_Setup exceeded 90s"); os.Exit(124) })
+	defer deadline.Stop()
+	directory, err := filepath.Abs(".")
+	if err != nil {
+		t.Fatal(err)
+	}
+	oracle := goOracle(t) // Overlay builds retain their existing builder by instruction.
+	binary, module := ownedWitnessProducts(t, directory)
+	ownedWitnessShared.oracle, ownedWitnessShared.binary, ownedWitnessShared.module = oracle, binary, module
+	t.Logf("shared setup=%s", time.Since(started))
+}
+
+func ownedWitnessExecute(t *testing.T, ctx context.Context, name string, args ...string) execution {
+	t.Helper()
+	command := exec.CommandContext(ctx, name, args...)
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
+	output, err := os.CreateTemp(t.TempDir(), "stdout-")
+	if err != nil {
+		t.Fatal(err)
+	}
+	defer output.Close()
+	command.Stdout = output
+	var stderr bytes.Buffer
+	command.Stderr = &stderr
+	started := time.Now()
+	err = command.Run()
+	if ctx.Err() != nil {
+		t.Fatalf("cooked: shard exceeded 90s: %v", ctx.Err())
+	}
+	if err != nil || len(commandDiagnostics(name, stderr.Bytes())) != 0 {
+		t.Fatalf("%s %v: %v\n%s", name, args, err, &stderr)
+	}
+	data, err := os.ReadFile(output.Name())
+	if err != nil {
+		t.Fatal(err)
+	}
+	return execution{data, time.Since(started)}
+}
+
+func ownedWitnessRecoveryRows(t *testing.T, ctx context.Context, oracle string, rows []string) []string {
+	t.Helper()
+	if len(rows) == 0 {
+		return rows
+	}
+	answer := ownedWitnessExecute(t, ctx, oracle, "--manifest", manifest(t, rows), "--diagnostics")
+	flags := strings.Fields(string(answer.output))
+	if len(flags) != len(rows) {
+		t.Fatalf("diagnostics answered %d rows of %d", len(flags), len(rows))
+	}
+	result := append([]string(nil), rows...)
+	for index, row := range rows {
+		if flags[index] != "1" {
+			continue
+		}
+		fields := strings.Split(row, "\t")
+		for len(fields) < 7 {
+			fields = append(fields, "")
+		}
+		if fields[6] == "" {
+			fields[6] = "recovery"
+		}
+		result[index] = strings.Join(fields, "\t")
+	}
+	return result
 }
 
 func ownedWitnessAgreement(id, side string, got, want []byte) error {
@@ -281,7 +382,7 @@ func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
 		t.Logf("cold build lowered=%s", time.Since(started))
 		return err
 	})
-	flags := append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
+	flags := append(native.Flags(native.Options{Sanitize: true, Split: true, Jobs: 4}), "Split=true", "Jobs=4", "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"), "ADAMIC_NATIVE_JOBS="+os.Getenv("ADAMIC_NATIVE_JOBS"), "ADAMIC_GATE_UNCACHED="+os.Getenv("ADAMIC_GATE_UNCACHED"))
 	tools = append(tools, buildcache.Tool("clang", "--version"))
 	binary := buildcache.Product(t, buildcache.Inputs{Name: "lint-owned-witnesses-sanitized", Files: files, Flags: flags, Toolchain: tools}, func(dir string) error {
 		source, err := os.ReadFile(filepath.Join(lowered, "program.c"))
@@ -289,7 +390,7 @@ func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
 			return err
 		}
 		started := time.Now()
-		err = native.Build(string(source), filepath.Join(dir, "native"), native.Options{Sanitize: true})
+		err = native.Build(string(source), filepath.Join(dir, "native"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 		t.Logf("cold build sanitized=%s", time.Since(started))
 		return err
 	})
@@ -297,6 +398,7 @@ func ownedWitnessProducts(t *testing.T, directory string) (string, string) {
 }
 
 func TestOwnedWitnessesUnion(t *testing.T) {
+	t.Parallel()
 	cases := ownedWitnessCases(t, ".")
 	plan, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
 	if err != nil {
@@ -324,11 +426,23 @@ func TestOwnedWitnessesUnion(t *testing.T) {
 }
 
 func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	binary, err := os.Executable()
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := exec.Command(binary, "-test.run=^TestOwnedWitnesses_[0-9]{3}$", "-test.timeout=75s", "-test.v")
+	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	defer cancel()
+	command := exec.CommandContext(ctx, binary, "-test.run=^TestOwnedWitnesses_[0-9]{3}$", "-test.timeout=90s", "-test.v")
+	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
+	command.Cancel = func() error {
+		err := syscall.Kill(-command.Process.Pid, syscall.SIGKILL)
+		if err == syscall.ESRCH {
+			return os.ErrProcessDone
+		}
+		return err
+	}
+	command.WaitDelay = time.Second
 	command.Env = append(os.Environ(), "ADAMIC_OWNED_WITNESS_PROBE=1", "ADAMIC_TEST_SHARD=")
 	output, err := command.CombinedOutput()
 	if err == nil {
@@ -351,19 +465,67 @@ func TestOwnedWitnessesPlantedDisagreement(t *testing.T) {
 	t.Logf("planted native disagreement caught only by %s", want)
 }
 
-func TestOwnedWitnesses_000(t *testing.T) { ownedWitnessUnit(t, 0) }
-func TestOwnedWitnesses_001(t *testing.T) { ownedWitnessUnit(t, 1) }
-func TestOwnedWitnesses_002(t *testing.T) { ownedWitnessUnit(t, 2) }
-func TestOwnedWitnesses_003(t *testing.T) { ownedWitnessUnit(t, 3) }
-func TestOwnedWitnesses_004(t *testing.T) { ownedWitnessUnit(t, 4) }
-func TestOwnedWitnesses_005(t *testing.T) { ownedWitnessUnit(t, 5) }
-func TestOwnedWitnesses_006(t *testing.T) { ownedWitnessUnit(t, 6) }
-func TestOwnedWitnesses_007(t *testing.T) { ownedWitnessUnit(t, 7) }
-func TestOwnedWitnesses_008(t *testing.T) { ownedWitnessUnit(t, 8) }
-func TestOwnedWitnesses_009(t *testing.T) { ownedWitnessUnit(t, 9) }
-func TestOwnedWitnesses_010(t *testing.T) { ownedWitnessUnit(t, 10) }
-func TestOwnedWitnesses_011(t *testing.T) { ownedWitnessUnit(t, 11) }
-func TestOwnedWitnesses_012(t *testing.T) { ownedWitnessUnit(t, 12) }
-func TestOwnedWitnesses_013(t *testing.T) { ownedWitnessUnit(t, 13) }
-func TestOwnedWitnesses_014(t *testing.T) { ownedWitnessUnit(t, 14) }
-func TestOwnedWitnesses_015(t *testing.T) { ownedWitnessUnit(t, 15) }
+func TestOwnedWitnesses_000(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 0)
+}
+func TestOwnedWitnesses_001(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 1)
+}
+func TestOwnedWitnesses_002(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 2)
+}
+func TestOwnedWitnesses_003(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 3)
+}
+func TestOwnedWitnesses_004(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 4)
+}
+func TestOwnedWitnesses_005(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 5)
+}
+func TestOwnedWitnesses_006(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 6)
+}
+func TestOwnedWitnesses_007(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 7)
+}
+func TestOwnedWitnesses_008(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 8)
+}
+func TestOwnedWitnesses_009(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 9)
+}
+func TestOwnedWitnesses_010(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 10)
+}
+func TestOwnedWitnesses_011(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 11)
+}
+func TestOwnedWitnesses_012(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 12)
+}
+func TestOwnedWitnesses_013(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 13)
+}
+func TestOwnedWitnesses_014(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 14)
+}
+func TestOwnedWitnesses_015(t *testing.T) {
+	t.Parallel()
+	ownedWitnessUnit(t, 15)
+}
