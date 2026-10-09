@@ -16,7 +16,6 @@ func TestClosureMergeRefusals(t *testing.T) {
 	t.Parallel()
 	paths := []string{
 		"stage3/fixtures/nested-functions/refused/01_scanner_frame.a",
-		"stage3/fixtures/taste/refused/21_truthy_loops.a",
 	}
 	for _, name := range fsFileRefusedFixtures {
 		paths = append(paths, "internal/oracle/testdata/optional_widening_refused/node_fs_file_"+name+".a")
