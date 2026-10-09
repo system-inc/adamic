@@ -42,6 +42,7 @@ func TestMain(m *testing.M) {
 
 const testOwnedWitnessesShards = 16
 
+// Fixed shard count with headroom; live repository witnesses use stable-key hashing.
 // ADAMIC_TEST_SHARD=i/n selects every nth shard starting at i; unset runs all.
 // Build products are prepared once before the parallel, independently runnable units.
 func TestOwnedWitnesses(t *testing.T) {

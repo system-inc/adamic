@@ -3,6 +3,7 @@ package lint
 import (
 	"bytes"
 	"fmt"
+	"hash/fnv"
 	"os"
 	"os/exec"
 	"path/filepath"
@@ -46,22 +47,63 @@ func ownedWitnessCases(t *testing.T, directory string) []ownedWitnessCase {
 // Validate the entire plan before applying a box selector: every original identity
 // must occur exactly once, including on boxes which execute only part of the plan.
 func planOwnedWitnesses(cases []ownedWitnessCase, count int) ([][]ownedWitnessCase, error) {
-	if count < 1 || len(cases) < count {
+	if count < 1 || len(cases) == 0 {
 		return nil, fmt.Errorf("%d witnesses cannot fill %d shards", len(cases), count)
 	}
 	original := make(map[string]bool, len(cases))
 	plan := make([][]ownedWitnessCase, count)
-	for index, witness := range cases {
+	for _, witness := range cases {
 		if original[witness.id] {
 			return nil, fmt.Errorf("repeated unsplit witness %s", witness.id)
 		}
 		original[witness.id] = true
-		plan[index%count] = append(plan[index%count], witness)
+		shard := ownedWitnessShard(witness.id, count)
+		plan[shard] = append(plan[shard], witness)
 	}
 	if err := checkOwnedWitnessUnion(cases, plan); err != nil {
 		return nil, err
 	}
 	return plan, nil
+}
+
+// The repository corpus is live. Hash its repository-relative path and mode,
+// so adding or reordering witnesses never moves an existing case.
+func ownedWitnessShard(id string, count int) int {
+	h := fnv.New64a()
+	_, _ = h.Write([]byte("stage1/cohere/lint/" + id + "\x00all"))
+	return int(h.Sum64() % uint64(count))
+}
+
+func TestOwnedWitnessAssignmentStable(t *testing.T) {
+	cases := ownedWitnessCases(t, ".")
+	original, err := planOwnedWitnesses(cases, testOwnedWitnessesShards)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assignments := make(map[string]int)
+	for shard, group := range original {
+		for _, witness := range group {
+			assignments[witness.id] = shard
+		}
+	}
+	grown := append([]ownedWitnessCase{{id: "rules/new-rule/witness/new.ts"}}, cases...)
+	for i, j := 0, len(grown)-1; i < j; i, j = i+1, j-1 {
+		grown[i], grown[j] = grown[j], grown[i]
+	}
+	plan, err := planOwnedWitnesses(grown, testOwnedWitnessesShards)
+	if err != nil {
+		t.Fatal(err)
+	}
+	for shard, group := range plan {
+		for _, witness := range group {
+			if previous, exists := assignments[witness.id]; exists && previous != shard {
+				t.Fatalf("%s moved from shard-%03d to shard-%03d", witness.id, previous, shard)
+			}
+		}
+	}
+	if _, err := planOwnedWitnesses(nil, testOwnedWitnessesShards); err == nil {
+		t.Fatal("empty repository corpus survived")
+	}
 }
 
 func checkOwnedWitnessUnion(cases []ownedWitnessCase, plan [][]ownedWitnessCase) error {
@@ -179,7 +221,12 @@ func TestOwnedWitnessUnionRejectsMissingAndRepeated(t *testing.T) {
 		t.Fatal(err)
 	}
 	missing := append([][]ownedWitnessCase(nil), plan...)
-	missing[0] = missing[0][1:]
+	for shard, group := range missing {
+		if len(group) > 0 {
+			missing[shard] = group[1:]
+			break
+		}
+	}
 	if checkOwnedWitnessUnion(cases, missing) == nil {
 		t.Fatal("missing witness survived")
 	}
@@ -229,19 +276,21 @@ func TestOwnedWitnessPlantedDisagreement(t *testing.T) {
 	if err == nil {
 		t.Fatal("planted disagreement survived")
 	}
+	cases := ownedWitnessCases(t, ".")
+	wantShard := fmt.Sprintf("shard-%03d", ownedWitnessShard(cases[0].id, testOwnedWitnessesShards))
 	failures := 0
 	for _, line := range strings.Split(string(output), "\n") {
 		if strings.Contains(line, "--- FAIL: TestOwnedWitnessShardProbe/shard-") {
 			failures++
-			if !strings.Contains(line, "/shard-000 ") {
+			if !strings.Contains(line, "/"+wantShard+" ") {
 				t.Fatalf("wrong shard caught disagreement: %s", line)
 			}
 		}
 	}
 	if failures != 1 || !bytes.Contains(output, []byte("planted disagreement")) {
-		t.Fatalf("want exactly shard-000 to fail: %s", output)
+		t.Fatalf("want exactly %s to fail: %s", wantShard, output)
 	}
-	t.Log("planted native disagreement caught only by shard-000")
+	t.Logf("planted native disagreement caught only by %s", wantShard)
 }
 
 // ownedProductInputs describes the build inputs beside each callback. There is
