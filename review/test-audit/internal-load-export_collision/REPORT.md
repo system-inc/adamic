@@ -778,7 +778,7 @@ Mutant and probe table. Every coordinate is at the starting commit.
 | P05 | internal/load/node_library.go:72 | empty-answer probe: whole function body -> return false | TestNodeLibraryUsesPinnedDeclarations |
 
 Survivor M20: equivalent candidate. Changing the final suffix predicate from .d.ts to .ts leaves every loaded pinned declaration accepted. No changed-output witness was obtained; not classified as unguarded.
-Probe survivors do not count as production survivors, kills, uniqueness or subsumption. P02 passed every package row. P01 individually proved the five Load-only acceptance rows or irrelevant entries pass while the relevant negative/type-output checks fail. Probe judgments use the row's own entry: Declarations for the declaration row, LoadOverlay for overlay, nodeTypesIndex for version rejection, Load elsewhere, with additional IsNodeLibrary probe for pinned declarations.
+Probe survivors do not count as production survivors, kills, uniqueness or subsumption. P02 passed every package row. P01 individually proved four Load acceptance rows and irrelevant entries pass while the relevant negative/type-output checks fail. Probe judgments use the row's own entry: Declarations for the declaration row, LoadOverlay for overlay, nodeTypesIndex for version rejection, Load elsewhere, with additional IsNodeLibrary probe for pinned declarations.
 The house-control-flow positive implicit-return and switch-fallthrough subcases passed P01 while its TS2366 negative failed. They are in vacuous_subcases.
 
 Commands:
@@ -790,6 +790,7 @@ Commands:
 - Authority: node stage3/api/node_modules/typescript/bin/tsc --ignoreConfig --noEmit --strict --lib es2024 /tmp/u024-authority.ts; source const broken: number = 'x'; log confirms TS2322 at 1,7. Official declarations independently inspected with rg, saved in authority-node.log.
 
 Unclear instructions and costs:
+- Repository log ignore rules omitted raw logs from the initial evidence commit. Force-added only this audit directory's logs in a second evidence commit.
 - The reference commit 8de93800f4 differs from fetched origin/main. Followed the explicit fresh-origin/main instruction, recording 7b18d057. No requested rows moved or vanished.
 - env.sh provided working tools but the required cohere/TypeScript source was absent. The tools-only warm check did not establish repository build readiness. npm ci stage3/api succeeded in 0.766s. Prescribed setup restored submodules in 20.329s but broad cache warming exceeded 90s and was stopped, around 115s total observed elapsed. Narrowed to internal/load; initial discovery build was stopped after 97s and retried using cached dependencies. The retry finished within its hard 90s limit. These are build costs, not a red test baseline.
 - Three mutants per each of 15 rows asks for about 45 mutants, conflicting with the 20-mutant cap. Honored 20, spread across production functions; each subsumption rests only on its listed 1 to 6 kills. No deletion recommendation.
