@@ -4,32 +4,22 @@ import (
 	"errors"
 	"strings"
 	"testing"
-
-	"github.com/system-inc/adamic/internal/ir"
 )
 
 func TestTypedArraysLower(t *testing.T) {
 	t.Parallel()
 	for _, kind := range []string{"Uint8Array", "Int32Array", "Float64Array"} {
 		t.Run(kind, func(t *testing.T) {
-			p, err := lowerSource(t, `const source: number[] = [300, -1, NaN];
+			lowersAndAgreesWithNode(t, `const source: number[] = [300, -1, NaN];
 const values = new `+kind+`(source);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
 values[0] = 300;
 values.fill(-1, 1);
 values.set(values.subarray(0, 1), 2);
 for (const value of values) { console.log(value.toString()); }
 console.log((values[values.length] ?? -999).toString());
 `)
-			if err != nil {
-				t.Fatal(err)
-			}
-			if !p.Locals[1].Type.IsTypedArray() {
-				t.Fatalf("typed array represented as %v", p.Locals[1].Type)
-			}
-			write, ok := p.Main[2].(ir.SetIndex)
-			if !ok || write.Element != ir.Number {
-				t.Fatalf("index write: %#v", p.Main[2])
-			}
 		})
 	}
 }
@@ -68,4 +58,22 @@ func TestTypedArrayViewsCannotChangeRepresentation(t *testing.T) {
 			t.Errorf("representation change accepted: %s: %v", source, err)
 		}
 	}
+}
+
+func TestTypedArrayFromArray(t *testing.T) {
+	t.Parallel()
+	// Only native shows FromArray selecting the array-copy constructor rather than the length constructor.
+	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([1, 2]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`)
+}
+
+func TestTypedArrayFromEmptyArray(t *testing.T) {
+	t.Parallel()
+	// Only native shows FromArray selecting the empty-array constructor rather than the length constructor.
+	lowersAndAgreesWithNodeNative(t, `const values = new Uint8Array([]);
+console.log(values.length.toString());
+for (const value of values) { console.log(value.toString()); }
+`)
 }

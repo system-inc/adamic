@@ -1,0 +1,8 @@
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== CONT  TestGenericBodyRelationsMaybeBind
+    generic_body_relations_test.go:55: want dependent return refusal, got /tmp/adamic-gate/TestGenericBodyRelationsMaybeBind2484579118/001/maybe-bind.a:11:12: stage 0 can't lower a function expression with a this parameter outside represented member storage yet
+--- FAIL: TestGenericBodyRelationsMaybeBind (0.08s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.095s
+FAIL

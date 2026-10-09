@@ -1,0 +1,9 @@
+push-old-stop: caught, exit 1, 16.77s
+map-boundary-bypass: caught, exit 1, 8.44s
+Traceback (most recent call last):
+  File "/workspace/adamic/review/compiler/lowering-chain-reds/run-mutants.py", line 44, in <module>
+    overlay('sort-direct-reader', 'internal/lower/exceptions.go',
+  File "/workspace/adamic/review/compiler/lowering-chain-reds/run-mutants.py", line 24, in overlay
+    assert result.returncode == 1 and all(text in output for text in required), (name, result.returncode, output[-2000:])
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('sort-direct-reader', 0, '=== RUN   TestCallTargetReaders\n=== PAUSE TestCallTargetReaders\n=== CONT  TestCallTargetReaders\n--- PASS: TestCallTargetReaders (23.23s)\nPASS\nok  \tgithub.com/system-inc/adamic/internal/ir\t23.247s\n')

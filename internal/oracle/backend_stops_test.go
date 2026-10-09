@@ -12,8 +12,8 @@ import (
 
 func TestRuledBackendOutcomes(t *testing.T) {
 	t.Parallel()
-	if len(ruledBackendDivergences) != 1 {
-		t.Fatal("only the weak-after-free fixture is ruled to diverge")
+	if len(ruledBackendDivergences) != 2 {
+		t.Fatal("only the weak-after-free and named-stack fixtures are ruled to diverge")
 	}
 	entry := ruledBackendDivergences[0]
 	path, err := filepath.Abs(filepath.Join(repository, entry.fixture))
@@ -33,6 +33,11 @@ func TestRuledBackendOutcomes(t *testing.T) {
 	if difference := backendDisagreement(entry.fixture, backend, native); difference != "" {
 		t.Fatal(difference)
 	}
+	requireExactBackendOutcomes(t, entry.fixture, backend, native)
+}
+
+func requireExactBackendOutcomes(t *testing.T, fixture string, backend, native run) {
+	t.Helper()
 	// The exception remains exact, including bytes printed before the terminal stop.
 	for _, side := range []string{"native", "JavaScript"} {
 		for _, field := range []string{"exit", "stdout", "stderr"} {
@@ -49,7 +54,7 @@ func TestRuledBackendOutcomes(t *testing.T) {
 			case "stderr":
 				mutated.stderr = append(append([]byte{}, mutated.stderr...), '!')
 			}
-			if backendDisagreement(entry.fixture, left, right) == "" {
+			if backendDisagreement(fixture, left, right) == "" {
 				t.Fatalf("listed %s %s mutation was waived", side, field)
 			}
 		}
@@ -94,13 +99,15 @@ func TestTerminalStackStop(t *testing.T) {
 	if difference := disagreement(want, backend); difference != "" {
 		t.Fatalf("terminal stack stop: %s; JavaScript exit %d stdout %q stderr %q", difference, backend.exitCode, backend.stdout, backend.stderr)
 	}
+	wantNative := run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"), exitCode: 70}
 	native, _ := natively(t, program)
-	if difference := disagreement(want, native); difference != "" {
+	if difference := disagreement(wantNative, native); difference != "" {
 		t.Fatalf("native stack stop: %s", difference)
 	}
 	if difference := backendDisagreement(fixture, backend, native); difference != "" {
 		t.Fatal(difference)
 	}
+	requireExactBackendOutcomes(t, fixture, backend, native)
 	// Catch instrumentation must not run before the terminal guard either.
 	code := javascript.JavaScriptWith(program, javascript.Options{Mark: func(at *ir.Statement, part int) string {
 		if _, isTry := (*at).(ir.Try); isTry && part == 1 {

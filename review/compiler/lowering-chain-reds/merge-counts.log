@@ -1,0 +1,27 @@
+=== RUN   TestCountsAreRecorded
+=== PAUSE TestCountsAreRecorded
+=== CONT  TestCountsAreRecorded
+=== RUN   TestCountsAreRecorded/fixtures
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_digest_twice.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_digest_twice.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/namespace_callable_properties.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/namespace_callable_properties.a
+=== RUN   TestCountsAreRecorded/fixtures/internal/oracle/testdata/pow_fractional.a
+=== PAUSE TestCountsAreRecorded/fixtures/internal/oracle/testdata/pow_fractional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_digest_twice.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/namespace_callable_properties.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/pow_fractional.a
+=== CONT  TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a
+--- PASS: TestCountsAreRecorded (27.10s)
+    --- PASS: TestCountsAreRecorded/fixtures (0.04s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/pow_fractional.a (0.21s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/namespace_callable_properties.a (0.26s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_digest_twice.a (0.50s)
+        --- PASS: TestCountsAreRecorded/fixtures/internal/oracle/testdata/node_buffer_finalized.a (0.51s)
+PASS
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	27.111s

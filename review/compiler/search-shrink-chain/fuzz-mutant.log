@@ -1,0 +1,11 @@
+=== RUN   TestJudgeReadsThePanicLine
+=== PAUSE TestJudgeReadsThePanicLine
+=== CONT  TestJudgeReadsThePanicLine
+    judge_test.go:50: find typed search value: finding (javascript backend exit code differs, native exit code differs), want checked
+    judge_test.go:50: findIndex typed search value: finding (javascript backend exit code differs, native exit code differs), want checked
+    judge_test.go:50: findLast typed search value: finding (javascript backend exit code differs, native exit code differs), want checked
+    judge_test.go:50: findLastIndex typed search value: finding (javascript backend exit code differs, native exit code differs), want checked
+--- FAIL: TestJudgeReadsThePanicLine (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/fuzz	0.007s
+FAIL

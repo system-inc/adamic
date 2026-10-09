@@ -1,6 +1,7 @@
 package lower
 
 import (
+	"bytes"
 	"context"
 	"os"
 	"os/exec"
@@ -50,6 +51,22 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 				}
 			}
 			entry := filepath.Join(directory, probe.entry)
+			// Observe a computed answer before the cycle can panic, rather than
+			// letting a failing cycle pass the oracle on silence.
+			if err := os.WriteFile(filepath.Join(directory, "probe.a"), []byte("console.log(`${1 + 2}`);"), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			original, err := os.ReadFile(entry)
+			if err != nil {
+				t.Fatal(err)
+			}
+			if err := os.WriteFile(entry, append([]byte("import './probe.a';\n"), original...), 0o644); err != nil {
+				t.Fatal(err)
+			}
+			probe.output = "3\n" + probe.output
+			if probe.fails {
+				probe.output = "3\n"
+			}
 			loaded, err := load.Load([]string{entry})
 			if err != nil {
 				t.Fatal(err)
@@ -74,33 +91,39 @@ func TestUndecidedCycleReadsUseReadyChecks(t *testing.T) {
 			}
 			run := func(command *exec.Cmd) {
 				t.Helper()
-				output, err := command.CombinedOutput()
+				var stderr bytes.Buffer
+				command.Stderr = &stderr
+				output, err := command.Output()
+				t.Logf("%s: stdout %q, exit result %v", command.Args, output, err)
+				if (command.Path == binary || !probe.fails) && stderr.Len() != 0 {
+					t.Errorf("%s: unexpected stderr %s", command.Path, stderr.Bytes())
+				}
 				if string(output) != probe.output {
 					t.Errorf("%s: got %q, want %q (error %v)", command.Path, output, probe.output, err)
 				}
 				if probe.fails {
 					exit, ok := err.(*exec.ExitError)
-					if !ok || exit.ExitCode() != 70 {
-						t.Errorf("expected exit 70, got %v", err)
+					if !ok || exit.ExitCode() != 1 {
+						t.Errorf("expected exit 1, got %v", err)
 					}
 				} else if err != nil {
 					t.Error(err)
 				}
 			}
 			// Node reads the original .a modules with native ESM evaluation; its runtime
-			// normalizes the ReferenceError to the same panic line and exit as Adamic.
+			// has the same stdout and exit 1 contract as Adamic for uncaught errors.
+			// Step 21 excludes engine-specific stderr rendering from that contract.
 			runner := filepath.Join("..", "..", "oracle", "node.mjs")
 			for _, path := range []string{entry, generated} {
 				ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
 				arguments := []string{"--disable-warning=ExperimentalWarning", runner}
-				if probe.fails {
-					arguments = append(arguments, "--terminal-check")
-				}
 				command := exec.CommandContext(ctx, "node", append(arguments, path)...)
 				run(command)
 				cancel()
 			}
-			command := exec.Command(binary)
+			ctx, cancel := context.WithTimeout(context.Background(), time.Minute)
+			defer cancel()
+			command := exec.CommandContext(ctx, binary)
 			if probe.fails {
 				command.Env = append(os.Environ(), "ASAN_OPTIONS=detect_leaks=0")
 			}

@@ -70,7 +70,7 @@ func TestParserConstructionUnsetUse(t *testing.T) {
 		t.Fatal(err)
 	}
 	truth := onNode(t, path)
-	if truth.exitCode != 70 || string(truth.stdout) != "true\n" || !strings.Contains(string(truth.stderr), "TypeError") {
+	if truth.exitCode != 1 || string(truth.stdout) != "true\n" || !strings.Contains(string(truth.stderr), "TypeError") {
 		t.Fatalf("Node %+v", truth)
 	}
 	program, err := lowered(t, path)

@@ -1,0 +1,13 @@
+class Cat {
+  constructor(readonly name: string) {}
+}
+function isCat(x: Cat | number): x is Cat {
+  return x instanceof Cat;
+}
+const items: (Cat | number)[] = [1];
+items.pop();
+items.push(new Cat("tom"));
+items.push(new Cat("kit"));
+if (items.every(isCat)) {
+  for (const c of items) console.log("cat " + c.name);
+}

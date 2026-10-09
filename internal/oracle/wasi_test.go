@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
@@ -16,6 +17,7 @@ import (
 // TestWASIAgreesWithNode runs every ordinary fixture as a WASI command.
 // Opt in with ADAMIC_ORACLE_WASI=1; these observations always run uncached.
 func TestWASIAgreesWithNode(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1 to run the WASI oracle")
 	}
@@ -71,8 +73,9 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 				mutate(fixture.path, program)
 			}
 			actual := onWASI(t, native.C(program))
-			if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
-				t.Error(err)
+			// WASI shares native reference counting and named stack guards. Apply only the existing exact rulings.
+			if difference := backendDisagreement(fixture.path, expected, actual); difference != "" {
+				t.Errorf("%s: %s; Node %+v; WASI %+v", t.Name(), difference, expected, actual)
 			}
 		})
 	}
@@ -88,6 +91,7 @@ func onWASI(t *testing.T, source string) run {
 }
 
 func TestWASIOracleCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -111,6 +115,7 @@ func TestWASIOracleCatchesMutants(t *testing.T) {
 
 // This probe holds the runner to real Wasm artifacts even before the runtime port is available.
 func TestWASIRunnerCatchesMutants(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -142,6 +147,7 @@ func TestWASIRunnerCatchesMutants(t *testing.T) {
 
 // Compile every emitted translation unit for the 32-bit ABI independently of runtime linking.
 func TestWASIEmission(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}
@@ -175,4 +181,58 @@ func TestWASIEmission(t *testing.T) {
 			}
 		})
 	}
+}
+
+func TestWASIRuledWeakStopMutant(t *testing.T) {
+	t.Parallel()
+	checkWASIRuledStopMutant(t, "internal/oracle/testdata/4ddd17f_weak_single_narrowed.a", "stdout differs", func(program *ir.Program) bool {
+		for index, value := range program.Strings {
+			if value == "before" {
+				program.Strings[index] += "!"
+				return true
+			}
+		}
+		return false
+	})
+}
+
+func TestWASIRuledStackStopMutant(t *testing.T) {
+	t.Parallel()
+	checkWASIRuledStopMutant(t, "internal/oracle/testdata/d96d304_try_stack.a", "stderr differs", func(program *ir.Program) bool {
+		for index := range program.Functions {
+			if program.Functions[index].Name == "depth" {
+				program.Functions[index].Name = "wrongDepth"
+				return true
+			}
+		}
+		return false
+	})
+}
+
+func checkWASIRuledStopMutant(t *testing.T, fixture, difference string, mutate func(*ir.Program) bool) {
+	t.Helper()
+	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
+		t.Skip("set ADAMIC_ORACLE_WASI=1")
+	}
+	path, err := filepath.Abs(filepath.Join(repository, fixture))
+	if err != nil {
+		t.Fatal(err)
+	}
+	program, err := lowered(t, path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	expected := onJavaScriptBackend(t, program)
+	control := onWASI(t, native.C(program))
+	if d := backendDisagreement(fixture, expected, control); d != "" {
+		t.Fatalf("WASI control: %s: %+v", d, control)
+	}
+	if !mutate(program) {
+		t.Fatal("mutant changed no emitted input")
+	}
+	actual := onWASI(t, native.C(program))
+	if d := backendDisagreement(fixture, expected, actual); !strings.HasPrefix(d, "ruled native outcome: "+difference) {
+		t.Fatalf("WASI mutant escaped exact outcome: %q: %+v", d, actual)
+	}
+	t.Logf("WASI mutant caught by %s: exit %d stdout %q stderr %q", difference, actual.exitCode, actual.stdout, actual.stderr)
 }

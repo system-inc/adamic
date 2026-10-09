@@ -1,0 +1,53 @@
+=== RUN   TestPushSpreadGap
+--- PASS: TestPushSpreadGap (31.33s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/typescript/parser	31.378s
+=== RUN   TestMultiPushGap
+=== PAUSE TestMultiPushGap
+=== RUN   TestMultiPushPortMatchesGo
+=== PAUSE TestMultiPushPortMatchesGo
+=== CONT  TestMultiPushGap
+=== CONT  TestMultiPushPortMatchesGo
+    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/format/css/testdata/prettier pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 247
+    gaps_test.go:48: corpus-files: upstream /workspace/adamic/cohere root internal/lint/rules/tailwind pin 7945d102a6c18dd36adf9114a758ce646e8b2359 count 8
+    gaps_test.go:51: build cssstrings_Go_oracle 2928b491ee55 miss 30.19
+    setup_products_test.go:28: build cssstrings_port_lowering_and_backends a42b7c37f3bc miss 5.04
+--- PASS: TestMultiPushGap (36.54s)
+=== NAME  TestMultiPushPortMatchesGo
+    gaps_test.go:54: build cssstrings_sanitized aeb4e5412fb5 miss 1.73
+    gaps_test.go:66: 9591 texts, both quote preferences agree with Go
+--- PASS: TestMultiPushPortMatchesGo (40.52s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/cssstrings	40.597s
+=== RUN   TestDocumentedStageZeroGaps
+=== PAUSE TestDocumentedStageZeroGaps
+=== CONT  TestDocumentedStageZeroGaps
+--- PASS: TestDocumentedStageZeroGaps (35.54s)
+PASS
+ok  	github.com/system-inc/adamic/stage1/cohere/json	35.639s
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestOptionalIndexingMapShapeAccepted
+=== PAUSE TestOptionalIndexingMapShapeAccepted
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestOptionalIndexingMapShapeAccepted
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.27s)
+=== NAME  TestOptionalIndexingMapShapeAccepted
+    optional_indexing_boundary_test.go:21: JavaScript backend stdout = "", source Node = "7\n"
+--- FAIL: TestOptionalIndexingMapShapeAccepted (1.17s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/lower	1.259s
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (36.88s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	36.902s
+=== RUN   TestEnumCleanupMutant
+=== PAUSE TestEnumCleanupMutant
+=== CONT  TestEnumCleanupMutant
+    enums_test.go:137: enum cleanup site not unique
+--- FAIL: TestEnumCleanupMutant (0.33s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.486s
+FAIL

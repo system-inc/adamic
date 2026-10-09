@@ -2,7 +2,7 @@ package oracle
 
 import "fmt"
 
-// Only this exact fixture has a ruled difference. Each side remains pinned:
+// Only these exact fixtures have ruled differences. Each side remains pinned:
 // membership never excuses an arbitrary exit, diagnostic or output change.
 var ruledBackendDivergences = []struct {
 	fixture    string
@@ -18,10 +18,17 @@ var ruledBackendDivergences = []struct {
 		native:     run{stdout: []byte("before\n"), stderr: []byte("adamic: panic: a weak reference was read after what it pointed to was freed\n"), exitCode: 70},
 		javascript: run{stdout: []byte("before\nafter: nn\n"), exitCode: 0},
 	},
+	{
+		fixture:    "internal/oracle/testdata/d96d304_try_stack.a",
+		ruling:     "@system_adamic, task #z1vjxxd, chain step 24",
+		reason:     "Native stack guards name the exhausted function; JavaScript preserves V8's unnamed overflow diagnostic. Both stops are terminal.",
+		native:     run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded in depth\n"), exitCode: 70},
+		javascript: run{stderr: []byte("adamic: panic: RangeError: Maximum call stack size exceeded\n"), exitCode: 70},
+	},
 }
 
 // backendDisagreement applies a named ruling or the ordinary byte-exact comparison.
-// An unlisted inserted check, including stack exhaustion, must agree on both sides.
+// Every unlisted inserted check must agree on both sides.
 func backendDisagreement(fixture string, javascript, native run) string {
 	for _, entry := range ruledBackendDivergences {
 		if entry.fixture != fixture {

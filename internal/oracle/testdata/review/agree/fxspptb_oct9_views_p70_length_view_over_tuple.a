@@ -1,0 +1,10 @@
+// A good view whose field is an object type with a length, over a real tuple.
+interface Sized { readonly length: number; }
+interface Root { readonly kind: 'Holder'; }
+interface View extends Root { readonly value: Sized; }
+const pair: [string, number] = ['first', 1];
+const raw = { kind: 'Holder' as const, value: pair };
+const base: Root = raw;
+const viewed = base as View;
+const value = viewed.value;
+console.log(`${value.length}`);

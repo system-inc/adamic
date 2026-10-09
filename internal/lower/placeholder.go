@@ -178,8 +178,11 @@ func (l *lowering) notePlaceholderSlots() {
 				target, value = ast.SkipParentheses(binary.Left), binary.Right
 				if ast.IsIdentifier(target) || target.Kind == ast.KindPropertyAccessExpression {
 					if target.Kind == ast.KindPropertyAccessExpression {
-						key := l.placeholderKey(l.symbol(target))
-						inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(l.symbol(target)))
+						// An any-valued receiver has no declared property symbol. It cannot carry a placeholder slot.
+						if symbol := l.symbol(target); symbol != nil {
+							key := l.placeholderKey(symbol)
+							inferred[key] = l.placeholderOptional(l.checker.GetTypeOfSymbol(symbol))
+						}
 					}
 					transfers = append(transfers, transfer{l.placeholderKey(l.symbol(target)), value})
 				}

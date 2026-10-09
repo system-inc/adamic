@@ -21,14 +21,13 @@ func TestClassArgumentsUseCheckerIdentity(t *testing.T) {
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.types+`
+			program := lowersAndAgreesWithNode(t, probe.types+`
 class Box<T> {}
 const first = new Box<A>();
 const second = new Box<B>();
+console.log(first === second ? 'same' : 'distinct'); console.log(first instanceof Box ? 'first Box' : 'missing first'); console.log(second instanceof Box ? 'second Box' : 'missing second');
 `)
-			if err != nil {
-				t.Fatal(err)
-			}
+			// Node behavior cannot observe how many native layouts share a checker identity.
 			if len(program.Classes) != probe.classes {
 				t.Fatalf("got %d class instantiations, want %d", len(program.Classes), probe.classes)
 			}

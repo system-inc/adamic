@@ -1,0 +1,6 @@
+const items: (string | number)[] = ["a", 2, "bc", 4, "z"];
+const found = items.findLast((x) => typeof x === "string");
+console.log("found " + String(found));
+if (found !== undefined) {
+  console.log("upper " + found.toUpperCase() + " " + String(found.length));
+}

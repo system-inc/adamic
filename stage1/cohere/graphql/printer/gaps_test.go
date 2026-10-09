@@ -43,6 +43,7 @@ const testPrinterWhitespaceGapShards = 5
 // selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
 // Not parallel: printerBuild writes the shared buildcache directory and native.Build writes the shared adamic/runtime cache.
 func printerWhitespaceUnit(t *testing.T, unit int) {
+	setupStart := time.Now()
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if library == "" {
 		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to prettier@3.9.6 and graphql@17.0.2")
@@ -94,6 +95,7 @@ func printerWhitespaceUnit(t *testing.T, unit int) {
 	}
 	t.Logf("union: %d unique whitespace case ids across %d shards", len(whole), len(shards))
 	if unit < 0 {
+		t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 		return
 	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
@@ -108,7 +110,9 @@ func printerWhitespaceUnit(t *testing.T, unit int) {
 			continue
 		}
 		{
+			t.Logf("setup wall %.3fs", time.Since(setupStart).Seconds())
 			start := time.Now()
+			defer func() { t.Logf("own work wall %.3fs", time.Since(start).Seconds()) }()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
 					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())

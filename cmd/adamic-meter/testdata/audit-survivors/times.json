@@ -1,0 +1,274 @@
+[
+  {
+    "label": "TestOptionalPositionCountsUTF16Surrogates",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalPositionCountsUTF16Surrogates)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.073
+  },
+  {
+    "label": "TestOptionalResolverPreservesUncheckedIndexDiagnostic",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalResolverPreservesUncheckedIndexDiagnostic)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.079
+  },
+  {
+    "label": "TestReturnAdaptationRewritesTS7030AndPreservesBehavior",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationRewritesTS7030AndPreservesBehavior)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.227
+  },
+  {
+    "label": "TestFixtureCorpusCountsEveryDiagnosticKind",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestFixtureCorpusCountsEveryDiagnosticKind)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.125
+  },
+  {
+    "label": "TestAdaptRewritesTypeOnlyImportInMemory",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestAdaptRewritesTypeOnlyImportInMemory)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.073
+  },
+  {
+    "label": "TestJSONIsMachineReadable",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestJSONIsMachineReadable)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.077
+  },
+  {
+    "label": "TestNormalizeDropsIncidentalDetails",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestNormalizeDropsIncidentalDetails)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.033
+  },
+  {
+    "label": "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestAdaptOptionalPropertiesPreservesRuntimeAndDisk)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.372
+  },
+  {
+    "label": "TestOptionalAdaptationLeavesUnsafeContractsRejected",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationLeavesUnsafeContractsRejected)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.576
+  },
+  {
+    "label": "TestOptionalAdaptationRechecksPresenceNarrowing",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationRechecksPresenceNarrowing)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.075
+  },
+  {
+    "label": "TestOptionalAdaptationContextualDeclarations",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationContextualDeclarations)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.525
+  },
+  {
+    "label": "TestOptionalAdaptationOwnsOnlyNamedRoots",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationOwnsOnlyNamedRoots)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.072
+  },
+  {
+    "label": "TestOptionalAdaptationPreservesLiveMethodPlacement",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationPreservesLiveMethodPlacement)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.223
+  },
+  {
+    "label": "TestOptionalAdaptationUTF16AndAdamicExtension",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestOptionalAdaptationUTF16AndAdamicExtension)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.227
+  },
+  {
+    "label": "TestImplicitReturnsNeedNoAdaptation",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestImplicitReturnsNeedNoAdaptation)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.527
+  },
+  {
+    "label": "TestReturnAdaptationLeavesUnprovenContracts",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationLeavesUnprovenContracts)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.284
+  },
+  {
+    "label": "TestReturnAdaptationOwnsOnlyRoots",
+    "command": [
+      "go",
+      "test",
+      "./cmd/adamic-meter/",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "-v",
+      "-run",
+      "^(TestReturnAdaptationOwnsOnlyRoots)$"
+    ],
+    "exit": 0,
+    "wall_seconds": 2.427
+  }
+]

@@ -4,8 +4,9 @@ Focused uncached oracle tests and changed-package vet pass; new fixture counts a
 The unlisted-output and missing-stack-guard mutants fail semantically; both guard-condition removal mutants fail too.
 No whole package test or repository gate was run; native lifetime rules and other checked-error semantics are unchanged.
 
-The only divergence entry is 4ddd17f_weak_single_narrowed. It records the ruling,
-reason and exact stdout, stderr and exit for each backend. Native prints before,
+The divergence entries are 4ddd17f_weak_single_narrowed and d96d304_try_stack.
+Each records the ruling, reason and exact stdout, stderr and exit for each backend.
+For the weak fixture, native prints before,
 then exits 70 with its weak-after-free diagnostic. JavaScript and original Node
 print before and after: nn, exiting 0. No reference counting is added to JavaScript.
 Unknown fixture names use the existing byte-exact comparison. Mutating any listed
@@ -18,9 +19,12 @@ Every emitted IR catch now checks instanceof RangeError and the exact V8 message
 Maximum call stack size exceeded before declaring the catch binding, marking catch
 entry or running its body. It calls the existing terminal panic function, using
 RangeError: Maximum call stack size exceeded from internal/native/runtime/stack.c.
-Stack overflow is absent from the divergence list. The pinned try_stack source
-catches on original Node, printing caught the overflow and after. Both Adamic
-backends instead emit the exact native diagnostic and exit 70 with empty stdout.
+The pinned try_stack source catches on original Node, printing caught the overflow
+and after. Both Adamic backends stop terminally with exit 70 and empty stdout.
+Native emits `adamic: panic: RangeError: Maximum call stack size exceeded in depth`
+followed by a newline, preserving the chain step 24 named stack guard. JavaScript
+emits `adamic: panic: RangeError: Maximum call stack size exceeded` followed by a
+newline. The exact fixture entry pins both diagnostics independently.
 Catch instrumentation is independently shown not to run before that stop.
 
 The review sources are pinned unchanged as .a oracle fixtures. Source commit,

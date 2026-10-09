@@ -1,0 +1,11 @@
+package lower
+import("testing";"context";"os";"path/filepath";"github.com/microsoft/TypeScript/tsc/shim/ast";"github.com/system-inc/adamic/internal/load";"github.com/system-inc/adamic/internal/ir")
+func TestAuditU030SurvivorWitness(t *testing.T) {
+ t.Run("private-static-recognition",func(t *testing.T){
+  path:=filepath.Join(t.TempDir(),"main.a");os.WriteFile(path,[]byte("class Box { static field=1; static #secret=2; static read():number {return this.#secret;} } console.log(`${Box.field + Box.read()}`);"),0600)
+  p,e:=load.Load([]string{path});if e!=nil{t.Fatal(e)};f:=p.Files()[0];c,release:=p.Checker(context.Background(),f);defer release();l:=&lowering{program:p,checker:c}
+  var visit ast.Visitor;visit=func(n *ast.Node)bool {if n.Kind==ast.KindPropertyAccessExpression && (n.Name().Text()=="field" || n.Name().Text()=="#secret") {t.Logf("privateStaticMember(%s) present=%t",n.Name().Text(),l.privateStaticMember(n.Name())!=nil)};return n.ForEachChild(visit)};f.AsNode().ForEachChild(visit)
+ })
+ t.Run("readiness-origin",func(t *testing.T){p,e:=lowerSource(t,"class Box { n!: number; } console.log(`${new Box().n + 1}`);");if e!=nil{t.Fatal(e)};walk(p.Main,func(n any)bool{if v,ok:=n.(ir.Property);ok && v.Name=="n"{t.Logf("property n readiness=%q",v.Readiness)};return true})})
+ t.Run("empty-layouts",func(t *testing.T){for _,s:=range []string{"const cases=[[],[1]];","const cases: (number[] | string[])[]=[[]];","function empty<T>():T[]{return [] as T[];} interface Item {readonly text:string;} empty<number>();empty<Item>();"}{p,e:=lowerSource(t,s);if e!=nil {t.Logf("%s error=%v",s,e);continue};kinds:=[]ir.Type{};v:=func(n any)bool{if a,ok:=n.(ir.ArrayLiteral);ok&&len(a.Elements)==0{kinds=append(kinds,a.Element)};return true};walk(p.Main,v);for _,f:=range p.Functions{walk(f.Body,v)};t.Logf("%s empty kinds=%v",s,kinds)}})
+}

@@ -1,0 +1,7 @@
+try {
+	const text = 'ab'.repeat(268435456);
+	console.log(`${text.length}`);
+} catch {
+	console.log('caught the long repeat');
+}
+console.log('after');

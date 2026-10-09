@@ -1,0 +1,4 @@
+const items: (string | number)[] = [1, 2];
+const first = items[0];
+console.log(typeof first);
+console.log(String(first));

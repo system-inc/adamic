@@ -3,11 +3,14 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 
 	"github.com/system-inc/adamic/internal/load"
 )
 
+// Smoke test: current Load emits no TS7030 here; this checks loader acceptance
+// and Node fallthrough/finally behavior, not the return rewriting path.
 func TestImplicitReturnsNeedNoAdaptation(t *testing.T) {
 	t.Parallel()
 	const source = `type Result<T> = T | undefined;
@@ -74,6 +77,7 @@ function opaque(flag: boolean): unknown { if (flag) return 1; }
 function anything(flag: boolean): any { if (flag) return 1; }
 async function asynchronous(flag: boolean): Promise<number | undefined> { if (flag) return 1; }
 function* generator(flag: boolean): Generator<number, number | undefined> { if (flag) return 1; }
+function admitted(flag: boolean): number | undefined { if (flag) return 1; }
 `
 	path := filepath.Join(t.TempDir(), "main.ts")
 	if err := os.WriteFile(path, []byte(source), 0644); err != nil {
@@ -83,9 +87,14 @@ function* generator(flag: boolean): Generator<number, number | undefined> { if (
 	if diagnosticCount(before, "7030") != 0 || diagnosticCount(before, "2366") != 2 {
 		t.Fatalf("want only the two required-return findings, without TS7030: %v", before)
 	}
-	overlay, changed, err := returnAdaptations([]string{path}, nil, before)
-	if err != nil || changed != 0 || len(overlay) != 0 {
-		t.Fatalf("unproven contract changed: %d %v %v", changed, overlay, err)
+	strict := meterReturnDiagnostics(t, []string{path}, nil)
+	if diagnosticCount(strict, "7030") < 2 {
+		t.Fatalf("strict checker must diagnose admitted and unproven returns: %v", strict)
+	}
+	overlay, changed, err := returnAdaptations([]string{path}, nil, strict)
+	want := strings.Replace(source, "function admitted(flag: boolean): number | undefined { if (flag) return 1; }", "function admitted(flag: boolean): number | undefined { if (flag) return 1; \nreturn void 0;\n}", 1)
+	if err != nil || changed != 1 || len(overlay) != 1 || overlay[path] != want {
+		t.Fatalf("only the admitted contract may change: %d %#v %v", changed, overlay, err)
 	}
 }
 
@@ -97,15 +106,25 @@ func TestReturnAdaptationOwnsOnlyRoots(t *testing.T) {
 	if err := os.WriteFile(external, []byte(`export function f(flag: boolean): number | undefined { if (flag) return 1; }`), 0644); err != nil {
 		t.Fatal(err)
 	}
-	if err := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));`), 0644); err != nil {
+	if err := os.WriteFile(root, []byte(`import {f} from "./external.ts"; console.log('' + f(false));
+function local(flag: boolean): number | undefined { if (flag) return 2; }`), 0644); err != nil {
 		t.Fatal(err)
 	}
 	_, before := load.Load([]string{root})
 	if before != nil {
 		t.Fatalf("external implicit return should compile without TS7030: %v", before)
 	}
-	overlay, changed, err := returnAdaptations([]string{root}, nil, before)
-	if err != nil || changed != 0 || len(overlay) != 0 {
-		t.Fatalf("external changed: %d %v %v", changed, overlay, err)
+	strict := meterReturnDiagnostics(t, []string{root}, nil)
+	if diagnosticCount(strict, "7030") != 2 {
+		t.Fatalf("strict checker must diagnose root and external returns: %v", strict)
+	}
+	overlay, changed, err := returnAdaptations([]string{root}, nil, strict)
+	const want = "import {f} from \"./external.ts\"; console.log('' + f(false));\nfunction local(flag: boolean): number | undefined { if (flag) return 2; \nreturn void 0;\n}"
+	if err != nil || changed != 1 || len(overlay) != 1 || overlay[root] != want {
+		t.Fatalf("only the root return may change: %d %#v %v", changed, overlay, err)
+	}
+	disk, err := os.ReadFile(external)
+	if err != nil || string(disk) != `export function f(flag: boolean): number | undefined { if (flag) return 1; }` {
+		t.Fatalf("external disk source changed: %q %v", disk, err)
 	}
 }

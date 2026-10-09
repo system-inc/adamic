@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T10:51:54.672594741Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:51:54.679931809Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault"}
+{"Time":"2026-10-09T10:51:54.680004889Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"=== RUN   TestFSStatThrowsByDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:54.680027783Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"=== PAUSE TestFSStatThrowsByDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:54.680030647Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault"}
+{"Time":"2026-10-09T10:51:54.680036486Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault"}
+{"Time":"2026-10-09T10:51:54.680038269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"=== CONT  TestFSStatThrowsByDefault\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:54.746126622Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"    fs_method_guards_test.go:125: Node main.a: exit 70, stdout \"missing\\n\"\n"}
+{"Time":"2026-10-09T10:51:55.037072824Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"    fs_method_guards_test.go:125: Node generated.mjs: exit 0, stdout \"missing\\nstat returned instead of throwing\\n\"\n"}
+{"Time":"2026-10-09T10:51:55.037129269Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"    fs_method_guards_test.go:125: JavaScript backend: exit 0 stdout \"missing\\nstat returned instead of throwing\\n\"; source Node: exit 70 stdout \"missing\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:51:55.037164902Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Output":"--- FAIL: TestFSStatThrowsByDefault (0.36s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:55.037228718Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestFSStatThrowsByDefault","Elapsed":0.36}
+{"Time":"2026-10-09T10:51:55.037278443Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:55.041857924Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.369s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:51:55.041927328Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.369}

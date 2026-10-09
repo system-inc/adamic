@@ -371,6 +371,11 @@ func (l *lowering) chainIntrinsic(member, node *ast.Node, receiver ir.Expression
 		}
 	}
 	if receiver.Type() == ir.Map && !l.isSet(source) {
+		// A library view does not prove native Map storage. Keep the indexing
+		// boundary when the general chain path supersedes optionalMapGet.
+		if name == "get" && l.optionalMapStructuralReceiver(source) {
+			return nil, l.notYet(node, "an optional Map get through a structural receiver")
+		}
 		key, value, err := l.mapTypes(source)
 		if err != nil {
 			return nil, err

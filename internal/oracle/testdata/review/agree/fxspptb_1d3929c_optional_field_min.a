@@ -1,0 +1,3 @@
+interface Box { size?: number }
+const boxes: Box[] = [{}];
+for (const box of boxes) console.log(`${box.size === undefined}`);

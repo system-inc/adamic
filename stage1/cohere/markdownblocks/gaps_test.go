@@ -24,7 +24,7 @@ func TestParserRepresentationProbes(t *testing.T) {
 		{path: "gaps/7_postfix_property.ts", stdout: "0\n1\n", notYet: "a PostfixUnaryExpression"},
 		{path: "gaps/8_generic_callback_result.ts", stdout: "value\n", notYet: "a function returning Result"},
 		{path: "gaps/9_mixed_path_names.ts", stdout: "children,0\n", notYet: "join on an array of objects, arrays, maps or functions"},
-		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n", notYet: "push with other than one value"},
+		{path: "gaps/10_multiple_push.ts", stdout: "1,2\n"},
 		{path: "gaps/11_function_expression.ts", stdout: "value\n"},
 		{path: "gaps/12_conditional_empty_array.ts", stdout: "0\n"},
 		{path: "gaps/15_string_or.ts", stdout: "fallback\nx\n"},

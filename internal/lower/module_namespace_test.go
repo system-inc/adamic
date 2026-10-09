@@ -60,6 +60,7 @@ func TestModuleNamespaceInitializedReadProof(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	requireLoweredOutput(t, lowered)
 	if strings.Contains(native.C(lowered), "ReferenceError: Cannot access 'value'") {
 		t.Fatal("provider initialized before consumer, but the qualified read retained a readiness check")
 	}

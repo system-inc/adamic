@@ -40,12 +40,11 @@ func TestNodeLibraryDoesNotRefuseTypeOnlyOrUserNames(t *testing.T) {
 		`import type {Stats} from 'node:fs'; type Size=Pick<Stats,'size'>; console.log('okay');`,
 		`import type {Stats} from 'node:fs'; function existsSync(path:string):boolean {return path==='x';} console.log(existsSync('x')?'yes':'no');`,
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
+// Behavior cannot observe checker member ownership for uncalled typed parameters.
 func TestNodeLibraryDistinguishesReceiverOwners(t *testing.T) {
 	t.Parallel()
 	file := filepath.Join(t.TempDir(), "main.a")

@@ -71,8 +71,7 @@ func inventoryEngineBuild(t *testing.T, mutant bool) (string, string, time.Durat
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command, cancel := inventoryEngineTestCommand(t, "go", "test", "-c", "-overlay="+path, "-o", binary, virtual, virtualTest)
-		defer cancel()
+		command := inventoryEngineSetupCommand("go", "test", "-c", "-overlay="+path, "-o", binary, virtual, virtualTest)
 		command.Dir = cohere
 		output, err := command.CombinedOutput()
 		if err != nil {
@@ -114,8 +113,7 @@ func inventoryEnginePartition(cases []string) ([][]string, error) {
 
 func inventoryEngineUnion(t *testing.T, binary, directory string) [][]string {
 	t.Helper()
-	command, cancel := inventoryEngineTestCommand(t, binary, "-test.list=^Test")
-	defer cancel()
+	command := inventoryEngineSetupCommand(binary, "-test.list=^Test")
 	command.Dir = directory
 	output, err := command.CombinedOutput()
 	if err != nil {

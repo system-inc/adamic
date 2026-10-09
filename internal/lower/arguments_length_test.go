@@ -28,6 +28,7 @@ func TestArgumentsLengthRefusals(t *testing.T) {
 		{"parenthesized write", "(arguments.length) = 1;", writing},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
+			t.Parallel()
 			source := "function take(value: IArguments): void { console.log(`${value.length}`); }\nfunction rejected() { " + probe.body + " }\nrejected();\n"
 			_, err := lowerSource(t, source)
 			var refused *Refused
@@ -47,9 +48,7 @@ func TestArgumentsLengthReadNeighbors(t *testing.T) {
 		"function sum(...items: number[]): number { return items.length; } console.log(`${sum(1, 2)}`);",
 		"function greet(name: string, greeting?: string): string { return `${greeting ?? 'hi'} ${name}`; } const run: (name: string) => string = greet; console.log(run('a'));",
 	} {
-		if _, err := lowerSource(t, source); err != nil {
-			t.Fatal(err)
-		}
+		lowersAndAgreesWithNode(t, source)
 	}
 }
 
@@ -91,10 +90,8 @@ func TestArgumentsLengthRefusalFixtures(t *testing.T) {
 
 func TestArgumentsLengthReadKeepsReaderFact(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, "function read(): number { return arguments.length; } console.log(`${read()}`);")
-	if err != nil {
-		t.Fatal(err)
-	}
+	program := lowersAndAgreesWithNode(t, "function read(): number { return arguments.length; } console.log(`${read()}`);")
+	// Behavior on this zero-argument call cannot observe the hidden reader calling convention.
 	for _, function := range program.Functions {
 		if function.Name != "read" {
 			continue

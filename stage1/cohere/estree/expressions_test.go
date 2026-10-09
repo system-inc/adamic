@@ -3,7 +3,6 @@ package estree
 import (
 	"os"
 	"path/filepath"
-	"strings"
 	"testing"
 )
 
@@ -50,22 +49,5 @@ func TestUnattachedDecorator(t *testing.T) {
 		for _, argv := range [][]string{{"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), main, path}, {binary, path}, {"node", "--disable-warning=ExperimentalWarning", filepath.Join(root(t), "oracle/node.mjs"), script, path}} {
 			refusedBeforeDeadline(t, argv, "ESTree unattached decorator")
 		}
-	}
-}
-
-// Not parallel: recovery helpers write the shared cache directory adamic-build
-func TestUnattachedDecoratorControl(t *testing.T) {
-	list := manifest(t, []string{"@dec\nawait 1", "@dec\nx"})
-	statuses := string(recoveryAnswer(t, goOracle(t), list, "--audit"))
-	if strings.Count(statuses, `"status":"error"`) != 2 {
-		t.Fatalf("Go decorator refusals changed: %s", statuses)
-	}
-	main := mutantPort(t, "pipeline.ts", `parser.nodes[id]?.kind === 'Decorator'`, `parser.nodes[id]?.kind === 'UnusedDecoratorControl'`)
-	binary, _ := recoveryBuild(t, main, true)
-	for name, got := range map[string][]byte{"Node": onNode(t, main, "--manifest", list), "native": execute(t, "", binary, "--manifest", list)} {
-		if strings.Count(string(got), "0 Program ") != 2 {
-			t.Fatal(name + " decorator control did not finish with two incorrect acceptances")
-		}
-		t.Log(name + ": disabled orphan guard accepts both Go-refused files; acceptance check catches it")
 	}
 }

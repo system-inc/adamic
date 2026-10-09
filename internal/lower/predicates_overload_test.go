@@ -8,7 +8,6 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -16,10 +15,6 @@ import (
 // for byte; checked failures have an independent complete exit-70 contract.
 func TestPredicateOverloadRuntime(t *testing.T) {
 	t.Parallel()
-	runner, err := filepath.Abs("../../oracle/node.mjs")
-	if err != nil {
-		t.Fatal(err)
-	}
 	for _, probe := range []struct {
 		name, nodeOut, checkedOut, message string
 		checked                            bool
@@ -69,7 +64,6 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 					t.Fatalf("%s: exit %d, stdout %q, stderr %q; want exit %d, stdout %q, stderr %q", command.Path, got, output.String(), errors.String(), code, stdout, stderr)
 				}
 			}
-			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, path), probe.nodeOut, "", 0)
 			source, err := os.ReadFile(path)
 			if err != nil {
 				t.Fatal(err)
@@ -82,6 +76,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			if err != nil {
 				t.Fatal(err)
 			}
+			// Behavior cannot count proven, checked, or unobservable predicate sites.
 			if counts, ok := map[string][3]int{
 				"overload_some_empty":      {2, 0, 2},
 				"overload_some_false_read": {1, 1, 1},
@@ -95,6 +90,7 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 					t.Fatalf("predicate counts: %+v, want %v (proven, checked, unobservable)", got, counts)
 				}
 			}
+			// Behavior cannot see the elimination of a redundant predicate check.
 			if probe.name == "overload_erased" {
 				for _, constant := range program.Strings {
 					if strings.Contains(constant, "overload 1 of isNumber result:") {
@@ -114,11 +110,12 @@ func TestPredicateOverloadRuntime(t *testing.T) {
 			}
 			command := exec.Command(binary)
 			run(command, stdout, stderr, code)
-			generated := filepath.Join(t.TempDir(), "generated.mjs")
-			if err = os.WriteFile(generated, []byte(javascript.JavaScript(program)), 0644); err != nil {
-				t.Fatal(err)
+			var checkedFailure *nodeObservation
+			if probe.checked {
+				checkedFailure = &nodeObservation{[]byte(stdout), []byte(stderr), code}
 			}
-			run(exec.Command("node", "--disable-warning=ExperimentalWarning", runner, generated), stdout, stderr, code)
+			compareAgreement(t, runAgreementNode(t, path), nodeObservation{[]byte(probe.nodeOut), nil, 0})
+			agreeEntry(t, path, program, 0, checkedFailure, nil)
 		})
 	}
 }

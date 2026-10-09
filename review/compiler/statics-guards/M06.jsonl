@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T10:58:01.63797308Z","Action":"start","Package":"github.com/system-inc/adamic/internal/lower"}
+{"Time":"2026-10-09T10:58:01.64413824Z","Action":"run","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:01.644194774Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== RUN   TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.64421216Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== PAUSE TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.644214663Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:01.644227172Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode"}
+{"Time":"2026-10-09T10:58:01.644229145Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"=== CONT  TestPrivateAndPublicStaticsAgreeWithNode\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.778428498Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"    statics_guards_test.go:101: lowered Node: exit=70 stdout=\"\" stderr=\"adamic: panic: TypeError: Cannot read private member field from an object whose class did not declare it\\n\"; source Node: exit=0 stdout=\"29 11 11\\n\"\n","OutputType":"error"}
+{"Time":"2026-10-09T10:58:01.778496569Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Output":"--- FAIL: TestPrivateAndPublicStaticsAgreeWithNode (0.13s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.77850427Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Test":"TestPrivateAndPublicStaticsAgreeWithNode","Elapsed":0.13}
+{"Time":"2026-10-09T10:58:01.778535206Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.779753538Z","Action":"output","Package":"github.com/system-inc/adamic/internal/lower","Output":"FAIL\tgithub.com/system-inc/adamic/internal/lower\t0.141s\n","OutputType":"frame"}
+{"Time":"2026-10-09T10:58:01.779834077Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/lower","Elapsed":0.142}

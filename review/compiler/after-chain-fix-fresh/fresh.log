@@ -1,0 +1,20 @@
+=== RUN   TestFreshCorpusRemainder
+=== PAUSE TestFreshCorpusRemainder
+=== CONT  TestFreshCorpusRemainder
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a
+    corpus_coverage_test.go:82: 6 writes, 3 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a
+    corpus_coverage_test.go:82: 1 writes, 1 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a
+    corpus_coverage_test.go:82: 7 writes, 7 proven not to close a cycle
+=== RUN   TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a
+    corpus_coverage_test.go:82: 4 writes, 4 proven not to close a cycle
+=== NAME  TestFreshCorpusRemainder
+    corpus_coverage_test.go:85: remainder ran 68 programs
+--- PASS: TestFreshCorpusRemainder (0.14s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/placeholder_nonnull_namespace_before_use.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_error_subclasses.a (0.03s)
+    --- PASS: TestFreshCorpusRemainder/../oracle/testdata/step21_saved_error.a (0.03s)
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.144s

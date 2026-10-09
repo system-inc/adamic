@@ -1,0 +1,43 @@
+=== RUN   TestGenericBodyRelationsMaybeBind
+=== PAUSE TestGenericBodyRelationsMaybeBind
+=== RUN   TestParserNamespaceClassRegistrationMutant
+=== PAUSE TestParserNamespaceClassRegistrationMutant
+=== RUN   TestParserStackGuardMutant
+=== PAUSE TestParserStackGuardMutant
+=== RUN   TestWASIRuledWeakStopMutant
+=== PAUSE TestWASIRuledWeakStopMutant
+=== RUN   TestWASIRuledStackStopMutant
+=== PAUSE TestWASIRuledStackStopMutant
+=== CONT  TestGenericBodyRelationsMaybeBind
+=== CONT  TestWASIRuledWeakStopMutant
+=== CONT  TestParserStackGuardMutant
+=== CONT  TestParserNamespaceClassRegistrationMutant
+=== CONT  TestWASIRuledStackStopMutant
+=== NAME  TestWASIRuledWeakStopMutant
+    wasi_test.go:184: gate cache node miss
+=== NAME  TestWASIRuledStackStopMutant
+    wasi_test.go:197: gate cache node miss
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:139: gate cache node miss
+--- PASS: TestGenericBodyRelationsMaybeBind (0.18s)
+=== NAME  TestParserStackGuardMutant
+    parser_stack_test.go:123: removed guard compiles and executes: exit 1, AddressSanitizer: stack-overflow
+--- PASS: TestParserStackGuardMutant (0.41s)
+=== NAME  TestWASIRuledStackStopMutant
+    wasi_test.go:197: WASI mutant caught by stderr differs: exit 70 stdout "" stderr "adamic: panic: RangeError: Maximum call stack size exceeded in wrongDepth\n"
+--- PASS: TestWASIRuledStackStopMutant (0.49s)
+=== NAME  TestWASIRuledWeakStopMutant
+    wasi_test.go:184: WASI mutant caught by stdout differs: exit 70 stdout "before!\n" stderr "adamic: panic: a weak reference was read after what it pointed to was freed\n"
+--- PASS: TestWASIRuledWeakStopMutant (0.49s)
+=== NAME  TestParserNamespaceClassRegistrationMutant
+    parser_namespaces_test.go:148: gate cache node miss
+    oracle_test.go:608: gate cache native miss
+    parser_namespaces_test.go:167: gate cache node miss
+    parser_namespaces_test.go:172: native missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+    parser_namespaces_test.go:172: javascript missing constructor registration stopped: {stdout:[67 97 110 110 111 116 32 97 99 99 101 115 115 32 39 68 101 98 117 103 84 121 112 101 77 97 112 112 101 114 39 32 98 101 102 111 114 101 32 105 110 105 116 105 97 108 105 122 97 116 105 111 110 10] stderr:[] exitCode:0}
+--- PASS: TestParserNamespaceClassRegistrationMutant (0.81s)
+PASS
+gate cache: native hits=0 misses=1
+gate cache: node hits=0 misses=5
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	0.833s

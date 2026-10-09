@@ -34,11 +34,10 @@ indexes. The representation accommodates speculative parse rollback as well.
 
 ## 2. Spread into Array.push
 
-`gaps/2_push_spread.ts` prints `1,2,3` on Node; stage 0 refuses
-`a SpreadElement` at the spread argument of push. The parser initially
-appended an argument list with `children.push(...arguments)`, which met this
-same refusal. Workaround: an explicit loop appends each numeric child index.
-This does not limit parsing spread syntax in the source being parsed.
+`gaps/2_push_spread.ts` now lowers and prints `1,2,3` on source Node,
+JavaScript backend and sanitized native with leak detection. `TestPushSpreadGap`
+holds the gap closed. The parser's explicit child-index append loops remain:
+its test does not request removing them, and port-wide recutting is outside this unit.
 
 ## 4. Class methods through a structural interface
 

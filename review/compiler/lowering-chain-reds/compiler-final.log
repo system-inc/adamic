@@ -1,0 +1,24 @@
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestOptionalIndexingMapShapeRefused
+=== PAUSE TestOptionalIndexingMapShapeRefused
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestOptionalIndexingMapShapeRefused
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.15s)
+--- PASS: TestOptionalIndexingMapShapeRefused (0.15s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.206s
+=== RUN   TestCallTargetReaders
+=== PAUSE TestCallTargetReaders
+=== CONT  TestCallTargetReaders
+--- PASS: TestCallTargetReaders (17.79s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	17.802s
+=== RUN   TestEnumCleanupMutant
+=== PAUSE TestEnumCleanupMutant
+=== CONT  TestEnumCleanupMutant
+    enums_test.go:137: enum cleanup site not unique
+--- FAIL: TestEnumCleanupMutant (0.15s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/oracle	0.200s
+FAIL

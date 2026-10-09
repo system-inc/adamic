@@ -3,6 +3,7 @@ package oracle
 import (
 	"context"
 	"errors"
+	"os"
 	"path/filepath"
 	"strings"
 	"testing"
@@ -26,6 +27,22 @@ func TestGenericBodyRelationsMaybeBind(t *testing.T) {
 	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/census_small_stopped/census_small_optional_stopped.a"))
 	if err != nil {
+		t.Fatal(err)
+	}
+	source, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	if _, err := lowered(t, path); err == nil || !strings.Contains(err.Error(), "explicit any in .a") {
+		t.Fatalf("original witness must refuse explicit any: %v", err)
+	}
+	// Isolate the dependent return from the earlier .a explicit-any refusal.
+	if strings.Count(string(source), "A extends any[]") != 1 {
+		t.Fatal("dependent return witness lost its original constraint")
+	}
+	source = []byte(strings.Replace(string(source), "A extends any[]", "A extends unknown[]", 1))
+	path = filepath.Join(t.TempDir(), "maybe-bind.a")
+	if err := os.WriteFile(path, source, 0600); err != nil {
 		t.Fatal(err)
 	}
 	program, err := load.Load([]string{path})

@@ -1,0 +1,8 @@
+=== RUN   TestFreshCorpusRemainder
+=== PAUSE TestFreshCorpusRemainder
+=== CONT  TestFreshCorpusRemainder
+    corpus_coverage_test.go:85: remainder ran 68 programs
+--- PASS: TestFreshCorpusRemainder (0.00s)
+testing: warning: no tests to run
+PASS
+ok  	github.com/system-inc/adamic/internal/fresh	0.011s [no tests to run]

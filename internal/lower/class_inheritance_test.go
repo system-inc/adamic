@@ -69,7 +69,7 @@ new B();`, "abstract"},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			path := filepath.Join(t.TempDir(), "main.ts")
+			path := filepath.Join(t.TempDir(), "main.a")
 			if err := os.WriteFile(path, []byte(probe.source), 0644); err != nil {
 				t.Fatal(err)
 			}
@@ -87,33 +87,25 @@ new B();`, "abstract"},
 
 func TestInheritanceAllowsSoundOverrides(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `interface Animal { readonly name: string }
+	program := lowersAndAgreesWithNode(t, `interface Animal { readonly name: string }
 interface Dog extends Animal { readonly bark: () => string }
 class A { readonly pet: Animal = { name: 'cat' }; accept(value: Dog): Animal { return value; } }
 class B extends A { override readonly pet: Dog = { name: 'dog', bark: () => 'woof' }; override accept(value: Animal): Dog { return this.pet; } }
 const base: A = new B();
 console.log(base.accept({ name: 'dog', bark: () => 'woof' }).name);`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	requireInheritanceAnswer(t, program)
 }
 
 // Class identities retain their nominal parent even when a subclass adds no fields.
 func TestInheritanceHasClassIdentity(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `class A {} class B extends A {} const value: A = new B(); console.log("ok");`)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if len(program.Classes) != 2 || program.Classes[1].Base != 1 {
-		t.Fatalf("missing ancestry: %+v", program.Classes)
-	}
+	lowersAndAgreesWithNode(t, `class A {} class B extends A {} const value: A = new B(); console.log(value instanceof A ? 'base' : 'missing base'); console.log(value instanceof B ? 'child' : 'missing child');`)
 }
 
+// Node behavior cannot observe the cycle finder's internal inherited-field traversal.
 func TestInheritanceCycleFinderIncludesInheritedFields(t *testing.T) {
 	t.Parallel()
-	path := filepath.Join(t.TempDir(), "main.ts")
+	path := filepath.Join(t.TempDir(), "main.a")
 	if err := os.WriteFile(path, []byte(`class Base { parent: Base | undefined = undefined; }
 class Child extends Base { readonly label = 'child'; }`), 0644); err != nil {
 		t.Fatal(err)
@@ -191,27 +183,22 @@ func TestInheritanceRefusesThisBeforeSuperReturns(t *testing.T) {
 
 func TestInheritanceKeepsNominalTupleDestructuring(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `class Source { readonly name = 'source'; read(): string { return this.name; } }
+	program := lowersAndAgreesWithNode(t, `class Source { readonly name = 'source'; read(): string { return this.name; } }
 const pair: readonly [boolean, boolean, Source] = [false, true, new Source()];
 const [, ignored, source] = pair;
 console.log(ignored ? source.read() : 'none');`)
-	if err != nil {
-		t.Fatal(err)
-	}
 	requireInheritanceAnswer(t, program)
 }
 
 func TestInheritanceGenericMonomorphizations(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `class Base {}
+	program := lowersAndAgreesWithNode(t, `class Base {}
 class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
 class Pair<T> extends Box<T> { readonly other: T; constructor(value: T, other: T) { super(value); this.other = other; } override read(): T { return this.other; } }
 const a = new Pair<number>(1, 2); const b = new Pair<string>('a', 'b');
 const c = new Pair<readonly number[]>([1], [2]); const d = new Pair<{ readonly n: number }>({ n: 1 }, { n: 2 });
-console.log('done');`)
-	if err != nil {
-		t.Fatal(err)
-	}
+console.log([a.read().toString(), b.read(), c.read().join(','), d.read().n.toString()].join(':'));`)
+	// Node behavior cannot observe the separate native layouts or shared erased definition identity.
 	layouts := map[ir.Type]bool{}
 	definition := 0
 	for _, class := range program.Classes {
@@ -309,16 +296,14 @@ func TestInheritanceGenericNominalConstraints(t *testing.T) {
 
 func TestInheritanceGenericFactoryLayouts(t *testing.T) {
 	t.Parallel()
-	program, err := lowerSource(t, `class Base {}
+	program := lowersAndAgreesWithNode(t, `class Base {}
 class Box<T> extends Base { readonly value: T; constructor(value: T) { super(); this.value = value; } read(): T { return this.value; } }
 class Projected<T extends { readonly native: number | string }> extends Box<T['native']> {}
 function make<T extends { readonly native: number | string }>(value: T['native']): Projected<T> { return new Projected<T>(value); }
 const n = make<{ readonly native: number }>(1);
 const s = make<{ readonly native: string }>('s');
-console.log('done');`)
-	if err != nil {
-		t.Fatal(err)
-	}
+console.log(n.read().toString() + ':' + s.read());`)
+	// Node behavior cannot observe the separate native layouts or shared erased definition identity.
 	layouts := map[ir.Type]bool{}
 	for _, class := range program.Classes {
 		if strings.HasPrefix(class.Name, "Box_") {
@@ -343,15 +328,12 @@ const value: Base = new Child(); console.log(value.scale(3).toString());`},
 class Child extends Base { override scale(factor?: number): number { return (factor ?? 2) + 1; } }
 const value: Base = new Child(); console.log(value.scale().toString());`},
 		{"void result", `class Base { scale(): void {} }
-class Child extends Base { override scale(): void {} }
+class Child extends Base { override scale(): void { console.log('child'); } }
 const value: Base = new Child(); value.scale();`},
 	} {
 		t.Run(probe.name, func(t *testing.T) {
 			t.Parallel()
-			program, err := lowerSource(t, probe.source)
-			if err != nil {
-				t.Fatal(err)
-			}
+			program := lowersAndAgreesWithNode(t, probe.source)
 			requireInheritanceAnswer(t, program)
 		})
 	}
