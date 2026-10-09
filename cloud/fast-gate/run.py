@@ -481,7 +481,7 @@ class Gate:
             try:
                 if self.arguments.full and phase in ("products", "wasi", "stage3", "catalog"):
                     with open(logPath, "a") as log:
-                        if not self.wholeProducts(log):
+                        if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):
                             break
                     if phase == "products":
                         self.steps.setdefault("products", 0.0)
@@ -613,7 +613,9 @@ class Gate:
         except BaseException:
             self.fail("build", traceback.format_exc())
         log = open(os.path.join(self.arguments.out, "test.jsonl"), "w")
-        if not self.wholeProducts(log):
+        # A parity run (--run-to-end) keeps going past a failed product: its tests build what they need on a miss, so
+        # the record still holds every red (Oct 9 07:23Z: library's area stopped at TestProduct_suite with no red list).
+        if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):
             log.close()
             return
         # Never more runnable threads than the box has cores (@system_adamic, Oct 9 00:11Z: -p of half the CPUs, each

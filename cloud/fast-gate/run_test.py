@@ -482,7 +482,7 @@ class Products(unittest.TestCase):
     setUp = FailClosed.setUp
     gate = FailClosed.gate
 
-    def probe(self, names=("TestProduct_A", "TestX"), failing=False, complete=False, sourceNames=None, full=False, extra=None):
+    def probe(self, names=("TestProduct_A", "TestX"), failing=False, complete=False, sourceNames=None, full=False, extra=None, runToEnd=False):
         commands, order = [], []
         with open(os.path.join(self.tree, "product_test.go"), "w") as source:
             source.write("\n".join("func %s(t *testing.T) {}" % name for name in (names if sourceNames is None else sourceNames) if name.startswith("TestProduct_")))
@@ -503,7 +503,7 @@ class Products(unittest.TestCase):
                 process.wait = lambda: process.returncode
             process.stdout = io.StringIO("".join(process.lines)) if stdout == subprocess.PIPE else None
         with mock.patch.object(FakeProcess, "__init__", product):
-            gate, status, result = self.gate(full=full, extra=dict(extra or {}, complete=complete))
+            gate, status, result = self.gate(full=full, extra=dict(extra or {}, complete=complete), runToEnd=runToEnd)
         return gate, status, result, commands, order
 
     def test_products_before_tests_and_skip(self):
@@ -618,6 +618,13 @@ class Products(unittest.TestCase):
         self.assertEqual(order, ["TestProduct_A"])
         self.assertNotIn("tests", result["steps_seconds"])
 
+    def test_whole_gate_run_to_end_runs_tests_past_a_failed_product(self):
+        # Oct 9 07:23Z: library's area parity run stopped at TestProduct_suite and gave no red list.
+        _, status, result, _, order = self.probe(full=True, failing=True, runToEnd=True)
+        self.assertEqual(result["failure"]["step"], "products")
+        self.assertEqual(result["stages_exit"]["products"], 1)
+        self.assertIn("TestX", order)
+
     def test_wall_deadline_kills_and_fails_in_complete_mode(self):
         for phase in ("products",):
             with self.subTest(phase=phase), tempfile.TemporaryDirectory() as out:
@@ -705,7 +712,7 @@ class WholeProductMutants(unittest.TestCase):
         with open(run.__file__) as source:
             original = source.read()
         namespace = dict(run.__dict__)
-        exec(compile(original.replace("if not self.wholeProducts(log):", "if False:"), run.__file__, "exec"), namespace)
+        exec(compile(original.replace('if not self.wholeProducts(log) and not getattr(self.arguments, "run_to_end", False):\n            log.close()', 'if False:\n            log.close()'), run.__file__, "exec"), namespace)
         with mock.patch.object(run.Gate, "runFull", namespace["Gate"].runFull):
             result = unittest.TestResult()
             Products("test_whole_gate_products_before_tests_and_skip").run(result)
