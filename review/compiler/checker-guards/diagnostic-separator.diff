@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -121,7 +121,7 @@
+ 	for index, diagnostic := range diagnostics {
+ 		messages[index] = diagnostic.Localize(english)
+ 	}
+-	return strings.Join(messages, "; ")
++	return strings.Join(messages, " | ")
+ }
+ 
+ // Query selects the deepest AST child containing a zero-based UTF-8 byte offset.

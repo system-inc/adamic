@@ -13,7 +13,7 @@ func TestJsxLintTreesSetupIsolation(t *testing.T) {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := jsxDeadlineCommand(t, executable, "-test.run=^TestJsxLintTrees_001$", "-test.v", "-test.timeout=90s")
+	command := lintBuildPhaseChild(t, executable, "-test.run=^TestJsxLintTrees_001$", "-test.v", "-test.timeout=600s")
 	command.Env = append(os.Environ(), "ADAMIC_BUILD_CACHE_DIR="+t.TempDir(), "ADAMIC_BUILD_CACHE=on", "ADAMIC_TEST_SHARD=", "ADAMIC_JSX_SHARD_CHILD=")
 	output, err := command.CombinedOutput()
 	if err != nil {

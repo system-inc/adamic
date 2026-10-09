@@ -36,13 +36,9 @@ func TestProduct_CompleteSuggestionNative(t *testing.T) {
 
 func completeSuggestionProductUnit(t *testing.T, build func(context.Context, string), mutant bool) {
 	t.Helper()
+	// A product unit carries no test-side budget or deadline: the build phase measures it, and a
+	// product over 60 s is a build-phase finding (#c5k975w), never a test failure.
 	started := time.Now()
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
-	defer cancel()
-	build(ctx, completeSuggestionFixture(t, mutant))
-	elapsed := time.Since(started)
-	t.Logf("%s: %.3fs", t.Name(), elapsed.Seconds())
-	if elapsed >= 60*time.Second {
-		t.Fatal("build product unit exceeds 60s budget")
-	}
+	build(context.Background(), completeSuggestionFixture(t, mutant))
+	t.Logf("%s: %.3fs", t.Name(), time.Since(started).Seconds())
 }

@@ -50,12 +50,22 @@ func checkFreshProgram(t *testing.T, path string) {
 	if err != nil {
 		t.Fatal(err)
 	}
+	// This existing corpus fixture contains Map.set and Array.push reference writes.
+	// Unlike a refused fixture or a scalar-only program, its proof cannot be empty.
+	floorPath, err := filepath.Abs("../flow/testdata/mutations.a")
+	if err != nil {
+		t.Fatal(err)
+	}
+	needsWrites := absolute == floorPath
 	program, err := load.Load([]string{absolute})
 	if err != nil {
 		t.Fatalf("%s: Load: %v", path, err)
 	}
 	lowered, err := lower.Lower(context.Background(), program)
 	if err != nil {
+		if needsWrites {
+			t.Fatalf("%s: known-write corpus fixture must lower: %v", path, err)
+		}
 		// The oracle's fixtures that stage 0 refuses on purpose.
 		t.Logf("Lower declined: %v", err)
 		return
@@ -71,6 +81,9 @@ func checkFreshProgram(t *testing.T, path string) {
 		if write.Site == 0 && write.Kind != fresh.WriteUnknown {
 			t.Errorf("%s: a write lowering didn't record, in function %d", path, write.Function)
 		}
+	}
+	if needsWrites && writes == 0 {
+		t.Errorf("%s: known-write corpus fixture reported zero writes", path)
 	}
 	t.Logf("%d writes, %d proven not to close a cycle", writes, proven)
 }

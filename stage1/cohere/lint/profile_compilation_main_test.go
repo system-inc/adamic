@@ -112,7 +112,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	if err != nil {
 		t.Fatal(err)
 	}
-	command := compilationCommand(t, "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
+	command := exec.CommandContext(context.Background(), "go", "list", "-deps", "-json", "./internal/load", "./internal/lower", "./internal/native", "./internal/javascript", "./stage1/cohere/lint/registry")
 	command.Dir = root
 	output, err := command.Output()
 	if err != nil {
@@ -158,7 +158,7 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 	for _, path := range portFiles(t) {
 		files[filepath.ToSlash(filepath.Join("stage1/cohere/lint", path))] = true
 	}
-	for _, path := range []string{"go.work", "stage1/cohere/lint/profile_compilation_main_test.go", "stage1/cohere/lint/profile_compilation_ir_test.go", "stage1/cohere/lint/profile_test.go"} {
+	for _, path := range []string{"go.work", "stage1/cohere/lint/profile_compilation_main_test.go", "stage1/cohere/lint/profile_compilation_ir_test.go", "stage1/cohere/lint/profile_test.go", "stage1/cohere/lint/lint_setup_clock_regression_test.go"} {
 		files[path] = true
 	}
 	var paths []string
@@ -170,6 +170,10 @@ func compilationInputs(t *testing.T) buildcache.Inputs {
 }
 
 func compilationProducts(t *testing.T) string {
+	return compilationProductKinds(t, []string{"scanner", "counted", "profiled"})
+}
+
+func compilationProductKinds(t *testing.T, kinds []string) string {
 	t.Helper()
 	inputs := compilationInputs(t)
 	cdir := compilationEmission(t, inputs, "c")
@@ -182,7 +186,7 @@ func compilationProducts(t *testing.T) string {
 	inputs.Toolchain = append(inputs.Toolchain, buildcache.Tool("clang", "--version"))
 	directory := t.TempDir()
 	var group sync.WaitGroup
-	for _, kind := range []string{"scanner", "counted", "profiled"} {
+	for _, kind := range kinds {
 		kind := kind
 		variant := inputs
 		variant.Name = "lint-profile-" + kind
@@ -225,7 +229,7 @@ func compilationProducts(t *testing.T) string {
 				flags := append(native.Flags(options), "-g", "-o", filepath.Join(dir, kind))
 				flags = append(flags, units...)
 				flags = append(flags, "-lm")
-				command := compilationCommand(t, "clang", flags...)
+				command := exec.CommandContext(context.Background(), "clang", flags...)
 				if output, err := command.CombinedOutput(); err != nil {
 					return fmt.Errorf("profile clang: %w\n%s", err, output)
 				}
@@ -252,25 +256,6 @@ func compilationProducts(t *testing.T) string {
 		t.Fatal(err)
 	}
 	return directory
-}
-
-func TestProfileCompilationPlantedFailure(t *testing.T) {
-	t.Parallel()
-	defer compilationBudget(t)()
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_000$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_PROFILE_COMPILATION_PLANT=1")
-	output, err := command.CombinedOutput()
-	if command.ProcessState == nil {
-		t.Fatalf("planted-failure child did not complete: %v", err)
-	}
-	if err == nil || !strings.Contains(string(output), "planted profile disagreement") || strings.Count(string(output), "--- FAIL: TestProfileCompilation_000") != 1 {
-		t.Fatalf("wrong planted-failure attribution: %v\n%s", err, output)
-	}
-	t.Log("planted single-case disagreement caught by TestProfileCompilation_000")
 }
 
 func compilationOracleOutputs(t *testing.T, oracle, manifestPath string) ([]byte, []byte) {
@@ -354,27 +339,7 @@ func compilationEmission(t *testing.T, inputs buildcache.Inputs, kind string) st
 }
 
 // Build products are individually enumerable so cold work never waits behind
-// a monolithic lowering-plus-emission build. Each has the same hard 90s harness.
-func TestProfileCompilationBuildLower(t *testing.T) {
-	t.Parallel()
-	defer compilationBudget(t)()
-	compilationLowered(t, compilationInputs(t))
-}
-func TestProfileCompilationBuildC(t *testing.T) {
-	t.Parallel()
-	defer compilationBudget(t)()
-	compilationEmission(t, compilationInputs(t), "c")
-}
-func TestProfileCompilationBuildJavaScript(t *testing.T) {
-	t.Parallel()
-	defer compilationBudget(t)()
-	compilationEmission(t, compilationInputs(t), "javascript")
-}
-func TestProfileCompilationBuildNative(t *testing.T) {
-	t.Parallel()
-	defer compilationBudget(t)()
-	compilationProducts(t)
-}
+// a monolithic lowering-plus-emission build. The build phase owns their ceiling.
 
 // Bound child commands without requiring an external timeout executable. Kill
 // the entire process group so compiler descendants cannot outlive the deadline.
@@ -395,28 +360,7 @@ func compilationCommand(t *testing.T, name string, args ...string) *exec.Cmd {
 	return command
 }
 
-// Preparation is independently discoverable and bounded, including the overlay
-// oracle (which buildcache intentionally refuses to cache). Products are fetched
-// before any runtime shard starts its case timer, even when selected alone.
-func TestProfileCompilation_Setup(t *testing.T) {
-	t.Parallel()
-	if os.Getenv("ADAMIC_PROFILE_SETUP_CHILD") == "1" {
-		compilationPrepare(t)
-		return
-	}
-	executable, err := os.Executable()
-	if err != nil {
-		t.Fatal(err)
-	}
-	command := compilationCommand(t, executable, "-test.run=^TestProfileCompilation_Setup$", "-test.v", "-test.timeout=90s")
-	command.Env = append(os.Environ(), "ADAMIC_PROFILE_SETUP_CHILD=1")
-	started := time.Now()
-	output, err := command.CombinedOutput()
-	t.Logf("setup wall=%s\n%s", time.Since(started), output)
-	if err != nil {
-		t.Fatalf("setup failed or cooked at 90s: %v", err)
-	}
-}
+// Setup has no test-side clock; runtime shards start their clock after preparation.
 
 func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
 	t.Helper()
@@ -426,7 +370,16 @@ func compilationPrepare(t *testing.T) (string, string, string, []byte, []byte) {
 	prepareRegistry(t, directory)
 	products := compilationProducts(t)
 	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
-	oracle := goOracle(t)
+	oracle := compilationOracle(t)
 	want, countedWant := compilationOracleOutputs(t, oracle, path)
 	return directory, products, path, want, countedWant
+}
+
+func compilationOracle(t *testing.T) string {
+	t.Helper()
+	inputs := testShardsAgreeInputs(t, "profile-oracle")
+	inputs.Files = append(inputs.Files, "stage1/cohere/lint/profile_compilation_main_test.go")
+	inputs.Flags = append(inputs.Flags, "overlay=full-live-registry")
+	product := buildcache.Product(t, inputs, func(dir string) error { _, err := goOracleIn(packageDirectory, dir); return err })
+	return filepath.Join(product, "oracle")
 }

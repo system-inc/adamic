@@ -1,0 +1,10 @@
+=== RUN   TestClassStaticInitializerCallIsEmitted
+=== PAUSE TestClassStaticInitializerCallIsEmitted
+=== RUN   TestClassStaticSideEffectMatchesNode
+=== PAUSE TestClassStaticSideEffectMatchesNode
+=== CONT  TestClassStaticInitializerCallIsEmitted
+=== CONT  TestClassStaticSideEffectMatchesNode
+--- PASS: TestClassStaticInitializerCallIsEmitted (0.04s)
+--- PASS: TestClassStaticSideEffectMatchesNode (0.30s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	0.305s

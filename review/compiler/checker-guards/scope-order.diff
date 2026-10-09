@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/scopes.go
++++ b/bridge/tsgo/checker/scopes.go
+@@ -37,7 +37,7 @@
+ 				names = append(names, name)
+ 			}
+ 		}
+-		sort.Strings(names)
++		sort.Sort(sort.Reverse(sort.StringSlice(names)))
+ 		out.number(uint64(len(names)))
+ 		for _, name := range names {
+ 			symbol := table.symbols[name]

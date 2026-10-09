@@ -197,19 +197,110 @@ func TestCanonicalizeLegacyNode(t *testing.T) {
 	reportDisagreements(t, disagreements)
 }
 
-// Top-level ranges are the gate's leaves. Each owns a contiguous block of the
-// existing sixteen-scan shards and uses Go's four-way scheduling within that
-// block. Every scan still visits every Unicode code point against Node.
+// Top-level ranges are the gate's leaves. Strides use eight-line shards and
+// four shards per range; cheaper class and dense scans keep sixteen-line shards.
+// Every scan still visits every Unicode code point against Node.
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange0(t *testing.T) { runUnicodeCanonicalizeRange(t, 0) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange1(t *testing.T) { runUnicodeCanonicalizeRange(t, 1) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange2(t *testing.T) { runUnicodeCanonicalizeRange(t, 2) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange3(t *testing.T) { runUnicodeCanonicalizeRange(t, 3) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange4(t *testing.T) { runUnicodeCanonicalizeRange(t, 4) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange5(t *testing.T) { runUnicodeCanonicalizeRange(t, 5) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange6(t *testing.T) { runUnicodeCanonicalizeRange(t, 6) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange7(t *testing.T) { runUnicodeCanonicalizeRange(t, 7) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange8(t *testing.T) { runUnicodeCanonicalizeRange(t, 8) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
 func TestCanonicalizeUnicodeNodeRange9(t *testing.T) { runUnicodeCanonicalizeRange(t, 9) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange10(t *testing.T) { runUnicodeCanonicalizeRange(t, 10) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange11(t *testing.T) { runUnicodeCanonicalizeRange(t, 11) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange12(t *testing.T) { runUnicodeCanonicalizeRange(t, 12) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange13(t *testing.T) { runUnicodeCanonicalizeRange(t, 13) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange14(t *testing.T) { runUnicodeCanonicalizeRange(t, 14) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange15(t *testing.T) { runUnicodeCanonicalizeRange(t, 15) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange16(t *testing.T) { runUnicodeCanonicalizeRange(t, 16) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange17(t *testing.T) { runUnicodeCanonicalizeRange(t, 17) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange18(t *testing.T) { runUnicodeCanonicalizeRange(t, 18) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange19(t *testing.T) { runUnicodeCanonicalizeRange(t, 19) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange20(t *testing.T) { runUnicodeCanonicalizeRange(t, 20) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange21(t *testing.T) { runUnicodeCanonicalizeRange(t, 21) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange22(t *testing.T) { runUnicodeCanonicalizeRange(t, 22) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange23(t *testing.T) { runUnicodeCanonicalizeRange(t, 23) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange24(t *testing.T) { runUnicodeCanonicalizeRange(t, 24) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange25(t *testing.T) { runUnicodeCanonicalizeRange(t, 25) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange26(t *testing.T) { runUnicodeCanonicalizeRange(t, 26) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange27(t *testing.T) { runUnicodeCanonicalizeRange(t, 27) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange28(t *testing.T) { runUnicodeCanonicalizeRange(t, 28) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange29(t *testing.T) { runUnicodeCanonicalizeRange(t, 29) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange30(t *testing.T) { runUnicodeCanonicalizeRange(t, 30) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange31(t *testing.T) { runUnicodeCanonicalizeRange(t, 31) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange32(t *testing.T) { runUnicodeCanonicalizeRange(t, 32) }
+
+// Not parallel: the range owns a four-process Node wave; concurrent ranges oversubscribe it.
+func TestCanonicalizeUnicodeNodeRange33(t *testing.T) { runUnicodeCanonicalizeRange(t, 33) }
 
 func runUnicodeCanonicalizeRange(t *testing.T, index int) {
 	t.Helper()

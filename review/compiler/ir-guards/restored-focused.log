@@ -1,0 +1,22 @@
+=== RUN   TestArgumentLayouts
+=== PAUSE TestArgumentLayouts
+=== RUN   TestMixedOptionalFixedLayoutPreservesMaybeNumber
+=== PAUSE TestMixedOptionalFixedLayoutPreservesMaybeNumber
+=== RUN   TestCallMayThrowUsesReachableTargets
+=== PAUSE TestCallMayThrowUsesReachableTargets
+=== RUN   TestDirectClosureTargetsUseEncodedIndex
+=== PAUSE TestDirectClosureTargetsUseEncodedIndex
+=== RUN   TestUnknownClosurePreservesThrowingEffect
+=== PAUSE TestUnknownClosurePreservesThrowingEffect
+=== CONT  TestArgumentLayouts
+--- PASS: TestArgumentLayouts (0.00s)
+=== CONT  TestCallMayThrowUsesReachableTargets
+--- PASS: TestCallMayThrowUsesReachableTargets (0.00s)
+=== CONT  TestMixedOptionalFixedLayoutPreservesMaybeNumber
+=== CONT  TestDirectClosureTargetsUseEncodedIndex
+--- PASS: TestDirectClosureTargetsUseEncodedIndex (0.00s)
+--- PASS: TestMixedOptionalFixedLayoutPreservesMaybeNumber (0.00s)
+=== CONT  TestUnknownClosurePreservesThrowingEffect
+--- PASS: TestUnknownClosurePreservesThrowingEffect (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/ir	0.008s

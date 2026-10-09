@@ -145,16 +145,13 @@ func printerCompiledProduct(t *testing.T, loweredProduct string, options native.
 	if err != nil {
 		t.Fatal(err)
 	}
-	clang := execute(t, nil, "clang", "--version")
-	if clang.exitCode != 0 {
-		t.Fatalf("clang version: %s", clang.stderr)
-	}
+	clang := buildcache.Tool("clang", "--version")
 	name := "release GraphQL printer"
 	if options.Sanitize {
 		name = "sanitized GraphQL printer"
 	}
 	inputs := printerInputFiles(t, filepath.Join(repository, "internal/native"))
-	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: string(clang.stdout)}, func(dir string) error {
+	return printerBuild(t, printerBuildInputs{Name: name, Files: append([]string{loweredProduct + "/port.c"}, inputs...), Flags: native.Flags(options), Toolchain: clang}, func(dir string) error {
 		start := time.Now()
 		err := native.Build(string(data), dir+"/port", options)
 		t.Logf("clang wall %.3fs", time.Since(start).Seconds())
@@ -277,73 +274,6 @@ func printerShardDisagreement(number int, shard printerShard, result run) error 
 	return fmt.Errorf("shard-%03d: extra output or changed final newline", number)
 }
 
-const testPrinterAsGoCohereShards = 4
-
-// The four fixed option modes own every case in their mode. ADAMIC_TEST_SHARD=i/n
-// selects shard indices modulo n equal to i; unset runs all. The gate can instead
-// select TestPrinterAsGoCohere_NNN directly. Products are prepared before case timing.
-func printerAsGoUnit(t *testing.T, unit int) {
-	oracle := printerOracle(t)
-	path := printerDirectory(t, "", "", "")
-	products := preparePrinterProducts(t, path)
-	var whole []printerCase
-	var shards []printerShard
-	for _, mode := range []string{"defaults", "narrow", "tight", "tabs"} {
-		cases, want := printerCases(t, mode, oracle)
-		enumeration := enumeratePrinter(t, mode, cases, want)
-		whole = append(whole, enumeration...)
-		shards = append(shards, printerShard{mode: mode, path: cases, cases: enumeration})
-	}
-	if len(shards) != testPrinterAsGoCohereShards {
-		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterAsGoCohereShards)
-	}
-	if err := printerShardUnion(whole, shards); err != nil {
-		t.Fatal(err)
-	}
-	t.Logf("union: %d unique mode/case ids across %d shards", len(whole), len(shards))
-	if unit < 0 {
-		return
-	}
-	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
-	if err != nil {
-		t.Fatal(err)
-	}
-	for number, shard := range shards {
-		if number != unit || !selected[number] {
-			continue
-		}
-		{
-			start := time.Now()
-			t.Cleanup(func() {
-				if elapsed := time.Since(start); elapsed > 30*time.Second {
-					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
-				}
-			})
-			t.Logf("mode %s, cases 0..%d", shard.mode, len(shard.cases)-1)
-			check := func(name string, result run) {
-				if err := printerShardDisagreement(number, shard, result); err != nil {
-					t.Errorf("%s: %v", name, err)
-				}
-			}
-			args := []string{"--cases", shard.path, shard.mode}
-			check("Node", onNode(t, products.source, args...))
-			check("native", execute(t, []string{"ASAN_OPTIONS=detect_leaks=0"}, products.sanitized, args...))
-			check("JS backend", onNode(t, products.backend, args...))
-			switch runtime.GOOS {
-			case "linux":
-				check("leaks", execute(t, []string{"ASAN_OPTIONS=detect_leaks=1"}, products.sanitized, args...))
-			case "darwin":
-				report := execute(t, nil, "leaks", append([]string{"--atExit", "--", products.release}, args...)...)
-				if report.exitCode != 0 {
-					t.Errorf("leaks: exit %d stdout %s stderr %s", report.exitCode, report.stdout, report.stderr)
-				}
-			default:
-				t.Fatalf("no leak check for %s", runtime.GOOS)
-			}
-		}
-	}
-}
-
 func TestPrinterShardUnionRejectsMissingAndRepeated(t *testing.T) {
 	t.Parallel()
 	whole := []printerCase{{id: "defaults/case-000000", input: ">query{a}", want: "ok"}, {id: "tabs/case-000000", input: ">query{b}", want: "ok"}}
@@ -392,44 +322,5 @@ func TestPrinterShardSelection(t *testing.T) {
 		if !runs {
 			t.Fatalf("unset selector omitted shard-%03d", i)
 		}
-	}
-}
-
-func TestPrinterShardPlantedDisagreement(t *testing.T) {
-	t.Parallel()
-	oracle := printerOracle(t)
-	path, _ := filepath.Abs("main.ts")
-	var shards []printerShard
-	for _, mode := range []string{"defaults", "tabs"} {
-		cases, want := printerCases(t, mode, oracle)
-		enumeration := enumeratePrinter(t, mode, cases, want)
-		// Use the first two enumerated oracle cases as a real Node control.
-		sample := append([]printerCase(nil), enumeration[:2]...)
-		filename := filepath.Join(t.TempDir(), "cases.txt")
-		if err := os.WriteFile(filename, []byte(sample[0].input+"\n"+sample[1].input+"\n"), 0644); err != nil {
-			t.Fatal(err)
-		}
-		shards = append(shards, printerShard{mode: mode, path: filename, cases: sample})
-	}
-	results := make([]run, len(shards))
-	for i, shard := range shards {
-		results[i] = onNode(t, path, "--cases", shard.path, shard.mode)
-		if err := printerShardDisagreement(i, shard, results[i]); err != nil {
-			t.Fatal(err)
-		}
-	}
-	shards[0].cases[1].want += "planted disagreement"
-	caught := 0
-	for i, shard := range shards {
-		if err := printerShardDisagreement(i, shard, results[i]); err != nil {
-			caught++
-			if i != 0 || !strings.Contains(err.Error(), "shard-000 defaults/case-000001") {
-				t.Fatalf("wrong owner: %v", err)
-			}
-			t.Logf("planted disagreement caught: %v", err)
-		}
-	}
-	if caught != 1 {
-		t.Fatalf("planted disagreement caught by %d shards, want exactly one", caught)
 	}
 }

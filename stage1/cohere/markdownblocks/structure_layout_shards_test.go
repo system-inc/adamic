@@ -109,8 +109,7 @@ func TestMarkdownStructureLayoutUnion(t *testing.T) {
 func structureLayoutShared(t *testing.T) *structureLayoutState {
 	structureLayoutOnce.Do(func() {
 		started := time.Now()
-		deadline := structureLayoutDeadline(t, "TestMarkdownStructureLayout_Setup")
-		defer deadline.Stop()
+		// Shared setup has no deadline; Loom bounds the whole unit.
 		state := structureLayoutEnumeration(t)
 		plantedName := state.products.plantedName
 		state.products = buildStructureLayoutProducts(t, state.products.root)
@@ -126,8 +125,7 @@ func structureLayoutShared(t *testing.T) *structureLayoutState {
 
 func runStructureLayoutShard(t *testing.T, index int) {
 	configureMarkdownMemory(t)
-	// Shared setup has its own deadline; no shard spends its case budget
-	// fetching or building the products used by every shard.
+	// Each shard prepares shared products before its own deadline starts.
 	state := structureLayoutShared(t)
 	deadline := structureLayoutDeadline(t, t.Name())
 	defer deadline.Stop()
@@ -156,6 +154,10 @@ func TestMarkdownStructureLayout_014(t *testing.T) { t.Parallel(); runStructureL
 func TestMarkdownStructureLayout_015(t *testing.T) { t.Parallel(); runStructureLayoutShard(t, 15) }
 
 func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProducts {
+	return structureLayoutBuildProduct(t, root, "")
+}
+
+func structureLayoutBuildProduct(t *testing.T, root, target string) structureLayoutProducts {
 	p := structureLayoutProducts{root: root}
 	main, err := filepath.Abs("testdata/list_probe.ts")
 	if err != nil {
@@ -187,34 +189,45 @@ func buildStructureLayoutProducts(t *testing.T, root string) structureLayoutProd
 	if err != nil {
 		t.Fatal(err)
 	}
+	if target == "lowered" {
+		return p
+	}
 	if runtime.GOOS == "darwin" {
 		p.program = lowered(t, main)
 	}
-	options := native.Options{Sanitize: true}
-	flags := append(native.Flags(options), native.Flags(native.Options{})...)
-	flags = append(flags, fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
-	nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
-		var workers sync.WaitGroup
-		sanitized := startFixtureTask(&workers, func() (struct{}, error) {
-			return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
-		})
-		release := startFixtureTask(&workers, func() (struct{}, error) {
-			return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native.Options{})
-		})
-		workers.Wait()
-		if _, err := sanitized.result(); err != nil {
+	if target == "" || target == "native" {
+		options := native.Options{Sanitize: true}
+		flags := append(native.Flags(options), native.Flags(native.Options{})...)
+		flags = append(flags, fmt.Sprintf("source=%x", sha256.Sum256(source)), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+		nativeDir := buildcache.Product(t, buildcache.Inputs{Name: "markdown-structure-native-modes", Files: files, Flags: flags, Toolchain: []string{buildcache.Tool("clang", "--version"), runtime.GOOS, runtime.GOARCH}}, func(dir string) error {
+			var workers sync.WaitGroup
+			sanitized := startFixtureTask(&workers, func() (struct{}, error) {
+				return struct{}{}, native.Build(string(source), filepath.Join(dir, "sanitized"), native.Options{Sanitize: true})
+			})
+			release := startFixtureTask(&workers, func() (struct{}, error) {
+				return struct{}{}, native.Build(string(source), filepath.Join(dir, "release"), native.Options{})
+			})
+			workers.Wait()
+			if _, err := sanitized.result(); err != nil {
+				return err
+			}
+			_, err := release.result()
 			return err
-		}
-		_, err := release.result()
-		return err
-	})
-	p.sanitized = filepath.Join(nativeDir, "sanitized")
-	p.release = filepath.Join(nativeDir, "release")
+		})
+		p.sanitized = filepath.Join(nativeDir, "sanitized")
+		p.release = filepath.Join(nativeDir, "release")
+	}
+	if target == "native" {
+		return p
+	}
 	cohere := filepath.Join(root, "cohere")
 	for _, item := range []struct {
 		command, driver string
 		bridge          bool
 	}{{"adamic_markdown_lists", "list_go.go", true}, {"adamic_markdown_doclayout", "document_go.go", false}} {
+		if target != "" && target != item.command {
+			continue
+		}
 		driver, err := filepath.Abs(filepath.Join("testdata", item.driver))
 		if err != nil {
 			t.Fatal(err)
@@ -564,10 +577,9 @@ func structureLayoutDeadline(t *testing.T, name string) *time.Timer {
 	})
 }
 
-// The Go driver starts compilers. Give the entire child process group the same
-// deadline so a canceled driver cannot leave compilation running behind it.
+// Setup has no deadline; cancellation still kills the compiler process group.
 func structureLayoutCommand(name string, arguments ...string) (*exec.Cmd, context.CancelFunc) {
-	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
+	ctx, cancel := markdownLayoutSetupContext(context.Background())
 	command := exec.CommandContext(ctx, name, arguments...)
 	command.SysProcAttr = &syscall.SysProcAttr{Setpgid: true}
 	command.Cancel = func() error {

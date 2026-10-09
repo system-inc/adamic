@@ -1,0 +1,12 @@
+{"Time":"2026-10-09T08:04:09.495724046Z","Action":"start","Package":"github.com/system-inc/adamic/internal/fresh"}
+{"Time":"2026-10-09T08:04:09.502762265Z","Action":"run","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:09.502820943Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== RUN   TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:09.502840903Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== PAUSE TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:09.502843577Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:09.502845861Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven"}
+{"Time":"2026-10-09T08:04:09.502847603Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"=== CONT  TestClassMethodOutsideSelfCycleRemainsUnproven\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:09.502853602Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Output":"--- PASS: TestClassMethodOutsideSelfCycleRemainsUnproven (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:09.502855896Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Test":"TestClassMethodOutsideSelfCycleRemainsUnproven","Elapsed":0}
+{"Time":"2026-10-09T08:04:09.502866952Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T08:04:09.502901814Z","Action":"output","Package":"github.com/system-inc/adamic/internal/fresh","Output":"ok  \tgithub.com/system-inc/adamic/internal/fresh\t0.007s\n"}
+{"Time":"2026-10-09T08:04:09.502909396Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/fresh","Elapsed":0.007}

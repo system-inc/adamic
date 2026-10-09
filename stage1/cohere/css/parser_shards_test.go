@@ -13,7 +13,6 @@ import (
 	"strconv"
 	"strings"
 	"testing"
-	"time"
 
 	"github.com/system-inc/adamic/internal/buildcache"
 	"github.com/system-inc/adamic/internal/childguard"
@@ -231,7 +230,7 @@ func checkCSSParserPostCSS(t *testing.T, unit cssParserShard, inputs []string, w
 }
 
 // Every non-Go product uses the shared cache, including temporary mutants.
-// Go overlay builds stay private until GoBuild supports them; products are immutable.
+// Go overlay recipes also use buildcache.Product; products are immutable.
 type cssParserInputs struct {
 	Name         string
 	Files, Flags []string
@@ -244,17 +243,16 @@ func cssParserProduct(t *testing.T, inputs cssParserInputs, build func(dir strin
 	return buildcache.Product(t, keyed, build)
 }
 
-// Go builds have no hand-listed key. Keep their private callback until GoBuild
-// supports these oracle overlays; it is invoked once per parent.
+// Go overlay builds use the same content-addressed cache as the other products.
 func cssParserGoProduct(t *testing.T, name string, build func(dir string) error) string {
 	t.Helper()
-	dir := cssParserTopTempDir(t)
-	start := time.Now()
-	if err := build(dir); err != nil {
-		t.Fatalf("Go build %s: %v", name, err)
+	inputs := buildcache.Inputs{
+		Name:      "css " + name,
+		Files:     []string{"cohere", "go.mod", "go.work", "stage1/cohere/css/testdata", "stage1/cohere/css/parser_shards_test.go"},
+		Flags:     []string{"go test -c", "./internal/format/css/postcss", "overlay=internal/format/css/postcss/adamic_port_side_test.go", name, "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOEXPERIMENT=" + os.Getenv("GOEXPERIMENT"), "CGO_ENABLED=" + os.Getenv("CGO_ENABLED"), "GOOS=" + os.Getenv("GOOS"), "GOARCH=" + os.Getenv("GOARCH"), "CC=" + os.Getenv("CC"), "CXX=" + os.Getenv("CXX")},
+		Toolchain: []string{buildcache.Tool("go", "version"), runtime.GOOS, runtime.GOARCH},
 	}
-	t.Logf("Go build %s %.6fs (private, awaiting GoBuild)", name, time.Since(start).Seconds())
-	return dir
+	return buildcache.Product(t, inputs, build)
 }
 
 // Temporary generated inputs are keyed by content and logical filename. Their
@@ -320,7 +318,7 @@ func cssParserOracle(t *testing.T) string {
 		if err := os.WriteFile(path, overlay, 0644); err != nil {
 			return err
 		}
-		command := cssParserCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
+		command := cssParserSetupCommand(t, "go", "test", "-c", "-overlay="+path, "-o", filepath.Join(dir, "oracle"), "./internal/format/css/postcss")
 		command.Dir = cohere
 		if output, err := childguard.CombinedOutput(command, childguard.Options{Stall: childStall}); err != nil {
 			return fmt.Errorf("Go oracle: %w\n%s", err, output)
@@ -624,7 +622,7 @@ func cachedCSSParserOracleOutputs(t *testing.T, oracle string) (string, string) 
 		if err := os.WriteFile(requestPath, data, 0644); err != nil {
 			return err
 		}
-		cmd := cssParserCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
+		cmd := cssParserSetupCommand(t, oracle, "-test.timeout=0", "-test.v", "-test.count=1", "-test.run=^TestAdamicPortCases$")
 		cmd.Dir = filepath.Join(repo, "cohere/internal/format/css/postcss")
 		cmd.Env = append(os.Environ(), "ADAMIC_PORT_REQUEST="+requestPath)
 		output, err := childguard.CombinedOutput(cmd, childguard.Options{Stall: childStall})

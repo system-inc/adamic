@@ -1,0 +1,11 @@
+--- a/internal/fuzz/reduce.go
++++ b/internal/fuzz/reduce.go
+@@ -55,7 +55,7 @@
+ 	if line == "" {
+ 		return false
+ 	}
+-	if s.Exact {
++	if !s.Exact {
+ 		return line == s.Text
+ 	}
+ 	return strings.Contains(line, s.Text)

@@ -20,7 +20,7 @@ func TestAnchoredSelectors(t *testing.T) {
 import "testing"
 func TestParent(t *testing.T) {
 	t.Parallel()
- for _,name:=range []string{"internal/oracle/testdata/a.a", "internal/oracle/testdata/aXa", "internal/oracle/testdata/b+.a", "internal/load/testdata/0.1/compile/main.a", "internal/load/testdata/0X1/compile/extra.a"} {
+ for _,name:=range []string{"internal/oracle/testdata/a.a", "internal/oracle/testdata/aXa", "internal/oracle/testdata/b+.a", "internal/load/testdata/0.1/compile/main.a", "internal/load/testdata/0X1/compile/extra.a", "internal/load/testdata/0X1/compile/main.a"} {
   t.Run(name,func(t *testing.T){t.Parallel()})
  }
 }
@@ -41,7 +41,7 @@ func TestOther(t *testing.T) {}
 		if err != nil {
 			t.Fatal(err)
 		}
-		cmd := exec.Command("go", "test", "-count=1", "-json", "-run", pattern, ".")
+		cmd := exec.Command("go", "test", "-timeout", "90s", "-count=1", "-json", "-run", pattern, ".")
 		cmd.Dir = directory
 		cmd.Env = append(os.Environ(), "GOWORK=off", "GOCACHE="+filepath.Join(directory, "go-cache"))
 		cmd.Stdout = f

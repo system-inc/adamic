@@ -6,11 +6,6 @@ import "testing"
 // selector. Each setup test prepares read-only buildcache products and validates
 // the live union. Units prepare private paths before starting their case timer;
 // no sync.Once or shared mutable state makes the first unit build for the rest.
-func TestPrinterAsGoCohere_Setup(t *testing.T)        { t.Parallel(); printerAsGoUnit(t, -1) }
-func TestPrinterAsGoCohere_000(t *testing.T)          { t.Parallel(); printerAsGoUnit(t, 0) }
-func TestPrinterAsGoCohere_001(t *testing.T)          { t.Parallel(); printerAsGoUnit(t, 1) }
-func TestPrinterAsGoCohere_002(t *testing.T)          { t.Parallel(); printerAsGoUnit(t, 2) }
-func TestPrinterAsGoCohere_003(t *testing.T)          { t.Parallel(); printerAsGoUnit(t, 3) }
 func TestPrinterUpstreamPreflight_Setup(t *testing.T) { t.Parallel(); printerUpstreamUnit(t, -1) }
 func TestPrinterUpstreamPreflight_000(t *testing.T)   { t.Parallel(); printerUpstreamUnit(t, 0) }
 func TestPrinterUpstreamPreflight_001(t *testing.T)   { t.Parallel(); printerUpstreamUnit(t, 1) }

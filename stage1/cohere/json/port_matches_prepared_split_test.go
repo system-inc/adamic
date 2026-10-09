@@ -38,7 +38,11 @@ func portMatchesBucket(name string) int {
 
 func portMatchesPartition(t *testing.T) [][]textCase {
 	t.Helper()
-	cases := sampledCorpusCases(t, 32)
+	allCases := sampledCorpusCases(t, 32)
+	cases, ordinaryShards, dedicated := jsonPortClassOrderPartition(allCases)
+	if err := jsonPortClassOrderUnion(allCases, cases, ordinaryShards, dedicated); err != nil {
+		t.Fatal(err)
+	}
 	shards := make([][]textCase, testPortMatchesGoCohereSplitShards)
 	seen := make(map[string]textCase, len(cases))
 	for _, item := range cases {

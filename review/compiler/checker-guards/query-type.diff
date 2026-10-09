@@ -1,0 +1,11 @@
+--- a/bridge/tsgo/checker/program.go
++++ b/bridge/tsgo/checker/program.go
+@@ -142,7 +142,7 @@
+ 	node := ast.GetNodeAtPosition(source, int(position), false)
+ 	typeChecker, release := p.Compiler.GetTypeCheckerForFile(context.Background(), source)
+ 	defer release()
+-	result := Result{Kind: uint32(node.Kind), Type: typeChecker.TypeToString(typeChecker.GetTypeAtLocation(node))}
++	result := Result{Kind: uint32(node.Kind), Type: "mutant"}
+ 	if symbol := typeChecker.GetSymbolAtLocation(node); symbol != nil {
+ 		result.Symbol = ast.EscapeAllInternalSymbolNames(ast.SymbolName(symbol))
+ 	}
