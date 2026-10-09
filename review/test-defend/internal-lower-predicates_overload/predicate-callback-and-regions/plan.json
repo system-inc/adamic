@@ -1,0 +1,20 @@
+[
+  [
+    "D1",
+    "internal/lower/predicates_proof.go",
+    "return l.predicateConditionDirection(declaration.AsVariableDeclaration().Initializer, call, truth, depth+1)",
+    ""
+  ],
+  [
+    "D2",
+    "internal/lower/predicates_proof.go",
+    "if previous := memo[original]; previous != nil {\n\t\t\treturn previous",
+    "if previous := memo[original]; previous != nil {\n\t\t\treturn nil"
+  ],
+  [
+    "D3",
+    "internal/lower/predicates.go",
+    "parameter.Type().Type().Kind != ast.KindTypePredicate",
+    "parameter.Type().Type().Kind == ast.KindTypePredicate"
+  ]
+]

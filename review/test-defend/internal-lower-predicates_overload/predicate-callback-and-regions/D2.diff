@@ -1,0 +1,13 @@
+diff --git a/internal/lower/predicates_proof.go b/internal/lower/predicates_proof.go
+index 86451984..cb199cf4 100644
+--- a/internal/lower/predicates_proof.go
++++ b/internal/lower/predicates_proof.go
+@@ -1156,7 +1156,7 @@ func (l *lowering) predicateFlowWithout(root *ast.FlowNode, call, reference *ast
+ 			return nil
+ 		}
+ 		if previous := memo[original]; previous != nil {
+-			return previous
++			return nil
+ 		}
+ 		copy := &ast.FlowNode{Flags: original.Flags &^ (ast.FlowFlagsShared | ast.FlowFlagsReferenced), Node: original.Node}
+ 		memo[original] = copy
