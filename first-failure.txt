@@ -1,0 +1,26 @@
+FIRST FAILURE (tests, at 1560.1 s):
+github.com/system-inc/adamic/stage1/cohere/tsprinter TestStatementsAgainstGoAndPrettier_000
+=== RUN   TestStatementsAgainstGoAndPrettier_000
+=== PAUSE TestStatementsAgainstGoAndPrettier_000
+=== CONT  TestStatementsAgainstGoAndPrettier_000
+    statements_top_level_test.go:18: statement shared setup: cooked: shared setup exceeded 90s: context deadline exceeded
+        === RUN   TestStatementsAgainstGoAndPrettier_Setup
+        === PAUSE TestStatementsAgainstGoAndPrettier_Setup
+        === CONT  TestStatementsAgainstGoAndPrettier_Setup
+            statements_setup_test.go:113: corpus root bench: 6 git-tracked .ts files
+            statements_setup_test.go:113: corpus root bridge: 1 git-tracked .ts files
+            statements_setup_test.go:113: corpus root cmd: 5 git-tracked .ts files
+            statements_setup_test.go:113: corpus root internal: 69 git-tracked .ts files
+            statements_setup_test.go:113: corpus root stage1: 477 git-tracked .ts files
+            statements_setup_test.go:113: corpus root stage3/drivers/tsc/corpus: 300 git-tracked .ts files
+            statements_setup_test.go:113: corpus root src/compiler: 77 git-tracked .ts files
+            statements_setup_test.go:113: build Go statement oracle (uncached): 2.077s, 3.924 CPU s
+            statements_setup_test.go:113: build tsprinter-statements-oracle-output-v1 af8229467ad2 hit 0.00
+            statements_setup_test.go:113: cases: 58052 cases in 8 largest-first processes
+            statements_shards_test.go:42: build tsprinter-statements-lowered-v1: 27.936s, 29.825 CPU s
+            statements_setup_test.go:113: build tsprinter-statements-lowered-v1 70c613ce4ccc miss 31.96
+            statements_shards_test.go:42: build tsprinter-statements-native-sanitize-true-v1: 52.708s, 53.987 CPU s
+        
+--- FAIL: TestStatementsAgainstGoAndPrettier_000 (0.00s)
+
+(box load 22.8 on 64 cores at first failure)
