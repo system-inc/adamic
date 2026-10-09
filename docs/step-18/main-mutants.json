@@ -1,0 +1,380 @@
+[
+  {
+    "name": "callable-reselect",
+    "fixture": "runtime-order",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "e0f10a14c33db651a1d2b0985968db9916536506b4faf9c6bb85cf2ca1a90652",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "callable-null-guard",
+    "fixture": "runtime-values",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "8ee0e27f5f0b2b43e82aa6e37ea55cf4c65b5835be9cda1e0fa0b5c372eb9e90",
+    "catcher": [
+      "oracle_test.go:780: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "name": "callable-eager-arguments",
+    "fixture": "runtime-arguments",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "44c1ed44c082fed27119cde1f6bc20b8bb40791da00a5113da3b68f16de1d8cc",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "callable-result-zero",
+    "fixture": "runtime-values",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "7f145f9892df3f6550cdf43b0c821222b3a7899a31101ec2f9e863543aac7589",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "callable-narrowing",
+    "fixture": "runtime-order",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "43770a810f4bf9bfa93c5142f150731b207ca35ee7aa1ac17be069e6a5aed4a2",
+    "catcher": [
+      "oracle_test.go:774: exit codes differ",
+      "oracle_test.go:780: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "name": "return-descriptor",
+    "fixture": "runtime-return-descriptor",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "99b7fd03e7565c5f4d8521504927af0bd7c0e5623b84a17633693ca031b8e133",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==387342==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56414e2f833e bp 0x7ffcc62090f0 sp 0x7ffcc62090c0 T0)\\n==387342==The signal is caused by a READ memory access.\\n==387342==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\\n    #0 0x56414e2f833e in adamic_release /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:372:28\\n    #1 0x56414e2e5c31 in adamic_function_1_cleanup /workspace/scratch/optional-calls-main-tmp/adamic-build-1916232713/main.c:56:3\\n    #2 0x56414e2e5a03 in main /workspace/scratch/optional-calls-main-tmp/adamic-build-1916232713/main.c:93:2\\n    #3 0x7f0ce2c49ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #4 0x7f0ce2c49d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #5 0x56414e1ff460 in _start (/workspace/scratch/optional-calls-main-tmp/TestNativeAgreesWithNodedocsstep-18fixturesruntime-return-de2378943213/002/program+0x57460)\\n\\n==387342==Register values:\\nrax = 0x4044800000000000  rbx = 0x00007b3ce1fe0040  rcx = 0x0808900000000000  rdx = 0x00000f679c3fc008  \\nrdi = 0x4044800000000000  rsi = 0x4044800000000000  rbp = 0x00007ffcc62090f0  rsp = 0x00007ffcc62090c0  \\n r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0x0000000000000001  \\nr12 = 0x00007b3ce1fe0040  r13 = 0x00007b0ce0b00040  r14 = 0x00007b3ce1fe0040  r15 = 0x00007b0ce0b00060  \\nAddressSanitizer can not provide additional info.\\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:372:28 in adamic_release\\n==387342==ABORTING\\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"AddressSanitizer:DEADLYSIGNAL\\n=================================================================\\n==387342==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x56414e2f833e bp 0x7ffcc62090f0 sp 0x7ffcc62090c0 T0)\\n==387342==The signal is caused by a READ memory access.\\n==387342==Hint: this fault was caused by a dereference of a high value address (see register values below).  Disassemble the provided pc to learn which register was used.\\n    #0 0x56414e2f833e in adamic_release /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:372:28\\n    #1 0x56414e2e5c31 in adamic_function_1_cleanup /workspace/scratch/optional-calls-main-tmp/adamic-build-1916232713/main.c:56:3\\n    #2 0x56414e2e5a03 in main /workspace/scratch/optional-calls-main-tmp/adamic-build-1916232713/main.c:93:2\\n    #3 0x7f0ce2c49ca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #4 0x7f0ce2c49d64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #5 0x56414e1ff460 in _start (/workspace/scratch/optional-calls-main-tmp/TestNativeAgreesWithNodedocsstep-18fixturesruntime-return-de2378943213/002/program+0x57460)\\n\\n==387342==Register values:\\nrax = 0x4044800000000000  rbx = 0x00007b3ce1fe0040  rcx = 0x0808900000000000  rdx = 0x00000f679c3fc008  \\nrdi = 0x4044800000000000  rsi = 0x4044800000000000  rbp = 0x00007ffcc62090f0  rsp = 0x00007ffcc62090c0  \\n r8 = 0x0000000000000001   r9 = 0x00007fffffffff01  r10 = 0x00007fffffffff01  r11 = 0x0000000000000001  \\nr12 = 0x00007b3ce1fe0040  r13 = 0x00007b0ce0b00040  r14 = 0x00007b3ce1fe0040  r15 = 0x00007b0ce0b00060  \\nAddressSanitizer can not provide additional info.\\nSUMMARY: AddressSanitizer: SEGV /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:372:28 in adamic_release\\n==387342==ABORTING\\n\"",
+      "==387349==ERROR: AddressSanitizer: SEGV on unknown address (pc 0x55b6017d833e bp 0x7ffcaae4b0b0 sp 0x7ffcaae4b080 T0)"
+    ]
+  },
+  {
+    "name": "method-receiver",
+    "fixture": "runtime-methods",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "613ab0c6739e63a5cd80f35696d9dc7888fbb9db78f38c1e7d0d323cfe78b173",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"/workspace/scratch/optional-calls-main-tmp/adamic-build-1148486152/main.c:198:54: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /workspace/scratch/optional-calls-main-tmp/adamic-build-1148486152/main.c:198:54 \\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"/workspace/scratch/optional-calls-main-tmp/adamic-build-1148486152/main.c:198:54: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /workspace/scratch/optional-calls-main-tmp/adamic-build-1148486152/main.c:198:54 \\n\"",
+      "/workspace/scratch/optional-calls-main-tmp/adamic-build-1148486152/main.c:198:54: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')"
+    ]
+  },
+  {
+    "name": "method-presence",
+    "fixture": "runtime-bound-methods",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "be1897c33acd43cbb042ce6ed08b9d963009a9556b7388b65be196d591cc4931",
+    "catcher": [
+      "oracle_test.go:774: stdout differs"
+    ]
+  },
+  {
+    "name": "method-reselection",
+    "fixture": "runtime-bound-method-selection",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "893f16f7b8de035e282f28f003a7cc173fcdd15d32e0f4942cae79e9d1edc0ad",
+    "catcher": [
+      "oracle_test.go:780: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "name": "method-eager-spread",
+    "fixture": "runtime-bound-method-arguments",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "f52f5b323c721d4d3768f9116bab3de789770a9fa70fe69a7cfa7d9fab9e2630",
+    "catcher": [
+      "oracle_test.go:774: stdout differs"
+    ]
+  },
+  {
+    "name": "method-retain",
+    "fixture": "runtime-bound-method-selection",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "38dcd43331349676513e6d603f547691b6408bd98d73329ac4c639da265ac235",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"=================================================================\\n==389173==ERROR: AddressSanitizer: heap-use-after-free on address 0x7ba1041e0050 at pc 0x557666ae9734 bp 0x7ffcfd4a5210 sp 0x7ffcfd4a5208\\nREAD of size 8 at 0x7ba1041e0050 thread T0\\n    #0 0x557666ae9733 in adamic_function_1_invoke /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:109:90\\n    #1 0x557666ae8a3a in main /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:241:2\\n    #2 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #3 0x7f7104f3bd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #4 0x557666a02460 in _start (/workspace/scratch/optional-calls-main-tmp/TestNativeAgreesWithNodedocsstep-18fixturesruntime-bound-met2777057151/002/program+0x58460)\\n\\n0x7ba1041e0050 is located 16 bytes inside of 32-byte region [0x7ba1041e0040,0x7ba1041e0060)\\nfreed by thread T0 here:\\n    #0 0x557666aa4fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\\n    #1 0x557666afcb8f in deallocate /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:212:3\\n    #2 0x557666afcb8f in free_one /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:351:2\\n    #3 0x557666afcb8f in release_last /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:364:3\\n    #4 0x557666ae8a3a in main /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:241:2\\n    #5 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n\\npreviously allocated by thread T0 here:\\n    #0 0x557666aa5274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\\n    #1 0x557666afc33f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:196:10\\n    #2 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n\\nSUMMARY: AddressSanitizer: heap-use-after-free /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:109:90 in adamic_function_1_invoke\\nShadow bytes around the buggy address:\\n  0x7ba1041dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n=>0x7ba1041e0000: fa fa 00 00 00 fa fa fa fd fd[fd]fd fa fa fa fa\\n  0x7ba1041e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\nShadow byte legend (one shadow byte represents 8 application bytes):\\n  Addressable:           00\\n  Partially addressable: 01 02 03 04 05 06 07 \\n  Heap left redzone:       fa\\n  Freed heap region:       fd\\n  Stack left redzone:      f1\\n  Stack mid redzone:       f2\\n  Stack right redzone:     f3\\n  Stack after return:      f5\\n  Stack use after scope:   f8\\n  Global redzone:          f9\\n  Global init order:       f6\\n  Poisoned by user:        f7\\n  Container overflow:      fc\\n  Array cookie:            ac\\n  Intra object redzone:    bb\\n  ASan internal:           fe\\n  Left alloca redzone:     ca\\n  Right alloca redzone:    cb\\n==389173==ABORTING\\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"=================================================================\\n==389173==ERROR: AddressSanitizer: heap-use-after-free on address 0x7ba1041e0050 at pc 0x557666ae9734 bp 0x7ffcfd4a5210 sp 0x7ffcfd4a5208\\nREAD of size 8 at 0x7ba1041e0050 thread T0\\n    #0 0x557666ae9733 in adamic_function_1_invoke /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:109:90\\n    #1 0x557666ae8a3a in main /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:241:2\\n    #2 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #3 0x7f7104f3bd64 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x29d64) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n    #4 0x557666a02460 in _start (/workspace/scratch/optional-calls-main-tmp/TestNativeAgreesWithNodedocsstep-18fixturesruntime-bound-met2777057151/002/program+0x58460)\\n\\n0x7ba1041e0050 is located 16 bytes inside of 32-byte region [0x7ba1041e0040,0x7ba1041e0060)\\nfreed by thread T0 here:\\n    #0 0x557666aa4fd6 in free /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:51:3\\n    #1 0x557666afcb8f in deallocate /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:212:3\\n    #2 0x557666afcb8f in free_one /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:351:2\\n    #3 0x557666afcb8f in release_last /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:364:3\\n    #4 0x557666ae8a3a in main /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:241:2\\n    #5 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n\\npreviously allocated by thread T0 here:\\n    #0 0x557666aa5274 in malloc /home/runner/work/llvm-project/llvm-project/compiler-rt/lib/asan/asan_malloc_linux.cpp:67:3\\n    #1 0x557666afc33f in adamic_allocate /home/agent/.cache/adamic/runtime/.build-592402746/heap.c:196:10\\n    #2 0x7f7104f3bca7  (/lib/x86_64-linux-gnu/libc.so.6+0x29ca7) (BuildId: c495b62edadd6c356265942ec1282d98058a7b41)\\n\\nSUMMARY: AddressSanitizer: heap-use-after-free /workspace/scratch/optional-calls-main-tmp/adamic-build-2829565324/main.c:109:90 in adamic_function_1_invoke\\nShadow bytes around the buggy address:\\n  0x7ba1041dfd80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dfe00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dfe80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dff00: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n  0x7ba1041dff80: 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00\\n=>0x7ba1041e0000: fa fa 00 00 00 fa fa fa fd fd[fd]fd fa fa fa fa\\n  0x7ba1041e0080: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0100: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0180: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0200: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\n  0x7ba1041e0280: fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa fa\\nShadow byte legend (one shadow byte represents 8 application bytes):\\n  Addressable:           00\\n  Partially addressable: 01 02 03 04 05 06 07 \\n  Heap left redzone:       fa\\n  Freed heap region:       fd\\n  Stack left redzone:      f1\\n  Stack mid redzone:       f2\\n  Stack right redzone:     f3\\n  Stack after return:      f5\\n  Stack use after scope:   f8\\n  Global redzone:          f9\\n  Global init order:       f6\\n  Poisoned by user:        f7\\n  Container overflow:      fc\\n  Array cookie:            ac\\n  Intra object redzone:    bb\\n  ASan internal:           fe\\n  Left alloca redzone:     ca\\n  Right alloca redzone:    cb\\n==389173==ABORTING\\n\"",
+      "==389197==ERROR: AddressSanitizer: heap-use-after-free on address 0x7c277e5e0050 at pc 0x559ade0e0734 bp 0x7ffefcf20bf0 sp 0x7ffefcf20be8"
+    ]
+  },
+  {
+    "name": "chain-short-circuit",
+    "fixture": "call-result",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "093ed50d2adf29dc1bf46c3696a64093bd58c120e6b004c04133496bb102e843",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"/workspace/scratch/optional-calls-main-tmp/adamic-build-2856682981/main.c:59:82: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /workspace/scratch/optional-calls-main-tmp/adamic-build-2856682981/main.c:59:82 \\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"/workspace/scratch/optional-calls-main-tmp/adamic-build-2856682981/main.c:59:82: runtime error: member access within null pointer of type 'adamic_object' (aka 'struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /workspace/scratch/optional-calls-main-tmp/adamic-build-2856682981/main.c:59:82 \\n\"",
+      "oracle_test.go:780: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "name": "chain-receiver-repeat",
+    "fixture": "runtime-chain-index",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "f987a96bb5b3365a2baa033b1e5dd996938c594385f647802a9f10be4cb809ce",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "chain-index-eager",
+    "fixture": "runtime-chain-index",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "a1a6a45d06ca4675ba65947114696527db2d02c0b8beb4e5deadf0a86f2e2e1f",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "chain-method-presence",
+    "fixture": "runtime-chain-method-continuation",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "5398a86a1b33abe57afcb8fc38be5350a25942b87c5fbd4493abec475daa3199",
+    "catcher": [
+      "oracle_test.go:774: stdout differs"
+    ]
+  },
+  {
+    "name": "chain-effects-leak",
+    "fixture": "runtime-chain-index",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "6759447c549a948cdd3edd65bd7ec3fac94fd59d85022603239b6ea79f9be3da",
+    "catcher": [
+      "==391076==ERROR: LeakSanitizer: detected memory leaks"
+    ]
+  },
+  {
+    "name": "chain-ordinary-read",
+    "fixture": "runtime-chain-present-undefined",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "6861577376c4004c590dc0b5b1f907bf1ddc666cf79aed32fbe1563baaf9664c",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"/home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30 \\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"/home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30 \\n\""
+    ]
+  },
+  {
+    "name": "chain-parentheses",
+    "fixture": "runtime-chain-parentheses",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "dae5e92bacd79810f2a0936c8c1329fe4d1ed121331d8e5cfbba096f978bc8f7",
+    "catcher": [
+      "oracle_test.go:758: the release build: exit codes differ",
+      "sanitized: exit 1, stdout \"\", stderr \"/home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30 \\n\"",
+      "oracle_test.go:774: exit codes differ",
+      "native: exit 1, stdout \"\", stderr \"/home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30: runtime error: member access within null pointer of type 'const adamic_object' (aka 'const struct adamic_object')\\nSUMMARY: UndefinedBehaviorSanitizer: undefined-behavior /home/agent/.cache/adamic/runtime/09fc722f9b41c8d4bfcefa74f7bd289362a3b41894c168863bafbf4d3e8e10ad/adamic.h:372:30 \\n\"",
+      "oracle_test.go:780: JavaScript backend: exit codes differ"
+    ]
+  },
+  {
+    "name": "chain-write-order",
+    "fixture": "runtime-chain-parentheses-write",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "87ef3ae4c00396ea32db984830deb0d3788fe933f45e162fed79f6e099646ece",
+    "catcher": [
+      "oracle_test.go:774: stdout differs"
+    ]
+  },
+  {
+    "name": "chain-array-map-storage",
+    "fixture": "runtime-chain-intrinsics",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "d5393890d944fd72b1cadc9d91f50dfa6c2d0aef2b9f435699faf0cd16a32c15",
+    "catcher": [
+      "==392900==ERROR: LeakSanitizer: detected memory leaks"
+    ]
+  },
+  {
+    "name": "chain-callback-eager",
+    "fixture": "runtime-chain-intrinsics",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "a10bba9d3010414a6f6d345f86f76c28c5bcf63597ee40d52fb33821c4703daf",
+    "catcher": [
+      "oracle_test.go:774: stdout differs",
+      "oracle_test.go:780: JavaScript backend: stdout differs"
+    ]
+  },
+  {
+    "name": "chain-weak-storage",
+    "fixture": null,
+    "test": "TestStep18OptionalCallableBoundaries/chain_weak_callable_storage",
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "52fc9abbcdb99ad018b885af3934ed1948070a77245bf5353355d3d973a2ab27",
+    "catcher": [
+      "optional_callable_test.go:30: got <nil>, want NotYet \"an optional chain method without closure member storage\""
+    ]
+  },
+  {
+    "name": "chain-accessor",
+    "fixture": null,
+    "test": "TestStep18OptionalCallableBoundaries/chain_getter_selection",
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "81aab07b85033928ae735fb5473bf3f267b28679614a54a32591cfa4e85e3c57",
+    "catcher": [
+      "optional_callable_test.go:30: got <nil>, want NotYet \"an optional chain callable accessor without represented selection\""
+    ]
+  },
+  {
+    "name": "discarded-reference",
+    "fixture": "runtime-discarded-reference",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "09c5310c5a2930bf1b7e5f67b733b1eafcb2d43f070767a0313bd4342a8e9069",
+    "catcher": [
+      "step18_optional_calls_test.go:130: heap values leaked: 3 (allocations 13, frees 10, in regions 0)"
+    ]
+  },
+  {
+    "name": "chain-map-visitor",
+    "fixture": "runtime-chain-intrinsics",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "bf1d6629f2622add5b456f30d4134b471d441c9f5f5a8826515ee52c205ee09d",
+    "catcher": [
+      "step18_optional_calls_test.go:130: heap values leaked: 1 (allocations 42, frees 41, in regions 0)"
+    ]
+  },
+  {
+    "name": "chain-array-visitor",
+    "fixture": "runtime-chain-intrinsics",
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "9c09098cd9dad95f774633871a81958dfb91eba783b1f6331983f1eecf15aaf0",
+    "catcher": [
+      "step18_optional_calls_test.go:130: heap values leaked: 1 (allocations 42, frees 41, in regions 0)"
+    ]
+  },
+  {
+    "name": "source-baseline",
+    "fixture": null,
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "5e97ba0a160c868fdf2c19ea4d689dc7a39708bf0d17f243220fe196dbc4f3aa",
+    "catcher": [
+      "step18_optional_calls_test.go:77: Node differs from source baseline: exit 0, stdout \"cleanup-mutant\\n\", stderr \"\"; want exit 0, stdout \"cleanup\\n\", stderr \"\""
+    ]
+  },
+  {
+    "name": "gap-masking",
+    "fixture": null,
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": null,
+    "log_sha256": "725b100dfe23d21aee762c9bb9aed2a278e89769472f03adecab95f954d4dfa3",
+    "catcher": [
+      "step18_optional_calls_test.go:98: got /workspace/adamic/docs/step-18/fixtures/number.a:1:7: stage 0 can't lower a value of type bigint yet, want NotYet \"?. to a number, which would be number | undefined\" at docs/step-18/fixtures/number.a:4:10"
+    ]
+  },
+  {
+    "name": "census-completeness",
+    "fixture": null,
+    "test": null,
+    "exit": 1,
+    "caught": true,
+    "scope": "reader completeness only; no acceptance census",
+    "log_sha256": "c7a06f7092993c7834fc2cc9433b4253045c4fbae3d7f1404edf30df649d7fd8",
+    "catcher": [
+      "AssertionError"
+    ]
+  }
+]

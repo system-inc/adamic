@@ -21,7 +21,7 @@ var gaps = []struct {
 	stdout  string
 }{
 	{path: "gaps/1_block_arrow_returning_class.ts", refused: "a value without nominal ancestry seen as Box", stdout: "2\n"},
-	{path: "gaps/2_call_through_optional_chain.ts", notYet: "a call through ?. (an optional call)", stdout: "7 undefined\n"},
+	{path: "gaps/2_call_through_optional_chain.ts", stdout: "7 undefined\n"},
 }
 
 func TestEachGapStandsWhereGapsMdSaysItDoes(t *testing.T) {

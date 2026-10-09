@@ -294,7 +294,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	exactCount := false
 	if receiver != "" {
 		property := expression.Closure.(ir.Property)
-		if function, known := e.exactReceiverMethod(property.Object, property.Name); known {
+		if function, known := e.exactReceiverMethod(property.Object, property.Name); known && !expression.Optional {
 			// Keep the interface adapter's borrowed-input convention and the same
 			// exception and result handling, but call its proven method directly.
 			method = e.methodThunk(function)
@@ -306,9 +306,20 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 			} else {
 				e.line("adamic_method %s = NULL;", method)
 			}
-			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(adamic_object_callee(%s, %s, &%s, &%s))", receiver, cString(property.Name), e.cache(), method))
+			lookup := "adamic_object_callee"
+			if expression.Optional {
+				lookup = e.optionalCalleeLookup()
+			}
+			closure = e.own(ir.Closure, fmt.Sprintf("adamic_retain(%s(%s, %s, &%s, &%s))", lookup, receiver, cString(property.Name), e.cache(), method))
 		}
 	}
+	if expression.Optional {
+		return e.optionalSelectedCall(expression, closure, receiver, method, exactCount)
+	}
+	return e.callSelected(expression, closure, receiver, method, exactCount)
+}
+
+func (e *emitter) callSelected(expression ir.CallClosure, closure, receiver, method string, exactCount bool) string {
 	packed, count := e.closureArguments(expression)
 	call := e.packedClosureCall(expression, closure, packed, count)
 	if expression.Direct > 0 {
@@ -352,7 +363,7 @@ func (e *emitter) callThrough(expression ir.CallClosure, closure string, receive
 	}
 
 	if expression.Returns == 0 {
-		e.line("%s;", call)
+		e.discardClosureResult(expression, closure, receiver, method, call)
 		e.closureThrown()
 		return "0"
 	}

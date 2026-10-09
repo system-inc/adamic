@@ -1,0 +1,5 @@
+// Reduced from builder.ts:705, !state.affectedFilesPendingEmit?.size.
+function empty(affectedFilesPendingEmit: Map<string, number> | undefined): boolean {
+	return !affectedFilesPendingEmit?.size;
+}
+console.log(`${empty(undefined)} ${empty(new Map<string, number>())} ${empty(new Map<string, number>([['file', 1]]))}`);
