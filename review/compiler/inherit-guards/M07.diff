@@ -1,0 +1,11 @@
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -183,7 +183,7 @@
+ // Named methods returning void or never have no C result, as signature lowering does.
+ func (l *lowering) overrideResultRepresentation(result *checker.Type) (ir.Type, bool) {
+ 	if result.Flags()&(checker.TypeFlagsVoid|checker.TypeFlagsNever) != 0 {
+-		return 0, true
++		return ir.Boolean, true
+ 	}
+ 	return l.representation(result)
+ }
