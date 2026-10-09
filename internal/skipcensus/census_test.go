@@ -582,3 +582,27 @@ func TestConditionsAreDeclaredForNotApplicableRows(t *testing.T) {
 		t.Fatalf("a conditional opt-in-lane row accepted: %v", err)
 	}
 }
+
+// A skip followed by a real pass of the same test in the same record is covered; a pass followed by a skip, or a skip
+// alone, is classed as ever (@system_adamic, Oct 9 14:44Z: main 20d538c0's TestWASIUnit skips from a runner lacking its
+// toolchain, each passed in a later attempt of the same merged log).
+func TestASkipALaterPassCovers(t *testing.T) {
+	t.Parallel()
+	skip := `{"Action":"skip","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit03"}` + "\n"
+	pass := `{"Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestWASIUnit03"}` + "\n"
+	for _, c := range []struct {
+		log     string
+		summary string
+		red     bool
+	}{
+		{skip + pass, "skips=1 required-input=0 unknown=0 pending=0 covered=1", false},
+		{pass + skip, "skips=1 required-input=0 unknown=1 pending=0 covered=0", true},
+		{skip, "skips=1 required-input=0 unknown=1 pending=0 covered=0", true},
+	} {
+		var output strings.Builder
+		err := CheckLog(strings.NewReader(c.log), &output, nil)
+		if (err != nil) != c.red || !strings.Contains(output.String(), c.summary) {
+			t.Fatalf("log %q: err %v, output %q, want %q", c.log, err, output.String(), c.summary)
+		}
+	}
+}

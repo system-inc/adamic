@@ -66,6 +66,7 @@ func CheckLogOn(input io.Reader, output io.Writer, rows []Row, landed Landed, pl
 	type logEvent struct{ Action, Package, Test, Output string }
 	var events []logEvent
 	passed := map[string]bool{}
+	lastPass := map[string]int{}
 	decoder := json.NewDecoder(input)
 	for {
 		var event logEvent
@@ -81,11 +82,13 @@ func CheckLogOn(input io.Reader, output io.Writer, rows []Row, landed Landed, pl
 			events = append(events, event)
 		case "pass":
 			passed[event.Package+"/"+event.Test] = true
+			// Where the test's last pass falls among the classed events: a skip before it is covered.
+			lastPass[event.Package+"/"+event.Test] = len(events)
 		}
 	}
 	messages := map[string]string{}
-	required, unknown, total, pending, overdue := 0, 0, 0, 0, 0
-	for _, event := range events {
+	required, unknown, total, pending, overdue, covered := 0, 0, 0, 0, 0, 0
+	for position, event := range events {
 		k := event.Package + "/" + event.Test
 		if event.Action == "output" {
 			messages[k] += event.Output
@@ -95,6 +98,14 @@ func CheckLogOn(input io.Reader, output io.Writer, rows []Row, landed Landed, pl
 			continue
 		}
 		total++
+		// A skip followed by a real pass of the same test in the same record is covered (@system_adamic, Oct 9 14:44Z, on
+		// main 20d538c0's 36 TestWASIUnit skips from a runner lacking its toolchain, each passed in a later attempt): a merged
+		// record is one tree's inputs, and the test's last real verdict is what it proved. A skip with no later pass is classed.
+		if last, ok := lastPass[k]; ok && last > position {
+			covered++
+			fmt.Fprintf(output, "covered\t%s\t%s\tpassed later in the same log\n", event.Package, event.Test)
+			continue
+		}
 		directory := strings.TrimPrefix(event.Package, "github.com/system-inc/adamic/")
 		test := strings.Split(event.Test, "/")[0]
 		var candidates []Row
@@ -195,7 +206,7 @@ func CheckLogOn(input io.Reader, output io.Writer, rows []Row, landed Landed, pl
 			required++
 		}
 	}
-	fmt.Fprintf(output, "skips=%d required-input=%d unknown=%d pending=%d\n", total, required, unknown, pending)
+	fmt.Fprintf(output, "skips=%d required-input=%d unknown=%d pending=%d covered=%d\n", total, required, unknown, pending, covered)
 	if required+unknown+overdue > 0 {
 		return fmt.Errorf("gate skipped %d required-input tests; %d unclassified skips; %d pending skips past or unsure of their reason", required, unknown, overdue)
 	}
