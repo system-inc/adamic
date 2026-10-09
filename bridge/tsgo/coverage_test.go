@@ -112,6 +112,8 @@ func TestBridgeUnitsCoverEveryPiece(t *testing.T) {
 }
 
 func TestBridgeProductCacheIsVerified(t *testing.T) {
+	// Synthetic products must never enter or come from the shared remote store.
+	t.Setenv("ADAMIC_BUILD_STORE", "off")
 	t.Setenv("ADAMIC_BUILD_CACHE_DIR", t.TempDir())
 	t.Setenv("ADAMIC_BUILD_CACHE", "")
 	builds := 0

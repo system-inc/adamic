@@ -1,0 +1,704 @@
+[
+  {
+    "mode": "sample",
+    "test": "TestBridgeABI",
+    "action": "pass",
+    "seconds": 0.12,
+    "wall": 5.3691282010040595,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeInputLength",
+    "action": "pass",
+    "seconds": 0.04,
+    "wall": 4.750442135999037,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeLinkage",
+    "action": "pass",
+    "seconds": 0.06,
+    "wall": 4.589566376998846,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleChecker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0240391379993525,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleParser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.124892337997153,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleSample",
+    "action": "pass",
+    "seconds": 0.13,
+    "wall": 4.652939247993345,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleTypes",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0270852579997154,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOracleUtilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9774188239971409,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOutputFree",
+    "action": "pass",
+    "seconds": 0.13,
+    "wall": 4.591388888999063,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeOutputLength",
+    "action": "pass",
+    "seconds": 0.14,
+    "wall": 4.388521943998057,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeProductCacheIsVerified",
+    "action": "pass",
+    "seconds": 0,
+    "wall": 1.973337335002725,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeRegion",
+    "action": "pass",
+    "seconds": 0.18,
+    "wall": 4.587149740000314,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeRegionOwnership",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.601821315001871,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeStaleHandle",
+    "action": "pass",
+    "seconds": 0.07,
+    "wall": 4.51254171099572,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9708907960011857,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0196930120000616,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Sample",
+    "action": "pass",
+    "seconds": 0.17,
+    "wall": 4.600658763003594,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.020238386998244,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound1Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.072593198005052,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.12379733799753,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.020867161001661,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Sample",
+    "action": "pass",
+    "seconds": 0.16,
+    "wall": 4.589612927004055,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9692321570037166,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound2Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0210447089993977,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Checker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.122139840001182,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Parser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.1709988939983305,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Sample",
+    "action": "pass",
+    "seconds": 0.17,
+    "wall": 4.600212605997513,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Types",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.021866005001357,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeTimingRound3Utilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.020514934003586,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "action": "pass",
+    "seconds": 0.01,
+    "wall": 1.9737332369986689,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedBuild",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.441725234995829,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedC",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.554807355998491,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeUnlinkedJavaScript",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.492413205000048,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionChecker",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9743493880014285,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionParser",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0230499429962947,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionSample",
+    "action": "pass",
+    "seconds": 0.12,
+    "wall": 4.545209563999379,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionTypes",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.024639864001074,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestBridgeWrongPositionUtilities",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0253057060035644,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "sample",
+    "test": "TestTSGoRequiresLink",
+    "action": "pass",
+    "seconds": 0.04,
+    "wall": 2.0261747969998396,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeABI",
+    "action": "pass",
+    "seconds": 0.11,
+    "wall": 4.586609011996188,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeInputLength",
+    "action": "pass",
+    "seconds": 0.03,
+    "wall": 4.544396293000318,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeLinkage",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.393499249999877,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleChecker",
+    "action": "pass",
+    "seconds": 0.84,
+    "wall": 5.345556200001738,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleParser",
+    "action": "pass",
+    "seconds": 0.79,
+    "wall": 5.19424195800093,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleSample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.4277603660011664,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleTypes",
+    "action": "pass",
+    "seconds": 0.73,
+    "wall": 5.252987301006215,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOracleUtilities",
+    "action": "pass",
+    "seconds": 0.79,
+    "wall": 5.199198549998982,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOutputFree",
+    "action": "pass",
+    "seconds": 0.14,
+    "wall": 4.646849529002793,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeOutputLength",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.587135331996251,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeProductCacheIsVerified",
+    "action": "pass",
+    "seconds": 0,
+    "wall": 1.9227950600034092,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeRegion",
+    "action": "pass",
+    "seconds": 0.17,
+    "wall": 4.579462820001936,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeRegionOwnership",
+    "action": "pass",
+    "seconds": 0.1,
+    "wall": 4.533923520000826,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeStaleHandle",
+    "action": "pass",
+    "seconds": 0.07,
+    "wall": 4.488880816003075,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Checker",
+    "action": "pass",
+    "seconds": 1.21,
+    "wall": 5.695568306000496,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Parser",
+    "action": "pass",
+    "seconds": 1.22,
+    "wall": 5.796684210996318,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.1736210899980506,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Types",
+    "action": "pass",
+    "seconds": 1.14,
+    "wall": 5.6600129599974025,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound1Utilities",
+    "action": "pass",
+    "seconds": 1.16,
+    "wall": 5.6987359229970025,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Checker",
+    "action": "pass",
+    "seconds": 1.22,
+    "wall": 5.706887404994632,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Parser",
+    "action": "pass",
+    "seconds": 1.22,
+    "wall": 5.799147313002322,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 2.0724201720004203,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Types",
+    "action": "pass",
+    "seconds": 1.06,
+    "wall": 5.602122914002393,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound2Utilities",
+    "action": "pass",
+    "seconds": 1.18,
+    "wall": 5.656325027004641,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Checker",
+    "action": "pass",
+    "seconds": 1.24,
+    "wall": 5.836668071999156,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Parser",
+    "action": "pass",
+    "seconds": 1.19,
+    "wall": 5.641236978000961,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Sample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9705072229990037,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Types",
+    "action": "pass",
+    "seconds": 1.01,
+    "wall": 5.467927858000621,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeTimingRound3Utilities",
+    "action": "pass",
+    "seconds": 1.19,
+    "wall": 5.592882944998564,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnitsCoverEveryPiece",
+    "action": "pass",
+    "seconds": 0.01,
+    "wall": 2.1274030599961407,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedBuild",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.500991020002402,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedC",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.44892844199785,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeUnlinkedJavaScript",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 4.45511692600121,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionChecker",
+    "action": "pass",
+    "seconds": 0.78,
+    "wall": 5.209802827994281,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionParser",
+    "action": "pass",
+    "seconds": 0.73,
+    "wall": 5.094918365000922,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionSample",
+    "action": "skip",
+    "seconds": 0,
+    "wall": 1.9751262310019229,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionTypes",
+    "action": "pass",
+    "seconds": 0.72,
+    "wall": 5.052639157998783,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestBridgeWrongPositionUtilities",
+    "action": "pass",
+    "seconds": 0.77,
+    "wall": 5.239750157001254,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  },
+  {
+    "mode": "corpus",
+    "test": "TestTSGoRequiresLink",
+    "action": "pass",
+    "seconds": 0.05,
+    "wall": 2.0192422319960315,
+    "cooked": false,
+    "hard_limit_seconds": 75
+  }
+]

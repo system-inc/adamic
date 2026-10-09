@@ -1,0 +1,28 @@
+{
+  "mutant": "add process ID to ordinary archive key",
+  "unit": "TestBridgeABI",
+  "runs": 2,
+  "selections": [
+    {
+      "test": "TestBridgeABI",
+      "run": 0,
+      "seconds": 10.732448337003007,
+      "cooked": false
+    },
+    {
+      "test": "TestBridgeABI",
+      "run": 1,
+      "seconds": 6.451781014999142,
+      "cooked": false
+    }
+  ],
+  "cooked": false,
+  "hard_limit_seconds": 75,
+  "unit_exits": [
+    0,
+    0
+  ],
+  "misses": 2,
+  "expected_misses": 1,
+  "caught_by": "one-cache-miss assertion"
+}

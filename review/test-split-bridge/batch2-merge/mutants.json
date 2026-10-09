@@ -1,0 +1,343 @@
+[
+  {
+    "seconds": 8.520367015000375,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "changed-native-query-0",
+    "shard": "0/4",
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/changed-native-query-0-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/bridge-b2-validation/mutants/changed-native-query-0.jsonl"
+  },
+  {
+    "seconds": 4.947109770000679,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "changed-native-query-1",
+    "shard": "1/4",
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/changed-native-query-1-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/bridge-b2-validation/mutants/changed-native-query-1.jsonl"
+  },
+  {
+    "seconds": 4.846449399999983,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "changed-native-query-2",
+    "shard": "2/4",
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/changed-native-query-2-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 6,
+    "skipped": 32,
+    "catcher": "PASS",
+    "log": "/tmp/bridge-b2-validation/mutants/changed-native-query-2.jsonl"
+  },
+  {
+    "seconds": 4.890470013000595,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "changed-native-query-3",
+    "shard": "3/4",
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/changed-native-query-3-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeOracleSample"
+    ],
+    "passed": 5,
+    "skipped": 32,
+    "catcher": "native oracle mismatch",
+    "log": "/tmp/bridge-b2-validation/mutants/changed-native-query-3.jsonl"
+  },
+  {
+    "seconds": 5.295623436002643,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "missing-piece",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/missing-piece-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "bridge coverage count",
+    "log": "/tmp/bridge-b2-validation/mutants/missing-piece.jsonl"
+  },
+  {
+    "seconds": 5.540827028999047,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "missing-query",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/missing-query-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "query coverage count",
+    "log": "/tmp/bridge-b2-validation/mutants/missing-query.jsonl"
+  },
+  {
+    "seconds": 5.490455228995415,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "drop-shard-filter",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/drop-shard-filter-overlay.json",
+      "-run",
+      "TestBridgeUnitsCoverEveryPiece",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeUnitsCoverEveryPiece"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "shard coverage",
+    "log": "/tmp/bridge-b2-validation/mutants/drop-shard-filter.jsonl"
+  },
+  {
+    "seconds": 5.583242453001731,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "accept-corrupt-product",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/accept-corrupt-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "corrupt product was accepted",
+    "log": "/tmp/bridge-b2-validation/mutants/accept-corrupt-product.jsonl"
+  },
+  {
+    "seconds": 5.59889982999448,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "accept-extra-product",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/accept-extra-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "wrong product count was accepted",
+    "log": "/tmp/bridge-b2-validation/mutants/accept-extra-product.jsonl"
+  },
+  {
+    "seconds": 5.742998378998891,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "rebuild-product",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/rebuild-product-overlay.json",
+      "-run",
+      "TestBridgeProductCacheIsVerified",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeProductCacheIsVerified"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "product was rebuilt",
+    "log": "/tmp/bridge-b2-validation/mutants/rebuild-product.jsonl"
+  },
+  {
+    "seconds": 8.367667401995277,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "over-budget",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/over-budget-overlay.json",
+      "-run",
+      "TestBridgeABI",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 1,
+    "failed": [
+      "TestBridgeABI"
+    ],
+    "passed": 0,
+    "skipped": 0,
+    "catcher": "bridge unit exceeded 30 seconds",
+    "log": "/tmp/bridge-b2-validation/mutants/over-budget.jsonl"
+  },
+  {
+    "seconds": 5.0985204329990665,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "over-budget-without-budget-gate",
+    "shard": null,
+    "budget": "0",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/over-budget-without-budget-gate-overlay.json",
+      "-run",
+      "TestBridgeABI",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 1,
+    "skipped": 0,
+    "catcher": "over the 30-second budget",
+    "log": "/tmp/bridge-b2-validation/mutants/over-budget-without-budget-gate.jsonl"
+  },
+  {
+    "seconds": 10.270550312001433,
+    "cooked": false,
+    "hard_limit_seconds": 75,
+    "name": "poison-build-callback",
+    "shard": null,
+    "budget": "1",
+    "command": [
+      "go",
+      "test",
+      "./bridge/tsgo",
+      "-json",
+      "-overlay=/tmp/bridge-b2-validation/mutants/poison-build-callback-overlay.json",
+      "-run",
+      "^TestBridge",
+      "-count=1",
+      "-timeout=75s"
+    ],
+    "exit": 0,
+    "failed": [],
+    "passed": 18,
+    "skipped": 20,
+    "catcher": "PASS",
+    "log": "/tmp/bridge-b2-validation/mutants/poison-build-callback.jsonl"
+  }
+]
