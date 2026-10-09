@@ -99,9 +99,14 @@ func main() {
 }
 func run(args []string) error {
 	if len(args) == 0 {
-		return errors.New("usage: adamic-gate plan|shard|merge|compare|timings")
+		return errors.New("usage: adamic-gate plan|leaves|shard|merge|compare|timings")
 	}
 	switch args[0] {
+	case "leaves":
+		if len(args) != 1 {
+			return errors.New("usage: adamic-gate leaves")
+		}
+		return leaves(os.Stdout)
 	case "plan":
 		flags := flag.NewFlagSet("plan", flag.ContinueOnError)
 		count := flags.Int("count", 8, "number of shards")
@@ -310,47 +315,141 @@ func literalChildren(file, parent string, table ...string) ([]string, error) {
 	}
 	return names, nil
 }
-func children(pkg, parent string) ([]string, error) {
-	if strings.HasSuffix(pkg, "/stage1/cohere/typeaware") && parent == "TestVolumeAgreementAndMutants" {
-		return literalChildren("stage1/cohere/typeaware/volume_test.go", parent, "changes")
+func children(dir, parent string) ([]string, error) {
+	// Keep shard declarations beside the tests so a split stays test-only and takes
+	// integration's test-only lane, without changing the planner's Go code.
+	file := filepath.Join(dir, "shards.json")
+	data, err := os.ReadFile(file)
+	if errors.Is(err, os.ErrNotExist) {
+		return nil, nil
 	}
-	if strings.HasSuffix(pkg, "/internal/oracle") {
-		switch parent {
-		case "TestNativeAgreesWithNode":
-			return fixtureRows("internal/oracle/oracle_test.go", "fixtures")
-		case "TestInputAgreesWithNode":
-			return fixtureRows("internal/oracle/input_test.go", "inputFixtures")
-		case "TestFreshWriteProbesStayRefused":
-			paths, err := filepath.Glob("internal/oracle/testdata/fresh_refused/*.a")
-			for i := range paths {
-				paths[i] = filepath.Base(paths[i])
+	fail := func(err error) ([]string, error) {
+		return nil, fmt.Errorf("%s: parent %s: %w", file, parent, err)
+	}
+	if err != nil {
+		return fail(err)
+	}
+	var declarations map[string]json.RawMessage
+	if err := json.Unmarshal(data, &declarations); err != nil {
+		return fail(err)
+	}
+	if declarations == nil {
+		return fail(errors.New("expected an object"))
+	}
+	data, ok := declarations[parent]
+	if !ok {
+		return nil, nil
+	}
+	var fields map[string]json.RawMessage
+	if err := json.Unmarshal(data, &fields); err != nil {
+		return fail(err)
+	}
+	for key := range fields {
+		switch key {
+		case "literal", "table", "rows", "variable", "glob", "minimum":
+		default:
+			return fail(fmt.Errorf("unknown field %q", key))
+		}
+	}
+	var declaration struct {
+		Literal  *string `json:"literal"`
+		Table    *string `json:"table"`
+		Rows     *string `json:"rows"`
+		Variable *string `json:"variable"`
+		Glob     *string `json:"glob"`
+		Minimum  *int    `json:"minimum"`
+	}
+	decoder := json.NewDecoder(strings.NewReader(string(data)))
+	decoder.DisallowUnknownFields()
+	if err := decoder.Decode(&declaration); err != nil {
+		return fail(err)
+	}
+	var names []string
+	switch {
+	case declaration.Literal != nil && len(fields) == 1:
+		names, err = literalChildren(filepath.Join(dir, *declaration.Literal), parent)
+	case declaration.Literal != nil && declaration.Table != nil && len(fields) == 2:
+		names, err = literalChildren(filepath.Join(dir, *declaration.Literal), parent, *declaration.Table)
+	case declaration.Rows != nil && declaration.Variable != nil && len(fields) == 2:
+		names, err = fixtureRows(filepath.Join(dir, *declaration.Rows), *declaration.Variable)
+	case declaration.Glob != nil && declaration.Minimum != nil && len(fields) == 2:
+		if *declaration.Minimum < 0 {
+			return fail(errors.New("minimum must be nonnegative"))
+		}
+		names, err = filepath.Glob(filepath.Join(dir, *declaration.Glob))
+		if err == nil && len(names) < *declaration.Minimum {
+			err = fmt.Errorf("glob %q matched %d files, minimum %d", *declaration.Glob, len(names), *declaration.Minimum)
+		}
+		for i := range names {
+			names[i] = filepath.Base(names[i])
+		}
+	default:
+		return fail(errors.New("expected exactly one literal, literal/table, rows/variable, or glob/minimum declaration"))
+	}
+	if err != nil {
+		return fail(err)
+	}
+	if len(names) == 0 {
+		return fail(errors.New("enumeration is empty"))
+	}
+	return names, nil
+}
+func leaves(w io.Writer) error {
+	packages, err := output("go", "list", "-f", "{{.ImportPath}} {{.Dir}}", "./...")
+	if err != nil {
+		return err
+	}
+	lines := strings.Split(packages, "\n")
+	sort.Strings(lines)
+	for _, line := range lines {
+		pkg, dir, ok := strings.Cut(line, " ")
+		if !ok {
+			return fmt.Errorf("package listing: missing directory for %s", line)
+		}
+		if err := packageLeaves(w, pkg, dir); err != nil {
+			return err
+		}
+	}
+	return nil
+}
+func packageLeaves(w io.Writer, pkg, dir string) error {
+	file := filepath.Join(dir, "shards.json")
+	var declarations map[string]json.RawMessage
+	if err := loadJSON(file, &declarations); err != nil {
+		if errors.Is(err, os.ErrNotExist) {
+			return nil
+		}
+		return fmt.Errorf("%s: %w", file, err)
+	}
+	if declarations == nil {
+		return fmt.Errorf("%s: expected an object", file)
+	}
+	var parents []string
+	for parent := range declarations {
+		parents = append(parents, parent)
+	}
+	sort.Strings(parents)
+	for _, parent := range parents {
+		names, err := children(dir, parent)
+		if err != nil {
+			return err
+		}
+		for i := range names {
+			names[i] = strings.ReplaceAll(names[i], " ", "_")
+		}
+		sort.Strings(names)
+		for _, name := range names {
+			parts := strings.Split(parent+"/"+name, "/")
+			for i := range parts {
+				parts[i] = "^" + regexp.QuoteMeta(parts[i]) + "$"
 			}
-			if len(paths) < 20 {
-				return nil, errors.New("fresh probes disappeared")
+			pattern := strings.Join(parts, "/")
+			if _, err := fmt.Fprintf(w, "%s %s %s %s\n", pkg, parent, name, pattern); err != nil {
+				return err
 			}
-			return paths, err
 		}
 	}
-	if strings.HasSuffix(pkg, "/stage1/cohere/css") && parent == "TestCSSPrinterAgreesWithGo" {
-		return literalChildren("stage1/cohere/css/print_test.go", parent)
-	}
-	if strings.HasSuffix(pkg, "/stage1/cohere/lint") {
-		switch parent {
-		case "TestMutants":
-			return literalChildren("stage1/cohere/lint/lint_test.go", parent)
-		case "TestVolumeMutants":
-			return literalChildren("stage1/cohere/lint/volume_test.go", parent)
-		}
-	}
-	if strings.HasSuffix(pkg, "/internal/native") {
-		switch parent {
-		case "TestNormalizeMatchesNode":
-			return literalChildren("internal/native/normalize_test.go", parent)
-		case "TestStringIndexMatchesNode":
-			return literalChildren("internal/native/string_index_test.go", parent)
-		}
-	}
-	return nil, nil
+	return nil
 }
 func sourceIdentity() (string, error) {
 	tracked, err := output("git", "ls-files", "-s", "-z")
@@ -416,7 +515,7 @@ func makePlan(count int) (plan, error) {
 	if err := loadJSON(timingPath, &weights); err != nil {
 		return p, err
 	}
-	packages, err := output("go", "list", "./...")
+	packages, err := output("go", "list", "-f", "{{.ImportPath}} {{.Dir}}", "./...")
 	if err != nil {
 		return p, err
 	}
@@ -436,9 +535,13 @@ func makePlan(count int) (plan, error) {
 			tests[e.Package] = append(tests[e.Package], name)
 		}
 	}
-	for _, pkg := range strings.Split(packages, "\n") {
+	for _, line := range strings.Split(packages, "\n") {
+		pkg, dir, ok := strings.Cut(line, " ")
+		if !ok {
+			return p, fmt.Errorf("package listing: missing directory for %s", line)
+		}
 		for _, test := range tests[pkg] {
-			names, err := children(pkg, test)
+			names, err := children(dir, test)
 			if err != nil {
 				return p, err
 			}
