@@ -229,6 +229,7 @@ func TestWholeMutants_001(t *testing.T) { t.Parallel(); wholeMutantsShard(t, 1) 
 func TestWholeMutants_002(t *testing.T) { t.Parallel(); wholeMutantsShard(t, 2) }
 
 func TestWholeMutantsUnion(t *testing.T) {
+	t.Parallel()
 	cases := wholeMutantCases()
 	ids := make([]string, len(cases))
 	for i, c := range cases {
@@ -268,6 +269,7 @@ func wholeMutantCommandContext(ctx context.Context, name string, args ...string)
 }
 
 func TestWholeMutantsRejectsSurvivor(t *testing.T) {
+	t.Parallel()
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
 	defer cancel()
 	command := wholeMutantCommandContext(ctx, os.Args[0], "-test.run=^TestWholeMutants_[0-9]{3}$", "-test.v", "-test.timeout=75s", "-test.parallel=4")
