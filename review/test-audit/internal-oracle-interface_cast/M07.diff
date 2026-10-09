@@ -1,0 +1,11 @@
+--- a/internal/lower/library_json_stringify.go
++++ b/internal/lower/library_json_stringify.go
+@@ -81,7 +81,7 @@
+ 			schema.Kind = "tuple"
+ 		}
+ 		add := func(name string, v *ast.Node) error {
+-			if name == "toJSON" || name == "__proto__" {
++			if name != "toJSON" && name != "__proto__" {
+ 				return l.notYet(v, "JSON.stringify a literal with "+name+" semantics")
+ 			}
+ 			for _, f := range literal.Fields {

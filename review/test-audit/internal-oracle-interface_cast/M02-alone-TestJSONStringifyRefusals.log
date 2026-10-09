@@ -1,0 +1,40 @@
+{"Time":"2026-10-09T11:09:52.467193373Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:09:52.476016805Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals"}
+{"Time":"2026-10-09T11:09:52.476102858Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals","Output":"=== RUN   TestJSONStringifyRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.476135754Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals","Output":"=== PAUSE TestJSONStringifyRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.476139261Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals"}
+{"Time":"2026-10-09T11:09:52.476142515Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals"}
+{"Time":"2026-10-09T11:09:52.476144595Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals","Output":"=== CONT  TestJSONStringifyRefusals\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.476147916Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/parse"}
+{"Time":"2026-10-09T11:09:52.476150382Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/parse","Output":"=== RUN   TestJSONStringifyRefusals/parse\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.511564032Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/parse","Output":"--- PASS: TestJSONStringifyRefusals/parse (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.51159412Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/parse","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.511612194Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/hidden_fields"}
+{"Time":"2026-10-09T11:09:52.511614274Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/hidden_fields","Output":"=== RUN   TestJSONStringifyRefusals/hidden_fields\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.53483581Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/hidden_fields","Output":"--- PASS: TestJSONStringifyRefusals/hidden_fields (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.537889871Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/hidden_fields","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.537913272Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/array_of_objects"}
+{"Time":"2026-10-09T11:09:52.53791652Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/array_of_objects","Output":"=== RUN   TestJSONStringifyRefusals/array_of_objects\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.561770641Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/array_of_objects","Output":"--- PASS: TestJSONStringifyRefusals/array_of_objects (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.561791534Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/array_of_objects","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.561797382Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/toJSON"}
+{"Time":"2026-10-09T11:09:52.561802353Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/toJSON","Output":"=== RUN   TestJSONStringifyRefusals/toJSON\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.588535818Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/toJSON","Output":"--- PASS: TestJSONStringifyRefusals/toJSON (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.588555761Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/toJSON","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.588559888Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/replacer_function"}
+{"Time":"2026-10-09T11:09:52.588561798Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/replacer_function","Output":"=== RUN   TestJSONStringifyRefusals/replacer_function\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.611000734Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/replacer_function","Output":"--- PASS: TestJSONStringifyRefusals/replacer_function (0.02s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.611019291Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/replacer_function","Elapsed":0.02}
+{"Time":"2026-10-09T11:09:52.611025899Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/prototype"}
+{"Time":"2026-10-09T11:09:52.61102846Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/prototype","Output":"=== RUN   TestJSONStringifyRefusals/prototype\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.637507268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/prototype","Output":"--- PASS: TestJSONStringifyRefusals/prototype (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.637524573Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/prototype","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.63753031Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/duplicate"}
+{"Time":"2026-10-09T11:09:52.637532614Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/duplicate","Output":"=== RUN   TestJSONStringifyRefusals/duplicate\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.663149222Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/duplicate","Output":"--- PASS: TestJSONStringifyRefusals/duplicate (0.03s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.663169405Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals/duplicate","Elapsed":0.03}
+{"Time":"2026-10-09T11:09:52.663174345Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals","Output":"--- PASS: TestJSONStringifyRefusals (0.19s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.663178924Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyRefusals","Elapsed":0.19}
+{"Time":"2026-10-09T11:09:52.663181005Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:09:52.664816395Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"ok  \tgithub.com/system-inc/adamic/internal/oracle\t0.197s\n"}
+{"Time":"2026-10-09T11:09:52.664851179Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.198}

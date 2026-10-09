@@ -1,0 +1,11 @@
+--- a/internal/lower/library_json_stringify.go
++++ b/internal/lower/library_json_stringify.go
+@@ -182,7 +182,7 @@
+ 		child, err := l.jsonType(node, element, depth+1)
+ 		return &ir.JSONSchema{Kind: "array", Element: child}, err
+ 	}
+-	if of == ir.Object || of == ir.Weak {
++	if of != ir.Object && of != ir.Weak {
+ 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
+ 	}
+ 	if t.Flags()&checker.TypeFlagsUnion != 0 {

@@ -1,0 +1,14 @@
+| ID | Starting-main file:line | Change | Failed rows |
+|---|---|---|---|
+| M01 | internal/native/view_fields.go:31 | `e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View)) -> e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.View), e.cache(), property.Of, cString(name), cString(property.Name))` | TestInterfaceCastChecksMalformedRead, TestInterfaceCastImportedConstruction, TestInterfaceCastOracle, TestInterfaceCastScalarTags |
+| M02 | internal/native/emit_expressions.go:435 | `e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)) -> e.binary(ir.NotEqual, expression.FieldType, field, e.value(allowed))` | TestInterfaceCastChecksMalformedRead, TestInterfaceCastImportedConstruction, TestInterfaceCastOracle, TestInterfaceCastScalarTags |
+| M03 | internal/native/native.go:35 | `character >= 0x20 -> character >= 0x21` | survivor |
+| M04 | internal/lower/readiness.go:287 | `!program.CheckedFields[expression.Name] || expression.Method -> program.CheckedFields[expression.Name] || expression.Method` | TestInterfaceCastChecksMalformedRead |
+| M05 | internal/lower/library_json_stringify.go:14 | `JSON.parse: its result's type can't be proven from the text -> JSON.parse is unsupported` | TestJSONStringifyRefusals |
+| M06 | internal/lower/library_json_stringify.go:185 | `of == ir.Object || of == ir.Weak -> of != ir.Object && of != ir.Weak` | TestJSONStringifyRefusals |
+| M07 | internal/lower/library_json_stringify.go:84 | `name == "toJSON" || name == "__proto__" -> name != "toJSON" && name != "__proto__"` | TestJSONStringifyRefusals |
+| M08 | internal/lower/library_map_set.go:514 | `if isIterator(source) { -> if !isIterator(source) {` | TestLibraryMapSetIteratorCopiesRefused |
+| M09 | internal/lower/library_map_set.go:501 | `property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) -> property.Kind == ast.KindSpreadAssignment && !isIterator(property.AsSpreadAssignment().Expression)` | TestLibraryMapSetIteratorCopiesRefused |
+| M10 | internal/load/prelude.d.ts:82 | `stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined; -> stringify(value?: unknown, replacer?: unknown, space?: unknown): string;` | TestJSONStringifyResultMayBeUndefined |
+| M11 | internal/load/load.go:61 | `ExactOptionalPropertyTypes: core.TSTrue, -> ExactOptionalPropertyTypes: core.TSFalse,` | survivor |
+| M12 | internal/lower/library_json_stringify.go:33 | `JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder) -> JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder)` | TestJSONStringifyRefusals |

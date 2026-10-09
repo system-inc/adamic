@@ -1,0 +1,11 @@
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -78,7 +78,7 @@
+ //
+ // Each path is an Adamic source: a .ts file or a .a file.
+ func Load(paths []string) (*Program, error) {
+-	return load(paths, nil)
++	return nil, nil
+ }
+ 
+ // LoadOverlay checks paths while replacing the named files with source held by the caller. The

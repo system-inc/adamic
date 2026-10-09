@@ -1,0 +1,511 @@
+[
+  {
+    "test": "TestInterfaceCastOracle",
+    "package": "internal/oracle",
+    "file": "internal/oracle/interface_cast_test.go",
+    "seconds": 0.609,
+    "oracle": "Node source observations plus self-written Adamic inserted-panic contracts, stdout and stderr",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: interface_cast_test.go:59: native sanitized: exit codes differ; exit 70 stdout \"\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceCastImportedConstruction"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": 0.398,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => interface_cast_test.go:59: native sanitized: exit codes differ; exit 70 stdout \"\" stderr \"adamic: panic: cast failed: this Node is not a Identifier\\n\"",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ]
+  },
+  {
+    "test": "TestInterfaceCastChecksMalformedRead",
+    "package": "internal/oracle",
+    "file": "internal/oracle/interface_cast_test.go",
+    "seconds": 0.489,
+    "oracle": "Node source observations plus self-written Adamic inserted-panic contracts, stdout and stderr",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02",
+      "M04"
+    ],
+    "unique_kills": [
+      "M04"
+    ],
+    "last_proven_fail": "M04: interface_cast_test.go:90: malformed view read: stderr differs; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x20, 0x62, 0x75, 0x67, 0x3a, 0x20, 0x61, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x74, 0x68, 0x65, 0x20, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x72, 0x20, 0x70, 0x72, 0x6f, 0x76, 0x65, 0x64, 0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x72, 0x65, 0x20, 0x69, 0x73, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0xa}, exitCode:70}",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=4 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => interface_cast_test.go:90: malformed view read: stderr differs; got oracle.run{stdout:[]uint8{}, stderr:[]uint8{0x61, 0x64, 0x61, 0x6d, 0x69, 0x63, 0x3a, 0x20, 0x70, 0x61, 0x6e, 0x69, 0x63, 0x3a, 0x20, 0x63, 0x6f, 0x6d, 0x70, 0x69, 0x6c, 0x65, 0x72, 0x20, 0x62, 0x75, 0x67, 0x3a, 0x20, 0x61, 0x20, 0x66, 0x69, 0x65, 0x6c, 0x64, 0x20, 0x74, 0x68, 0x65, 0x20, 0x63, 0x68, 0x65, 0x63, 0x6b, 0x65, 0x72, 0x20, 0x70, 0x72, 0x6f, 0x76, 0x65, 0x64, 0x20, 0x69, 0x73, 0x20, 0x74, 0x68, 0x65, 0x72, 0x65, 0x20, 0x69, 0x73, 0x20, 0x6d, 0x69, 0x73, 0x73, 0x69, 0x6e, 0x67, 0xa}, exitCode:70}",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ]
+  },
+  {
+    "test": "TestInterfaceCastRuntimeMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/interface_cast_test.go",
+    "seconds": 0.54,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: interface_cast_test.go:141: mutant survived",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestInterfaceCastRuntimeMutants$ => interface_cast_test.go:141: mutant survived",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestInterfaceCastImportedConstruction",
+    "package": "internal/oracle",
+    "file": "internal/oracle/interface_cast_test.go",
+    "seconds": 0.398,
+    "oracle": "Node source stdout, stderr and exit status compared to native and JavaScript backends",
+    "oracle_kind": "external-run",
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: interface_cast_test.go:175: exit codes differ",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceCastChecksMalformedRead"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": 0.489,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => interface_cast_test.go:175: exit codes differ",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ]
+  },
+  {
+    "test": "TestInterfaceCastScalarTags",
+    "package": "internal/oracle",
+    "file": "internal/oracle/interface_cast_test.go",
+    "seconds": 0.679,
+    "oracle": "Node source observations plus self-written Adamic inserted-panic contracts, stdout and stderr; scalar row also witnesses omission detection",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M01",
+      "M02"
+    ],
+    "unique_kills": [],
+    "last_proven_fail": "M02: interface_cast_test.go:218: native: exit codes differ; exit 70 stdout \"casting\\n\" stderr \"adamic: panic: cast failed: this Base is not a Member\\n\"",
+    "verdict": "subsumed",
+    "subsumed_by": [
+      "TestInterfaceCastImportedConstruction"
+    ],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P03",
+      "P04"
+    ],
+    "subsumer_seconds": 0.398,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => interface_cast_test.go:218: native: exit codes differ; exit 70 stdout \"casting\\n\" stderr \"adamic: panic: cast failed: this Base is not a Member\\n\"",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "witness_component": "W01 also fails the built-in scalar omission checks; production verdict uses only M-series kills"
+  },
+  {
+    "test": "TestArrayFamilyMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_array_mutant_test.go",
+    "seconds": 1.534,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_array_mutant_test.go:122: mutant caught by \"\", want stdout differs",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestArrayFamilyMutants$ => library_array_mutant_test.go:122: mutant caught by \"\", want stdout differs",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestArrayWithBoundsMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_array_mutant_test.go",
+    "seconds": 0.342,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_array_mutant_test.go:170: bounds mutant caught by \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestArrayWithBoundsMutant$ => library_array_mutant_test.go:170: bounds mutant caught by \"\"",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestJSONStringifyRefusals",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_json_stringify_test.go",
+    "seconds": 0.204,
+    "oracle": "Self-written Adamic refusal text; duplicate TS1117 copied from TypeScript diagnostic authority, checked against cohere/TypeScript/tsc/internal/diagnostics/diagnosticMessages.json this session",
+    "oracle_kind": [
+      "self",
+      "external-authority"
+    ],
+    "kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M12"
+    ],
+    "unique_kills": [
+      "M05",
+      "M06",
+      "M07",
+      "M12"
+    ],
+    "last_proven_fail": "M12: library_json_stringify_test.go:44: want refusal containing \"callback must have a proven type\", got /tmp/adamic-gate/TestJSONStringifyRefusalsreplacer_function3460705154/001/probe.ts:1:19: stage 0 can't lower JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder) yet",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01",
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=12 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => library_json_stringify_test.go:44: want refusal containing \"callback must have a proven type\", got /tmp/adamic-gate/TestJSONStringifyRefusalsreplacer_function3460705154/001/probe.ts:1:19: stage 0 can't lower JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder) yet",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "entry_note": "Duplicate subcase calls Load; P02-duplicate.log probes that entry separately. Other cases call Lower."
+  },
+  {
+    "test": "TestJSONStringifyResultMayBeUndefined",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_json_stringify_test.go",
+    "seconds": 0.043,
+    "oracle": "Self-written expected undefined rejection from Adamic public declarations; diagnostic substring must contain undefined",
+    "oracle_kind": "self",
+    "kills": [
+      "M10"
+    ],
+    "unique_kills": [
+      "M10"
+    ],
+    "last_proven_fail": "M10: library_json_stringify_test.go:62: want the checker to require handling stringify's undefined result, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P02"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=10 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => library_json_stringify_test.go:62: want the checker to require handling stringify's undefined result, got <nil>",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ]
+  },
+  {
+    "test": "TestJSONStringifyOracleCatchesKeyOrder",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_json_stringify_test.go",
+    "seconds": 0.319,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_json_stringify_test.go:89: want Node alone to catch key order as stdout differs, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestJSONStringifyOracleCatchesKeyOrder$ => library_json_stringify_test.go:89: want Node alone to catch key order as stdout differs, got \"\"",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestLibraryMapSetIteratorCopiesRefused",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_map_set_iterator_test.go",
+    "seconds": 0.792,
+    "oracle": "Node copy.next failure plus self-written NotYet inherited-next refusal text",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [
+      "M08",
+      "M09"
+    ],
+    "unique_kills": [
+      "M08",
+      "M09"
+    ],
+    "last_proven_fail": "M09: library_map_set_iterator_test.go:42: want inherited-next refusal, got <nil>",
+    "verdict": "sacred",
+    "subsumed_by": [],
+    "mutants_in_matrix": 12,
+    "probe_kills": [
+      "P01"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": true,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=9 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$ => library_map_set_iterator_test.go:42: want inherited-next refusal, got <nil>",
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ]
+  },
+  {
+    "test": "TestLibraryMapSetMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_map_set_test.go",
+    "seconds": 2.449,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_map_set_test.go:111: mutant was not caught by stdout comparison: \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLibraryMapSetMutants$ => library_map_set_test.go:111: mutant was not caught by stdout comparison: \"\"",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestMathNumberOracleCatchesMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_math_number_test.go",
+    "seconds": 0.881,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_math_number_test.go:49: got \"\", want stdout differs",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestMathNumberOracleCatchesMutants$ => library_math_number_test.go:49: got \"\", want stdout differs",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestLibraryStringMutants",
+    "package": "internal/oracle",
+    "file": "internal/oracle/library_string_test.go",
+    "seconds": 1.5550000000000002,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: library_string_test.go:121: want only the Node comparison to kill mutant, got \"\"",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLibraryStringMutants$ => library_string_test.go:121: want only the Node comparison to kill mutant, got \"\"",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  },
+  {
+    "test": "TestLiteralOptionalOracleCatchesMutant",
+    "package": "internal/oracle",
+    "file": "internal/oracle/literal_optional_test.go",
+    "seconds": 0.337,
+    "oracle": "Node source observations and self-written expectation that disagreement detects the built-in mutant; W01 disabled the witnessed check",
+    "oracle_kind": [
+      "external-run",
+      "self"
+    ],
+    "kills": [],
+    "unique_kills": [],
+    "last_proven_fail": "W01: literal_optional_test.go:48: Node did not catch mutant",
+    "verdict": "witness",
+    "subsumed_by": [],
+    "mutants_in_matrix": 0,
+    "probe_kills": [
+      "P05"
+    ],
+    "subsumer_seconds": null,
+    "vacuous": false,
+    "bounded": false,
+    "evidence": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLiteralOptionalOracleCatchesMutant$ => literal_optional_test.go:48: Node did not catch mutant",
+    "witness_checks": [
+      "W01",
+      "W02"
+    ],
+    "probe_note": "P05 is the empty-answer W01 weakening, sharing the same diff and observations"
+  }
+]

@@ -1,0 +1,5 @@
+optional explicit undefined: accepted=false error=/tmp/adamic-gate/u061-survivor-1820691399/optional.ts:1:44: error TS2375: Type '{ p: undefined; }' is not assignable to type 'P' with 'exactOptionalPropertyTypes: true'. Consider adding 'undefined' to the types of the target's properties.
+  Types of property 'p' are incompatible.
+    Type 'undefined' is not assignable to type 'string'.
+static adamic_string adamic_string_0 = ADAMIC_STRING("a b");
+native output="a b\n" error=<nil>

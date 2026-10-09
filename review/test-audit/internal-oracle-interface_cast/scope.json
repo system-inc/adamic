@@ -1,0 +1,17 @@
+[
+  "TestInterfaceCastOracle",
+  "TestInterfaceCastChecksMalformedRead",
+  "TestInterfaceCastRuntimeMutants",
+  "TestInterfaceCastImportedConstruction",
+  "TestInterfaceCastScalarTags",
+  "TestArrayFamilyMutants",
+  "TestArrayWithBoundsMutant",
+  "TestJSONStringifyRefusals",
+  "TestJSONStringifyResultMayBeUndefined",
+  "TestJSONStringifyOracleCatchesKeyOrder",
+  "TestLibraryMapSetIteratorCopiesRefused",
+  "TestLibraryMapSetMutants",
+  "TestMathNumberOracleCatchesMutants",
+  "TestLibraryStringMutants",
+  "TestLiteralOptionalOracleCatchesMutant"
+]

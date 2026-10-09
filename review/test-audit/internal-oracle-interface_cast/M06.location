@@ -1,0 +1,1 @@
+internal/lower/library_json_stringify.go:185: of == ir.Object || of == ir.Weak -> of != ir.Object && of != ir.Weak

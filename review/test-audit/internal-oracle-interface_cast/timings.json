@@ -1,0 +1,77 @@
+{
+  "TestInterfaceCastOracle": [
+    0.609,
+    0.615,
+    0.596
+  ],
+  "TestInterfaceCastChecksMalformedRead": [
+    0.489,
+    0.501,
+    0.489
+  ],
+  "TestInterfaceCastRuntimeMutants": [
+    0.545,
+    0.54,
+    0.54
+  ],
+  "TestInterfaceCastImportedConstruction": [
+    0.392,
+    0.398,
+    0.4
+  ],
+  "TestInterfaceCastScalarTags": [
+    0.671,
+    0.679,
+    0.701
+  ],
+  "TestArrayFamilyMutants": [
+    1.534,
+    1.516,
+    1.552
+  ],
+  "TestArrayWithBoundsMutant": [
+    0.341,
+    0.342,
+    0.347
+  ],
+  "TestJSONStringifyRefusals": [
+    0.205,
+    0.204,
+    0.203
+  ],
+  "TestJSONStringifyResultMayBeUndefined": [
+    0.042,
+    0.043,
+    0.046
+  ],
+  "TestJSONStringifyOracleCatchesKeyOrder": [
+    0.319,
+    0.322,
+    0.315
+  ],
+  "TestLibraryMapSetIteratorCopiesRefused": [
+    0.81,
+    0.792,
+    0.772
+  ],
+  "TestLibraryMapSetMutants": [
+    2.387,
+    2.532,
+    2.449
+  ],
+  "TestMathNumberOracleCatchesMutants": [
+    0.881,
+    0.861,
+    0.882
+  ],
+  "TestLibraryStringMutants": [
+    1.5899999999999999,
+    1.5550000000000002,
+    1.492
+  ],
+  "TestLiteralOptionalOracleCatchesMutant": [
+    0.355,
+    0.326,
+    0.337
+  ]
+}

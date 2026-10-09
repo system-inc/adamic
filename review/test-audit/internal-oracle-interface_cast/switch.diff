@@ -1,0 +1,216 @@
+diff --git a/internal/javascript/javascript.go b/internal/javascript/javascript.go
+index 1471d952..5a051780 100644
+--- a/internal/javascript/javascript.go
++++ b/internal/javascript/javascript.go
+@@ -22,6 +22,10 @@ import (
+ // JavaScript is a program as one JavaScript module, importing panic and the functions that read and
+ // write files from 'adamic'.
+ func JavaScript(program *ir.Program) string {
++	if auditSelect() == 104 {
++		return ""
++	}
++
+ 	return JavaScriptWith(program, Options{})
+ }
+ 
+diff --git a/internal/load/load.go b/internal/load/load.go
+index 2515e26f..59776e31 100644
+--- a/internal/load/load.go
++++ b/internal/load/load.go
+@@ -58,7 +58,7 @@ func compilerOptions() *core.CompilerOptions {
+ 	return &core.CompilerOptions{
+ 		Strict:                     core.TSTrue,
+ 		NoUncheckedIndexedAccess:   core.TSTrue,
+-		ExactOptionalPropertyTypes: core.TSTrue,
++		ExactOptionalPropertyTypes: auditChoose(11, core.TSTrue, core.TSFalse),
+ 		ErasableSyntaxOnly:         core.TSFalse,
+ 		VerbatimModuleSyntax:       core.TSTrue,
+ 		AllowImportingTsExtensions: core.TSTrue,
+@@ -78,6 +78,10 @@ func compilerOptions() *core.CompilerOptions {
+ //
+ // Each path is an Adamic source: a .ts file or a .a file.
+ func Load(paths []string) (*Program, error) {
++	if auditSelect() == 102 {
++		return nil, nil
++	}
++
+ 	return load(paths, nil)
+ }
+ 
+diff --git a/internal/load/source_fs.go b/internal/load/source_fs.go
+index 34622df9..2fce4c47 100644
+--- a/internal/load/source_fs.go
++++ b/internal/load/source_fs.go
+@@ -70,7 +70,7 @@ func (s *sourceFS) ReadFile(path tspath.RootedFilePath) (string, bool) {
+ 		if s.nodeTypes {
+ 			return nodePrelude(), true
+ 		}
+-		return prelude, true
++		return auditPrelude(prelude), true
+ 	}
+ 	if source, exists := s.overlay[path]; exists {
+ 		return source, true
+diff --git a/internal/lower/library_json_stringify.go b/internal/lower/library_json_stringify.go
+index aff61727..885bff5c 100644
+--- a/internal/lower/library_json_stringify.go
++++ b/internal/lower/library_json_stringify.go
+@@ -11,7 +11,7 @@ import (
+ 
+ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, error) {
+ 	if name == "parse" {
+-		return nil, true, &Refused{Where: l.program.Where(node), What: "JSON.parse: its result's type can't be proven from the text", Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now"}
++		return nil, true, &Refused{Where: l.program.Where(node), What: auditChoose(5, "JSON.parse: its result's type can't be proven from the text", "JSON.parse is unsupported"), Fix: "a checked parse against a declared type is a later design; construct typed values explicitly for now"}
+ 	}
+ 	if name != "stringify" {
+ 		return nil, true, l.notYet(node, "JSON."+name)
+@@ -30,7 +30,7 @@ func (l *lowering) jsonCall(node *ast.Node, name string) (ir.Expression, bool, e
+ 	}
+ 	if len(args) > 1 {
+ 		if t := l.checker.GetTypeAtLocation(args[1]); len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
+-			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)")
++			return nil, true, l.notYet(args[1], auditChoose(12, "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)", "JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder)"))
+ 		}
+ 		result.Replacer, result.ReplacerSchema, err = l.jsonInput(args[1])
+ 		if err != nil {
+@@ -81,7 +81,7 @@ func (l *lowering) jsonInput(node *ast.Node) (ir.Expression, *ir.JSONSchema, err
+ 			schema.Kind = "tuple"
+ 		}
+ 		add := func(name string, v *ast.Node) error {
+-			if name == "toJSON" || name == "__proto__" {
++			if auditChoose(7, name == "toJSON" || name == "__proto__", name != "toJSON" && name != "__proto__") {
+ 				return l.notYet(v, "JSON.stringify a literal with "+name+" semantics")
+ 			}
+ 			for _, f := range literal.Fields {
+@@ -182,7 +182,7 @@ func (l *lowering) jsonType(node *ast.Node, t *checker.Type, depth int) (*ir.JSO
+ 		child, err := l.jsonType(node, element, depth+1)
+ 		return &ir.JSONSchema{Kind: "array", Element: child}, err
+ 	}
+-	if of == ir.Object || of == ir.Weak {
++	if auditChoose(6, of == ir.Object || of == ir.Weak, of != ir.Object && of != ir.Weak) {
+ 		return nil, l.notYet(node, "JSON.stringify object references (structural types can hide fields and toJSON; runtime shapes need complete value metadata)")
+ 	}
+ 	if t.Flags()&checker.TypeFlagsUnion != 0 {
+diff --git a/internal/lower/library_map_set.go b/internal/lower/library_map_set.go
+index ce30a508..beb19cca 100644
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -498,7 +498,7 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+ 	}
+ 	if node.Kind == ast.KindObjectLiteralExpression {
+ 		for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+-			if property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) {
++			if auditChoose(9, property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression), property.Kind == ast.KindSpreadAssignment && !isIterator(property.AsSpreadAssignment().Expression)) {
+ 				return l.notYet(property, "spreading a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator or collect its elements into an array")
+ 			}
+ 		}
+@@ -511,7 +511,7 @@ func (l *lowering) libraryIteratorUnsupportedUse(node *ast.Node) error {
+ 				if index == 0 {
+ 					continue
+ 				}
+-				if isIterator(source) {
++				if auditChoose(8, isIterator(source), !isIterator(source)) {
+ 					return l.notYet(source, "Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator")
+ 				}
+ 			}
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..c84754f4 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,10 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if auditSelect() == 101 {
++		return nil, nil
++	}
++
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/readiness.go b/internal/lower/readiness.go
+index 1955c537..f71e38c7 100644
+--- a/internal/lower/readiness.go
++++ b/internal/lower/readiness.go
+@@ -284,7 +284,7 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
+ 				}
+ 				node = expression
+ 			case ir.Property:
+-				if !program.CheckedFields[expression.Name] || expression.Method {
++				if auditChoose(4, !program.CheckedFields[expression.Name] || expression.Method, program.CheckedFields[expression.Name] || expression.Method) {
+ 					expression.View = ""
+ 					expression.ViewType = ""
+ 					expression.ViewAllowed = nil
+diff --git a/internal/native/emit.go b/internal/native/emit.go
+index 8842056c..2bbf6982 100644
+--- a/internal/native/emit.go
++++ b/internal/native/emit.go
+@@ -20,6 +20,10 @@ import (
+ // retain and a release on every assignment for that simplicity; removing them where they cancel is
+ // the memory model's work, measured against this.
+ func C(program *ir.Program) string {
++	if auditSelect() == 103 {
++		return ""
++	}
++
+ 	return cProgram(program, -1)
+ }
+ 
+diff --git a/internal/native/emit_expressions.go b/internal/native/emit_expressions.go
+index 3549a0f5..0e48dff3 100644
+--- a/internal/native/emit_expressions.go
++++ b/internal/native/emit_expressions.go
+@@ -432,7 +432,7 @@ func (e *emitter) evaluate(expression ir.Expression) string {
+ 		}
+ 		tests := []string{}
+ 		for _, allowed := range expression.Allowed {
+-			tests = append(tests, e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)))
++			tests = append(tests, e.binary(auditChoose(2, ir.Equal, ir.NotEqual), expression.FieldType, field, e.value(allowed)))
+ 		}
+ 		e.line("if (!(%s)) {", strings.Join(tests, " || "))
+ 		e.line("\tstatic const char message[] = %s;", cString(expression.Message))
+diff --git a/internal/native/native.go b/internal/native/native.go
+index fd266740..d73a01b5 100644
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -32,7 +32,7 @@ func cString(value string) string {
+ 		case character == '"' || character == '\\' || character == '?':
+ 			builder.WriteByte('\\')
+ 			builder.WriteByte(character)
+-		case character >= 0x20 && character < 0x7f:
++		case character >= auditChoose[byte](3, 0x20, 0x21) && character < 0x7f:
+ 			builder.WriteByte(character)
+ 		default:
+ 			fmt.Fprintf(&builder, "\\%03o", character)
+diff --git a/internal/native/view_fields.go b/internal/native/view_fields.go
+index 0bcc88d9..c3d07634 100644
+--- a/internal/native/view_fields.go
++++ b/internal/native/view_fields.go
+@@ -28,7 +28,7 @@ func (e *emitter) viewField(property ir.Property) string {
+ 	if property.ViewType != "" {
+ 		name = property.ViewType
+ 	}
+-	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, cString(property.Name), e.cache(), property.Of, cString(name), cString(property.View))
++	e.line("adamic_value %s = adamic_object_view(%s, %s, &%s, %d, %s, %s);", slot, object, auditChoose(1, cString(property.Name), cString(property.View)), e.cache(), property.Of, cString(name), auditChoose(1, cString(property.View), cString(property.Name)))
+ 	value := unslotted(property.Of, fmt.Sprintf("%s.%s", slot, member(property.Of)))
+ 	if len(property.ViewAllowed) != 0 {
+ 		tests := []string{}
+diff --git a/internal/oracle/oracle_test.go b/internal/oracle/oracle_test.go
+index 8f73e788..0346f2c3 100644
+--- a/internal/oracle/oracle_test.go
++++ b/internal/oracle/oracle_test.go
+@@ -714,10 +714,14 @@ func leakSanitizer(t *testing.T, binary string) string {
+ 
+ // disagreement says how two runs differ, or "" when they don't.
+ func disagreement(oracle run, native run) string {
++	if auditSelect() == 201 {
++		return ""
++	}
++
+ 	switch {
+ 	case oracle.exitCode != native.exitCode:
+ 		return "exit codes differ"
+-	case !bytes.Equal(oracle.stdout, native.stdout):
++	case auditSelect() != 202 && !bytes.Equal(oracle.stdout, native.stdout):
+ 		return "stdout differs"
+ 	case !bytes.Equal(oracle.stderr, native.stderr):
+ 		return "stderr differs"

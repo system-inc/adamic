@@ -1,0 +1,1 @@
+internal/lower/library_json_stringify.go:33: JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder) -> JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder)

@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T11:11:10.173648814Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:11:10.18165422Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined"}
+{"Time":"2026-10-09T11:11:10.181716152Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Output":"=== RUN   TestJSONStringifyResultMayBeUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.181982892Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Output":"=== PAUSE TestJSONStringifyResultMayBeUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.181989379Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined"}
+{"Time":"2026-10-09T11:11:10.181992719Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined"}
+{"Time":"2026-10-09T11:11:10.181994557Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Output":"=== CONT  TestJSONStringifyResultMayBeUndefined\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.181996983Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Output":"    library_json_stringify_test.go:62: want the checker to require handling stringify's undefined result, got \u003cnil\u003e\n","OutputType":"error"}
+{"Time":"2026-10-09T11:11:10.182007031Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Output":"--- FAIL: TestJSONStringifyResultMayBeUndefined (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.182008967Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyResultMayBeUndefined","Elapsed":0}
+{"Time":"2026-10-09T11:11:10.18202003Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.182093242Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.008s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:11:10.182122203Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.008}

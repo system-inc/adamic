@@ -1,0 +1,1 @@
+internal/lower/library_json_stringify.go:84: name == "toJSON" || name == "__proto__" -> name != "toJSON" && name != "__proto__"

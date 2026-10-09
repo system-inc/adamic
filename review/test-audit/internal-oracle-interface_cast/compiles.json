@@ -1,0 +1,74 @@
+[
+  {
+    "id": "M01",
+    "seconds": 0.381,
+    "exit": 0,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M02",
+    "seconds": 0.316,
+    "exit": 0,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M03",
+    "seconds": 0.302,
+    "exit": 0,
+    "command": "go vet ./internal/native/"
+  },
+  {
+    "id": "M04",
+    "seconds": 0.545,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M05",
+    "seconds": 0.51,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M06",
+    "seconds": 0.457,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M07",
+    "seconds": 0.45,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M08",
+    "seconds": 0.518,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M09",
+    "seconds": 0.446,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  },
+  {
+    "id": "M10",
+    "seconds": 0.147,
+    "exit": 0,
+    "command": "go vet ./internal/load/"
+  },
+  {
+    "id": "M11",
+    "seconds": 0.09,
+    "exit": 0,
+    "command": "go vet ./internal/load/"
+  },
+  {
+    "id": "M12",
+    "seconds": 0.443,
+    "exit": 0,
+    "command": "go vet ./internal/lower/"
+  }
+]

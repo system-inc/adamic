@@ -1,0 +1,11 @@
+--- a/internal/lower/library_map_set.go
++++ b/internal/lower/library_map_set.go
+@@ -511,7 +511,7 @@
+ 				if index == 0 {
+ 					continue
+ 				}
+-				if isIterator(source) {
++				if !isIterator(source) {
+ 					return l.notYet(source, "Object.assign copying a Map or Set iterator: next is inherited, not an own enumerable field; use the original iterator")
+ 				}
+ 			}

@@ -1,0 +1,1 @@
+internal/native/emit_expressions.go:435: e.binary(ir.Equal, expression.FieldType, field, e.value(allowed)) -> e.binary(ir.NotEqual, expression.FieldType, field, e.value(allowed))

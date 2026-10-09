@@ -1,0 +1,9 @@
+--- a/internal/load/prelude.d.ts
++++ b/internal/load/prelude.d.ts
+@@ -79,5 +79,5 @@
+ // stringify can return undefined. The bundled TypeScript declaration's plain string result
+ // is not a proven type, so this overload keeps callers honest about the missing result.
+ interface JSON {
+-	stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;
++	stringify(value?: unknown, replacer?: unknown, space?: unknown): string;
+ }

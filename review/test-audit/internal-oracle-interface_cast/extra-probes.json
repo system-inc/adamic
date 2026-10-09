@@ -1,0 +1,10 @@
+[
+  {
+    "id": "P02",
+    "test": "TestJSONStringifyRefusals",
+    "subcase": "duplicate",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestJSONStringifyRefusals$/^duplicate$",
+    "log": "P02-duplicate.log",
+    "exit": 1
+  }
+]

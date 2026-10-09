@@ -1,0 +1,1 @@
+internal/lower/library_map_set.go:501: property.Kind == ast.KindSpreadAssignment && isIterator(property.AsSpreadAssignment().Expression) -> property.Kind == ast.KindSpreadAssignment && !isIterator(property.AsSpreadAssignment().Expression)

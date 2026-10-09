@@ -1,0 +1,811 @@
+[
+  {
+    "id": "M01",
+    "seconds": 3.597,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags"
+    ],
+    "passed": [
+      "TestInterfaceCastOracle",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M01.log",
+    "reruns": [
+      {
+        "id": "M01-alone-TestInterfaceCastOracle",
+        "seconds": 2.127,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastOracle"
+        ],
+        "failed": [
+          "TestInterfaceCastOracle"
+        ],
+        "passed": [
+          "TestInterfaceCastOracle"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestInterfaceCastOracle timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle)$",
+        "log": "M01-alone-TestInterfaceCastOracle.log"
+      },
+      {
+        "id": "M01-alone-TestInterfaceCastChecksMalformedRead",
+        "seconds": 2.073,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "failed": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestInterfaceCastChecksMalformedRead timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastChecksMalformedRead)$",
+        "log": "M01-alone-TestInterfaceCastChecksMalformedRead.log"
+      },
+      {
+        "id": "M01-alone-TestInterfaceCastImportedConstruction",
+        "seconds": 1.948,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "failed": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestInterfaceCastImportedConstruction timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastImportedConstruction)$",
+        "log": "M01-alone-TestInterfaceCastImportedConstruction.log"
+      },
+      {
+        "id": "M01-alone-TestInterfaceCastScalarTags",
+        "seconds": 2.389,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "failed": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestInterfaceCastScalarTags timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastScalarTags)$",
+        "log": "M01-alone-TestInterfaceCastScalarTags.log"
+      },
+      {
+        "id": "M01-alone-TestJSONStringifyRefusals",
+        "seconds": 1.795,
+        "exit": 0,
+        "matrix_rows": [
+          "TestJSONStringifyRefusals"
+        ],
+        "failed": [],
+        "passed": [
+          "TestJSONStringifyRefusals"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestJSONStringifyRefusals timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyRefusals)$",
+        "log": "M01-alone-TestJSONStringifyRefusals.log"
+      },
+      {
+        "id": "M01-alone-TestJSONStringifyResultMayBeUndefined",
+        "seconds": 1.591,
+        "exit": 0,
+        "matrix_rows": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "failed": [],
+        "passed": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestJSONStringifyResultMayBeUndefined timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyResultMayBeUndefined)$",
+        "log": "M01-alone-TestJSONStringifyResultMayBeUndefined.log"
+      },
+      {
+        "id": "M01-alone-TestLibraryMapSetIteratorCopiesRefused",
+        "seconds": 2.691,
+        "exit": 0,
+        "matrix_rows": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "failed": [],
+        "passed": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=1 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M01-alone-TestLibraryMapSetIteratorCopiesRefused timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLibraryMapSetIteratorCopiesRefused)$",
+        "log": "M01-alone-TestLibraryMapSetIteratorCopiesRefused.log"
+      }
+    ]
+  },
+  {
+    "id": "M02",
+    "seconds": 3.495,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags"
+    ],
+    "passed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M02.log",
+    "reruns": [
+      {
+        "id": "M02-alone-TestInterfaceCastOracle",
+        "seconds": 2.205,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastOracle"
+        ],
+        "failed": [
+          "TestInterfaceCastOracle"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestInterfaceCastOracle timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle)$",
+        "log": "M02-alone-TestInterfaceCastOracle.log"
+      },
+      {
+        "id": "M02-alone-TestInterfaceCastChecksMalformedRead",
+        "seconds": 2.055,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "failed": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestInterfaceCastChecksMalformedRead timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastChecksMalformedRead)$",
+        "log": "M02-alone-TestInterfaceCastChecksMalformedRead.log"
+      },
+      {
+        "id": "M02-alone-TestInterfaceCastImportedConstruction",
+        "seconds": 1.977,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "failed": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestInterfaceCastImportedConstruction timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastImportedConstruction)$",
+        "log": "M02-alone-TestInterfaceCastImportedConstruction.log"
+      },
+      {
+        "id": "M02-alone-TestInterfaceCastScalarTags",
+        "seconds": 2.204,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "failed": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestInterfaceCastScalarTags timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastScalarTags)$",
+        "log": "M02-alone-TestInterfaceCastScalarTags.log"
+      },
+      {
+        "id": "M02-alone-TestJSONStringifyRefusals",
+        "seconds": 1.76,
+        "exit": 0,
+        "matrix_rows": [
+          "TestJSONStringifyRefusals"
+        ],
+        "failed": [],
+        "passed": [
+          "TestJSONStringifyRefusals"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestJSONStringifyRefusals timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyRefusals)$",
+        "log": "M02-alone-TestJSONStringifyRefusals.log"
+      },
+      {
+        "id": "M02-alone-TestJSONStringifyResultMayBeUndefined",
+        "seconds": 1.624,
+        "exit": 0,
+        "matrix_rows": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "failed": [],
+        "passed": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestJSONStringifyResultMayBeUndefined timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyResultMayBeUndefined)$",
+        "log": "M02-alone-TestJSONStringifyResultMayBeUndefined.log"
+      },
+      {
+        "id": "M02-alone-TestLibraryMapSetIteratorCopiesRefused",
+        "seconds": 2.354,
+        "exit": 0,
+        "matrix_rows": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "failed": [],
+        "passed": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=2 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M02-alone-TestLibraryMapSetIteratorCopiesRefused timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLibraryMapSetIteratorCopiesRefused)$",
+        "log": "M02-alone-TestLibraryMapSetIteratorCopiesRefused.log"
+      }
+    ]
+  },
+  {
+    "id": "M03",
+    "seconds": 3.611,
+    "exit": 0,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=3 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M03.log"
+  },
+  {
+    "id": "M04",
+    "seconds": 3.572,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead"
+    ],
+    "passed": [
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=4 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M04.log"
+  },
+  {
+    "id": "M05",
+    "seconds": 3.526,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=5 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M05 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M05.log"
+  },
+  {
+    "id": "M06",
+    "seconds": 3.562,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=6 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M06 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M06.log"
+  },
+  {
+    "id": "M07",
+    "seconds": 3.526,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=7 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M07 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M07.log"
+  },
+  {
+    "id": "M08",
+    "seconds": 3.583,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=8 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M08 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M08.log"
+  },
+  {
+    "id": "M09",
+    "seconds": 3.575,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=9 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M09 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M09.log"
+  },
+  {
+    "id": "M10",
+    "seconds": 3.541,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestJSONStringifyResultMayBeUndefined"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=10 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M10 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M10.log"
+  },
+  {
+    "id": "M11",
+    "seconds": 3.493,
+    "exit": 0,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=11 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M11 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M11.log"
+  },
+  {
+    "id": "M12",
+    "seconds": 3.571,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=12 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/M12 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "M12.log"
+  },
+  {
+    "id": "W01",
+    "seconds": 9.952,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestArrayFamilyMutants",
+      "TestArrayWithBoundsMutant",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestJSONStringifyOracleCatchesKeyOrder",
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLibraryMapSetMutants",
+      "TestMathNumberOracleCatchesMutants",
+      "TestLibraryStringMutants",
+      "TestLiteralOptionalOracleCatchesMutant"
+    ],
+    "failed": [
+      "TestArrayFamilyMutants",
+      "TestArrayWithBoundsMutant",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyOracleCatchesKeyOrder",
+      "TestLibraryMapSetMutants",
+      "TestLibraryStringMutants",
+      "TestLiteralOptionalOracleCatchesMutant",
+      "TestMathNumberOracleCatchesMutants"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=201 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/W01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestJSONStringifyOracleCatchesKeyOrder|TestLibraryMapSetIteratorCopiesRefused|TestLibraryMapSetMutants|TestMathNumberOracleCatchesMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant)$",
+    "log": "W01.log"
+  },
+  {
+    "id": "W02",
+    "seconds": 10.196,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestArrayFamilyMutants",
+      "TestArrayWithBoundsMutant",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestJSONStringifyOracleCatchesKeyOrder",
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLibraryMapSetMutants",
+      "TestMathNumberOracleCatchesMutants",
+      "TestLibraryStringMutants",
+      "TestLiteralOptionalOracleCatchesMutant"
+    ],
+    "failed": [
+      "TestArrayFamilyMutants",
+      "TestArrayWithBoundsMutant",
+      "TestInterfaceCastRuntimeMutants",
+      "TestJSONStringifyOracleCatchesKeyOrder",
+      "TestLibraryMapSetMutants",
+      "TestLibraryStringMutants",
+      "TestMathNumberOracleCatchesMutants"
+    ],
+    "passed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastRuntimeMutants",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused",
+      "TestLiteralOptionalOracleCatchesMutant"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=202 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/W02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastRuntimeMutants|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestArrayFamilyMutants|TestArrayWithBoundsMutant|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestJSONStringifyOracleCatchesKeyOrder|TestLibraryMapSetIteratorCopiesRefused|TestLibraryMapSetMutants|TestMathNumberOracleCatchesMutants|TestLibraryStringMutants|TestLiteralOptionalOracleCatchesMutant)$",
+    "log": "W02.log"
+  },
+  {
+    "id": "P01",
+    "seconds": 3.022,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals",
+      "TestLibraryMapSetIteratorCopiesRefused"
+    ],
+    "passed": [
+      "TestJSONStringifyRefusals",
+      "TestJSONStringifyResultMayBeUndefined"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals|TestJSONStringifyResultMayBeUndefined|TestLibraryMapSetIteratorCopiesRefused)$",
+    "log": "P01.log",
+    "reruns": [
+      {
+        "id": "P01-alone-TestInterfaceCastOracle",
+        "seconds": 1.909,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastOracle"
+        ],
+        "failed": [
+          "TestInterfaceCastOracle"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestInterfaceCastOracle timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle)$",
+        "log": "P01-alone-TestInterfaceCastOracle.log"
+      },
+      {
+        "id": "P01-alone-TestInterfaceCastChecksMalformedRead",
+        "seconds": 1.784,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "failed": [
+          "TestInterfaceCastChecksMalformedRead"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestInterfaceCastChecksMalformedRead timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastChecksMalformedRead)$",
+        "log": "P01-alone-TestInterfaceCastChecksMalformedRead.log"
+      },
+      {
+        "id": "P01-alone-TestInterfaceCastImportedConstruction",
+        "seconds": 1.769,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "failed": [
+          "TestInterfaceCastImportedConstruction"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestInterfaceCastImportedConstruction timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastImportedConstruction)$",
+        "log": "P01-alone-TestInterfaceCastImportedConstruction.log"
+      },
+      {
+        "id": "P01-alone-TestInterfaceCastScalarTags",
+        "seconds": 1.821,
+        "exit": 1,
+        "matrix_rows": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "failed": [
+          "TestInterfaceCastScalarTags"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestInterfaceCastScalarTags timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastScalarTags)$",
+        "log": "P01-alone-TestInterfaceCastScalarTags.log"
+      },
+      {
+        "id": "P01-alone-TestJSONStringifyRefusals",
+        "seconds": 1.911,
+        "exit": 1,
+        "matrix_rows": [
+          "TestJSONStringifyRefusals"
+        ],
+        "failed": [
+          "TestJSONStringifyRefusals"
+        ],
+        "passed": [
+          "TestJSONStringifyRefusals"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestJSONStringifyRefusals timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyRefusals)$",
+        "log": "P01-alone-TestJSONStringifyRefusals.log"
+      },
+      {
+        "id": "P01-alone-TestJSONStringifyResultMayBeUndefined",
+        "seconds": 1.613,
+        "exit": 0,
+        "matrix_rows": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "failed": [],
+        "passed": [
+          "TestJSONStringifyResultMayBeUndefined"
+        ],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestJSONStringifyResultMayBeUndefined timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyResultMayBeUndefined)$",
+        "log": "P01-alone-TestJSONStringifyResultMayBeUndefined.log"
+      },
+      {
+        "id": "P01-alone-TestLibraryMapSetIteratorCopiesRefused",
+        "seconds": 2.392,
+        "exit": 1,
+        "matrix_rows": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "failed": [
+          "TestLibraryMapSetIteratorCopiesRefused"
+        ],
+        "passed": [],
+        "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=101 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P01-alone-TestLibraryMapSetIteratorCopiesRefused timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestLibraryMapSetIteratorCopiesRefused)$",
+        "log": "P01-alone-TestLibraryMapSetIteratorCopiesRefused.log"
+      }
+    ]
+  },
+  {
+    "id": "P02",
+    "seconds": 1.586,
+    "exit": 1,
+    "matrix_rows": [
+      "TestJSONStringifyResultMayBeUndefined"
+    ],
+    "failed": [
+      "TestJSONStringifyResultMayBeUndefined"
+    ],
+    "passed": [],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=102 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P02 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestJSONStringifyResultMayBeUndefined)$",
+    "log": "P02.log"
+  },
+  {
+    "id": "P03",
+    "seconds": 2.351,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags"
+    ],
+    "passed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=103 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P03 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals)$",
+    "log": "P03.log"
+  },
+  {
+    "id": "P04",
+    "seconds": 3.031,
+    "exit": 1,
+    "matrix_rows": [
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastScalarTags",
+      "TestJSONStringifyRefusals"
+    ],
+    "failed": [
+      "TestInterfaceCastChecksMalformedRead",
+      "TestInterfaceCastImportedConstruction",
+      "TestInterfaceCastOracle",
+      "TestInterfaceCastScalarTags"
+    ],
+    "passed": [
+      "TestJSONStringifyRefusals"
+    ],
+    "command": "ADAMIC_GATE_UNCACHED=1 ADAMIC_MUTANT=104 ADAMIC_BUILD_CACHE_DIR=/tmp/u061/cache/P04 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^(TestInterfaceCastOracle|TestInterfaceCastChecksMalformedRead|TestInterfaceCastImportedConstruction|TestInterfaceCastScalarTags|TestJSONStringifyRefusals)$",
+    "log": "P04.log"
+  }
+]

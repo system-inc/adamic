@@ -1,0 +1,81 @@
+package load
+
+import (
+	"os"
+	"strconv"
+	"strings"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoose[T any](id int, before, after T) T {
+	if auditSelect() == id {
+		return after
+	}
+	return before
+}
+func auditPrelude(text string) string {
+	if auditSelect() == 10 {
+		return strings.Replace(text, "stringify(value?: unknown, replacer?: unknown, space?: unknown): string | undefined;", "stringify(value?: unknown, replacer?: unknown, space?: unknown): string;", 1)
+	}
+	return text
+}
+
+package lower
+
+import (
+	"os"
+	"strconv"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoose[T any](id int, before, after T) T {
+	if auditSelect() == id {
+		return after
+	}
+	return before
+}
+
+package native
+
+import (
+	"os"
+	"strconv"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoose[T any](id int, before, after T) T {
+	if auditSelect() == id {
+		return after
+	}
+	return before
+}
+
+package javascript
+
+import (
+	"os"
+	"strconv"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoose[T any](id int, before, after T) T {
+	if auditSelect() == id {
+		return after
+	}
+	return before
+}
+
+package oracle
+
+import (
+	"os"
+	"strconv"
+)
+
+func auditSelect() int { n, _ := strconv.Atoi(os.Getenv("ADAMIC_MUTANT")); return n }
+func auditChoose[T any](id int, before, after T) T {
+	if auditSelect() == id {
+		return after
+	}
+	return before
+}

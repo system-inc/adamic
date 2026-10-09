@@ -1,0 +1,11 @@
+--- a/internal/lower/library_json_stringify.go
++++ b/internal/lower/library_json_stringify.go
+@@ -30,7 +30,7 @@
+ 	}
+ 	if len(args) > 1 {
+ 		if t := l.checker.GetTypeAtLocation(args[1]); len(l.checker.GetSignaturesOfType(t, checker.SignatureKindCall)) != 0 {
+-			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a proven type for every visited value and its holder)")
++			return nil, true, l.notYet(args[1], "JSON.stringify replacer functions (the callback must have a runtime type for every visited value and its holder)")
+ 		}
+ 		result.Replacer, result.ReplacerSchema, err = l.jsonInput(args[1])
+ 		if err != nil {

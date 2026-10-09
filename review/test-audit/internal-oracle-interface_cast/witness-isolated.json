@@ -1,0 +1,58 @@
+[
+  {
+    "row": "TestInterfaceCastRuntimeMutants",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestInterfaceCastRuntimeMutants$",
+    "log": "W01-isolated-TestInterfaceCastRuntimeMutants.log",
+    "exit": 1,
+    "seconds": 6.247
+  },
+  {
+    "row": "TestArrayFamilyMutants",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestArrayFamilyMutants$",
+    "log": "W01-isolated-TestArrayFamilyMutants.log",
+    "exit": 1,
+    "seconds": 3.131
+  },
+  {
+    "row": "TestArrayWithBoundsMutant",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestArrayWithBoundsMutant$",
+    "log": "W01-isolated-TestArrayWithBoundsMutant.log",
+    "exit": 1,
+    "seconds": 1.915
+  },
+  {
+    "row": "TestJSONStringifyOracleCatchesKeyOrder",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestJSONStringifyOracleCatchesKeyOrder$",
+    "log": "W01-isolated-TestJSONStringifyOracleCatchesKeyOrder.log",
+    "exit": 1,
+    "seconds": 1.91
+  },
+  {
+    "row": "TestLibraryMapSetMutants",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLibraryMapSetMutants$",
+    "log": "W01-isolated-TestLibraryMapSetMutants.log",
+    "exit": 1,
+    "seconds": 4.027
+  },
+  {
+    "row": "TestMathNumberOracleCatchesMutants",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestMathNumberOracleCatchesMutants$",
+    "log": "W01-isolated-TestMathNumberOracleCatchesMutants.log",
+    "exit": 1,
+    "seconds": 2.454
+  },
+  {
+    "row": "TestLibraryStringMutants",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLibraryStringMutants$",
+    "log": "W01-isolated-TestLibraryStringMutants.log",
+    "exit": 1,
+    "seconds": 3.047
+  },
+  {
+    "row": "TestLiteralOptionalOracleCatchesMutant",
+    "command": "ADAMIC_GATE_UNCACHED=1 timeout 120 go test -json -count=1 -timeout 90s ./internal/oracle/ -run ^TestLiteralOptionalOracleCatchesMutant$",
+    "log": "W01-isolated-TestLiteralOptionalOracleCatchesMutant.log",
+    "exit": 1,
+    "seconds": 1.914
+  }
+]

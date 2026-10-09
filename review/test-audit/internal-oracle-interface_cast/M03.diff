@@ -1,0 +1,11 @@
+--- a/internal/native/native.go
++++ b/internal/native/native.go
+@@ -32,7 +32,7 @@
+ 		case character == '"' || character == '\\' || character == '?':
+ 			builder.WriteByte('\\')
+ 			builder.WriteByte(character)
+-		case character >= 0x20 && character < 0x7f:
++		case character >= 0x21 && character < 0x7f:
+ 			builder.WriteByte(character)
+ 		default:
+ 			fmt.Fprintf(&builder, "\\%03o", character)

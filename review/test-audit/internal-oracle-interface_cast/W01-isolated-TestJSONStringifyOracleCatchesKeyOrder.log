@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T11:13:37.260002987Z","Action":"start","Package":"github.com/system-inc/adamic/internal/oracle"}
+{"Time":"2026-10-09T11:13:37.26892781Z","Action":"run","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder"}
+{"Time":"2026-10-09T11:13:37.269005238Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Output":"=== RUN   TestJSONStringifyOracleCatchesKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.26903184Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Output":"=== PAUSE TestJSONStringifyOracleCatchesKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.269035024Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder"}
+{"Time":"2026-10-09T11:13:37.269044146Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder"}
+{"Time":"2026-10-09T11:13:37.269046567Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Output":"=== CONT  TestJSONStringifyOracleCatchesKeyOrder\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.576015476Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Output":"    library_json_stringify_test.go:89: want Node alone to catch key order as stdout differs, got \"\"\n","OutputType":"error"}
+{"Time":"2026-10-09T11:13:37.576063725Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Output":"--- FAIL: TestJSONStringifyOracleCatchesKeyOrder (0.31s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.576067098Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Test":"TestJSONStringifyOracleCatchesKeyOrder","Elapsed":0.31}
+{"Time":"2026-10-09T11:13:37.576086268Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.576089056Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: native hits=0 misses=2\n"}
+{"Time":"2026-10-09T11:13:37.576091692Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: node hits=0 misses=1\n"}
+{"Time":"2026-10-09T11:13:37.576093419Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"gate cache: probe hits=0 misses=0\n"}
+{"Time":"2026-10-09T11:13:37.577342335Z","Action":"output","Package":"github.com/system-inc/adamic/internal/oracle","Output":"FAIL\tgithub.com/system-inc/adamic/internal/oracle\t0.317s\n","OutputType":"frame"}
+{"Time":"2026-10-09T11:13:37.577374445Z","Action":"fail","Package":"github.com/system-inc/adamic/internal/oracle","Elapsed":0.317}
