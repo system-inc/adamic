@@ -83,8 +83,8 @@ const adamicUntaggedPlainSelect = (value, contracts, id, expression, declared) =
   if(contract.Kind===6) return value===null;
   if(contract.Kind===7) return value===undefined;
   if(contract.Kind===4) return (contract.Members || []).some(member=>matches(value,member,depth+1));
-  if(contract.Kind!==2 || value===null || typeof value!=='object' || (!contract.FixedTuple && Array.isArray(value)) || value instanceof Map) return false;
-  if(contract.FixedTuple && (!Array.isArray(value) || value.length !== contract.Tuple.length)) return false;
+  if(contract.Kind!==2 || value===null || typeof value!=='object' || (Array.isArray(value) && !adamicTupleObjects.has(value)) || value instanceof Map) return false;
+  if(contract.FixedTuple && (!Array.isArray(value) || !adamicTupleObjects.has(value) || value.length !== contract.Tuple.length)) return false;
   const fields=contract.Fields || [];
   const ownKind=fields.find(field=>field.Name==='kind' && !field.Optional && contracts[field.Contract-1]?.Kind===1 && [1,2,3].includes(contracts[field.Contract-1]?.Of));
   if(ownKind){const actual=slot(value,'kind');return actual!==undefined && matches(actual.value,ownKind.Contract,depth+1);}

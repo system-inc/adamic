@@ -35,7 +35,7 @@ func readUnionViewAt(e *emitter, property ir.Property, object string) (string, b
 	}
 	checked := e.viewUntaggedObjectUnion(property, raw)
 	if property.Of != ir.Union {
-		test := map[ir.Type]string{ir.Object: "v!==null && typeof v==='object' && !Array.isArray(v) && !(v instanceof Map)", ir.Array: "Array.isArray(v)", ir.String: "typeof v==='string'", ir.Closure: "adamicTypeOf(v)==='function'"}[property.Of]
+		test := map[ir.Type]string{ir.Object: "adamicViewObject(v)", ir.Array: "Array.isArray(v)", ir.String: "typeof v==='string'", ir.Closure: "adamicTypeOf(v)==='function'"}[property.Of]
 		if contract.FixedTuple {
 			test = "Array.isArray(v)"
 		}

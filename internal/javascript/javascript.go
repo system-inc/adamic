@@ -837,7 +837,7 @@ func (e *emitter) value(expression ir.Expression) string {
 			for _, field := range expression.Fields {
 				elements = append(elements, e.value(field.Value))
 			}
-			return "[" + strings.Join(elements, ", ") + "]"
+			return "adamicTuple([" + strings.Join(elements, ", ") + "])"
 		}
 		spreadValue := ""
 		fields := []string{}
