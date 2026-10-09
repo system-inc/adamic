@@ -1,0 +1,14 @@
+--- FAIL: TestNativeAgreesWithNode (0.01s)
+    --- FAIL: TestNativeAgreesWithNode/internal/oracle/testdata/node_buffer_fallback.a (0.44s)
+        oracle_test.go:627: stdout differs
+            node:   exit 0, stdout "5381\n193485963\n2317135974\n-997923643\nsame function\n", stderr ""
+            native: exit 0, stdout "5381\n193485963\n2317135974\n-997923643\ndifferent function\n", stderr ""
+        oracle_test.go:633: JavaScript backend: stdout differs
+            node:    exit 0, stdout "5381\n193485963\n2317135974\n-997923643\nsame function\n", stderr ""
+            backend: exit 0, stdout "5381\n193485963\n2317135974\n-997923643\ndifferent function\n", stderr ""
+FAIL
+gate cache: native hits=0 misses=3
+gate cache: node hits=0 misses=2
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	0.457s
+FAIL

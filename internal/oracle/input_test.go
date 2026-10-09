@@ -33,7 +33,12 @@ var inputFixtures = []struct {
 	// file's name, bytes and permissions, must agree too.
 	writes bool
 }{
+	{"internal/oracle/testdata/node_process_host.a", []string{"plain", "", "with space", "héllo 🌍", "--prof", "bad\xff"}, false, false},
+	{"internal/oracle/testdata/node_process_performance.a", nil, false, false},
+	{"internal/oracle/testdata/node_process_performance_core.a", nil, false, false},
+	{"internal/oracle/testdata/node_process_system.a", []string{"--noEmit", "tiny.a"}, false, false},
 	{"internal/oracle/testdata/read_files.a", nil, false, false},
+	{"internal/oracle/testdata/realpath.a", nil, false, false},
 	{"internal/oracle/testdata/empty-path.a", nil, false, false},
 	{"internal/oracle/testdata/utf8_sweep.a", nil, false, false},
 	{"internal/oracle/testdata/arguments.a", []string{
@@ -68,7 +73,7 @@ func executeInput(t *testing.T, how inputRun, environment []string, name string,
 	var stdout, stderr bytes.Buffer
 	command.Stdout = &stdout
 	command.Stderr = &stderr
-	err := command.Run()
+	err := runChild(command)
 	var exitError *exec.ExitError
 	if err != nil && !errors.As(err, &exitError) {
 		t.Fatalf("running %s: %v", name, err)

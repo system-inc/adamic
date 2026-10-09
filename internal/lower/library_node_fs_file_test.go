@@ -71,10 +71,15 @@ func TestNodeFSFileNamespaceImport(t *testing.T) {
 
 func TestNodeFSFileQualifiedErrorType(t *testing.T) {
 	t.Parallel()
+	// The area proves optional-field views. A compatible qualified type lowers;
+	// adding unproven errno fields to a plain Error remains a named refusal.
+	if _, err := lowerSource(t, `import type {Stats} from 'node:fs'; const make = (): NodeJS.ErrnoException => ({ name: 'E', message: 'm' }); const error = make() as NodeJS.ErrnoException; console.log(error.code ?? 'missing');`); err != nil {
+		t.Fatal(err)
+	}
 	_, err := lowerSource(t, `import type {Stats} from 'node:fs'; const error=new Error('plain'); const code=(error as NodeJS.ErrnoException).code; console.log(code??'missing');`)
 	var refused *Refused
-	if !errors.As(err, &refused) || !strings.Contains(err.Error(), "adamic/no-optional-widening") {
-		t.Fatalf("want optional host fields proven before the qualified cast, got %v", err)
+	if !errors.As(err, &refused) || !strings.Contains(refused.What, "unproven relation from Error to ErrnoException") {
+		t.Fatalf("want optional-field relation refusal, got %v", err)
 	}
 }
 
@@ -110,6 +115,7 @@ func TestNodeFSFileScratchOverloadsAreNamed(t *testing.T) {
 	t.Parallel()
 	for _, one := range []struct{ source, member string }{
 		{`import {mkdtempSync} from 'node:fs'; mkdtempSync('prefix','buffer');`, "mkdtempSync"},
+		{`import {rmSync} from 'node:fs'; const options={maxRetries:2}; rmSync('missing',options);`, "rmSync"},
 		{`import {rmSync} from 'node:fs'; rmSync('missing',{maxRetries:2});`, "rmSync"},
 		{`import {rmSync} from 'node:fs'; function flag():boolean {console.log('effect');return true;} rmSync('missing',{force:flag()});`, "rmSync"},
 	} {

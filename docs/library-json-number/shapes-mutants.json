@@ -1,0 +1,23 @@
+[
+  {
+    "mutant": "replacer-null",
+    "exit": 1,
+    "caughtBy": "runtime error:",
+    "killed": true,
+    "log": "/tmp/library-json-number-shapes-mutants/replacer-null.log"
+  },
+  {
+    "mutant": "array-null",
+    "exit": 1,
+    "caughtBy": "runtime error:",
+    "killed": true,
+    "log": "/tmp/library-json-number-shapes-mutants/array-null.log"
+  },
+  {
+    "mutant": "union-closure",
+    "exit": 1,
+    "caughtBy": "stdout differs",
+    "killed": true,
+    "log": "/tmp/library-json-number-shapes-mutants/union-closure.log"
+  }
+]

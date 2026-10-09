@@ -23,6 +23,8 @@ double adamic_fs_file_utimes(const adamic_string *, double, double);
 double adamic_fs_file_utimes_dates(const adamic_string *, const adamic_object *, const adamic_object *);
 double adamic_fs_file_utimes_atime_date(const adamic_string *, const adamic_object *, double);
 double adamic_fs_file_utimes_mtime_date(const adamic_string *, double, const adamic_object *);
+bool adamic_fs_file_stat_is(const adamic_object *, const char *);
+bool adamic_fs_file_is_stats(const adamic_object *);
 bool adamic_fs_file_is_file(const adamic_object *);
 bool adamic_fs_file_is_directory(const adamic_object *);
 bool adamic_fs_file_is_symbolic_link(const adamic_object *);
@@ -31,6 +33,7 @@ double adamic_fs_file_date_time(const adamic_object *);
 // Raw bytes seam for the Buffer unit. The caller frees bytes, closes only fds it
 // opened, and raises the saved errno after any cleanup. No fake Buffer type.
 int adamic_fs_file_read_bytes(int, unsigned char **, size_t *);
+#include "date_string.h"
 adamic_string *adamic_fs_file_host_join(size_t, adamic_string *const[]);
 adamic_string *adamic_fs_file_host_cwd(void);
 adamic_string *adamic_fs_file_host_tmpdir(void);

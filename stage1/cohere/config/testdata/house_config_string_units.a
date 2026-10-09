@@ -1,0 +1,17 @@
+// One missing local config still loads the embedded house tiers and all four variants.
+import { panic, programArguments } from 'adamic';
+import { loadHouse } from './house.ts';
+import { printSettings } from './settings.ts';
+import { dir } from '../gitignore/path.ts';
+
+const path = programArguments()[0] ?? panic('usage: house_config_string_units.a <missing-config>');
+const root = dir(path);
+console.log(`house ${path}`);
+const loaded = loadHouse(path, {
+    reactFiles: [root + '/React.tsx'],
+    nextFiles: [root + '/Next.tsx'],
+    tailwindEntryPoint: '',
+    tailwindSkipped: 'no stylesheet',
+});
+if (loaded.kind === 'Error') { panic(loaded.message); }
+printSettings(loaded.house.whole);

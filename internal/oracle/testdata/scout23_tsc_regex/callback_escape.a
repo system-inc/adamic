@@ -1,0 +1,9 @@
+// utilities.ts:9594-9603; callback lowering belongs to 01a114e3.
+const reservedCharacterPattern = /[^\w\s/]/g;
+function escapeRegExpCharacter(match: string): string {
+    return "\\" + match;
+}
+function regExpEscape(text: string): string {
+    return text.replace(reservedCharacterPattern, escapeRegExpCharacter);
+}
+console.log(regExpEscape('src/a+b[1].ts $^(){}|\\ 😀'));

@@ -1,0 +1,14 @@
+function errorCode(error: unknown): string | undefined {
+    return typeof error === 'object' && error !== null && 'code' in error && typeof error.code === 'string' ? error.code : undefined;
+}
+import { programArguments } from 'adamic';
+const root = programArguments()[0] ?? '';
+function failure(error: Error): void {
+    console.log(`${errorCode(error) ?? ''}: ${error.message.replace(root, '<root>')}`);
+}
+import { unlinkSync, existsSync } from 'node:fs';
+unlinkSync(root + '/file'); console.log(`file=${existsSync(root + '/file')}`);
+unlinkSync(root + '/dangling'); console.log('removed dangling');
+try { unlinkSync(root + '/missing'); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { unlinkSync(root + '/directory'); } catch(error) { if (error instanceof Error) { failure(error); } }
+try { unlinkSync(root + '/locked/file'); } catch(error) { if (error instanceof Error) { failure(error); } }

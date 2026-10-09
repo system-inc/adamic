@@ -1,5 +1,6 @@
-// map.c: Map, as JavaScript has it. Entries keep insertion order in one array, and a hash index
-// finds them. Keys compare with SameValueZero: NaN equals NaN, +0 equals -0, and an object, an array,
+// map.c: Map, as JavaScript has it. Up to four entries live inline and are searched linearly.
+// Larger maps keep insertion order in one array and a hash index finds their keys.
+// Keys compare with SameValueZero: NaN equals NaN, +0 equals -0, and an object, an array,
 // a map or a function is its own key, found by identity. Deleting leaves a
 // tombstone, and while an iteration is open a full map grows rather than compacting them away, so
 // the iteration keeps its place; entries added during it are visited, and deleted ones aren't, as
@@ -25,8 +26,8 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	adamic_map *map = adamic_allocate(sizeof *map, adamic_kind_map);
 	map->count = 0;
 	map->used = 0;
-	map->capacity = 0;
-	map->entries = NULL;
+	map->capacity = 4;
+	map->entries = map->small;
 	map->bucket_count = 0;
 	map->buckets = NULL;
 	map->string_keys = string_keys;
@@ -34,8 +35,13 @@ adamic_map *adamic_map_new(bool string_keys, bool reference_values) {
 	map->boolean_keys = false;
 	map->maybe_number_keys = false;
 	map->reference_values = reference_values;
+	map->nonextensible = false;
 	map->iterating = 0;
 	return map;
+}
+
+void adamic_map_relocated(const adamic_map *from, adamic_map *to) {
+	if (from->entries == from->small) { to->entries = to->small; }
 }
 
 adamic_map *adamic_map_new_booleans(bool reference_values) {
@@ -54,6 +60,25 @@ adamic_map *adamic_map_new_identity(bool reference_values) {
 	adamic_map *map = adamic_map_new(false, reference_values);
 	map->reference_keys = true;
 	return map;
+}
+
+// V8's SameValueZeroHeapNumber / SameValueZeroString / OtherKey dispatch
+// (src/builtins/builtins-collections-gen.cc, Node v24.19.0). A mixed union
+// holds primitives in boxes and objects directly; box identity is not key identity.
+static bool reference_key_equal(const adamic_heap *left, const adamic_heap *right) {
+	if (left == NULL || right == NULL) return left == right;
+	if (left->kind != right->kind) return false;
+	switch (left->kind) {
+	case adamic_kind_number: {
+		double a = ((const adamic_number_box *)left)->number;
+		double b = ((const adamic_number_box *)right)->number;
+		return a == b || (isnan(a) && isnan(b));
+	}
+	case adamic_kind_string:
+		return adamic_string_equal((const adamic_string *)left, (const adamic_string *)right);
+	default:
+		return left == right;
+	}
 }
 
 static uint64_t hash_key(const adamic_map *map, adamic_value key) {
@@ -78,7 +103,18 @@ static uint64_t hash_key(const adamic_map *map, adamic_value key) {
 		return key.boolean ? 0x9e3779b97f4a7c15ull : 0x7f4a7c159e3779b9ull;
 	}
 	if (map->reference_keys) {
-		// By identity: the address, its low bits (alignment, always zero) mixed up into the rest.
+		const adamic_heap *reference = key.reference;
+		if (reference != NULL && reference->kind == adamic_kind_number) {
+			return adamic_map_number_hash(((const adamic_number_box *)reference)->number);
+		}
+		if (reference != NULL && reference->kind == adamic_kind_string) {
+			const adamic_string *string = key.reference;
+			for (size_t index = 0; index < string->length; index++) {
+				hash = (hash ^ (unsigned char)string->bytes[index]) * 1099511628211ull;
+			}
+			return hash;
+		}
+		// Objects and canonical boolean boxes compare by identity.
 		uint64_t bits = (uint64_t)(uintptr_t)key.reference;
 		return (bits ^ (bits >> 4) ^ (bits >> 29)) * 1099511628211ull;
 	}
@@ -96,7 +132,7 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 		return left.boolean == right.boolean;
 	}
 	if (map->reference_keys) {
-		return left.reference == right.reference;
+		return reference_key_equal(left.reference, right.reference);
 	}
 	return left.number == right.number || (isnan(left.number) && isnan(right.number));
 }
@@ -104,6 +140,12 @@ static bool same_key(const adamic_map *map, adamic_value left, adamic_value righ
 // find is the entry index for a key, or SIZE_MAX.
 static size_t find(const adamic_map *map, adamic_value key) {
 	if (map->bucket_count == 0) {
+		for (size_t index = 0; index < map->used; index++) {
+			const adamic_map_entry *entry = &map->entries[index];
+			if (!entry->deleted && same_key(map, entry->key, key)) {
+				return index;
+			}
+		}
 		return SIZE_MAX;
 	}
 	size_t mask = map->bucket_count - 1;
@@ -119,27 +161,59 @@ static size_t find(const adamic_map *map, adamic_value key) {
 	}
 }
 
+// Without an active iterator, entry positions can move. Copying transfers ownership:
+// the same references remain in the map, without extra retains or releases.
+static void compact(adamic_map *map) {
+	size_t live = 0;
+	for (size_t index = 0; index < map->used; index++) {
+		if (!map->entries[index].deleted) {
+			map->entries[live++] = map->entries[index];
+		}
+	}
+	map->used = live;
+}
+
+// Shared maps are read-only publications. Closing an iterator must not rewrite
+// their entries while another worker can start or read an iterator.
+static void return_inline(adamic_map *map) {
+	if (adamic_is_shared(&map->heap) || map->iterating != 0 || map->count > 4) {
+		return;
+	}
+	compact(map);
+	if (map->entries != map->small) {
+		memcpy(map->small, map->entries, map->used * sizeof *map->entries);
+		free(map->entries);
+		free(map->buckets);
+		map->entries = map->small;
+		map->capacity = 4;
+		map->buckets = NULL;
+		map->bucket_count = 0;
+	}
+}
+
 // rebuild compacts away tombstones, unless an iteration is open, and rehashes into enough buckets
 // for the entries to grow.
 static void rebuild(adamic_map *map, size_t entries_needed) {
 	if (map->iterating == 0) {
-		size_t live = 0;
-		for (size_t index = 0; index < map->used; index++) {
-			if (!map->entries[index].deleted) {
-				map->entries[live++] = map->entries[index];
-			}
-		}
-		map->used = live;
+		compact(map);
+	}
+	if (entries_needed <= 4 && map->entries == map->small) {
+		return;
 	}
 	if (entries_needed > map->capacity) {
 		size_t capacity = map->capacity == 0 ? 8 : map->capacity;
 		while (capacity < entries_needed) {
 			capacity *= 2;
 		}
-		adamic_map_entry *grown = realloc(map->entries, capacity * sizeof *grown);
+		bool inline_entries = map->entries == map->small;
+		adamic_map_entry *grown = inline_entries ? malloc(capacity * sizeof *grown) : realloc(map->entries, capacity * sizeof *grown);
 		if (grown == NULL) {
 			static const char message[] = "out of memory";
 			adamic_panic(message, sizeof message - 1);
+		}
+		if (inline_entries) {
+			// Promotion preserves historical positions, including tombstones an iterator needs.
+			memcpy(grown, map->entries, map->used * sizeof *grown);
 		}
 		map->entries = grown;
 		map->capacity = capacity;
@@ -185,23 +259,43 @@ void adamic_map_set(adamic_map *map, adamic_value key, adamic_value value) {
 	if (map->used == map->capacity) {
 		// Full: grow when most entries are live, and when most are tombstones, compact in place, unless
 		// an iteration is open, which needs every entry where it is.
-		size_t needed = map->iterating > 0 || map->count * 2 > map->capacity ? map->capacity * 2 : map->capacity;
-		rebuild(map, needed == 0 ? 8 : needed);
+		size_t needed;
+		if (map->bucket_count == 0) {
+			needed = map->iterating == 0 && map->count < 4 ? 4 : 8;
+		} else {
+			needed = map->iterating > 0 || map->count * 2 > map->capacity ? map->capacity * 2 : map->capacity;
+		}
+		rebuild(map, needed);
 	}
 	adamic_map_entry *entry = &map->entries[map->used];
 	if (!map->reference_keys && !map->boolean_keys && key.number == 0) {
 		// Map.prototype.set stores -0 as +0 (ECMA-262), so iterating gives back +0: 1 / key is Infinity.
 		key.number = 0;
 	}
+	if (map->reference_keys && !map->string_keys && key.reference != NULL) {
+		const adamic_heap *reference = key.reference;
+		if (reference->kind == adamic_kind_number) {
+			double number = ((const adamic_number_box *)reference)->number;
+			if (number == 0 && signbit(number)) {
+				// NormalizeNumberKey stores +0. Do not mutate a box shared with
+				// the source variable: its own -0 remains observable.
+				adamic_heap *zero = adamic_box_number(0);
+				adamic_release(key.reference);
+				key.reference = zero;
+			}
+		}
+	}
 	entry->key = key;
 	entry->value = value;
 	entry->deleted = false;
-	size_t mask = map->bucket_count - 1;
-	size_t bucket = hash_key(map, key) & mask;
-	while (map->buckets[bucket] != 0) {
-		bucket = (bucket + 1) & mask;
+	if (map->bucket_count != 0) {
+		size_t mask = map->bucket_count - 1;
+		size_t bucket = hash_key(map, key) & mask;
+		while (map->buckets[bucket] != 0) {
+			bucket = (bucket + 1) & mask;
+		}
+		map->buckets[bucket] = map->used + 1;
 	}
-	map->buckets[bucket] = map->used + 1;
 	map->used++;
 	map->count++;
 }
@@ -220,6 +314,7 @@ bool adamic_map_delete(adamic_map *map, adamic_value key) {
 		adamic_release(entry->value.reference);
 	}
 	map->count--;
+	return_inline(map);
 	return true;
 }
 
@@ -235,7 +330,9 @@ void adamic_map_free_children(adamic_map *map, void (*let_go)(void *)) {
 			let_go(map->entries[index].value.reference);
 		}
 	}
-	free(map->entries);
+	if (map->entries != map->small) {
+		free(map->entries);
+	}
 	free(map->buckets);
 }
 
@@ -263,9 +360,16 @@ bool adamic_map_iterator_next(adamic_map_iterator *iterator, adamic_value *key, 
 	}
 	// A held iterator that reached done no longer needs stable entry positions.
 	// exhausted also tells its eventual free not to drop the count a second time.
-	iterator->exhausted = true;
-	iterator->map->iterating--;
+	adamic_map_iterator_close(iterator);
 	return false;
+}
+
+void adamic_map_iterator_close(adamic_map_iterator *iterator) {
+	if (!iterator->exhausted) {
+		iterator->exhausted = true;
+		iterator->map->iterating--;
+		return_inline(iterator->map);
+	}
 }
 
 adamic_array *adamic_map_entries(const adamic_map *map, const adamic_shape *pair) {
@@ -305,13 +409,7 @@ void adamic_map_clear(adamic_map *map) {
 		}
 	}
 	map->count = 0;
-	if (map->iterating == 0) {
-		// Nothing holds a place in the entries, so they and the index start over.
-		map->used = 0;
-		if (map->buckets != NULL) {
-			memset(map->buckets, 0, map->bucket_count * sizeof *map->buckets);
-		}
-	}
+	return_inline(map);
 }
 
 // listed is an array of every live entry's key, or every value, in insertion order, each reference
