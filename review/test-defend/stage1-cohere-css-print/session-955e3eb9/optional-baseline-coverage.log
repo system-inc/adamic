@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T15:58:33.026672996Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/css"}
+{"Time":"2026-10-09T15:58:33.036859329Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo"}
+{"Time":"2026-10-09T15:58:33.037082919Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"=== RUN   TestOptionalBooleanPrinterMatchesGo\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:58:34.021330847Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"    print_test.go:302: === RUN   TestAdamicPrinterCases\n"}
+{"Time":"2026-10-09T15:58:34.021379096Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"            adamic_print_side_test.go:92: printed stylesheets: 6 inputs, 6 formatted, elapsed 573.431µs\n"}
+{"Time":"2026-10-09T15:58:34.021397366Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"        --- PASS: TestAdamicPrinterCases (0.00s)\n"}
+{"Time":"2026-10-09T15:58:34.021400064Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"        PASS\n"}
+{"Time":"2026-10-09T15:58:34.021417102Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"        ok  \tgithub.com/system-inc/cohere/internal/format/css\t0.007s\n"}
+{"Time":"2026-10-09T15:59:07.602166815Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"    print_test.go:323: six boolean-flag and namespace cases agree with Go, Node and both backends; leak clean\n"}
+{"Time":"2026-10-09T15:59:07.603082459Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Output":"--- PASS: TestOptionalBooleanPrinterMatchesGo (34.57s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:59:07.603113598Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Test":"TestOptionalBooleanPrinterMatchesGo","Elapsed":34.57}
+{"Time":"2026-10-09T15:59:07.603274827Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T15:59:07.607470767Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"coverage: 47.9% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T15:59:07.615269601Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/css","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/css\t34.586s\tcoverage: 47.9% of statements in ./internal/native\n"}
+{"Time":"2026-10-09T15:59:07.615314213Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/css","Elapsed":34.589}

@@ -1,0 +1,38 @@
+[
+  {
+    "mutant": "D2",
+    "command": [
+      "/tmp/css-defense/adamic",
+      "build",
+      "/tmp/css-defense/standalone/D2/css/print_main.ts",
+      "-o",
+      "/tmp/css-defense/standalone/D2/printer"
+    ],
+    "seconds": 20.80690389299707,
+    "exit": 0
+  },
+  {
+    "mutant": "D3",
+    "command": [
+      "/tmp/css-defense/adamic",
+      "build",
+      "/tmp/css-defense/standalone/D3/css/print_main.ts",
+      "-o",
+      "/tmp/css-defense/standalone/D3/printer"
+    ],
+    "seconds": 19.29159852900193,
+    "exit": 0
+  },
+  {
+    "mutant": "D4",
+    "command": [
+      "/tmp/css-defense/adamic",
+      "build",
+      "/tmp/css-defense/standalone/D4/css/print_main.ts",
+      "-o",
+      "/tmp/css-defense/standalone/D4/printer"
+    ],
+    "seconds": 20.407324268002412,
+    "exit": 0
+  }
+]

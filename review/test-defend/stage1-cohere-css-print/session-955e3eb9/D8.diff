@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/count.c
++++ b/internal/native/runtime/count.c
+@@ -21,7 +21,7 @@
+ 		adamic_counted.allocations, adamic_counted.frees, adamic_counted.retains, adamic_counted.releases, adamic_counted.peak, adamic_counted.regions);
+ 	if (length > 0 && (size_t)length < sizeof line) {
+ 		// Best effort, as a panic's message is: stderr may be what failed.
+-		(void)!write(2, line, (size_t)length);
++		(void)!write(1, line, (size_t)length);
+ 	}
+ }
+ 

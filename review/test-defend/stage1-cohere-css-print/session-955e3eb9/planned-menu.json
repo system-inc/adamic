@@ -1,0 +1,66 @@
+[
+  {
+    "mutant": "D1",
+    "file": "internal/native/native.go",
+    "line": 110,
+    "old": "func Build(source string, output string, options Options) error {",
+    "new": "func Build(source string, output string, options Options) error {\n\tif options.Count { return fmt.Errorf(\"native: counted builds unavailable\") }",
+    "operation": "return early for counted builds"
+  },
+  {
+    "mutant": "D2",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 41,
+    "old": "n.data().booleans.get('namespace') ? '' :",
+    "new": "n.data().booleans.get('namespace') ? '*' :",
+    "operation": "change empty namespace constant"
+  },
+  {
+    "mutant": "D3",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 146,
+    "old": "/\\s*!\\s*important/i, ' !important'",
+    "new": "/\\s*!\\s*important/i, ' !default'",
+    "operation": "change important suffix constant"
+  },
+  {
+    "mutant": "D4",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 146,
+    "old": "/\\s*!default/i, ' !default'",
+    "new": "/\\s*!default/i, ' !global'",
+    "operation": "change SCSS default suffix constant"
+  },
+  {
+    "mutant": "D5",
+    "file": "stage1/cohere/css/print_doc.ts",
+    "line": 163,
+    "old": "repeatText(tabs ? '\\t' : ' '",
+    "new": "repeatText(tabs ? ' ' : ' '",
+    "operation": "change tab indentation constant, preserving length"
+  },
+  {
+    "mutant": "D6",
+    "file": "stage1/cohere/css/print.ts",
+    "line": 269,
+    "old": "': yaml front matter is formatted by the yaml printer, which css.Format cannot reach'",
+    "new": "': YAML front matter is formatted by the yaml printer, which css.Format cannot reach'",
+    "operation": "change refusal diagnostic constant"
+  },
+  {
+    "mutant": "D7",
+    "file": "stage1/cohere/css/print_main.ts",
+    "line": 63,
+    "old": "tabs: true, single: true, trailingComma:",
+    "new": "tabs: true, single: false, trailingComma:",
+    "operation": "flip narrow-mode single-quote option"
+  },
+  {
+    "mutant": "D8",
+    "file": "internal/native/runtime/count.c",
+    "line": 25,
+    "old": "write(2, line, (size_t)length)",
+    "new": "write(1, line, (size_t)length)",
+    "operation": "change file descriptor constant"
+  }
+]

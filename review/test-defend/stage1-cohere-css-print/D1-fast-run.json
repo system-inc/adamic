@@ -1,0 +1,45 @@
+{
+  "command": [
+    "timeout",
+    "120",
+    "go",
+    "test",
+    "-json",
+    "-count=1",
+    "-timeout",
+    "90s",
+    "./stage1/cohere/css/",
+    "-run",
+    "^Test(ClosedPrinterRegexGap|CSSPrinterBoundaryProofs|OptionalBooleanPrinterMatchesGo|SharedSliceAppendAgreesWithNode|EachGapStandsWhereGapsMdSaysItDoes|ClosedEmptyArrayUnionGap|ClosedParserRegexGap|ClosedOptionalBooleanConditionGap)$"
+  ],
+  "compile_command": [
+    "clang",
+    "-std=c11",
+    "-Wall",
+    "-Wextra",
+    "-Werror",
+    "-Wcast-function-type-strict",
+    "-pedantic",
+    "-Wno-unused-variable",
+    "-Wno-unused-but-set-variable",
+    "-Wno-unused-function",
+    "-Wno-unused-parameter",
+    "-Wno-self-assign",
+    "-ffp-contract=off",
+    "-fno-optimize-sibling-calls",
+    "-O1",
+    "-g",
+    "-fsanitize=address,undefined",
+    "-fno-sanitize-recover=all",
+    "-I",
+    "internal/native/runtime",
+    "-fsyntax-only",
+    "internal/native/runtime/string_share.c"
+  ],
+  "environment": {
+    "ADAMIC_BUILD_CACHE_DIR": "/workspace/defend-css-tmp/cache/D1",
+    "TMPDIR": "/workspace/defend-css-tmp"
+  },
+  "exit": 1,
+  "seconds": 48.609942630999285
+}

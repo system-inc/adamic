@@ -1,0 +1,21 @@
+stage1/cohere/css/composition_shards_test.go:413:		if err := native.Build(string(source), binary, native.Options{}); err != nil {
+stage1/cohere/css/composition_shards_test.go:489:	inputs.Flags = append(native.Flags(native.Options{Sanitize: true}), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT"))
+stage1/cohere/css/composition_shards_test.go:492:		return native.Build(string(c), filepath.Join(dir, "port"), native.Options{Sanitize: true})
+stage1/cohere/css/css_printer_parallel_test.go:143:	t.Logf("counted union: %d cases x 2 modes x 4 check groups = %d checks in %d shards", len(lines), len(lines)*8, len(plan))
+stage1/cohere/css/css_test.go:381:	if err := native.Build(native.C(program), binary, native.Options{Sanitize: true}); err != nil {
+stage1/cohere/css/css_test.go:399:		if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+stage1/cohere/css/css_test.go:433:	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+stage1/cohere/css/memory_checks_test.go:63:			if err := native.Build(code, binary, native.Options{}); err != nil {
+stage1/cohere/css/memory_checks_test.go:70:			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
+stage1/cohere/css/optimized_test.go:19:	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+stage1/cohere/css/optimized_test.go:41:	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+stage1/cohere/css/parser_shards_test.go:363:	options := native.Options{Sanitize: true}
+stage1/cohere/css/parser_shards_test.go:380:	options := native.Options{}
+stage1/cohere/css/print_test.go:193:	if err := native.Build(native.C(program), binary, native.Options{}); err != nil {
+stage1/cohere/css/printer_shards_test.go:96:			Flags:     append(native.Flags(native.Options{Sanitize: sanitize}), "variant="+strconv.Itoa(variant), "ADAMIC_NATIVE_SPLIT="+os.Getenv("ADAMIC_NATIVE_SPLIT")),
+stage1/cohere/css/printer_shards_test.go:124:			return native.Build(code, filepath.Join(dir, "native"), native.Options{Sanitize: sanitize})
+stage1/cohere/css/profile_test.go:99:		options native.Options
+stage1/cohere/css/profile_test.go:100:	}{{"printer", native.Options{}}, {"counted", native.Options{Count: true}}} {
+stage1/cohere/css/profile_test.go:107:	args := append(native.Flags(native.Options{}), "-g", "-I", runtimeDir, "-o", filepath.Join(directory, "profiled"), source)
+stage1/cohere/css/profile_test.go:151:			for _, name := range []string{"printer", "profiled", "counted"} {
+stage1/cohere/css/profile_test.go:153:				if result.exitCode != 0 || (name != "counted" && len(result.stderr) != 0) {
