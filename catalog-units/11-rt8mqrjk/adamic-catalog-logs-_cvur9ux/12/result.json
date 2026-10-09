@@ -1,0 +1,18 @@
+{
+  "number": 12,
+  "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "target": "b8bcadb2c493173855f19d7e5c508b34f5eeb5b6",
+  "worktree": "/home/ahra/full-gate/out/b8bcadb2c493-20261009T181932Z/catalog-units/11-rt8mqrjk/adamic-catalog-worktree-lfd_60_7/entry-12",
+  "setup_seconds": 83.03624837499228,
+  "ok": true,
+  "check_seconds": 30.71709309000289,
+  "cleanup_seconds": 22.388012641997193,
+  "wall_seconds": 139.1172353990114,
+  "load_before": "18.02 17.60 25.34 77/948 2400360",
+  "load_after": "80.56 41.88 33.20 97/1248 2498458",
+  "messages": [
+    "12 refuse-suppression-directives: applies-and-fails-as-recorded",
+    "12 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "12 wall=139.117s setup=83.036s check=30.717s cleanup=22.388s load=18.02 17.60 25.34 77/948 2400360 -> 80.56 41.88 33.20 97/1248 2498458"
+  ]
+}

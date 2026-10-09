@@ -1,0 +1,8 @@
+github.com/system-inc/adamic/internal/lower TestClassFeaturesPrivateStorage
+=== RUN   TestClassFeaturesPrivateStorage
+=== PAUSE TestClassFeaturesPrivateStorage
+=== CONT  TestClassFeaturesPrivateStorage
+    class_features_test.go:52: Node /tmp/adamic-gate/TestClassFeaturesPrivateStorage3531132165/001/main.a: context deadline exceeded
+--- FAIL: TestClassFeaturesPrivateStorage (66.25s)
+
+(box load 66.0 on 64 cores at first failure)
