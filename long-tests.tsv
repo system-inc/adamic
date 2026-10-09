@@ -1,0 +1,66 @@
+github.com/system-inc/adamic/stage1/cohere/markdownblocks	TestMicromarkInputChunks (setup)	160.82	pass
+github.com/system-inc/adamic/internal/native	TestRecordsAgainstNode (setup)	149.56	pass
+github.com/system-inc/adamic/internal/native	TestRecordReadMutants (setup)	137.42	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit00 (setup)	136.81	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit01 (setup)	136.78	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit02 (setup)	124.24	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit03 (setup)	123.92	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit04 (setup)	123.06	pass
+github.com/system-inc/adamic/internal/native	TestRecordMutantsUnit05 (setup)	120.33	pass
+github.com/system-inc/adamic/stage1/typescript/parser	TestJsxMemberNameRejection	102.93	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume_asan	81.46	pass
+github.com/system-inc/adamic/internal/oracle	TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/class_inheritance_exceptions.a	80.23	pass
+github.com/system-inc/adamic/stage1/cohere/selector	TestThePortParsesAsGoCohereDoes/catches_a_merged_word_uses_its_first_token_position	80.01	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_123	78.09	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline_0052	77.17	pass
+github.com/system-inc/adamic/stage3/fixtures	TestFixturesTaste/taste/18_named_export.a/native	75.88	fail
+github.com/system-inc/adamic/stage1/cohere/json	TestUpstreamRepositoryCorpusParity_1561	75.78	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_126	75.13	pass
+github.com/system-inc/adamic/internal/oracle	TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/number_parsing.a	73.85	pass
+github.com/system-inc/adamic/internal/oracle	TestWASIAgreesWithNode/shard-007/internal/oracle/testdata/fallthrough_nested.a	71.90	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline_1378	70.84	pass
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline_1377	70.36	fail
+github.com/system-inc/adamic/stage1/cohere/markdowninline	TestMarkdownInline_0033	70.31	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestAdaptVarToLet (setup)	66.96	pass
+github.com/system-inc/adamic/internal/lower	TestClassFeaturesPrivateStorage	66.25	fail
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestInspectRequestRefusals (setup)	57.53	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_strict_this_native	55.46	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestLargeCompilerOutputIsComplete	55.06	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_guard_volume	54.65	pass
+github.com/system-inc/adamic/stage1/cohere/css	TestTheCanonicalRangeChecksCanFail	53.36	pass
+github.com/system-inc/adamic/internal/lower	TestInheritanceGenericSoundness (setup)	51.43	pass
+github.com/system-inc/adamic/internal/native	TestRegExpBytecodeTest262	51.19	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestVerdictCorpus (setup)	49.52	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_122	47.71	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestVolumeTypeSymbol_000	47.40	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_apparent_shape_native	46.24	pass
+github.com/system-inc/adamic/internal/native	TestLoopBorrowPlan	45.78	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_assignable_types_native	45.20	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_base_shapes_native	44.97	pass
+github.com/system-inc/adamic/cmd/adamic-test262	TestClassifyCorpus (setup)	44.47	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_call_count_native	43.89	pass
+github.com/system-inc/adamic/internal/lower	TestNumericEnumLiteralPromises (setup)	43.60	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_121	43.50	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_call_parameters_native	43.44	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_call_returns_native	41.84	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_contextual_shape_native	41.27	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_enum_types_native	41.25	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_property_info_native	40.01	pass
+github.com/system-inc/adamic/internal/lower	TestNumericEnumNeverProof (setup)	39.66	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_property_shape_native	38.80	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestProduct_WitnessScriptKindNative	37.75	pass
+github.com/system-inc/adamic/internal/flow	TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95	35.65	pass
+github.com/system-inc/adamic/internal/lower	TestNamespaceCallGraphLinearWork (setup)	34.85	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_scope_locals_native	34.69	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_volume_asan	34.37	pass
+github.com/system-inc/adamic/internal/lower	TestNamespaceLimitsStayLoud (setup)	34.14	pass
+github.com/system-inc/adamic/internal/lower	TestNamespaceInitializationReachability (setup)	33.73	pass
+github.com/system-inc/adamic/internal/flow	TestFlowGraphPaths____oracle_testdata_timsort_a_63f1305dfb95	33.63	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly_007	32.50	pass
+github.com/system-inc/adamic/internal/flow	TestFlowMutationRanges____oracle_testdata_timsort_a_63f1305dfb95	32.46	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_symbol_origin_native	32.21	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_125	30.97	pass
+github.com/system-inc/adamic/stage1/cohere/json	TestPortMatchesGoCohere_124	30.88	pass
+github.com/system-inc/adamic/stage1/cohere/typeaware	TestProduct_volume_agreement_type_origin_native	30.85	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly_006	30.58	pass
+github.com/system-inc/adamic/stage1/cohere/lint	TestNodeTableIsLinkOnly_005	30.46	pass
