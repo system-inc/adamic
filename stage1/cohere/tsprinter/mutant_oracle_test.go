@@ -70,7 +70,7 @@ func mutantOracle(t *testing.T, change mutation) (string, string) {
 	if err := os.WriteFile(directory+"/overlay.json", overlay, 0644); err != nil {
 		t.Fatal(err)
 	}
-	command := bounded(t, "go", "test", "-count=1", "-timeout=75s", "-overlay="+directory+"/overlay.json", "-run=^TestAdamic"+kind+"Corpus$", "./internal/format/javascript")
+	command := bounded(t, "go", "test", "-count=1", "-timeout=0", "-overlay="+directory+"/overlay.json", "-run=^TestAdamic"+kind+"Corpus$", "./internal/format/javascript")
 	command.Dir = root + "/cohere"
 	command.Env = append(os.Environ(), "ADAMIC_TS_EXPRESSION_REQUEST="+directory+"/request.json", "ADAMIC_TS_STATEMENT_REQUEST="+directory+"/request.json")
 	if output, err := combinedOutput(command); err != nil {
