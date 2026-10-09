@@ -252,6 +252,7 @@ func witnessScriptKindRun(t *testing.T, shard int) {
 }
 
 func TestWitnessScriptKindPlantedFailure(t *testing.T) {
+	t.Parallel()
 	witnessScriptKindSetup(t)
 	key := witnessScriptKindState.keys[0]
 	ctx, cancel := context.WithTimeout(context.Background(), 90*time.Second)
