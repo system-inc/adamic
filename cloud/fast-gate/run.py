@@ -58,6 +58,10 @@ slowPackageSeconds = 3600
 # on its own box until Loom's Codex tier measures every unit on the reference shape, and the verdict names it.
 longTestSeconds = 30
 unitKillSeconds = 90
+# Products run to completion under a ten-minute ceiling; only test units get the 90 s kill, and a product over the
+# budget is listed beside the verdict, never red (@system_adamic, Oct 9 00:41 MDT, live on Loom's pool first: the boxes'
+# 90 s product kill at load 53 redded every candidate on main's own products).
+productKillSeconds = 600
 smokeTest = "TestNativeAgreesWithNode"
 oracle = module + "/internal/oracle"
 # A command run by literal name: exec.Command("x", exec.CommandContext(ctx, "x", exec.LookPath("x").
@@ -1846,10 +1850,10 @@ class Gate:
                 if not drained.is_set():
                     package = command[command.index("-p") + 1]
                     test = command[command.index("-test.run") + 1]
-                    self.fail(name, "%s %s killed at 90 s" % (package, test))
+                    self.fail(name, "%s %s killed at %d s" % (package, test, productKillSeconds))
                     with self.lock:
                         self.killSessions({process.pid})
-            deadline = threading.Timer(unitKillSeconds, expired)
+            deadline = threading.Timer(productKillSeconds, expired)
             deadline.daemon = True
             deadline.start()
         output = {}
@@ -2067,6 +2071,8 @@ class Gate:
         found = subprocess.run(["git", "-C", self.arguments.tree, "merge-base", self.arguments.base, self.arguments.sha],
                                capture_output=True, text=True)
         fork = found.stdout.strip() if found.returncode == 0 and found.stdout.strip() else self.arguments.base
+        products = [row for row in offBurndown if row[1].startswith("TestProduct_")]
+        offBurndown = [row for row in offBurndown if row not in products]
         unlisted = [row for row in offBurndown if not testInBase(self.arguments.tree, fork, row[0], row[1])]
         drift = [row for row in offBurndown if row not in unlisted]
         def unitWords(package, name, seconds):
@@ -2079,6 +2085,7 @@ class Gate:
             "budget_over": [unitWords(package, name, seconds) for package, name, seconds, _ in unlisted],
             "budget_drift": [unitWords(package, name, seconds) for package, name, seconds, _ in drift],
             "budget_can_leave_burndown": sorted("%s %s" % key for key in (burndown & set(units)) - over),
+            "products_over_budget": [unitWords(package, name, seconds) for package, name, seconds, _ in products],
         })
         if unlisted and self.failure is None and not getattr(self, "stopped", None):
             instrument = self.result["budget_instrument"]
@@ -2148,9 +2155,8 @@ class Gate:
         if self.result.get("slow_packages"):
             steps += "; slow packages, over %d min: %s" % (slowPackageSeconds // 60, ", ".join("%s %.0fs" % (name.rsplit("/", 2)[-2] + "/" + name.rsplit("/", 1)[-1], seconds) for name, seconds in sorted(self.result["slow_packages"].items(), key=lambda item: -item[1])))
         steps += "; %d units over %d s (%.0f s, %d on the burn-down, %d drifted over)" % (len(ledger), longTestSeconds, self.result["long_test_seconds"], len(self.result.get("budget_burndown_units", [])), len(self.result.get("budget_drift", [])))
-        productsOver = [words for words in self.result.get("budget_over", []) + self.result.get("budget_drift", []) if words.startswith("product ")]
-        if productsOver:
-            steps += "; " + "; ".join(productsOver)
+        if self.result.get("products_over_budget"):
+            steps += "; products over %d s, listed not red: %s" % (longTestSeconds, "; ".join(self.result["products_over_budget"]))
         if self.census.get("pending"):
             steps += "; pending skips: %s" % "; ".join(self.census["pending"])
         steps += "; box " + ", ".join("%s at %s" % (loadWords(self.result["box_load"][moment]), moment.replace("_", " "))

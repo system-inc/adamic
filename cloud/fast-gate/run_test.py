@@ -634,11 +634,11 @@ class Products(unittest.TestCase):
                 original = gate.spawn
                 command = ["go", "tool", "test2json", "-p", "p", "-test.run", "^TestProduct_A$"]
                 gate.spawn = lambda command, *args: original([sys.executable, "-c", "import time; time.sleep(600)"], *args)
-                with mock.patch.object(run, "unitKillSeconds", 0.05), mock.patch("builtins.print"):
+                with mock.patch.object(run, "productKillSeconds", 0.05), mock.patch("builtins.print"):
                     code = gate.stream(phase, command, io.StringIO())
                 self.assertNotEqual(code, 0)
                 self.assertEqual(gate.failure["step"], phase)
-                self.assertIn("p ^TestProduct_A$ killed at 90 s", gate.failure["detail"])
+                self.assertIn("p ^TestProduct_A$ killed at 0 s", gate.failure["detail"])
                 self.assertTrue(all(process.poll() is not None for process in gate.processes))
 
     def test_product_pool_uses_four_cpu_slots(self):
@@ -1432,15 +1432,16 @@ class Budget(unittest.TestCase):
             gate.budget(ledger, allUnits)
         return gate
 
-    def test_new_product_over_budget_is_named_and_never_burns_down(self):
+    def test_a_product_over_budget_is_listed_never_red_and_never_burns_down(self):
+        # @system_adamic, Oct 9 00:41 MDT: products run to completion; over 60 s is listed beside the verdict.
         self.write("p/product_test.go", "func TestProduct_New(t *testing.T) {}\n")
         self.write("cloud/fast-gate/budget-burndown.tsv", "%s/p\tTestProduct_New\t61.0\n" % run.module)
         self.head = self.commit("new product")
         gate = self.budget([("TestProduct_New", 61.0)])
-        self.assertEqual(gate.failure["step"], "budget")
+        self.assertIsNone(gate.failure)
         words = "product %s/p TestProduct_New 61.0 s" % run.module
-        self.assertEqual(gate.result["budget_over"], [words])
-        self.assertIn(words, gate.failure["detail"])
+        self.assertEqual(gate.result["budget_over"], [])
+        self.assertEqual(gate.result["products_over_budget"], [words])
         self.assertEqual(gate.result["budget_burndown_units"], [])
         gate.arguments.branch = gate.arguments.session = ""
         gate.kind, gate.planned, gate.exits, gate.steps = "fast", [], {}, {}
@@ -1451,12 +1452,13 @@ class Budget(unittest.TestCase):
         with open(os.path.join(self.directory, "status.txt")) as status:
             self.assertIn(words, status.read())
 
-    def test_old_product_over_budget_is_drift(self):
+    def test_old_product_over_budget_is_listed_too(self):
         self.write("p/product_test.go", "func TestProduct_Old(t *testing.T) {}\n")
         self.base = self.head = self.commit("old product")
         gate = self.budget([("TestProduct_Old", 61.0)])
         self.assertIsNone(gate.failure)
-        self.assertEqual(gate.result["budget_drift"], ["product %s/p TestProduct_Old 61.0 s" % run.module])
+        self.assertEqual(gate.result["budget_drift"], [])
+        self.assertEqual(gate.result["products_over_budget"], ["product %s/p TestProduct_Old 61.0 s" % run.module])
 
     def test_a_new_unit_over_the_budget_is_red_naming_it_and_the_box(self):
         gate = self.budget([("TestNew/case", 31.5)])
