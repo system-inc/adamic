@@ -1,5 +1,5 @@
 Built: emission-only CPU profile of the unmodified stage-1 lint port through Go APIs, task #3he8f8g.
-Commits: base cd0ecb04d63fe873383154cb6470a3c66861d0cb; delivery SHA is reported with the pushed branch.
+Commits: base cd0ecb04d63fe873383154cb6470a3c66861d0cb; profile evidence 60b137d7; final delivery SHA is reported with the pushed branch.
 Commands and outputs: GOMAXPROCS=4 /tmp/c-emission-profile; lower 4.124505348s, native.C 72.431460293s, 6,405,618 C bytes.
 Mutants: none; this delivery adds evidence only, with no compiler, fixture, or test change.
 Not covered: sf-yepesta's mutant snapshot, the other two port snapshots, full oracle C equivalence, an implemented fix, or optimized cold timing.
@@ -26,8 +26,8 @@ state; do not label it a cold optimized measurement.
 internal/native/emit_objects.go:427 dynamicProperties, whole-program walk at
 line 429; fieldTypesNeeded at line 447 invokes it at 448 and performs another
 whole-program walk at 452. shapeWith calls dynamicProperties before even
-checking its shape cache (line 256). objectLiteral calls fieldTypesNeeded
-once per field (line 202). These facts do not vary per call, but each query
+checking its shape cache (line 265). objectLiteral calls fieldTypesNeeded
+once per field (line 205). These facts do not vary per call, but each query
 walks every expression in every function and main by reflection.
 
 The profile attributes 37.74s cumulative to dynamicProperties and 38.81s to
@@ -92,7 +92,6 @@ Unfiltered pprof output, including emitter entry points and runtime wrappers:
 File: c-emission-profile
 Build ID: fa145ac134c5a681f9e57d71c36668ff02040cbf
 Type: cpu
-Time: 2026-10-09 07:01:45 UTC
 Duration: 72.43s, Total samples = 69.90s (96.50%)
 Showing nodes accounting for 28.94s, 41.40% of 69.90s total
 Dropped 220 nodes (cum <= 0.35s)
@@ -124,3 +123,5 @@ performance unit #3he8f8g. The brief provides no numeric roadmap step; none is
 invented. Conservative scope assumption: profiling the unmodified lint recipe
 satisfies the requested one-program measurement; it does not imply coverage of
 all named snapshots.
+
+Lane checks passed: `lane checks 0.3 s: gofmt and tools on 0 Go files, t.Parallel on 0 test packages`. The prescribed fetch left no origin/cloud/merge-tree ref because this checkout has a narrow fetch refspec. Explicitly fetching main, devtools/fast-gate and cloud/merge-tree into their origin refs fixed it; the same lane-check script then exited 0.
