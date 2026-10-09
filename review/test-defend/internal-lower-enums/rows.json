@@ -1,0 +1,63 @@
+[
+  {
+    "test": "TestInputSpreadArgumentsAreNotYet",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestInputSpreadCoverage"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/lower/input.go:30",
+        "change": "for _, name := range inputFunctions { -> for _, name := range inputFunctions[:len(inputFunctions)-1] {",
+        "rows_failed": [
+          "TestInputSpreadArgumentsAreNotYet",
+          "TestInputSpreadCoverage"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/lower/input.go:36",
+        "change": "\"a spread argument to \"+name -> \"a tuple spread argument to \"+name",
+        "rows_failed": [
+          "TestInputSpreadArgumentsAreNotYet",
+          "TestInputSpreadCoverage"
+        ]
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/lower/input.go:35",
+        "change": "argument.Kind == ast.KindSpreadElement -> argument.Kind != ast.KindSpreadElement",
+        "rows_failed": [
+          "TestInputSpreadArgumentsAreNotYet",
+          "TestInputSpreadCoverage"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1; input_test.go:33: got lower: /tmp/adamic-gate/TestInputSpreadArgumentsAreNotYetwriteTextFile1954327788/001/main.a:3:1: writeTextFile takes a path and a text, and the checker let another count through, want NotYet"
+  },
+  {
+    "test": "TestInputSpreadCoverage",
+    "package": "internal/lower",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestInputSpreadArgumentsAreNotYet"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/lower/input.go:34",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/lower/input.go:34",
+        "change": "for _, argument := range arguments { -> for _, argument := range arguments[:min(1, len(arguments))] {",
+        "rows_failed": [
+          "TestInputSpreadCoverage"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1; === RUN   TestInputSpreadCoverage/writeTextFile_later.a\n=== PAUSE TestInputSpreadCoverage/writeTextFile_later.a\n=== CONT  TestInputSpreadCoverage/writeTextFile_later.a\n    input_test.go:77: import { writeTextFile } from 'adamic';\n        const text: [string] = ['text'];\n        writeTextFile('out.txt', ...text);\n        : got /workspace/adamic/internal/lower/testdata/input-spread/writeTextFile_later.a:3:26: stage 0 can't lower a SpreadElement yet, want NotYet naming writeTextFile\n--- FAIL: TestInputSpreadCoverage/writeTextFile_later.a (0.06s)"
+  }
+]

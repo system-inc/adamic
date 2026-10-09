@@ -1,0 +1,26 @@
+[
+  {
+    "id": "D1",
+    "exit": 1,
+    "wall": 47.9498711510023,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D1.log 2>&1"
+  },
+  {
+    "id": "D2",
+    "exit": 1,
+    "wall": 44.77404387700153,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D2 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D2.log 2>&1"
+  },
+  {
+    "id": "D3",
+    "exit": 1,
+    "wall": 45.57318515899897,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D3 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D3.log 2>&1"
+  },
+  {
+    "id": "D4",
+    "exit": 1,
+    "wall": 46.40192954400118,
+    "command": "ADAMIC_BUILD_CACHE_DIR=/tmp/defend-lower-enums/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run . > D4.log 2>&1"
+  }
+]
