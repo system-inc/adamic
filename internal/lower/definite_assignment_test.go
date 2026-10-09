@@ -2,6 +2,7 @@ package lower
 
 import (
 	"github.com/system-inc/adamic/internal/ir"
+	"strings"
 	"testing"
 )
 
@@ -16,6 +17,11 @@ func TestDefiniteAssignmentUsesReadiness(t *testing.T) {
 		{"class Box { n!: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n", 1},
 		{"let n!: number;\nn = 2;\nconsole.log(`${n + 1}`);\n", 0},
 	} {
+		// Behavior cannot observe redundant readiness metadata after initialization.
+		// Uninitialized rows deliberately panic where unchecked source produces NaN.
+		if strings.Contains(probe.source, "= 2") {
+			lowersAndAgreesWithNode(t, probe.source)
+		}
 		program, err := lowerSource(t, probe.source)
 		if err != nil {
 			t.Fatal(err)
@@ -52,10 +58,6 @@ func TestDefiniteAssignmentSoundNeighbors(t *testing.T) {
 		"class Box { n: number; constructor() { this.n = 2; } }\nconsole.log(`${new Box().n + 1}`);\n",
 		"// This mentions ts-ignore in prose.\nconsole.log('@ts-ignore');\n",
 	} {
-		program, err := lowerSource(t, source)
-		if err != nil {
-			t.Fatalf("sound neighbor: %v", err)
-		}
-		requireLoweredOutput(t, program)
+		lowersAndAgreesWithNode(t, source)
 	}
 }

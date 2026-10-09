@@ -22,7 +22,7 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 		{"unused bad factory", `function bad(): Node { return { kind: 'identifier', pos: 0 }; } console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`, ""},
 		{"different tag", `const node: Node = { kind: 'number', pos: 0 }; console.log(identifier(node).name);`, ""},
 		{"dynamic complete", `function make(kind: Node['kind']): Node { const raw = { kind, pos: 0, name: 'ok' }; return raw; } console.log(identifier(make('identifier')).name);`, ""},
-		{"optional target", `interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; } function opt(node: Node): Optional { return node as Optional; }`, ""},
+		{"optional target", `interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; } function opt(node: Node): Optional { return node as Optional; } console.log(opt({ kind: 'identifier', pos: 0 }).kind);`, ""},
 		{"optional target read", `interface Optional extends Node { readonly kind: 'identifier'; readonly name?: string; } function opt(node: Node): Optional { return node as Optional; } console.log(opt({kind: 'identifier', pos: 0}).name ?? 'missing');`, "a checked field alias requiring an optional, accessor, or representation conversion"},
 		{"spread", `const raw = { kind: 'identifier' as const, pos: 0, name: 'ok' }; const node: Node = { ...raw }; console.log(identifier(node).name);`, ""},
 		{"reflection alias", `const raw = { kind: 'identifier' as const, pos: 0, name: 'ok' }; const O = Object; O.assign(raw, { name: 'changed' }); console.log(identifier(raw).name);`, "Object as a value"},
@@ -32,6 +32,11 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 	} {
 		t.Run(test.name, func(t *testing.T) {
 			t.Parallel()
+			switch test.name {
+			case "complete", "alias write", "unused bad factory", "dynamic complete", "spread", "generic", "optional target":
+				lowersAndAgreesWithNode(t, interfaceCastSource+test.source)
+				return
+			}
 			_, err := lowerSource(t, interfaceCastSource+test.source)
 			if test.reason == "" {
 				if err != nil {
@@ -47,8 +52,5 @@ func TestDefaultTaggedInterfaceAdmission(t *testing.T) {
 // Default admission has no environment switch.
 func TestDefaultTaggedInterfaceNeedsNoFlag(t *testing.T) {
 	t.Parallel()
-	_, err := lowerSource(t, interfaceCastSource+`console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`)
-	if err != nil {
-		t.Fatalf("default admission: %v", err)
-	}
+	lowersAndAgreesWithNode(t, interfaceCastSource+`console.log(identifier({ kind: 'identifier', pos: 0, name: 'ok' } as Identifier).name);`)
 }
