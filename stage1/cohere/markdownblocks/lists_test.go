@@ -32,11 +32,13 @@ func TestMarkdownTableLayout(t *testing.T) {
 	testBlockLayout(t, "tables")
 }
 
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
 func TestMarkdownCodeBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "code")
 }
 
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
 func TestMarkdownHTMLBlockLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "html")
@@ -79,6 +81,7 @@ func TestMarkdownLeafComposition(t *testing.T) {
 	testBlockLayout(t, "leaves")
 }
 
+// Not parallel: shared completeLayout cache and layout-fixtures directory; existing helper controls parallel execution.
 func TestMarkdownRootLayout(t *testing.T) {
 	parallelMarkdown(t)
 	testBlockLayout(t, "root")
