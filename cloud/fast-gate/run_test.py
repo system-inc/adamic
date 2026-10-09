@@ -39,6 +39,55 @@ def stage(command):
     return "tests"
 
 
+def landingProblems(sha, parts):
+    """Fixture of push-main's --also-gate union and fast VERDICT checks (969092f5)."""
+    problems = []
+    first = dict(parts[0][1])
+    for status, other in parts:
+        if not status.startswith("green") or other.get("sha") != sha or other.get("finished") is not True:
+            problems.append("record isn't green, finished and of the same sha")
+    for _, other in parts[1:]:
+        for key in ("steps_seconds", "stages_exit"):
+            first[key] = dict(first.get(key) or {}, **(other.get(key) or {}))
+        first["planned_stages"] = sorted(set(first.get("planned_stages") or []) | set(other.get("planned_stages") or []))
+        first["fail"] = (first.get("fail") or 0) + (other.get("fail") or 0)
+        for key in ("build_ok", "vet_ok", "uncached_tests"):
+            first[key] = bool(first.get(key) or other.get(key))
+        for key in ("unclassified_skips", "required_input_skips"):
+            first[key] = (first.get(key) or []) + (other.get(key) or [])
+    fast, status = first, parts[0][0]
+    if fast.get("sha") != sha:
+        problems.append("it gated %s, not %s" % (fast.get("sha"), sha))
+    if not status.startswith("green"):
+        problems.append("its status is %r" % status)
+    if fast.get("fail") != 0:
+        problems.append("%s failures" % fast.get("fail"))
+    if not fast.get("build_ok") or not fast.get("vet_ok"):
+        problems.append("go build or go vet failed")
+    for kind in ("unclassified_skips", "required_input_skips"):
+        if fast.get(kind):
+            problems.append("%s: %s" % (kind.replace("_", " "), " ".join(fast[kind])))
+    if fast.get("uncached_tests") is not True:
+        problems.append("its tests weren't run uncached")
+    planned = ("build", "vet", "tests", "smoke", "census")
+    ran = fast.get("steps_seconds") or {}
+    missing = [stage for stage in planned if stage not in ran]
+    if missing:
+        problems.append("stages with no completion recorded: %s" % " ".join(missing))
+    exits = fast.get("stages_exit") or fast.get("exit_codes") or {}
+    nonzero = ["%s=%s" % (stage, code) for stage, code in exits.items() if code != 0]
+    if nonzero:
+        problems.append("stages that exited nonzero: %s" % " ".join(nonzero))
+    unrecorded = [stage for stage in fast.get("planned_stages") or [] if exits.get(stage) != 0]
+    if unrecorded:
+        problems.append("planned stages without a recorded exit of 0: %s" % " ".join(unrecorded))
+    if fast.get("finished") is not True:
+        problems.append("the gate didn't record that it finished")
+    if fast.get("scoped_env"):
+        problems.append("it ran scoped (%s set)" % " ".join(fast["scoped_env"]))
+    return problems
+
+
 class FakeProcess:
     def __init__(self, command, stdout):
         self.pid = 0
@@ -294,6 +343,120 @@ class FailClosed(unittest.TestCase):
         self.assertEqual(result["planned_stages"], ["determinism"])
         self.assertNotIn("tests", result["stages_exit"])
         self.assertNotIn("build", result["stages_exit"])
+
+    def poolLog(self):
+        path = os.path.join(self.directory, "pool.jsonl")
+        with open(path, "w") as handle:
+            handle.write(json.dumps({"Action": "pass", "Package": "p", "Test": "TestPool"}) + "\n")
+        return path
+
+    def poolPart(self):
+        return ("green: pool Go tests", {"sha": self.sha, "base": self.sha, "finished": True, "fail": 0,
+                                        "uncached_tests": True, "planned_stages": ["tests"],
+                                        "steps_seconds": {"tests": 1}, "stages_exit": {"tests": 0}})
+
+    def test_fast_phases_plan_only_themselves(self):
+        for phase in ("coverage", "tools", "build", "vet", "smoke", "determinism", "census", "stage3", "catalog"):
+            with self.subTest(phase=phase):
+                extra = {"phase": phase}
+                if phase == "census":
+                    extra["census"] = self.poolLog()
+                gate, status, result = self.gate(extra=extra)
+                self.assertTrue(status.startswith("green:"), status)
+                self.assertEqual(result["planned_stages"], [phase])
+                self.assertEqual(result["stages_exit"], {phase: 0})
+                self.assertEqual(set(result["steps_seconds"]), {phase})
+                self.assertEqual(result["build_ok"], phase == "build")
+                self.assertEqual(result["vet_ok"], phase == "vet")
+                self.assertTrue(result["finished"])
+
+    def test_conditional_fast_phases_dispatch_only_their_selected_work(self):
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "a") as handle:
+            handle.write("workers workers/*\na-check probes/*\n")
+        for phase, path, method in (("workers", "workers/probe.mjs", "workers"),
+                                    ("a-check", "probes/probe.a", "aCheck"),
+                                    ("catalog-apply", "probe.md", "catalogApply")):
+            calls = []
+            def execute(gate, inputs):
+                calls.append(inputs)
+                gate.steps[phase] = 0.1
+                gate.exits[phase] = 0
+            with self.subTest(phase=phase), mock.patch.object(run.Gate, method, execute), \
+                    mock.patch.object(run.Gate, "catalogEntriesTouched", return_value=["01.patch"]):
+                gate, status, result = self.gate(unowned=[path], extra={"phase": phase})
+            self.assertTrue(status.startswith("green:"), status)
+            self.assertEqual(result["planned_stages"], [phase])
+            self.assertEqual(result["stages_exit"], {phase: 0})
+            self.assertEqual(set(result["steps_seconds"]), {phase})
+            self.assertEqual(len(calls), 1)
+            self.assertIn("workers" if phase == "workers" else path if phase == "a-check" else "01.patch", calls[0])
+
+    def test_fast_inventory_uses_the_base_diff_for_conditional_phases(self):
+        base = self.sha
+        for path in ("stage3/probe.md", "workers/probe.mjs", "probes/probe.a"):
+            os.makedirs(os.path.dirname(os.path.join(self.tree, path)), exist_ok=True)
+            with open(os.path.join(self.tree, path), "w") as handle:
+                handle.write("probe\n")
+        with open(os.path.join(self.tree, "cloud/fast-gate/executors.txt"), "a") as handle:
+            handle.write("workers workers/*\na-check probes/*\ninert cloud/*\n")
+        for command in (["add", "."], ["-c", "user.name=t", "-c", "user.email=t@t", "commit", "-qm", "conditional"]):
+            realRun(["git", "-C", self.tree] + command, check=True)
+        self.sha = run.git(self.tree, "rev-parse", "HEAD")
+        with mock.patch.object(run.Gate, "touched", lambda gate, paths: ([], paths)), \
+                mock.patch.object(run.Gate, "npmCli", side_effect=AssertionError("listing installs nothing")):
+            self.assertEqual(run.fastUnits(self.tree, base, self.sha), run.fastBasePhases + ["stage3", "workers", "a-check"])
+            self.assertEqual(run.fastUnits(self.tree, self.sha, self.sha), run.fastBasePhases)
+        gate, status, result = self.gate(base=base, extra={"phase": "coverage"})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertIn("workers/probe.mjs", result["changed_files"])
+        self.assertEqual(result["planned_stages"], ["coverage"])
+
+    def test_unknown_and_whole_only_fast_phases_are_red(self):
+        for phase in ("no-such-phase", "wasi", "tests", "workers", "a-check", "catalog-apply", "darwin"):
+            with self.subTest(phase=phase):
+                gate, status, result = self.gate(extra={"phase": phase})
+                self.assertTrue(status.startswith("red:"), status)
+                self.assertEqual(result["planned_stages"], [phase])
+                self.assertIn(phase, result["failure"]["step"])
+
+    def test_fast_census_requires_a_log_and_checks_requested_tests(self):
+        gate, status, result = self.gate(extra={"phase": "census"})
+        self.assertIn("first failure at census", status)
+        self.assertIn("no test.jsonl", result["failure"]["detail"])
+        with mock.patch.object(run.Gate, "runRequested", lambda gate: setattr(gate, "requested", {"p": {"TestMissing"}})):
+            gate, status, result = self.gate(extra={"phase": "census", "census": self.poolLog()})
+        self.assertTrue(status.startswith("red:"), status)
+        self.assertEqual(result["deferred_run_results"], {"p TestMissing": "missing"})
+
+    def test_several_fast_phases_complete_the_pool_landing_record(self):
+        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertEqual(result["planned_stages"], ["build", "vet", "smoke", "census"])
+        self.assertEqual(result["stages_exit"], {phase: 0 for phase in result["planned_stages"]})
+        self.assertEqual(landingProblems(self.sha, [self.poolPart(), (status, result)]), [])
+        with open(os.path.join(gate.arguments.out, "test.jsonl")) as handle:
+            log = handle.read()
+        self.assertIn("TestPool", log)
+        self.assertIn("TestOne", log)  # smoke appended, rather than overwriting the pool's log
+
+    def test_a_missing_smoke_or_red_vet_cannot_complete_the_pool_record(self):
+        gate, status, result = self.gate(extra={"phases": "build,vet,census", "census": self.poolLog()})
+        self.assertTrue(status.startswith("green:"), status)
+        self.assertTrue(any("smoke" in problem for problem in landingProblems(self.sha, [self.poolPart(), (status, result)])))
+        gate, status, result = self.gate(failing="vet", extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        self.assertIn("first failure at vet", status)
+        self.assertFalse(result["vet_ok"])
+        self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
+        gate, status, result = self.gate(extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+        result["sha"] = "b" * 40
+        self.assertTrue(landingProblems(self.sha, [self.poolPart(), (status, result)]))
+
+    def test_a_silent_fast_phase_is_red_even_in_a_combined_record(self):
+        for method, phase in (("build", "build"), ("vet", "vet"), ("smoke", "smoke"), ("checkCensus", "census")):
+            with self.subTest(phase=phase):
+                gate, status, result = self.gate(silent=method, extra={"phases": "build,vet,smoke,census", "census": self.poolLog()})
+                self.assertTrue(status.startswith("red:"), status)
+                self.assertIn(phase, result["failure"]["step"])
 
     def test_the_census_runs_over_a_merged_record(self):
         # The pool merges its units' test.jsonl; the gate's census and deferred checks run over it, nothing else.
@@ -1402,6 +1565,15 @@ class PhaseUnitTests(unittest.TestCase):
             self.assertEqual([line for line in listed if line], ["coverage", "tools", "build", "vet", "wasi a.a", "wasi requests",
                                                                 "stage3 stage3-apply-tests", "stage3 stage3-lane-tests", "stage3 stage3-lane",
                                                                 "catalog 1", "catalog 12", "determinism"])
+
+    def test_the_pool_lists_fast_non_test_units_from_a_plain_checkout(self):
+        listed = realRun([sys.executable, run.__file__, "--list-units", "--tree", "/unused"],
+                         capture_output=True, text=True, check=True, timeout=90).stdout.splitlines()
+        self.assertEqual(listed, run.fastBasePhases)
+        self.assertIn("smoke", listed)
+        self.assertIn("census", listed)
+        self.assertNotIn("tests", listed)
+        self.assertNotIn("wasi", listed)
 
     def test_one_catalog_entry_runs_alone_by_its_number(self):
         with tempfile.TemporaryDirectory() as tree:
