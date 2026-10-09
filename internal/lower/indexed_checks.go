@@ -19,17 +19,6 @@ func (l *lowering) checkedIndexedRead(node *ast.Node, value ir.Expression) (ir.E
 	if l.acceptsUndefined(node) && !l.program.RequiresIndexedSite(node) {
 		return value, nil
 	}
-	// Optional destinations can be absent even after this read succeeds.
-	// The area has fixed shapes, so reject rather than reach a missing-slot panic.
-	if parent := node.Parent; parent != nil && parent.Kind == ast.KindBinaryExpression {
-		assignment := parent.AsBinaryExpression()
-		target := ast.SkipParentheses(assignment.Left)
-		if assignment.Right == node && assignment.OperatorToken.Kind == ast.KindEqualsToken && target.Kind == ast.KindPropertyAccessExpression {
-			if field := l.checker.GetSymbolAtLocation(target); field != nil && field.Flags&ast.SymbolFlagsOptional != 0 {
-				return nil, l.notYet(target, "indexed result written to an optional property requires own-presence representation 5bb775ca and alias fixes through 7e7464e6")
-			}
-		}
-	}
 	return l.indexedPresenceGuard(node, value, l.checker.GetTypeAtLocation(node), l.checker.GetTypeAtLocation(node.AsElementAccessExpression().Expression))
 }
 

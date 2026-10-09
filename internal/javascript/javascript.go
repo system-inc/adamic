@@ -973,6 +973,9 @@ func (e *emitter) value(expression ir.Expression) string {
 	case ir.NodeBufferCall:
 		return e.nodeBufferCall(expression)
 	case ir.ObjectCall:
+		if strings.HasPrefix(expression.Method, "optional") && expression.Method != "optionalDelete" && expression.Method != "optionalIn" {
+			return "adamicObjectReadCall(" + quote(expression.Method) + ", " + quote(expression.Readiness) + ", " + e.values(expression.Arguments) + ")"
+		}
 		if expression.Checked {
 			return e.checkedObjectEnumeration(expression)
 		}

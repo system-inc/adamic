@@ -10,6 +10,7 @@ type ObjectCall struct {
 	Checked     bool
 	Allowed     []Expression
 	ElementName string
+	Readiness   string // runtime optional-contract diagnostic site
 }
 
 func (c ObjectCall) Type() Type { return c.Returns }

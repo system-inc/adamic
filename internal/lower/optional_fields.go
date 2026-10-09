@@ -97,6 +97,13 @@ func (l *lowering) literalObjectKeys(node *ast.Node, depth int) bool {
 		return false
 	}
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindBinaryExpression {
+		binary := node.AsBinaryExpression()
+		// Every non-nullish object is truthy, so a present result has the right origin.
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Left)).Flags()&checker.TypeFlagsObject != 0 {
+			return l.literalObjectKeys(binary.Right, depth+1)
+		}
+	}
 	if node.Kind == ast.KindObjectLiteralExpression {
 		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
 			if field.Kind == ast.KindSpreadAssignment {

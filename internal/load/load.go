@@ -46,7 +46,12 @@ type Program struct {
 	sparseArrays       bool
 
 	// files is the program's own source, in the order Load was given it: no prelude, no lib.
-	files []*ast.SourceFile
+	files             []*ast.SourceFile
+	optionalChecks    map[string]OptionSite
+	optionalRelations map[string]OptionSite
+	optionalLiterals  map[string][]OptionSite
+	optionalViews     map[string]OptionalViewContract
+	checkedOptions    map[string]bool
 }
 
 // CheckError is a program the checker rejected, with every diagnostic it gave.

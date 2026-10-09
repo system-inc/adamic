@@ -254,6 +254,9 @@ func (l *lowering) expression(node *ast.Node) (ir.Expression, error) {
 		return nil, err
 	}
 	value, err := l.value(node)
+	if err == nil && l.program.OptionalLiteralSite(ast.SkipParentheses(node)) {
+		value, err = l.checkedOptionalLiteral(ast.SkipParentheses(node), value)
+	}
 	if err == nil {
 		value, err = l.checkedIndexedRead(node, value)
 		if err == nil {

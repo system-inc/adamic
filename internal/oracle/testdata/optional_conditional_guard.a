@@ -1,0 +1,13 @@
+interface Fields { slot?: number | undefined; }
+function absent(): number | undefined { return undefined; }
+function build(enabled: { flag: number } | undefined): void {
+    const record: Fields | undefined = enabled && { slot: absent() };
+    if (record) {
+        console.log(`${'slot' in record}|${Object.keys(record).join(',')}|${Object.hasOwn(record, 'slot')}|${String(record.slot)}`);
+    } else {
+        console.log(String(record));
+    }
+}
+build({ flag: 1 });
+build({ flag: 2 });
+build(undefined);

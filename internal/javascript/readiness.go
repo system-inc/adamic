@@ -24,6 +24,16 @@ const adamicViewField = (object, name, expression, type, expected = adamicViewTy
     if (allowed.length && !allowed.includes(value)) panic("field read failed: " + expression + " expected " + expected + ", found " + typeof value + " " + value);
     return value;
 };
+const adamicObjectReadCall = (method, expression, target, ...sources) => {
+    if (method === "optionalFunctionStorage") { if (!(target instanceof AdamicClosure) || typeof target.code !== "function") panic("optional contract lacks object-return closure storage at " + expression); return true; }
+    if (method === "optionalArrayPresence") { if (target == null && sources[0]) return true; if (!Array.isArray(target)) panic("optional contract lacks object array storage at " + expression); for (const object of target) { adamicObjectReadCall("optionalViewStorage", expression, object, sources[2]); if (object != null) adamicObjectReadCall("optionalSpreadPresence", expression, object, sources[1]); } return true; }
+    if (method === "optionalViewStorage") { if (target == null ? sources[0] : (typeof target === "object" || typeof target === "function")) return true; panic("optional view lacks own-presence storage at " + expression); }
+    if (method === "optionalSpreadKeys") return target == null ? [] : Object.keys(target);
+    if (method === "optionalSpreadPresence") { for (const name of sources[0]) if (!Object.hasOwn(target, name)) panic("optional write lost own presence: '" + name + "' at " + expression); return true; }
+    if (method === "optionalWritePresence") { if (!Object.hasOwn(target, sources[0])) panic("optional write lost own presence: '" + sources[0] + "' at " + expression); return true; }
+    if (method === "assign") { for (const source of sources) for (const name of Object.keys(source)) adamicWriteField(target, name, adamicReadField(source, name, expression)); return target; }
+    return Object.keys(target).map(name => { const value = adamicReadField(target, name, expression); return method === "entries" ? [name, value] : value; });
+};
 const adamicCheckedViewCast = (object, field, type, allowed, message) => allowed.includes(adamicViewField(object, field, field, type)) ? object : panic(message);
 const adamicDefineField = (object, name, value, enumerable, ready, type) => { if (type !== undefined) adamicRecordFieldTypes(object, {[name]: type}); Object.defineProperty(object, name, {value, writable: true, enumerable, configurable: true}); if (ready) adamicFieldReadiness.get(object)?.delete(name); else { let fields = adamicFieldReadiness.get(object); if (!fields) adamicFieldReadiness.set(object, fields = new Set()); fields.add(name); } };
 const adamicSpreadFields = (object, expression) => { const result = {}; if (object !== undefined && object !== null) for (const name of Object.keys(object)) Object.defineProperty(result, name, {value: adamicReadField(object, name, expression), enumerable: true, writable: true, configurable: true}); return adamicRecordFieldTypes(result, adamicFieldRepresentations.get(object) || {}); };

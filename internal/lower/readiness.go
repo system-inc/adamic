@@ -283,6 +283,11 @@ func readinessStatement(statement ir.Statement, program *ir.Program, fields map[
 					expression.SpreadReadiness = ""
 				}
 				node = expression
+			case ir.ObjectCall:
+				if expression.Method != "optionalFunctionStorage" && expression.Method != "optionalArrayPresence" && expression.Method != "optionalViewStorage" && expression.Method != "optionalWritePresence" && expression.Method != "optionalSpreadKeys" && expression.Method != "optionalSpreadPresence" && (len(fields) == 0 || (expression.Method != "values" && expression.Method != "entries" && expression.Method != "assign")) {
+					expression.Readiness = ""
+				}
+				node = expression
 			case ir.Property:
 				if !program.CheckedFields[expression.Name] || expression.Method {
 					expression.View = ""

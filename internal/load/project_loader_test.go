@@ -22,10 +22,10 @@ const ordinary: number = 'wrong';
 	if !errors.As(err, &rejected) || len(rejected.OptionSites) != 3 {
 		t.Fatalf("unconverted sites must remain errors and be recorded: %v", err)
 	}
-	if !strings.Contains(err.Error(), "main.ts:5:") || !strings.Contains(err.Error(), "main.ts:3:") {
+	if !strings.Contains(err.Error(), "main.ts:5:") || len(rejected.ScheduledOptionSites) != 3 {
 		t.Fatalf("ordinary or unconverted error disappeared: %v", err)
 	}
-	if strings.Contains(err.Error(), "main.ts:2:") || strings.Contains(err.Error(), "main.ts:4:") {
+	if strings.Contains(err.Error(), "main.ts:2:") || strings.Contains(err.Error(), "main.ts:3:") || strings.Contains(err.Error(), "main.ts:4:") {
 		t.Fatalf("indexed row was not deferred to its lowering check: %v", err)
 	}
 }
@@ -109,5 +109,37 @@ func TestProductionProjectOverlaySites(t *testing.T) {
 	_, err = LoadOverlay(paths[1:], map[string]string{paths[1]: `const wrong: number = 'wrong';`})
 	if err == nil || !strings.Contains(err.Error(), "not assignable") {
 		t.Fatalf("ordinary overlay error was lost: %v", err)
+	}
+}
+
+func TestProductionLiteralContractIsPending(t *testing.T) {
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"exactOptionalPropertyTypes":false,"lib":["es2020"],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `const point: { x?: number } = { x: undefined };`})
+	program, err := Load(paths[1:])
+	if err != nil {
+		t.Fatal(err)
+	}
+	if len(program.optionalLiterals) != 1 || len(program.ExplainedOptionalChecks()) != 0 {
+		t.Fatal("a pending literal contract was lost or counted as emitted")
+	}
+	for _, sites := range program.optionalLiterals {
+		if len(sites) != 1 || sites[0].Code != 2375 {
+			t.Fatalf("wrong pending site: %v", sites)
+		}
+	}
+}
+
+func TestProductionNullableCallbackContractStaysError(t *testing.T) {
+	paths := writeProgram(t,
+		[2]string{"tsconfig.json", `{"compilerOptions":{"strict":true,"exactOptionalPropertyTypes":false,"lib":["ES2024"],"types":[],"noEmit":true},"files":["main.ts"]}`},
+		[2]string{"main.ts", `interface Source { slot?: number | undefined; }
+interface Target { slot?: number; }
+function choose(): (() => Source) | undefined { return undefined; }
+const callback: (() => Target) | undefined = choose();`})
+	_, err := Load(paths[1:])
+	var rejected *CheckError
+	if !errors.As(err, &rejected) || len(rejected.OptionSites) != 1 || len(rejected.ScheduledOptionSites) != 0 {
+		t.Fatalf("nullable callback must remain an explicit diagnostic, not a present-callback guard: %v", err)
 	}
 }

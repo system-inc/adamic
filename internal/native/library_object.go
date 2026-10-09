@@ -15,6 +15,24 @@ func (e *emitter) objectCall(call ir.ObjectCall) string {
 	switch call.Method {
 	case "catchProperty":
 		return e.caughtProperty(call, arguments)
+	case "optionalFunctionStorage":
+		e.line("extern bool adamic_optional_function_storage(const adamic_closure *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_function_storage(%s, %s)", arguments[0], cString(call.Readiness)))
+	case "optionalArrayPresence":
+		e.line("extern bool adamic_optional_array_presence(const adamic_array *, bool, const adamic_array *, bool, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_array_presence(%s, %s, %s, %s, %s)", arguments[0], arguments[1], arguments[2], arguments[3], cString(call.Readiness)))
+	case "optionalViewStorage":
+		e.line("extern bool adamic_optional_view_storage(const adamic_object *, bool, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_view_storage(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
+	case "optionalSpreadKeys":
+		e.line("extern adamic_array *adamic_optional_spread_keys(const adamic_object *);")
+		return e.own(ir.Array, fmt.Sprintf("adamic_optional_spread_keys(%s)", arguments[0]))
+	case "optionalSpreadPresence":
+		e.line("extern bool adamic_optional_spread_presence(const adamic_object *, const adamic_array *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_spread_presence(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
+	case "optionalWritePresence":
+		e.line("extern bool adamic_optional_write_presence(const adamic_object *, const adamic_string *, const char *);")
+		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_optional_write_presence(%s, %s, %s)", arguments[0], arguments[1], cString(call.Readiness)))
 	case "is":
 		return e.snapshot(ir.Boolean, fmt.Sprintf("adamic_object_is(%s, %s)", arguments[0], arguments[1]))
 	case "isFrozen":

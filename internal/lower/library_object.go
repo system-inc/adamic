@@ -247,8 +247,30 @@ func (l *lowering) literalDataObject(node *ast.Node, depth int) bool {
 		return false
 	}
 	node = ast.SkipParentheses(node)
+	if node.Kind == ast.KindBinaryExpression {
+		binary := node.AsBinaryExpression()
+		// Every non-nullish object is truthy, so a present result has the right origin.
+		if binary.OperatorToken.Kind == ast.KindAmpersandAmpersandToken && l.checker.GetNonNullableType(l.checker.GetTypeAtLocation(binary.Left)).Flags()&checker.TypeFlagsObject != 0 {
+			return l.literalDataObject(binary.Right, depth+1)
+		}
+	}
 	if node.Kind == ast.KindObjectLiteralExpression {
-		return l.exactObject(node, 0)
+		for _, field := range node.AsObjectLiteralExpression().Properties.Nodes {
+			if field.Kind == ast.KindSpreadAssignment {
+				if !l.literalDataObject(field.AsSpreadAssignment().Expression, depth+1) {
+					return false
+				}
+				continue
+			}
+			if field.Kind != ast.KindPropertyAssignment && field.Kind != ast.KindShorthandPropertyAssignment && field.Kind != ast.KindMethodDeclaration {
+				return false
+			}
+			name := field.Name()
+			if name == nil || (name.Kind != ast.KindIdentifier && name.Kind != ast.KindStringLiteral) || strings.ContainsRune(name.Text(), 0) || name.Text() == "__proto__" || strings.HasPrefix(name.Text(), "#") {
+				return false
+			}
+		}
+		return true
 	}
 	if !ast.IsIdentifier(node) {
 		return false
