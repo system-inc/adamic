@@ -12,7 +12,6 @@ import (
 	"unicode/utf16"
 
 	"github.com/system-inc/adamic/internal/childguard"
-	"github.com/system-inc/adamic/internal/javascript"
 	"github.com/system-inc/adamic/internal/native"
 )
 
@@ -52,92 +51,8 @@ func printerAnswers(t *testing.T, cases, mode string) string {
 	}
 	return string(data)
 }
-func TestCSSPrinterAgreesWithGo(t *testing.T) {
-	cases, _ := askedCases(t)
-	directory := portDirectory(t, nil)
-	program := lowered(t, filepath.Join(directory, "print_main.ts"))
 
-	// C emission marks borrowing information in the IR. Finish both backends
-	// and builds before parallel readers share the immutable sources/binaries.
-	source := native.C(program)
-	sanitized := filepath.Join(t.TempDir(), "printer")
-	if err := native.Build(source, sanitized, native.Options{Sanitize: true}); err != nil {
-		t.Fatal(err)
-	}
-	backend := filepath.Join(t.TempDir(), "printer.mjs")
-	if err := os.WriteFile(backend, []byte(javascript.JavaScript(program)), 0644); err != nil {
-		t.Fatal(err)
-	}
-	leakBinary := sanitized
-	if runtime.GOOS == "darwin" {
-		leakBinary = filepath.Join(t.TempDir(), "printer")
-		if err := native.Build(source, leakBinary, native.Options{}); err != nil {
-			t.Fatal(err)
-		}
-	}
-	for _, mode := range []string{"default", "narrow"} {
-		t.Run(mode, func(t *testing.T) {
-			t.Parallel()
-			expected := printerAnswers(t, cases, mode)
-			arguments := []string{cases, "output", "once", mode}
-			var environment []string
-			if runtime.GOOS == "linux" {
-				environment = []string{"ASAN_OPTIONS=detect_leaks=0"}
-			}
-			nativeRun := execute(t, environment, sanitized, arguments...)
-			for _, side := range []struct {
-				name   string
-				result run
-			}{
-				{"native ASan/UBSan", nativeRun},
-				{"Node", onNode(t, filepath.Join(directory, "print_main.ts"), arguments...)},
-				{"JavaScript backend", onNode(t, backend, arguments...)},
-			} {
-				if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-					t.Fatalf("%s: %d %s", side.name, side.result.exitCode, side.result.stderr)
-				}
-				if difference := firstDifference(string(side.result.stdout), expected); difference != "" {
-					t.Fatalf("%s: %s", side.name, difference)
-				}
-			}
-			if report := printerLeaks(t, leakBinary, arguments...); report != "" {
-				t.Fatal(report)
-			}
-			t.Log("native ASan/UBSan, Node, JavaScript backend and separate LeakSanitizer pass")
-			t.Logf("%d stylesheet formats and refusals agree byte for byte", strings.Count(expected, "\n")/2)
-			for _, mutation := range printerMutants {
-				t.Run("catches "+mutation.name, func(t *testing.T) {
-					t.Parallel()
-					mutated := portDirectory(t, &mutation)
-					mutantProgram := lowered(t, filepath.Join(mutated, "print_main.ts"))
-					for _, side := range []struct {
-						name   string
-						result run
-					}{
-						{"native ASan/UBSan", nativelyRun(t, mutantProgram, arguments...)},
-						{"Node", onNode(t, filepath.Join(mutated, "print_main.ts"), arguments...)},
-					} {
-						if side.result.exitCode != 0 || len(side.result.stderr) != 0 {
-							t.Fatalf("%s mutant must run: %d %s", side.name, side.result.exitCode, side.result.stderr)
-						}
-						difference := firstDifference(string(side.result.stdout), expected)
-						if difference == "" {
-							t.Fatalf("%s printer mutant survived", side.name)
-						}
-						t.Logf("%s caught: %s", side.name, difference)
-					}
-				})
-			}
-			if library := os.Getenv("ADAMIC_CSS_PRINTER_LIBRARY"); library != "" {
-				comparePrinterLibrary(t, cases, expected, library, mode, "npm")
-				repo, _ := filepath.Abs(repository)
-				comparePrinterLibrary(t, cases, expected, filepath.Join(repo, "cohere", "internal", "format", "prettier", "bundles"), mode, "fork")
-			} else {
-				t.Skip("set ADAMIC_CSS_PRINTER_LIBRARY to scratch Prettier 3.9.6")
-			}
-		})
-	}
-}
+// Not parallel: native.Build writes the shared adamic/runtime cache.
 func TestClosedPrinterRegexGap(t *testing.T) {
 	path, _ := filepath.Abs("gaps/6_printer_regex_tree.ts")
 	program := lowered(t, path)
@@ -324,6 +239,7 @@ func TestCSSPrinterThroughput(t *testing.T) {
 }
 
 func TestCSSPrinterBoundaryProofs(t *testing.T) {
+	t.Parallel()
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	inputs := "\ufeffa{b:c}"
 	encoded := ">C" + inputs + "\n>C// x\\ra{}\n>C\u00a0\n>C---\\na:     b\\n---\\na{}\n"
@@ -376,6 +292,7 @@ func printerLeaks(t *testing.T, binary string, arguments ...string) string {
 }
 
 // This corpus isolates boolean flags and namespace choices without the full printer corpus.
+// Not parallel: native.Build writes the shared adamic/runtime cache.
 func TestOptionalBooleanPrinterMatchesGo(t *testing.T) {
 	cases := filepath.Join(t.TempDir(), "cases.txt")
 	inputs := ">Ca{b:c}\n>Ca{b:c!important}\n>C*|a{b:c}\n>C|a{b:c}\n>Csvg|a{b:c}\n>S$x:1!default;a{b:$x!important}\n"

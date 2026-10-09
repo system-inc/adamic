@@ -10,6 +10,7 @@ import (
 )
 
 func TestArrayHolesMilestone(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"library_array_holes_scanner_probe.a", "library_array_holes_length.a", "library_array_holes_range.a"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", name))
@@ -46,6 +47,7 @@ func init() {
 
 // Missing indexed slots must stay absent rather than becoming present zero.
 func TestArrayHolesAbsentSlotMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_length.a"))
 	if err != nil {
 		t.Fatal(err)
@@ -77,6 +79,7 @@ func TestArrayHolesAbsentSlotMutant(t *testing.T) {
 }
 
 func TestArrayHolesRangeErrorMutant(t *testing.T) {
+	t.Parallel()
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_array_holes_range.a"))
 	if err != nil {
 		t.Fatal(err)

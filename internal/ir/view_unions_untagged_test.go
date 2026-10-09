@@ -3,6 +3,7 @@ package ir
 import "testing"
 
 func TestViewUnionDiscriminantOverlaps(t *testing.T) {
+	t.Parallel()
 	contracts := []ViewContract{
 		{Kind: ViewObject, Fields: []ViewFieldContract{{Name: "kind", Contract: 3}}},
 		{Kind: ViewObject, Fields: []ViewFieldContract{{Name: "kind", Contract: 4}}},

@@ -38,6 +38,7 @@ func TestMixedUnionContractGraph(t *testing.T) {
 		`interface Left {readonly left:string} interface Right {readonly right:number} type Target=Left|Right;`,
 	} {
 		t.Run(source, func(t *testing.T) {
+			t.Parallel()
 			l, target, release := mixedUnionLowering(t, source)
 			defer release()
 			node := l.program.Files()[0].Statements.Nodes[0]
@@ -66,6 +67,7 @@ func TestMixedUnionContractGraph(t *testing.T) {
 }
 
 func TestMixedUnionContractFailureDoesNotCertifyRetry(t *testing.T) {
+	t.Parallel()
 	l, target, release := mixedUnionLowering(t, `type Target=string|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -92,6 +94,7 @@ func TestMixedUnionContractFailureDoesNotCertifyRetry(t *testing.T) {
 }
 
 func TestMixedUnionContractUnknownMemberFails(t *testing.T) {
+	t.Parallel()
 	l, target, release := mixedUnionLowering(t, `type Target=string|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -110,6 +113,7 @@ func TestMixedUnionContractUnknownMemberFails(t *testing.T) {
 }
 
 func TestMixedUnionContractRecursiveMember(t *testing.T) {
+	t.Parallel()
 	l, target, release := mixedUnionLowering(t, `interface Node {readonly next:Target} type Target=Node|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -133,6 +137,7 @@ func TestMixedUnionContractRecursiveMember(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
+	t.Parallel()
 	l, target, release := mixedUnionLowering(t, `type Brand=string&{readonly marker:void}; type Target=Brand|number;`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]
@@ -156,6 +161,7 @@ func TestMixedUnionContractPhantomBrandUsesPrimitiveBase(t *testing.T) {
 }
 
 func TestMixedUnionContractPhantomVoidIsUndefined(t *testing.T) {
+	t.Parallel()
 	l, target, release := mixedUnionLowering(t, `type Target=void&{readonly marker:void};`)
 	defer release()
 	node := l.program.Files()[0].Statements.Nodes[0]

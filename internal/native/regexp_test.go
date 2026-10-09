@@ -35,6 +35,7 @@ type regexCase struct {
 // One executable runs all the observed test262 calls through the C interpreter,
 // including captures, named groups, indices and lastIndex, under both sanitizers.
 func TestRegExpBytecodeTest262(t *testing.T) {
+	t.Parallel()
 	file, err := os.Open("../regexp/testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -175,6 +176,7 @@ int main(int argc,char **argv) {
 }
 
 func TestRegExpBytecodeRandomNode(t *testing.T) {
+	t.Parallel()
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
 	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}
@@ -235,7 +237,9 @@ process.stdout.write(JSON.stringify(cases));`)
 	}
 	runRegexCases(t, cases)
 }
+
 func TestRegExpNativeStepLimit(t *testing.T) {
+	t.Parallel()
 	program, err := regex.Compile("(a+)+$", "")
 	if err != nil {
 		t.Fatal(err)
@@ -270,6 +274,7 @@ int main(int argc,char **argv) {
 // Library IteratorYieldResult types can also describe user objects. Read by
 // field name, and preserve a missing optional done instead of assuming slot zero.
 func TestRegExpIteratorResultShape(t *testing.T) {
+	t.Parallel()
 	source := `#include "adamic.h"
 #include <stdio.h>
 static const char *const names[] = {"value", "done"};
@@ -298,6 +303,7 @@ int main(int argc,char **argv) {
 }
 
 func TestRegExpBytecodePatternUnits(t *testing.T) {
+	t.Parallel()
 	var cases []regexCase
 	for _, unit := range []uint16{0xd800, 0xd801} {
 		// JSON decoders can replace lone surrogates in pattern strings with the same

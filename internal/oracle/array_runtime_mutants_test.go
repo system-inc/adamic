@@ -82,6 +82,7 @@ func arrayJavaScriptMutant(t *testing.T, source, before, after string) run {
 }
 
 func TestArrayElementKindRuntimeMutant(t *testing.T) {
+	t.Parallel()
 	program, _ := interfaceFixture(t, "lane2/array-boolean")
 	control := releasedUncached(t, program)
 	if control.exitCode != 70 || !strings.Contains(string(control.stderr), "expected number, found boolean") {
@@ -98,6 +99,7 @@ func TestArrayElementKindRuntimeMutant(t *testing.T) {
 }
 
 func TestArrayViewMissingReceiverMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "lane2/nullable-array-missing")
 	if got := onNode(t, path); got.exitCode != 70 || !strings.Contains(string(got.stderr), "Cannot read properties of undefined") {
 		t.Fatalf("Node: %#v", got)
@@ -123,6 +125,7 @@ func TestArrayViewMissingReceiverMutant(t *testing.T) {
 // Native and JavaScript also defend their IR boundary. Frontend writes through
 // mutable views stay refused until their logical source slot can be certified.
 func TestArrayViewPhysicalWriteMutant(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct {
 		name, raw, declared, diagnostic string
 		value                           ir.Expression
@@ -193,6 +196,7 @@ func TestArrayViewPhysicalWriteMutant(t *testing.T) {
 }
 
 func TestArrayViewHolesAbsenceMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "lane2/array-holes-view")
 	truth := onNode(t, path)
 	if truth.exitCode != 0 || string(truth.stdout) != "-1\n7\n" {

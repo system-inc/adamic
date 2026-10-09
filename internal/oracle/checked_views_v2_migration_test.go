@@ -12,8 +12,10 @@ import (
 )
 
 func TestCheckedViewV2ReadsAfterWrites(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"mixed-read-write", "null-read-write", "undefined-read-write", "representation-read-write", "fixed-tuple-good", "fs-option-boxing"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			program, path := interfaceFixture(t, "v2/"+name)
 			node := onNode(t, path)
 			sanitized, binary := nativelyUncached(t, program)
@@ -45,6 +47,7 @@ func TestCheckedViewV2ArrayArmAdmission(t *testing.T) {
 }
 
 func TestCheckedViewV2WrongFamilyMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "untagged/fixtures/callable-union-good-number")
 	want := onNode(t, path)
 	for _, got := range []run{releasedUncached(t, program), onJavaScriptBackend(t, program)} {
@@ -81,6 +84,7 @@ func TestCheckedViewV2WrongFamilyMutant(t *testing.T) {
 }
 
 func TestCheckedViewV2RepresentationMutants(t *testing.T) {
+	t.Parallel()
 	// The backend differential above checks the same five slot families after writes.
 	// Here the native reader deliberately restores each old interpretation, one at a time.
 	for _, sample := range []struct {
@@ -95,6 +99,7 @@ func TestCheckedViewV2RepresentationMutants(t *testing.T) {
 		{"float64", 17, "float64", "adamic_typed_array_new(adamic_typed_array_float64,1)"},
 	} {
 		t.Run(sample.name, func(t *testing.T) {
+			t.Parallel()
 			code := representationProbeC(sample.tag, sample.value, false)
 			binary := filepath.Join(t.TempDir(), "correct")
 			if err := native.Build(code, binary, native.Options{Sanitize: true}); err != nil {
@@ -150,6 +155,7 @@ int main(void){
 }
 
 func TestCheckedViewV2MembershipMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "untagged/fixtures/structural-source-wrong")
 	node := onNode(t, path)
 	if node.exitCode != 0 {
@@ -180,6 +186,7 @@ func TestCheckedViewV2MembershipMutant(t *testing.T) {
 }
 
 func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "v2/tuple-identity-wrong")
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("first\n")}, node); difference != "" {
@@ -210,6 +217,7 @@ func TestCheckedViewV2TupleIdentityMutant(t *testing.T) {
 }
 
 func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
+	t.Parallel()
 	program, path := interfaceFixture(t, "v2/callable-producer-wrong")
 	node := onNode(t, path)
 	if difference := disagreement(run{stdout: []byte("true\n")}, node); difference != "" {
@@ -240,8 +248,10 @@ func TestCheckedViewV2CallableProducerMutant(t *testing.T) {
 }
 
 func TestCheckedViewV2MovedStage3Results(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"taste/refused/21_truthy_loops.a", "predicates/03_void_zero.a", "assertions/11_parenthesized_kind.a", "assertions/20_type_flag_mask.a", "assertions/13_flag_downcast.a"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs("../../stage3/fixtures/" + name)
 			if err != nil {
 				t.Fatal(err)

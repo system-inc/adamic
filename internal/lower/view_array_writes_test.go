@@ -11,6 +11,7 @@ import (
 )
 
 func TestViewArrayWritesNeedSourceCertificate(t *testing.T) {
+	t.Parallel()
 	for _, write := range []string{"items(raw).values.push(true);", "items(raw).values[0] = true;"} {
 		t.Run(write, func(t *testing.T) {
 			source := "interface Base { readonly kind: 'items' | 'other'; }\ninterface Items extends Base { readonly kind: 'items'; readonly values: boolean[]; }\nfunction items(node: Base): Items { return node as Items; }\nconst raw = {kind: 'items' as const, values: [1]};\n" + write
@@ -32,6 +33,7 @@ func TestViewArrayWritesNeedSourceCertificate(t *testing.T) {
 }
 
 func TestViewArraySourceCertificateOmission(t *testing.T) {
+	t.Parallel()
 	path := filepath.Join(t.TempDir(), "certificate.a")
 	if err := os.WriteFile(path, []byte("console.log('control');"), 0600); err != nil {
 		t.Fatal(err)

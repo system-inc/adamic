@@ -10,6 +10,7 @@ import (
 // Each mutant removes an executable read check, leaving the cast and actual
 // producer storage intact. Release C is valid even when a scalar is misread.
 func TestCheckedViewArrayReadMutants(t *testing.T) {
+	t.Parallel()
 	for _, probe := range []struct{ name, kind string }{
 		{"array-second", "index"}, {"array-boolean", "index"},
 		{"array-string-literal", "literal"}, {"array-undefined", "index"},

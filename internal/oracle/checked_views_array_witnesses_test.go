@@ -13,6 +13,7 @@ import (
 // These are upstream TypeScript checker-profile witnesses, not standalone
 // Adamic admissions. Their source bytes and Node goldens survive the rename.
 func TestOriginalArrayWitnessExtensions(t *testing.T) {
+	t.Parallel()
 	data, err := os.ReadFile(filepath.Join(repository, "stage3/interface-downcasts/lane2/originalB/witness-extensions.json"))
 	if err != nil {
 		t.Fatal(err)
@@ -42,6 +43,7 @@ func TestOriginalArrayWitnessExtensions(t *testing.T) {
 }
 
 func TestOriginalArrayWitnessNode(t *testing.T) {
+	t.Parallel()
 	for _, group := range []string{"B", "B2", "B3", "B4"} {
 		directory := filepath.Join(repository, "stage3/interface-downcasts/lane2/original"+group)
 		directory, err := filepath.Abs(directory)
