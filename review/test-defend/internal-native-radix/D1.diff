@@ -1,0 +1,11 @@
+--- a/internal/native/runtime/radix.c
++++ b/internal/native/runtime/radix.c
+@@ -142,7 +142,7 @@
+ 	radix = isnan(radix) ? 0 : trunc(radix);
+ 	if (radix < 2 || radix > 36) {
+ 		static const char message[] = "RangeError: toString() radix argument must be between 2 and 36";
+-		adamic_panic(message, sizeof message - 1);
++		adamic_panic(message, sizeof message - 2);
+ 	}
+ 	if (radix == 10) {
+ 		return adamic_string_from_number(value);

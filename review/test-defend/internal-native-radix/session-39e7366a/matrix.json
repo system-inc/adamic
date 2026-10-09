@@ -1,0 +1,552 @@
+[
+  {
+    "mutant": "D01",
+    "file": "internal/regexp/matcher.go",
+    "file_line": "internal/regexp/matcher.go:219",
+    "old": "{0x2028, 0x2029}",
+    "new": "{0x2029, 0x2029}",
+    "target": "TestRegExpBytecodeTest262",
+    "change": "Off by one: stop excluding U+2028 from dot without dotAll.",
+    "compile_command": [
+      "go",
+      "vet",
+      "./internal/regexp/"
+    ],
+    "compile_exit": 0,
+    "compile_seconds": 0.12000308899951051,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegexProgramsKeepCheckedFieldReads|TestClosureConventionRuntimeDropCount)$"
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-native-radix/cache/D01"
+    },
+    "exit": 1,
+    "wall_seconds": 41.35077632899993,
+    "failed_members": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "rows_failed": [
+      "TestRegExpBytecodeTest262"
+    ],
+    "passed_members": [
+      "TestClosureConventionRuntimeDropCount",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode",
+      "TestRegexProgramsKeepCheckedFieldReads"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T14:38:17.775620313Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeTest262",
+        "Output": "    regexp_test.go:53: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      }
+    ],
+    "package_result": [
+      {
+        "Time": "2026-10-09T14:38:17.781058664Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 27.73
+      }
+    ]
+  },
+  {
+    "mutant": "D02",
+    "file": "internal/native/runtime/regexp.c",
+    "file_line": "internal/native/runtime/regexp.c:331",
+    "old": "i->unbounded || reg.count < i->maximum",
+    "new": "i->unbounded || i->maximum == 0 || reg.count < i->maximum",
+    "target": "TestRegExpBytecodeRandomNode family",
+    "change": "Flip repeat-body condition: interpret closed maximum zero as unbounded.",
+    "compile_command": [
+      "clang",
+      "-std=c11",
+      "-Wall",
+      "-Wextra",
+      "-Werror",
+      "-Wcast-function-type-strict",
+      "-pedantic",
+      "-Wno-unused-variable",
+      "-Wno-unused-but-set-variable",
+      "-Wno-unused-function",
+      "-Wno-unused-parameter",
+      "-Wno-self-assign",
+      "-ffp-contract=off",
+      "-fno-optimize-sibling-calls",
+      "-DADAMIC_COUNT",
+      "-O1",
+      "-g",
+      "-fsanitize=address,undefined",
+      "-fno-sanitize-recover=all",
+      "-I",
+      "internal/native/runtime",
+      "-c",
+      "internal/native/runtime/regexp.c",
+      "-o",
+      "/tmp/native-defend-D02.o"
+    ],
+    "compile_exit": 0,
+    "compile_seconds": 0.5562656969996169,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^(TestRegExpBytecodeTest262|TestRegExpNativeStepLimit|TestRegExpNativeStepLimitBoundary|TestRegExpIteratorResultShape|TestRegExpBytecodePatternUnits|TestRegExpBytecodeRandomNodeUnit00|TestRegExpBytecodeRandomNodeUnit01|TestRegExpBytecodeRandomNodeUnit02|TestRegExpBytecodeRandomNodeUnit03|TestRegExpBytecodeRandomNodeUnit04|TestRegExpBytecodeRandomNodeUnit05|TestRegExpBytecodeRandomNodeUnit06|TestRegExpBytecodeRandomNodeUnit07|TestRegExpBytecodeRandomNodeUnit08|TestRegExpBytecodeRandomNodeUnit09|TestRegExpBytecodeRandomNodeUnit10|TestRegExpBytecodeRandomNodeUnit11|TestRegExpBytecodeRandomNodeUnit12|TestRegExpBytecodeRandomNodeUnit13|TestRegExpBytecodeRandomNodeUnit14|TestRegExpBytecodeRandomNodeUnit15|TestRegExpBytecodeRandomNodeUnit16|TestRegExpBytecodeRandomNodeUnit17|TestRegExpBytecodeRandomNodeUnit18|TestRegExpBytecodeRandomNodeUnit19|TestRegExpBytecodeRandomNodeUnit20|TestRegExpBytecodeRandomNodeUnit21|TestRegExpBytecodeRandomNodeUnit22|TestRegExpBytecodeRandomNodeUnit23|TestRegExpBytecodeRandomNodeUnit24|TestRegExpBytecodeRandomNodeUnit25|TestRegExpBytecodeRandomNodeUnit26|TestRegExpBytecodeRandomNodeUnit27|TestRegExpBytecodeRandomNodeUnit28|TestRegExpBytecodeRandomNodeUnit29|TestRegExpBytecodeRandomNodeUnit30|TestRegExpBytecodeRandomNodeUnit31|TestRegExpBytecodeRandomNodeUnit32|TestRegExpBytecodeRandomNodeUnit33|TestRegExpBytecodeRandomNodeUnit34|TestRegExpBytecodeRandomNodeUnit35|TestRegExpBytecodeRandomNodeUnit36|TestRegExpBytecodeRandomNodeUnit37|TestRegExpBytecodeRandomNodeUnit38|TestRegExpBytecodeRandomNodeUnit39|TestRegExpSearchNode|TestRegExpLintPatternsNode|TestRegexProgramsKeepCheckedFieldReads|TestClosureConventionRuntimeDropCount)$"
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-native-radix/cache/D02"
+    },
+    "exit": 1,
+    "wall_seconds": 41.8621499639994,
+    "failed_members": [
+      "TestRegExpBytecodeRandomNodeUnit00",
+      "TestRegExpBytecodeRandomNodeUnit01",
+      "TestRegExpBytecodeRandomNodeUnit02",
+      "TestRegExpBytecodeRandomNodeUnit03",
+      "TestRegExpBytecodeRandomNodeUnit04",
+      "TestRegExpBytecodeRandomNodeUnit05",
+      "TestRegExpBytecodeRandomNodeUnit06",
+      "TestRegExpBytecodeRandomNodeUnit07",
+      "TestRegExpBytecodeRandomNodeUnit08",
+      "TestRegExpBytecodeRandomNodeUnit09",
+      "TestRegExpBytecodeRandomNodeUnit10",
+      "TestRegExpBytecodeRandomNodeUnit11",
+      "TestRegExpBytecodeRandomNodeUnit12",
+      "TestRegExpBytecodeRandomNodeUnit13",
+      "TestRegExpBytecodeRandomNodeUnit14",
+      "TestRegExpBytecodeRandomNodeUnit15",
+      "TestRegExpBytecodeRandomNodeUnit16",
+      "TestRegExpBytecodeRandomNodeUnit17",
+      "TestRegExpBytecodeRandomNodeUnit18",
+      "TestRegExpBytecodeRandomNodeUnit19",
+      "TestRegExpBytecodeRandomNodeUnit20",
+      "TestRegExpBytecodeRandomNodeUnit21",
+      "TestRegExpBytecodeRandomNodeUnit22",
+      "TestRegExpBytecodeRandomNodeUnit23",
+      "TestRegExpBytecodeRandomNodeUnit24",
+      "TestRegExpBytecodeRandomNodeUnit25",
+      "TestRegExpBytecodeRandomNodeUnit26",
+      "TestRegExpBytecodeRandomNodeUnit27",
+      "TestRegExpBytecodeRandomNodeUnit28",
+      "TestRegExpBytecodeRandomNodeUnit29",
+      "TestRegExpBytecodeRandomNodeUnit30",
+      "TestRegExpBytecodeRandomNodeUnit31",
+      "TestRegExpBytecodeRandomNodeUnit32",
+      "TestRegExpBytecodeRandomNodeUnit33",
+      "TestRegExpBytecodeRandomNodeUnit34",
+      "TestRegExpBytecodeRandomNodeUnit35",
+      "TestRegExpBytecodeRandomNodeUnit36",
+      "TestRegExpBytecodeRandomNodeUnit37",
+      "TestRegExpBytecodeRandomNodeUnit38",
+      "TestRegExpBytecodeRandomNodeUnit39"
+    ],
+    "rows_failed": [
+      "TestRegExpBytecodeRandomNode family"
+    ],
+    "passed_members": [
+      "TestClosureConventionRuntimeDropCount",
+      "TestRegExpBytecodePatternUnits",
+      "TestRegExpBytecodeTest262",
+      "TestRegExpIteratorResultShape",
+      "TestRegExpLintPatternsNode",
+      "TestRegExpNativeStepLimit",
+      "TestRegExpNativeStepLimitBoundary",
+      "TestRegExpSearchNode",
+      "TestRegexProgramsKeepCheckedFieldReads"
+    ],
+    "errors": [
+      {
+        "Time": "2026-10-09T14:38:32.969541108Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit15",
+        "Output": "    regexp_test.go:446: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:32.993977958Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit16",
+        "Output": "    regexp_test.go:451: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:33.064424068Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit39",
+        "Output": "    regexp_test.go:566: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:33.201553462Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit28",
+        "Output": "    regexp_test.go:511: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:33.333557261Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit14",
+        "Output": "    regexp_test.go:441: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:34.533150804Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit38",
+        "Output": "    regexp_test.go:561: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:34.675144546Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit37",
+        "Output": "    regexp_test.go:556: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:34.887891812Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit34",
+        "Output": "    regexp_test.go:541: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:35.029544974Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit35",
+        "Output": "    regexp_test.go:546: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:35.182225031Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit36",
+        "Output": "    regexp_test.go:551: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:36.225168327Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit33",
+        "Output": "    regexp_test.go:536: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:36.489545112Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit32",
+        "Output": "    regexp_test.go:531: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:36.60309623Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit31",
+        "Output": "    regexp_test.go:526: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:36.768800947Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit30",
+        "Output": "    regexp_test.go:521: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:37.073319127Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit29",
+        "Output": "    regexp_test.go:516: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:38.203425957Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit03",
+        "Output": "    regexp_test.go:386: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:38.370296194Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit12",
+        "Output": "    regexp_test.go:431: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:38.486283399Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit13",
+        "Output": "    regexp_test.go:436: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:38.635099308Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit11",
+        "Output": "    regexp_test.go:426: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:39.081542597Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit10",
+        "Output": "    regexp_test.go:421: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:39.893816934Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit09",
+        "Output": "    regexp_test.go:416: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:40.133540209Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit08",
+        "Output": "    regexp_test.go:411: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:40.38173835Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit07",
+        "Output": "    regexp_test.go:406: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:40.860297535Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit06",
+        "Output": "    regexp_test.go:401: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:41.526785805Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit05",
+        "Output": "    regexp_test.go:396: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:41.772761185Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit04",
+        "Output": "    regexp_test.go:391: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:42.193774996Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit01",
+        "Output": "    regexp_test.go:376: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:42.358981062Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit02",
+        "Output": "    regexp_test.go:381: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:42.671874652Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit00",
+        "Output": "    regexp_test.go:371: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:43.794145626Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit22",
+        "Output": "    regexp_test.go:481: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:43.81399752Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit27",
+        "Output": "    regexp_test.go:506: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:44.133615619Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit26",
+        "Output": "    regexp_test.go:501: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:44.241751674Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit25",
+        "Output": "    regexp_test.go:496: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:44.589580768Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit24",
+        "Output": "    regexp_test.go:491: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:45.660316584Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit23",
+        "Output": "    regexp_test.go:486: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:45.701269118Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit19",
+        "Output": "    regexp_test.go:466: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:45.871160839Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit21",
+        "Output": "    regexp_test.go:476: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:45.969769494Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit20",
+        "Output": "    regexp_test.go:471: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:46.271135388Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit17",
+        "Output": "    regexp_test.go:456: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      },
+      {
+        "Time": "2026-10-09T14:38:47.213554684Z",
+        "Action": "output",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Test": "TestRegExpBytecodeRandomNodeUnit18",
+        "Output": "    regexp_test.go:461: native regex oracle ([]): exit status 1\n",
+        "OutputType": "error"
+      }
+    ],
+    "package_result": [
+      {
+        "Time": "2026-10-09T14:39:00.200329786Z",
+        "Action": "fail",
+        "Package": "github.com/system-inc/adamic/internal/native",
+        "Elapsed": 34.647
+      }
+    ]
+  }
+]

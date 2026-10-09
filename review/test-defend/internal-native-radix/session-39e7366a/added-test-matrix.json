@@ -1,0 +1,44 @@
+[
+  {
+    "mutant": "D01",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeKeyKeepsBoundaries$"
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-native-radix/cache/D01"
+    },
+    "exit": 0,
+    "wall_seconds": 1.9829710490012076
+  },
+  {
+    "mutant": "D02",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./internal/native/",
+      "-run",
+      "^TestRuntimeKeyKeepsBoundaries$"
+    ],
+    "env": {
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/defend-native-radix/cache/D02"
+    },
+    "exit": 0,
+    "wall_seconds": 1.8848526400033734
+  }
+]
