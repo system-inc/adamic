@@ -1,0 +1,70 @@
+[
+  {
+    "test": "TestCallMayThrowUsesReachableTargets",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestCallMayThrowUsesReachableTargets$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "invocation_seconds": 2.112,
+    "test_seconds": 0,
+    "action": "pass",
+    "exit": 0
+  },
+  {
+    "test": "TestDirectClosureTargetsUseEncodedIndex",
+    "command": [
+      "go",
+      "test",
+      "./internal/ir",
+      "-run",
+      "^TestDirectClosureTargetsUseEncodedIndex$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "invocation_seconds": 2.095,
+    "test_seconds": 0,
+    "action": "pass",
+    "exit": 0
+  },
+  {
+    "test": "TestCallTargetThrowAgreesWithNode",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestCallTargetThrowAgreesWithNode$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "invocation_seconds": 14.35,
+    "test_seconds": 12.27,
+    "action": "pass",
+    "exit": 0
+  },
+  {
+    "test": "TestDirectClosureCallAgreesWithNode",
+    "command": [
+      "go",
+      "test",
+      "./internal/oracle",
+      "-run",
+      "^TestDirectClosureCallAgreesWithNode$",
+      "-count=1",
+      "-json",
+      "-timeout=90s"
+    ],
+    "invocation_seconds": 23.023,
+    "test_seconds": 21.09,
+    "action": "pass",
+    "exit": 0
+  }
+]

@@ -1,0 +1,16 @@
+{"Time":"2026-10-09T04:51:00.039298341Z","Action":"start","Package":"github.com/system-inc/adamic/bridge/tsgo"}
+{"Time":"2026-10-09T04:51:00.04661261Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample"}
+{"Time":"2026-10-09T04:51:00.046701711Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"=== RUN   TestBridgeOracleSample\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:00.046768239Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:237: queries: sample.ts, 162 positions, 1 unchanged program roots\n"}
+{"Time":"2026-10-09T04:51:00.449785096Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:238: go: tsgo: load_ns=28600344 query_ns=14273439 queries=162\n"}
+{"Time":"2026-10-09T04:51:06.507768831Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"    units_test.go:249: native oracle mismatch at byte 1\n","OutputType":"error"}
+{"Time":"2026-10-09T04:51:06.507974826Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Output":"--- FAIL: TestBridgeOracleSample (6.46s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:06.507982917Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeOracleSample","Elapsed":6.46}
+{"Time":"2026-10-09T04:51:06.508011259Z","Action":"run","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample"}
+{"Time":"2026-10-09T04:51:06.508013503Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"=== RUN   TestBridgeTimingRound1Sample\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:06.508016097Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"    units_test.go:58: piece belongs to another corpus mode or shard\n"}
+{"Time":"2026-10-09T04:51:06.508021414Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Output":"--- SKIP: TestBridgeTimingRound1Sample (0.00s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:06.508028795Z","Action":"skip","Package":"github.com/system-inc/adamic/bridge/tsgo","Test":"TestBridgeTimingRound1Sample","Elapsed":0}
+{"Time":"2026-10-09T04:51:06.508052961Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:06.516292799Z","Action":"output","Package":"github.com/system-inc/adamic/bridge/tsgo","Output":"FAIL\tgithub.com/system-inc/adamic/bridge/tsgo\t6.477s\n","OutputType":"frame"}
+{"Time":"2026-10-09T04:51:06.516329854Z","Action":"fail","Package":"github.com/system-inc/adamic/bridge/tsgo","Elapsed":6.477}

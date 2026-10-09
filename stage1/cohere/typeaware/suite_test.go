@@ -2,7 +2,6 @@ package typeaware
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	goast "go/ast"
 	"go/parser"
@@ -13,6 +12,7 @@ import (
 	"sort"
 	"strconv"
 	"strings"
+	"sync"
 	"testing"
 	"time"
 
@@ -154,7 +154,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 			t.Fatal(err)
 		}
 	}
-	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, setupStarted: started}
+	h := &harness{t: t, repository: repository, directory: directory, sixBuilds: true, sharedSetup: true, setupStarted: started}
 	traceGroup(t)
 	stage0 := "" // Native builds use the in-process compiler; only refusal shards need stage zero.
 	normal := func(h *harness) string { return typeAwareArchive(h, "checker", "", false) }
@@ -163,22 +163,23 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 	binary := func(h *harness) string { return typeAwareBuild(h, stage0, "suite-asan", entry, sanitized(h), true) }
 	optimized := func(h *harness) string { return typeAwareBuild(h, stage0, "suite", entry, normal(h), false) }
 	// Common products are ready before any case deadline starts.
-	typeAwareStage0(h)
-	readyBinary, readyOptimized := binary(h), optimized(h)
-	binary = func(*harness) string { return readyBinary }
-	optimized = func(*harness) string { return readyOptimized }
-	readyNormal, readySanitized := normal(h), sanitized(h)
+	var readyNormal, readySanitized string
+	var builds sync.WaitGroup
+	builds.Add(3)
+	go func() { defer builds.Done(); typeAwareStage0(h) }()
+	go func() { defer builds.Done(); readyNormal = normal(h) }()
+	go func() { defer builds.Done(); readySanitized = sanitized(h) }()
+	builds.Wait()
 	normal = func(*harness) string { return readyNormal }
 	sanitized = func(*harness) string { return readySanitized }
-	oracle := filepath.Join(directory, "oracle")
-	virtual := filepath.Join(repository, "cohere/adamic_six_oracle.go")
-	data, err := json.Marshal(map[string]any{"Replace": map[string]string{virtual: filepath.Join(repository, "stage1/cohere/typeaware/testdata/oracle_six.go")}})
-	if err != nil {
-		t.Fatal(err)
-	}
-	cmd := exec.Command("go", "build", "-overlay", h.write("oracle-overlay.json", string(data)), "-o", oracle, virtual)
-	cmd.Dir = filepath.Join(repository, "cohere")
-	oracle = typeAwareProduct(h, "oracle-build", cmd)
+	var readyBinary, readyOptimized string
+	builds.Add(2)
+	go func() { defer builds.Done(); readyBinary = binary(h) }()
+	go func() { defer builds.Done(); readyOptimized = optimized(h) }()
+	builds.Wait()
+	binary = func(*harness) string { return readyBinary }
+	optimized = func(*harness) string { return readyOptimized }
+	oracle := typeAwareOracle(h, "six")
 	config := filepath.Join(repository, "stage1/cohere/typeaware/testdata/tsconfig.json")
 	var paths []string
 	for i, source := range suiteSources(t, repository) {
@@ -381,7 +382,7 @@ func prepareSixRuleAgreementAndMutants(t *testing.T) *typeAwarePlan {
 		return typeAwareBuild(h, stage0, "facts-cost", filepath.Join(repository, "stage1/cohere/typeaware/testdata/fact_cost.ts"), normal(h), false)
 	}
 	directCost := func(h *harness) string {
-		return typeAwareProduct(h, "facts-cost-go-build", exec.Command("go", "build", "-o", filepath.Join(h.directory, "direct-cost"), "./bridge/tsgo/cost"))
+		return sixFactsCostGo(h)
 	}
 	readyNativeCost, readyDirectCost := nativeCost(h), directCost(h)
 	nativeCost = func(*harness) string { return readyNativeCost }

@@ -19,8 +19,10 @@ func init() {
 }
 
 func TestEnumInitializationNode(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"native-enum-map", "native-call-before-enum", "safe-helper", "safe-constructor", "callable-selection", "call-graph-24", "unknown-after"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {
 				t.Fatal(err)
@@ -46,6 +48,7 @@ func TestEnumInitializationNode(t *testing.T) {
 	}
 	for _, name := range []string{"reaching-direct", "reaching-helper", "reaching-cycle", "reaching-constructor", "reaching-derived"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {
 				t.Fatal(err)
@@ -64,8 +67,10 @@ func TestEnumInitializationNode(t *testing.T) {
 }
 
 func TestEnumInitializationUnknownPinned(t *testing.T) {
+	t.Parallel()
 	for _, name := range []string{"unknown-before", "unknown-callback", "unknown-property"} {
 		t.Run(name, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "stage3/fixtures/enum-init-reach", name+".a"))
 			if err != nil {
 				t.Fatal(err)

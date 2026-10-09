@@ -1,0 +1,5 @@
+=== RUN   TestBridgeUnitsCoverEveryPiece
+    coverage_test.go:112: coverage: 16 active pieces, 162 query positions, 5 query analyses; each piece has one owner for 1..40 shards
+--- PASS: TestBridgeUnitsCoverEveryPiece (0.01s)
+PASS
+ok  	github.com/system-inc/adamic/bridge/tsgo	0.012s

@@ -35,8 +35,8 @@ type regexCase struct {
 
 // One executable runs all the observed test262 calls through the C interpreter,
 // including captures, named groups, indices and lastIndex, under both sanitizers.
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpBytecodeTest262(t *testing.T) {
+	t.Parallel()
 	file, err := os.Open("../regexp/testdata/matches.json.gz")
 	if err != nil {
 		t.Fatal(err)
@@ -185,8 +185,8 @@ int main(int argc,char **argv) {
 
 }
 
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
-func TestRegExpBytecodeRandomNode(t *testing.T) {
+func runRegExpBytecodeRandomNodeUnit(t *testing.T, unit int) {
+	t.Helper()
 	random := rand.New(rand.NewSource(0x8_7_5))
 	atoms := []string{"a", "b", ".", "[a-z]", "[^]", "(a)", "(?:a)", "(?=a)", "(?<=a)", "\\d", "\\p{Letter}"}
 	extra := []string{"(a|(b))", "(a?b)", "(?!b)", "(?<!b)", "[ab]", "[^a]", "\\w", "\\b", "^", "$", "k", "s", "(a)\\1", "\\1(a)", "(?<x>a)\\k<x>", "(?<=([ab]+)([bc]+))", "[\\q{ab|a|}]", "[[a-z]&&[^aeiou]]"}
@@ -247,12 +247,14 @@ process.stdout.write(JSON.stringify(cases));`)
 	if err = json.Unmarshal(output.Bytes(), &cases); err != nil {
 		t.Fatal(err)
 	}
-
-	runRegexCases(t, cases)
+	if len(cases) != randomRegexCases {
+		t.Fatalf("random regex corpus: got %d, want %d", len(cases), randomRegexCases)
+	}
+	runRegexCases(t, cases[unit*randomRegexUnitSize:min((unit+1)*randomRegexUnitSize, len(cases))])
 }
 
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpNativeStepLimit(t *testing.T) {
+	t.Parallel()
 	program, err := regex.Compile("(a+)+$", "")
 	if err != nil {
 		t.Fatal(err)
@@ -282,8 +284,8 @@ int main(int argc,char **argv) {
 
 // Library IteratorYieldResult types can also describe user objects. Read by
 // field name, and preserve a missing optional done instead of assuming slot zero.
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpIteratorResultShape(t *testing.T) {
+	t.Parallel()
 	source := `#include "adamic.h"
 #include <stdio.h>
 static const char *const names[] = {"value", "done"};
@@ -311,8 +313,8 @@ int main(int argc,char **argv) {
 	}
 }
 
-// Not parallel: writes the shared user cache directory adamic/runtime and the package-level runtimeBuilds map.
 func TestRegExpBytecodePatternUnits(t *testing.T) {
+	t.Parallel()
 	var cases []regexCase
 	for _, unit := range []uint16{0xd800, 0xd801} {
 		// JSON decoders can replace lone surrogates in pattern strings with the same
@@ -332,4 +334,204 @@ func regularProgramsWithEngine(programs map[int]bool) []int {
 		}
 	}
 	return ids
+}
+
+func TestRegExpBytecodeRandomNodeUnit00(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 0)
+}
+
+func TestRegExpBytecodeRandomNodeUnit01(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 1)
+}
+
+func TestRegExpBytecodeRandomNodeUnit02(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 2)
+}
+
+func TestRegExpBytecodeRandomNodeUnit03(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 3)
+}
+
+func TestRegExpBytecodeRandomNodeUnit04(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 4)
+}
+
+func TestRegExpBytecodeRandomNodeUnit05(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 5)
+}
+
+func TestRegExpBytecodeRandomNodeUnit06(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 6)
+}
+
+func TestRegExpBytecodeRandomNodeUnit07(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 7)
+}
+
+func TestRegExpBytecodeRandomNodeUnit08(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 8)
+}
+
+func TestRegExpBytecodeRandomNodeUnit09(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 9)
+}
+
+func TestRegExpBytecodeRandomNodeUnit10(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 10)
+}
+
+func TestRegExpBytecodeRandomNodeUnit11(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 11)
+}
+
+func TestRegExpBytecodeRandomNodeUnit12(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 12)
+}
+
+func TestRegExpBytecodeRandomNodeUnit13(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 13)
+}
+
+func TestRegExpBytecodeRandomNodeUnit14(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 14)
+}
+
+func TestRegExpBytecodeRandomNodeUnit15(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 15)
+}
+
+func TestRegExpBytecodeRandomNodeUnit16(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 16)
+}
+
+func TestRegExpBytecodeRandomNodeUnit17(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 17)
+}
+
+func TestRegExpBytecodeRandomNodeUnit18(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 18)
+}
+
+func TestRegExpBytecodeRandomNodeUnit19(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 19)
+}
+
+func TestRegExpBytecodeRandomNodeUnit20(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 20)
+}
+
+func TestRegExpBytecodeRandomNodeUnit21(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 21)
+}
+
+func TestRegExpBytecodeRandomNodeUnit22(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 22)
+}
+
+func TestRegExpBytecodeRandomNodeUnit23(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 23)
+}
+
+func TestRegExpBytecodeRandomNodeUnit24(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 24)
+}
+
+func TestRegExpBytecodeRandomNodeUnit25(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 25)
+}
+
+func TestRegExpBytecodeRandomNodeUnit26(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 26)
+}
+
+func TestRegExpBytecodeRandomNodeUnit27(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 27)
+}
+
+func TestRegExpBytecodeRandomNodeUnit28(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 28)
+}
+
+func TestRegExpBytecodeRandomNodeUnit29(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 29)
+}
+
+func TestRegExpBytecodeRandomNodeUnit30(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 30)
+}
+
+func TestRegExpBytecodeRandomNodeUnit31(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 31)
+}
+
+func TestRegExpBytecodeRandomNodeUnit32(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 32)
+}
+
+func TestRegExpBytecodeRandomNodeUnit33(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 33)
+}
+
+func TestRegExpBytecodeRandomNodeUnit34(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 34)
+}
+
+func TestRegExpBytecodeRandomNodeUnit35(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 35)
+}
+
+func TestRegExpBytecodeRandomNodeUnit36(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 36)
+}
+
+func TestRegExpBytecodeRandomNodeUnit37(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 37)
+}
+
+func TestRegExpBytecodeRandomNodeUnit38(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 38)
+}
+
+func TestRegExpBytecodeRandomNodeUnit39(t *testing.T) {
+	t.Parallel()
+	runRegExpBytecodeRandomNodeUnit(t, 39)
 }
