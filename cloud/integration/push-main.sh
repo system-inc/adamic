@@ -369,9 +369,18 @@ if [ "$testOnly" = yes ]; then
 		exit 1
 	fi
 	# Tests only: Go test files, testdata, review evidence and shard tables. Anything else needs a gate.
-	nonTest=$(git diff --name-only "$old" "$tree" | grep -v -E '(_test\.go$|/testdata/|^review/|(^|/)shards\.json$)' | grep . || true)
+	# Harness directories read only by tests and gates, never by the compiler, runtime, library or a shipped
+	# tool, are allowed too, each added by ruling (@system_adamic, Oct 8: stage3/fixtures and stage3/meter).
+	changed=$(git diff --name-only "$old" "$tree")
+	nonTest=$(printf '%s\n' "$changed" | grep -v -E '(_test\.go$|_test\.py$|(^|/)test_[^/]*\.py$|/testdata/|^review/|(^|/)shards\.json$|^stage3/fixtures/|^stage3/meter/)' | grep . || true)
 	if [ -n "$nonTest" ]; then
 		echo "refused: not test-only against main ${old:0:8}: $(printf '%s' "$nonTest" | head -n 5 | paste -sd ' ' -)" >&2
+		exit 1
+	fi
+	# A harness change can hide a check that can't fail, so it lands only with its mutant evidence.
+	harness=$(printf '%s\n' "$changed" | grep -E '^stage3/(fixtures|meter)/' | grep -v -E '(_test\.go$|/testdata/)' | grep . || true)
+	if [ -n "$harness" ] && ! printf '%s\n' "$changed" | grep -q -i 'mutant'; then
+		echo "refused: it changes test harness ($(printf '%s' "$harness" | head -n 3 | paste -sd ' ' -)) with no mutant evidence among its files" >&2
 		exit 1
 	fi
 	if ! git merge-base --is-ancestor "$old" "$sha" || [ "$(git rev-parse "${sha}^{tree}")" != "$tree" ]; then
