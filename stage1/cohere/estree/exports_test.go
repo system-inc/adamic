@@ -9,16 +9,14 @@ func decoratedExports() []string {
 	return []string{"@d export class C {}", "@d export default class C {}", "export @d class C {}", "export default @d class C {}", "@a @b() export abstract class C {}", "// first\n@d\nexport default class {}"}
 }
 
-const testDecoratedExportsShards = 6
+const testDecoratedExportsShards = 32
 
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export.
 func TestDecoratedExports(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
-	ids := miscIDs("export", len(cases))
-	if len(cases) != testDecoratedExportsShards {
-		t.Fatal("decorated export enumeration changed")
-	}
+	ids := miscIDs("stage1/cohere/estree/exports_test.go:export", cases)
 	oracle := miscOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -39,7 +37,7 @@ func TestDecoratedExports(t *testing.T) {
 }
 
 func TestDecoratedExportsPlantedDisagreement(t *testing.T) {
-	miscPlantedProof(t, testDecoratedExportsShards, miscIDs("export", len(decoratedExports())), func(planted bool) error {
+	miscPlantedProof(t, testDecoratedExportsShards, miscIDs("stage1/cohere/estree/exports_test.go:export", decoratedExports()), func(planted bool) error {
 		got := []byte("agree")
 		if planted {
 			got = []byte("disagree")
@@ -48,16 +46,14 @@ func TestDecoratedExportsPlantedDisagreement(t *testing.T) {
 	})
 }
 
-const testDecoratedExportMutantShards = 6
+const testDecoratedExportMutantShards = 32
 
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every decorated export mutant case.
 func TestDecoratedExportMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := decoratedExports()
-	if len(cases) != testDecoratedExportMutantShards {
-		t.Fatal("decorated export mutant enumeration changed")
-	}
-	ids := miscIDs("export-mutant", len(cases))
+	ids := miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", cases)
 	oracle := miscOracle(t)
 	path := miscMutant(t, "convert.ts", "this.arena.node(wrapper).start = this.start(exported);", "this.arena.node(wrapper).start = this.start(id);")
 	binary, _ := miscBuild(t, path)
@@ -78,7 +74,7 @@ func TestDecoratedExportMutant(t *testing.T) {
 }
 
 func TestDecoratedExportMutantPlantedSurvivor(t *testing.T) {
-	miscPlantedProof(t, testDecoratedExportMutantShards, miscIDs("export-mutant", len(decoratedExports())), func(planted bool) error {
+	miscPlantedProof(t, testDecoratedExportMutantShards, miscIDs("stage1/cohere/estree/exports_test.go:export-mutant", decoratedExports()), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
 			got = []byte("agree")

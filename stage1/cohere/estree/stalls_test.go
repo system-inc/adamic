@@ -27,7 +27,7 @@ func refusedBeforeDeadline(t *testing.T, argv []string, diagnostic string) {
 	}
 }
 
-const testBoundedPortParserShards = 16
+const testBoundedPortParserShards = 64
 
 type boundedPortCase struct {
 	id, text, filename string
@@ -37,12 +37,12 @@ type boundedPortCase struct {
 func boundedPortCases(t *testing.T) []boundedPortCase {
 	t.Helper()
 	cases := []boundedPortCase{
-		{"eof-type", "type X = {", "input.ts", false},
-		{"eof-interface", "interface I {", "input.ts", false},
-		{"eof-method", "type X = { m(a: string): void;", "input.ts", false},
+		{"stage1/cohere/estree/stalls_test.go:0:eof-type", "type X = {", "input.ts", false},
+		{"stage1/cohere/estree/stalls_test.go:0:eof-interface", "interface I {", "input.ts", false},
+		{"stage1/cohere/estree/stalls_test.go:0:eof-method", "type X = { m(a: string): void;", "input.ts", false},
 	}
 	fixtures, err := filepath.Glob("validation/followup/stalls/*.input")
-	if err != nil || len(fixtures) != 13 {
+	if err != nil || len(fixtures) == 0 {
 		t.Fatalf("stall fixtures: %d %v", len(fixtures), err)
 	}
 	for _, fixture := range fixtures {
@@ -50,10 +50,7 @@ func boundedPortCases(t *testing.T) []boundedPortCase {
 		if err != nil {
 			t.Fatal(err)
 		}
-		cases = append(cases, boundedPortCase{fixture, string(body), strings.TrimSuffix(filepath.Base(fixture), ".input"), true})
-	}
-	if len(cases) != testBoundedPortParserShards {
-		t.Fatal("bounded parser enumeration changed")
+		cases = append(cases, boundedPortCase{"stage1/cohere/estree/" + filepath.ToSlash(fixture) + ":0:audit", string(body), strings.TrimSuffix(filepath.Base(fixture), ".input"), true})
 	}
 	return cases
 }
@@ -66,7 +63,9 @@ func boundedPortIDs(cases []boundedPortCase) []string {
 	return ids
 }
 
-// ADAMIC_TEST_SHARD=i/n selects shards; unset runs all 13 fixtures and three EOF cases.
+// 64 fixed hash shards leave headroom for the live repository corpus. Keys are
+// repository-relative fixture paths plus case index/mode; new files move no cases.
+// ADAMIC_TEST_SHARD=i/n selects shards; unset runs every live fixture and EOF case.
 func TestBoundedPortParser(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := boundedPortCases(t)
@@ -76,13 +75,17 @@ func TestBoundedPortParser(t *testing.T) {
 	}
 	binary, script := miscBuild(t, main)
 	oracle := miscOracle(t)
-	audited := make([]boundedPortCase, 0, len(cases)-3)
+	audited := make([]boundedPortCase, 0, len(cases))
 	for _, item := range cases {
 		if item.audit {
 			audited = append(audited, item)
 		}
 	}
 	answers := miscAnswers(t, oracle, audited)
+	byID := make(map[string]miscAnswer, len(audited))
+	for i, item := range audited {
+		byID[item.id] = answers[i]
+	}
 	finishSetup()
 	miscRunShards(t, testBoundedPortParserShards, boundedPortIDs(cases), func(t *testing.T, i int) {
 		item := cases[i]
@@ -90,9 +93,9 @@ func TestBoundedPortParser(t *testing.T) {
 		if err := os.WriteFile(path, []byte(item.text), 0644); err != nil {
 			t.Fatal(err)
 		}
-		accepted := item.audit && answers[i-3].Status == "ok"
+		accepted := item.audit && byID[item.id].Status == "ok"
 		if accepted {
-			want := answers[i-3].Data
+			want := byID[item.id].Data
 			for name, got := range map[string][]byte{"Node": onNode(t, main, path), "native": execute(t, "", binary, path), "emitted": onNode(t, script, path)} {
 				if err := miscCompare(want, got, false); err != nil {
 					t.Fatalf("%s %s: %v", item.id, name, err)
@@ -132,7 +135,7 @@ func TestPortStallControl(t *testing.T) {
 	main := miscMutant(t, "sourceStatements.ts", "if(this.parser.scanner.fullStart === start)", "if(false)")
 	binary, _ := miscBuild(t, main)
 	finishSetup()
-	miscRunShards(t, testPortStallControlShards, []string{"guard-disabled"}, func(t *testing.T, _ int) {
+	miscRunShards(t, testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"}, func(t *testing.T, _ int) {
 		path := filepath.Join(t.TempDir(), "input.ts")
 		if err := os.WriteFile(path, []byte("class C { ) }"), 0644); err != nil {
 			t.Fatal(err)
@@ -159,7 +162,7 @@ func TestPortStallControl(t *testing.T) {
 }
 
 func TestPortStallControlPlantedSurvivor(t *testing.T) {
-	miscPlantedProof(t, testPortStallControlShards, []string{"guard-disabled"}, func(planted bool) error {
+	miscPlantedProof(t, testPortStallControlShards, []string{"stage1/cohere/estree/stalls_test.go:0:guard-disabled"}, func(planted bool) error {
 		return portStallControlResult(!planted, nil)
 	})
 }

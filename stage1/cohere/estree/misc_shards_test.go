@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"os"
@@ -23,9 +24,11 @@ import (
 	"github.com/system-inc/adamic/internal/native"
 )
 
-// miscPlan validates the complete union even when only some shards are selected.
+// Fixed shard counts have headroom for corpus growth, including empty shards.
+// Assignment hashes a repository-relative case key, never its enumeration position.
+// miscPlan validates the live union even when only some shards are selected.
 func miscPlan(ids []string, count int) ([][]int, error) {
-	if count < 1 || len(ids) < count {
+	if count < 1 || len(ids) == 0 {
 		return nil, fmt.Errorf("%d cases cannot enumerate %d shards", len(ids), count)
 	}
 	shards := make([][]int, count)
@@ -35,7 +38,8 @@ func miscPlan(ids []string, count int) ([][]int, error) {
 			return nil, fmt.Errorf("empty or repeated case id %q", id)
 		}
 		expected[id] = true
-		shards[i%count] = append(shards[i%count], i)
+		shard := miscShard(id, count)
+		shards[shard] = append(shards[shard], i)
 	}
 	seen := make(map[string]bool, len(ids))
 	total := 0
@@ -60,10 +64,11 @@ func miscPlan(ids []string, count int) ([][]int, error) {
 	return shards, nil
 }
 
-func miscIDs(prefix string, count int) []string {
-	ids := make([]string, count)
-	for i := range ids {
-		ids[i] = fmt.Sprintf("%s-%03d", prefix, i)
+func miscIDs(prefix string, cases []string) []string {
+	ids := make([]string, len(cases))
+	for i, text := range cases {
+		// A generated case keeps its identity even when another is inserted before it.
+		ids[i] = fmt.Sprintf("%s:source-%x", prefix, sha256.Sum256([]byte(text)))
 	}
 	return ids
 }
@@ -141,7 +146,7 @@ func miscPlantedProof(t *testing.T, count int, ids []string, check func(bool) er
 	}
 	command.Env = append(command.Env, marker+"="+t.Name())
 	output, err := command.CombinedOutput()
-	leaf := fmt.Sprintf("%s/shard-%03d", t.Name(), planted%count)
+	leaf := fmt.Sprintf("%s/shard-%03d", t.Name(), miscShard(ids[planted], count))
 	if err == nil || bytes.Count(output, []byte("--- FAIL: "+t.Name()+"/shard-")) != 1 || !bytes.Contains(output, []byte("--- FAIL: "+leaf+" ")) {
 		t.Fatalf("planted failure must be caught only by %s: exit=%v\n%s", leaf, err, output)
 	}
@@ -211,7 +216,7 @@ func TestMiscShardUnionRejectsInvalidEnumeration(t *testing.T) {
 		ids   []string
 		count int
 	}{
-		{[]string{"a", "a"}, 2}, {[]string{"a", ""}, 2}, {[]string{"a"}, 2}, {[]string{"a"}, 0},
+		{[]string{"a", "a"}, 2}, {[]string{"a", ""}, 2}, {nil, 2}, {[]string{"a"}, 0},
 	} {
 		if _, err := miscPlan(item.ids, item.count); err == nil {
 			t.Fatalf("invalid enumeration accepted: %+v", item)
@@ -374,4 +379,48 @@ func miscArchiverTool() string {
 		}
 	}
 	return buildcache.Tool("ar", "--version")
+}
+
+func miscShard(id string, count int) int {
+	digest := sha256.Sum256([]byte(id))
+	return int(binary.BigEndian.Uint64(digest[:8]) % uint64(count))
+}
+
+func TestMiscShardGrowthKeepsAssignments(t *testing.T) {
+	const shards = 32
+	original := []string{"stage1/cohere/estree/z.input:0:audit", "stage1/cohere/estree/m.input:0:audit", "stage1/cohere/estree/exports_test.go:export:0"}
+	original = append(original, miscIDs("stage1/cohere/estree/exports_test.go:export", []string{"@d export class C {}", "@d export default class C {}"})...)
+	before, err := miscPlan(original, shards)
+	if err != nil {
+		t.Fatal(err)
+	}
+	assignments := make(map[string]int)
+	for shard, indexes := range before {
+		for _, index := range indexes {
+			assignments[original[index]] = shard
+		}
+	}
+	// Insert a file before the existing paths, reorder them, and add a case in an
+	// existing file. None of these operations may move any pre-existing case.
+	grown := []string{"stage1/cohere/estree/a.input:0:audit", original[2], "stage1/cohere/estree/m.input:1:audit", original[1], original[0]}
+	generated := miscIDs("stage1/cohere/estree/exports_test.go:export", []string{"new case", "@d export default class C {}", "@d export class C {}"})
+	grown = append(grown, generated...)
+	after, err := miscPlan(grown, shards)
+	if err != nil {
+		t.Fatal(err)
+	}
+	seen := 0
+	for shard, indexes := range after {
+		for _, index := range indexes {
+			if previous, exists := assignments[grown[index]]; exists {
+				seen++
+				if shard != previous {
+					t.Fatalf("case %s moved from shard-%03d to shard-%03d", grown[index], previous, shard)
+				}
+			}
+		}
+	}
+	if seen != len(original) {
+		t.Fatal("growth lost an original case")
+	}
 }

@@ -32,16 +32,14 @@ func jsxManifestCases(t *testing.T, cases []string) string {
 	return path
 }
 
-const testJSXAgreementShards = 9
+const testJSXAgreementShards = 32
 
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX case.
 func TestJSXAgreement(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
-	if len(cases) != testJSXAgreementShards {
-		t.Fatal("JSX agreement enumeration changed")
-	}
-	ids := miscIDs("jsx", len(cases))
+	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx", cases)
 	oracle := miscOracle(t)
 	main, err := filepath.Abs("main.ts")
 	if err != nil {
@@ -62,7 +60,7 @@ func TestJSXAgreement(t *testing.T) {
 }
 
 func TestJSXAgreementPlantedDisagreement(t *testing.T) {
-	miscPlantedProof(t, testJSXAgreementShards, miscIDs("jsx", len(jsxCases())), func(planted bool) error {
+	miscPlantedProof(t, testJSXAgreementShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx", jsxCases()), func(planted bool) error {
 		got := []byte("agree")
 		if planted {
 			got = []byte("disagree")
@@ -142,16 +140,14 @@ func TestJSXOriginalLibraries(t *testing.T) {
 	}
 }
 
-const testJSXMutantShards = 9
+const testJSXMutantShards = 32
 
+// Shard counts stay fixed as cases grow; keys are this file, mode and source-case identity.
 // ADAMIC_TEST_SHARD=i/n selects shards; unset runs every JSX mutant case.
 func TestJSXMutant(t *testing.T) {
 	finishSetup := miscStart(t)
 	cases := jsxCases()
-	if len(cases) != testJSXMutantShards {
-		t.Fatal("JSX mutant enumeration changed")
-	}
-	ids := miscIDs("jsx-mutant", len(cases))
+	ids := miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", cases)
 	oracle := miscOracle(t)
 	path := miscMutant(t, "jsxConvert.ts", "boolValue(source.optional)", "boolValue(!source.optional)")
 	binary, _ := miscBuild(t, path)
@@ -169,7 +165,7 @@ func TestJSXMutant(t *testing.T) {
 }
 
 func TestJSXMutantPlantedSurvivor(t *testing.T) {
-	miscPlantedProof(t, testJSXMutantShards, miscIDs("jsx-mutant", len(jsxCases())), func(planted bool) error {
+	miscPlantedProof(t, testJSXMutantShards, miscIDs("stage1/cohere/estree/jsx_test.go:jsx-mutant", jsxCases()), func(planted bool) error {
 		got := []byte("disagree")
 		if planted {
 			got = []byte("agree")
