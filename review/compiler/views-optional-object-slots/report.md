@@ -113,3 +113,13 @@ Final uncached optional-object oracle selector after that merge: PASS, 3.295s. F
 | TestOptionalObjectUndefined | 0.39 |
 
 Dependency: compiler/views-v3 14690251. This remains its own candidate after V3. The unpushed predicates compatibility merge is a measurement tree with executable output disabled, not a proposed integration merge.
+
+## Final committed lane checks
+
+The required command ran after evidence commit e11058e15 and the final V3 merge, from the repository root:
+
+```text
+lane checks 6.8 s: gofmt and tools on 63 Go files, t.Parallel on 7 test packages; no t.Parallel analyzer on this tree; vet 7 packages
+```
+
+All seven changed test packages pass vet. The missing analyzer notice is preserved; the separate integration analyzer run verifies all thirteen owned test leaves. No main, area or predicates branch was pushed or merged into.
