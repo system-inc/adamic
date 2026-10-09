@@ -1,0 +1,13 @@
+diff --git a/cmd/adamic-meter/returns.go b/cmd/adamic-meter/returns.go
+index c70c352a..9dfca603 100644
+--- a/cmd/adamic-meter/returns.go
++++ b/cmd/adamic-meter/returns.go
+@@ -76,7 +76,7 @@ func returnAdaptations(paths []string, overlay map[string]string, before error)
+ 			}
+ 		}
+ 		release()
+-		if includesUndefined {
++		if includesUndefined || typ.Flags()&checker.TypeFlagsUnknown != 0 {
+ 			selected[node] = true
+ 		}
+ 	}
