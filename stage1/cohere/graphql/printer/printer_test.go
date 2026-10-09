@@ -75,8 +75,7 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 const testPrinterUpstreamPreflightShards = 4
 
 // ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i; unset runs all.
-// The four fixed option modes run as shard-NNN and share their Go oracle build.
-func TestPrinterUpstreamPreflight(t *testing.T) { printerUpstreamShards(t) }
+// The four fixed option modes run as top-level TestPrinterUpstreamPreflight_NNN tests.
 
 func printerDirectory(t *testing.T, file, from, to string) string {
 	t.Helper()
@@ -120,10 +119,10 @@ var printerMutations = [...]struct{ name, file, from, to string }{
 	{"block string indentation discarded", "printer.ts", "for(const line of lines) parts.push(documents.text(line));", "for(const line of lines) parts.push(documents.text(line.trim()));"},
 }
 
-// Each fixed mutant owns one shard-NNN and checks the entire corpus on both
+// Each fixed mutant owns one top-level TestPrinterMutants_NNN and checks the corpus on both
 // original sides. ADAMIC_TEST_SHARD=i/n selects indices modulo n equal to i;
-// unset runs all. Builds are shared inputs prepared before t.Parallel.
-func TestPrinterMutants(t *testing.T) {
+// unset runs all. Build inputs are prepared before case timing.
+func printerMutantUnit(t *testing.T, unit int) {
 	if len(printerMutations) != testPrinterMutantsShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(printerMutations), testPrinterMutantsShards)
 	}
@@ -147,17 +146,19 @@ func TestPrinterMutants(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("union: %d unique mutant/case ids across %d shards (%d cases per mutant)", len(whole), len(shards), len(enumeration))
+	if unit < 0 {
+		return
+	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
 		t.Fatal(err)
 	}
 	for number, mutation := range printerMutations {
-		if !selected[number] {
+		if number != unit || !selected[number] {
 			continue
 		}
 		product := products[number]
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
+		{
 			start := time.Now()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
@@ -179,7 +180,7 @@ func TestPrinterMutants(t *testing.T) {
 					t.Logf("%s caught: %s", side.name, difference)
 				}
 			}
-		})
+		}
 	}
 }
 
@@ -206,6 +207,7 @@ func printerMutantDisagreement(number int, side string, result run, want string)
 // A real process emits an unchanged answer for one planted surviving mutant;
 // exactly its owning shard must reject it through the production comparison.
 func TestPrinterMutantPlantedSurvivor(t *testing.T) {
+	t.Parallel()
 	caught := 0
 	for number := range printerMutations {
 		answer := "ok\tmutated\n"

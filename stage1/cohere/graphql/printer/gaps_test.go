@@ -42,7 +42,7 @@ const testPrinterWhitespaceGapShards = 5
 // Adding entries preserves every existing assignment. ADAMIC_TEST_SHARD=i/n
 // selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
 // Not parallel: printerBuild writes the shared buildcache directory and native.Build writes the shared adamic/runtime cache.
-func TestPrinterWhitespaceGap(t *testing.T) {
+func printerWhitespaceUnit(t *testing.T, unit int) {
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
 	if library == "" {
 		t.Skip("set ADAMIC_GRAPHQL_PRETTIER to prettier@3.9.6 and graphql@17.0.2")
@@ -93,6 +93,9 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 		t.Fatal(err)
 	}
 	t.Logf("union: %d unique whitespace case ids across %d shards", len(whole), len(shards))
+	if unit < 0 {
+		return
+	}
 	selected, err := printerShardSelection(os.Getenv("ADAMIC_TEST_SHARD"), len(shards))
 	if err != nil {
 		t.Fatal(err)
@@ -101,11 +104,10 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 	script, _ := filepath.Abs("testdata/prettier.mjs")
 	embedded, _ := filepath.Abs(filepath.Join(repository, "cohere/internal/format/prettier/bundles"))
 	for number, shard := range shards {
-		if !selected[number] {
+		if number != unit || !selected[number] {
 			continue
 		}
-		t.Run(fmt.Sprintf("shard-%03d", number), func(t *testing.T) {
-			t.Parallel()
+		{
 			start := time.Now()
 			t.Cleanup(func() {
 				if elapsed := time.Since(start); elapsed > 30*time.Second {
@@ -133,7 +135,7 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 					t.Errorf("shard-%03d %s Prettier %s: %+v", number, fmt.Sprint(shard.cases), side.engine, result)
 				}
 			}
-		})
+		}
 	}
 }
 
