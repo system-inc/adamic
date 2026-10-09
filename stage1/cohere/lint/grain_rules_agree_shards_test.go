@@ -152,17 +152,25 @@ func rulesAgreeLowered(t *testing.T) string {
 		}
 		rulesAgreeBuildInputs = inputs
 		rulesAgreeLoweredDirectory = buildcache.Product(t, inputs, func(output string) error {
+			phase := time.Now()
 			program, err := load.Load([]string{filepath.Join(directory, "main.ts")})
 			if err != nil {
 				return err
 			}
+			t.Logf("rules load: %.3fs", time.Since(phase).Seconds())
+			phase = time.Now()
 			result, err := lower.Lower(context.Background(), program)
 			if err != nil {
 				return err
 			}
+			t.Logf("rules lower: %.3fs", time.Since(phase).Seconds())
+			phase = time.Now()
 			if err := os.WriteFile(filepath.Join(output, "lint.c"), []byte(native.C(result)), 0644); err != nil {
 				return err
 			}
+			t.Logf("rules native emit: %.3fs", time.Since(phase).Seconds())
+			phase = time.Now()
+			defer func() { t.Logf("rules JavaScript emit: %.3fs", time.Since(phase).Seconds()) }()
 			return os.WriteFile(filepath.Join(output, "lint.mjs"), []byte(javascript.JavaScript(result)), 0644)
 		})
 
@@ -190,6 +198,8 @@ func rulesAgreeNative(t *testing.T) string {
 			if err != nil {
 				return err
 			}
+			started := time.Now()
+			defer func() { t.Logf("rules clang: %.3fs", time.Since(started).Seconds()) }()
 			return native.Build(string(source), filepath.Join(output, "scanner"), native.Options{Sanitize: true, Split: true, Jobs: 4})
 		})
 
@@ -200,34 +210,12 @@ func rulesAgreeNative(t *testing.T) string {
 	return rulesAgreeBinaryDirectory
 }
 
-// Setup leaves run sequentially; shards share process-lifetime products.
-// Not parallel: prepares shared native products before the comparison leaves.
-func TestRulesAgreeSetupNative(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree native setup cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeNative(t)
-	t.Logf("TestRulesAgree (setup native): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: native setup over 60s")
-	}
-}
+var rulesAgreeOracleOnce, rulesAgreeCaptureOnce sync.Once
+var rulesAgreeOracleDirectory, rulesAgreeCaptureDirectory string
 
-// Not parallel: prepares the shared corpus and cached Go oracle before the comparison leaves.
-func TestRulesAgreeSetupCorpus(t *testing.T) {
-	deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree corpus setup cooked: exceeded 90s") })
-	defer deadline.Stop()
-	started := time.Now()
-	rulesAgreeCorpus(t)
-	t.Logf("TestRulesAgree (setup corpus): %.3fs", time.Since(started).Seconds())
-	if time.Since(started) >= 60*time.Second {
-		t.Fatal("cooked: corpus setup over 60s")
-	}
-}
-
-func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
+func rulesAgreeOracle(t *testing.T) string {
 	t.Helper()
-	rulesAgreeOnce.Do(func() {
+	rulesAgreeOracleOnce.Do(func() {
 		directory := packageDirectory
 		// GoBuild is not present on this main. Cache the original overlay build
 		// as a Product so a filtered shard never recompiles everyone's oracle.
@@ -237,10 +225,60 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 			Flags:     []string{"go build", "overlay registry and rule adapters", "context-deadline=90s", "GOFLAGS=" + os.Getenv("GOFLAGS"), "GOWORK=" + os.Getenv("GOWORK")},
 			Toolchain: []string{runtime.Version()},
 		}
-		oracleDirectory := buildcache.Product(t, oracleInputs, func(output string) error {
+		rulesAgreeOracleDirectory = buildcache.Product(t, oracleInputs, func(output string) error {
 			_, err := rulesAgreeGoOracleIn(directory, output)
 			return err
 		})
+
+	})
+	if rulesAgreeOracleDirectory == "" {
+		t.Fatal("oracle preparation failed")
+	}
+	return rulesAgreeOracleDirectory
+}
+
+func rulesAgreeCapture(t *testing.T) string {
+	t.Helper()
+	rulesAgreeCaptureOnce.Do(func() {
+		directory := packageDirectory
+		captureInputs := buildcache.Inputs{
+			Name:      "lint-rules-agree-capture",
+			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
+			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=90s"},
+			Toolchain: []string{runtime.Version()},
+		}
+		rulesAgreeCaptureDirectory = buildcache.Product(t, captureInputs, func(output string) error {
+			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
+			if err != nil {
+				return err
+			}
+			for index, row := range captured {
+				fields := strings.SplitN(row, "\t", 2)
+				relative, err := filepath.Rel(output, fields[0])
+				if err != nil {
+					return err
+				}
+				captured[index] = relative + "\t" + fields[1]
+			}
+			data, err := json.Marshal(captured)
+			if err != nil {
+				return err
+			}
+			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
+		})
+
+	})
+	if rulesAgreeCaptureDirectory == "" {
+		t.Fatal("capture preparation failed")
+	}
+	return rulesAgreeCaptureDirectory
+}
+
+func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
+	t.Helper()
+	rulesAgreeOnce.Do(func() {
+		directory := packageDirectory
+		oracleDirectory := rulesAgreeOracle(t)
 		oracle := filepath.Join(oracleDirectory, "oracle")
 		corpus, err := os.MkdirTemp(sharedDirectory, "rules-agree-")
 		if err != nil {
@@ -265,31 +303,7 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 			}
 			rows = append(rows, path)
 		}
-		captureInputs := buildcache.Inputs{
-			Name:      "lint-rules-agree-capture",
-			Files:     []string{"cohere", "stage1/cohere/lint", "go.mod", "go.work"},
-			Flags:     []string{"asserted-cases-overlay", "-count=1", "-timeout=90s"},
-			Toolchain: []string{runtime.Version()},
-		}
-		captureDirectory := buildcache.Product(t, captureInputs, func(output string) error {
-			captured, err := rulesAgreeCaptureUpstream(t, directory, output)
-			if err != nil {
-				return err
-			}
-			for index, row := range captured {
-				fields := strings.SplitN(row, "\t", 2)
-				relative, err := filepath.Rel(output, fields[0])
-				if err != nil {
-					return err
-				}
-				captured[index] = relative + "\t" + fields[1]
-			}
-			data, err := json.Marshal(captured)
-			if err != nil {
-				return err
-			}
-			return os.WriteFile(filepath.Join(output, "rows.json"), data, 0644)
-		})
+		captureDirectory := rulesAgreeCapture(t)
 		data, err := os.ReadFile(filepath.Join(captureDirectory, "rows.json"))
 		if err != nil {
 			t.Fatal(err)
@@ -312,25 +326,38 @@ func rulesAgreeCorpus(t *testing.T) *rulesAgreeProducts {
 	return rulesAgreePrepared
 }
 
-// Not parallel: eagerly prepares process-wide products and corpus before parallel comparison leaves.
-func TestRulesAgree_Setup(t *testing.T) {
-	rulesAgreeSetup(t)
-}
-
 // Setup has its own clock and deadline, independent of every leaf's case clock.
 // Filtered single-shard runs use this same preparation path and persistent cache.
 func rulesAgreeSetup(t *testing.T) *rulesAgreeProducts {
 	t.Helper()
+	if path := os.Getenv("ADAMIC_RULES_AGREE_PROBE"); path != "" {
+		return rulesAgreeProbeProducts(t, path)
+	}
 	rulesAgreeSetupOnce.Do(func() {
 		started := time.Now()
 		deadline := time.AfterFunc(rulesAgreeKill, func() { panic("TestRulesAgree_Setup cooked: shared setup exceeded 90s") })
 		defer deadline.Stop()
-		lowered := rulesAgreeLowered(t)
-		binary := rulesAgreeNative(t)
-		corpus := *rulesAgreeCorpus(t)
-		corpus.binary = filepath.Join(binary, "scanner")
-		corpus.module = filepath.Join(lowered, "lint.mjs")
-		rulesAgreeReady = &corpus
+		var corpus *rulesAgreeProducts
+		var binary, lowered string
+		var workers sync.WaitGroup
+		workers.Add(2)
+		go func() {
+			defer workers.Done()
+			lowered = rulesAgreeLowered(t)
+			binary = rulesAgreeNative(t)
+		}()
+		go func() {
+			defer workers.Done()
+			corpus = rulesAgreeCorpus(t)
+		}()
+		workers.Wait()
+		if t.Failed() || corpus == nil {
+			t.Fatal("RulesAgree preparation failed")
+		}
+		ready := *corpus
+		ready.binary = filepath.Join(binary, "scanner")
+		ready.module = filepath.Join(lowered, "lint.mjs")
+		rulesAgreeReady = &ready
 		t.Logf("TestRulesAgree_Setup: %.3fs cooked=%t", time.Since(started).Seconds(), time.Since(started) >= 60*time.Second)
 	})
 	if rulesAgreeReady == nil {
@@ -389,7 +416,11 @@ func rulesAgreeRunShard(t *testing.T, shard int) {
 
 func TestRulesAgreeUnion(t *testing.T) {
 	t.Parallel()
-	products := rulesAgreeSetup(t)
+	started := time.Now()
+	products := rulesAgreeCorpus(t)
+	t.Logf("union (setup corpus): %.3fs", time.Since(started).Seconds())
+	started = time.Now()
+	defer func() { t.Logf("union (own work): %.3fs", time.Since(started).Seconds()) }()
 	functions := []func(*testing.T){TestRulesAgree_000, TestRulesAgree_001, TestRulesAgree_002, TestRulesAgree_003, TestRulesAgree_004, TestRulesAgree_005, TestRulesAgree_006, TestRulesAgree_007, TestRulesAgree_008, TestRulesAgree_009, TestRulesAgree_010, TestRulesAgree_011, TestRulesAgree_012, TestRulesAgree_013, TestRulesAgree_014, TestRulesAgree_015}
 	if len(functions) != testRulesAgreeShards || len(products.assignments) != testRulesAgreeShards {
 		t.Fatal("shard enumeration differs from const")
@@ -411,11 +442,31 @@ func TestRulesAgreeUnion(t *testing.T) {
 	t.Logf("union: %d cases, each exactly once, %d top-level shards", len(seen), testRulesAgreeShards)
 }
 
-// Plant one output disagreement on a real corpus case. Routing and the same
-// byte comparator used by parity must detect it in exactly one owner shard.
+// Probe children run the ordinary shard selection and comparator on one real
+// corpus case. The original hash still assigns it to exactly one owner.
+type rulesAgreeProbe struct {
+	Directory, Oracle, Binary, Module string
+	Rows                              []string
+}
+
+func rulesAgreeProbeProducts(t *testing.T, path string) *rulesAgreeProducts {
+	t.Helper()
+	data, err := os.ReadFile(path)
+	if err != nil {
+		t.Fatal(err)
+	}
+	var probe rulesAgreeProbe
+	if err := json.Unmarshal(data, &probe); err != nil {
+		t.Fatal(err)
+	}
+	return &rulesAgreeProducts{directory: probe.Directory, oracle: probe.Oracle, binary: probe.Binary, module: probe.Module, rows: probe.Rows, assignments: rulesAgreeAssignments(t, probe.Rows)}
+}
+
 func TestRulesAgreePlantedFailure(t *testing.T) {
 	t.Parallel()
 	products := rulesAgreeSetup(t)
+	started := time.Now()
+	defer func() { t.Logf("planted failure (own work): %.3fs", time.Since(started).Seconds()) }()
 	planted := -1
 	for index, row := range products.rows {
 		if !strings.HasSuffix(row, "\tunsupported-recovery") {
@@ -426,20 +477,41 @@ func TestRulesAgreePlantedFailure(t *testing.T) {
 	if planted < 0 {
 		t.Fatal("no supported case to plant")
 	}
-	path := manifest(t, recoveryRows(t, products.oracle, []string{products.rows[planted]}))
-	want := execute(t, "", products.oracle, "--manifest", path).output
-	got := execute(t, "", products.binary, "--manifest", path).output
-	if diff := difference(got, want); diff != "" {
-		t.Fatal(diff)
+	data, err := os.ReadFile(products.module)
+	if err != nil {
+		t.Fatal(err)
 	}
-	got = append(append([]byte(nil), got...), []byte("planted disagreement\n")...)
+	module := filepath.Join(t.TempDir(), "planted.mjs")
+	marker := "planted RulesAgree disagreement"
+	if err := os.WriteFile(module, append(data, []byte(fmt.Sprintf("\nconsole.log(%q);\n", marker))...), 0644); err != nil {
+		t.Fatal(err)
+	}
+	data, err = json.Marshal(rulesAgreeProbe{products.directory, products.oracle, products.binary, module, []string{products.rows[planted]}})
+	if err != nil {
+		t.Fatal(err)
+	}
+	path := filepath.Join(t.TempDir(), "products.json")
+	if err := os.WriteFile(path, data, 0644); err != nil {
+		t.Fatal(err)
+	}
 	caught, owner := 0, -1
-	for shard, indices := range products.assignments {
-		for _, index := range indices {
-			if index == planted && difference(got, want) != "" {
-				caught++
-				owner = shard
+	for shard := 0; shard < testRulesAgreeShards; shard++ {
+		name := fmt.Sprintf("TestRulesAgree_%03d", shard)
+		ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+		command := dotARenameChild(ctx, "-test.run=^"+name+"$", "-test.v", "-test.timeout=10s")
+		command.Env = append(os.Environ(), "ADAMIC_RULES_AGREE_PROBE="+path)
+		output, err := command.CombinedOutput()
+		expired := ctx.Err()
+		cancel()
+		if expired != nil {
+			t.Fatalf("%s probe timed out: %v\n%s", name, expired, output)
+		}
+		if err != nil {
+			if bytes.Count(output, []byte("--- FAIL: "+name)) != 1 || !bytes.Contains(output, []byte("emitted JavaScript:")) || !bytes.Contains(output, []byte(marker)) {
+				t.Fatalf("wrong planted failure in %s: %v\n%s", name, err, output)
 			}
+			caught++
+			owner = shard
 		}
 	}
 	if caught != 1 {
