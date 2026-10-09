@@ -48,10 +48,8 @@ func TestCompleteSuggestionSerialization(t *testing.T) {
 	completeSuggestionSetup(t)
 }
 
-// Not parallel: prepares shared suggestion products before parallel leaves.
-// Not parallel: initializes shared suggestion and automatic-fix fixtures and products.
 func TestSuggestionAlongsideAutomaticFix(t *testing.T) {
-	suggestionAlongsideSetup(t)
+	t.Parallel()
 	suggestionAlongsideUnion(t)
 }
 
