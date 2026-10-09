@@ -26,7 +26,9 @@ are retained in JSON. Every entry is verified against head. The result records
 the generator blob, the manifest's Git blob hash even for an external manifest,
 and every program blob.
 
-`--timeout 10s` bounds each compilation or execution and kills its process group.
+`--compile-timeout 45s` bounds each base/head classification compile.
+`--timeout 10s` bounds each backend build and execution. Both kill the process
+group on timeout. The JSON records both limits and each command wall time.
 `--budget <seconds>` limits selection, reserving five command timeouts per
 program. Classification and compiler preparation are outside this runtime
 budget. All witness programs run even if their reservation exceeds the budget.

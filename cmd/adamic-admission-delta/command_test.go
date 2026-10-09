@@ -123,6 +123,9 @@ func TestHeadInputIsolation(t *testing.T) {
 	if err := json.Unmarshal([]byte(o.Stdout), &r); err != nil {
 		t.Fatal(err, o.Stderr)
 	}
+	if r.CompileTimeoutSeconds != 45 || r.RuntimeTimeoutSeconds != 10 || r.Programs[0].Head.WallSeconds <= 0 {
+		t.Fatal("missing timeout limits or measured command time", r)
+	}
 	if o.Exit != 0 || r.Admitted != 0 || r.Programs[0].Class != "accepted-by-both" {
 		t.Fatalf("equal revisions failed: %+v %s", r, o.Stderr)
 	}

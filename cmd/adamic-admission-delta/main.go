@@ -20,10 +20,11 @@ import (
 )
 
 type observation struct {
-	Exit   int    `json:"exit"`
-	Stdout string `json:"stdout"`
-	Stderr string `json:"stderr"`
-	Error  string `json:"error,omitempty"`
+	WallSeconds float64 `json:"wall_seconds"`
+	Exit        int     `json:"exit"`
+	Stdout      string  `json:"stdout"`
+	Stderr      string  `json:"stderr"`
+	Error       string  `json:"error,omitempty"`
 }
 type program struct {
 	Path string `json:"path"`
@@ -53,19 +54,21 @@ type entry struct {
 	Sampled           bool         `json:"sampled"`
 }
 type report struct {
-	Base              string   `json:"base"`
-	Head              string   `json:"head"`
-	GeneratorBlob     string   `json:"generator_blob"`
-	ManifestBlob      string   `json:"manifest_blob"`
-	Admitted          int      `json:"admitted"`
-	Programs          []entry  `json:"programs"`
-	Verdict           string   `json:"verdict"`
-	Corpora           []corpus `json:"corpora"`
-	SamplingSeed      string   `json:"sampling_seed"`
-	SamplingSize      int      `json:"sampling_size"`
-	Omitted           int      `json:"omitted"`
-	BudgetSeconds     float64  `json:"budget_seconds"`
-	BudgetUsedSeconds float64  `json:"budget_used_seconds"`
+	CompileTimeoutSeconds float64  `json:"compile_timeout_seconds"`
+	RuntimeTimeoutSeconds float64  `json:"runtime_timeout_seconds"`
+	Base                  string   `json:"base"`
+	Head                  string   `json:"head"`
+	GeneratorBlob         string   `json:"generator_blob"`
+	ManifestBlob          string   `json:"manifest_blob"`
+	Admitted              int      `json:"admitted"`
+	Programs              []entry  `json:"programs"`
+	Verdict               string   `json:"verdict"`
+	Corpora               []corpus `json:"corpora"`
+	SamplingSeed          string   `json:"sampling_seed"`
+	SamplingSize          int      `json:"sampling_size"`
+	Omitted               int      `json:"omitted"`
+	BudgetSeconds         float64  `json:"budget_seconds"`
+	BudgetUsedSeconds     float64  `json:"budget_used_seconds"`
 }
 
 func execute(dir string, limit time.Duration, name string, args ...string) observation {
@@ -79,8 +82,9 @@ func execute(dir string, limit time.Duration, name string, args ...string) obser
 	var out, errout bytes.Buffer
 	command.Stdout = &out
 	command.Stderr = &errout
+	started := time.Now()
 	err := command.Run()
-	o := observation{Stdout: out.String(), Stderr: errout.String()}
+	o := observation{Stdout: out.String(), Stderr: errout.String(), WallSeconds: time.Since(started).Seconds()}
 	if err != nil {
 		o.Exit = -1
 		if e, ok := err.(*exec.ExitError); ok {
@@ -153,7 +157,8 @@ func run(args []string) error {
 	corpusDir := flags.String("corpus", "", "ad hoc corpus directory relative to head")
 	budget := flags.Float64("budget", 0, "runtime budget in seconds; 0 means all, witnesses always run")
 	asJSON := flags.Bool("json", false, "emit JSON to stdout")
-	limit := flags.Duration("timeout", 10*time.Second, "per-command timeout")
+	limit := flags.Duration("timeout", 10*time.Second, "per-runtime command timeout")
+	compileLimit := flags.Duration("compile-timeout", 45*time.Second, "per-program compiler timeout")
 	if err := flags.Parse(args); err != nil {
 		return err
 	}
@@ -163,7 +168,7 @@ func run(args []string) error {
 	if *budget < 0 {
 		return fmt.Errorf("budget must be nonnegative")
 	}
-	if *limit <= 0 {
+	if *limit <= 0 || *compileLimit <= 0 {
 		return fmt.Errorf("timeout must be positive")
 	}
 	root, err := git(".", "rev-parse", "--show-toplevel")
@@ -286,6 +291,8 @@ func run(args []string) error {
 	result.Corpora = m.Corpora
 	result.SamplingSeed = result.Head
 	result.BudgetSeconds = *budget
+	result.CompileTimeoutSeconds = compileLimit.Seconds()
+	result.RuntimeTimeoutSeconds = limit.Seconds()
 	for _, c := range m.Corpora {
 		for _, p := range c.Programs {
 			clean := filepath.ToSlash(filepath.Clean(p.Path))
@@ -306,8 +313,8 @@ func run(args []string) error {
 			if blob != p.Blob {
 				return fmt.Errorf("blob mismatch for %s: manifest %s head %s", p.Path, p.Blob, blob)
 			}
-			a := execute(headTree, *limit, b, "c", p.Path)
-			z := execute(headTree, *limit, h, "c", p.Path)
+			a := execute(headTree, *compileLimit, b, "c", p.Path)
+			z := execute(headTree, *compileLimit, h, "c", p.Path)
 			a.Stdout = ""
 			z.Stdout = ""
 			record := entry{program: p, Corpus: c.Name, Class: classify(a, z), Base: a, Head: z}

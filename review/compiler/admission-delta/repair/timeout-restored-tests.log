@@ -1,0 +1,10 @@
+=== RUN   TestHeadInputIsolation
+=== PAUSE TestHeadInputIsolation
+=== RUN   TestCompilerTimeoutIsError
+=== PAUSE TestCompilerTimeoutIsError
+=== CONT  TestHeadInputIsolation
+=== CONT  TestCompilerTimeoutIsError
+--- PASS: TestHeadInputIsolation (0.06s)
+--- PASS: TestCompilerTimeoutIsError (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.104s

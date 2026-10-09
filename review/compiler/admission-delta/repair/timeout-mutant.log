@@ -1,0 +1,6 @@
+--- FAIL: TestCompilerTimeoutIsError (0.10s)
+    command_test.go:203: timeout became refusal: {WallSeconds:0.100531302 Exit:-1 Stdout: Stderr: Error:timeout}
+FAIL
+FAIL	github.com/system-inc/adamic/cmd/adamic-admission-delta	0.103s
+FAIL
+mutant exit: 1
