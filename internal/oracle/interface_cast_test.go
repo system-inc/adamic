@@ -32,8 +32,10 @@ func interfaceFixturePath(name string) string {
 }
 
 // Default tagged admission is compared to Node on successful programs.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestInterfaceCastOracle(t *testing.T) {
 	for _, name := range []string{"visitor", "wrong-kind"} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(name, func(t *testing.T) {
 			program, path := interfaceFixture(t, name)
 			truth := onNode(t, path)
@@ -67,6 +69,7 @@ func TestInterfaceCastOracle(t *testing.T) {
 }
 
 // This legal Node construction fails only when a required field is read through the cast.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "stage3/interface-downcasts/missing-name.a"))
 	if err != nil {
@@ -90,8 +93,10 @@ func TestInterfaceCastChecksMalformedRead(t *testing.T) {
 }
 
 // Mutants change only native IR after lowering.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestInterfaceCastRuntimeMutants(t *testing.T) {
 	for _, name := range []string{"skip tag", "wrong tag", "twice operand"} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(name, func(t *testing.T) {
 			fixture := "visitor"
 			if name == "skip tag" {
@@ -147,6 +152,7 @@ func TestInterfaceCastRuntimeMutants(t *testing.T) {
 }
 
 // An unused malformed factory does not prevent a valid read in another module.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestInterfaceCastImportedConstruction(t *testing.T) {
 	directory := t.TempDir()
 	sources := map[string]string{
@@ -172,6 +178,7 @@ func TestInterfaceCastImportedConstruction(t *testing.T) {
 }
 
 // Numeric and boolean tags use the same default cast check.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestInterfaceCastScalarTags(t *testing.T) {
 	for _, test := range []struct {
 		name, domain, target, argument string
@@ -182,6 +189,7 @@ func TestInterfaceCastScalarTags(t *testing.T) {
 		{"boolean passes", "boolean", "true", "true", false},
 		{"boolean fails", "boolean", "true", "false", true},
 	} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(test.name, func(t *testing.T) {
 			path := filepath.Join(t.TempDir(), "scalar.a")
 			source := "interface Base { readonly kind: " + test.domain + "; }\n" +

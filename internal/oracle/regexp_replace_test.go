@@ -26,6 +26,7 @@ func init() {
 
 // Each mutant builds cleanly and completes without sanitizer diagnostics. Only the
 // source-on-Node output decides whether its callback argument construction is correct.
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestRegExpReplacementNodeMutants(t *testing.T) {
 	path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/arguments.a"))
 	program, err := lowered(t, path)
@@ -42,6 +43,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 		{"groups wrong order", "value = match->elements[j];", "value = match->elements[j == 1 ? 2 : j == 2 ? 1 : j];"},
 		{"missing named groups argument", "adamic_object *groups = match->properties->slots[2].reference;", "adamic_object *groups = NULL;"},
 	} {
+		// Not parallel: native.Build writes the shared os.UserCacheDir()/adamic/runtime cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			if bytes.Count(runtime, []byte(mutant.old)) != 1 {
 				t.Fatal("mutation site moved")
@@ -66,6 +68,7 @@ func TestRegExpReplacementNodeMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 	runtime, err := os.ReadFile(filepath.Join(repository, "internal/native/runtime/regexp_replace.c"))
 	if err != nil {
@@ -75,6 +78,7 @@ func TestRegExpReplacementTypeGuardMutants(t *testing.T) {
 		{"argument_guard", "if (!accepted)", "if (!accepted && false)"},
 		{"group_guard", "if (field == NULL && !rule->optional)", "if (field == NULL && !rule->optional && false)"},
 	} {
+		// Not parallel: native.Build writes the shared os.UserCacheDir()/adamic/runtime cache.
 		t.Run(mutant.name, func(t *testing.T) {
 			path, _ := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/regexp_replace/"+mutant.name+".a"))
 			program, err := lowered(t, path)

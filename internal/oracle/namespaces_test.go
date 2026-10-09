@@ -200,12 +200,14 @@ func TestNamespaceSemanticMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestNamespaceStateMutants(t *testing.T) {
 	for _, test := range []struct{ name, path string }{
 		{"lose assignment", "namespaces_parser_state.a"},
 		{"lose hoisting", "namespaces_parser_state.a"},
 		{"skip ready check", "namespaces_unready.a"},
 	} {
+		// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 		t.Run(test.name, func(t *testing.T) {
 			path, pathErr := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata", test.path))
 			if pathErr != nil {

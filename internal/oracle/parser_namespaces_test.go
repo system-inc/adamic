@@ -25,18 +25,22 @@ func init() {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserNamespaceReceiver(t *testing.T) {
 	parserNamespaceMatchesNode(t, []string{"stage3/namespace-parser-stops/native-namespace-object-receiver.a", "internal/oracle/testdata/namespace_method_receiver.a"})
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserNamespaceClass(t *testing.T) {
 	parserNamespaceMatchesNode(t, []string{"stage3/namespace-parser-stops/native-namespace-class.a", "internal/oracle/testdata/namespace_class_registration.a"})
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserCallableNamespace(t *testing.T) {
 	parserNamespaceMatchesNode(t, []string{"stage3/namespace-parser-stops/native-callable-namespace.a", "internal/oracle/testdata/namespace_callable_properties.a"})
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserCallableNamespaceMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/namespace_callable_properties.a"))
 	if err != nil {
@@ -107,6 +111,7 @@ func parserNamespaceMatchesNode(t *testing.T, sources []string) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/namespace_class_registration.a"))
 	if err != nil {
@@ -139,6 +144,7 @@ func TestParserNamespaceClassRegistrationMutant(t *testing.T) {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestParserNamespaceReceiverMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/namespace_method_receiver.a"))
 	if err != nil {

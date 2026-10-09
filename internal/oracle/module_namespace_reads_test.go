@@ -82,6 +82,7 @@ func TestModuleNamespaceReadinessMutants(t *testing.T) {
 	}
 }
 
+// Not parallel: cyclic lowering updates cohere correctnessNoImportCycleLoadTimeReadCache; oracle helpers write shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestModuleNamespaceLiveBindingMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/module_namespace_reads/main.a"))
 	if err != nil {

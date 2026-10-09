@@ -14,6 +14,7 @@ func init() {
 	}{"internal/oracle/testdata/notyet_library_object_entries_const.a", true, false})
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestNotYetLibraryObjectEntriesConstMutant(t *testing.T) {
 	path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_library_object_entries_const.a"))
 	if err != nil {

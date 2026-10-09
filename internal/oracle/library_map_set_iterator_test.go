@@ -19,11 +19,13 @@ func init() {
 	}
 }
 
+// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 func TestLibraryMapSetIteratorCopiesRefused(t *testing.T) {
 	for _, collection := range []string{"map", "set"} {
 		for _, part := range []string{"keys", "values", "entries"} {
 			for _, copy := range []string{"spread", "assign"} {
 				name := collection + "_" + part + "_" + copy
+				// Not parallel: oracle helpers write the shared os.UserCacheDir()/adamic/gate and os.UserCacheDir()/adamic/runtime caches.
 				t.Run(name, func(t *testing.T) {
 					path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/library_map_set_iterator_refuse/library_map_set_iterator_"+name+".a"))
 					if err != nil {
