@@ -188,3 +188,5 @@ Warm tools were used, with no setup script; npm ci ran in stage3/api. The baseli
 The push found existing defender work on the same remote branch. This session is kept in sessions/gaps-profile-76c59c81 so the earlier root evidence can be merged unchanged, without force-pushing or overwriting it.
 
 All sixteen members of the named audit subsumer pass D3 and D4 while snapshots fails them. This demonstrates behavior missed by that named family, although performance catches the same mutations and prevents package-unique defense.
+
+Moving the evidence into the session subdirectory caused ignored .log files to be omitted from the first merge push. They were force-added in the following evidence commit and pushed; no measured result changed.

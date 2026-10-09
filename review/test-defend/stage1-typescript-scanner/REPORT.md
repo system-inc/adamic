@@ -47,3 +47,5 @@ The repository corpus collector rejects dirty tracked TypeScript. Each mutant wa
 No tests were deleted, rewritten or weakened. No oracle or preparation guards were altered. Only scanner.ts production code was mutated and restored. No other packages were tested and no PR was opened. All three mutants were caught, so there are no survivors. All source diffs are restored in the final branch tree; evidence and the clean variant/restore commit history remain.
 
 Final restored whole-package baseline: 44.868 binary seconds, all 29 top-level tests passed with no skips.
+
+Additional gap/profile defender session at origin/main 76c59c81: two gap rows defended, profile row not uniquely defended after three valid attempts. Its independent report, matrices, raw logs and diffs are in [sessions/gaps-profile-76c59c81/REPORT.md](sessions/gaps-profile-76c59c81/REPORT.md). Earlier root evidence is preserved.
