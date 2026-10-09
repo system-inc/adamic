@@ -1,0 +1,15 @@
+{
+  "setup_seconds": 0,
+  "npm_seconds": 0.9963279419971514,
+  "nproc": 5,
+  "whole_package_baseline_wall": 92.5093177460003,
+  "unit_baseline_wall": 92.3016283399993,
+  "36_isolated_runs_wall": 810.9240082819997,
+  "switched_product_build_wall": 213.97728041099617,
+  "instrumented_control_wall": 11.787398624997877,
+  "mutant_probe_and_check_matrix_wall": 505.4148313339938,
+  "standalone_native_build_wall": 373.8933040650045,
+  "standalone_compile_driver_wall": 6.675196895001136,
+  "note": "Standalone compilation overlapped the matrix; sums are not elapsed session time.",
+  "elapsed_before_commit_seconds": 2799.256468
+}

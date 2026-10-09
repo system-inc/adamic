@@ -1,0 +1,30 @@
+--- a/stage1/cohere/markdownblocks/splitText.ts
++++ b/stage1/cohere/markdownblocks/splitText.ts
+@@ -45,26 +45,5 @@
+     nonCJK(tokens, value.slice(start));
+ }
+ export function splitText(text: string): readonly TextTokenInterface[] {
+-    const tokens = new TextTokens();
+-    let start = 0;
+-    let index = 0;
+-    while(index < text.length) {
+-        const code = text.charCodeAt(index);
+-        if(code !== 9 && code !== 10 && code !== 32) {
+-            index++;
+-            continue;
+-        }
+-        word(tokens, text.slice(start, index));
+-        let newline = false;
+-        while(index < text.length) {
+-            const unit = text.charCodeAt(index);
+-            if(unit !== 9 && unit !== 10 && unit !== 32) break;
+-            if(unit === 10) newline = true;
+-            index++;
+-        }
+-        tokens.whitespace(newline ? '\n' : ' ');
+-        start = index;
+-    }
+-    word(tokens, text.slice(start));
+-    return tokens.values;
++    return [];
+ }

@@ -1,0 +1,27 @@
+--- a/stage1/cohere/markdownblocks/whitespace.ts
++++ b/stage1/cohere/markdownblocks/whitespace.ts
+@@ -107,23 +107,5 @@
+     return true;
+ }
+ export function printWhitespace(arena: DocumentArena, frame: WhitespaceFrameInterface): number {
+-    let proseWrap = frame.proseWrap;
+-    const fakeAfterNext =
+-        frame.afterNext.present && frame.afterNext.type === 'whitespace' && frame.afterNext.value === '';
+-    const fakeSetext =
+-        frame.value === '\n' &&
+-        frame.next.value === '-' &&
+-        (!frame.afterNext.present || (frame.afterNext.type === 'whitespace' && frame.afterNext.value === '\n'));
+-    if(
+-        !frame.link &&
+-        frame.next.present &&
+-        syntaxLeading(frame.next.value) &&
+-        !fakeAfterNext &&
+-        !(proseWrap === 'preserve' && fakeSetext)
+-    )
+-        proseWrap = 'never';
+-    if(proseWrap === 'preserve' && frame.value === '\n') return arena.hardline();
+-    const canBeSpace = frame.value === ' ' || (frame.value === '\n' && converts(frame));
+-    if(breakable(frame, proseWrap)) return arena.add('h', '', 0, [], canBeSpace ? 0 : 1);
+-    return arena.text(canBeSpace ? ' ' : '');
++    return arena.text('');
+ }

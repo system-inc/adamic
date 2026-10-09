@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
++++ b/stage1/cohere/markdownblocks/whitespace_layout_split_test.go
+@@ -763,7 +763,7 @@
+ 
+ func whitespaceLayoutReadyProducts(t *testing.T) (whitespaceLayoutProducts, whitespaceLayoutProducts) {
+ 	t.Helper()
+-	whitespaceLayoutReadyOnce.Do(func() { whitespaceLayoutPrepare(t) })
++	
+ 	if whitespaceLayoutPrepared.goBinary == "" {
+ 		t.Fatal("whitespace layout setup failed")
+ 	}

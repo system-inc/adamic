@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/structure.ts
++++ b/stage1/cohere/markdownblocks/structure.ts
+@@ -48,7 +48,7 @@
+     source: string,
+ ): number {
+     const contents = arena.concat(children);
+-    if(!setext) return arena.concat([arena.text(`${'#'.repeat(depth)} `), contents]);
++    if(setext) return arena.concat([arena.text(`${'#'.repeat(depth)} `), contents]);
+     const lastLine = source.slice(source.lastIndexOf('\n') + 1);
+     const start = Math.max(lastLine.indexOf('='), lastLine.indexOf('-'));
+     const underline = lastLine.slice(start < 0 ? Math.max(lastLine.length - 1, 0) : start);

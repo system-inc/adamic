@@ -1,0 +1,18 @@
+--- a/stage1/cohere/markdownblocks/text_independent_shards_test.go
++++ b/stage1/cohere/markdownblocks/text_independent_shards_test.go
+@@ -273,14 +273,7 @@
+ // Shared setup has no deadline; Loom bounds the complete unit.
+ func textReadySetup(t *testing.T) textSetupState {
+ 	t.Helper()
+-	textSetupOnce.Do(func() {
+-		started := time.Now()
+-		root, inputs := textSplittingInputs(t)
+-		products := textBuildProducts(t, root)
+-		shards := textShardInputs(t, inputs, testMarkdownTextSplittingShards)
+-		textSetupShared = textSetupState{root: root, inputs: inputs, shards: shards, products: products, ready: true}
+-		t.Logf("shared text setup ready in %.3fs", time.Since(started).Seconds())
+-	})
++	
+ 	if !textSetupShared.ready {
+ 		t.Fatal("shared text setup did not complete")
+ 	}

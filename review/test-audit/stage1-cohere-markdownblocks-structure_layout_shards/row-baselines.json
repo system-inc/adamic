@@ -1,0 +1,218 @@
+[
+  {
+    "row": "structure-family",
+    "wall": 77.40699842400136,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownStructureLayout(Union|_[0-9]+)$"
+    ]
+  },
+  {
+    "row": "table-family",
+    "wall": 70.34011877599914,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownTableLayout(Union|_[0-9]+)$"
+    ]
+  },
+  {
+    "row": "text-family",
+    "wall": 41.51803497199944,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownTextSplitting(Union|_[0-9]+)$"
+    ]
+  },
+  {
+    "row": "whitespace-family",
+    "wall": 71.27746382500118,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownWhitespaceLayout(Union|_[0-9]+)$"
+    ]
+  },
+  {
+    "row": "width",
+    "wall": 90.87501306899867,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownUnicodeWidths$"
+    ]
+  },
+  {
+    "row": "native-modes",
+    "wall": 2.2451173379995453,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestNativeBuildModesAreDistinct$"
+    ]
+  },
+  {
+    "row": "text-witness",
+    "wall": 1.9656194109993521,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownTextShardDisagreement$"
+    ]
+  },
+  {
+    "row": "whitespace-witness",
+    "wall": 7.7628334799992444,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownWhitespaceLayoutMutants$"
+    ]
+  },
+  {
+    "row": "table-setup",
+    "wall": 5.957570610000403,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownTableLayout_Setup$"
+    ]
+  },
+  {
+    "row": "text-setup",
+    "wall": 7.193028474001039,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownTextSplitting_Setup$"
+    ]
+  },
+  {
+    "row": "whitespace-setup",
+    "wall": 3.0979315050026344,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownWhitespaceLayout_Setup$"
+    ]
+  },
+  {
+    "row": "worker",
+    "wall": 1.8834360000000743,
+    "exit": 0,
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/markdownblocks/",
+      "-run",
+      "^TestMarkdownWhitespaceLayoutBuildWorker$"
+    ]
+  }
+]

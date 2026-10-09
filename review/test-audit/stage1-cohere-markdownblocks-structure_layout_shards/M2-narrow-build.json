@@ -1,0 +1,15 @@
+{
+  "id": "M2-narrow-build",
+  "command": [
+    "/tmp/u130-adamic",
+    "build",
+    "/tmp/u130-standalone/stage1/cohere/markdownblocks/testdata/u130_heading_narrow.ts",
+    "-o",
+    "/tmp/u130-M2-narrow",
+    "--sanitize"
+  ],
+  "seconds": 38.419830729999376,
+  "exit": 0,
+  "ADAMIC_NATIVE_SPLIT": "1",
+  "ADAMIC_NATIVE_JOBS": "2"
+}

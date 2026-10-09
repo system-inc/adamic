@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/splitText.ts
++++ b/stage1/cohere/markdownblocks/splitText.ts
+@@ -59,7 +59,7 @@
+         while(index < text.length) {
+             const unit = text.charCodeAt(index);
+             if(unit !== 9 && unit !== 10 && unit !== 32) break;
+-            if(unit === 10) newline = true;
++            if(unit === 9) newline = true;
+             index++;
+         }
+         tokens.whitespace(newline ? '\n' : ' ');

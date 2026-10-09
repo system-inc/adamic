@@ -1,0 +1,11 @@
+--- a/stage1/cohere/markdownblocks/support_test.go
++++ b/stage1/cohere/markdownblocks/support_test.go
+@@ -186,7 +186,7 @@
+ }
+ 
+ func nativeBinaryResult(source string, options native.Options) (string, error) {
+-	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: options.Sanitize}
++	key := artifactKey{source: sha256.Sum256([]byte(source)), sanitize: false}
+ 	pending := &artifactBuild{done: make(chan struct{})}
+ 	actual, loaded := artifacts.LoadOrStore(key, pending)
+ 	build := actual.(*artifactBuild)
