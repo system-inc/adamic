@@ -12,6 +12,7 @@ import (
 )
 
 func TestSharedSliceAppendMatchesNode(t *testing.T) {
+	t.Parallel()
 	entry, err := filepath.Abs("gaps/sharedSliceAppend.ts")
 	if err != nil {
 		t.Fatal(err)
@@ -42,6 +43,7 @@ func TestSharedSliceAppendMatchesNode(t *testing.T) {
 	}
 	for _, offset := range []string{"0", "48"} {
 		t.Run(offset, func(t *testing.T) {
+			t.Parallel()
 			expected := run(t, "", nil, "node", "--disable-warning=ExperimentalWarning", runner, entry, offset)
 			if string(expected) != "a\nx\n" {
 				t.Fatalf("Node %q", expected)

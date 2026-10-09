@@ -16,6 +16,7 @@ import (
 )
 
 func TestLexerGaps(t *testing.T) {
+	t.Parallel()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -24,6 +25,7 @@ func TestLexerGaps(t *testing.T) {
 		{"multiplePush.ts", "2\n", "push with other than one value"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join("gaps", gap.file))
 			if err != nil {
 				t.Fatal(err)
@@ -47,6 +49,7 @@ func TestLexerGaps(t *testing.T) {
 }
 
 func TestStructuralPositionRefusal(t *testing.T) {
+	t.Parallel()
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
 	if err != nil {
 		t.Fatal(err)
@@ -71,6 +74,7 @@ func TestStructuralPositionRefusal(t *testing.T) {
 }
 
 func TestClosedStringPresenceGap(t *testing.T) {
+	t.Parallel()
 	closedGap(t, "gaps/stringPresence.ts", "false\n")
 }
 
@@ -78,6 +82,7 @@ func TestClosedStringPresenceGap(t *testing.T) {
 // must print what Node prints from native under the sanitizers and from emitted JavaScript. The port's
 // workarounds for them still stand; retiring each one is its own change against the corpus.
 func TestClosedLexerGaps(t *testing.T) {
+	t.Parallel()
 	for _, gap := range []struct{ file, output string }{
 		{"assignmentValue.ts", "1\n"},
 		{"dynamicCase.ts", "1\n"},
@@ -88,6 +93,7 @@ func TestClosedLexerGaps(t *testing.T) {
 		{"emptyAlternative.ts", "1\n"},
 	} {
 		t.Run(gap.file, func(t *testing.T) {
+			t.Parallel()
 			closedGap(t, filepath.Join("gaps", gap.file), gap.output)
 		})
 	}
@@ -143,5 +149,6 @@ func closedGap(t *testing.T, file, output string) {
 }
 
 func TestClosedValuePresenceGap(t *testing.T) {
+	t.Parallel()
 	closedGap(t, "gaps/valuePresence.ts", "false\n")
 }

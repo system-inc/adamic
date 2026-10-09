@@ -39,6 +39,7 @@ func goCST(t *testing.T, cases string) []byte {
 }
 
 func TestCSTMatchesGo(t *testing.T) {
+	t.Parallel()
 	cases, files, count := lexCases(t)
 	expected := goCST(t, cases)
 	root, err := filepath.Abs(repository)
@@ -89,6 +90,7 @@ func TestCSTMatchesGo(t *testing.T) {
 }
 
 func TestCSTMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := lexCases(t)
 	expected := goCST(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -101,6 +103,7 @@ func TestCSTMutants(t *testing.T) {
 		{"line start shifted", "this.lineStarts.push(this.offset + source.length);", "this.lineStarts.push(this.offset + source.length - 1);"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "cst_main.ts"} {
 				source, err := os.ReadFile(file)

@@ -73,6 +73,7 @@ func goProps(t *testing.T, cases string) []byte {
 	}
 	return expected
 }
+// Not parallel: ADAMIC_YAML_ARTIFACTS props files and fixed /tmp/stage1-yaml-props diagnostic paths.
 func TestPropsMatchGo(t *testing.T) {
 	cases, files, count := lexCases(t)
 	expected := goProps(t, cases)
@@ -122,6 +123,7 @@ func TestPropsMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d props answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: ADAMIC_YAML_ARTIFACTS props files.
 func TestPropsMutants(t *testing.T) {
 	cases, _, _ := lexCases(t)
 	expected := goProps(t, cases)
@@ -135,6 +137,7 @@ func TestPropsMutants(t *testing.T) {
 		{"tab indentation accepted", "tab = index;", "tab = -1;"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "props.ts", "propsResolver.ts", "scalarResolution.ts", "composeError.ts", "props_main.ts"} {
 				source, err := os.ReadFile(file)

@@ -101,6 +101,7 @@ func composeCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
+// Not parallel: ADAMIC_YAML_ARTIFACTS compose files and fixed /tmp/stage1-yaml-compose diagnostic paths.
 func TestComposeMatchGo(t *testing.T) {
 	cases, files, count := composeCases(t)
 	expected := goCompose(t, cases)
@@ -150,6 +151,7 @@ func TestComposeMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d compose answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: ADAMIC_YAML_ARTIFACTS compose files.
 func TestComposeMutants(t *testing.T) {
 	cases, _, _ := composeCases(t)
 	expected := goCompose(t, cases)
@@ -163,6 +165,7 @@ func TestComposeMutants(t *testing.T) {
 		{"implicit key limit skipped", "properties.start < this.parser.get(valueProps.found).offset - 1024", "properties.start < this.parser.get(valueProps.found).offset - 999999"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			entries, err := filepath.Glob("*.ts")
 			if err != nil {

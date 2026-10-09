@@ -15,6 +15,7 @@ import (
 )
 
 func TestSpeedCostProbes(t *testing.T) {
+	t.Parallel()
 	input := filepath.Join(t.TempDir(), "units.txt")
 	if err := os.WriteFile(input, []byte(strings.Repeat("abc中😀", 4000)), 0644); err != nil {
 		t.Fatal(err)
@@ -30,6 +31,7 @@ func TestSpeedCostProbes(t *testing.T) {
 		{"numericMapLookup.ts", "integer", "fractional", "1702000\n"},
 	} {
 		t.Run(probe.file, func(t *testing.T) {
+			t.Parallel()
 			entry, err := filepath.Abs(filepath.Join("gaps", probe.file))
 			if err != nil {
 				t.Fatal(err)

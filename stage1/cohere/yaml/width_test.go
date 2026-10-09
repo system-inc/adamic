@@ -40,6 +40,7 @@ func goWidth(t *testing.T, cases string) []byte {
 }
 
 func TestWidthsMatchGo(t *testing.T) {
+	t.Parallel()
 	var input strings.Builder
 	count := 0
 	add := func(text string) {

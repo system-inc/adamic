@@ -100,6 +100,7 @@ func goScalars(t *testing.T, cases string) []byte {
 	}
 	return expected
 }
+// Not parallel: ADAMIC_YAML_ARTIFACTS scalar files and fixed /tmp/stage1-yaml-scalars diagnostic paths.
 func TestScalarsMatchGo(t *testing.T) {
 	cases, files, count := scalarCases(t)
 	expected := goScalars(t, cases)
@@ -149,6 +150,7 @@ func TestScalarsMatchGo(t *testing.T) {
 	t.Logf("%d repository files, %d cases, %d scalar answer bytes identical on all five sides", files, count, len(expected))
 }
 
+// Not parallel: ADAMIC_YAML_ARTIFACTS scalar files.
 func TestScalarMutants(t *testing.T) {
 	cases, _, _ := scalarCases(t)
 	expected := goScalars(t, cases)
@@ -162,6 +164,7 @@ func TestScalarMutants(t *testing.T) {
 		{"flow line break stops folding", "let separator = ' ';\n    let position = first + 1;", "let separator = '\\n';\n    let position = first + 1;"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"lexer.ts", "cst.ts", "collectionItem.ts", "cstParser.ts", "scalar.ts", "scalarText.ts", "scalarResolution.ts", "composeError.ts", "newlineFold.ts", "blockLine.ts", "scalar_main.ts"} {
 				source, err := os.ReadFile(file)

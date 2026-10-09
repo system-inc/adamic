@@ -63,6 +63,7 @@ func goSchema(t *testing.T, cases string) []byte {
 }
 
 func TestSchemaMatchesGo(t *testing.T) {
+	t.Parallel()
 	cases, files, count := schemaCases(t)
 	expected := goSchema(t, cases)
 	root, err := filepath.Abs(repository)
@@ -113,6 +114,7 @@ func TestSchemaMatchesGo(t *testing.T) {
 }
 
 func TestSchemaMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := schemaCases(t)
 	expected := goSchema(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -126,6 +128,7 @@ func TestSchemaMutants(t *testing.T) {
 		{"nullable prefix loses successors", "node.kind === 'concat' && !this.match(child, '', 0).includes(0)", "node.kind === 'concat'"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			for _, file := range []string{"patternNode.ts", "schemaPattern.ts", "schemaTag.ts", "schemaTags.ts", "schema_main.ts"} {
 				source, err := os.ReadFile(file)

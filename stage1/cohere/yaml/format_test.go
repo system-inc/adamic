@@ -95,6 +95,7 @@ func formatCases(t *testing.T) (string, int, int) {
 	return target, files, count
 }
 
+// Not parallel: ADAMIC_YAML_ARTIFACTS format files and fixed /tmp/stage1-yaml-format diagnostic paths.
 func TestFormatterMatchesGo(t *testing.T) {
 	cases, files, count := formatCases(t)
 	expected := goFormat(t, cases)
@@ -194,6 +195,7 @@ func unescapeCase(line string) string {
 }
 
 func TestBundledParserDifference(t *testing.T) {
+	t.Parallel()
 	library := os.Getenv("ADAMIC_YAML_LIBRARY")
 	if library == "" {
 		t.Skip("set ADAMIC_YAML_LIBRARY to an npm install of yaml@2.9.0 and prettier@3.9.6; the gate skips this oracle until #xq2ecw6 (setup --gate-inputs) installs it")
@@ -206,6 +208,7 @@ func TestBundledParserDifference(t *testing.T) {
 	t.Logf("%s", actual)
 }
 
+// Not parallel: fileDriverOnce/fileDriverShared setup, the build cache directory, and ADAMIC_YAML_ARTIFACTS format files.
 func TestFileDriver(t *testing.T) {
 	fileDriverGet(t)
 }

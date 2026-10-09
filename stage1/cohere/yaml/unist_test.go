@@ -38,6 +38,7 @@ func goUnist(t *testing.T, cases string) []byte {
 	return run(t, "", nil, goBinary, cases)
 }
 
+// Not parallel: fixed /tmp/stage1-yaml-unist diagnostic paths.
 func TestUnistMatchesGo(t *testing.T) {
 	cases, files, count := composeCases(t)
 	expected := goUnist(t, cases)
@@ -91,6 +92,7 @@ func TestUnistMatchesGo(t *testing.T) {
 }
 
 func TestUnistMutants(t *testing.T) {
+	t.Parallel()
 	cases, _, _ := composeCases(t)
 	expected := goUnist(t, cases)
 	runner, err := filepath.Abs(filepath.Join(repository, "oracle/node.mjs"))
@@ -103,6 +105,7 @@ func TestUnistMutants(t *testing.T) {
 		{"document end marker lost", "this.node(result).documentEndMarker = data.end >= 0;", "this.node(result).documentEndMarker = false;"},
 	} {
 		t.Run(mutant.name, func(t *testing.T) {
+			t.Parallel()
 			directory := t.TempDir()
 			entries, err := filepath.Glob("*.ts")
 			if err != nil {
