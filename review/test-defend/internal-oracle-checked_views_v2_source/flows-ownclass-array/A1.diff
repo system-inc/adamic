@@ -1,0 +1,11 @@
+--- a/internal/lower/object.go
++++ b/internal/lower/object.go
+@@ -332,7 +332,7 @@
+ 	valueType, isKnown := l.kept(element)
+ 	if !isKnown || (slotless(valueType) && valueType != ir.Union) {
+ 		// An element is one adamic_value, and number | undefined needs two words.
+-		return 0, l.notYet(node, "an array of "+l.checker.TypeToString(element))
++		return 0, l.notYet(node, "an array with elements of "+l.checker.TypeToString(element))
+ 	}
+ 	return valueType, nil
+ }

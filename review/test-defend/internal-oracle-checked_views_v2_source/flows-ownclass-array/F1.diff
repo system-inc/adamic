@@ -1,0 +1,10 @@
+--- a/internal/lower/generic.go
++++ b/internal/lower/generic.go
+@@ -128,7 +128,6 @@
+ 		}
+ 	}
+ 	if len(sources) > 0 {
+-		l.typeMapper = newTypeMapper(sources, targets)
+ 	}
+ 	if err := l.refuseInstantiatedMutation(declaration); err != nil {
+ 		return 0, err

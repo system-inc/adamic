@@ -1,0 +1,32 @@
+[
+  {
+    "id": "F1",
+    "file": "internal/lower/generic.go",
+    "line": 131,
+    "change": "drop concrete checker type mapper for generic instantiation"
+  },
+  {
+    "id": "A1",
+    "file": "internal/lower/object.go",
+    "line": 335,
+    "change": "change unsupported array diagnostic prefix"
+  },
+  {
+    "id": "F2",
+    "file": "internal/native/emit_functions.go",
+    "line": 365,
+    "change": "drop ownership bookkeeping for a closure reference result"
+  },
+  {
+    "id": "F3",
+    "file": "internal/native/emit_functions.go",
+    "line": 365,
+    "change": "return early with NULL for a closure reference result"
+  },
+  {
+    "id": "C1",
+    "file": "internal/native/runtime/view_unions_untagged.c",
+    "line": 44,
+    "change": "flip is_static condition for own-slot class admission"
+  }
+]

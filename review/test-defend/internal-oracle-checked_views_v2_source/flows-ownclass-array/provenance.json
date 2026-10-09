@@ -1,0 +1,18 @@
+{
+  "origin_main": "7d113268b1903e4e47289f226e94ec2fb609e15b",
+  "audit_commit": "68d82d371fe1dae7c93108c201bbd1f27305aa94",
+  "preserved_prior_defense_commit": "d101b15a",
+  "nproc": 5,
+  "setup_seconds": 0,
+  "disk_before": {
+    "tmp_free_GB": 3.0,
+    "workspace_free_GB": 6.8
+  },
+  "removed_previous_scratch": "/tmp/defend-element (92 KiB)",
+  "disk_after": {
+    "tmp_free_GB": 3.0,
+    "workspace_free_GB": 6.3
+  },
+  "listed_top_level_tests": 198,
+  "matrix_rows": 33
+}

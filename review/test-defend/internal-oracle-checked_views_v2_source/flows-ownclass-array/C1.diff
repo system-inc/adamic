@@ -1,0 +1,13 @@
+diff --git a/internal/native/runtime/view_unions_untagged.c b/internal/native/runtime/view_unions_untagged.c
+index b2d5fc7e..42f550bc 100644
+--- a/internal/native/runtime/view_unions_untagged.c
++++ b/internal/native/runtime/view_unions_untagged.c
+@@ -41,7 +41,7 @@ bool adamic_view_untagged_plain_slot(void *context, const adamic_view_union_valu
+     (void)context;
+     if (value->kind != adamic_view_union_object || value->payload.reference == NULL) { return false; }
+     const adamic_object *object = value->payload.reference;
+-    if (object->class != NULL && object->class->is_static) { return false; }
++    if (object->class != NULL && !object->class->is_static) { return false; }
+     adamic_slot_cache cache = {0};
+     adamic_value *slot = adamic_object_optional_field(object, field, &cache);
+     if (slot == NULL || !adamic_object_initialized(object)[adamic_slot_index(object, slot)]) { return false; }
