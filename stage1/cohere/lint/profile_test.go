@@ -7,6 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 	"testing"
+	"time"
 
 	bridge "github.com/system-inc/adamic/bridge/tsgo"
 	"github.com/system-inc/adamic/internal/native"
@@ -78,9 +79,13 @@ func TestProfileArtifacts(t *testing.T) {
 
 func buildProfile(t *testing.T, directory string) {
 	t.Helper()
+	started := time.Now()
 	built := checkerCompile(t, directory)
+	t.Logf("profile lowered program build: %s", time.Since(started))
 	source := built.c
+	started = time.Now()
 	archive := checkerArchive(t, false)
+	t.Logf("profile release checker archive build: %s", time.Since(started))
 	if err := os.WriteFile(filepath.Join(directory, "main.c"), []byte(source), 0644); err != nil {
 		t.Fatal(err)
 	}
@@ -88,12 +93,15 @@ func buildProfile(t *testing.T, directory string) {
 		name    string
 		options native.Options
 	}{{"scanner", native.Options{}}, {"counted", native.Options{Count: true}}} {
+		started = time.Now()
 		if err := nativeBuild(func() error {
 			return buildCheckerWithRuntime(source, filepath.Join(directory, build.name), archive, build.options)
 		}); err != nil {
 			t.Fatal(err)
 		}
+		t.Logf("profile %s build: %s", build.name, time.Since(started))
 	}
+	started = time.Now()
 	runtime := filepath.Join(repository, "internal/native/runtime")
 	entries, err := os.ReadDir(runtime)
 	if err != nil {
@@ -128,54 +136,72 @@ func buildProfile(t *testing.T, directory string) {
 	}); err != nil {
 		t.Fatal(err)
 	}
+	t.Logf("profile profiled build: %s", time.Since(started))
 	t.Logf("release, counted and -O2 -g profiling builds saved in %s", directory)
 }
 
+const testProfileCompilationShards = 1
+
 // Exercise the shared profile graph without requiring the external compiler corpus.
+// ADAMIC_TEST_SHARD=i/n selects a shard; unset runs all. The single witness
+// fits one shard with its build products prepared once before parallel work.
 func TestProfileCompilation(t *testing.T) {
 	t.Parallel()
+	setup := time.Now()
 	directory := t.TempDir()
 	copyPort(t, directory, "", "")
 	prepareRegistry(t, directory)
+	buildStart := time.Now()
 	buildProfile(t, directory)
-	path := manifest(t, []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"})
+	started := time.Now()
 	oracle := goOracle(t)
-	compare(t, oracle, filepath.Join(directory, "scanner"), directory, path)
-	want := execute(t, "", oracle, "--manifest", path).output
-	got := execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path).output
-	if diff := difference(got, want); diff != "" {
-		t.Fatal(diff)
-	}
-	want = execute(t, "", oracle, "--manifest", path, "--count").output
-	output, err := os.CreateTemp(t.TempDir(), "counted-output-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer output.Close()
-	stats, err := os.CreateTemp(t.TempDir(), "counted-stats-")
-	if err != nil {
-		t.Fatal(err)
-	}
-	defer stats.Close()
-	command := exec.Command(filepath.Join(directory, "counted"), "--manifest", path, "--count")
-	command.Stdout, command.Stderr = output, stats
-	if err := command.Run(); err != nil {
-		t.Fatal(err)
-	}
-	got, err = os.ReadFile(output.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
-	counters, err := os.ReadFile(stats.Name())
-	if err != nil {
-		t.Fatal(err)
-	}
-	if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
-		t.Fatalf("unexpected counted stderr: %s", counters)
-	}
-	t.Logf("counted instrumentation: %s", counters)
-	if diff := difference(got, want); diff != "" {
-		t.Fatal(diff)
+	t.Logf("profile Go oracle build: %s", time.Since(started))
+	module := emittedJavaScript(t, directory)
+	buildTime := time.Since(buildStart)
+	rows := []string{ownedWitnesses(t, directory, "no-var")[0] + "\tno-var"}
+	assignments := profileAssignments(t, rows, testProfileCompilationShards)
+	t.Logf("setup with builds=%s without builds=%s", time.Since(setup), time.Since(setup)-buildTime)
+	for i, cases := range assignments {
+		if !profileSelected(t, i, len(assignments)) {
+			continue
+		}
+		t.Run(fmt.Sprintf("shard-%03d", i), func(t *testing.T) {
+			t.Parallel()
+			path := manifest(t, cases)
+			compareWithJavaScript(t, oracle, filepath.Join(directory, "scanner"), directory, path, module)
+			want := execute(t, "", oracle, "--manifest", path).output
+			got := execute(t, "", filepath.Join(directory, "profiled"), "--manifest", path).output
+			profileCheck(t, got, want)
+			want = execute(t, "", oracle, "--manifest", path, "--count").output
+			output, err := os.CreateTemp(t.TempDir(), "counted-output-")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer output.Close()
+			stats, err := os.CreateTemp(t.TempDir(), "counted-stats-")
+			if err != nil {
+				t.Fatal(err)
+			}
+			defer stats.Close()
+			command := exec.Command(filepath.Join(directory, "counted"), "--manifest", path, "--count")
+			command.Stdout, command.Stderr = output, stats
+			if err := command.Run(); err != nil {
+				t.Fatal(err)
+			}
+			got, err = os.ReadFile(output.Name())
+			if err != nil {
+				t.Fatal(err)
+			}
+			counters, err := os.ReadFile(stats.Name())
+			if err != nil {
+				t.Fatal(err)
+			}
+			if !strings.HasPrefix(string(counters), "adamic: counts: allocations ") {
+				t.Fatalf("unexpected counted stderr: %s", counters)
+			}
+			t.Logf("counted instrumentation: %s", counters)
+			profileCheck(t, got, want)
+		})
 	}
 }
 
