@@ -17,8 +17,10 @@ func init() {
 }
 
 func TestNotYetLibraryStringBoundsMutants(t *testing.T) {
+	t.Parallel()
 	for _, rule := range []string{"slice", "substring", "position"} {
 		t.Run(rule, func(t *testing.T) {
+			t.Parallel()
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/notyet_library_string_bounds.a"))
 			if err != nil {
 				t.Fatal(err)
