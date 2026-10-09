@@ -1,0 +1,46 @@
+const edges: number[] = [0, 65535, 65536, -1, 1.5, NaN, -0, Infinity, 4294967297];
+const converted = new Uint16Array(edges);
+const written = new Uint16Array(edges.length);
+for (let index = 0; index < edges.length; index += 1) {
+    written[index] = edges[index] ?? 0;
+    console.log(`${index}: ${converted[index]} ${written[index]} inverse ${1 / (written[index] ?? 0)}`);
+}
+console.log(`lengths ${written.length} ${written.byteLength} ${new Uint16Array(3.9).length} ${new Uint16Array().byteLength}`);
+console.log(`reads ${written[99]} ${written[-1]} ${written[0.5]} ${written[NaN]} ${written[Infinity]} zero ${written[-0]}`);
+const zero = new Uint16Array(2);
+console.log(`zero ${zero[0]} ${zero[1]} ${zero.byteLength}`);
+for (const value of edges) {
+    zero.fill(value);
+    console.log(`fill ${zero[0]} ${zero[1]}`);
+}
+const copied = new Uint16Array(edges.length);
+copied.set(converted);
+for (const value of copied) { console.log(`copied ${value}`); }
+const parent = new Uint16Array([1, 2, 3, 4, 5]);
+const child = parent.subarray(1, -1);
+child[0] = 65536;
+parent[2] = -1;
+console.log(`alias ${parent[1]} ${child[1]} ${parent.length} ${parent.byteLength} ${child.length} ${child.byteLength}`);
+child.fill(65537, -1);
+console.log(`fill alias ${parent[3]}`);
+parent.set(parent.subarray(0, 4), 1);
+for (const value of parent) { console.log(`right overlap ${value}`); }
+parent.subarray(0, 4).set(parent.subarray(1));
+for (const value of parent) { console.log(`left overlap ${value}`); }
+let position = 0;
+for (const value of parent) {
+    console.log(`live ${value}`);
+    child[0] = 65535;
+    position += 1;
+    if (position === 3) { break; }
+}
+function surviving(): Uint16Array {
+    const owner = new Uint16Array([9, 65535, 65536]);
+    return owner.subarray(1).subarray(0, 1);
+}
+const alive = surviving();
+console.log(`surviving ${alive[0]} ${alive.length} ${alive.byteLength}`);
+alive[0] = 4294967297;
+console.log(`surviving write ${alive[0]}`);
+console.log(`empty ${alive.subarray(1).byteLength}`);
+console.log(`widths ${new Uint8Array(2).byteLength} ${new Int32Array(2).byteLength} ${new Float64Array(2).byteLength}`);

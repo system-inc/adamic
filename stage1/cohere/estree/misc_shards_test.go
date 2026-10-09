@@ -212,6 +212,7 @@ func miscStart(t *testing.T) func() {
 }
 
 func TestMiscShardUnionRejectsInvalidEnumeration(t *testing.T) {
+	t.Parallel()
 	for _, item := range []struct {
 		ids   []string
 		count int
@@ -387,6 +388,7 @@ func miscShard(id string, count int) int {
 }
 
 func TestMiscShardGrowthKeepsAssignments(t *testing.T) {
+	t.Parallel()
 	const shards = 32
 	original := []string{"stage1/cohere/estree/z.input:0:audit", "stage1/cohere/estree/m.input:0:audit", "stage1/cohere/estree/exports_test.go:export:0"}
 	original = append(original, miscIDs("stage1/cohere/estree/exports_test.go:export", []string{"@d export class C {}", "@d export default class C {}"})...)

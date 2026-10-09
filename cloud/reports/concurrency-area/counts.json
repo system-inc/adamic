@@ -1,0 +1,154 @@
+{
+  "base": "4d86c305",
+  "area_rows": 413,
+  "merged_rows": 441,
+  "area_changed": [],
+  "area_rises": [],
+  "area_missing": [],
+  "new_rows": [
+    "bench/parallel_files.a",
+    "internal/oracle/testdata/async_coverage_discard.a",
+    "internal/oracle/testdata/async_coverage_parameters.a",
+    "internal/oracle/testdata/async_coverage_reject_eager.a",
+    "internal/oracle/testdata/async_coverage_reject_empty.a",
+    "internal/oracle/testdata/async_coverage_reject_nested.a",
+    "internal/oracle/testdata/async_coverage_typeof.a",
+    "internal/oracle/testdata/async_coverage_unions.a",
+    "internal/oracle/testdata/async_coverage_values.a",
+    "internal/oracle/testdata/async_nested.a",
+    "internal/oracle/testdata/async_plain.a",
+    "internal/oracle/testdata/async_three.a",
+    "internal/oracle/testdata/async_throw.a",
+    "internal/oracle/testdata/async_typeof.a",
+    "internal/oracle/testdata/concurrency/accepted/fresh.a",
+    "internal/oracle/testdata/concurrency/accepted/global_capture.a",
+    "internal/oracle/testdata/concurrency/accepted/identity.a",
+    "internal/oracle/testdata/concurrency/accepted/large.a",
+    "internal/oracle/testdata/concurrency/accepted/map_capture.a",
+    "internal/oracle/testdata/concurrency/accepted/nested.a",
+    "internal/oracle/testdata/concurrency/accepted/numbers.a",
+    "internal/oracle/testdata/concurrency/accepted/readonly_forms.a",
+    "internal/oracle/testdata/concurrency/accepted/readonly_function.a",
+    "internal/oracle/testdata/concurrency/accepted/records.a",
+    "internal/oracle/testdata/concurrency/accepted/recursive_tree.a",
+    "internal/oracle/testdata/concurrency/accepted/strings.a",
+    "internal/oracle/testdata/concurrency/accepted/throw_middle.a",
+    "internal/oracle/testdata/moves/accepted/objects.a"
+  ],
+  "changed_imported_parallel_rows": [
+    {
+      "fixture": "internal/oracle/testdata/moves/accepted/objects.a",
+      "before": [
+        2056,
+        2056,
+        8194,
+        6153,
+        2053,
+        0
+      ],
+      "after": [
+        2056,
+        2056,
+        6145,
+        4104,
+        2053,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/concurrency/accepted/fresh.a",
+      "before": [
+        20,
+        20,
+        11,
+        26,
+        12,
+        0
+      ],
+      "after": [
+        20,
+        20,
+        10,
+        25,
+        12,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/concurrency/accepted/identity.a",
+      "before": [
+        8,
+        8,
+        14,
+        20,
+        5,
+        0
+      ],
+      "after": [
+        8,
+        8,
+        13,
+        19,
+        5,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/concurrency/accepted/large.a",
+      "before": [
+        4105,
+        4105,
+        6155,
+        6165,
+        4102,
+        0
+      ],
+      "after": [
+        4105,
+        4105,
+        6154,
+        6164,
+        4102,
+        0
+      ]
+    },
+    {
+      "fixture": "internal/oracle/testdata/concurrency/accepted/recursive_tree.a",
+      "before": [
+        10,
+        10,
+        11,
+        17,
+        10,
+        0
+      ],
+      "after": [
+        10,
+        10,
+        9,
+        15,
+        10,
+        0
+      ]
+    },
+    {
+      "fixture": "bench/parallel_files.a",
+      "before": [
+        3952651,
+        3952651,
+        8151046,
+        8654931,
+        8839,
+        0
+      ],
+      "after": [
+        3952651,
+        3952651,
+        8151045,
+        8654930,
+        8839,
+        0
+      ]
+    }
+  ]
+}

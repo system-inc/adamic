@@ -13,6 +13,7 @@ import (
 
 // Not parallel: native.Build writes the shared user cache directory adamic/runtime
 func TestInterfaceTypeMethodGap(t *testing.T) {
+	t.Parallel()
 	main, err := filepath.Abs("gaps/interfaceTypeMethod.ts")
 	if err != nil {
 		t.Fatal(err)

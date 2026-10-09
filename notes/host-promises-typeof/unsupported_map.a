@@ -1,0 +1,3 @@
+async function f(): Promise<Map<string, number>> { return new Map<string, number>([['a', 1]]); }
+const value = await f();
+console.log(`${value.size}`);

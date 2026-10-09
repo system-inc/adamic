@@ -1,0 +1,14 @@
+async function stringValue(value: string): Promise<string> { return `${value}!`; }
+async function booleanValue(value: boolean): Promise<boolean> { return value; }
+async function numberValue(value: number): Promise<number> { return value; }
+async function discard(): Promise<void> {
+    await stringValue(`held${3}`);
+    await booleanValue(false);
+    await numberValue(0);
+    await 'primitive';
+    await false;
+    await 0;
+    return await Promise.resolve();
+}
+await discard();
+console.log('discarded');

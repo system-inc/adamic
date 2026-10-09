@@ -285,6 +285,7 @@ func proveRecoveryVerdict(t *testing.T, cases []recoveryCase, count int, mode st
 	t.Logf("planted %s %s failed only %s", mode, cases[planted].id, owner)
 }
 func TestRecoveryShardProofChild(t *testing.T) {
+	t.Parallel()
 	data := os.Getenv("ADAMIC_ESTREE_SHARD_PROOF")
 	if data == "" {
 		return

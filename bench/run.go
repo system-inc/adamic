@@ -33,8 +33,9 @@ import (
 
 // A runtime is one way to run a program.
 type runtimeKind struct {
-	name    string
-	command func(program program) []string
+	name        string
+	environment []string
+	command     func(program program) []string
 }
 
 // A program is one benchmark: its source, and the native binaries built from it.
@@ -43,6 +44,7 @@ type program struct {
 	source  string
 	native  string
 	counted string
+	adamic  bool
 }
 
 // A measurement is one run's wall time and peak resident memory, or why there isn't one.
@@ -59,6 +61,7 @@ func main() {
 	rounds := flag.Int("rounds", 5, "how many interleaved rounds; the best of them is reported")
 	timeout := flag.Duration("timeout", 120*time.Second, "how long one run may take before it's reported as not finishing")
 	only := flag.String("only", "", "comma-separated benchmark names to run (default: all)")
+	threads := flag.String("threads", "", "comma-separated native thread counts, interleaved within each round (default: pool default)")
 	flag.Parse()
 
 	directory, err := benchDirectory()
@@ -75,7 +78,20 @@ func main() {
 	if err != nil {
 		fail(err)
 	}
-	runtimes := availableRuntimes()
+	// Bun uses ordinary package resolution; its shim is outside the repository and never changes source.
+	modules := filepath.Join(work, "node_modules")
+	packageDirectory := filepath.Join(modules, "adamic")
+	if err := os.MkdirAll(packageDirectory, 0755); err != nil {
+		fail(err)
+	}
+	if err := os.WriteFile(filepath.Join(packageDirectory, "package.json"), []byte(`{"type":"module","exports":"./index.mjs"}`), 0644); err != nil {
+		fail(err)
+	}
+	shim := "export * from " + strconv.Quote(filepath.Join(filepath.Dir(directory), "oracle", "adamic.mjs")) + ";\n"
+	if err := os.WriteFile(filepath.Join(packageDirectory, "index.mjs"), []byte(shim), 0644); err != nil {
+		fail(err)
+	}
+	runtimes := availableRuntimes(*threads, modules)
 
 	describeMachine(runtimes)
 	fmt.Printf("load before: %s\n\n", loadAverage())
@@ -108,7 +124,7 @@ func main() {
 				if len(previous) > 0 && previous[0].failure != "" {
 					continue
 				}
-				result := run(kind.command(program), *timeout)
+				result := run(kind.command(program), *timeout, kind.environment...)
 				results[programIndex][runtimeIndex] = append(previous, result)
 				fmt.Fprintf(os.Stderr, "round %d %s %s: %s\n", round+1, program.name, kind.name, short(result))
 			}
@@ -120,7 +136,7 @@ func main() {
 	for _, kind := range runtimes {
 		header = append(header, kind.name+" time", kind.name+" memory")
 	}
-	header = append(header, "native vs node", "same answer")
+	header = append(header, runtimes[0].name+" vs node", "same answer")
 	fmt.Println("| " + strings.Join(header, " | ") + " |")
 	fmt.Println("|" + strings.Repeat("---|", len(header)))
 	for programIndex, program := range programs {
@@ -134,12 +150,18 @@ func main() {
 			}
 			row = append(row, seconds(best[runtimeIndex].elapsed), megabytes(best[runtimeIndex].peak))
 		}
-		row = append(row, ratio(best[0], best[1]), sameAnswer(best))
+		nodeIndex := 0
+		for index, kind := range runtimes {
+			if kind.name == "node" {
+				nodeIndex = index
+			}
+		}
+		row = append(row, ratio(best[0], best[nodeIndex]), sameAnswer(best))
 		fmt.Println("| " + strings.Join(row, " | ") + " |")
 	}
 
 	fmt.Println()
-	fmt.Println("counted native build, run once (adamic build --count): heap values and reference-count calls")
+	fmt.Println("counted native build, run once (adamic build --count; parallel programs use ADAMIC_THREADS=1): heap values and reference-count calls")
 	fmt.Println()
 	fmt.Println("| benchmark | allocations | frees | retains | releases | peak live | in regions |")
 	fmt.Println("|---|---:|---:|---:|---:|---:|---:|")
@@ -167,6 +189,12 @@ func findPrograms(directory string, only string) ([]program, error) {
 	if err != nil {
 		return nil, err
 	}
+	adamicSources, err := filepath.Glob(filepath.Join(directory, "*.a"))
+	if err != nil {
+		return nil, err
+	}
+	sources = append(sources, adamicSources...)
+	slices.Sort(sources)
 	wanted := map[string]bool{}
 	for _, name := range strings.Split(only, ",") {
 		if name != "" {
@@ -174,10 +202,19 @@ func findPrograms(directory string, only string) ([]program, error) {
 		}
 	}
 	programs := []program{}
+	seen := map[string]bool{}
 	for _, source := range sources {
-		name := strings.TrimSuffix(filepath.Base(source), ".ts")
+		name := strings.TrimSuffix(filepath.Base(source), filepath.Ext(source))
 		if len(wanted) == 0 || wanted[name] {
-			programs = append(programs, program{name: name, source: source})
+			if seen[name] {
+				return nil, fmt.Errorf("duplicate benchmark name %q across source extensions", name)
+			}
+			seen[name] = true
+			contents, err := os.ReadFile(source)
+			if err != nil {
+				return nil, err
+			}
+			programs = append(programs, program{name: name, source: source, adamic: strings.Contains(string(contents), "from 'adamic'") || strings.Contains(string(contents), `from "adamic"`)})
 		}
 	}
 	if len(programs) == 0 {
@@ -187,23 +224,41 @@ func findPrograms(directory string, only string) ([]program, error) {
 }
 
 // availableRuntimes is native and Node always, and Bun when it's installed.
-func availableRuntimes() []runtimeKind {
-	runtimes := []runtimeKind{
-		{"native", func(program program) []string { return []string{program.native} }},
-		{"node", func(program program) []string { return []string{"node", program.source} }},
+func availableRuntimes(threads, modules string) []runtimeKind {
+	runtimes := []runtimeKind{}
+	if threads == "" {
+		runtimes = append(runtimes, runtimeKind{name: "native", command: func(program program) []string { return []string{program.native} }})
+	} else {
+		seen := map[int]bool{}
+		for _, setting := range strings.Split(threads, ",") {
+			count, err := strconv.Atoi(setting)
+			if err != nil || count < 1 || count > 4096 || seen[count] {
+				fail(fmt.Errorf("-threads requires distinct integers from 1 to 4096: %q", threads))
+			}
+			seen[count] = true
+			runtimes = append(runtimes, runtimeKind{name: "native/" + setting, environment: []string{"ADAMIC_THREADS=" + setting}, command: func(program program) []string { return []string{program.native} }})
+		}
 	}
+	runtimes = append(runtimes, runtimeKind{name: "node", command: func(program program) []string {
+		if program.adamic || filepath.Ext(program.source) == ".a" {
+			return []string{"node", "--disable-warning=ExperimentalWarning", filepath.Join(filepath.Dir(filepath.Dir(program.source)), "oracle", "node.mjs"), program.source}
+		}
+		return []string{"node", program.source}
+	}})
 	if _, err := exec.LookPath("bun"); err == nil {
-		runtimes = append(runtimes, runtimeKind{"bun", func(program program) []string { return []string{"bun", program.source} }})
+		runtimes = append(runtimes, runtimeKind{name: "bun", environment: []string{"NODE_PATH=" + modules}, command: func(program program) []string {
+			return []string{"bun", program.source}
+		}})
 	}
 	return runtimes
 }
 
 // run runs a command to the end, and measures it.
-func run(command []string, timeout time.Duration) measurement {
+func run(command []string, timeout time.Duration, settings ...string) measurement {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	process := exec.CommandContext(ctx, command[0], command[1:]...)
-	process.Env = environment()
+	process.Env = append(environment(), settings...)
 	var stdout, stderr bytes.Buffer
 	process.Stdout = &stdout
 	process.Stderr = &stderr
@@ -267,6 +322,10 @@ func counts(program program, timeout time.Duration) string {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout)
 	defer cancel()
 	process := exec.CommandContext(ctx, program.counted)
+	process.Env = environment()
+	if program.adamic {
+		process.Env = append(process.Env, "ADAMIC_THREADS=1")
+	}
 	var stderr bytes.Buffer
 	process.Stderr = &stderr
 	process.Stdout = nil

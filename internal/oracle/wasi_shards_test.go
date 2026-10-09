@@ -71,6 +71,7 @@ func wasiFixtureDifference(name string, expected, actual run) error {
 }
 
 func TestWASIShardUnion(t *testing.T) {
+	t.Parallel()
 	shards := wasiFixtureShards()
 	if err := wasiFixtureUnion(shards); err != nil {
 		t.Fatal(err)
@@ -101,6 +102,7 @@ func TestWASIShardUnion(t *testing.T) {
 // Use the live oracle comparison and a registered fixture identity, following
 // the stage 1 planted-disagreement proof. Only its owning shard may reject it.
 func TestWASIShardPlantedDisagreement(t *testing.T) {
+	t.Parallel()
 	planted := "dedication/dedication.a"
 	caught := 0
 	for ordinal, rows := range wasiFixtureShards() {
@@ -131,6 +133,7 @@ func TestWASIShardPlantedDisagreement(t *testing.T) {
 // Exercise the real lowering/build/run path without editing any fixture. The
 // child process must fail, naming the registered fixture in its owning shard.
 func TestWASIShardPlantedFixture(t *testing.T) {
+	t.Parallel()
 	if os.Getenv("ADAMIC_ORACLE_WASI") != "1" {
 		t.Skip("set ADAMIC_ORACLE_WASI=1")
 	}

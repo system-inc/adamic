@@ -143,6 +143,11 @@ func prepareCSSStringsSetup(t *testing.T) {
 		build := stringsPreparedProgram(t, -1)
 		sanitized := stringsPreparedNative(t, -1, true)
 		fast := stringsPreparedNative(t, -1, false)
+		counted := stringsCounted(t, build)
+		code, err := os.ReadFile(build.c)
+		if err != nil {
+			t.Fatal(err)
+		}
 		// macOS's leaks tool needs the unsanitized product; Linux reuses sanitized.
 		mutants := make(map[string]stringsProgram)
 		mutantBinaries := make(map[string]string)
@@ -189,7 +194,7 @@ func prepareCSSStringsSetup(t *testing.T) {
 					clean(t, side.name, side.result)
 					checkStringsOutput(t, unit, side.name, side.result.stdout, want.stdout)
 				}
-				stringsLeaks(t, sanitized, fast, "--batch", path)
+				stringsLeaks(t, string(code), sanitized, counted, "--batch", path)
 				if library != "" {
 					answer := stringsOracleAnswers(t, "Prettier", "node", []string{script, library}, stringsInput(corpus.texts[unit.lo:unit.hi]), libraryIdentity)
 					clean(t, "Prettier", answer)

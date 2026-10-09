@@ -1,7 +1,29 @@
 {
   "version": 1,
   "packages": {
-    "cmd/adamic-gocacheprog": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"],
-    "internal/buildcache/cmd/productidentity": ["internal/load", "internal/lower", "internal/native", "internal/javascript", "internal/ir", "internal/flow", "cmd/adamic"]
+    "cmd/adamic-gocacheprog": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "internal/boundedrun": [
+      "cmd/adamic"
+    ],
+    "internal/buildcache/cmd/productidentity": [
+      "internal/load",
+      "internal/lower",
+      "internal/native",
+      "internal/javascript",
+      "internal/ir",
+      "internal/flow",
+      "cmd/adamic"
+    ],
+    "internal/leakcheck": [
+      "internal/native"
+    ]
   }
 }

@@ -17,8 +17,8 @@ func init() {
 	}
 }
 
+// Not parallel: cyclic projects use the process-wide cohere rule runner.
 func TestModuleNamespaceReadsMatchNode(t *testing.T) {
-	// Not parallel: cyclic projects use the process-wide cohere rule runner.
 	for _, name := range []string{"main", "early", "initialized", "direct_early", "direct_initialized", "hoisted"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/module_namespace_reads", name+".a"))
@@ -46,8 +46,8 @@ func TestModuleNamespaceReadsMatchNode(t *testing.T) {
 	}
 }
 
+// Not parallel: cyclic projects use the process-wide cohere rule runner.
 func TestModuleNamespaceReadinessMutants(t *testing.T) {
-	// Not parallel: cyclic projects use the process-wide cohere rule runner.
 	for _, name := range []string{"early", "direct_early"} {
 		t.Run(name, func(t *testing.T) {
 			path, err := filepath.Abs(filepath.Join(repository, "internal/oracle/testdata/module_namespace_reads", name+".a"))

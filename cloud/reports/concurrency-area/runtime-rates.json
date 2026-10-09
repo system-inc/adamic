@@ -1,0 +1,135 @@
+{
+  "gate_seconds": 433.486,
+  "mutants": [
+    {
+      "mutant": "skip_items_share",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 150,
+      "executions": 150,
+      "mean_group_seconds": 0.46799999999999997,
+      "min_group_seconds": 0.36,
+      "max_group_seconds": 1.02
+    },
+    {
+      "mutant": "lazy_cache",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 150,
+      "executions": 150,
+      "mean_group_seconds": 1.9666,
+      "min_group_seconds": 1.44,
+      "max_group_seconds": 3.22
+    },
+    {
+      "mutant": "plain_shared_count",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 150,
+      "executions": 150,
+      "mean_group_seconds": 1.8126,
+      "min_group_seconds": 1.4,
+      "max_group_seconds": 2.8
+    },
+    {
+      "mutant": "field_cache",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 150,
+      "executions": 150,
+      "mean_group_seconds": 0.3732,
+      "min_group_seconds": 0.27,
+      "max_group_seconds": 0.96
+    },
+    {
+      "mutant": "remote_free",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 150,
+      "executions": 150,
+      "mean_group_seconds": 2.8336,
+      "min_group_seconds": 2.21,
+      "max_group_seconds": 6.61
+    },
+    {
+      "mutant": "result_order",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1508,
+      "min_group_seconds": 0.11,
+      "max_group_seconds": 0.35
+    },
+    {
+      "mutant": "reused_graph",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1106,
+      "min_group_seconds": 0.08,
+      "max_group_seconds": 0.22
+    },
+    {
+      "mutant": "oversized_slot",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.11780000000000002,
+      "min_group_seconds": 0.09,
+      "max_group_seconds": 0.28
+    },
+    {
+      "mutant": "fixed_grain",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1164,
+      "min_group_seconds": 0.09,
+      "max_group_seconds": 0.33
+    },
+    {
+      "mutant": "eager_strings",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1168,
+      "min_group_seconds": 0.09,
+      "max_group_seconds": 0.3
+    },
+    {
+      "mutant": "one_worker",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1478,
+      "min_group_seconds": 0.11,
+      "max_group_seconds": 0.37
+    },
+    {
+      "mutant": "pointer_guard",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.1152,
+      "min_group_seconds": 0.09,
+      "max_group_seconds": 0.3
+    },
+    {
+      "mutant": "loser_free",
+      "caught_groups": 50,
+      "groups": 50,
+      "caught_executions": 50,
+      "executions": 50,
+      "mean_group_seconds": 0.3366,
+      "min_group_seconds": 0.24,
+      "max_group_seconds": 0.71
+    }
+  ]
+}

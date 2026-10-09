@@ -1,0 +1,2 @@
+async function f(): Promise<void> {}
+console.log(typeof (f === f));
