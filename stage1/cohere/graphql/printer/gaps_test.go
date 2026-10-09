@@ -2,6 +2,8 @@ package printer
 
 import (
 	"context"
+	"crypto/sha256"
+	"encoding/binary"
 	"encoding/json"
 	"errors"
 	"fmt"
@@ -36,7 +38,8 @@ func TestPrinterConstructorGap(t *testing.T) {
 
 const testPrinterWhitespaceGapShards = 5
 
-// Each independent whitespace input owns one shard-NNN. ADAMIC_TEST_SHARD=i/n
+// A fixed set of shards hashes the repository-relative JSON path and entry index.
+// Adding entries preserves every existing assignment. ADAMIC_TEST_SHARD=i/n
 // selects indices modulo n equal to i; unset runs all. Builds are shared inputs.
 func TestPrinterWhitespaceGap(t *testing.T) {
 	library := os.Getenv("ADAMIC_GRAPHQL_PRETTIER")
@@ -65,15 +68,22 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 		if !exists || !strings.HasPrefix(answer, "error\tSyntax Error:") {
 			t.Fatalf("Go whitespace refusal missing: %q", input)
 		}
-		whole[i] = printerCase{id: fmt.Sprintf("whitespace/case-%06d", i), input: input, want: answer}
+		whole[i] = printerCase{id: whitespaceCaseID(i), input: input, want: answer}
 	}
-	shards := make([]printerShard, len(whole))
-	for i, item := range whole {
+	if len(whole) == 0 {
+		t.Fatal("repository whitespace corpus is empty")
+	}
+	shards := whitespaceShards(whole)
+	for i := range shards {
 		path := filepath.Join(t.TempDir(), "whitespace-cases.txt")
-		if err := os.WriteFile(path, []byte(item.input+"\n"), 0644); err != nil {
+		var protocol strings.Builder
+		for _, item := range shards[i].cases {
+			protocol.WriteString(item.input + "\n")
+		}
+		if err := os.WriteFile(path, []byte(protocol.String()), 0644); err != nil {
 			t.Fatal(err)
 		}
-		shards[i] = printerShard{mode: "defaults", path: path, cases: []printerCase{item}}
+		shards[i].path = path
 	}
 	if len(shards) != testPrinterWhitespaceGapShards {
 		t.Fatalf("enumerated %d shards, declared %d", len(shards), testPrinterWhitespaceGapShards)
@@ -101,7 +111,10 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 					t.Errorf("invalid test unit: %.3fs exceeds 30s", elapsed.Seconds())
 				}
 			})
-			t.Logf("whitespace case %s", shard.cases[0].id)
+			t.Logf("whitespace cases: %v", shard.cases)
+			if len(shard.cases) == 0 {
+				return
+			}
 			for _, side := range []struct {
 				name   string
 				result run
@@ -115,8 +128,8 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 			}
 			for _, side := range []struct{ directory, engine string }{{library, "npm"}, {embedded, "embedded"}} {
 				result := execute(t, nil, "node", script, side.directory, shard.path, "defaults", side.engine)
-				if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != "ok\t\n" {
-					t.Errorf("shard-%03d %s Prettier %s: %+v", number, shard.cases[0].id, side.engine, result)
+				if result.exitCode != 0 || len(result.stderr) != 0 || string(result.stdout) != strings.Repeat("ok\t\n", len(shard.cases)) {
+					t.Errorf("shard-%03d %s Prettier %s: %+v", number, fmt.Sprint(shard.cases), side.engine, result)
 				}
 			}
 		})
@@ -125,24 +138,50 @@ func TestPrinterWhitespaceGap(t *testing.T) {
 
 // A real process emits one planted acceptance where the oracle requires refusal;
 // only the owning whitespace shard may report the disagreement.
+func whitespaceCaseID(index int) string {
+	return fmt.Sprintf("stage1/cohere/graphql/printer/gaps/whitespace-cases.json/case-%06d", index)
+}
+
+func whitespaceOwner(key string) int {
+	hash := sha256.Sum256([]byte(key))
+	return int(binary.BigEndian.Uint64(hash[:8]) % testPrinterWhitespaceGapShards)
+}
+
+func whitespaceShards(cases []printerCase) []printerShard {
+	shards := make([]printerShard, testPrinterWhitespaceGapShards)
+	for i := range shards {
+		shards[i].mode = "defaults"
+	}
+	for _, item := range cases {
+		owner := whitespaceOwner(item.id)
+		shards[owner].cases = append(shards[owner].cases, item)
+	}
+	return shards
+}
+
 func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
+	var whole []printerCase
+	for i := range 5 {
+		whole = append(whole, printerCase{id: whitespaceCaseID(i), want: "error\trefused"})
+	}
+	planted := whitespaceCaseID(3)
 	caught := 0
-	for number := 0; number < testPrinterWhitespaceGapShards; number++ {
-		shard := printerShard{cases: []printerCase{{id: fmt.Sprintf("whitespace/case-%06d", number), want: "error\trefused"}}}
-		answer := "error\trefused\n"
-		if number == 3 {
-			answer = "ok\t\n"
+	for number, shard := range whitespaceShards(whole) {
+		var answer strings.Builder
+		for _, item := range shard.cases {
+			if item.id == planted {
+				answer.WriteString("ok\t\n")
+			} else {
+				answer.WriteString(item.want + "\n")
+			}
 		}
-		encoded, _ := json.Marshal(answer)
+		encoded, _ := json.Marshal(answer.String())
 		result := execute(t, nil, "node", "-e", "process.stdout.write("+string(encoded)+")")
 		err := printerShardDisagreement(number, shard, result)
 		if err == nil {
-			if number == 3 {
-				t.Fatal("planted disagreement escaped shard-003")
-			}
 			continue
 		}
-		if number != 3 || !strings.Contains(err.Error(), "shard-003 whitespace/case-000003") {
+		if number != whitespaceOwner(planted) || !strings.Contains(err.Error(), planted) {
 			t.Fatalf("wrong owner: %v", err)
 		}
 		t.Log(err)
@@ -150,5 +189,32 @@ func TestPrinterWhitespacePlantedDisagreement(t *testing.T) {
 	}
 	if caught != 1 {
 		t.Fatalf("%d shards caught planted disagreement, want 1", caught)
+	}
+}
+
+func TestPrinterWhitespaceShardGrowth(t *testing.T) {
+	original := []printerCase{{id: whitespaceCaseID(0)}, {id: whitespaceCaseID(1)}}
+	grown := append(append([]printerCase(nil), original...), printerCase{id: whitespaceCaseID(2)})
+	before, after := whitespaceShards(original), whitespaceShards(grown)
+	if len(before) != testPrinterWhitespaceGapShards || len(after) != len(before) {
+		t.Fatal("growth changed shard count")
+	}
+	for _, cases := range [][]printerCase{original, grown} {
+		if err := printerShardUnion(cases, whitespaceShards(cases)); err != nil {
+			t.Fatal(err)
+		}
+	}
+	for number, shard := range before {
+		for _, item := range shard.cases {
+			found := false
+			for _, candidate := range after[number].cases {
+				if candidate.id == item.id {
+					found = true
+				}
+			}
+			if !found {
+				t.Fatalf("growth moved %s from shard-%03d", item.id, number)
+			}
+		}
 	}
 }

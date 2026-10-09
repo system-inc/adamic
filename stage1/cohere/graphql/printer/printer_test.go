@@ -19,9 +19,15 @@ func printerCases(t *testing.T, mode string, oracle ...string) (string, string) 
 	if err != nil {
 		t.Fatal(err)
 	}
-	// Validate the pinned enumeration on cache hits as well as misses.
-	corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
+	// Mode and mutant shards use this fixed corpus: Cohere commit
+	// 7945d102a6c18dd36adf9114a758ce646e8b2359 plus generated controls
+	// from cohere_side_test.go, whose random seed is 20261006. Compare
+	// live case totals in the union; guard the pinned file count separately.
+	files := corpusfiles.Upstream(t, filepath.Join(root, "cohere"), corpusfiles.CohereCommit,
 		[]string{"internal/format/graphql"}, []string{"*_test.go"})
+	if len(files) != 3 {
+		t.Fatalf("pinned GraphQL corpus: %d files, want 3", len(files))
+	}
 	t.Log("GraphQL documents: no tracked .graphql corpus; pinned upstream test constants and generated controls")
 	if len(oracle) == 0 {
 		oracle = []string{printerOracle(t)}
