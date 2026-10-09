@@ -1,8 +1,8 @@
 [
   {
     "path": "internal/load/testdata/0.1/compile/09_tree.ts",
-    "member": "refusal-rulings-main",
-    "reason": "SourceLength runtime closure metadata changes allocations; inferred from closure layout change",
+    "member": "optional-chain-after-call-main",
+    "reason": "isolated main-plus-optional count build exactly reproduces 33/33/66/69/16/0; count-owner-tree.stderr.log",
     "before": "| internal/load/testdata/0.1/compile/09_tree.ts | 19 | 19 | 28 | 69 | 16 | 0 |",
     "after": "| internal/load/testdata/0.1/compile/09_tree.ts | 33 | 33 | 66 | 69 | 16 | 0 |"
   },

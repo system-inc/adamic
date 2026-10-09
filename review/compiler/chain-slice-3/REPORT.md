@@ -46,8 +46,27 @@ tsgo-cache-build.log and tsgo-cache-runtime.json record actual BuildTSGo first/w
 
 admission-inputs.json fixes 1992 existing main inputs. Final slice observations are rebuilt after owner repairs; main observations are unchanged. admission-delta.json contains seven newly admitted spread/push gaps, each attributed to spread-shorthand, and no newly refused input. All seven have explicit Node-held backend gap proofs.
 
-Counts regenerated successfully once by timeout 310 go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -timeout=300s -args -update-counts: 88.903 s. The initial 85 s attempt timed out before writing. counts-attribution.json attributes all 33 numeric added/changed rows: 22 additions and 11 existing changes. Attribution causes are marked as inference where appropriate; numbers are observations and were never hand edited. No fixture was added after regeneration; the optional summary repair only changes throw metadata.
+Counts regenerated successfully once by timeout 310 go test ./internal/oracle -run ^TestCountsAreRecorded$ -count=1 -timeout=300s -args -update-counts: 88.903 s. The initial 85 s attempt timed out before writing. counts-attribution.json attributes all 33 numeric added/changed rows: 22 additions and 11 existing changes. The largest existing change, 09_tree.ts, is reproduced exactly by the isolated main-plus-optional count build (33/33/66/69/16/0). Attribution causes are marked as inference where appropriate; numbers are observations and were never hand edited. No fixture was added after regeneration; the optional summary repair only changes throw metadata.
 
 TestCallTargetReaders: timeout 110 go test ./internal/ir -run ^TestCallTargetReaders$ -count=1 -timeout=85s; passes, 20.471 s on final touched tests. No allowlist expansion.
 
-Lane checks run against committed HEAD using the exact integration command. lane-checks.log holds output. Full gate is intentionally deferred to the shared post-push gate.
+Lane checks run against committed HEAD using the exact integration command. lane-checks.log holds output: lane checks 13.7 s, gofmt and tools on 34 Go files, t.Parallel on 11 test packages; vet skipped over 10 s. A separate timeout 90 go vet over all 11 changed test packages then exited 0, recorded in vet-final.log. Full gate is intentionally deferred to the shared post-push gate.
+
+## Every recorded production mutant
+
+| Mutant | Catching test |
+|---|---|
+| check-optional-receiver | TestOptionalAfterCall79 |
+| javascript-required-panic | TestOptionalAfterCallRequired |
+| native-required-panic | TestOptionalAfterCallRequired |
+| drop-flow-throw-edge | TestOptionalAfterCallFlowEdges |
+| drop-required-propagation | TestOptionalAfterCallPropagation |
+| merged-computed-read | TestMergedFieldTypeScriptComputedChecked |
+| merged-declaration | TestMergedFieldAdamicUnusedRefused |
+| merged-read | TestMergedFieldTypeScriptMissingChecked |
+| function-annotation | TestFunctionAdamicUnusedAnnotationRefused |
+| function-call | TestFunctionTypeScriptCallRefused |
+| function-length | TestFunctionTypeScriptLengthAgreesWithNode |
+| erase-earlier-throw | TestOptionalAfterCallPreservesEarlierThrow |
+
+Embedded mutant leaves: TestAssignmentProofChainedMutant, TestAssignmentProofCompoundMutant, TestAssignmentProofIfNarrowingMutant, TestAssignmentProofReturnDefinedMutant, TestAssignmentProofScannerKeywordMutant, TestAssignmentProofWiderTargetMutant, TestCallSpreadEvaluatedTwiceMutant, TestJSONStringifyShorthandWrongBindingMutant. Each passes by rejecting its deliberately changed source/output against its independently captured Node golden.
