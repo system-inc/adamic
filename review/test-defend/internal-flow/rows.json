@@ -1,0 +1,60 @@
+[
+  {
+    "test": "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+    "package": "internal/flow",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowProgram family"
+    ],
+    "defense": "not defended",
+    "unique_mutant": null,
+    "attempts": [
+      {
+        "mutant": "D2",
+        "file_line": "internal/flow/liveness.go:25",
+        "change": "off by one: omit the first instruction transfer",
+        "rows_failed": [
+          "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family"
+        ]
+      },
+      {
+        "mutant": "D3",
+        "file_line": "internal/flow/liveness.go:33",
+        "change": "drop the whole definition-kill loop; preserve future-read overapproximations",
+        "rows_failed": []
+      },
+      {
+        "mutant": "D4",
+        "file_line": "internal/flow/liveness.go:25",
+        "change": "off by one: omit the final instruction transfer, including a return read",
+        "rows_failed": [
+          "TestFlowLiveness____oracle_testdata_timsort_a_63f1305dfb95",
+          "TestFlowProgram family"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/flow-defense/cache/D4 timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; corpus_units_test.go:9143: function 2 (numbers): a variable (declaration 12) is read after instruction 9, where liveness says it's dead; requested row completed with a fail action; 24.335s bounded replay also failed timsort, joins and mutations."
+  },
+  {
+    "test": "TestDebuggerHasNoFlowInstruction",
+    "package": "internal/flow",
+    "prior_verdict": "subsumed",
+    "subsumed_by": [
+      "TestFlowSingleAssignment____oracle_testdata_timsort_a_63f1305dfb95"
+    ],
+    "defense": "defended",
+    "unique_mutant": "D1 internal/flow/build.go:177",
+    "attempts": [
+      {
+        "mutant": "D1",
+        "file_line": "internal/flow/build.go:177",
+        "change": "return early for a literal-number Evaluate",
+        "rows_failed": [
+          "TestDebuggerHasNoFlowInstruction"
+        ]
+      }
+    ],
+    "evidence": "ADAMIC_BUILD_CACHE_DIR=/tmp/flow-defense/cache/D1 timeout 120 go test -json -count=1 -timeout 90s ./internal/flow/ -run .; debugger_test.go:18: debugger changed the flow: 0 instructions, want 1; all 834 other top-level tests passed to completion."
+  }
+]

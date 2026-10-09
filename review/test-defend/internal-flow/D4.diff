@@ -1,0 +1,13 @@
+diff --git a/internal/flow/liveness.go b/internal/flow/liveness.go
+index d3837836..09d9daf0 100644
+--- a/internal/flow/liveness.go
++++ b/internal/flow/liveness.go
+@@ -22,7 +22,7 @@ func LiveOut(function *Function) map[InstructionId]map[DeclarationId]bool {
+ 					live[variable] = true
+ 				}
+ 			})
+-			for position := len(block.Instructions) - 1; position >= 0; position-- {
++			for position := len(block.Instructions) - 2; position >= 0; position-- {
+ 				id := block.Instructions[position]
+ 				after := make(map[DeclarationId]bool, len(live))
+ 				for variable := range live {

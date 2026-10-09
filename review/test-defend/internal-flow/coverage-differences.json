@@ -1,0 +1,18 @@
+[
+  {
+    "target": "debugger",
+    "subsumer": "ssa",
+    "exclusive_blocks": [
+      "github.com/system-inc/adamic/internal/flow/build.go:174.3,174.9"
+    ],
+    "target_covered_blocks": 78,
+    "subsumer_covered_blocks": 319
+  },
+  {
+    "target": "liveness",
+    "subsumer": "family",
+    "exclusive_blocks": [],
+    "target_covered_blocks": 251,
+    "subsumer_covered_blocks": 763
+  }
+]
