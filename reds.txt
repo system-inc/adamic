@@ -1,0 +1,41 @@
+run adamic-verify-20261009T134736-a17237cf: red, 19422 tests in 34 units, 3 failed, 0 units broken, 0 killed over budget
+AGAIN tests-07: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-00-r1: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-00-r2: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-00-r4: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r3: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r4: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r5: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r6: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r7: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r8: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r9: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r10: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r11: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r12: from run adamic-verify-again-20261009T140756-8a61ad21
+AGAIN tests-07-r13: from run adamic-verify-again-20261009T140756-8a61ad21
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfileMutants_000 (tests-07-r9)
+    volume_test.go:8: build typeaware_six_volume-oracle-build f51d58341ebd hit 2.07
+    volume_profile_Mutants_test.go:64: phase command controls-go 0.111117s
+    volume_profile_Mutants_test.go:64: TestVolumeProfileMutants_000 (setup): 5.787463s; slice coverage: 1 source mutants, 54 controls
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.041939s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.007679s
+    volume_profile_Mutants_test.go:166: phase command binding-slot 90.031394s
+    volume_profile_Mutants_test.go:166: binding-slot: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfileMutants_001 (tests-07-r9)
+    volume_test.go:8: build typeaware_six_volume-oracle-build f51d58341ebd hit 3.62
+    volume_profile_Mutants_test.go:69: phase command controls-go 0.096551s
+    volume_profile_Mutants_test.go:69: TestVolumeProfileMutants_001 (setup): 7.930200s; slice coverage: 1 source mutants, 54 controls
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.015722s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.013853s
+    volume_profile_Mutants_test.go:166: phase command scope-containment 90.033226s
+    volume_profile_Mutants_test.go:166: scope-containment: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeProfileMutants_002 (tests-07-r9)
+    volume_test.go:8: build typeaware_six_volume-oracle-build f51d58341ebd miss 30.70
+    volume_profile_Mutants_test.go:74: phase command controls-go 0.138757s
+    volume_profile_Mutants_test.go:74: TestVolumeProfileMutants_002 (setup): 34.071896s; slice coverage: 1 source mutants, 54 controls
+    volume_profile_Mutants_test.go:141: phase command clang-version 0.047505s
+    volume_profile_Mutants_test.go:142: phase command go-version 0.011660s
+    volume_profile_Mutants_test.go:166: phase command first-binding 90.015933s
+    volume_profile_Mutants_test.go:166: first-binding: signal: killed
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware whole package started 578, verdicts 334 of: TestProduct_checker, TestProduct_checker_asan, TestProduct_corpus_checker, TestProduct_corpus_checker_asan, TestProduct_corpus_lowered, TestProduct_corpus_native, TestProduct_corpus_native_asan, TestProduct_corpus_oracle, TestProduct_corpus_record, TestProduct_corpus_stage0, TestProduct_facts_cost_go, TestProduct_facts_cost_lowered (tests-00)
