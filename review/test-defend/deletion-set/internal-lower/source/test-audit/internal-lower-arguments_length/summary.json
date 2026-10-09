@@ -1,0 +1,22 @@
+{
+  "start_commit": "7b18d0576930caca4e22ce2eef92fcf563af52d0",
+  "nproc": 5,
+  "baseline_binary_seconds": 33.494,
+  "measurement_wall_seconds": 94.887437922,
+  "validation_wall_seconds": 11.766569675000142,
+  "matrix_wall_seconds": 497.8074824049995,
+  "individual_rerun_wall_seconds": 29.66084574899969,
+  "probe_wall_seconds": 29.94849085699957,
+  "skips": [
+    "TestMixedUnionContractGraph/interface_Node_{readonly_ready:boolean}_type_Target=Node|readonly_Node[];",
+    "TestOptionalWideningCensus",
+    "TestOriginalCycleLedger"
+  ],
+  "survivors": [
+    "M04"
+  ],
+  "unit_survivors": [
+    "M04",
+    "M10"
+  ]
+}

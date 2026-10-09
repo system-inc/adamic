@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration_consume.go
++++ b/internal/lower/iteration_consume.go
+@@ -39,7 +39,7 @@
+ 		}
+ 		if callbackCount > 1 {
+ 			parameter, _ := l.representation(l.checker.GetTypeOfSymbol(signatures[0].Parameters()[1]))
+-			if parameter != ir.Number {
++			if parameter == ir.Number {
+ 				return nil, l.notYet(callbackNode, "an Array.from mapper with a different index representation")
+ 			}
+ 		}

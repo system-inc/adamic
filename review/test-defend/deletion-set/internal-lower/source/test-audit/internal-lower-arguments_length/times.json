@@ -1,0 +1,77 @@
+{
+  "TestArgumentsLengthRefusals": [
+    0.384,
+    0.362,
+    0.305
+  ],
+  "TestArgumentsLengthReadNeighbors": [
+    0.177,
+    0.174,
+    0.196
+  ],
+  "TestArgumentsLengthRefusalFixtures": [
+    0.274,
+    0.308,
+    0.379
+  ],
+  "TestArrayPredicatePreservesDeclaredElementContract": [
+    0.195,
+    0.159,
+    0.178
+  ],
+  "TestArrayPredicateCannotInventAnElementContract": [
+    0.221,
+    0.249,
+    0.22
+  ],
+  "TestArrayPredicateDoesNotMisclassifyNativeTuples": [
+    0.07,
+    0.077,
+    0.066
+  ],
+  "TestUnknownArrayPredicateRefusesUnrepresentedObservations": [
+    0.076,
+    0.075,
+    0.075
+  ],
+  "TestArrayPredicateCoexistsWithUnknownReflection": [
+    0.152,
+    0.145,
+    0.155
+  ],
+  "TestUncheckableCastsStayRefused": [
+    0.323,
+    0.322,
+    0.264
+  ],
+  "TestCheckedCastProofAndElision": [
+    0.178,
+    0.163,
+    0.144
+  ],
+  "TestCensusMarkerResultIsAssignable": [
+    0.042,
+    0.048,
+    0.041
+  ],
+  "TestCensusMarkerZeroCallIsNotAssumedSafe": [
+    0.04,
+    0.044,
+    0.045
+  ],
+  "TestOptionalFunctionValueRelation": [
+    0.056,
+    0.056,
+    0.06
+  ],
+  "TestOverloadedShorthandFunctionValueStaysNotYet": [
+    0.039,
+    0.04,
+    0.072
+  ],
+  "TestCensusOverloadBinderGuards": [
+    0.099,
+    0.1,
+    0.134
+  ]
+}

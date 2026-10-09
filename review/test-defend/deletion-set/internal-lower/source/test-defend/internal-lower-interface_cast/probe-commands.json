@@ -1,0 +1,26 @@
+[
+  {
+    "variant": "spread",
+    "source": "origin/main",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/witness-spread-clean timeout 90 go run ./review/test-defend/internal-lower-interface_cast/witness",
+    "log": "D07-witness-clean.log"
+  },
+  {
+    "variant": "spread",
+    "source": "origin/main with standalone D07.diff applied",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/witness-spread-D07 timeout 90 go run ./review/test-defend/internal-lower-interface_cast/witness",
+    "log": "D07-witness-D07.log"
+  },
+  {
+    "variant": "from",
+    "source": "origin/main",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/witness-from-clean timeout 90 go run ./review/test-defend/internal-lower-interface_cast/witness from",
+    "log": "D07-witness-from-clean.log"
+  },
+  {
+    "variant": "from",
+    "source": "origin/main with standalone D07.diff applied",
+    "command": "ADAMIC_BUILD_CACHE_DIR=/workspace/defend-lower-cache/witness-from-D07 timeout 90 go run ./review/test-defend/internal-lower-interface_cast/witness from",
+    "log": "D07-witness-from-D07.log"
+  }
+]

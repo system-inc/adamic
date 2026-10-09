@@ -1,0 +1,152 @@
+{
+  "package": "internal/lower",
+  "main": "d29d80ceb5d5d42d9b0ffb7b528a57a2272c76f4",
+  "skipped": [
+    "TestArgumentsLengthRefusalFixtures",
+    "TestArgumentsLengthRefusals",
+    "TestArrayPredicateCannotInventAnElementContract",
+    "TestDefaultTaggedInterfaceNeedsNoFlag"
+  ],
+  "mutants": [
+    {
+      "mutant": "M03",
+      "file_line": "internal/lower/arguments_length.go:23",
+      "branch": "test-audit/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [
+        "TestArgumentsLengthReadKeepsReaderFact",
+        "TestArgumentsLengthReadNeighbors",
+        "TestMixedTupleSpreadIsNotYet"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "M01",
+      "file_line": "internal/lower/arguments_length.go:44",
+      "branch": "test-audit/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [
+        "TestArgumentsLengthReadKeepsReaderFact",
+        "TestArgumentsLengthReadNeighbors",
+        "TestMixedTupleSpreadIsNotYet"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "M02",
+      "file_line": "internal/lower/arguments_length.go:29",
+      "branch": "test-audit/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [
+        "TestArgumentsLengthReadKeepsReaderFact",
+        "TestArgumentsLengthReadNeighbors",
+        "TestMixedTupleSpreadIsNotYet"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "M07",
+      "file_line": "internal/lower/library_array_predicate.go:51",
+      "branch": "test-audit/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArrayPredicateCannotInventAnElementContract"
+      ],
+      "still_caught_by": [
+        "TestArrayPredicateCoexistsWithUnknownReflection",
+        "TestArrayPredicatePreservesDeclaredElementContract"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "M01",
+      "file_line": "internal/lower/interface_cast.go:69",
+      "branch": "test-audit/internal-lower-interface_cast",
+      "candidates_failed": [
+        "TestDefaultTaggedInterfaceNeedsNoFlag"
+      ],
+      "still_caught_by": [
+        "TestDefaultTaggedInterfaceAdmission",
+        "TestPredicateBodyProof",
+        "TestPredicateOverloadRuntime",
+        "TestViewObjectContractsAreAvailableToEraser"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "D02",
+      "file_line": "internal/lower/arguments_length.go:47",
+      "branch": "test-defend/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D07",
+      "file_line": "internal/lower/library_array_predicate.go:51",
+      "branch": "test-defend/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArrayPredicateCannotInventAnElementContract"
+      ],
+      "still_caught_by": [
+        "TestArrayPredicateCoexistsWithUnknownReflection",
+        "TestArrayPredicatePreservesDeclaredElementContract"
+      ],
+      "stale": false
+    },
+    {
+      "mutant": "D04",
+      "file_line": "internal/lower/arguments_length.go:49",
+      "branch": "test-defend/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    },
+    {
+      "mutant": "D03",
+      "file_line": "internal/lower/arguments_length.go:30",
+      "branch": "test-defend/internal-lower-arguments_length",
+      "candidates_failed": [
+        "TestArgumentsLengthRefusalFixtures",
+        "TestArgumentsLengthRefusals"
+      ],
+      "still_caught_by": [],
+      "stale": false
+    }
+  ],
+  "keep": [
+    {
+      "test": "TestArgumentsLengthRefusalFixtures",
+      "because": "D02 on test-defend/internal-lower-arguments_length, D04 on test-defend/internal-lower-arguments_length, D03 on test-defend/internal-lower-arguments_length loses its last catcher without the set; the two refusal candidates are interchangeable for these mutants"
+    },
+    {
+      "test": "TestArgumentsLengthRefusals",
+      "because": "D02 on test-defend/internal-lower-arguments_length, D04 on test-defend/internal-lower-arguments_length, D03 on test-defend/internal-lower-arguments_length loses its last catcher without the set; the two refusal candidates are interchangeable for these mutants"
+    }
+  ],
+  "deletable": [
+    "TestArrayPredicateCannotInventAnElementContract",
+    "TestDefaultTaggedInterfaceNeedsNoFlag"
+  ],
+  "notes": [
+    "Selection follows the requested M*.diff and D*.diff globs; interface defender round2 F01-F03 are excluded.",
+    "Keep findings protect the refusal coverage collectively; either refusal candidate alone catches the diagnostic mutants in prior evidence."
+  ],
+  "replay_wall_seconds": 391.487,
+  "witness_failures": {},
+  "panicking_tests": {}
+}

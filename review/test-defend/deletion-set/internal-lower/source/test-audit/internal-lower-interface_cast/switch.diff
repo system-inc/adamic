@@ -1,0 +1,173 @@
+diff --git a/internal/lower/class.go b/internal/lower/class.go
+index 0c955352..9481a9ea 100644
+--- a/internal/lower/class.go
++++ b/internal/lower/class.go
+@@ -408,13 +408,16 @@ func (l *lowering) callOrMethod(node *ast.Node) (ir.Expression, error) {
+ 
+ // setProperty lowers object.name = value, as a statement.
+ func (l *lowering) setProperty(target *ast.Node, valueNode *ast.Node) ([]ir.Statement, error) {
++	if u033Mutant("P02") {
++		return nil, nil
++	}
+ 	if call, handled, err := l.superAccessor(target, valueNode); handled {
+ 		if err != nil {
+ 			return nil, err
+ 		}
+ 		return []ir.Statement{ir.Evaluate{Value: call}}, nil
+ 	}
+-	if member := l.checker.GetSymbolAtLocation(target); member != nil && member.Flags&ast.SymbolFlagsMethod != 0 {
++	if member := l.checker.GetSymbolAtLocation(target); member != nil && ((member.Flags&ast.SymbolFlagsMethod != 0) != u033Mutant("M08")) {
+ 		return nil, l.notYet(target, "replacing a represented method at runtime")
+ 	}
+ 	if err := l.absentOptionalWrite(target); err != nil {
+diff --git a/internal/lower/class_features.go b/internal/lower/class_features.go
+index d6ec6223..7d3fe4ef 100644
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -74,7 +74,7 @@ func (l *lowering) objectKeys(node *ast.Node) (ir.Expression, bool, error) {
+ 	// A spread of a possibly absent plain object has synthetic optional slots, not real keys.
+ 	// Class and accessor descriptors provide the public shape for their stored fields.
+ 	proven := l.checker.GetTypeAtLocation(arguments[0])
+-	if !isClassInstance(proven) && l.iteratorMember(proven) != nil {
++	if ((!isClassInstance(proven)) != u033Mutant("M10")) && l.iteratorMember(proven) != nil {
+ 		return nil, true, l.notYet(node, "Object.keys on a literal with symbol-key storage")
+ 	}
+ 	// A structural view does not remove the iterable literal's hidden symbol slot.
+diff --git a/internal/lower/class_inheritance.go b/internal/lower/class_inheritance.go
+index b1906e9d..0e8115ea 100644
+--- a/internal/lower/class_inheritance.go
++++ b/internal/lower/class_inheritance.go
+@@ -688,6 +688,9 @@ func (l *lowering) classAssignable(from, to *checker.Type) bool {
+ // Follow nominal class slots inside structural containers too. A plain object inside A[] lacks
+ // the same method table as a plain object assigned directly to A. Mutable slots need both views.
+ func (l *lowering) nominalMismatch(from, to *checker.Type, seen map[[2]*checker.Type]bool) *checker.Type {
++	if u033Mutant("M07") {
++		return nil
++	}
+ 	if from == nil || to == nil || from == to || from.Flags()&(checker.TypeFlagsNever|checker.TypeFlagsUndefined) != 0 || seen[[2]*checker.Type{from, to}] {
+ 		return nil
+ 	}
+diff --git a/internal/lower/cycles.go b/internal/lower/cycles.go
+index 63513189..62976059 100644
+--- a/internal/lower/cycles.go
++++ b/internal/lower/cycles.go
+@@ -61,6 +61,9 @@ type cycleFinder struct {
+ // findCycles refuses the first cycle-capable slot that isn't declared Weak and has a write that isn't
+ // proven not to close a cycle (fresh.go), or returns nil.
+ func (l *lowering) findCycles(modules []*ast.SourceFile) error {
++	if u033Mutant("M06") {
++		return nil
++	}
+ 	finder := &cycleFinder{l: l, where: map[*checker.Type]*ast.Node{}}
+ 	for _, module := range modules {
+ 		var visit ast.Visitor
+diff --git a/internal/lower/interface_cast.go b/internal/lower/interface_cast.go
+index 8ca15d7b..511640eb 100644
+--- a/internal/lower/interface_cast.go
++++ b/internal/lower/interface_cast.go
+@@ -66,7 +66,7 @@ func (l *lowering) view(node *ast.Node, value ir.Expression, target *checker.Typ
+ 			access := part.AsPropertyAccessExpression()
+ 			if base, _ := l.representation(l.checker.GetTypeAtLocation(access.Expression)); base == ir.Object {
+ 				field := l.checker.GetSymbolAtLocation(part.Name())
+-				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (field.Flags&ast.SymbolFlagsOptional != 0 || access.QuestionDotToken != nil || accessorSymbol(field)) {
++				if field != nil && len(l.checker.GetSignaturesOfType(l.checker.GetTypeOfSymbol(field), checker.SignatureKindCall)) == 0 && (((field.Flags&ast.SymbolFlagsOptional != 0) != u033Mutant("M01")) || access.QuestionDotToken != nil || accessorSymbol(field)) {
+ 					refused = l.notYet(part, "a checked field alias requiring an optional, accessor, or representation conversion")
+ 				}
+ 			}
+diff --git a/internal/lower/iteration.go b/internal/lower/iteration.go
+index daed8156..cc13b51c 100644
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -51,7 +51,7 @@ func (l *lowering) iteratorMember(proven *checker.Type) *ast.Symbol {
+ // lexical captures still use the existing cycle analysis and reference-counted closure environment.
+ func (l *lowering) objectMethod(node *ast.Node) (ir.Expression, error) {
+ 	index := len(l.result.Functions)
+-	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
++	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: !u033Mutant("M02")})
+ 	this := l.iterationLocal("this", ir.Object, index)
+ 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
+ 	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
+@@ -189,7 +189,7 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+ 		return nil, err
+ 	}
+ 	done := l.checker.GetPropertyOfType(step, "done")
+-	if done == nil || done.Flags&ast.SymbolFlagsOptional != 0 {
++	if ((done == nil) != u033Mutant("M03")) || done.Flags&ast.SymbolFlagsOptional != 0 {
+ 		return nil, l.notYet(where, "an iterator result without a required boolean done field")
+ 	}
+ 	if of, known := l.representation(l.checker.GetTypeOfSymbol(done)); !known || of != ir.Boolean {
+@@ -305,8 +305,10 @@ func (l *lowering) planIteration(where *ast.Node) (*iterationPlan, error) {
+ 		}
+ 		return node.ForEachChild(visit)
+ 	}
+-	for _, module := range modules {
+-		module.AsNode().ForEachChild(visit)
++	if !u033Mutant("M04") {
++		for _, module := range modules {
++			module.AsNode().ForEachChild(visit)
++		}
+ 	}
+ 	if hazard != nil {
+ 		return nil, hazard
+diff --git a/internal/lower/iteration_consume.go b/internal/lower/iteration_consume.go
+index 79151d3b..8aa3d54c 100644
+--- a/internal/lower/iteration_consume.go
++++ b/internal/lower/iteration_consume.go
+@@ -39,7 +39,7 @@ func (l *lowering) collectIteration(where, sourceNode, callbackNode *ast.Node, p
+ 		}
+ 		if callbackCount > 1 {
+ 			parameter, _ := l.representation(l.checker.GetTypeOfSymbol(signatures[0].Parameters()[1]))
+-			if parameter != ir.Number {
++			if (parameter != ir.Number) != u033Mutant("M09") {
+ 				return nil, l.notYet(callbackNode, "an Array.from mapper with a different index representation")
+ 			}
+ 		}
+@@ -164,7 +164,7 @@ func (l *lowering) destructureIterator(pattern, sourceNode *ast.Node, plan *iter
+ 			}
+ 		} else {
+ 			valueType := l.checker.GetTypeOfSymbol(l.checker.GetPropertyOfType(plan.step, "value"))
+-			if !l.includesUndefined(valueType) {
++			if (!l.includesUndefined(valueType)) != u033Mutant("M12") {
+ 				return nil, &Refused{Where: l.program.Where(binding), What: "an iterator binding whose type omits undefined on exhaustion", Fix: "give the binding a default, [value = fallback], or make the yielded type include undefined; TypeScript does not account for early iterator exhaustion"}
+ 			}
+ 			fallback = fit(ir.Undefined{}, plan.element)
+diff --git a/internal/lower/iteration_origin.go b/internal/lower/iteration_origin.go
+index 0fa45453..3bac4f58 100644
+--- a/internal/lower/iteration_origin.go
++++ b/internal/lower/iteration_origin.go
+@@ -77,7 +77,7 @@ func (l *lowering) erasedMethodField(where *ast.Node, view *checker.Type, name s
+ 			field := l.checker.GetPropertyOfType(shape, name)
+ 			if field != nil && l.iterationShapeFits(shape, view) {
+ 				if literalMethod(field) {
+-					if isCallee(where) { // Calls carry the runtime closure's receiver convention.
++					if isCallee(where) != u033Mutant("M11") { // Calls carry the runtime closure's receiver convention.
+ 						return candidate.ForEachChild(visit)
+ 					}
+ 					found = l.notYet(where, "a literal method through a view that erases its receiver")
+diff --git a/internal/lower/lower.go b/internal/lower/lower.go
+index daba343f..2e662aa2 100644
+--- a/internal/lower/lower.go
++++ b/internal/lower/lower.go
+@@ -18,6 +18,9 @@ import (
+ 
+ // Lower lowers a checked program from one entry, in ESM evaluation order.
+ func Lower(ctx context.Context, program *load.Program) (*ir.Program, error) {
++	if u033Mutant("P01") {
++		return nil, nil
++	}
+ 	files := program.Files()
+ 	if len(files) != 1 {
+ 		return nil, fmt.Errorf("lower: stage 0 compiles a program from one entry file, got %d", len(files))
+diff --git a/internal/lower/refusals.go b/internal/lower/refusals.go
+index e9909dfa..4ca942c0 100644
+--- a/internal/lower/refusals.go
++++ b/internal/lower/refusals.go
+@@ -147,7 +147,7 @@ func (l *lowering) refuse(module *ast.SourceFile) error {
+ 		case ast.KindMethodDeclaration:
+ 			generator = node.AsMethodDeclaration().AsteriskToken != nil
+ 		}
+-		if generator {
++		if generator && !u033Mutant("M05") {
+ 			found = &Refused{Where: l.program.Where(node), What: "a generator function", Fix: "use an explicit iterator object; suspended frames need ownership and cancellation rules before generators can be compiled without a collector (docs/user-iterators.md)"}
+ 			return true
+ 		}

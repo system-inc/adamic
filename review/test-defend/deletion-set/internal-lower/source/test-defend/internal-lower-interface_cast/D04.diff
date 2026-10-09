@@ -1,0 +1,11 @@
+--- a/internal/lower/class_features.go
++++ b/internal/lower/class_features.go
+@@ -75,7 +75,7 @@
+ 	// Class and accessor descriptors provide the public shape for their stored fields.
+ 	proven := l.checker.GetTypeAtLocation(arguments[0])
+ 	if !isClassInstance(proven) && l.iteratorMember(proven) != nil {
+-		return nil, true, l.notYet(node, "Object.keys on a literal with symbol-key storage")
++		return nil, true, l.notYet(node, "Object.keys on a literal with a hidden symbol slot")
+ 	}
+ 	// A structural view does not remove the iterable literal's hidden symbol slot.
+ 	// Fresh explicit string-keyed literals cannot carry storage erased by a view.

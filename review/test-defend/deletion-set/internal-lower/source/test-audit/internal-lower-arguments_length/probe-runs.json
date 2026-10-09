@@ -1,0 +1,92 @@
+{
+  "TestArgumentsLengthRefusals": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthRefusals$",
+    "exit": 1,
+    "wall": 1.9555715179999424,
+    "log": "P01-TestArgumentsLengthRefusals.log"
+  },
+  "TestArgumentsLengthReadNeighbors": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthReadNeighbors$",
+    "exit": 0,
+    "wall": 1.9668072930001017,
+    "log": "P01-TestArgumentsLengthReadNeighbors.log"
+  },
+  "TestArgumentsLengthRefusalFixtures": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthRefusalFixtures$",
+    "exit": 1,
+    "wall": 1.9461789169999975,
+    "log": "P01-TestArgumentsLengthRefusalFixtures.log"
+  },
+  "TestArrayPredicatePreservesDeclaredElementContract": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicatePreservesDeclaredElementContract$",
+    "exit": 0,
+    "wall": 1.9455400049998843,
+    "log": "P01-TestArrayPredicatePreservesDeclaredElementContract.log"
+  },
+  "TestArrayPredicateCannotInventAnElementContract": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateCannotInventAnElementContract$",
+    "exit": 1,
+    "wall": 1.83084560899988,
+    "log": "P01-TestArrayPredicateCannotInventAnElementContract.log"
+  },
+  "TestArrayPredicateDoesNotMisclassifyNativeTuples": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateDoesNotMisclassifyNativeTuples$",
+    "exit": 1,
+    "wall": 2.0602962980001394,
+    "log": "P01-TestArrayPredicateDoesNotMisclassifyNativeTuples.log"
+  },
+  "TestUnknownArrayPredicateRefusesUnrepresentedObservations": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestUnknownArrayPredicateRefusesUnrepresentedObservations$",
+    "exit": 1,
+    "wall": 1.9915263379998578,
+    "log": "P01-TestUnknownArrayPredicateRefusesUnrepresentedObservations.log"
+  },
+  "TestArrayPredicateCoexistsWithUnknownReflection": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateCoexistsWithUnknownReflection$",
+    "exit": 0,
+    "wall": 1.9671724959998755,
+    "log": "P01-TestArrayPredicateCoexistsWithUnknownReflection.log"
+  },
+  "TestUncheckableCastsStayRefused": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestUncheckableCastsStayRefused$",
+    "exit": 1,
+    "wall": 2.4825306660000024,
+    "log": "P01-TestUncheckableCastsStayRefused.log"
+  },
+  "TestCheckedCastProofAndElision": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCheckedCastProofAndElision$",
+    "exit": 1,
+    "wall": 2.1737449050001487,
+    "log": "P01-TestCheckedCastProofAndElision.log"
+  },
+  "TestCensusMarkerResultIsAssignable": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusMarkerResultIsAssignable$",
+    "exit": 1,
+    "wall": 2.143246898999905,
+    "log": "P01-TestCensusMarkerResultIsAssignable.log"
+  },
+  "TestCensusMarkerZeroCallIsNotAssumedSafe": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusMarkerZeroCallIsNotAssumedSafe$",
+    "exit": 1,
+    "wall": 1.9293309919999047,
+    "log": "P01-TestCensusMarkerZeroCallIsNotAssumedSafe.log"
+  },
+  "TestOptionalFunctionValueRelation": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestOptionalFunctionValueRelation$",
+    "exit": 1,
+    "wall": 1.8530517029998919,
+    "log": "P01-TestOptionalFunctionValueRelation.log"
+  },
+  "TestOverloadedShorthandFunctionValueStaysNotYet": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestOverloadedShorthandFunctionValueStaysNotYet$",
+    "exit": 1,
+    "wall": 1.8870057829999496,
+    "log": "P01-TestOverloadedShorthandFunctionValueStaysNotYet.log"
+  },
+  "TestCensusOverloadBinderGuards": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusOverloadBinderGuards$",
+    "exit": 1,
+    "wall": 1.8156414350000887,
+    "log": "P01-TestCensusOverloadBinderGuards.log"
+  }
+}

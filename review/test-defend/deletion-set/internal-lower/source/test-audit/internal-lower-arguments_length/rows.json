@@ -1,0 +1,77 @@
+[
+  {
+    "test": "TestArgumentsLengthRefusals",
+    "file": "internal/lower/arguments_length_test.go",
+    "line": 13
+  },
+  {
+    "test": "TestArgumentsLengthReadNeighbors",
+    "file": "internal/lower/arguments_length_test.go",
+    "line": 41
+  },
+  {
+    "test": "TestArgumentsLengthRefusalFixtures",
+    "file": "internal/lower/arguments_length_test.go",
+    "line": 56
+  },
+  {
+    "test": "TestArrayPredicatePreservesDeclaredElementContract",
+    "file": "internal/lower/array_predicate_test.go",
+    "line": 9
+  },
+  {
+    "test": "TestArrayPredicateCannotInventAnElementContract",
+    "file": "internal/lower/array_predicate_test.go",
+    "line": 24
+  },
+  {
+    "test": "TestArrayPredicateDoesNotMisclassifyNativeTuples",
+    "file": "internal/lower/array_predicate_test.go",
+    "line": 43
+  },
+  {
+    "test": "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+    "file": "internal/lower/array_predicate_test.go",
+    "line": 57
+  },
+  {
+    "test": "TestArrayPredicateCoexistsWithUnknownReflection",
+    "file": "internal/lower/array_predicate_test.go",
+    "line": 71
+  },
+  {
+    "test": "TestUncheckableCastsStayRefused",
+    "file": "internal/lower/cast_test.go",
+    "line": 11
+  },
+  {
+    "test": "TestCheckedCastProofAndElision",
+    "file": "internal/lower/cast_test.go",
+    "line": 45
+  },
+  {
+    "test": "TestCensusMarkerResultIsAssignable",
+    "file": "internal/lower/census_marker_test.go",
+    "line": 9
+  },
+  {
+    "test": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+    "file": "internal/lower/census_marker_test.go",
+    "line": 20
+  },
+  {
+    "test": "TestOptionalFunctionValueRelation",
+    "file": "internal/lower/census_optional_values_test.go",
+    "line": 9
+  },
+  {
+    "test": "TestOverloadedShorthandFunctionValueStaysNotYet",
+    "file": "internal/lower/census_optional_values_test.go",
+    "line": 26
+  },
+  {
+    "test": "TestCensusOverloadBinderGuards",
+    "file": "internal/lower/census_overload_binders_test.go",
+    "line": 8
+  }
+]

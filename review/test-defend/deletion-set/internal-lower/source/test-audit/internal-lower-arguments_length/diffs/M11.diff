@@ -1,0 +1,11 @@
+--- a/internal/lower/cast.go
++++ b/internal/lower/cast.go
+@@ -57,7 +57,7 @@
+ 		return nil, err
+ 	}
+ 	cast.CheckedFields = true
+-	return cast, nil
++	return value, nil
+ }
+ 
+ // fieldLiteral is a member's type for a field when it's a single literal ('Circle', 1, true), the

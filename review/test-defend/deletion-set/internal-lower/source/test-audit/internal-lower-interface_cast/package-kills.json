@@ -1,0 +1,110 @@
+{
+  "M01": [
+    "TestDefaultTaggedInterfaceAdmission",
+    "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "TestPredicateOverloadRuntime",
+    "TestPredicateBodyProof",
+    "TestViewObjectContractsAreAvailableToEraser"
+  ],
+  "M02": [],
+  "M03": [
+    "TestClassWrongOutputIteratorReceiver",
+    "TestClassWrongOutputKeysRepair",
+    "TestIteratorViewsCannotHideReturn",
+    "TestIteratorViewsCannotEraseReceivers",
+    "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "TestIteratorDescriptorReasons",
+    "TestIteratorMapperIndexHasNumberRepresentation"
+  ],
+  "M04": [
+    "TestIteratorGapsAreExplicit",
+    "TestIteratorViewsCannotHideReturn",
+    "TestIteratorViewsCannotEraseReceivers",
+    "TestIteratorDescriptorReasons"
+  ],
+  "M05": [
+    "TestGeneratorsAreRefusedEvenWithoutYield"
+  ],
+  "M06": [
+    "TestClassFeaturesStaticSoundness",
+    "TestClassFeaturesAccessorCaptureCycle",
+    "TestClassFeaturesStaticParentCycle",
+    "TestClassFeaturesStaticInterfaceCycle",
+    "TestInheritanceRefusesUnsoundOverrides",
+    "TestInheritanceGenericSoundness",
+    "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+    "TestLiteralMethodCapturesCannotMakeCycles",
+    "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "TestNamespaceAmbientHostInitialization",
+    "TestNestedFunctionCycleIsRefused",
+    "TestNestedEnvironmentCycleIncludesDisjointSlots",
+    "TestNestedCallbackCycleIsRefused"
+  ],
+  "M07": [
+    "TestUncheckableCastsStayRefused",
+    "TestCheckedCastProofAndElision",
+    "TestInheritanceRefusesFalseNominalViews",
+    "TestInheritanceGenericViewsKeepNominalArguments",
+    "TestInheritanceGenericNominalConstraints",
+    "TestEnumSlotViews",
+    "TestGenericIteratorViewsPreserveNativeArguments",
+    "TestUnprovenPredicateReturnsAreRefused",
+    "TestProvenRelationsRefuse"
+  ],
+  "M08": [
+    "TestClassFeaturesReadonlyChecker",
+    "TestClassFeaturesPrivateStorage",
+    "TestClassFeaturesStaticParentCycle",
+    "TestClassFeaturesStaticInterfaceCycle",
+    "TestInheritanceRefusesUnsoundOverrides",
+    "TestInheritanceGenericMonomorphizations",
+    "TestInheritanceRefusesGrowingGenericClasses",
+    "TestInheritanceGenericSoundness",
+    "TestInheritanceGenericFactoryLayouts",
+    "TestClassWrongOutputPrivateRepair",
+    "TestConstructorCacheOneArgumentRemainsNotYet",
+    "TestDefiniteAssignmentUsesReadiness",
+    "TestDefiniteAssignmentSoundNeighbors",
+    "TestFlagEnumsDomain",
+    "TestEnumSlotViews",
+    "TestReadonlyFieldsAreJudgedByTheirConstructorsWrites",
+    "TestDefaultTaggedInterfaceAdmission",
+    "TestIteratorDescriptorReasons",
+    "TestRepresentedMethodReplacementIsNotYet",
+    "TestWhatZeroOneRefusesIsRefusedWithAFix",
+    "TestParameterPropertyCheckerContracts",
+    "TestReadinessElisionRequiresDominatingAssignment",
+    "TestTasteRepresentationLimitsStayExplicit"
+  ],
+  "M09": [
+    "TestIteratorMapperIndexHasNumberRepresentation"
+  ],
+  "M10": [
+    "TestClassWrongOutputKeysRepair",
+    "TestIteratorSymbolKeysAreNotStringKeys"
+  ],
+  "M11": [
+    "TestLiteralMethodViewsDoNotLoseThis",
+    "TestDestructuredMethodsCannotLoadOwnSlots"
+  ],
+  "M12": [
+    "TestIteratorDestructuringDoesNotLieAboutExhaustion"
+  ],
+  "P01": [
+    "TestDefaultTaggedInterfaceAdmission",
+    "TestIteratorGapsAreExplicit",
+    "TestIteratorViewsCannotHideReturn",
+    "TestIteratorViewsCannotEraseReceivers",
+    "TestIteratorDestructuringDoesNotLieAboutExhaustion",
+    "TestGeneratorsAreRefusedEvenWithoutYield",
+    "TestLiteralMethodCapturesCannotMakeCycles",
+    "TestIteratorDescriptorReasons",
+    "TestDestructuredMethodsCannotLoadOwnSlots",
+    "TestGenericIteratorViewsPreserveNativeArguments",
+    "TestIteratorMapperIndexHasNumberRepresentation",
+    "TestIteratorSymbolKeysAreNotStringKeys"
+  ],
+  "P02": [
+    "TestRepresentedMethodReplacementIsNotYet"
+  ]
+}

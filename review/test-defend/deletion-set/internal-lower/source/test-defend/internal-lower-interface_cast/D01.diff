@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -287,7 +287,7 @@
+ 				}
+ 			}
+ 			if !iteratorKnown && l.iterationShapeFits(shape, iterator) && (l.checker.GetPropertyOfType(shape, "return") != nil) != (close != nil) {
+-				hazard = l.notYet(where, "an iterator view that can hide a return method")
++				hazard = l.notYet(where, "an iterator view with an omitted close method")
+ 				return true
+ 			}
+ 		}

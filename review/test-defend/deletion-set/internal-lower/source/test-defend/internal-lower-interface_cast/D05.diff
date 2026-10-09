@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -54,7 +54,7 @@
+ 	l.result.Functions = append(l.result.Functions, ir.Function{Name: "object_method", Closure: true, Receiver: true})
+ 	this := l.iterationLocal("this", ir.Object, index)
+ 	l.noteLocal(this, l.checker.GetTypeAtLocation(node.Parent), node)
+-	l.closureRecords = append(l.closureRecords, closureRecord{proven: l.checker.GetTypeAtLocation(node), function: index, node: node})
++
+ 	l.closures = append(l.closures, index)
+ 	err := l.lowerFunction(index, node, this)
+ 	l.closures = l.closures[:len(l.closures)-1]

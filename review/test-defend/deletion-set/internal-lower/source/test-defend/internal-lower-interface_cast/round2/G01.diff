@@ -1,0 +1,11 @@
+--- a/internal/lower/iteration.go
++++ b/internal/lower/iteration.go
+@@ -281,7 +281,7 @@
+ 			if node.Kind == ast.KindObjectLiteralExpression {
+ 				for _, property := range node.AsObjectLiteralExpression().Properties.Nodes {
+ 					if property.Kind == ast.KindSpreadAssignment && (l.iterationShapeFits(shape, iterator) || l.iterationShapeFits(shape, source)) {
+-						hazard = l.notYet(where, "an iterator built by object spread (own method presence is not proved)")
++
+ 						return true
+ 					}
+ 				}

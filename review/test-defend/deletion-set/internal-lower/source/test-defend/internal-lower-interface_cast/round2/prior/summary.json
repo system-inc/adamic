@@ -1,0 +1,22 @@
+{
+  "start_commit": "8171b3173bdbfce1f7982d3c4f731279307ece37",
+  "nproc": 5,
+  "scope_rows": 15,
+  "package_top_level_tests": 239,
+  "verdicts": {
+    "overlapping": 2,
+    "subsumed": 10,
+    "sacred": 3
+  },
+  "survivors": [
+    "M02"
+  ],
+  "equivalent_candidates": [
+    "M02"
+  ],
+  "vacuous_rows": [
+    "TestDefaultTaggedInterfaceNeedsNoFlag",
+    "TestLiteralMethodViewsDoNotLoseThis"
+  ],
+  "production_restored": true
+}

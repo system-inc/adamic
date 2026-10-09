@@ -1,0 +1,12 @@
+--- a/internal/lower/arguments_length.go
++++ b/internal/lower/arguments_length.go
+@@ -38,9 +38,6 @@
+ 	}
+ 	if value.Parent != nil && l.isArgumentsLength(value.Parent) {
+ 		length := value.Parent
+-		for length.Parent != nil && length.Parent.Kind == ast.KindParenthesizedExpression {
+-			length = length.Parent
+-		}
+ 		if !ast.IsAssignmentTarget(length) {
+ 			return nil
+ 		}

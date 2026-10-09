@@ -1,0 +1,11 @@
+--- a/internal/lower/predicates.go
++++ b/internal/lower/predicates.go
+@@ -179,7 +179,7 @@
+ 			// narrowing independently of the true-return comparison.
+ 			if truth {
+ 				narrowed := p.narrowed(branch, p.declared)
+-				if (!branch.checked && !p.admittedValueProof()) || !p.l.checker.IsTypeAssignableTo(narrowed, p.target) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
++				if (!branch.checked && !p.admittedValueProof()) || !p.l.checker.IsTypeAssignableTo(p.target, narrowed) || p.l.nominalMismatch(narrowed, p.target, map[[2]*checker.Type]bool{}) != nil {
+ 					return p.refused(node, "true return narrows to "+p.l.checker.TypeToString(narrowed)+", not "+p.l.checker.TypeToString(p.target))
+ 				}
+ 				p.trueTypes = append(p.trueTypes, narrowed)

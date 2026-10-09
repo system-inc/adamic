@@ -1,0 +1,13 @@
+{
+  "TestArgumentsLengthRefusals": "TestArgumentsLengthReadNeighbors",
+  "TestArgumentsLengthRefusalFixtures": "TestArgumentsLengthReadNeighbors",
+  "TestArrayPredicatePreservesDeclaredElementContract": "TestArrayPredicateCoexistsWithUnknownReflection",
+  "TestArrayPredicateCannotInventAnElementContract": "TestArrayPredicateCoexistsWithUnknownReflection",
+  "TestArrayPredicateDoesNotMisclassifyNativeTuples": "TestArrayPredicateCoexistsWithUnknownReflection",
+  "TestUnknownArrayPredicateRefusesUnrepresentedObservations": null,
+  "TestArrayPredicateCoexistsWithUnknownReflection": "TestArrayPredicatePreservesDeclaredElementContract",
+  "TestCensusMarkerResultIsAssignable": "TestCensusMarkerZeroCallIsNotAssumedSafe",
+  "TestOptionalFunctionValueRelation": "TestArgumentsLengthReadNeighbors",
+  "TestOverloadedShorthandFunctionValueStaysNotYet": null,
+  "TestCensusOverloadBinderGuards": "TestCensusOverloadRelation"
+}

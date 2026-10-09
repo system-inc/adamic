@@ -1,0 +1,196 @@
+{
+  "M01": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 35.04758755499995,
+    "log": "M01.log"
+  },
+  "M02": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 29.60311375699996,
+    "log": "M02.log"
+  },
+  "M03": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 35.62775919300009,
+    "log": "M03.log"
+  },
+  "M04": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 0,
+    "wall": 29.720130651999966,
+    "log": "M04.log"
+  },
+  "M05": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 27.866040677,
+    "log": "M05.log"
+  },
+  "M06": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 27.13371891700001,
+    "log": "M06.log"
+  },
+  "M07": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 26.85525850099998,
+    "log": "M07.log"
+  },
+  "M08": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.77028673999996,
+    "log": "M08.log"
+  },
+  "M09": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.250972055000034,
+    "log": "M09.log"
+  },
+  "M10": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.429363886000033,
+    "log": "M10.log",
+    "individual": {
+      "TestArgumentsLengthRefusals": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthRefusals$",
+        "exit": 0,
+        "wall": 2.034663309999928,
+        "log": "M10-TestArgumentsLengthRefusals.log"
+      },
+      "TestArgumentsLengthReadNeighbors": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthReadNeighbors$",
+        "exit": 0,
+        "wall": 1.960080699999935,
+        "log": "M10-TestArgumentsLengthReadNeighbors.log"
+      },
+      "TestArgumentsLengthRefusalFixtures": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArgumentsLengthRefusalFixtures$",
+        "exit": 0,
+        "wall": 2.0599366200000304,
+        "log": "M10-TestArgumentsLengthRefusalFixtures.log"
+      },
+      "TestArrayPredicatePreservesDeclaredElementContract": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicatePreservesDeclaredElementContract$",
+        "exit": 0,
+        "wall": 1.8406158340000047,
+        "log": "M10-TestArrayPredicatePreservesDeclaredElementContract.log"
+      },
+      "TestArrayPredicateCannotInventAnElementContract": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateCannotInventAnElementContract$",
+        "exit": 0,
+        "wall": 1.9754727979999416,
+        "log": "M10-TestArrayPredicateCannotInventAnElementContract.log"
+      },
+      "TestArrayPredicateDoesNotMisclassifyNativeTuples": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateDoesNotMisclassifyNativeTuples$",
+        "exit": 0,
+        "wall": 1.7926804380000476,
+        "log": "M10-TestArrayPredicateDoesNotMisclassifyNativeTuples.log"
+      },
+      "TestUnknownArrayPredicateRefusesUnrepresentedObservations": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestUnknownArrayPredicateRefusesUnrepresentedObservations$",
+        "exit": 0,
+        "wall": 1.8141065470000513,
+        "log": "M10-TestUnknownArrayPredicateRefusesUnrepresentedObservations.log"
+      },
+      "TestArrayPredicateCoexistsWithUnknownReflection": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestArrayPredicateCoexistsWithUnknownReflection$",
+        "exit": 0,
+        "wall": 1.8465177079999648,
+        "log": "M10-TestArrayPredicateCoexistsWithUnknownReflection.log"
+      },
+      "TestUncheckableCastsStayRefused": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestUncheckableCastsStayRefused$",
+        "exit": 0,
+        "wall": 2.0864886219999335,
+        "log": "M10-TestUncheckableCastsStayRefused.log"
+      },
+      "TestCheckedCastProofAndElision": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCheckedCastProofAndElision$",
+        "exit": 0,
+        "wall": 2.0692663789999415,
+        "log": "M10-TestCheckedCastProofAndElision.log"
+      },
+      "TestCensusMarkerResultIsAssignable": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusMarkerResultIsAssignable$",
+        "exit": 0,
+        "wall": 2.00738770800001,
+        "log": "M10-TestCensusMarkerResultIsAssignable.log"
+      },
+      "TestCensusMarkerZeroCallIsNotAssumedSafe": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusMarkerZeroCallIsNotAssumedSafe$",
+        "exit": 0,
+        "wall": 2.0319088779999674,
+        "log": "M10-TestCensusMarkerZeroCallIsNotAssumedSafe.log"
+      },
+      "TestOptionalFunctionValueRelation": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestOptionalFunctionValueRelation$",
+        "exit": 0,
+        "wall": 2.0822269870000127,
+        "log": "M10-TestOptionalFunctionValueRelation.log"
+      },
+      "TestOverloadedShorthandFunctionValueStaysNotYet": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestOverloadedShorthandFunctionValueStaysNotYet$",
+        "exit": 0,
+        "wall": 2.0255390019999595,
+        "log": "M10-TestOverloadedShorthandFunctionValueStaysNotYet.log"
+      },
+      "TestCensusOverloadBinderGuards": {
+        "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run ^TestCensusOverloadBinderGuards$",
+        "exit": 0,
+        "wall": 2.0339542179999626,
+        "log": "M10-TestCensusOverloadBinderGuards.log"
+      }
+    }
+  },
+  "M11": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 29.854400123999994,
+    "log": "M11.log"
+  },
+  "M12": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.93459105499994,
+    "log": "M12.log"
+  },
+  "M13": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.637690287000055,
+    "log": "M13.log"
+  },
+  "M14": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 27.816051890999915,
+    "log": "M14.log"
+  },
+  "M15": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 27.75684056,
+    "log": "M15.log"
+  },
+  "M16": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 29.356637089999822,
+    "log": "M16.log"
+  },
+  "M17": {
+    "command": "timeout 120 go test -json -count=1 -timeout 90s ./internal/lower/ -run .",
+    "exit": 1,
+    "wall": 28.147039464999807,
+    "log": "M17.log"
+  }
+}
