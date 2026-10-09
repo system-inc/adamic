@@ -1,0 +1,6 @@
+run adamic-gate-phases-20261009T040253-30d11786: void, 0 tests in 60 units, 2 failed, 1 units broken, 0 killed over budget
+BROKEN phase-wasi-internal-oracle-testdata-closures-throw-a: the stage broke (exited true, code 2, last output "loom-pilot: checkout of ac1e362fb5ac7417f82a62007bf023fdc86f8874 failed")
+FAIL phase-vet (stage)
+    red: ac1e362fb5ac7417f82a62007bf023fdc86f8874 full gate, first failure at vet after 22.7 s, cancelled after first failure (vet=22.7s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 1.5 on 5 cores at start, load 4.8 on 5 cores at first failure, load 4.8 on 5 cores at end), 0 fail, 0 pass
+FAIL phase-catalog-11 (stage)
+    red: ac1e362fb5ac7417f82a62007bf023fdc86f8874 full gate, first failure at catalog/11 refuse-definite-assignment after 287.1 s, cancelled after first failure (catalog=287.1s; 0 units over 30 s (0 s, 0 on the burn-down, 0 drifted over); box load 0.1 on 5 cores at start, load 1.0 on 5 cores at first failure, load 1.0 on 5 cores at end), 0 fail, 0 pass

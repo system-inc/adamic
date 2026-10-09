@@ -1,0 +1,221 @@
+run adamic-gate-pilot-20261009T040253-9e3b1cf1: void, 14129 tests in 200 units, 102 failed, 3 units broken, 0 killed over budget
+BROKEN tests-16: no results (exited true, last output "loom-pilot: checkout of ac1e362fb5ac7417f82a62007bf023fdc86f8874 failed")
+BROKEN tests-120: no results (exited true, last output "loom-pilot: checkout of ac1e362fb5ac7417f82a62007bf023fdc86f8874 failed")
+BROKEN tests-171: no results (exited true, last output "loom-pilot: checkout of ac1e362fb5ac7417f82a62007bf023fdc86f8874 failed")
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-02)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-03)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-06)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-08)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-10)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-14)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-19)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-20)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-22)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-23)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-24)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-25)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-27)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-28)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-30)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-46)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-46)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-47)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-49)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownListLayout_000 (tests-49)
+    list_layout_shards_test.go:572: original fork full Markdown parsing/layout off agrees on all 247 source documents
+    list_layout_shards_test.go:131: list mutant 0 caught
+    list_layout_shards_test.go:131: list mutant 1 caught
+    list_layout_shards_test.go:131: list mutant 2 survived
+FAIL github.com/system-inc/adamic/stage1/cohere/typeaware TestVolumeTypeSymbol_000 (tests-49)
+    volume_type_symbol_test.go:219: build typeaware-volume-type-symbol-native: /tmp/adamic-gate/TestVolumeTypeSymbol_0002626086189/001/adamic build /tmp/adamic/stage1/cohere/typeaware/volume_suite.ts -o /home/agent/.cache/adamic-build/.building-e72c025f9b79-130241012/native --tsgo /tmp/adamic-gate/TestVolumeTypeSymbol_0002626086189/001/type-symbol-checker.a: signal: killed
+FAIL github.com/system-inc/adamic/stage1/typescript/parser TestJsxMutantsPlantedFailure (tests-49)
+    jsx_mutants_shards_test.go:241: cooked: planted-failure child exceeded 75 seconds
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-50)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-53)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-56)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-57)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-58)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-59)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-60)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-66)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-67)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-68)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-69)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-73)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks (package) (tests-76)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/markdownblocks	75.113s
+    PASS
+    ok  	github.com/system-inc/adamic/stage1/cohere/markdownblocks	54.348s
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-79)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-80)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-82)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-83)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-84)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-88)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-89)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-90)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-91)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-93)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-95)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-96)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-97)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-100)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-101)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-101)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-102)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-104)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-105)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-107)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-110)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-113)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-114)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-118)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-118)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-119)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-121)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-121)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-122)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-122)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-126)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-134)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-134)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-135)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-136)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-141)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-142)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-143)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-145)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-146)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-148)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-151)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-152)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-156)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-158)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-162)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-164)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-167)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-168)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-175)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-178)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-179)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-179)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-180)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-184)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-185)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-187)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-190)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-191)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-193)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-193)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/json (package) (tests-194)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/json [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-194)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-196)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-197)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-198)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]
+FAIL github.com/system-inc/adamic/stage1/cohere/lint (package) (tests-199)
+    FAIL	github.com/system-inc/adamic/stage1/cohere/lint [build failed]

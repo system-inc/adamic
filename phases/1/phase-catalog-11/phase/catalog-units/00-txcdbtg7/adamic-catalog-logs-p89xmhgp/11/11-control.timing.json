@@ -1,0 +1,16 @@
+{
+  "command": [
+    "go",
+    "test",
+    "-trimpath",
+    "-count=1",
+    "./internal/lower",
+    "-run",
+    "^TestDefiniteAssignmentUsesReadiness$"
+  ],
+  "seconds": 270.4645842509999,
+  "exit_code": 1,
+  "go_reported_test_seconds": null,
+  "load_before": "0.11 0.17 2.35 1/298 313948",
+  "load_after": "1.04 0.69 2.00 1/302 315067"
+}

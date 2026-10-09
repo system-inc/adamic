@@ -1,0 +1,127 @@
+{
+  "sha": "ac1e362fb5ac7417f82a62007bf023fdc86f8874",
+  "branch": "",
+  "branch_source": "",
+  "session": "",
+  "session_source": "",
+  "base": "ac1e362fb5ac7417f82a62007bf023fdc86f8874",
+  "base_name": "main",
+  "tools_sha": "25b3700dabf52bb70669a73c9a05dc3f472f423e",
+  "machine": {
+    "hostname": "d653d164236f",
+    "nproc": 5
+  },
+  "uncached_tests": true,
+  "build_ok": false,
+  "vet_ok": false,
+  "box_load": {
+    "start": {
+      "load_1m": 2.3,
+      "cores": 5
+    },
+    "end": {
+      "load_1m": 2.6,
+      "cores": 5
+    }
+  },
+  "scoped_env": [],
+  "npm": {
+    "stage3/api": {
+      "lockfile_sha256": "d7a3ae81b884b59bf3bd617519eb6f04d3d682a83cb803429a2f6ceb9db1a079",
+      "seconds": 0.0
+    }
+  },
+  "emission_sha256": {
+    "internal/oracle/testdata/array_from_length.a": "ee8b2d882c9258626a4dcfbcffd035648e0ed943bd4b390bbd46bff5814a348b",
+    "internal/oracle/testdata/bitwise.a": "fd3681c39f5cfb107ddaf7398ca5b6498619818e31679fe9850c16d377429560",
+    "internal/oracle/testdata/borrow_chain_reassigned.a": "7d07fc61d8e517cd6dcad3791e8427c03bc60a721d2ca2bfb9f70c019ed3a230",
+    "internal/oracle/testdata/call_targets_sort.a": "8fdf976d88b1f1f4b564bcde2aa7c6b642d3cf0b9e378239f2ae2b7b79673bb4",
+    "internal/oracle/testdata/casts.a": "9cb15504b4bdedfbd23ca0d3bfda74bd4972beea5d917286ed08a2d742b1ca21",
+    "internal/oracle/testdata/class_oct6_parameters.a": "1094195b3fd8314300a75968493fed2627d06541e2591dc3e1dbf8c85337b289",
+    "internal/oracle/testdata/classes.a": "75e923f64e36773de6fe2e45f054043b162fe7847a8785dba7fc436aee291a2f",
+    "internal/oracle/testdata/closures_throw_uncaught.a": "1ccad9aa02ff6947ce58692385a05b55d22d22e9884c3cf3e5ddc03fa176982f",
+    "internal/oracle/testdata/devirtualize_abstract.a": "d9f42e02a75e5ea156b1aa5827e642c66e9b498ecf635698d39430d94a78f442",
+    "internal/oracle/testdata/devirtualize_modules/main.a": "1fe477a0cb140a571ecdf2f9f3193c9442a3c51e5dc386ddbdbda236a768d702",
+    "internal/oracle/testdata/enums_names.a": "1eb4ee1b47793ce8df5b4b72a5a1c2a27c3b6057f118f80b6ae71ae034ed4fab",
+    "internal/oracle/testdata/exceptions_empty.a": "828ff6cc0fff05638e3815a62be0c92db8d3e6f66f89cc6bf59c7cad9504d30f",
+    "internal/oracle/testdata/finally_leaves.a": "09f5ef02e9388d0f1b9e163e47135f35ad395cc2e9e5b87bf7c9117f60fc5175",
+    "internal/oracle/testdata/fresh_calls.a": "6457637b990d8228cfe3b9d11913270a2372a4252eaa8902fe2a36dde6cd6b09",
+    "internal/oracle/testdata/generic_method_return.a": "a6d9ad5e9e1c04cb1fbb6ac1c4e7851a88599825902758add92d4ec80e03764e",
+    "internal/oracle/testdata/inherited_static_field_read.a": "2c455df627edb7c31ee6d39176114946c982b326746eab64e2924504205aee31",
+    "internal/oracle/testdata/json_stringify_numbers.a": "c87c4bd753446862eb63bf847df808188b30d215001d4405c99dd216ebdc6c14",
+    "internal/oracle/testdata/library_object_freeze_write.a": "a6251655c65fdea9ec477f84ee6452ae3d4cc5521a2d0bfe75e7ed7f129d1759",
+    "internal/oracle/testdata/lint_runtime_search_calls.a": "c41cf824993c286f18b8d60c018c10f6b75f1505ad9586833f97d229b56ecba4",
+    "internal/oracle/testdata/map_zero_keys.a": "a1fb1c45471924c22657bf3cef69b947b2f739d0e0e9b0b7a7179b86e51f58fe",
+    "internal/oracle/testdata/maybe_boolean_panic.a": "0f5076bdf7d6665fbd51e469703158f15ef340181badd1fe1c197125869eebe9",
+    "internal/oracle/testdata/modules/main.a": "1c9399efcc6434378d311dad1e158111e694140e130992ce250e40891de6076e",
+    "internal/oracle/testdata/narrowed_writes.a": "8c20cd41faa87286a0d0d27c8230777588d1804ac57f871b10ce356262718f77",
+    "internal/oracle/testdata/nbody_runtime_fields.a": "ca514c7e0e57b890f4fbdb4fc43971ce198ec07ca102f1f68adbaa5289d09267",
+    "internal/oracle/testdata/normalize_form.a": "0b8a729d246a96efe53cf1e02188b6c6b2c9b1d43258030fe69a3e9740ca918f",
+    "internal/oracle/testdata/number_parsing.a": "60a6d5fc27a90bcad1112ffbf0cfc897a5ba6eb4f2a0e912fa6edbf07da14531",
+    "internal/oracle/testdata/optional_numbers.a": "211259d228d5d2bee5918da42821b734553bb4d150626d665335318b2e777bcf",
+    "internal/oracle/testdata/override_same_representation.a": "303018b1d47ab0ddd6b0b657b844b52ca646eee01af85199c413432d9ed901a7",
+    "internal/oracle/testdata/panic.a": "2ecc2e6e437b25aa4a0d976f4338600e3d074bd18bf373286bbcd6d2f1bbf91d",
+    "internal/oracle/testdata/regexp_replaceall_nonglobal.a": "65d2d8c45853f9ddf03f290e76af93fd896fc0074b0d9d9d04903aa19b1f2bfd",
+    "internal/oracle/testdata/regions_constructor_capture.a": "08af5ed5ecd04b9a0324369217bfb03ebb2262516f09727cc90999d5c38a07df",
+    "internal/oracle/testdata/reuse_global_sibling.a": "1a741620ff8a44fdc55372c7ef7d1d559cddadb5437a832ddf74338dabe3b68d",
+    "internal/oracle/testdata/route_targets_accessor.a": "caacd885613a7c34a35358876a762bbca4e1ec5302da987fa342f312326a6b3e",
+    "internal/oracle/testdata/search_halves.a": "dbb5c652e19e8347bbca76492bedda077b96129f5d2547811c042a28f5bb990d",
+    "internal/oracle/testdata/set_foreach_fnexpr.a": "2f0786a0c48bc71120f237b8bb2857d1e37012c8a3c8365ef89403536ab565bd",
+    "internal/oracle/testdata/spread_calls.a": "fad028f67e41bba6fce8c0000e82f34ab5561b1289d6789f767dad31cb77e20c",
+    "internal/oracle/testdata/stack_forever.a": "ad07e884892ab888d583fce0c301ea6320049b6b40ef36d3703c597d1be1d464",
+    "internal/oracle/testdata/string_too_long.a": "5bcbe3087322813902363ecb8023dc723d30e675cdcbdf472f8d152fa046a3e1",
+    "internal/oracle/testdata/throw_in_writes.a": "f9e8da621148e83a93b7d05b40b994ccbaa9ffe797a5a24e15454119ee840779",
+    "internal/oracle/testdata/timsort.a": "f9905457a10c1fec78fce0ebd16e575187631c7104737cd78ab00a996435f426",
+    "internal/oracle/testdata/typeof_string_literal.a": "0495fc7c002298764f651649b9f0f877cc60d04dce53f29e5423442e6fc47864",
+    "internal/oracle/testdata/undefined_elements.a": "c5f5b6401aba9447fbe9ebeb409344a6dedd6d14de704e033b69dabdbfc2f9b4",
+    "internal/oracle/testdata/utf8_view_fails.a": "521c9ce041792179eac88e7dd9ecff23ebd097f09eab28747bdae6903ad7289e",
+    "internal/oracle/testdata/walk.a": "f1fc0628c2c1cc6f90bf9c35655fa20ba71ce18a6bc0a348fc4b8e9e10e9b4bc",
+    "internal/oracle/testdata/weak_narrowed.a": "2b2470f13ef071046fa38487aa193204a413a80859e6db831636340ee81267f7",
+    "internal/oracle/testdata/writes.a": "9f83fbf4b45858f7ac9b00c26dcad63fab4d7b7153ef87194ed0bc7bff9d5b34"
+  },
+  "budget_seconds": 30,
+  "budget_instrument": {
+    "box": "d653d164236f",
+    "cpus": 5,
+    "load": [
+      2.6,
+      1.0,
+      1.0
+    ],
+    "reference": "a 4-CPU Codex instance; this box until Loom's tier measures there"
+  },
+  "budget_burndown_units": [],
+  "budget_over": [],
+  "budget_drift": [],
+  "budget_can_leave_burndown": [],
+  "wall_seconds": 6.7,
+  "steps_seconds": {
+    "determinism": 6.7
+  },
+  "pass": 0,
+  "fail": 0,
+  "failed_tests": [],
+  "complete": false,
+  "skip": 0,
+  "required_input_skips": [],
+  "unclassified_skips": [],
+  "pending_skips": [],
+  "failure": null,
+  "planned_stages": [
+    "determinism"
+  ],
+  "stages_exit": {
+    "determinism": 0
+  },
+  "cancelled_after_first_failure": false,
+  "finished": true,
+  "long_test_threshold_seconds": 30,
+  "long_tests": 0,
+  "long_test_seconds": 0,
+  "planned_test_counts": {
+    "passed": 0,
+    "failed": 0,
+    "not run": 0
+  },
+  "gate_kind": "full"
+}

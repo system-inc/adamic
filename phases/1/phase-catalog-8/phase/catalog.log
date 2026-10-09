@@ -1,0 +1,9 @@
+08 narrowed-number-field wall=58.919s
+target ac1e362fb5ac7417f82a62007bf023fdc86f8874
+logs /tmp/loom-units/loom-unit-2399389173/workspace/loom-out/phase/catalog-units/00-opm3ibd3/adamic-catalog-logs-lt33642z
+build flags: commit=ac1e362fb5ac7417f82a62007bf023fdc86f8874; nproc=5; cpu.max=400000 100000; go version go1.27.2 linux/amd64; clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261); v24.19.0; ADAMIC_GATE_UNCACHED=1; go test -trimpath -count=1; native C11 strict warnings, -ffp-contract=off -fno-optimize-sibling-calls; release -O2; sanitizer -O1 -g -fsanitize=address,undefined -fno-sanitize-recover=all
+jobs 1; Go -trimpath shares only content-keyed build artifacts; test results uncached
+08 narrowed-number-field: applies-and-fails-as-recorded
+08 made against=9272c54ea9c122cd49f6890066552953a949b4cd
+08 wall=58.848s setup=8.960s check=48.246s cleanup=0.402s load=1.08 1.27 1.05 1/466 157543 -> 1.00 1.20 1.04 1/468 157930
+total wall=58.869s load=1.08 1.27 1.05 1/465 157534 -> 1.00 1.20 1.04 1/467 157930

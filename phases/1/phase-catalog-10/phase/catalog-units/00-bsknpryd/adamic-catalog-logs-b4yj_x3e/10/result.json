@@ -1,0 +1,17 @@
+{
+  "number": 10,
+  "made_against": "e8ba3d5d81de4d3773c723914fccd4c76248b965",
+  "target": "ac1e362fb5ac7417f82a62007bf023fdc86f8874",
+  "ok": true,
+  "setup_seconds": 0,
+  "check_seconds": 0,
+  "cleanup_seconds": 0,
+  "wall_seconds": 0.00020033900000271387,
+  "load_before": "1.61 1.32 1.29 1/759 298042",
+  "load_after": "1.61 1.32 1.29 1/759 298042",
+  "messages": [
+    "10 override-representation: skipped (Fix 1f96441 is still not an ancestor of origin/main (e8ba3d5d81de4d3773c723914fccd4c76248b965); leave skipped pending integration.)",
+    "10 made against=e8ba3d5d81de4d3773c723914fccd4c76248b965",
+    "10 wall=0.000s setup=0.000s check=0.000s cleanup=0.000s load=1.61 1.32 1.29 1/759 298042 -> 1.61 1.32 1.29 1/759 298042"
+  ]
+}
