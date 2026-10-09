@@ -1,0 +1,19 @@
+run adamic-verify-20261009T142822-2f7effa2: red, 13223 tests in 19 units, 2 failed, 0 units broken, 0 killed over budget
+FAIL github.com/system-inc/adamic/stage1/cohere/markdowninline TestMarkdownInline_0000 (tests-02)
+    inline_products_shards_test.go:549: hash bucket 0/2048: 43 cases
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 escaped delimiter parity disagreement: case 29260 mode w byte 5812 lengths 1128942/1128534
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 escaped delimiter parity disagreement: case 29260 mode w byte 5812 lengths 1128942/1128534
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 table pipe escaping disagreement: case 117711 mode c byte 1127758 lengths 1128534/1128534
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 table pipe escaping disagreement: case 117711 mode c byte 1127758 lengths 1128534/1128534
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 minimum absent fence disagreement: case 28810 mode c byte 1206 lengths 1114782/1128534
+    inline_products_shards_test.go:651: TestMarkdownInline_0000 minimum absent fence disagreement: case 28810 mode c byte 1206 lengths 1114782/1128534
+    inline_units_test.go:34: own work: 68.316580s
+FAIL github.com/system-inc/adamic/stage3/fixtures TestFixtureDirectoriesHaveTopLevelTests (tests-07-r3)
+    units_test.go:130: TestFixturesAssertions directory=assertions fixtures=20
+    units_test.go:130: TestFixturesCycles directory=cycles fixtures=10
+    units_test.go:130: TestFixturesEnums directory=enums fixtures=13
+    units_test.go:130: TestFixturesHost directory=host fixtures=25
+    units_test.go:130: TestFixturesNamespaces directory=namespaces fixtures=12
+    units_test.go:130: TestFixturesNestedFunctions directory=nested-functions fixtures=11
+    units_test.go:130: TestFixturesObjects directory=objects fixtures=25
+    units_test.go:130: TestFixturesPredicates directory=predicates fixtures=11
