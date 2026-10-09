@@ -1,0 +1,23 @@
+{
+  "finished": true,
+  "verdict": "void",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "",
+  "covers": "go-tests",
+  "uncached_tests": false,
+  "sha": "55399221d628f681ae6ff55004873497240bd58a",
+  "branch": "area/compiler",
+  "base": "d60886e1fd29030fe204d99b1dbe8b2bbf9790ff",
+  "complete": true,
+  "darwin": "not run (pool is Linux only)",
+  "loom_tools": "33c1238674895b42b25b9a1fa7122adf4379953f96a7cde00e94eff51c3ef48e",
+  "loom_tools_promoted": "d0c80ee6a1d426c42ef3414264d87e6478902c5aa9b5b81e46ae9c81c81b0e3e",
+  "gate_tools": "8f3805c40c3d7a3d336f0ad914d705bc1d39ffea",
+  "pass": 0,
+  "fail": 0,
+  "skip": 0,
+  "planned_stages": [
+    "tests"
+  ]
+}
