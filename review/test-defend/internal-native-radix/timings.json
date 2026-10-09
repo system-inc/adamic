@@ -1,0 +1,126 @@
+{
+  "nproc": 5,
+  "setup": "warm env.sh reused; npm ci successful",
+  "runs": [
+    {
+      "id": "bounded-baseline",
+      "wall": 84.32869320300233,
+      "cooked": false
+    },
+    {
+      "id": "D1-compile",
+      "wall": 0.11651239499769872,
+      "cooked": false
+    },
+    {
+      "id": "D1-cooked",
+      "wall": 100.55122200299957,
+      "cooked": true
+    },
+    {
+      "id": "D1-compile",
+      "wall": 0.09502126699953806,
+      "cooked": false
+    },
+    {
+      "id": "D1",
+      "wall": 6.394173139000486,
+      "cooked": false
+    },
+    {
+      "id": "D1-apply",
+      "wall": 0.06940419899910921,
+      "cooked": false
+    },
+    {
+      "id": "D2-compile",
+      "wall": 0.4653148110010079,
+      "cooked": false
+    },
+    {
+      "id": "D2",
+      "wall": 98.63466027099639,
+      "cooked": false
+    },
+    {
+      "id": "D2-apply",
+      "wall": 0.0714472260006005,
+      "cooked": false
+    },
+    {
+      "id": "D3-compile",
+      "wall": 0.9513555570010794,
+      "cooked": false
+    },
+    {
+      "id": "D3",
+      "wall": 51.20586924199597,
+      "cooked": false
+    },
+    {
+      "id": "D3-apply",
+      "wall": 0.08544532000087202,
+      "cooked": false
+    },
+    {
+      "id": "D4-compile",
+      "wall": 0.9987352610041853,
+      "cooked": false
+    },
+    {
+      "id": "D4",
+      "wall": 53.24683615899994,
+      "cooked": false
+    },
+    {
+      "id": "D4-apply",
+      "wall": 0.05993673000193667,
+      "cooked": false
+    },
+    {
+      "id": "D5-compile",
+      "wall": 0.9276010949979536,
+      "cooked": false
+    },
+    {
+      "id": "D5",
+      "wall": 51.444267288003175,
+      "cooked": false
+    },
+    {
+      "id": "D5-apply",
+      "wall": 0.06466226799966535,
+      "cooked": false
+    },
+    {
+      "id": "D6-compile",
+      "wall": 0.2113725279996288,
+      "cooked": false
+    },
+    {
+      "id": "D6",
+      "wall": 50.94277317199885,
+      "cooked": false
+    },
+    {
+      "id": "D6-apply",
+      "wall": 0.09739748200081522,
+      "cooked": false
+    },
+    {
+      "id": "D7-compile",
+      "wall": 0.9649823489962728,
+      "cooked": false
+    },
+    {
+      "id": "D7",
+      "wall": 48.94633060299384,
+      "cooked": false
+    },
+    {
+      "id": "D7-apply",
+      "wall": 0.05012750199966831,
+      "cooked": false
+    }
+  ]
+}

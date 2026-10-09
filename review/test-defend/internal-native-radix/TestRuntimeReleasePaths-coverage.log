@@ -1,0 +1,13 @@
+{"Time":"2026-10-09T14:11:53.075275267Z","Action":"start","Package":"github.com/system-inc/adamic/internal/native"}
+{"Time":"2026-10-09T14:11:53.087971915Z","Action":"run","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths"}
+{"Time":"2026-10-09T14:11:53.088041758Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths","Output":"=== RUN   TestRuntimeReleasePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:53.088062787Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths","Output":"=== PAUSE TestRuntimeReleasePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:53.088065332Z","Action":"pause","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths"}
+{"Time":"2026-10-09T14:11:53.088068175Z","Action":"cont","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths"}
+{"Time":"2026-10-09T14:11:53.088069912Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths","Output":"=== CONT  TestRuntimeReleasePaths\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:53.45550199Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths","Output":"--- PASS: TestRuntimeReleasePaths (0.37s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:53.455604464Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Test":"TestRuntimeReleasePaths","Elapsed":0.37}
+{"Time":"2026-10-09T14:11:53.455667225Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T14:11:53.456782094Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"coverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:53.463501744Z","Action":"output","Package":"github.com/system-inc/adamic/internal/native","Output":"ok  \tgithub.com/system-inc/adamic/internal/native\t0.386s\tcoverage: 1.9% of statements in ./internal/native, ./internal/regexp\n"}
+{"Time":"2026-10-09T14:11:53.463538132Z","Action":"pass","Package":"github.com/system-inc/adamic/internal/native","Elapsed":0.388}
