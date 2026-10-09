@@ -1,0 +1,11 @@
+--- a/stage1/cohere/yaml/formatter_mutants_grain_test.go
++++ b/stage1/cohere/yaml/formatter_mutants_grain_test.go
+@@ -122,7 +122,7 @@
+ 			if err != nil {
+ 				return err
+ 			}
+-			if err := os.WriteFile(filepath.Join(directory, "cases.txt"), data, 0644); err != nil {
++			if err := os.WriteFile(filepath.Join(directory, "missing-cases.txt"), data, 0644); err != nil {
+ 				return err
+ 			}
+ 			return os.WriteFile(filepath.Join(directory, "expected.txt"), expected, 0644)

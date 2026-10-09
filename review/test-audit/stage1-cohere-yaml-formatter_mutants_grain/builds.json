@@ -1,0 +1,290 @@
+{
+  "bounded-baseline": {
+    "binary_seconds": 82.762,
+    "products": [
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "328dcd7c4f7b",
+        "status": "miss",
+        "seconds": 1.32
+      },
+      {
+        "product": "yaml-formatter-mutants-oracle-and-corpus-v2",
+        "key": "f5e6f0a5be28",
+        "status": "miss",
+        "seconds": 2.86
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "03cdfb5b963b",
+        "status": "miss",
+        "seconds": 2.21
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "43e624e0f474",
+        "status": "miss",
+        "seconds": 2.32
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "7e0605810d8a",
+        "status": "miss",
+        "seconds": 2.39
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "6f66f143de54",
+        "status": "miss",
+        "seconds": 2.52
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "04328fc61204",
+        "status": "miss",
+        "seconds": 34.15
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "5481ccf0889b",
+        "status": "miss",
+        "seconds": 35.08
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "e91b226348de",
+        "status": "miss",
+        "seconds": 37.49
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "200ebd6d28c2",
+        "status": "miss",
+        "seconds": 35.66
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "5d8e98809c72",
+        "status": "miss",
+        "seconds": 39.48
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "f5eb0fce25c4",
+        "status": "miss",
+        "seconds": 9.86
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "ee0d2bf6b246",
+        "status": "miss",
+        "seconds": 9.98
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "779058715087",
+        "status": "miss",
+        "seconds": 11.03
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "d0cc7c406753",
+        "status": "miss",
+        "seconds": 11.2
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "b7de13f8e910",
+        "status": "miss",
+        "seconds": 1.96
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "07bc633905c5",
+        "status": "miss",
+        "seconds": 10.88
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "ad712137b4a7",
+        "status": "miss",
+        "seconds": 20.99
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "5a1ec73f458b",
+        "status": "miss",
+        "seconds": 6.04
+      }
+    ],
+    "logged_miss_seconds": 277.42
+  },
+  "S1": {
+    "binary_seconds": 60.582,
+    "products": [
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "43e624e0f474",
+        "status": "miss",
+        "seconds": 1.54
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "328dcd7c4f7b",
+        "status": "miss",
+        "seconds": 1.55
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "03cdfb5b963b",
+        "status": "miss",
+        "seconds": 1.55
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "7e0605810d8a",
+        "status": "miss",
+        "seconds": 1.42
+      },
+      {
+        "product": "yaml-formatter-mutants-oracle-and-corpus-v2",
+        "key": "f5e6f0a5be28",
+        "status": "miss",
+        "seconds": 3.11
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "5481ccf0889b",
+        "status": "miss",
+        "seconds": 21.89
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "04328fc61204",
+        "status": "miss",
+        "seconds": 21.74
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "5d8e98809c72",
+        "status": "miss",
+        "seconds": 22.38
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "6f66f143de54",
+        "status": "miss",
+        "seconds": 1.36
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "ee0d2bf6b246",
+        "status": "miss",
+        "seconds": 6.2
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "f5eb0fce25c4",
+        "status": "miss",
+        "seconds": 6.55
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "07bc633905c5",
+        "status": "miss",
+        "seconds": 6.41
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "b7de13f8e910",
+        "status": "miss",
+        "seconds": 1.04
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "200ebd6d28c2",
+        "status": "miss",
+        "seconds": 21.73
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "e91b226348de",
+        "status": "miss",
+        "seconds": 21.51
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "d0cc7c406753",
+        "status": "miss",
+        "seconds": 6.08
+      },
+      {
+        "product": "yaml-formatter-mutant-lowered",
+        "key": "ad712137b4a7",
+        "status": "miss",
+        "seconds": 21.73
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "779058715087",
+        "status": "miss",
+        "seconds": 5.93
+      },
+      {
+        "product": "yaml-formatter-mutant-native",
+        "key": "5a1ec73f458b",
+        "status": "miss",
+        "seconds": 5.89
+      }
+    ],
+    "logged_miss_seconds": 179.61
+  },
+  "S2": {
+    "binary_seconds": 7.797,
+    "products": [
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "328dcd7c4f7b",
+        "status": "miss",
+        "seconds": 1.23
+      },
+      {
+        "product": "yaml-formatter-mutants-oracle-and-corpus-v2",
+        "key": "f5e6f0a5be28",
+        "status": "miss",
+        "seconds": 2.62
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "43e624e0f474",
+        "status": "miss",
+        "seconds": 1.93
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "7e0605810d8a",
+        "status": "miss",
+        "seconds": 1.96
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "03cdfb5b963b",
+        "status": "miss",
+        "seconds": 2.0
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "6f66f143de54",
+        "status": "miss",
+        "seconds": 2.07
+      },
+      {
+        "product": "yaml-formatter-mutant-sources",
+        "key": "b7de13f8e910",
+        "status": "miss",
+        "seconds": 1.95
+      }
+    ],
+    "logged_miss_seconds": 13.76
+  }
+}

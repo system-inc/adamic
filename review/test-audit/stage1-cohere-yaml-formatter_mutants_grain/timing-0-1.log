@@ -1,0 +1,15 @@
+{"Time":"2026-10-09T13:12:15.685994464Z","Action":"start","Package":"github.com/system-inc/adamic/stage1/cohere/yaml"}
+{"Time":"2026-10-09T13:12:15.693218531Z","Action":"run","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle"}
+{"Time":"2026-10-09T13:12:15.693295597Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"=== RUN   TestProduct_YAMLFormatterMutantsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:15.693323019Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"=== PAUSE TestProduct_YAMLFormatterMutantsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:15.693325683Z","Action":"pause","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle"}
+{"Time":"2026-10-09T13:12:15.693327976Z","Action":"cont","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle"}
+{"Time":"2026-10-09T13:12:15.693329709Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"=== CONT  TestProduct_YAMLFormatterMutantsOracle\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:16.784075916Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"    formatter_mutants_grain_test.go:92: build yaml-formatter-mutants-oracle-and-corpus-v2 f5e6f0a5be28 hit 1.08\n"}
+{"Time":"2026-10-09T13:12:16.802980767Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"    formatter_mutants_grain_test.go:131: union: 60156 mutant/case pairs (10026 complete corpus cases)\n"}
+{"Time":"2026-10-09T13:12:16.803014678Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"    formatter_mutants_grain_test.go:133: TestFormatterMutants (setup): 1.110s\n"}
+{"Time":"2026-10-09T13:12:16.803070963Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Output":"--- PASS: TestProduct_YAMLFormatterMutantsOracle (1.11s)\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:16.803076631Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Test":"TestProduct_YAMLFormatterMutantsOracle","Elapsed":1.11}
+{"Time":"2026-10-09T13:12:16.803105515Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"PASS\n","OutputType":"frame"}
+{"Time":"2026-10-09T13:12:16.804359916Z","Action":"output","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Output":"ok  \tgithub.com/system-inc/adamic/stage1/cohere/yaml\t1.118s\n"}
+{"Time":"2026-10-09T13:12:16.804380177Z","Action":"pass","Package":"github.com/system-inc/adamic/stage1/cohere/yaml","Elapsed":1.1179999999999999}

@@ -1,0 +1,18 @@
+timing-0-1 0 2.796962512000391
+timing-1-1 0 9.763030813001023
+timing-2-1 0 14.883995266998681
+timing-3-1 0 1.622808713998893
+timing-0-2 0 2.5983646149998094
+timing-1-2 0 10.007096830999217
+timing-2-2 0 14.978630244999295
+timing-3-2 0 1.662352049999754
+timing-0-3 0 2.6225342740017368
+timing-1-3 0 10.512060275001204
+timing-2-3 0 15.134968526001103
+timing-3-3 0 1.7073474349999742
+W1-vet 2 0.004935958000714891
+Traceback (most recent call last):
+  File "/tmp/u151/audit.py", line 28, in <module>
+    overlay=ev/(id+'.overlay.json');assert run(id+'-vet',overlay=overlay,vet=True)==0
+                                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError

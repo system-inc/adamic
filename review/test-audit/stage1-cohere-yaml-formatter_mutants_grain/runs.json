@@ -1,0 +1,500 @@
+[
+  {
+    "id": "timing-0-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 2.796962512000391,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 9.763030813001023,
+    "exit": 0
+  },
+  {
+    "id": "timing-2-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 14.883995266998681,
+    "exit": 0
+  },
+  {
+    "id": "timing-3-1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 1.622808713998893,
+    "exit": 0
+  },
+  {
+    "id": "timing-0-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 2.5983646149998094,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 10.007096830999217,
+    "exit": 0
+  },
+  {
+    "id": "timing-2-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 14.978630244999295,
+    "exit": 0
+  },
+  {
+    "id": "timing-3-2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 1.662352049999754,
+    "exit": 0
+  },
+  {
+    "id": "timing-0-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 2.6225342740017368,
+    "exit": 0
+  },
+  {
+    "id": "timing-1-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 10.512060275001204,
+    "exit": 0
+  },
+  {
+    "id": "timing-2-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 15.134968526001103,
+    "exit": 0
+  },
+  {
+    "id": "timing-3-3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 1.7073474349999742,
+    "exit": 0
+  },
+  {
+    "id": "W1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "-overlay=/tmp/u151/evidence/W1.overlay.json",
+      "vet",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 0.004935958000714891,
+    "exit": 2
+  },
+  {
+    "id": "W1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/W1.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 0.15946038600122847,
+    "exit": 0
+  },
+  {
+    "id": "W1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/W1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 16.286101535999478,
+    "exit": 1
+  },
+  {
+    "id": "S1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/S1.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 0.16027726700122003,
+    "exit": 0
+  },
+  {
+    "id": "S1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/S1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u151/cache/S1"
+    },
+    "wall": 65.57751735600141,
+    "exit": 1
+  },
+  {
+    "id": "S2-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/S2.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "wall": 0.17756474400084699,
+    "exit": 0
+  },
+  {
+    "id": "S2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/S2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules",
+      "ADAMIC_BUILD_CACHE_DIR": "/tmp/u151/cache/S2"
+    },
+    "wall": 12.634382926999024,
+    "exit": 1
+  },
+  {
+    "id": "P1-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/P1.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 0,
+    "wall": 0.09858033399905253
+  },
+  {
+    "id": "P1",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P1.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 1,
+    "wall": 13.638535054000386
+  },
+  {
+    "id": "P2-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/P2.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 0,
+    "wall": 0.17167986999993445
+  },
+  {
+    "id": "P2",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P2.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 1,
+    "wall": 13.757743489999484
+  },
+  {
+    "id": "P3-vet",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "vet",
+      "-overlay=/tmp/u151/evidence/P3.overlay.json",
+      "./stage1/cohere/yaml/"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 0,
+    "wall": 0.16070311300063622
+  },
+  {
+    "id": "P3",
+    "command": [
+      "timeout",
+      "120",
+      "go",
+      "test",
+      "-overlay=/tmp/u151/evidence/P3.overlay.json",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "90s",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^(TestProduct_YAMLFormatterMutantsOracle|TestProduct_YAMLFormatterMutant000Sources|TestProduct_YAMLFormatterMutant000Lowered|TestProduct_YAMLFormatterMutant000Native|TestProduct_YAMLFormatterMutant001Sources|TestProduct_YAMLFormatterMutant001Lowered|TestProduct_YAMLFormatterMutant001Native|TestProduct_YAMLFormatterMutant002Sources|TestProduct_YAMLFormatterMutant002Lowered|TestProduct_YAMLFormatterMutant002Native|TestProduct_YAMLFormatterMutant003Sources|TestProduct_YAMLFormatterMutant003Lowered|TestProduct_YAMLFormatterMutant003Native|TestProduct_YAMLFormatterMutant004Sources|TestProduct_YAMLFormatterMutant004Lowered|TestProduct_YAMLFormatterMutant004Native|TestProduct_YAMLFormatterMutant005Sources|TestProduct_YAMLFormatterMutant005Lowered|TestProduct_YAMLFormatterMutant005Native|TestFormatterMutants_000|TestFormatterMutants_001|TestFormatterMutants_002|TestFormatterMutants_003|TestFormatterMutants_004|TestFormatterMutants_005|TestFormatterMutantsPlantedFailure)$"
+    ],
+    "environment": {
+      "ADAMIC_YAML_LIBRARY": "/tmp/u151/library/node_modules"
+    },
+    "exit": 1,
+    "wall": 6.072081260001141
+  }
+]

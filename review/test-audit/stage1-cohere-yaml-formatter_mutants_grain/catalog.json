@@ -1,0 +1,50 @@
+[
+  {
+    "id": "W1",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 245,
+    "before": "func formatterMutantSurvived(actual, expected []byte) error {\n\tif bytes.Equal(actual, expected) {\n\t\treturn fmt.Errorf(\"missed mutant\")\n\t}\n\treturn nil\n}",
+    "after": "func formatterMutantSurvived(actual, expected []byte) error {\n\treturn nil\n}",
+    "kind": "weakened comparison"
+  },
+  {
+    "id": "S1",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 125,
+    "before": "os.WriteFile(filepath.Join(directory, \"cases.txt\"), data, 0644)",
+    "after": "os.WriteFile(filepath.Join(directory, \"missing-cases.txt\"), data, 0644)",
+    "kind": "construction artifact option change"
+  },
+  {
+    "id": "S2",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 342,
+    "before": "os.WriteFile(filepath.Join(directory, file), source, 0644)",
+    "after": "os.WriteFile(filepath.Join(directory, file+\".missing\"), source, 0644)",
+    "kind": "construction artifact option change"
+  },
+  {
+    "id": "P1",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 245,
+    "before": "formatterMutantSurvived body",
+    "after": "return nil at entry",
+    "kind": "empty entry probe"
+  },
+  {
+    "id": "P2",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 86,
+    "before": "formatterMutantsOracleProduct body",
+    "after": "return \"\" at entry",
+    "kind": "empty entry probe"
+  },
+  {
+    "id": "P3",
+    "file": "stage1/cohere/yaml/formatter_mutants_grain_test.go",
+    "line": 297,
+    "before": "formatterMutantsProduct body",
+    "after": "return \"\", \"\" at entry",
+    "kind": "empty entry probe"
+  }
+]

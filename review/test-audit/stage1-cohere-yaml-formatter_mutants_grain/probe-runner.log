@@ -1,0 +1,8 @@
+P1-vet 0 0.09858033399905253
+P1 1 13.638535054000386
+P2-vet 1 0.16013902600025176
+Traceback (most recent call last):
+  File "/tmp/u151/probes.py", line 13, in <module>
+    if vet:assert r.returncode==0
+                  ^^^^^^^^^^^^^^^
+AssertionError

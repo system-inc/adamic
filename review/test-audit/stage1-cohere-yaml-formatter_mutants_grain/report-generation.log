@@ -1,0 +1,68 @@
+{
+  "rows": [
+    {
+      "test": "TestProduct_YAMLFormatterMutantsOracle",
+      "seconds": 1.008,
+      "verdict": "setup-check",
+      "vacuous": true,
+      "last_proven_fail": "S1: formatter_mutants_grain_test.go:130: open /tmp/u151/cache/S1/f5e6f0a5be2887bad0408ac8ed7e255631d937ca100a8237f84b54632f07bb6b/cases.txt: no such file or directory"
+    },
+    {
+      "test": "TestProduct_YAMLFormatterMutant family",
+      "seconds": 8.407,
+      "verdict": "setup-check",
+      "vacuous": true,
+      "last_proven_fail": "S2: formatter_mutants_grain_test.go:450: mutant preparation failed"
+    },
+    {
+      "test": "TestFormatterMutants family",
+      "seconds": 13.303,
+      "verdict": "untrue",
+      "vacuous": true,
+      "last_proven_fail": null
+    },
+    {
+      "test": "TestFormatterMutantsPlantedFailure",
+      "seconds": 0.007,
+      "verdict": "witness",
+      "vacuous": false,
+      "last_proven_fail": "W1: formatter_mutants_grain_test.go:494: planted survivor caught by [], want [3]"
+    }
+  ],
+  "matrix": {
+    "W1": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "S1": [
+      "TestFormatterMutants family",
+      "TestProduct_YAMLFormatterMutantsOracle"
+    ],
+    "S2": [
+      "TestFormatterMutants family",
+      "TestProduct_YAMLFormatterMutant family"
+    ],
+    "P1": [
+      "TestFormatterMutantsPlantedFailure"
+    ],
+    "P2": [
+      "TestFormatterMutants family"
+    ],
+    "P3": [
+      "TestFormatterMutants family"
+    ]
+  },
+  "builds": {
+    "bounded-baseline": {
+      "binary_seconds": 82.762,
+      "logged_miss_seconds": 277.42
+    },
+    "S1": {
+      "binary_seconds": 60.582,
+      "logged_miss_seconds": 179.61
+    },
+    "S2": {
+      "binary_seconds": 7.797,
+      "logged_miss_seconds": 13.76
+    }
+  }
+}
