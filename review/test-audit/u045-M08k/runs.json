@@ -1,0 +1,218 @@
+[
+  {
+    "name": "counts-base",
+    "exit": 0,
+    "seconds": 120.466,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$"
+    ],
+    "cache": "/tmp/M08k/cache/counts-base",
+    "mutant": false
+  },
+  {
+    "name": "counts-mutant",
+    "exit": 1,
+    "seconds": 104.388,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./internal/oracle/",
+      "-run",
+      "^TestCountsAreRecorded$"
+    ],
+    "cache": "/tmp/M08k/cache/counts-mutant",
+    "mutant": true
+  },
+  {
+    "name": "agreement-mutant",
+    "exit": 0,
+    "seconds": 257.057,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "30m",
+      "./internal/oracle/",
+      "-run",
+      "^(TestNativeAgreesWithNode|TestInputAgreesWithNode)$"
+    ],
+    "cache": "/tmp/M08k/cache/agreement-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestDecodeASCIIUnit40-mutant",
+    "exit": 0,
+    "seconds": 41.71,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/native/",
+      "-run",
+      "^TestDecodeASCIIUnit40$"
+    ],
+    "cache": "/tmp/M08k/cache/TestDecodeASCIIUnit40-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestDecodeASCIIUnit41-mutant",
+    "exit": 0,
+    "seconds": 31.039,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/native/",
+      "-run",
+      "^TestDecodeASCIIUnit41$"
+    ],
+    "cache": "/tmp/M08k/cache/TestDecodeASCIIUnit41-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestDecodeASCIIUnit42-mutant",
+    "exit": 0,
+    "seconds": 30.547,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/native/",
+      "-run",
+      "^TestDecodeASCIIUnit42$"
+    ],
+    "cache": "/tmp/M08k/cache/TestDecodeASCIIUnit42-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestDecodeASCIIUnit43-mutant",
+    "exit": 0,
+    "seconds": 29.353,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/native/",
+      "-run",
+      "^TestDecodeASCIIUnit43$"
+    ],
+    "cache": "/tmp/M08k/cache/TestDecodeASCIIUnit43-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestDecodeASCIIUnit44-mutant",
+    "exit": 0,
+    "seconds": 28.552,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./internal/native/",
+      "-run",
+      "^TestDecodeASCIIUnit44$"
+    ],
+    "cache": "/tmp/M08k/cache/TestDecodeASCIIUnit44-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestCSSPrinterAgreesWithGo_000-mutant",
+    "exit": 0,
+    "seconds": 102.501,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/css/",
+      "-run",
+      "^TestCSSPrinterAgreesWithGo_000$"
+    ],
+    "cache": "/tmp/M08k/cache/TestCSSPrinterAgreesWithGo_000-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestCSSNumbers_350-mutant",
+    "exit": 0,
+    "seconds": 64.93,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/cssnumbers/",
+      "-run",
+      "^TestCSSNumbers_350$"
+    ],
+    "cache": "/tmp/M08k/cache/TestCSSNumbers_350-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestPortMatchesGoCohere_1649-mutant",
+    "exit": 0,
+    "seconds": 59.096,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/json/",
+      "-run",
+      "^(TestPortMatchesGoCohere_1649|TestPortMatchesGoCohereSplit_Setup)$"
+    ],
+    "cache": "/tmp/M08k/cache/TestPortMatchesGoCohere_1649-mutant",
+    "mutant": true
+  },
+  {
+    "name": "TestFileDriver_Setup-mutant",
+    "exit": 0,
+    "seconds": 68.889,
+    "command": [
+      "go",
+      "test",
+      "-json",
+      "-count=1",
+      "-timeout",
+      "10m",
+      "./stage1/cohere/yaml/",
+      "-run",
+      "^TestFileDriver_Setup$"
+    ],
+    "cache": "/tmp/M08k/cache/TestFileDriver_Setup-mutant",
+    "mutant": true
+  }
+]

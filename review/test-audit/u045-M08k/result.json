@@ -1,0 +1,111 @@
+{
+  "mutant": "u045 M08",
+  "base": "bc9edc55",
+  "counts_moved": {
+    "fixtures": 33,
+    "columns": {
+      "allocations": 0,
+      "frees": 153,
+      "retains": -1,
+      "releases": -8,
+      "peak": 0,
+      "in_regions": -153
+    },
+    "sample_rows": [
+      "recorded: | internal/oracle/testdata/route_targets_virtual_fresh.a | 54 | 50 | 20 | 64 | 10 | 4 |\nmeasured: | internal/oracle/testdata/route_targets_virtual_fresh.a | 54 | 54 | 20 | 68 | 10 | 0 |",
+      "recorded: | internal/oracle/testdata/route_targets_recursive.a | 19 | 18 | 6 | 23 | 7 | 1 |\nmeasured: | internal/oracle/testdata/route_targets_recursive.a | 19 | 19 | 6 | 23 | 7 | 0 |",
+      "recorded: | internal/oracle/testdata/route_targets_try_loop.a | 68 | 66 | 41 | 85 | 9 | 2 |\nmeasured: | internal/oracle/testdata/route_targets_try_loop.a | 68 | 68 | 41 | 87 | 9 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_chain_override.a | 15 | 13 | 4 | 12 | 7 | 2 |\nmeasured: | internal/oracle/testdata/borrow_chain_override.a | 15 | 15 | 4 | 14 | 7 | 0 |",
+      "recorded: | internal/oracle/testdata/call_targets_element.a | 45 | 43 | 32 | 60 | 7 | 2 |\nmeasured: | internal/oracle/testdata/call_targets_element.a | 45 | 45 | 32 | 62 | 7 | 0 |",
+      "recorded: | internal/oracle/testdata/call_targets_region.a | 27 | 22 | 13 | 33 | 9 | 5 |\nmeasured: | internal/oracle/testdata/call_targets_region.a | 27 | 27 | 13 | 38 | 9 | 0 |",
+      "recorded: | internal/oracle/testdata/call_targets_reuse.a | 15 | 12 | 9 | 21 | 6 | 3 |\nmeasured: | internal/oracle/testdata/call_targets_reuse.a | 15 | 15 | 9 | 24 | 6 | 0 |",
+      "recorded: | internal/oracle/testdata/defaults.a | 38 | 36 | 15 | 50 | 6 | 2 |\nmeasured: | internal/oracle/testdata/defaults.a | 38 | 38 | 15 | 52 | 6 | 0 |",
+      "recorded: | internal/oracle/testdata/unused_parameters.a | 5 | 4 | 3 | 8 | 5 | 1 |\nmeasured: | internal/oracle/testdata/unused_parameters.a | 5 | 5 | 3 | 9 | 5 | 0 |",
+      "recorded: | internal/oracle/testdata/regions.a | 316 | 260 | 19 | 209 | 50 | 56 |\nmeasured: | internal/oracle/testdata/regions.a | 316 | 316 | 19 | 158 | 50 | 0 |",
+      "recorded: | internal/oracle/testdata/regions_throw.a | 124 | 95 | 9 | 99 | 31 | 29 |\nmeasured: | internal/oracle/testdata/regions_throw.a | 124 | 124 | 9 | 87 | 31 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_loop.a | 128 | 126 | 110 | 181 | 14 | 2 |\nmeasured: | internal/oracle/testdata/borrow_loop.a | 128 | 128 | 110 | 183 | 14 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_loop_calls.a | 263 | 261 | 176 | 342 | 25 | 2 |\nmeasured: | internal/oracle/testdata/borrow_loop_calls.a | 263 | 263 | 176 | 344 | 25 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_global_call.a | 18 | 16 | 7 | 20 | 6 | 2 |\nmeasured: | internal/oracle/testdata/borrow_global_call.a | 18 | 18 | 7 | 22 | 6 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_element_virtual_store.a | 13 | 11 | 7 | 13 | 7 | 2 |\nmeasured: | internal/oracle/testdata/borrow_element_virtual_store.a | 13 | 13 | 7 | 15 | 7 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_element_virtual_move.a | 25 | 23 | 11 | 26 | 11 | 2 |\nmeasured: | internal/oracle/testdata/borrow_element_virtual_move.a | 25 | 25 | 11 | 28 | 11 | 0 |",
+      "recorded: | internal/oracle/testdata/borrow_element_super_move.a | 10 | 9 | 4 | 9 | 8 | 1 |\nmeasured: | internal/oracle/testdata/borrow_element_super_move.a | 10 | 10 | 4 | 10 | 8 | 0 |",
+      "recorded: | internal/oracle/testdata/generic_method_return.a | 23 | 15 | 28 | 36 | 5 | 6 |\nmeasured: | internal/oracle/testdata/generic_method_return.a | 23 | 21 | 28 | 36 | 5 | 0 |",
+      "recorded: | internal/oracle/testdata/arguments_length_method.a | 49 | 47 | 11 | 59 | 9 | 2 |\nmeasured: | internal/oracle/testdata/arguments_length_method.a | 49 | 49 | 11 | 61 | 9 | 0 |",
+      "recorded: | internal/oracle/testdata/class_inheritance_memory.a | 48 | 42 | 20 | 58 | 11 | 6 |\nmeasured: | internal/oracle/testdata/class_inheritance_memory.a | 48 | 48 | 20 | 62 | 11 | 0 |",
+      "recorded: | internal/oracle/testdata/class_instance_key_throw.a | 6 | 5 | 5 | 10 | 5 | 1 |\nmeasured: | internal/oracle/testdata/class_instance_key_throw.a | 6 | 6 | 5 | 10 | 5 | 0 |",
+      "recorded: | internal/oracle/testdata/class_instance_key_region.a | 110 | 109 | 104 | 165 | 55 | 1 |\nmeasured: | internal/oracle/testdata/class_instance_key_region.a | 110 | 110 | 104 | 165 | 55 | 0 |",
+      "recorded: | internal/oracle/testdata/class_instance_key_consume.a | 8 | 7 | 5 | 12 | 6 | 1 |\nmeasured: | internal/oracle/testdata/class_instance_key_consume.a | 8 | 8 | 5 | 12 | 6 | 0 |",
+      "recorded: | internal/oracle/testdata/class_instance_key_region_alias.a | 110 | 109 | 104 | 165 | 55 | 1 |\nmeasured: | internal/oracle/testdata/class_instance_key_region_alias.a | 110 | 110 | 104 | 165 | 55 | 0 |",
+      "recorded: | internal/oracle/testdata/devirtualize_modules/main.a | 5 | 2 | 8 | 10 | 2 | 3 |\nmeasured: | internal/oracle/testdata/devirtualize_modules/main.a | 5 | 5 | 8 | 13 | 2 | 0 |",
+      "recorded: | internal/oracle/testdata/devirtualize_receivers.a | 22 | 21 | 41 | 57 | 7 | 1 |\nmeasured: | internal/oracle/testdata/devirtualize_receivers.a | 22 | 22 | 41 | 58 | 7 | 0 |",
+      "recorded: | internal/oracle/testdata/devirtualize_factory.a | 8 | 5 | 12 | 19 | 2 | 3 |\nmeasured: | internal/oracle/testdata/devirtualize_factory.a | 8 | 8 | 12 | 22 | 2 | 0 |",
+      "recorded: | internal/oracle/testdata/devirt_borrow_doc_claim.a | 15 | 13 | 6 | 13 | 5 | 2 |\nmeasured: | internal/oracle/testdata/devirt_borrow_doc_claim.a | 15 | 15 | 6 | 15 | 5 | 0 |",
+      "recorded: | internal/oracle/testdata/devirtualize.a | 43 | 39 | 22 | 62 | 10 | 4 |\nmeasured: | internal/oracle/testdata/devirtualize.a | 43 | 43 | 22 | 66 | 10 | 0 |",
+      "recorded: | internal/oracle/testdata/method_coverage_object_tags.a | 6 | 5 | 19 | 27 | 4 | 1 |\nmeasured: | internal/oracle/testdata/method_coverage_object_tags.a | 6 | 6 | 19 | 28 | 4 | 0 |",
+      "recorded: | internal/oracle/testdata/omitted_reader_direct.a | 2 | 1 | 1 | 3 | 1 | 1 |\nmeasured: | internal/oracle/testdata/omitted_reader_direct.a | 2 | 2 | 1 | 4 | 1 | 0 |",
+      "recorded: | internal/oracle/testdata/proven_class_guards.a | 5 | 3 | 3 | 5 | 3 | 2 |\nmeasured: | internal/oracle/testdata/proven_class_guards.a | 5 | 5 | 3 | 7 | 3 | 0 |",
+      "recorded: | internal/oracle/testdata/non_null_uninitialized_interface.ts | 1 | 0 | 1 | 0 | 1 | 0 |\nmeasured: | internal/oracle/testdata/non_null_uninitialized_interface.ts | 1 | 0 | 0 | 0 | 1 | 0 |"
+    ]
+  },
+  "agreement_failures": [],
+  "sanitizer_reports": [],
+  "isolated": [
+    {
+      "test": "TestDecodeASCIIUnit40",
+      "exit": 0,
+      "seconds": 41.71,
+      "line": null
+    },
+    {
+      "test": "TestDecodeASCIIUnit41",
+      "exit": 0,
+      "seconds": 31.039,
+      "line": null
+    },
+    {
+      "test": "TestDecodeASCIIUnit42",
+      "exit": 0,
+      "seconds": 30.547,
+      "line": null
+    },
+    {
+      "test": "TestDecodeASCIIUnit43",
+      "exit": 0,
+      "seconds": 29.353,
+      "line": null
+    },
+    {
+      "test": "TestDecodeASCIIUnit44",
+      "exit": 0,
+      "seconds": 28.552,
+      "line": null
+    },
+    {
+      "test": "TestCSSPrinterAgreesWithGo_000",
+      "exit": 0,
+      "seconds": 102.501,
+      "line": null
+    },
+    {
+      "test": "TestCSSNumbers_350",
+      "exit": 0,
+      "seconds": 64.93,
+      "line": null
+    },
+    {
+      "test": "TestPortMatchesGoCohere_1649",
+      "exit": 0,
+      "seconds": 59.096,
+      "line": null
+    },
+    {
+      "test": "TestFileDriver_Setup",
+      "exit": 0,
+      "seconds": 68.889,
+      "line": null
+    }
+  ],
+  "real_catches": [
+    "TestCountsAreRecorded"
+  ]
+}
