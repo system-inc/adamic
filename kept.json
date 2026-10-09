@@ -1,0 +1,305 @@
+{
+ "github.com/system-inc/adamic/bridge/tsgo": [
+  "TestTSGoRequiresLink"
+ ],
+ "github.com/system-inc/adamic/cmd/adamic": [
+  "TestWASIRequest"
+ ],
+ "github.com/system-inc/adamic/cmd/adamic-gate": [
+  "TestResumeCleanupPreservesForeignPaths"
+ ],
+ "github.com/system-inc/adamic/cmd/adamic-meter": [
+  "TestAdaptOptionalPropertiesPreservesRuntimeAndDisk",
+  "TestAdaptRewritesTypeOnlyImportInMemory",
+  "TestOptionalAdaptationLeavesUnsafeContractsRejected"
+ ],
+ "github.com/system-inc/adamic/cmd/adamic-test262": [
+  "TestImportedInputsRunFresh",
+  "TestNodeCacheProgram"
+ ],
+ "github.com/system-inc/adamic/internal/buildcache": [
+  "TestParallelCallersBuildOnce"
+ ],
+ "github.com/system-inc/adamic/internal/childguard": [
+  "TestNoFirstOutput",
+  "TestProgress"
+ ],
+ "github.com/system-inc/adamic/internal/corpusfiles": [
+  "TestMissingAndEmptyRoots"
+ ],
+ "github.com/system-inc/adamic/internal/fresh": [
+  "TestMethodKeepsArgument",
+  "TestRegexOperationsDoNotPoisonTreeWrites"
+ ],
+ "github.com/system-inc/adamic/internal/fuzz": [
+  "TestOctoberFeaturesAppear",
+  "TestReduceKeepsTheSignature",
+  "TestShrinkKeepsOnlyWhatFails"
+ ],
+ "github.com/system-inc/adamic/internal/javascript": [
+  "TestViewArrayFieldPresence",
+  "TestViewArraysNode",
+  "TestViewMixedUnionUnknownAndUnavailable"
+ ],
+ "github.com/system-inc/adamic/internal/load": [
+  "TestATypeErrorFailsTheLoad",
+  "TestAdamicFilesImportEachOther",
+  "TestEveryFileIsAModule",
+  "TestOverlayPrecedesDiskForAdamicAliases"
+ ],
+ "github.com/system-inc/adamic/internal/lower": [
+  "TestAMutableLocationSeenWiderIsRefused",
+  "TestAbfe962OverrideDefaultAddedRefusesNativeSignature",
+  "TestAdamicNullishAssertionsAreRefused",
+  "TestArgumentsLengthRefusals",
+  "TestArrayPredicateCannotInventAnElementContract",
+  "TestCallableNamespaceLimitsStayLoud",
+  "TestCensusOverloadBinderGuards",
+  "TestCensusPredicateInteractionBoundary",
+  "TestCheckPragmasAreRefused",
+  "TestCheckedCastProofAndElision",
+  "TestClassFeaturesAccessorRefusals",
+  "TestClockGenericReturnsT01RejectsNullBeforeBody",
+  "TestConditionAssertionAdmission",
+  "TestDefaultTaggedInterfaceNeedsNoFlag",
+  "TestDefiniteAssignmentSoundNeighbors",
+  "TestEmptyLiteralGenericReturnUsesSamePath",
+  "TestFlagEnumLiteralSpellings",
+  "TestFlagEnumsOpen",
+  "TestInheritanceAllowsSoundOverrides",
+  "TestInheritanceNativeSignatureLimits",
+  "TestInheritanceRefusesGrowingGenericClasses",
+  "TestInheritedLibraryReadsNeverLoadOwnFields",
+  "TestIteratorGapsAreExplicit",
+  "TestIteratorMapperIndexHasNumberRepresentation",
+  "TestIteratorViewsCannotEraseReceivers",
+  "TestLibraryLanguageBoundaries",
+  "TestLibraryMethodValueSafety",
+  "TestLibraryStringRefusals",
+  "TestMixedUnionContractGraph",
+  "TestMixedUnionContractPhantomBrandUsesPrimitiveBase",
+  "TestMixedUnionContractPhantomVoidIsUndefined",
+  "TestMixedUnionContractUnknownMemberFails",
+  "TestNamespaceAmbientContextsDoNotExecute",
+  "TestNamespaceClassEarlyConstructionStaysLoud",
+  "TestNamespaceLimitsStayLoud",
+  "TestNamespaceTypesErase",
+  "TestNestedBodylessDeclarationsAreLoud",
+  "TestNestedCapturedParametersAreOwned",
+  "TestNestedFunctionCycleIsRefused",
+  "TestNestedFunctionGapsAreLoud",
+  "TestNestedRestIsSupported",
+  "TestNodeFSFileKeepsDetachedMethodRefusal",
+  "TestNodeFSFileOptionsBorrow",
+  "TestNodeFSFileQualifiedErrorType",
+  "TestNodeFSFileScratchOverloadsAreNamed",
+  "TestNumericEnumNeverProof",
+  "TestOptionalFunctionValueRelation",
+  "TestOptionalIndexingKeepsUnsupportedStorageNotYet",
+  "TestOptionalWideningAllowed",
+  "TestOriginalCycleLedger",
+  "TestOverloadInferenceWitnesses",
+  "TestOverloadedShorthandFunctionValueStaysNotYet",
+  "TestOverrideOptionalNumberRefusesNativeSignature",
+  "TestOverrideOptionalRefusesNativeSignature",
+  "TestParameterPropertiesSoundness",
+  "TestPredicateBodiesAreProven",
+  "TestPredicateCallbackContracts",
+  "TestPredicateOverloadCallback",
+  "TestPredicateSummaryParameterIndex",
+  "TestPredicateUseRegions",
+  "TestProvenRelationsRefuse",
+  "TestTracingNamespaceEscapeStaysNotYet",
+  "TestUnknownArrayPredicateRefusesUnrepresentedObservations",
+  "TestUnrepresentedPrototypeCallsAreNotYet"
+ ],
+ "github.com/system-inc/adamic/internal/native": [
+  "TestBorrowChainDeclarations",
+  "TestLibraryMapSetIteratorResources",
+  "TestLoopCallCoverage",
+  "TestNodeBufferRuntimeWithoutDeclarations",
+  "TestOptionalMethodThunksMatchNode",
+  "TestPowersOfTwoFormatAsJavaScriptDoes",
+  "TestRegExpBytecodeTest262",
+  "TestRegExpNativeStepLimit",
+  "TestRuntimeCacheConcurrentBuilders",
+  "TestRuntimeCacheRebuildsChangedSources",
+  "TestRuntimeKeyIncludesEveryInput",
+  "TestToStringWithARadixOutOfRangePanics",
+  "TestViewMixedUnionUnknownAndUnavailable"
+ ],
+ "github.com/system-inc/adamic/internal/oracle": [
+  "TestArrayWithBoundsMutant",
+  "TestCheckedCastMutants",
+  "TestCheckedNonNullCounts",
+  "TestCheckedNonNullTypeScript",
+  "TestCheckedViewFlagDowncast",
+  "TestCheckedViewObjectPrimitiveSource",
+  "TestCheckedViewObjects",
+  "TestCheckedViewUntaggedOwnClassData",
+  "TestCheckedViewUntaggedRecursive",
+  "TestCheckedViewV2ReadsAfterWrites",
+  "TestClassWrongOutput103",
+  "TestClassWrongOutput106",
+  "TestClosedNestedConstituentMutant",
+  "TestConditionLedgerMissingSiteMutant",
+  "TestCountsAreRecorded",
+  "TestDefaultTaggedSourceViews",
+  "TestElementAccessCompilerAreaBoundaries",
+  "TestFreshWriteProbesStayRefused",
+  "TestGateCacheNodeInputs",
+  "TestGateCacheToolchains",
+  "TestImportCycleLoadTimeReads",
+  "TestInterfaceCastRuntimeMutants",
+  "TestJSONStringifyResultMayBeUndefined",
+  "TestLibraryMethodValueMutants",
+  "TestLoopCountersAgreeWithNode",
+  "TestNestedCycleRefusal",
+  "TestNewExpressionCacheCaptureRemainsNotYet",
+  "TestNodeFSFileAgreesWithNode",
+  "TestNonNullWeakFreedNamesExpression",
+  "TestNotYetLibraryStringBoundsMutants",
+  "TestNumericEnumNeverPinned",
+  "TestOmittedReaderZeroMutantIsCaught",
+  "TestParameterPropertyMutants",
+  "TestParserCallableNamespace",
+  "TestParserCallableNamespaceMutant",
+  "TestParserNamespaceClass",
+  "TestParserNamespaceReceiverMutant",
+  "TestPredicateDirectionCountsAreRecorded",
+  "TestPrivateGenericMethodOwnerMutant",
+  "TestRegExpReplacementNodeMutants",
+  "TestRequiredViewFieldOperandOnce",
+  "TestRequiredViewFieldPrimitive",
+  "TestSwitchCaseDeadZoneStop",
+  "TestSyntaxSubstrMutants",
+  "TestTypeOfConstructorMutant",
+  "TestTypeOfNullMutant",
+  "TestTypedArrayWorkersStatsMatchesPlatforms",
+  "TestViewFieldInheritedStaticReadiness"
+ ],
+ "github.com/system-inc/adamic/internal/regexp": [
+  "TestMatcherNodeControls",
+  "TestMatcherOct6LoopsNode",
+  "TestMatcherProviderSnapshot",
+  "TestMatcherTest262Executions",
+  "TestMatcherUTF16PatternsNode",
+  "TestNodeAgreement"
+ ],
+ "github.com/system-inc/adamic/internal/unicodeproperties": [
+  "TestNodeStringProperties",
+  "TestVersionMatchesNode"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/css": [
+  "TestCSSPrinterOptimizedMatchesGo",
+  "TestClosedParserRegexGap",
+  "TestEachGapStandsWhereGapsMdSaysItDoes",
+  "TestOptionalBooleanPrinterMatchesGo"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/estree": [
+  "TestDecoratedExportLibraries",
+  "TestDeepGrammar",
+  "TestParserRecoveryGap",
+  "TestPinnedNumericGaps",
+  "TestRawInputGap",
+  "TestRecoveredExpressions",
+  "TestUnattachedDecoratorControl"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/gitignore": [
+  "TestPathAnswersAsGosPathPackage"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/json": [
+  "TestAdditionalJSONBoundaries",
+  "TestExternalComparisonCatchesThreePrinterMutants"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint": [
+  "TestChildCPUWaitGuard",
+  "TestCountGuardMutant",
+  "TestLegacyMutants",
+  "TestMutants"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint/helpers": [
+  "TestHelperMutants"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint/inventory": [
+  "TestInventoryEngineShardAssignment",
+  "TestInventoryEngineShardMutant",
+  "TestInventoryEngineUnion",
+  "TestInventoryEngine_000",
+  "TestInventoryEngine_001",
+  "TestInventoryEngine_002",
+  "TestInventoryEngine_003",
+  "TestInventoryEngine_004",
+  "TestInventoryEngine_005",
+  "TestInventoryEngine_006",
+  "TestInventoryEngine_007"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/lint/regex": [
+  "TestFixedPatterns",
+  "TestInventoryMatchesPinnedSource"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdownblocks": [
+  "TestMarkdownListLayout",
+  "TestMdastIdentifierWitnesses"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/markdowninline": [
+  "TestDelimiterExpressionMatchesNode",
+  "TestMarkdownInlineProductSourceInputs",
+  "TestMarkdownInlineShardAssignmentStable",
+  "TestMarkdownInlineShardSelector",
+  "TestMarkdownInlineShardUnion",
+  "TestProduct_MarkdownInlineFenceLowered",
+  "TestProduct_MarkdownInlineFenceNative",
+  "TestProduct_MarkdownInlineFenceNode",
+  "TestProduct_MarkdownInlineFenceSanitized",
+  "TestProduct_MarkdownInlineGoOverlay",
+  "TestProduct_MarkdownInlineNode",
+  "TestProduct_MarkdownInlineOriginalLowered",
+  "TestProduct_MarkdownInlineOriginalNative",
+  "TestProduct_MarkdownInlineOriginalSanitized",
+  "TestProduct_MarkdownInlineParityLowered",
+  "TestProduct_MarkdownInlineParityNative",
+  "TestProduct_MarkdownInlineParityNode",
+  "TestProduct_MarkdownInlineParitySanitized",
+  "TestProduct_MarkdownInlinePipeLowered",
+  "TestProduct_MarkdownInlinePipeNative",
+  "TestProduct_MarkdownInlinePipeNode",
+  "TestProduct_MarkdownInlinePipeSanitized",
+  "TestProduct_MarkdownInlinePlantedLowered",
+  "TestProduct_MarkdownInlinePlantedNative",
+  "TestProduct_MarkdownInlinePlantedSanitized"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/selector": [
+  "TestCorpusKeepsEveryParseableFile",
+  "TestTheLibraryDoesNotReturnOnUnconsumedNamespaceBars"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/suppression": [
+  "TestThePortParsesAsGoCohereDoes"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/tsprinter": [
+  "TestStatementUpstreamDifferences"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/typeaware": [
+  "TestVolumeAgreementAndMutants"
+ ],
+ "github.com/system-inc/adamic/stage1/cohere/yaml": [
+  "TestClosedValuePresenceGap",
+  "TestComposeMatchGo",
+  "TestLexerGaps",
+  "TestPropsMutants",
+  "TestSchemaMutants",
+  "TestSpeedCostProbes",
+  "TestUnistMutants"
+ ],
+ "github.com/system-inc/adamic/stage1/typescript/parser": [
+  "TestClassMethodInterfaceGap",
+  "TestEveryTypeNodeKindAgrees",
+  "TestExpressionsAgree",
+  "TestJsxMemberNameRejection",
+  "TestStrongAstParentGap",
+  "TestYieldLookaheadAgrees"
+ ],
+ "github.com/system-inc/adamic/stage3/census/latent/statecopy": [
+  "TestUnknownForeignPointerFailsLoudly"
+ ]
+}
