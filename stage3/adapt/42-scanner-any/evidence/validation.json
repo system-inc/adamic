@@ -1,0 +1,38 @@
+{
+  "mainCommit": "c966d4c4509ecaf37ae275dbaafae33291367ac8",
+  "laneVerdictsIdentical": true,
+  "oracleCountsAndBaselineDiffIdentical": true,
+  "laneCounts": {
+    "passing": 106366,
+    "failing": 1,
+    "pending": 0
+  },
+  "laneApi": {
+    "reference_declarations": 28,
+    "composed_declarations": 222,
+    "sanctioned_declarations": 222,
+    "added_lines": 194,
+    "removed_lines": 193
+  },
+  "mainLaneSeconds": 638.97,
+  "42LaneSeconds": 467.499,
+  "mainOracleSeconds": 531.303,
+  "42OracleSeconds": 363.014,
+  "42TestSeconds": 331.803,
+  "builtArtifactsIdentical": 725,
+  "changedSourceFiles": [
+    "src/compiler/scanner.ts"
+  ],
+  "scannerPassCounts": {
+    "true": {
+      "tokens": 509014,
+      "errors": 233,
+      "files": 81
+    },
+    "false": {
+      "tokens": 860418,
+      "errors": 233,
+      "files": 81
+    }
+  }
+}
