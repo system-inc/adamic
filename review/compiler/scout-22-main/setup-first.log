@@ -1,0 +1,14 @@
+go version go1.27.1 linux/amd64
+setup: go ready (0.074s)
+v24.19.0
+setup: node ready (0.082s)
+clang version 20.1.8 (https://github.com/llvm/llvm-project 87f0227cb60147a26a1eeb4fb06e3b505e9c7261)
+setup: clang ready (/workspace/adamic-tools/llvm/bin/clang) (0.463s)
+
+added 3 packages in 926ms
+setup: markdown dependencies installed (npm ci, integrity verified); step-duration=1.427s
+setup: markdown dependencies ready (1.617s)
+submodule cache: restored cohere 7945d102a6c18dd36adf9114a758ce646e8b2359
+setup: submodules ready (21.576s)
+# github.com/system-inc/adamic/internal/lower
+internal/lower/library_string.go:79:1: syntax error: unexpected <<, expected }

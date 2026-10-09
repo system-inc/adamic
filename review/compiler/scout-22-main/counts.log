@@ -1,0 +1,14 @@
+--- FAIL: TestCountsAreRecorded (57.85s)
+    --- FAIL: TestCountsAreRecorded/fixtures (0.01s)
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_method_values.a (0.05s)
+            counts_test.go:149: Lower: /workspace/adamic/internal/oracle/testdata/library_method_values.a:22:13: stage 0 can't lower Object.prototype.hasOwnProperty value without a const (this: object, key: string) => boolean signature yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/method_coverage_object_descriptors.a (0.08s)
+            counts_test.go:149: Lower: /workspace/adamic/internal/oracle/testdata/method_coverage_object_descriptors.a:2:13: stage 0 can't lower Object.prototype.hasOwnProperty value without a const (this: object, key: string) => boolean signature yet
+        --- FAIL: TestCountsAreRecorded/fixtures/internal/oracle/testdata/library_string_raw.a (0.25s)
+            counts_test.go:149: no counts at the end of stderr (exit -1): ""
+FAIL
+gate cache: native hits=0 misses=0
+gate cache: node hits=0 misses=0
+gate cache: probe hits=0 misses=0
+FAIL	github.com/system-inc/adamic/internal/oracle	57.872s
+FAIL

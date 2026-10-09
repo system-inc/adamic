@@ -1,0 +1,373 @@
+=== RUN   TestBorrowedObjectOwnProperty
+=== PAUSE TestBorrowedObjectOwnProperty
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses
+=== RUN   TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations
+=== PAUSE TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations
+=== RUN   TestObjectRefusalsExplainSoundness
+=== PAUSE TestObjectRefusalsExplainSoundness
+=== RUN   TestObjectUnprovenShapesStayNotYet
+=== PAUSE TestObjectUnprovenShapesStayNotYet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps
+=== PAUSE TestScout22Slice2CompilerAndPrototypeGaps
+=== RUN   TestScout22PrototypeRuntimeBoundary
+=== PAUSE TestScout22PrototypeRuntimeBoundary
+=== RUN   TestScout22NullConversionResultStaysRefused
+=== PAUSE TestScout22NullConversionResultStaysRefused
+=== CONT  TestBorrowedObjectOwnProperty
+=== RUN   TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1_};_console.log(String(hasOwnProperty.call(value,_'n')));
+=== PAUSE TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1_};_console.log(String(hasOwnProperty.call(value,_'n')));
+=== CONT  TestObjectRefusalsExplainSoundness
+=== RUN   TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_hasOwnProperty:_(key:_string):_boolean_=>_false_};_hasOwnProperty.call(value,_'hasOwnProperty');
+=== PAUSE TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_hasOwnProperty:_(key:_string):_boolean_=>_false_};_hasOwnProperty.call(value,_'hasOwnProperty');
+=== CONT  TestObjectUnprovenShapesStayNotYet
+=== CONT  TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== RUN   TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== PAUSE TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== RUN   TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== PAUSE TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== RUN   TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== RUN   TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== PAUSE TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== RUN   TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== PAUSE TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== PAUSE TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== RUN   TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== PAUSE TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== RUN   TestBorrowedObjectOwnProperty/const_value_=_{_n:_1_};_console.log(String(Object.prototype.hasOwnProperty.call(value,_'absent')));
+=== PAUSE TestBorrowedObjectOwnProperty/const_value_=_{_n:_1_};_console.log(String(Object.prototype.hasOwnProperty.call(value,_'absent')));
+=== RUN   TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1,_hidden:_undefined_};_for_(const_key_in_value)_{_console.log(String(hasOwnProperty.call(value,key)));_}
+=== PAUSE TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1,_hidden:_undefined_};_for_(const_key_in_value)_{_console.log(String(hasOwnProperty.call(value,key)));_}
+=== CONT  TestScout22PrototypeRuntimeBoundary
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== PAUSE TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== RUN   TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== PAUSE TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+=== RUN   TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own);
+=== PAUSE TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own);
+=== RUN   TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/let_own:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(String(own.call({n:1},'n')));
+=== PAUSE TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/let_own:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(String(own.call({n:1},'n')));
+=== RUN   TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_Object_=_{_prototype:_{_hasOwnProperty:_(key:_string):_boolean_=>_false_}_};_console.log(String(Object.prototype.hasOwnProperty.call({},'n')));
+=== PAUSE TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_Object_=_{_prototype:_{_hasOwnProperty:_(key:_string):_boolean_=>_false_}_};_console.log(String(Object.prototype.hasOwnProperty.call({},'n')));
+=== CONT  TestScout22Slice2CompilerAndPrototypeGaps
+=== CONT  TestScout22NullConversionResultStaysRefused
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/compiler-cached-intrinsic.a
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'});
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_other_=_hasOwnProperty;
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_other_=_hasOwnProperty;
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(typeof_hasOwnProperty);
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(typeof_hasOwnProperty);
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_export_{_hasOwnProperty_};
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_export_{_hasOwnProperty_};
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value:_{_n:_number_}_=_{_n:_1_};_hasOwnProperty.call(value,_'n');
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value:_{_n:_number_}_=_{_n:_1_};_hasOwnProperty.call(value,_'n');
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_function_own(value:_{_n:_number_}):_boolean_{_return_hasOwnProperty.call(value,_'n');_}_console.log(String(own({n:1})));
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_function_own(value:_{_n:_number_}):_boolean_{_return_hasOwnProperty.call(value,_'n');_}_console.log(String(own({n:1})));
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call([1],_'0')));
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call([1],_'0')));
+=== RUN   TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call({n:1},_1)));
+=== PAUSE TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call({n:1},_1)));
+=== CONT  TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1_};_console.log(String(hasOwnProperty.call(value,_'n')));
+--- PASS: TestScout22NullConversionResultStaysRefused (0.18s)
+=== CONT  TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{});
+=== CONT  TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared');
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/compiler-cached-intrinsic.a
+    scout_22_slice2_test.go:44: main proves the cached intrinsic signature from provenance
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/compiler-two-store.a
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view);
+--- PASS: TestScout22PrototypeRuntimeBoundary (0.44s)
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1});
+=== CONT  TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5});
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/compiler-two-store.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapscompiler-two-store.a3802826215/001/main.ts:5:51: stage 0 can't lower join on a tuple (a tuple is held as an object, not an array, so far; write it as an array where it's made) yet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-554-function-provenance.a
+=== CONT  TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'});
+=== CONT  TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]);
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2});
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1});
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-554-function-provenance.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-554-function-pro2723028567/001/main.ts:2:23: Adamic 0.1 refuses a method read as a value (setPrototypeOf would lose its object, and this with it); call it in an arrow that keeps the object: (o, proto) => Object.setPrototypeOf(o, proto) (unbound-method)
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-558-flow-prototype.a
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value');
+=== CONT  TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}});
+=== CONT  TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own);
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-558-flow-prototype.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-558-flow-prototy2296658839/001/main.ts:3:23: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-561-flow-link.a
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_}
+=== CONT  TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other');
+--- PASS: TestObjectRefusalsExplainSoundness (0.00s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperty({value:1},_'value',_{value:'wrong'}); (0.32s)
+    --- PASS: TestObjectRefusalsExplainSoundness/prototypesObject.setPrototypeOf({value:1},_{}); (0.15s)
+    --- PASS: TestObjectRefusalsExplainSoundness/declared_public_fieldObject.hasOwn({value:1},_'notDeclared'); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.values({number:1,_text:'wrong'}); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1}); (0.10s)
+    --- PASS: TestObjectRefusalsExplainSoundness/homogeneousObject.entries({number:1,_text:'wrong'}); (0.26s)
+    --- PASS: TestObjectRefusalsExplainSoundness/result_is_anyObject.assign({value:1},_{value:2},_{value:3},_{value:4},_{value:5}); (0.15s)
+    --- PASS: TestObjectRefusalsExplainSoundness/widened_sourceconst_source={value:1,_hidden:'wrong'};_const_view:{readonly_value:number}=source;_Object.assign({value:1},view); (0.28s)
+    --- PASS: TestObjectRefusalsExplainSoundness/index-signatureObject.fromEntries([['key',_1]]); (0.16s)
+    --- PASS: TestObjectRefusalsExplainSoundness/intersection_resultObject.assign({value:1},_{value:'wrong'}); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptors({value:1}); (0.19s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.getOwnPropertyDescriptor({value:1},_'value'); (0.14s)
+    --- PASS: TestObjectRefusalsExplainSoundness/property_descriptorsObject.defineProperties({value:1},_{value:{value:'wrong'}}); (0.16s)
+=== CONT  TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_}
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-561-flow-link.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-561-flow-link.a3174498827/001/main.ts:4:9: stage 0 can't lower Object.setPrototypeOf: prototype link across region lifetimes; compiler graph-region proof is the way out (prototype identity, inherited data or hidden fields are unproven) yet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-594-function-provenance.a
+=== CONT  TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_}
+=== CONT  TestBorrowedObjectOwnProperty/const_value_=_{_n:_1_};_console.log(String(Object.prototype.hasOwnProperty.call(value,_'absent')));
+=== CONT  TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_hasOwnProperty:_(key:_string):_boolean_=>_false_};_hasOwnProperty.call(value,_'hasOwnProperty');
+=== CONT  TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1,_hidden:_undefined_};_for_(const_key_in_value)_{_console.log(String(hasOwnProperty.call(value,key)));_}
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-594-function-provenance.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-594-function-pro4241040025/001/main.ts:2:23: Adamic 0.1 refuses a method read as a value (setPrototypeOf would lose its object, and this with it); call it in an arrow that keeps the object: (o, proto) => Object.setPrototypeOf(o, proto) (unbound-method)
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-598-array-prototype.a
+=== CONT  TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_Object_=_{_prototype:_{_hasOwnProperty:_(key:_string):_boolean_=>_false_}_};_console.log(String(Object.prototype.hasOwnProperty.call({},'n')));
+--- PASS: TestObjectUnprovenShapesStayNotYet (0.00s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.assign({value:1},_{extra:2}); (0.23s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/const_object={value:1};_Object.freeze(object);_try_{_object.value=2;_}_catch_{_console.log('caught');_} (0.17s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_keys(source:{value:number}|undefined):string[]_{_return_Object.keys({...source});_} (0.23s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/Object.groupBy([1,2],_(value:number):string_=>_value===1_?_'one'_:_'other'); (0.22s)
+    --- PASS: TestObjectUnprovenShapesStayNotYet/function_own(object:{value?:number}):boolean_{_return_Object.hasOwn(object,'value');_} (0.22s)
+=== CONT  TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/let_own:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(String(own.call({n:1},'n')));
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_other_=_hasOwnProperty;
+--- PASS: TestBorrowedObjectOwnProperty (0.00s)
+    --- PASS: TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1_};_console.log(String(hasOwnProperty.call(value,_'n'))); (0.22s)
+    --- PASS: TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_hasOwnProperty:_(key:_string):_boolean_=>_false_};_hasOwnProperty.call(value,_'hasOwnProperty'); (0.07s)
+    --- PASS: TestBorrowedObjectOwnProperty/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value_=_{_n:_1,_hidden:_undefined_};_for_(const_key_in_value)_{_console.log(String(hasOwnProperty.call(value,key)));_} (0.18s)
+    --- PASS: TestBorrowedObjectOwnProperty/const_value_=_{_n:_1_};_console.log(String(Object.prototype.hasOwnProperty.call(value,_'absent'))); (0.21s)
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_function_own(value:_{_n:_number_}):_boolean_{_return_hasOwnProperty.call(value,_'n');_}_console.log(String(own({n:1})));
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call([1],_'0')));
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-598-array-prototype.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-598-array-protot1911066367/001/main.ts:3:24: Adamic 0.1 refuses a cast the runtime can't check; use a proven upcast, cast a discriminated object union with unique literal or enum tags to members or a sub-union, or downcast along nominal class ancestry (adamic/no-unchecked-cast)
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-601-array-link.a
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call({n:1},_1)));
+--- PASS: TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations (0.00s)
+    --- PASS: TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_own_=_Object.prototype.hasOwnProperty;_console.log(typeof_own); (0.18s)
+    --- PASS: TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/const_Object_=_{_prototype:_{_hasOwnProperty:_(key:_string):_boolean_=>_false_}_};_console.log(String(Object.prototype.hasOwnProperty.call({},'n'))); (0.14s)
+    --- PASS: TestBorrowedObjectOwnPropertyDoesNotTrustAnnotations/let_own:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(String(own.call({n:1},'n'))); (0.19s)
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_export_{_hasOwnProperty_};
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value:_{_n:_number_}_=_{_n:_1_};_hasOwnProperty.call(value,_'n');
+=== CONT  TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(typeof_hasOwnProperty);
+=== NAME  TestScout22Slice2CompilerAndPrototypeGaps/debug-601-array-link.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-601-array-link.a2798345960/001/main.ts:4:1: stage 0 can't lower Object.setPrototypeOf: prototype link across region lifetimes; compiler graph-region proof is the way out (receiver field '<hidden field>' plus [[Prototype]] link is unproven) yet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-859-mapper-link.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-859-mapper-link.3616241498/001/main.ts:4:1: stage 0 can't lower field 'toString' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out yet
+--- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses (0.01s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_function_own(value:_{_n:_number_}):_boolean_{_return_hasOwnProperty.call(value,_'n');_}_console.log(String(own({n:1}))); (0.10s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call([1],_'0'))); (0.15s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_other_=_hasOwnProperty; (0.19s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_export_{_hasOwnProperty_}; (0.11s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_const_value:_{_n:_number_}_=_{_n:_1_};_hasOwnProperty.call(value,_'n'); (0.12s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/const_hasOwnProperty:_(this:_object,_key:_string)_=>_boolean_=_Object.prototype.hasOwnProperty;_console.log(typeof_hasOwnProperty); (0.12s)
+    --- PASS: TestBorrowedObjectOwnPropertyRefusesUnprovenUses/console.log(String(Object.prototype.hasOwnProperty.call({n:1},_1))); (0.23s)
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/debug-944-two-store.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsdebug-944-two-store.a3631170448/001/main.ts:2:44: stage 0 can't lower Object.create: prototype link across region lifetimes; compiler graph-region proof is the way out (prototype identity, inherited data or hidden fields are unproven) yet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/prototype-mixed-cycle.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsprototype-mixed-cycle.2650467293/001/main.ts:4:1: stage 0 can't lower field 'a' plus [[Prototype]] link can close a counted cycle; compiler graph-region proof is the way out yet
+=== RUN   TestScout22Slice2CompilerAndPrototypeGaps/prototype-region-lifetimes.a
+    scout_22_slice2_test.go:62: /tmp/adamic-gate/TestScout22Slice2CompilerAndPrototypeGapsprototype-region-lifet527302426/001/main.ts:4:9: stage 0 can't lower Object.setPrototypeOf: prototype link across region lifetimes; compiler graph-region proof is the way out (receiver field '<hidden field>' plus [[Prototype]] link is unproven) yet
+--- PASS: TestScout22Slice2CompilerAndPrototypeGaps (1.93s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/compiler-cached-intrinsic.a (0.32s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/compiler-two-store.a (0.23s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-554-function-provenance.a (0.19s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-558-flow-prototype.a (0.15s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-561-flow-link.a (0.14s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-594-function-provenance.a (0.15s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-598-array-prototype.a (0.19s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-601-array-link.a (0.16s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-859-mapper-link.a (0.14s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/debug-944-two-store.a (0.06s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/prototype-mixed-cycle.a (0.10s)
+    --- PASS: TestScout22Slice2CompilerAndPrototypeGaps/prototype-region-lifetimes.a (0.10s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	1.983s
+=== RUN   TestPrototypeArgumentsEscapeRegions
+=== PAUSE TestPrototypeArgumentsEscapeRegions
+=== CONT  TestPrototypeArgumentsEscapeRegions
+=== RUN   TestPrototypeArgumentsEscapeRegions/create
+=== RUN   TestPrototypeArgumentsEscapeRegions/setPrototypeOf
+--- PASS: TestPrototypeArgumentsEscapeRegions (0.00s)
+    --- PASS: TestPrototypeArgumentsEscapeRegions/create (0.00s)
+    --- PASS: TestPrototypeArgumentsEscapeRegions/setPrototypeOf (0.00s)
+PASS
+ok  	github.com/system-inc/adamic/internal/native	0.045s
+=== RUN   TestNativeAgreesWithNode
+=== PAUSE TestNativeAgreesWithNode
+=== RUN   TestScout22PrototypeLinks
+=== PAUSE TestScout22PrototypeLinks
+=== RUN   TestScout22PrototypeLifetimes
+=== PAUSE TestScout22PrototypeLifetimes
+=== RUN   TestScout22PrototypeCreate
+=== PAUSE TestScout22PrototypeCreate
+=== RUN   TestScout22ConversionHints
+=== PAUSE TestScout22ConversionHints
+=== RUN   TestScout22ConversionErrors
+=== PAUSE TestScout22ConversionErrors
+=== RUN   TestScout22PropertyErrors
+=== PAUSE TestScout22PropertyErrors
+=== RUN   TestScout22RangeErrors
+=== PAUSE TestScout22RangeErrors
+=== RUN   TestScout22TscToString
+=== PAUSE TestScout22TscToString
+=== RUN   TestScout22MutantConversionHints
+=== PAUSE TestScout22MutantConversionHints
+=== RUN   TestScout22MutantConversionErrors
+=== PAUSE TestScout22MutantConversionErrors
+=== RUN   TestScout22MutantPropertyErrors
+=== PAUSE TestScout22MutantPropertyErrors
+=== RUN   TestScout22MutantRangeErrors
+=== PAUSE TestScout22MutantRangeErrors
+=== RUN   TestScout22MutantPadStart
+=== PAUSE TestScout22MutantPadStart
+=== RUN   TestScout22MutantNormalize
+=== PAUSE TestScout22MutantNormalize
+=== RUN   TestScout22MutantToFixed
+=== PAUSE TestScout22MutantToFixed
+=== RUN   TestScout22MutantToExponential
+=== PAUSE TestScout22MutantToExponential
+=== RUN   TestScout22MutantToPrecision
+=== PAUSE TestScout22MutantToPrecision
+=== RUN   TestScout22MutantToString
+=== PAUSE TestScout22MutantToString
+=== RUN   TestScout22MutantErrorIdentity
+=== PAUSE TestScout22MutantErrorIdentity
+=== RUN   TestScout22PendingSourcesOnNode
+=== PAUSE TestScout22PendingSourcesOnNode
+=== RUN   TestScout22CachedIntrinsicProvenance
+=== PAUSE TestScout22CachedIntrinsicProvenance
+=== RUN   TestScout22OwnPropertyMutant
+=== PAUSE TestScout22OwnPropertyMutant
+=== RUN   TestScout22KeywordOrderMutant
+=== PAUSE TestScout22KeywordOrderMutant
+=== CONT  TestNativeAgreesWithNode
+=== CONT  TestScout22MutantToString
+=== CONT  TestScout22MutantToExponential
+    scout_22_slice2_test.go:217: awaits runtime/step22-to-primitive: toExponential mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantToExponential (0.00s)
+=== NAME  TestScout22MutantToString
+    scout_22_slice2_test.go:229: awaits runtime/step22-to-primitive: toString mutant needs its catchable error fixture
+=== CONT  TestScout22OwnPropertyMutant
+=== CONT  TestScout22MutantToPrecision
+    scout_22_slice2_test.go:223: awaits runtime/step22-to-primitive: toPrecision mutant needs its catchable error fixture
+=== CONT  TestScout22CachedIntrinsicProvenance
+--- SKIP: TestScout22MutantToString (0.00s)
+--- SKIP: TestScout22MutantToPrecision (0.00s)
+=== CONT  TestScout22MutantRangeErrors
+=== CONT  TestScout22KeywordOrderMutant
+=== NAME  TestScout22MutantRangeErrors
+    scout_22_slice2_test.go:193: awaits runtime/step22-to-primitive: range_errors mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantRangeErrors (0.00s)
+=== CONT  TestScout22PendingSourcesOnNode
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values_dead_zone.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values_dead_zone.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout22_conversion_hints.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout22_conversion_hints.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout22_tsc_to_string.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout22_tsc_to_string.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_own_keys.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_own_keys.a
+=== RUN   TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_keyword_entries.a
+=== PAUSE TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_keyword_entries.a
+=== CONT  TestScout22MutantErrorIdentity
+    scout_22_slice2_test.go:235: awaits runtime/step22-to-primitive: error_identity mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantErrorIdentity (0.00s)
+=== CONT  TestScout22MutantNormalize
+    scout_22_slice2_test.go:205: awaits runtime/step22-to-primitive: normalize mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantNormalize (0.00s)
+=== CONT  TestScout22MutantToFixed
+    scout_22_slice2_test.go:211: awaits runtime/step22-to-primitive: toFixed mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantToFixed (0.00s)
+=== CONT  TestScout22PropertyErrors
+    scout_22_slice2_test.go:159: awaits runtime/step22-to-primitive: frozen writes and Object.assign need catchable runtime TypeErrors
+--- SKIP: TestScout22PropertyErrors (0.00s)
+=== CONT  TestScout22MutantPropertyErrors
+    scout_22_slice2_test.go:187: awaits runtime/step22-to-primitive: property_errors mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantPropertyErrors (0.00s)
+=== CONT  TestScout22MutantConversionErrors
+    scout_22_slice2_test.go:181: awaits runtime/step22-to-primitive: conversion_errors mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantConversionErrors (0.00s)
+=== CONT  TestScout22MutantConversionHints
+--- PASS: TestScout22CachedIntrinsicProvenance (1.20s)
+=== CONT  TestScout22TscToString
+=== NAME  TestScout22KeywordOrderMutant
+    scout_22_tsc_objects_test.go:93: mutant exited zero without stderr or leaks; only Node caught stdout differs on each backend
+--- PASS: TestScout22KeywordOrderMutant (1.29s)
+=== CONT  TestScout22RangeErrors
+    scout_22_slice2_test.go:165: awaits runtime/step22-to-primitive: repeat, padding, normalization and number formatting need catchable runtime RangeErrors
+--- SKIP: TestScout22RangeErrors (0.00s)
+=== CONT  TestScout22PrototypeCreate
+    scout22_prototype_links_test.go:98: awaits runtime/step22-prototype-links: Object.create and getPrototypeOf need runtime prototype storage
+--- SKIP: TestScout22PrototypeCreate (0.00s)
+=== CONT  TestScout22ConversionErrors
+    scout_22_slice2_test.go:153: awaits runtime/step22-to-primitive: TypeError and RangeError identity needs runtime error tags
+--- SKIP: TestScout22ConversionErrors (0.00s)
+=== CONT  TestScout22ConversionHints
+=== NAME  TestScout22OwnPropertyMutant
+    scout_22_tsc_objects_test.go:69: Node alone caught 2 inherited-as-own queries; native exited zero without leaks
+--- PASS: TestScout22OwnPropertyMutant (1.35s)
+=== CONT  TestScout22MutantPadStart
+    scout_22_slice2_test.go:199: awaits runtime/step22-to-primitive: padStart mutant needs its catchable error fixture
+--- SKIP: TestScout22MutantPadStart (0.00s)
+=== CONT  TestScout22PrototypeLifetimes
+    scout22_prototype_links_test.go:61: awaits runtime/step22-prototype-links: replacement and teardown need runtime retain and release of prototype edges
+--- SKIP: TestScout22PrototypeLifetimes (0.01s)
+=== CONT  TestScout22PrototypeLinks
+    scout22_prototype_links_test.go:14: awaits runtime/step22-prototype-links: prototype identity, retained links and cycle rejection require the runtime half
+--- SKIP: TestScout22PrototypeLinks (0.00s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a
+=== NAME  TestScout22MutantConversionHints
+    scout_22_slice2_test.go:176: mutant exited zero without stderr or leaks; only Node caught stdout differs on each backend
+--- PASS: TestScout22MutantConversionHints (1.40s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout22_conversion_hints.a
+--- PASS: TestScout22PendingSourcesOnNode (2.25s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_keyword_entries.a
+--- PASS: TestScout22ConversionHints (1.09s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_own_keys.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/scout22_tsc_to_string.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a
+--- PASS: TestScout22TscToString (1.54s)
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values_dead_zone.a
+=== CONT  TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a
+--- PASS: TestNativeAgreesWithNode (0.39s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout22_conversion_hints.a (0.83s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_string_raw.a (1.35s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_keyword_entries.a (0.95s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout_22_tsc_own_keys.a (0.94s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values_dead_zone.a (0.85s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/method_coverage_object_descriptors.a (0.70s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/scout22_tsc_to_string.a (1.28s)
+    --- PASS: TestNativeAgreesWithNode/internal/oracle/testdata/library_method_values.a (1.28s)
+PASS
+gate cache: native hits=0 misses=35
+gate cache: node hits=0 misses=34
+gate cache: probe hits=0 misses=0
+ok  	github.com/system-inc/adamic/internal/oracle	4.032s

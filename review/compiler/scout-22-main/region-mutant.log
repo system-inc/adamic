@@ -1,0 +1,13 @@
+=== RUN   TestPrototypeArgumentsEscapeRegions
+=== PAUSE TestPrototypeArgumentsEscapeRegions
+=== CONT  TestPrototypeArgumentsEscapeRegions
+=== RUN   TestPrototypeArgumentsEscapeRegions/create
+    library_prototypes_region_test.go:36: create operand 0 could be shorter lived than the receiver
+=== RUN   TestPrototypeArgumentsEscapeRegions/setPrototypeOf
+    library_prototypes_region_test.go:36: setPrototypeOf operand 0 could be shorter lived than the receiver
+--- FAIL: TestPrototypeArgumentsEscapeRegions (0.00s)
+    --- FAIL: TestPrototypeArgumentsEscapeRegions/create (0.00s)
+    --- FAIL: TestPrototypeArgumentsEscapeRegions/setPrototypeOf (0.00s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	0.010s
+FAIL
