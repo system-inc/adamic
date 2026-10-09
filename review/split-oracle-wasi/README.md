@@ -36,8 +36,8 @@ ADAMIC_ORACLE_WASI=1 ADAMIC_GATE_UNCACHED=1 GOMAXPROCS=4   go test ./internal/or
 Verify the saved, real completed union from the repository root:
 
 ```sh
-python3 internal/oracle/verify_wasi_shards.py   internal/oracle/wasi-shards-evidence/proof.json.gz   internal/oracle/wasi-shards-evidence/shard-*.json.gz
-python3 internal/oracle/verify_wasi_shards.py --self-test
+python3 review/split-oracle-wasi/verify_wasi_shards.py   review/split-oracle-wasi/proof.json.gz   review/split-oracle-wasi/shard-*.json.gz
+python3 review/split-oracle-wasi/verify_wasi_shards.py --self-test
 ```
 
 Raw Go JSON receipts are compressed without filtering. Timing JSON includes the exact command, exit status, wall, and deadline status. The saved measure.py and prove-completion.py reproduce the commands on this machine; their paths describe this environment. The baseline overlay executes origin/main's original wasi_test.go and removes only the newly added shard-proof test file; it does not alter compiler or fixture sources.

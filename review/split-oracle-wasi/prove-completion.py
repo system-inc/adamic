@@ -1,6 +1,6 @@
 import importlib.util, json
 from pathlib import Path
-spec=importlib.util.spec_from_file_location('verify','internal/oracle/verify_wasi_shards.py')
+spec=importlib.util.spec_from_file_location('verify','review/split-oracle-wasi/verify_wasi_shards.py')
 v=importlib.util.module_from_spec(spec); spec.loader.exec_module(v)
 root=Path('/workspace/scratch/oracle-split')
 expected=v.manifest(v.events(root/'proof.json'))

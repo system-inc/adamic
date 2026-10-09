@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Verify successful fixture completion, not merely the declared shard union.
 
-Usage: python3 internal/oracle/verify_wasi_shards.py manifest.json shard-*.json
+Usage: python3 review/split-oracle-wasi/verify_wasi_shards.py manifest.json shard-*.json
 Generate manifest.json with:
   go test ./internal/oracle -run '^TestWASIShardUnion$' -count=1 -timeout 90s -json
 Each shard log must come from an isolated gate invocation, for example:
