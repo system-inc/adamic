@@ -1,0 +1,42 @@
+=== RUN   TestExplainCheckedWritesOutput
+=== PAUSE TestExplainCheckedWritesOutput
+=== CONT  TestExplainCheckedWritesOutput
+=== RUN   TestExplainCheckedWritesOutput/emit-node-misfit
+=== PAUSE TestExplainCheckedWritesOutput/emit-node-misfit
+=== RUN   TestExplainCheckedWritesOutput/number-misfit
+=== PAUSE TestExplainCheckedWritesOutput/number-misfit
+=== RUN   TestExplainCheckedWritesOutput/flow-node-misfit
+=== PAUSE TestExplainCheckedWritesOutput/flow-node-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-number-misfit
+=== PAUSE TestExplainCheckedWritesOutput/container-number-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-map-misfit
+=== PAUSE TestExplainCheckedWritesOutput/container-map-misfit
+=== RUN   TestExplainCheckedWritesOutput/container-fill-misfit
+=== PAUSE TestExplainCheckedWritesOutput/container-fill-misfit
+=== RUN   TestExplainCheckedWritesOutput/optional-boolean-misfit
+=== PAUSE TestExplainCheckedWritesOutput/optional-boolean-misfit
+=== RUN   TestExplainCheckedWritesOutput/overload-result-misfit
+=== PAUSE TestExplainCheckedWritesOutput/overload-result-misfit
+=== RUN   TestExplainCheckedWritesOutput/overload-callback-misfit
+=== PAUSE TestExplainCheckedWritesOutput/overload-callback-misfit
+=== CONT  TestExplainCheckedWritesOutput/emit-node-misfit
+=== CONT  TestExplainCheckedWritesOutput/container-fill-misfit
+=== CONT  TestExplainCheckedWritesOutput/container-number-misfit
+=== CONT  TestExplainCheckedWritesOutput/overload-callback-misfit
+=== CONT  TestExplainCheckedWritesOutput/overload-result-misfit
+=== CONT  TestExplainCheckedWritesOutput/optional-boolean-misfit
+=== CONT  TestExplainCheckedWritesOutput/container-map-misfit
+=== CONT  TestExplainCheckedWritesOutput/flow-node-misfit
+=== CONT  TestExplainCheckedWritesOutput/number-misfit
+--- PASS: TestExplainCheckedWritesOutput (0.00s)
+    --- PASS: TestExplainCheckedWritesOutput/container-fill-misfit (0.45s)
+    --- PASS: TestExplainCheckedWritesOutput/emit-node-misfit (0.51s)
+    --- PASS: TestExplainCheckedWritesOutput/container-number-misfit (0.51s)
+    --- PASS: TestExplainCheckedWritesOutput/overload-callback-misfit (0.53s)
+    --- PASS: TestExplainCheckedWritesOutput/overload-result-misfit (0.54s)
+    --- PASS: TestExplainCheckedWritesOutput/container-map-misfit (0.41s)
+    --- PASS: TestExplainCheckedWritesOutput/optional-boolean-misfit (0.48s)
+    --- PASS: TestExplainCheckedWritesOutput/number-misfit (0.44s)
+    --- PASS: TestExplainCheckedWritesOutput/flow-node-misfit (0.48s)
+PASS
+ok  	github.com/system-inc/adamic/cmd/adamic	0.999s

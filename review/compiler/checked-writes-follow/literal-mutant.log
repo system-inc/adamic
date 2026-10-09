@@ -1,0 +1,8 @@
+=== RUN   TestRuntimeCheckedLibraryPushRejectsLiteral
+=== PAUSE TestRuntimeCheckedLibraryPushRejectsLiteral
+=== CONT  TestRuntimeCheckedLibraryPushRejectsLiteral
+    checked_library_push_test.go:90: want exit 70 at contract, got <nil>: match,match,done
+--- FAIL: TestRuntimeCheckedLibraryPushRejectsLiteral (7.03s)
+FAIL
+FAIL	github.com/system-inc/adamic/internal/native	7.041s
+FAIL

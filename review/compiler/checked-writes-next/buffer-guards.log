@@ -1,0 +1,80 @@
+=== RUN   TestCheckedSignatureInstantiation
+=== PAUSE TestCheckedSignatureInstantiation
+=== RUN   TestCheckedSignatureEveryReceivingOverload
+=== PAUSE TestCheckedSignatureEveryReceivingOverload
+=== RUN   TestNodeBufferRefusals
+=== PAUSE TestNodeBufferRefusals
+=== CONT  TestCheckedSignatureInstantiation
+=== CONT  TestNodeBufferRefusals
+=== CONT  TestCheckedSignatureEveryReceivingOverload
+=== RUN   TestNodeBufferRefusals/buffer_alloc
+=== PAUSE TestNodeBufferRefusals/buffer_alloc
+=== RUN   TestNodeBufferRefusals/buffer_read
+=== PAUSE TestNodeBufferRefusals/buffer_read
+=== RUN   TestNodeBufferRefusals/hash_inherited_read
+=== PAUSE TestNodeBufferRefusals/hash_inherited_read
+=== RUN   TestNodeBufferRefusals/hash_copy
+=== PAUSE TestNodeBufferRefusals/hash_copy
+=== RUN   TestNodeBufferRefusals/crypto_random
+=== PAUSE TestNodeBufferRefusals/crypto_random
+=== RUN   TestNodeBufferRefusals/crypto_constructor
+=== PAUSE TestNodeBufferRefusals/crypto_constructor
+=== RUN   TestNodeBufferRefusals/buffer_isUtf8
+=== PAUSE TestNodeBufferRefusals/buffer_isUtf8
+=== RUN   TestNodeBufferRefusals/encoding
+=== PAUSE TestNodeBufferRefusals/encoding
+=== RUN   TestNodeBufferRefusals/algorithm
+=== PAUSE TestNodeBufferRefusals/algorithm
+=== RUN   TestNodeBufferRefusals/digest
+=== PAUSE TestNodeBufferRefusals/digest
+=== RUN   TestNodeBufferRefusals/catch
+=== PAUSE TestNodeBufferRefusals/catch
+=== RUN   TestNodeBufferRefusals/detached
+=== PAUSE TestNodeBufferRefusals/detached
+=== RUN   TestNodeBufferRefusals/typed_array_view
+=== PAUSE TestNodeBufferRefusals/typed_array_view
+=== RUN   TestNodeBufferRefusals/structural_hash_view
+=== PAUSE TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/buffer_alloc
+=== CONT  TestNodeBufferRefusals/algorithm
+=== CONT  TestNodeBufferRefusals/typed_array_view
+--- PASS: TestCheckedSignatureInstantiation (0.34s)
+=== CONT  TestNodeBufferRefusals/crypto_random
+--- PASS: TestCheckedSignatureEveryReceivingOverload (0.38s)
+=== CONT  TestNodeBufferRefusals/encoding
+=== CONT  TestNodeBufferRefusals/buffer_isUtf8
+=== CONT  TestNodeBufferRefusals/crypto_constructor
+=== CONT  TestNodeBufferRefusals/hash_inherited_read
+=== CONT  TestNodeBufferRefusals/hash_copy
+=== CONT  TestNodeBufferRefusals/buffer_read
+=== CONT  TestNodeBufferRefusals/structural_hash_view
+=== CONT  TestNodeBufferRefusals/catch
+=== CONT  TestNodeBufferRefusals/detached
+=== CONT  TestNodeBufferRefusals/digest
+--- PASS: TestNodeBufferRefusals (0.04s)
+    --- PASS: TestNodeBufferRefusals/buffer_alloc (1.93s)
+    --- PASS: TestNodeBufferRefusals/typed_array_view (2.29s)
+    --- PASS: TestNodeBufferRefusals/algorithm (2.33s)
+    --- PASS: TestNodeBufferRefusals/encoding (2.00s)
+    --- PASS: TestNodeBufferRefusals/crypto_random (2.07s)
+    --- PASS: TestNodeBufferRefusals/buffer_isUtf8 (1.89s)
+    --- PASS: TestNodeBufferRefusals/hash_inherited_read (1.69s)
+    --- PASS: TestNodeBufferRefusals/crypto_constructor (1.76s)
+    --- PASS: TestNodeBufferRefusals/buffer_read (1.84s)
+    --- PASS: TestNodeBufferRefusals/hash_copy (1.91s)
+    --- PASS: TestNodeBufferRefusals/structural_hash_view (1.42s)
+    --- PASS: TestNodeBufferRefusals/digest (1.20s)
+    --- PASS: TestNodeBufferRefusals/detached (1.40s)
+    --- PASS: TestNodeBufferRefusals/catch (1.47s)
+PASS
+ok  	github.com/system-inc/adamic/internal/lower	5.690s
+=== RUN   TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+=== PAUSE TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+=== CONT  TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17
+    corpus_units_test.go:7204: 2 functions: 1 phis, 8 values, 31 uses checked
+    corpus_units_test.go:7204: 21 mutations checked, 0 on a range the pass left unset, 0 invalid ranges
+    corpus_units_test.go:7204: 128 points walked, 168 events
+    corpus_units_test.go:7204: 333 variable-and-point pairs checked
+--- PASS: TestFlowProgram____oracle_testdata_node_buffer_bom_a_e668b0027d17 (1.12s)
+PASS
+ok  	github.com/system-inc/adamic/internal/flow	1.245s
