@@ -1,0 +1,6 @@
+FIRST FAILURE (tests, at 16.6 s):
+go test -c -o exited 1
+# github.com/system-inc/adamic/stage1/cohere/json [github.com/system-inc/adamic/stage1/cohere/json.test]
+stage1/cohere/json/port_test.go:305:17: undefined: sync
+
+(box load 13.9 on 64 cores at first failure)
