@@ -8,7 +8,7 @@ for r in changes:
   assert [int(s) for s in re.findall(r'\d+',obs[r['path']]['base']['counts'])]==values(r['measured'])
   assert [int(s) for s in re.findall(r'\d+',obs[r['path']]['chain']['counts'])]==values(r['merged'])
   if r['path'].startswith('docs/'):
-   reason='897d0e79 already measures this retain increase. Shared copy_fields introduced by b215cedb retains reserved reference slots including NULL; heap.c counts calls before its NULL check. Generated method C is identical to base.'
+   reason='897d0e79 already measures this retain increase. Shared copy_fields introduced by b215cedb retains reserved reference slots including NULL; heap.c counts calls before its NULL check. For method.a, generated C is identical to base.'
   else:reason='897d0e79 already measures this reduction; 50654a40 reproduces the recorded row. Inherited optional-presence copy/enumeration paths, not the eep guard or merge. Allocations equal frees.'
  elif r['base'] is None:
   commit=subprocess.check_output(['git','log','50654a40','--format=%h %s','-1','-S',r['measured'],'--','internal/oracle/counts.md'],text=True,timeout=30).strip();reason='Inherited chain fixture row: '+commit
