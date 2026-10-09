@@ -858,6 +858,11 @@ while true; do
     firstStepPid=$!
     firstStepRefresh=${now}
   fi
+  # Gate merges older than a week leave origin, once a day (cloud/prune-gate-merges.sh, #6f3b76x).
+  if [ -z "${pruneRefresh:-}" ] || [ "$((now - pruneRefresh))" -ge 86400 ]; then
+    bash "${here}/cloud/prune-gate-merges.sh" >> "${state}/logs/prune-gate-merges.log" 2>&1 &
+    pruneRefresh=${now}
+  fi
   # The star owns Server (@system_adamic, Oct 8 21:47Z, and integration for the views train): while the front
   # file names any tip, Server's area slot is reserved for the front instead of the roadmap's first step.
   if [ -n "$(frontGlobs)" ]; then
