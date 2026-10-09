@@ -71,8 +71,22 @@ func runWASIFixtures(t *testing.T, rows []int, mutate func(string, *ir.Program))
 				mutate(fixture.path, program)
 			}
 			actual := onWASI(t, native.C(program))
-			if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
-				t.Error(err)
+			// WASI uses the native reference-counting runtime and named stack guard.
+			// Exact ruled fixtures pin both outcomes through the shared backend table.
+			ruled := false
+			for _, entry := range ruledBackendDivergences {
+				if entry.fixture == fixture.path {
+					ruled = true
+					if difference := backendDisagreement(fixture.path, expected, actual); difference != "" {
+						t.Errorf("%s: %s; WASI %+v", fixture.path, difference, actual)
+					}
+					break
+				}
+			}
+			if !ruled {
+				if err := wasiFixtureDifference(t.Name(), expected, actual); err != nil {
+					t.Error(err)
+				}
 			}
 		})
 	}
