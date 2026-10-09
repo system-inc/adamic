@@ -116,6 +116,18 @@ func validFixturePath(name string) bool {
 	return fs.ValidPath(name) && !strings.ContainsAny(name, "\\:") && filepath.Ext(name) == ".a"
 }
 
+// Check the supported mode independently of the broader call and URL guards.
+// Its fatal must be observable even when another guard rejects the same runner.
+func nodeRunnerMode(t *testing.T, text string) int {
+	t.Helper()
+	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
+	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
+	if erasable+transformedCalls != 1 {
+		t.Fatal("source Node runner changed: review the transform-mode hook")
+	}
+	return erasable
+}
+
 // The enum and namespace branches use Node's transform mode. Derive that runner
 // from the current source oracle, preserving its runtime and import hooks while
 // accepting either source mode without changing the original runner.
@@ -128,9 +140,8 @@ func transformedNodeRunner(t *testing.T, repository string) string {
 	}
 	text := string(source)
 	// Parameter properties may already require transform mode in the source oracle.
-	erasable := strings.Count(text, "stripTypeScriptTypes(source)")
-	transformedCalls := strings.Count(text, "stripTypeScriptTypes(source, { mode: 'transform' })")
-	if erasable+transformedCalls != 1 || strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
+	erasable := nodeRunnerMode(t, text)
+	if strings.Count(text, "stripTypeScriptTypes(source") != 1 || strings.Count(text, "new URL('./adamic.mjs', import.meta.url)") != 1 {
 		t.Fatal("source Node runner changed: review the transform-mode hook")
 	}
 	if erasable == 1 {
