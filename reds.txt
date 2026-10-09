@@ -1,0 +1,28 @@
+run adamic-verify-20261009T095123-48a9faf2: void, 1993 tests in 12 units, 4 failed, 8 units broken, 0 killed over budget
+BROKEN tests-00: no results (exited false, last output "loom-runner: still running after 900 s")
+BROKEN tests-02: no results (exited false, last output "")
+BROKEN tests-04: no results (exited false, last output "")
+BROKEN tests-05: no results (exited false, last output "loom-runner: still running after 450 s")
+BROKEN tests-06: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-07: no results (exited false, last output "")
+BROKEN tests-09: no results (exited false, last output "loom-runner: still running after 270 s")
+BROKEN tests-11: no results (exited false, last output "loom-runner: still running after 420 s")
+FAIL github.com/system-inc/adamic/stage1/cohere/json TestUpstreamRepositoryCorpusParity (tests-01)
+    upstream_parity_split_test.go:104: full corpus: 3576 cases before gate sampling
+    upstream_parity_split_test.go:104: corpus repository: 2482 tracked JSON files; checked against Git HEAD
+    upstream_parity_split_test.go:104: corpus pin group provisioned: 18, SHA256 41f0e3f346ba9e6897962c730c1c5baa118755f0050b207a4187854b2378de7c
+    upstream_parity_split_test.go:104: corpus pin group TypeScript: 203, SHA256 46baec96d44c3d34a35a408d8de1f52474c8b42c0e52766fd2bfd1e1b971971b
+    upstream_parity_split_test.go:104: corpus pin group cohere: 839, SHA256 f96f53d1a186bc305fe73f8028ecd492fd70ce03df41b491276d74f405849a47
+    upstream_parity_split_test.go:104: corpus pin group generated: 34, SHA256 c0c29d57a98fa673fc3c3ab540ef852f64c0e3392b3382277a896c1b15adaa82
+    upstream_parity_split_test.go:104: TestUpstreamRepositoryCorpusParity: ADAMIC_GATE_CHANGED: open /tmp/loom-select/2841c9a1f22eb04a4c1148f443c6efd64b57f08e/changed-paths.txt: no such file or directory
+    upstream_parity_split_test.go:119: shared setup: 1.130s
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownASTPreprocessing (tests-10)
+    support_test.go:60: markdownblocks memory capacity: 16 units (512 MiB each)
+    ast_test.go:24: corpus-files: repository /tmp/adamic root stage1/cohere/markdownblocks pin 2841c9a1f22eb04a4c1148f443c6efd64b57f08e count 3
+    ast_test.go:26: TestMarkdownASTPreprocessing: ADAMIC_GATE_CHANGED: open /tmp/loom-select/2841c9a1f22eb04a4c1148f443c6efd64b57f08e/changed-paths.txt: no such file or directory
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMarkdownParserPrefixes (tests-10)
+    prefix_test.go:22: corpus-files: repository /tmp/adamic root stage1/cohere/markdownblocks pin 2841c9a1f22eb04a4c1148f443c6efd64b57f08e count 3
+    prefix_test.go:24: TestMarkdownParserPrefixes: ADAMIC_GATE_CHANGED: open /tmp/loom-select/2841c9a1f22eb04a4c1148f443c6efd64b57f08e/changed-paths.txt: no such file or directory
+FAIL github.com/system-inc/adamic/stage1/cohere/markdownblocks TestMicromarkInputChunks (tests-10)
+    chunks_test.go:23: corpus-files: repository /tmp/adamic root stage1/cohere/markdownblocks pin 2841c9a1f22eb04a4c1148f443c6efd64b57f08e count 3
+    chunks_test.go:57: TestMicromarkInputChunks: ADAMIC_GATE_CHANGED: open /tmp/loom-select/2841c9a1f22eb04a4c1148f443c6efd64b57f08e/changed-paths.txt: no such file or directory

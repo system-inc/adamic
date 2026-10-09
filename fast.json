@@ -1,0 +1,15 @@
+{
+  "finished": true,
+  "verdict": "red",
+  "runner": "pool",
+  "pool": "codex-side",
+  "pool_run": "adamic-verify-20261009T095123-48a9faf2",
+  "covers": "go-tests",
+  "uncached_tests": true,
+  "sha": "3fefe5b221a751faa05cf49c865270c68c54b7d5",
+  "branch": "cloud/land-stack-c-emission-3fefe5b2",
+  "base": "6d890e0129beecb2df9f65c89b7733a6f02b5248",
+  "candidate": "3fefe5b221a751faa05cf49c865270c68c54b7d5",
+  "gated": "2841c9a1f22eb04a4c1148f443c6efd64b57f08e",
+  "unplanned_packages_not_run": 4
+}
