@@ -1987,3 +1987,23 @@ class WASIUnits(unittest.TestCase):
         run.Gate.wasiSplit(gate, io.StringIO())
         command = seen["TestWASIUnit07"]
         self.assertEqual(command[command.index("-run") + 1], "^TestWASIUnit07$")
+
+    def test_a_unit_s_own_fixture_subtests_are_expected_and_another_unit_is_not(self):
+        # Oct 9 06:47Z: every unit read as red because its own fixture subtests counted as unexpected.
+        tree = self.tree("func TestWASIUnit03(t *testing.T) {\n\trunWASIUnit(t, 3)\n}\n")
+        executes = {}
+        gate = types.SimpleNamespace(arguments=types.SimpleNamespace(tree=tree), selectedUnits=lambda phase, names: names,
+                                     phaseUnits=lambda phase, names, commands, execute: executes.update(execute=execute))
+        run.Gate.wasiSplit(gate, io.StringIO())
+        for extra, ok in (([], True), (["TestWASIUnit04"], False)):
+            events = [{"Action": "run", "Test": "TestWASIUnit03"},
+                      {"Action": "run", "Test": "TestWASIUnit03/internal/load/testdata/0.1/compile/04_closures.ts"},
+                      {"Action": "pass", "Test": "TestWASIUnit03/internal/load/testdata/0.1/compile/04_closures.ts"},
+                      {"Action": "pass", "Test": "TestWASIUnit03"}] + [{"Action": "run", "Test": name} for name in extra]
+            def stream(name, command, log, environment=None):
+                for event in events:
+                    log.write(json.dumps(event) + "\n")
+                return 0
+            gate.stream = stream
+            with self.subTest(extra=extra):
+                self.assertEqual(executes["execute"]("TestWASIUnit03", [], "/tmp")["ok"], ok)

@@ -987,7 +987,8 @@ class Gate:
             passed = any(event.get("Test") == wanted and event.get("Action") == "pass" for event in events)
             unexpected = sorted({event["Test"] for event in events if event.get("Action") == "run"
                                  and (event.get("Test", "").startswith("TestWASI/") or wasiUnit.fullmatch(event.get("Test", "").split("/")[0]))
-                                 and event["Test"] != wanted and not wanted.startswith(event["Test"] + "/")})
+                                 and event["Test"] != wanted and not wanted.startswith(event["Test"] + "/")
+                                 and not event["Test"].startswith(wanted + "/")})
             return {"exit": code, "ok": code == 0 and passed and not unexpected, "test": wanted,
                     "unexpected": unexpected,
                     "passed": passed}
