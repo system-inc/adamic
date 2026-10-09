@@ -1,0 +1,33 @@
+{
+  "readTextFile": [
+    "internal/oracle/testdata/input_spread_local.a",
+    "internal/oracle/testdata/node_buffer_input.a",
+    "internal/oracle/testdata/prompt_then_read.a",
+    "internal/oracle/testdata/read_arguments.a",
+    "internal/oracle/testdata/read_files.a",
+    "internal/oracle/testdata/utf8_sweep.a",
+    "internal/oracle/testdata/write_files.a"
+  ],
+  "overload_signatures": [
+    "internal/oracle/testdata/census_append_overload.a",
+    "internal/oracle/testdata/census_overload_binders.a",
+    "internal/oracle/testdata/census_overload_contracts.a",
+    "internal/oracle/testdata/census_overload_lie.a",
+    "internal/oracle/testdata/census_small_overload.a",
+    "internal/oracle/testdata/library_fnexpr_store.a",
+    "internal/oracle/testdata/library_function_expressions.a",
+    "internal/oracle/testdata/overload_ancestor_directory.a",
+    "internal/oracle/testdata/overload_array_to_map.a",
+    "internal/oracle/testdata/overload_array_to_multimap.a",
+    "internal/oracle/testdata/overload_array_to_numeric_map.a",
+    "internal/oracle/testdata/overload_leading_comment_range.a",
+    "internal/oracle/testdata/overload_mutate_map.a",
+    "internal/oracle/testdata/overload_mutate_map_skipping_new.a",
+    "internal/oracle/testdata/overload_original_node.a",
+    "internal/oracle/testdata/overload_resolve_type_names.a",
+    "internal/oracle/testdata/overload_sort_deduplicate.a",
+    "internal/oracle/testdata/overload_trailing_comment_range.a",
+    "internal/oracle/testdata/scanner_nested_overload.a",
+    "internal/oracle/testdata/switch_case_declarations/overload.a"
+  ]
+}
